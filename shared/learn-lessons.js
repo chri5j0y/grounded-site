@@ -48,8 +48,8 @@ window.GG_LEARN = {
      "n": 1,
      "title": "Welcome to Maple",
      "mins": 3,
-     "blurb": "Meet your tree, its six parts, and how Maple works for kids and grown-ups.",
-     "scenes": [
+     "blurb": "Meet your tree, the four parts you take care of, and how Maple works for kids and grown-ups.",
+     "faithScenes": [
       {
        "k": "title",
        "hero": "maple",
@@ -61,21 +61,26 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Every kid is growing like a little tree.",
-       "sub": "Six parts make a kid whole.",
-       "say": "Every kid is growing like a little tree. You grow a little bit every day, even when you cannot see it. And a whole tree needs all six of its parts."
+       "sub": "Take care of four. Watch two grow.",
+       "say": "Every kid is growing like a little tree. You grow a little bit every day, even when you cannot see it. And a whole tree grows when you take care of it."
       },
       {
-       "k": "six",
-       "h": "The six parts of your tree",
-       "words": [
-        "Feeling safe and loved",
-        "What makes you you",
-        "Big feelings",
-        "Your people",
-        "Sleep, food, and play",
-        "Looking forward"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is your tree. There are four parts you take care of. Roots are your spirit, feeling safe and loved. Bark is for big feelings. Leaves are sleep, food, and play. And branches are your people. When you take care of those four, two parts grow: your trunk, what makes you you, and your fruit, looking forward to good things.",
+       "items": [
+        [
+         "Four to take care of",
+         "Roots, bark, leaves, and branches"
+        ],
+        [
+         "Two that grow",
+         "Your trunk and your fruit"
+        ]
        ],
-       "say": "Here are the six parts. Roots are feeling safe and loved. Your trunk is what makes you you. Bark is for big feelings. Branches are your people. Leaves are sleep, food, and play. And fruit is looking forward to good things."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
@@ -186,15 +191,168 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "How many parts does your tree have?",
+       "q": "How many parts of your tree do you take care of?",
        "opts": [
         "Three",
-        "Six",
+        "Four",
         "Ten"
        ],
        "right": 1,
-       "why": "Roots, Trunk, Bark, Branches, Leaves, and Fruit. All six make you whole.",
-       "say": "Quick question. How many parts does your tree have?"
+       "why": "Roots, bark, leaves, and branches. Take care of those four, and your trunk and fruit grow too.",
+       "say": "Quick question. How many parts of your tree do you take care of?"
+      }
+     ],
+     "plainScenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Maple",
+       "sub": "Bright leaves, strong roots.",
+       "say": "Welcome to Maple! Maple is for kids in kindergarten through fifth grade, and for the grown-ups who love them. Let us take a look around."
+      },
+      {
+       "k": "big",
+       "h": "Every kid is growing like a little tree.",
+       "sub": "Take care of four. Watch two grow.",
+       "say": "Every kid is growing like a little tree. You grow a little bit every day, even when you cannot see it. And a whole tree grows when you take care of it."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is your tree. There are four parts you take care of. Roots are feeling safe and loved. Bark is for big feelings. Leaves are sleep, food, and play. And branches are your people. When you take care of those four, two parts grow: your trunk, what makes you you, and your fruit, looking forward to good things.",
+       "items": [
+        [
+         "Four to take care of",
+         "Roots, bark, leaves, and branches"
+        ],
+        [
+         "Two that grow",
+         "Your trunk and your fruit"
+        ]
+       ],
+       "cue": {
+        "at": [1, 6]
+       }
+      },
+      {
+       "k": "big",
+       "h": "Be a tree!",
+       "sub": "Roots down. Branches up.",
+       "beats": [
+        "Let us be a tree right now.",
+        "Sit up tall, or stand up tall, like a strong trunk.",
+        "Press your feet down into the floor, like roots.",
+        "Reach your arms up high, like branches.",
+        {
+         "t": "Now wiggle your fingers like leaves in the wind, and take one big, slow breath.",
+         "w": 10
+        }
+       ],
+       "say": "Let us be a tree right now. Sit up tall, or stand up tall, like a strong trunk. Press your feet down into the floor, like roots. Reach your arms up high, like branches. Now wiggle your fingers like leaves in the wind, and take one big, slow breath."
+      },
+      {
+       "k": "flow",
+       "h": "How Maple works",
+       "steps": [
+        [
+         "Check in",
+         "Questions for each part"
+        ],
+        [
+         "See the weather",
+         "Sunny, cloudy, or rainy"
+        ],
+        [
+         "Practice a little",
+         "Small things each day"
+        ],
+        [
+         "Watch it grow",
+         "A new ring each check-in"
+        ]
+       ],
+       "say": "Here is how Maple works. First, you check in. You answer a few questions for each part. Then you see the weather on your tree. Next, you practice a little each day. And you watch your tree grow, with a new ring for every check-in."
+      },
+      {
+       "k": "card",
+       "title": "How are we doing this?",
+       "body": "Pick one. Then type your first name and pick your grade.",
+       "fields": [
+        [
+         "What's your first name?",
+         "Sam"
+        ],
+        [
+         "What grade are you in?",
+         "Grade 2"
+        ]
+       ],
+       "btns": [
+        "On my own",
+        "With a grown-up"
+       ],
+       "tap": 1,
+       "say": "To start, Maple asks, how are we doing this? You can pick On my own, or With a grown-up. Then you type your first name and pick your grade. The questions are written just for your grade."
+      },
+      {
+       "k": "tabs",
+       "app": "maple",
+       "app_name": "Maple",
+       "tabs": [
+        "Check-in",
+        "My Kids",
+        "When Life Changes",
+        "Grown-up Guide",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Check-in",
+        "p": "Start here. Your tree and your check-ins live here too."
+       },
+       "say": "Along the top are the tabs. Check-in is where you start. When Life Changes and the Grown-up Guide are for grown-ups. My Kids shows up when a grown-up is helping. And Learn is where you are right now."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Grown-up Guide",
+         "A tip and conversation starters for every part"
+        ],
+        [
+         "When Life Changes",
+         "More than 70 guides for hard talks"
+        ],
+        [
+         "Health and Ability",
+         "Maple fits each child"
+        ],
+        [
+         "Private by design",
+         "Everything stays on this device"
+        ]
+       ],
+       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has more than seventy guides for hard talks, from a pet dying to scary news. Health and Ability, in Settings, helps Maple fit each child's body and health. And everything stays on this device, yours alone."
+      },
+      {
+       "k": "big",
+       "h": "Maple is made to do together.",
+       "sub": "The best part happens after the screen.",
+       "say": "Maple is made to do together. The best part happens after the screen, when a kid and a grown-up talk about the weather on their tree."
+      },
+      {
+       "k": "quiz",
+       "q": "How many parts of your tree do you take care of?",
+       "opts": [
+        "Three",
+        "Four",
+        "Ten"
+       ],
+       "right": 1,
+       "why": "Roots, bark, leaves, and branches. Take care of those four, and your trunk and fruit grow too.",
+       "say": "Quick question. How many parts of your tree do you take care of?"
       }
      ]
     }
@@ -219,7 +377,7 @@ window.GG_LEARN = {
        "hero": "maple",
        "eyebrow": "Using Maple, Lesson 1",
        "h": "Your First Check-in",
-       "sub": "Six parts, one at a time.",
+       "sub": "Every part, one at a time.",
        "say": "Everything in Maple starts with a check-in. This lesson shows you what happens, step by step, so you know just what to expect."
       },
       {
@@ -647,7 +805,7 @@ window.GG_LEARN = {
         "h": "Growth Plan",
         "p": "Pick things to practice for each part of your tree."
        },
-       "say": "Start with Growth Plan. This is where you pick things to practice for each part of your tree. Parts with rain or clouds come first, marked Suggested for you. After a check-in, a friendly voice walks you through it, one part at a time."
+       "say": "Start with Growth Plan. This is where you pick things to practice for the four parts you take care of. Parts with rain or clouds come first, marked Suggested for you. After a check-in, a friendly voice walks you through it, one part at a time."
       },
       {
        "k": "screen",
@@ -766,7 +924,7 @@ window.GG_LEARN = {
         ],
         [
          "A Rainbow Week",
-         "All six parts in one week"
+         "All four parts in one week"
         ],
         [
          "Milestones",
@@ -774,14 +932,9 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         3,
-         4
-        ]
+        "at": [0, 1, 3, 4]
        },
-       "say": "As you tend your tree, tree friends may come to visit, as a surprise. Every day you tend helps your tree grow up, from a Seed, to a Sprout, all the way to a Grand Old Maple. Six little dots show the parts you tended this week. Tend all six, and you make a Rainbow Week! Your milestones live on the Season tab."
+       "say": "As you tend your tree, tree friends may come to visit, as a surprise. Every day you tend helps your tree grow up, from a Seed, to a Sprout, all the way to a Grand Old Maple. Four little dots show the parts you tended this week. Tend all four, and you make a Rainbow Week! Your milestones live on the Season tab."
       },
       {
        "k": "big",
@@ -1066,7 +1219,10 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-u-guide",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 5,
      "title": "The Grown-up Guide",
      "mins": 4,
@@ -1181,7 +1337,7 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "For each of the six parts",
+       "h": "For each part of the tree",
        "steps": [
         [
          "Conversation starters",
@@ -1196,7 +1352,7 @@ window.GG_LEARN = {
          "What to try next"
         ]
        ],
-       "say": "The Six Parts section goes one part at a time. Each part has conversation starters. A short note on why this works. And what to try if that part is rainy."
+       "say": "The Tend Four, Grow Two section goes one part at a time. Each part has conversation starters. A short note on why this works. And what to try if that part is rainy."
       },
       {
        "k": "points",
@@ -1443,25 +1599,25 @@ window.GG_LEARN = {
   },
   {
    "id": "maple-six",
-   "title": "The Six Parts",
-   "who": "One lesson for each part of a kid's tree, with something to try",
-   "certTitle": "Maple: The Six Parts",
-   "certLine": "For finishing every lesson on the six parts of a kid's tree.",
+   "title": "Tend Four, Grow Two",
+   "who": "Four parts to take care of, two that grow, each with something to try",
+   "certTitle": "Maple: Tend Four, Grow Two",
+   "certLine": "For finishing every lesson on tending four parts of a kid's tree, and the two that grow.",
    "lessons": [
     {
      "id": "mp-6-roots",
      "n": 1,
-     "title": "Roots: Feeling Safe and Loved",
+     "title": "Roots: Spirit",
      "mins": 4,
      "blurb": "Feeling safe and loved, and what holds you close.",
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "maple",
-       "eyebrow": "The Six Parts, Lesson 1",
-       "h": "Roots",
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots: Spirit",
        "sub": "Feeling safe and loved.",
-       "say": "This lesson is about Roots. Roots are about feeling safe and loved."
+       "say": "This is Tend Four, Grow Two. Your tree has four parts you take care of, and two that grow when you do. This first lesson is about Roots: Spirit. Roots are about feeling safe and loved, and close to what is sacred."
       },
       {
        "k": "big",
@@ -1566,12 +1722,7 @@ window.GG_LEARN = {
          "3": 8,
          "7": 10
         },
-        "at": [
-         2,
-         3,
-         5,
-         9
-        ]
+        "at": [2, 3, 5, 9]
        },
        "say": "Let's try one from Maple. It is called My Safe Place. Get comfy, and close your eyes if you like. Now picture a place where you feel safe and calm. Maybe your bed, a grandparent's kitchen, or a spot outside. Look around your safe place. What do you see? What do you hear? Now open your eyes. Your safe place stays with you, and you can visit it any time you feel scared."
       },
@@ -1612,154 +1763,167 @@ window.GG_LEARN = {
        "why": "Roots hold you tight, so you feel safe and loved.",
        "say": "Quick question. What do roots help you feel?"
       }
-     ]
-    },
-    {
-     "id": "mp-6-trunk",
-     "n": 2,
-     "title": "Trunk: What Makes You You",
-     "mins": 3,
-     "blurb": "What you love, what you are good at, and how you help.",
-     "scenes": [
+     ],
+     "plainScenes": [
       {
        "k": "title",
        "hero": "maple",
-       "eyebrow": "The Six Parts, Lesson 2",
-       "h": "Trunk",
-       "sub": "What makes you you.",
-       "say": "This lesson is about your Trunk. Your trunk is what makes you you."
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots",
+       "sub": "Feeling safe and loved.",
+       "say": "This is Tend Four, Grow Two. Your tree has four parts you take care of, and two that grow when you do. This first lesson is about Roots, what grounds you. Roots are about feeling safe and loved."
       },
       {
        "k": "big",
-       "h": "The trunk helps a tree stand tall.",
-       "sub": "It grows a new ring every year.",
-       "say": "The trunk helps a tree stand tall. And every year, it grows a new ring. You grow too. Every day, you are becoming more you."
+       "h": "Roots hold a tree tight.",
+       "sub": "Out of sight, they are always working.",
+       "say": "Roots hold a tree tight. They grow deep underground, where they find water. You can't see them, and they are always working. Your roots work the same way. They hold you when things feel wobbly."
       },
       {
        "k": "points",
-       "h": "Your trunk is",
+       "h": "Roots can look like",
        "items": [
         [
-         "What you love to do",
-         "Drawing, building, animals"
+         "Feeling loved",
+         "Just for being you"
         ],
         [
-         "What you are good at",
-         "And getting better at"
+         "Feeling safe",
+         "At home and at bedtime"
         ],
         [
-         "How you help",
-         "At home and at school"
+         "Quiet times",
+         "A prayer, a song, a hug"
+        ],
+        [
+         "Wonder",
+         "The sky, a song, an animal"
         ]
        ],
-       "say": "Your trunk is what you love to do, like drawing, building, or caring for animals. It is what you are good at, and what you are getting better at. And it is how you help, at home and at school."
-      },
-      {
-       "k": "big",
-       "h": "There is only one you!",
-       "sub": "Trying hard things makes your trunk strong.",
-       "say": "There is only one you! And here is something about trunks. Trying something hard makes your trunk stronger, even before you get it right."
+       "say": "Roots can look like feeling loved, just for being you. Feeling safe, at home and when you go to sleep. Quiet times, like a prayer, a song, or a hug before bed. And wonder, when the sky or an animal makes you say wow."
       },
       {
        "k": "points",
-       "h": "Trunk weather",
+       "h": "Every family has its own ways",
+       "items": [
+        [
+         "Some pray",
+         "Or go to worship together"
+        ],
+        [
+         "Some sit quietly",
+         "Or sing, or walk outside"
+        ],
+        [
+         "Some keep traditions",
+         "A special meal, a blessing"
+        ]
+       ],
+       "say": "Every family has its own ways. Some families pray, or go to worship together. Some sit quietly, or sing, or take a walk outside. Some share a special meal or a blessing. Ask your grown-up what your family does. All of these can help roots grow deep."
+      },
+      {
+       "k": "points",
+       "h": "Roots weather",
        "items": [
         [
          "Sunny",
-         "I like being me.",
+         "I know I am loved.",
          "#C07A26"
         ],
         [
          "Partly cloudy",
-         "I am growing a new ring.",
+         "My roots are holding on.",
          "#7D6B57"
         ],
         [
          "Rainy",
-         "I wish I were someone else.",
+         "I feel alone inside.",
          "#3D5A73"
         ]
        ],
-       "say": "After a check-in, your trunk gets its weather. Sunny might mean you like being you. Partly cloudy might mean you are growing a new ring. Rainy might mean you wish you were someone else, or you feel like you are not good at anything. Rainy days add rings too. You matter just the way you are."
+       "say": "After a check-in, your roots get their weather. Sunny might mean you know you are loved. Partly cloudy might mean your roots are holding on. Rainy might mean you feel alone inside. Even in the rain, roots keep reaching down. You are loved, even today."
+      },
+      {
+       "k": "big",
+       "h": "Feel alone inside? Tell a grown-up.",
+       "sub": "You are not in trouble. They want to know.",
+       "say": "If you feel all alone inside, tell a grown-up you trust. A parent, a grandparent, a teacher, or your school counselor. You are not in trouble. They want to know, and they can stay close."
       },
       {
        "k": "points",
-       "h": "Practice: Proud Jar",
+       "h": "Practice: My Safe Place",
        "items": [
         [
-         "Think back",
-         "Over your day or your week"
+         "Get comfy",
+         "Close your eyes if you like"
         ],
         [
-         "Find one proud moment",
-         "Big or small"
+         "Picture a safe place",
+         "Where you feel calm and happy"
         ],
         [
-         "Say it out loud",
-         "\"I am proud that I...\""
+         "Look around",
+         "What do you see and hear?"
         ],
         [
-         "Keep it",
-         "Write it down, drop it in a jar"
+         "Keep it with you",
+         "Visit any time you feel scared"
         ]
        ],
        "cue": {
         "w": {
-         "3": 6,
-         "6": 8
+         "2": 4,
+         "3": 8,
+         "7": 10
         },
-        "at": [
-         2,
-         3,
-         5,
-         8
-        ]
+        "at": [2, 3, 5, 9]
        },
-       "say": "Let's try one from Maple. It is called Proud Jar. Think back over your day, or your week. Find one thing you did that made you proud. It can be big or small, like helping a friend or trying a hard puzzle. Now say it out loud. Start with the words, I am proud that I. Nice! You can write each one down and drop it in a jar."
+       "say": "Let's try one from Maple. It is called My Safe Place. Get comfy, and close your eyes if you like. Now picture a place where you feel safe and calm. Maybe your bed, a grandparent's kitchen, or a spot outside. Look around your safe place. What do you see? What do you hear? Now open your eyes. Your safe place stays with you, and you can visit it any time you feel scared."
       },
       {
        "k": "points",
        "h": "For grown-ups",
        "items": [
         [
-         "Name a real strength",
-         "\"You didn't give up when...\""
+         "Say it plainly",
+         "\"I love you just for being you.\""
         ],
         [
-         "Praise the trying",
-         "The effort too"
+         "Share your family's way",
+         "A prayer, a verse, a quiet practice"
         ],
         [
-         "Give a small job",
-         "And thank them for it"
+         "Welcome big questions",
+         "\"I wonder too\" is a fine answer"
         ]
        ],
-       "say": "For grown-ups. Name one strength you have really seen, like, you were kind when, or you did not give up when. Praise the trying as much as the result. And give them a small job that matters, then thank them for it. When a grown-up names a strength, a child starts to see it too."
+       "say": "For grown-ups. Say it in plain words: I love you just for being you. Share a prayer, a verse, or a quiet practice from your own family's way. And welcome their big questions. I wonder too is a fine answer. When you check in With a grown-up, a Grown-up tip shows under every question."
       },
       {
        "k": "big",
-       "h": "You are becoming more you every day.",
+       "h": "Strong roots hold you up.",
        "sub": "Pick it for your growth plan.",
-       "say": "You are becoming more you every day. After your check-in, tap Make My Growth Plan. You can pick Proud Jar, Strength Detective, or Helper Job."
+       "say": "Strong roots hold you up, even on rainy days. After your check-in, tap Make My Growth Plan. You can pick My Safe Place, Wonder Walk, or Bedtime Blessing."
       },
       {
        "k": "quiz",
-       "q": "What makes your trunk stronger?",
+       "q": "What do roots help you feel?",
        "opts": [
-        "Being the best at everything",
-        "Trying hard things",
-        "Never making mistakes"
+        "Fast and strong",
+        "Safe and loved",
+        "Sleepy"
        ],
        "right": 1,
-       "why": "Trying hard things helps your trunk grow, even before you get it right.",
-       "say": "Quick question. What makes your trunk stronger?"
+       "why": "Roots hold you tight, so you feel safe and loved.",
+       "say": "Quick question. What do roots help you feel?"
       }
-     ]
+     ],
+     "plainTitle": "Roots: What Grounds You"
     },
     {
      "id": "mp-6-bark",
-     "n": 3,
-     "title": "Bark: Big Feelings",
+     "n": 2,
+     "title": "Bark: Mind",
      "mins": 4,
      "blurb": "Naming big feelings and calming down.",
      "sources": [
@@ -1770,10 +1934,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "maple",
-       "eyebrow": "The Six Parts, Lesson 3",
-       "h": "Bark",
+       "eyebrow": "Tend Four, Grow Two, Lesson 2",
+       "h": "Bark: Mind",
        "sub": "Big feelings.",
-       "say": "This lesson is about Bark. Your bark helps you with big feelings, like mad, sad, and scared."
+       "say": "This lesson is about Bark: Mind. Your bark helps you with big feelings, like mad, sad, and scared. Bark is one of the four parts you take care of."
       },
       {
        "k": "big",
@@ -1858,12 +2022,7 @@ window.GG_LEARN = {
          "6": 6,
          "8": 8
         },
-        "at": [
-         2,
-         4,
-         7,
-         9
-        ]
+        "at": [2, 4, 7, 9]
        },
        "say": "Let's try one from Maple. It is called Name It to Tame It. First, stop for a moment. Keep your feet still and your hands still. Now think of a feeling you have right now, or one from today. Where do you feel it in your body? Your tummy, your chest, or your hands? Now say its name out loud. You might say, I feel mad, or I feel worried, or I feel happy. Did the feeling get a little smaller? Naming a feeling can help it calm down."
       },
@@ -1913,183 +2072,19 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "mp-6-branches",
-     "n": 4,
-     "title": "Branches: Your People",
-     "mins": 4,
-     "blurb": "Family, friends, and helpers, and how to reach out.",
-     "sources": [
-      [
-       "Layous and colleagues, kindness counts: prosocial behavior in preadolescents (2012)",
-       ""
-      ]
-     ],
-     "scenes": [
-      {
-       "k": "title",
-       "hero": "maple",
-       "eyebrow": "The Six Parts, Lesson 4",
-       "h": "Branches",
-       "sub": "Your people.",
-       "say": "This lesson is about Branches. Your branches are your people."
-      },
-      {
-       "k": "big",
-       "h": "Branches reach out wide.",
-       "sub": "And give birds a place to rest.",
-       "say": "Look at a tree. Its branches reach out wide, and they give birds a place to rest. You reach out too. Your branches are your people: family, friends, teachers, and neighbors."
-      },
-      {
-       "k": "points",
-       "h": "Your people can be",
-       "items": [
-        [
-         "Family",
-         "At home, near or far"
-        ],
-        [
-         "Friends",
-         "Someone glad to see you"
-        ],
-        [
-         "Helpers",
-         "A teacher, a coach, a neighbor"
-        ],
-        [
-         "You!",
-         "You help others too"
-        ]
-       ],
-       "say": "Your people can be family, the ones at home and the ones far away, like a grandparent or a cousin. Friends, someone who is glad to see you. Helpers, like a teacher, a coach, or a neighbor. And you! Branches reach both ways. You help other people too."
-      },
-      {
-       "k": "screen",
-       "app": "maple",
-       "app_name": "Maple",
-       "title": "Check-in: Branches",
-       "rows": [
-        [
-         "Do you have a friend to play with?",
-         ""
-        ],
-        [
-         "Yes, a lot",
-         ""
-        ],
-        [
-         "Sometimes",
-         ""
-        ],
-        [
-         "Not really",
-         ""
-        ],
-        [
-         "I don't know",
-         ""
-        ]
-       ],
-       "tap": 1,
-       "say": "In a check-in, Maple asks four questions about your branches. Like, do you have a friend to play with? Is there a grown-up you can go to when you need help? You can answer yes, a lot. Sometimes. Not really. Or I do not know. Every answer is okay."
-      },
-      {
-       "k": "points",
-       "h": "Weather for your branches",
-       "items": [
-        [
-         "Sunny",
-         "Full of people who love you",
-         "#C07A26"
-        ],
-        [
-         "Partly cloudy",
-         "Growing. Keep reaching out.",
-         "#7D6B57"
-        ],
-        [
-         "Rainy",
-         "Your people want to help",
-         "#3D5A73"
-        ]
-       ],
-       "say": "Then your branches get their weather. Sunny means your branches are full of people who love you. Partly cloudy means your branches are growing, so keep reaching out. And rainy? Rain helps branches grow. Your people want to help you."
-      },
-      {
-       "k": "big",
-       "h": "Someone being mean? Tell a grown-up.",
-       "sub": "Telling is brave. You are not in trouble.",
-       "say": "Sometimes branches have a hard day. Maybe you feel left out. Maybe someone is being mean to you. Here is what to do. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor. Telling is brave, and you are not in trouble. If you tell Maple that other kids have been unkind, your grown-up sees it, so they can help."
-      },
-      {
-       "k": "points",
-       "h": "Practice: My People Tree",
-       "items": [
-        [
-         "Picture a big tree",
-         "With lots of branches"
-        ],
-        [
-         "Put your people on it",
-         "Say their names"
-        ],
-        [
-         "Find your helper",
-         "Give them a star"
-        ]
-       ],
-       "cue": {
-        "w": {
-         "4": 12,
-         "7": 6
-        },
-        "at": [
-         2,
-         3,
-         5
-        ]
-       },
-       "say": "Let us try one together. It is called My People Tree. Picture a big tree with lots of branches. Now put your people on it, one on each branch. Say their names out loud. Last, find your helper. Who is one person you can go to for help? Put a star by them."
-      },
-      {
-       "k": "big",
-       "h": "Small kind things help branches grow.",
-       "sub": "Kindness Three and Ask to Play are in your plan.",
-       "say": "Here is something neat. Kids who do small kind things on purpose often feel closer to the people around them. So try Kindness Three. Do three kind things this week, and tell your grown-up. Or try Ask to Play, and ask someone new to play with you. You will find these, and My People Tree, when you pick things to practice in your plan."
-      },
-      {
-       "k": "big",
-       "h": "Reach out, and your branches grow.",
-       "sub": "Grown-ups: ask who they would go to for help.",
-       "say": "Grown-ups, here is a good question for tonight. Who would you go to if you needed help? Listen for the names. If someone is being mean, listen first and stay calm, then work with the school. Reach out a little every day, and branches grow."
-      },
-      {
-       "k": "quiz",
-       "q": "If someone is being mean to you, what can you do?",
-       "opts": [
-        "Keep it a secret",
-        "Tell a safe grown-up",
-        "Be mean back"
-       ],
-       "right": 1,
-       "why": "Telling a safe grown-up is brave, and you are not in trouble.",
-       "say": "Quick question. If someone is being mean to you, what can you do?"
-      }
-     ]
-    },
-    {
      "id": "mp-6-leaves",
-     "n": 5,
-     "title": "Leaves: Sleep, Food, and Play",
+     "n": 3,
+     "title": "Leaves: Body",
      "mins": 4,
      "blurb": "Move, rest, and nourish, so your whole tree has energy.",
      "scenes": [
       {
        "k": "title",
        "hero": "maple",
-       "eyebrow": "The Six Parts, Lesson 5",
-       "h": "Leaves",
+       "eyebrow": "Tend Four, Grow Two, Lesson 3",
+       "h": "Leaves: Body",
        "sub": "Sleep, food, and play.",
-       "say": "This lesson is about Leaves. Your leaves are your body."
+       "say": "This lesson is about Leaves: Body. Your leaves are your body: sleep, food, and play. Leaves are one of the four parts you take care of."
       },
       {
        "k": "big",
@@ -2203,12 +2198,7 @@ window.GG_LEARN = {
          "8": 4,
          "10": 5
         },
-        "at": [
-         3,
-         4,
-         5,
-         6
-        ]
+        "at": [3, 4, 5, 6]
        },
        "say": "Let us move! Stand up if you can. If you are sitting, use your arms. Hop like a frog. Stomp like a bear. Flap like a bird, with your wings out wide. Now slow down, like a sleepy turtle. Slower. And still. Notice your body. How does it feel now?"
       },
@@ -2239,10 +2229,310 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "mp-6-branches",
+     "n": 4,
+     "title": "Branches: Relationships",
+     "mins": 4,
+     "blurb": "Family, friends, and helpers, and how to reach out.",
+     "sources": [
+      [
+       "Layous and colleagues, kindness counts: prosocial behavior in preadolescents (2012)",
+       ""
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Tend Four, Grow Two, Lesson 4",
+       "h": "Branches: Relationships",
+       "sub": "Your people.",
+       "say": "This lesson is about Branches: Relationships. Your branches are your people. Branches are one of the four parts you take care of."
+      },
+      {
+       "k": "big",
+       "h": "Branches reach out wide.",
+       "sub": "And give birds a place to rest.",
+       "say": "Look at a tree. Its branches reach out wide, and they give birds a place to rest. You reach out too. Your branches are your people: family, friends, teachers, and neighbors."
+      },
+      {
+       "k": "points",
+       "h": "Your people can be",
+       "items": [
+        [
+         "Family",
+         "At home, near or far"
+        ],
+        [
+         "Friends",
+         "Someone glad to see you"
+        ],
+        [
+         "Helpers",
+         "A teacher, a coach, a neighbor"
+        ],
+        [
+         "You!",
+         "You help others too"
+        ]
+       ],
+       "say": "Your people can be family, the ones at home and the ones far away, like a grandparent or a cousin. Friends, someone who is glad to see you. Helpers, like a teacher, a coach, or a neighbor. And you! Branches reach both ways. You help other people too."
+      },
+      {
+       "k": "screen",
+       "app": "maple",
+       "app_name": "Maple",
+       "title": "Check-in: Branches",
+       "rows": [
+        [
+         "Do you have a friend to play with?",
+         ""
+        ],
+        [
+         "Yes, a lot",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "I don't know",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "In a check-in, Maple asks four questions about your branches. Like, do you have a friend to play with? Is there a grown-up you can go to when you need help? You can answer yes, a lot. Sometimes. Not really. Or I do not know. Every answer is okay."
+      },
+      {
+       "k": "points",
+       "h": "Weather for your branches",
+       "items": [
+        [
+         "Sunny",
+         "Full of people who love you",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "Growing. Keep reaching out.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "Your people want to help",
+         "#3D5A73"
+        ]
+       ],
+       "say": "Then your branches get their weather. Sunny means your branches are full of people who love you. Partly cloudy means your branches are growing, so keep reaching out. And rainy? Rain helps branches grow. Your people want to help you."
+      },
+      {
+       "k": "big",
+       "h": "Someone being mean? Tell a grown-up.",
+       "sub": "Telling is brave. You are not in trouble.",
+       "say": "Sometimes branches have a hard day. Maybe you feel left out. Maybe someone is being mean to you. Here is what to do. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor. Telling is brave, and you are not in trouble. If you tell Maple that other kids have been unkind, your grown-up sees it, so they can help."
+      },
+      {
+       "k": "points",
+       "h": "Practice: My People Tree",
+       "items": [
+        [
+         "Picture a big tree",
+         "With lots of branches"
+        ],
+        [
+         "Put your people on it",
+         "Say their names"
+        ],
+        [
+         "Find your helper",
+         "Give them a star"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "4": 12,
+         "7": 6
+        },
+        "at": [2, 3, 5]
+       },
+       "say": "Let us try one together. It is called My People Tree. Picture a big tree with lots of branches. Now put your people on it, one on each branch. Say their names out loud. Last, find your helper. Who is one person you can go to for help? Put a star by them."
+      },
+      {
+       "k": "big",
+       "h": "Small kind things help branches grow.",
+       "sub": "Kindness Three and Ask to Play are in your plan.",
+       "say": "Here is something neat. Kids who do small kind things on purpose often feel closer to the people around them. So try Kindness Three. Do three kind things this week, and tell your grown-up. Or try Ask to Play, and ask someone new to play with you. You will find these, and My People Tree, when you pick things to practice in your plan."
+      },
+      {
+       "k": "big",
+       "h": "Reach out, and your branches grow.",
+       "sub": "Grown-ups: ask who they would go to for help.",
+       "say": "Grown-ups, here is a good question for tonight. Who would you go to if you needed help? Listen for the names. If someone is being mean, listen first and stay calm, then work with the school. Reach out a little every day, and branches grow."
+      },
+      {
+       "k": "quiz",
+       "q": "If someone is being mean to you, what can you do?",
+       "opts": [
+        "Keep it a secret",
+        "Tell a safe grown-up",
+        "Be mean back"
+       ],
+       "right": 1,
+       "why": "Telling a safe grown-up is brave, and you are not in trouble.",
+       "say": "Quick question. If someone is being mean to you, what can you do?"
+      }
+     ]
+    },
+    {
+     "id": "mp-6-trunk",
+     "n": 5,
+     "title": "Trunk: Meaning",
+     "mins": 3,
+     "blurb": "What you love, what you are good at, and how you help.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Tend Four, Grow Two, Lesson 5",
+       "h": "Trunk: Meaning",
+       "sub": "What makes you you.",
+       "say": "This lesson is about your Trunk: Meaning. Your trunk is what makes you you. It is one of the two parts that grow when you take care of the other four."
+      },
+      {
+       "k": "big",
+       "h": "The trunk helps a tree stand tall.",
+       "sub": "It grows a new ring every year.",
+       "say": "The trunk helps a tree stand tall. And every year, it grows a new ring. You grow too. Every day, you are becoming more you. When you take care of your roots, bark, leaves, and branches, your trunk grows stronger too."
+      },
+      {
+       "k": "points",
+       "h": "Your trunk is",
+       "items": [
+        [
+         "What you love to do",
+         "Drawing, building, animals"
+        ],
+        [
+         "What you are good at",
+         "And getting better at"
+        ],
+        [
+         "How you help",
+         "At home and at school"
+        ]
+       ],
+       "say": "Your trunk is what you love to do, like drawing, building, or caring for animals. It is what you are good at, and what you are getting better at. And it is how you help, at home and at school."
+      },
+      {
+       "k": "big",
+       "h": "There is only one you!",
+       "sub": "Trying hard things makes your trunk strong.",
+       "say": "There is only one you! And here is something about trunks. Trying something hard makes your trunk stronger, even before you get it right."
+      },
+      {
+       "k": "points",
+       "h": "Trunk weather",
+       "items": [
+        [
+         "Sunny",
+         "I like being me.",
+         "#C07A26"
+        ],
+        [
+         "Partly cloudy",
+         "I am growing a new ring.",
+         "#7D6B57"
+        ],
+        [
+         "Rainy",
+         "I wish I were someone else.",
+         "#3D5A73"
+        ]
+       ],
+       "say": "After a check-in, your trunk gets its weather. Sunny might mean you like being you. Partly cloudy might mean you are growing a new ring. Rainy might mean you wish you were someone else, or you feel like you are not good at anything. Rainy days add rings too. You matter just the way you are."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Proud Jar",
+       "items": [
+        [
+         "Think back",
+         "Over your day or your week"
+        ],
+        [
+         "Find one proud moment",
+         "Big or small"
+        ],
+        [
+         "Say it out loud",
+         "\"I am proud that I...\""
+        ],
+        [
+         "Keep it",
+         "Write it down, drop it in a jar"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 6,
+         "6": 8
+        },
+        "at": [2, 3, 5, 8]
+       },
+       "say": "Let's try one from Maple. It is called Proud Jar, and you will find it in Bark: Mind. Think back over your day, or your week. Find one thing you did that made you proud. It can be big or small, like helping a friend or trying a hard puzzle. Now say it out loud. Start with the words, I am proud that I. Nice! You can write each one down and drop it in a jar."
+      },
+      {
+       "k": "points",
+       "h": "For grown-ups",
+       "items": [
+        [
+         "Name a real strength",
+         "\"You didn't give up when...\""
+        ],
+        [
+         "Praise the trying",
+         "The effort too"
+        ],
+        [
+         "Give a small job",
+         "And thank them for it"
+        ]
+       ],
+       "say": "For grown-ups. Name one strength you have really seen, like, you were kind when, or you did not give up when. Praise the trying as much as the result. And give them a small job that matters, then thank them for it. When a grown-up names a strength, a child starts to see it too."
+      },
+      {
+       "k": "big",
+       "h": "You are becoming more you every day.",
+       "sub": "Proud Jar is in Bark: Mind.",
+       "say": "You are becoming more you every day. Take care of your four parts, and your trunk keeps growing. After your check-in, tap Make My Growth Plan. You can pick Proud Jar or Strength Detective under Bark: Mind, or Helper Job under Branches: Relationships."
+      },
+      {
+       "k": "quiz",
+       "q": "What makes your trunk stronger?",
+       "opts": [
+        "Being the best at everything",
+        "Trying hard things",
+        "Never making mistakes"
+       ],
+       "right": 1,
+       "why": "Trying hard things helps your trunk grow, even before you get it right.",
+       "say": "Quick question. What makes your trunk stronger?"
+      }
+     ]
+    },
+    {
      "id": "mp-6-fruit",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 6,
-     "title": "Fruit: Looking Forward",
+     "title": "Fruit: Hope",
      "mins": 4,
      "blurb": "Hope, and the good things still to come.",
      "sources": [
@@ -2252,16 +2542,16 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "maple",
-       "eyebrow": "The Six Parts, Lesson 6",
-       "h": "Fruit",
+       "eyebrow": "Tend Four, Grow Two, Lesson 6",
+       "h": "Fruit: Hope",
        "sub": "Looking forward.",
-       "say": "This last lesson is about Fruit. Your fruit is hope: the good things you are looking forward to."
+       "say": "This last lesson is about Fruit: Hope. Your fruit is the good things you are looking forward to. Like your trunk, your fruit grows when you take care of your four parts."
       },
       {
        "k": "big",
        "h": "Fruit holds seeds for new trees.",
        "sub": "Hope holds good things still to come.",
-       "say": "Fruit holds seeds, so new trees can grow someday. Hope is like that. It holds the good things that are still coming. And fruit grows from the whole tree. Roots, trunk, bark, branches, and leaves all help it grow."
+       "say": "Fruit holds seeds, so new trees can grow someday. Hope is like that. It holds the good things that are still coming. And fruit grows from the whole tree. When you take care of your roots, bark, leaves, and branches, fruit comes."
       },
       {
        "k": "points",
@@ -2368,13 +2658,9 @@ window.GG_LEARN = {
          "5": 5,
          "7": 3
         },
-        "at": [
-         1,
-         3,
-         6
-        ]
+        "at": [1, 3, 6]
        },
-       "say": "Let us make a Hope Map, right in your head. Think of something you want to do or learn. Maybe riding a bike, reading a big book, or making a new friend. Now think of two ways to get there. Path one. And path two. Last, say it out loud with me. I can do it!"
+       "say": "Let us make a Hope Map, right in your head. You will find it in Bark: Mind. Think of something you want to do or learn. Maybe riding a bike, reading a big book, or making a new friend. Now think of two ways to get there. Path one. And path two. Last, say it out loud with me. I can do it!"
       },
       {
        "k": "big",
@@ -2384,9 +2670,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Tend the whole tree, and fruit will come.",
-       "sub": "Hope Map and Tomorrow Wish are in your plan.",
-       "say": "Here is one more to try tonight. It is called Tomorrow Wish. Before bed, say one good thing you hope happens tomorrow. In the morning, look for it. Tend your whole tree, a little each day, and fruit will come. That is all six parts. Well done!"
+       "h": "Take care of your four, and fruit will come.",
+       "sub": "Hope Map and Tomorrow Wish are in Bark: Mind.",
+       "say": "Here is one more to try tonight. It is called Tomorrow Wish. Before bed, say one good thing you hope happens tomorrow. In the morning, look for it. Take care of your four parts, a little each day, and fruit will come. That is your whole tree. Well done!"
       },
       {
        "k": "quiz",
@@ -2413,7 +2699,10 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "mp-p-talk",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Talking with Little Ones",
      "mins": 5,
@@ -2541,7 +2830,7 @@ window.GG_LEARN = {
         "h": "Grown-up Guide",
         "p": "Conversation starters for each part, and what helps when a part is rainy."
        },
-       "say": "You never have to come up with these on your own. The Grown-up Guide tab has conversation starters for every one of the six parts. Each part also says why it works, and what helps if that part is rainy. You can save or print the whole guide."
+       "say": "You never have to come up with these on your own. The Grown-up Guide tab has conversation starters for every part of the tree. Each part also says why it works, and what helps if that part is rainy. You can save or print the whole guide."
       },
       {
        "k": "card",
@@ -2613,7 +2902,10 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-feelings",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 2,
      "title": "Big Feelings, Calm Grown-ups",
      "mins": 6,
@@ -2815,7 +3107,10 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-faith",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 3,
      "title": "Wonder, Faith, and Big Questions",
      "mins": 6,
@@ -3006,7 +3301,11 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-worry",
-     "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Childhelp: call or text 1-800-422-4453",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 6,
@@ -3451,7 +3750,10 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-you",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 5,
@@ -3514,17 +3816,22 @@ window.GG_LEARN = {
        "say": "Here are some signs you are running low. A short fuse, when small things feel huge. Running on empty, when sleep, meals, and breaks slip away. Pulling away from the people who fill you up. And joy going quiet, when even the good parts feel flat. These are signals, not failures. They tell you where to tend."
       },
       {
-       "k": "six",
-       "h": "Your tree has six parts too",
-       "words": [
-        "What holds you up",
-        "What you live for",
-        "Your mind and feelings",
-        "Your people",
-        "Sleep, movement, food",
-        "Something to look forward to"
+       "k": "points",
+       "h": "Your tree grows the same way",
+       "say": "Your tree grows the same way as your child’s. You tend four parts. Roots, what holds you up. Bark, your mind and feelings. Leaves, your body. And Branches, your people. Then Trunk, what you live for, and Fruit, something to look forward to, grow from that tending.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark, Leaves, Branches"
+        ],
+        [
+         "Grow two",
+         "Trunk and Fruit"
+        ]
        ],
-       "say": "Your tree has the same six parts as your child’s. Roots, what holds you up. Trunk, what you live for. Bark, your mind and feelings. Branches, your people. Leaves, your body. And Fruit, something to look forward to."
+       "cue": {
+        "at": [0, 5]
+       }
       },
       {
        "k": "points",
@@ -3577,12 +3884,7 @@ window.GG_LEARN = {
          "3": 10,
          "4": 8
         },
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "Let us practice, right where you are. Put your feet down, and take one slow breath. Now name your own weather today, sunny, partly cloudy, or rainy. What is one thing that helps you feel more like yourself? Choose one small way to give yourself that today."
       },
@@ -3598,7 +3900,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Oak",
-         "A check-in for grown-ups, root to fruit"
+         "A check-in for grown-ups, the same tree"
         ],
         [
          "When Life Changes",
@@ -3609,7 +3911,7 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "say": "Grounded has support for you too. Oak is a check-in for grown-ups, with the same six parts, from root to fruit. When Life Changes has guides for the hard seasons. If your own rain lasts for weeks, talk with your doctor or a counselor."
+       "say": "Grounded has support for you too. Oak is a check-in for grown-ups, with the same tree, from root to fruit. When Life Changes has guides for the hard seasons. If your own rain lasts for weeks, talk with your doctor or a counselor."
       },
       {
        "k": "big",
@@ -5252,8 +5554,8 @@ window.GG_LEARN = {
      "n": 1,
      "title": "Welcome to Aspen",
      "mins": 4,
-     "blurb": "A first look at your tree, its six parts, and how Aspen works.",
-     "scenes": [
+     "blurb": "A first look at your tree, the four parts you tend, and how Aspen works.",
+     "faithScenes": [
       {
        "k": "title",
        "hero": "aspen",
@@ -5269,17 +5571,183 @@ window.GG_LEARN = {
        "say": "Aspen trees grow fast, and a whole grove of them can grow from the same roots. Middle school is a lot like that. You are changing fast, and you grow best with good people around you."
       },
       {
-       "k": "six",
-       "h": "Six parts make you whole",
-       "words": [
-        "What keeps you steady",
-        "Goals and trying new things",
-        "Naming feelings, asking for help",
-        "Friends, family, belonging",
-        "Sleep, movement, real meals",
-        "Hope for what's ahead"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Your tree has four parts you tend. Roots: Spirit, what grounds you. Bark, your mind and feelings. Leaves, your body. And Branches, your people. Then two grow from that tending: Trunk, what matters to you, and Fruit, your hope. Being whole means tending all four, not just one or two.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Your tree has six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your people. Leaves, your body. And Fruit, your hope. Being whole means noticing all six, not just one or two."
+       "cue": {
+        "at": [0, 5]
+       }
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Home",
+        "Students",
+        "Grown-ups",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 1,
+       "note": {
+        "h": "Students",
+        "p": "Tap your name, or add yourself."
+       },
+       "say": "To begin, open the Students tab. Tap your name, or add yourself with your first name and your grade. A grown-up agrees when your profile is made, and your tree is locked with a passcode only you know."
+      },
+      {
+       "k": "flow",
+       "h": "How Aspen works",
+       "steps": [
+        [
+         "Check in",
+         "Questions for your grade"
+        ],
+        [
+         "See your levels",
+         "Strong, Steady, Growing Edge"
+        ],
+        [
+         "Tend each day",
+         "Small practices"
+        ],
+        [
+         "Add a ring",
+         "Each full check-in"
+        ]
+       ],
+       "say": "Here is how Aspen works. Check in, with questions written for your grade. See how each part is doing: Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend. Tend a little each day with small practices. And each full check-in adds a growth ring to your tree."
+      },
+      {
+       "k": "tabs",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Guides"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Your tree",
+        "p": "Five tabs for tending your tree."
+       },
+       "say": "Once you are in, your tree has five tabs. Today, Week, Season, Growth Plan, and Guides. The next lessons walk through each one, step by step."
+      },
+      {
+       "k": "big",
+       "h": "One slow breath before your phone.",
+       "sub": "Wake up slow, from Today.",
+       "beats": [
+        "Aspen has a tiny practice for the start of each day.",
+        "Before you grab your phone, take one slow breath and notice how you feel.",
+        {
+         "t": "Try it right now.",
+         "w": 10
+        }
+       ],
+       "say": "Aspen has a tiny practice for the start of each day. Before you grab your phone, take one slow breath and notice how you feel. Try it right now."
+      },
+      {
+       "k": "points",
+       "h": "Yours to keep",
+       "items": [
+        [
+         "Everything stays on your device",
+         "Your tree stays on this device"
+        ],
+        [
+         "Your grown-up sees the big picture",
+         "Plus a few answers, so they can help"
+        ],
+        [
+         "Need help now?",
+         "One tap, any time"
+        ]
+       ],
+       "say": "Aspen is yours. Your tree stays right here, on this device. Your grown-up sees the big picture of your tree, plus a few answers about friends and hope, so they can help. And the Need help now button is always one tap away."
+      },
+      {
+       "k": "points",
+       "h": "More in Aspen",
+       "items": [
+        [
+         "When Life Changes",
+         "Guides for the hard stuff"
+        ],
+        [
+         "Learn",
+         "Lessons, and Support for Right Now"
+        ],
+        [
+         "Health and Ability",
+         "Aspen fits your body and health"
+        ],
+        [
+         "The Grove",
+         "Your tree beside your family"
+        ]
+       ],
+       "say": "There is more. When Life Changes has guides about hard things, written for grown-ups, and you can read them too. Learn has short lessons like this one, plus Support for Right Now videos for hard moments. Health and Ability, set with your grown-up, helps Aspen fit your body and your health. And your tree can stand in The Grove beside your family's trees, showing only your growth, never your answers."
+      },
+      {
+       "k": "quiz",
+       "q": "What does a Growing Edge mean?",
+       "opts": [
+        "You failed that part",
+        "A part to tend, where growth begins",
+        "You need to start over"
+       ],
+       "right": 1,
+       "why": "A Growing Edge is simply a part to tend.",
+       "say": "Quick question. What does a Growing Edge mean?"
+      }
+     ],
+     "plainScenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Aspen",
+       "sub": "Rooted together.",
+       "say": "Welcome to Aspen. Aspen is a tree for students in grades six to eight, and for the grown-ups who walk with them. This lesson shows you around."
+      },
+      {
+       "k": "big",
+       "h": "Aspens grow fast, and they grow together.",
+       "sub": "A whole grove can share one set of roots.",
+       "say": "Aspen trees grow fast, and a whole grove of them can grow from the same roots. Middle school is a lot like that. You are changing fast, and you grow best with good people around you."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Your tree has four parts you tend. Roots, what grounds you. Bark, your mind and feelings. Leaves, your body. And Branches, your people. Then two grow from that tending: Trunk, what matters to you, and Fruit, your hope. Being whole means tending all four, not just one or two.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
+       ],
+       "cue": {
+        "at": [0, 5]
+       }
       },
       {
        "k": "tabs",
@@ -5421,7 +5889,11 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "as-u-checkin",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
@@ -5432,7 +5904,7 @@ window.GG_LEARN = {
        "hero": "aspen",
        "eyebrow": "Using Aspen, Lesson 1",
        "h": "Your First Check-in",
-       "sub": "An honest look at all six parts.",
+       "sub": "An honest look at your whole tree.",
        "say": "Everything in Aspen starts with a check-in. This lesson walks you through your first one, so you know what to expect."
       },
       {
@@ -5468,7 +5940,7 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Six parts, six questions each",
+       "h": "Six questions for each part",
        "items": [
         [
          "36 questions",
@@ -5529,10 +6001,10 @@ window.GG_LEARN = {
         ],
         [
          "Next part",
-         "When all six are answered"
+         "When a part is answered"
         ]
        ],
-       "say": "Every page has helpers. Tap Why this question to see why Aspen asks it. Turn on Read Aloud to hear the questions. When you have answered all six, tap Next part."
+       "say": "Every page has helpers. Tap Why this question to see why Aspen asks it. Turn on Read Aloud to hear the questions. When you have answered the six questions in a part, tap Next part."
       },
       {
        "k": "points",
@@ -5856,14 +6328,9 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
-       "say": "Every day you tend your tree moves it toward its next level, from Seed all the way to Golden Aspen. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, like tending all six parts in one week, a balanced week. And in Season, Your Scenery opens new lakes at twenty, fifty, and one hundred days tended. Growth only adds, and everything you grow stays yours."
+       "say": "Every day you tend your tree moves it toward its next level, from Seed all the way to Golden Aspen. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, like tending all four parts in one week, a balanced week. And in Season, Your Scenery opens new lakes at twenty, fifty, and one hundred days tended. Growth only adds, and everything you grow stays yours."
       },
       {
        "k": "big",
@@ -5915,7 +6382,7 @@ window.GG_LEARN = {
         "h": "Growth Plan",
         "p": "Pick small practices for each part."
        },
-       "say": "Start with Growth Plan. After a check-in, tap Build my growth plan. Each part of your tree has practices to pick from, written for your grade. The plan opens guided, one part at a time, and Read It All shows every practice at once."
+       "say": "Start with Growth Plan. After a check-in, tap Build my growth plan. Each of the four parts you tend has practices to pick from, written for your grade. The plan opens guided, one part at a time, and Read It All shows every practice at once."
       },
       {
        "k": "points",
@@ -6005,7 +6472,7 @@ window.GG_LEARN = {
         "h": "Today",
         "p": "Check off any one practice, and your tree is watered."
        },
-       "say": "Now open Today. Your practices are here, grouped by part. Check off any one, and your tree is watered for the day. Tend all six parts, and that is a full day. At the top is Wake up slow, and at the bottom, End the day."
+       "say": "Now open Today. Your practices are here, grouped by part. Check off any one, and your tree is watered for the day. Tend all four parts, and that is a full day. At the top is Wake up slow, and at the bottom, End the day."
       },
       {
        "k": "points",
@@ -6099,7 +6566,11 @@ window.GG_LEARN = {
     },
     {
      "id": "as-u-changes",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "When Life Changes",
      "mins": 4,
@@ -6234,7 +6705,7 @@ window.GG_LEARN = {
        "items": [
         [
          "The Guides tab",
-         "Your six parts, and When life gets hard"
+         "Your tree, and When life gets hard"
         ],
         [
          "Your Growth Plan",
@@ -6245,7 +6716,7 @@ window.GG_LEARN = {
          "A quiet check marks them"
         ]
        ],
-       "say": "You will find guides inside your own tree too. The Guides tab shows your six parts, and the same guide cards, with tabs and a search bar, under When life gets hard. In your Growth Plan, each part lists a few guides for your grown-up. And once you watch a guide's video, a quiet check marks it."
+       "say": "You will find guides inside your own tree too. The Guides tab shows your tree, and the same guide cards, with tabs and a search bar, under When life gets hard. In your Growth Plan, each part lists a few guides for your grown-up. And once you watch a guide's video, a quiet check marks it."
       },
       {
        "k": "big",
@@ -6297,7 +6768,11 @@ window.GG_LEARN = {
     },
     {
      "id": "as-u-grown",
-     "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Childhelp: call or text 1-800-422-4453",
+      "911: emergency"
+     ],
      "n": 5,
      "title": "The Grown-ups Tab",
      "mins": 7,
@@ -6545,7 +7020,11 @@ window.GG_LEARN = {
     },
     {
      "id": "as-u-private",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 6,
      "title": "Private, Saved, and Shared",
      "mins": 6,
@@ -6764,15 +7243,15 @@ window.GG_LEARN = {
   },
   {
    "id": "aspen-six",
-   "title": "The Six Parts",
-   "who": "One lesson for each part of your tree, with a practice",
-   "certTitle": "Aspen: The Six Parts",
-   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "title": "Tend Four, Grow Two",
+   "who": "Four parts you tend, two that grow from your tending, each with a practice",
+   "certTitle": "Aspen: Tend Four, Grow Two",
+   "certLine": "For finishing every lesson on the four parts you tend, and the two that grow.",
    "lessons": [
     {
      "id": "as-6-roots",
      "n": 1,
-     "title": "Roots: What Keeps You Steady",
+     "title": "Roots: Spirit",
      "mins": 5,
      "blurb": "What grounds you, and what keeps you steady when life gets loud.",
      "sources": [
@@ -6781,14 +7260,14 @@ window.GG_LEARN = {
        "https://www.tc.columbia.edu/faculty/lfm14/"
       ]
      ],
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "aspen",
-       "eyebrow": "The Six Parts, Lesson 1",
-       "h": "Roots",
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots: Spirit",
        "sub": "What keeps you steady.",
-       "say": "This lesson is about Roots. In Aspen, Roots means what grounds you. It is what keeps you steady when life gets loud."
+       "say": "This is Tend Four, Grow Two. Your tree has four parts you tend, and two that grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred. It is what keeps you steady when life gets loud."
       },
       {
        "k": "big",
@@ -6916,12 +7395,7 @@ window.GG_LEARN = {
          "4": 15,
          "5": 5
         },
-        "at": [
-         1,
-         2,
-         3,
-         5
-        ]
+        "at": [1, 2, 3, 5]
        },
        "say": "Let us try one from Aspen’s Roots practices. Find the sky, outside or through a window. Look up, and let your eyes rest there. Now breathe in slowly, and breathe out even more slowly. Do that three times. Then notice how you feel."
       },
@@ -6943,71 +7417,59 @@ window.GG_LEARN = {
        "why": "Roots asks about your experience, whatever you believe.",
        "say": "Quick question. What does Aspen ask about in Roots?"
       }
-     ]
-    },
-    {
-     "id": "as-6-trunk",
-     "n": 2,
-     "title": "Trunk: Goals and Trying New Things",
-     "mins": 4,
-     "blurb": "What you care about, what you are good at, and why it matters.",
-     "scenes": [
+     ],
+     "plainScenes": [
       {
        "k": "title",
        "hero": "aspen",
-       "eyebrow": "The Six Parts, Lesson 2",
-       "h": "Trunk",
-       "sub": "Goals and trying new things.",
-       "say": "This lesson is about your Trunk. In Aspen, Trunk means purpose. What you care about, what you are good at, and why it matters."
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots",
+       "sub": "What keeps you steady.",
+       "say": "This is Tend Four, Grow Two. Your tree has four parts you tend, and two that grow from that tending. This first lesson is about Roots, what grounds you. It is what keeps you steady when life gets loud."
       },
       {
        "k": "big",
-       "h": "The trunk carries everything up to the branches.",
-       "say": "A tree’s trunk carries water from the roots all the way up to the branches and leaves. Purpose works like that for you. It gives your days somewhere to go."
+       "h": "Roots hold a tree steady when the wind blows.",
+       "sub": "Aspens share their roots, so a whole grove stands together.",
+       "say": "You cannot see a tree’s roots, and they hold it steady when the wind blows. Aspen trees are known for sharing roots underground, so a whole grove stands together. Your roots help you stand, too."
       },
       {
        "k": "points",
-       "h": "Trunk can look like",
+       "h": "Roots can look like",
        "items": [
         [
-         "Losing track of time",
-         "Doing something you love"
+         "A calm place",
+         "Inside you, or a spot you go"
         ],
         [
-         "Getting better",
-         "A skill you are proud of"
+         "Wonder",
+         "Stars, music, somewhere beautiful"
         ],
         [
-         "Helping",
-         "At home, at school, around you"
+         "God, prayer, worship",
+         "If your family prays or worships"
         ],
         [
-         "Trying new things",
-         "Before you are good at them"
+         "Quiet and traditions",
+         "Nature, stillness, family ways"
         ]
        ],
-       "say": "Trunk can look like doing something you love so much that you lose track of time. Getting better at a skill, and feeling proud of it. Helping people, at home, at school, or around your community. And trying new things, even before you are good at them."
+       "say": "Roots can look like a calm place, inside you or a spot you like to go. Wonder, like the stars at night or a song you love. For many families, roots are God, prayer, and worship. For others, roots are quiet, time outside, or traditions passed down in your family. Aspen is made for all faith traditions and everything in-between."
       },
       {
        "k": "big",
-       "h": "Every skill starts with a first try.",
-       "sub": "You can be a beginner.",
-       "say": "Trying things before you are good at them is how people find what they love. A new club, an instrument, a sport, a recipe. Your first try counts, even when it is wobbly. You can be a beginner."
-      },
-      {
-       "k": "big",
-       "h": "The real you is the one worth growing.",
-       "sub": "The right people like the real you.",
-       "say": "Trunk also asks if you feel like you have to act like someone you are not, just to fit in. Or if you do things mostly because other people expect you to. That can be tiring. The real you is the one worth growing, and the right people like the real you."
+       "h": "You matter, just for being you.",
+       "sub": "One of the strongest roots there is.",
+       "say": "Roots also means knowing you matter, just for being you. Not for your grades, your followers, or how good you are at something. Just for being you. That is one of the strongest roots a person can have. And noticing what you are thankful for, even small things, helps that root grow."
       },
       {
        "k": "screen",
        "app": "aspen",
        "app_name": "Aspen",
-       "title": "Check-in: Trunk",
+       "title": "Check-in: Roots",
        "rows": [
         [
-         "Is there something you love doing so much that you lose track of time?",
+         "Do you feel like you matter, just for being you?",
          ""
         ],
         [
@@ -7027,91 +7489,103 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "tap": 1,
-       "say": "In a check-in, Trunk asks questions written for your grade. In sixth grade, one asks, is there something you love doing so much that you lose track of time? In eighth grade, one asks what you care about enough to stand up for."
+       "tap": 2,
+       "say": "In a check-in, Roots asks about your experience. Where you feel calm. Whether you feel like you matter. Whether something holy feels close to you. Aspen asks about what you live and feel. And if you wonder why a question is there, tap Why this question? to find out."
+      },
+      {
+       "k": "big",
+       "h": "Faith should help you feel loved.",
+       "sub": "If it ever feels heavy, talk with a grown-up you trust.",
+       "say": "Roots asks one more kind of question. Sometimes thoughts about God or faith can leave a person feeling worried, scared, or not good enough. Faith should help you feel loved. If it ever feels heavy, that is worth talking about with a grown-up you trust. Big questions are a normal part of growing up."
+      },
+      {
+       "k": "big",
+       "h": "Feeling held by something bigger helps in hard times.",
+       "sub": "Middle school is often when this part of you wakes up.",
+       "say": "Here is something researchers have found. Feeling held by something bigger than yourself is one of the strongest supports young people have in hard times. And the middle school years are often when that part of you starts to wake up."
       },
       {
        "k": "points",
-       "h": "How Trunk can look",
+       "h": "How Roots can look",
        "items": [
         [
          "Strong",
-         "You know what you care about, and you go for it",
+         "You know what steadies you, and you reach for it",
          "#5F7D48"
         ],
         [
          "Steady",
-         "Things you like, though some days feel flat",
+         "It is there, though you reach for it less lately",
          "#8B5E1A"
         ],
         [
          "Growing Edge",
-         "Bored a lot, or going through the motions",
+         "You feel empty, unsure, or weighed down",
          "#B8612F"
         ]
        ],
-       "say": "A strong trunk might mean you know what you care about, and you go for it. Steady might mean you have things you like, though some days feel flat. And a Growing Edge might mean you feel bored a lot, or like you are going through the motions. If you have stopped enjoying things you used to love, tell a grown-up you trust. That is worth some support."
+       "say": "Strong roots might mean you know what steadies you, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel empty inside, unsure, or weighed down. That is an honest place to be, and it is simply a part to tend."
       },
       {
        "k": "points",
-       "h": "Practice: Things I’m Good At",
+       "h": "Practice: Look Up and Breathe",
        "items": [
         [
-         "Think",
-         "Big or small things count"
+         "Find the sky",
+         "Step outside, or look out a window"
         ],
         [
-         "Name three",
-         "Out loud, or on your fingers"
+         "Look up",
+         "Let your eyes rest there"
         ],
         [
-         "Stuck?",
-         "What do friends come to you for?"
+         "Breathe slowly",
+         "In, then out even slower"
         ],
         [
-         "Later",
-         "Ask someone to add one"
+         "Notice",
+         "How do you feel now?"
         ]
        ],
        "cue": {
         "w": {
-         "3": 15,
-         "4": 5
+         "2": 6,
+         "4": 15,
+         "5": 5
         },
-        "at": [
-         1,
-         3,
-         4,
-         5
-        ]
+        "at": [1, 2, 3, 5]
        },
-       "say": "Let us try one from Aspen’s Trunk practices. Think of things you are good at. They can be big or small, like being kind, being funny, or being good at drawing. Now name three of them, out loud or on your fingers. If you get stuck, think about what your friends come to you for. Later, ask someone who knows you to add one more."
+       "say": "Let us try one from Aspen’s Roots practices. Find the sky, outside or through a window. Look up, and let your eyes rest there. Now breathe in slowly, and breathe out even more slowly. Do that three times. Then notice how you feel."
       },
       {
        "k": "big",
-       "h": "Purpose grows when you use it.",
-       "sub": "Find Trunk practices in Growth Plan.",
-       "say": "Purpose grows when you use it. In Growth Plan, under Trunk, you will find practices like this one, and ideas like teaching someone a skill, or helping at home without being asked. You can write your own, too."
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "Find Roots practices in Growth Plan.",
+       "say": "Tend your roots, and they will hold you. Practices like this one are in Growth Plan, under Roots, and each one has a Learn more button with the steps. You can also ask someone in your family what helps them feel peaceful. Their answer might help your roots grow, too."
       },
       {
        "k": "quiz",
-       "q": "What helps your Trunk grow?",
+       "q": "What does Aspen ask about in Roots?",
        "opts": [
-        "Only doing what you are already great at",
-        "Trying things, even before you are good at them",
-        "Acting like whoever fits in best"
+        "Which religion you belong to",
+        "What steadies you, and whether it helps or weighs on you",
+        "How often you go to services"
        ],
        "right": 1,
-       "why": "Trying new things is how people find what they love.",
-       "say": "Quick question. What helps your Trunk grow?"
+       "why": "Roots asks about your experience, whatever you believe.",
+       "say": "Quick question. What does Aspen ask about in Roots?"
       }
-     ]
+     ],
+     "plainTitle": "Roots: What Grounds You"
     },
     {
      "id": "as-6-bark",
-     "crisis": ["988: call or text, any time", "911: emergency"],
-     "n": 3,
-     "title": "Bark: Naming Feelings, Asking for Help",
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
+     "n": 2,
+     "title": "Bark: Mind",
      "mins": 5,
      "blurb": "How you talk to yourself and handle big feelings.",
      "sources": [
@@ -7121,10 +7595,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "aspen",
-       "eyebrow": "The Six Parts, Lesson 3",
-       "h": "Bark",
+       "eyebrow": "Tend Four, Grow Two, Lesson 2",
+       "h": "Bark: Mind",
        "sub": "Naming feelings, asking for help.",
-       "say": "This lesson is about Bark, your mind and feelings. How you talk to yourself, and how you handle big feelings."
+       "say": "This lesson is about Bark: Mind. How you talk to yourself, and how you handle big feelings. Bark is one of the four parts you tend."
       },
       {
        "k": "big",
@@ -7253,12 +7727,7 @@ window.GG_LEARN = {
          "4": 6,
          "5": 5
         },
-        "at": [
-         1,
-         2,
-         4,
-         5
-        ]
+        "at": [1, 2, 4, 5]
        },
        "say": "Let us try one from Aspen’s Bark practices. Get still, and press your feet into the floor. Now check inside. What feeling is here right now? Find one word for it, like calm, tired, glad, nervous, or sad. Say your word softly, out loud or inside. You just named it, and that helps."
       },
@@ -7282,9 +7751,159 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "as-6-leaves",
+     "n": 3,
+     "title": "Leaves: Body",
+     "mins": 5,
+     "blurb": "Sleep, movement, screens, and feeling at home in your body.",
+     "sources": [
+      [
+       "HealthyChildren.org (American Academy of Pediatrics), healthy sleep habits",
+       "https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx"
+      ]
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Tend Four, Grow Two, Lesson 3",
+       "h": "Leaves: Body",
+       "sub": "Sleep, movement, real meals.",
+       "say": "This lesson is about Leaves: Body. Sleep, movement, real meals, and feeling at home in your body. Leaves are one of the four parts you tend."
+      },
+      {
+       "k": "big",
+       "h": "Leaves turn sunlight into energy for the whole tree.",
+       "say": "Leaves catch sunlight and turn it into energy for the whole tree. Your body does that for all of you. When your body gets what it needs, your mood, your focus, and your friendships all have more to work with."
+      },
+      {
+       "k": "flow",
+       "h": "Three ways to tend Leaves",
+       "steps": [
+        [
+         "Rest",
+         "Sleep, and phones out at night"
+        ],
+        [
+         "Move",
+         "In ways you enjoy"
+        ],
+        [
+         "Nourish",
+         "Real meals that keep you going"
+        ]
+       ],
+       "say": "Aspen tends Leaves in three ways. Rest, with real sleep. Move, in ways you enjoy, like sports, biking, or dancing. And nourish, with regular meals that keep your energy up all day."
+      },
+      {
+       "k": "big",
+       "h": "Most kids your age need 9 to 12 hours of sleep.",
+       "sub": "Teens need 8 to 10. Phones sleep outside.",
+       "say": "Sleep experts say most kids your age need nine to twelve hours of sleep a night, and teens need eight to ten. That is a lot! Sleep helps your mood, your focus, and how you feel about yourself. One of the biggest helps is simple. Charge your phone outside your bedroom at night."
+      },
+      {
+       "k": "points",
+       "h": "What Aspen asks about Leaves",
+       "items": [
+        [
+         "Sleep",
+         "Enough to feel rested?"
+        ],
+        [
+         "Moving and getting outside",
+         "Most days?"
+        ],
+        [
+         "Your body",
+         "Feeling okay in it?"
+        ],
+        [
+         "Screens",
+         "Late nights and long scrolls"
+        ]
+       ],
+       "say": "In a check-in, Aspen asks six Leaves questions, written for your grade. Do you get enough sleep to feel rested? Do you move in ways you enjoy, or get outside most days? Some are turned around, like whether you feel bad about how your body looks, or stay up late on screens. And one asks whether you would know what to say if someone offered you a vape. Knowing your line ahead of time makes it much easier to say no."
+      },
+      {
+       "k": "points",
+       "h": "How Leaves can look",
+       "items": [
+        [
+         "Strong",
+         "You rest, move, and eat in ways that fuel you",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly okay, with a weak spot or two",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Tired a lot, or uneasy in your body",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong leaves might mean you rest, move, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two, like late nights. And a Growing Edge might mean you feel tired a lot, or uneasy in your body. That is simply a part to tend."
+      },
+      {
+       "k": "big",
+       "h": "Your body is your home, and it is growing.",
+       "sub": "Think strength and energy.",
+       "say": "Lots of kids your age worry about how they look. Bodies change fast in middle school, and that is normal. Try thinking about what your body lets you do. Run, laugh, hug, and carry your backpack all day. If worries about food or how you look keep coming back, tell a grown-up you trust. Talking about it helps."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Shoulders, Jaw, Hands",
+       "items": [
+        [
+         "Shoulders",
+         "Lift them up, then let them drop"
+        ],
+        [
+         "Jaw",
+         "Let your teeth come apart"
+        ],
+        [
+         "Hands",
+         "Squeeze tight, then let go"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 5,
+         "5": 6,
+         "7": 4,
+         "8": 8
+        },
+        "at": [2, 4, 6]
+       },
+       "say": "Let us practice, right where you are. You can sit or lie down. Breathe in slowly, and lift your shoulders up toward your ears. Now breathe out, and let them drop. Next, your jaw. Let your teeth come apart, and let your face go soft. Last, your hands. Squeeze them into tight fists, and hold. Now let go, and notice how your body feels."
+      },
+      {
+       "k": "big",
+       "h": "Tend Leaves a little each day.",
+       "sub": "Find Leaves practices in your Growth Plan.",
+       "say": "That one helps at bedtime too. You will find practices like it in your Growth Plan, under Leaves, along with ones like a dance break or a calm bedtime plan. Hard day? Tap Easier today for a smaller version that still counts."
+      },
+      {
+       "k": "quiz",
+       "q": "Aspen tends Leaves in three ways. What are they?",
+       "opts": [
+        "Rest, Move, Nourish",
+        "Win, Train, Compete",
+        "Wake, Study, Scroll"
+       ],
+       "right": 0,
+       "why": "Rest, Move, and Nourish keep your leaves green.",
+       "say": "Quick question. Aspen tends Leaves in three ways. What are they?"
+      }
+     ]
+    },
+    {
      "id": "as-6-branches",
      "n": 4,
-     "title": "Branches: Friends, Family, Belonging",
+     "title": "Branches: Relationships",
      "mins": 5,
      "blurb": "Friends, family, and grown-ups you can count on.",
      "sources": [
@@ -7297,10 +7916,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "aspen",
-       "eyebrow": "The Six Parts, Lesson 4",
-       "h": "Branches",
+       "eyebrow": "Tend Four, Grow Two, Lesson 4",
+       "h": "Branches: Relationships",
        "sub": "Friends, family, belonging.",
-       "say": "This lesson is about Branches. Your friends, your family, and the places where you belong."
+       "say": "This lesson is about Branches: Relationships. Your friends, your family, and the places where you belong. Branches are one of the four parts you tend."
       },
       {
        "k": "big",
@@ -7420,11 +8039,7 @@ window.GG_LEARN = {
          "3": 8,
          "4": 8
         },
-        "at": [
-         2,
-         3,
-         4
-        ]
+        "at": [2, 3, 4]
        },
        "say": "Let us practice. This one is your people list. Think of one friend you can be yourself around, and say their name in your head. Now think of a grown-up at home you could go to, like a parent or a grandparent. Last, think of a grown-up at school, like a teacher, a coach, or a school counselor. Those are your people. Coaches, neighbors, and pets count too."
       },
@@ -7449,164 +8064,171 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "as-6-leaves",
+     "id": "as-6-trunk",
      "n": 5,
-     "title": "Leaves: Sleep, Movement, Real Meals",
-     "mins": 5,
-     "blurb": "Sleep, movement, screens, and feeling at home in your body.",
-     "sources": [
-      [
-       "HealthyChildren.org (American Academy of Pediatrics), healthy sleep habits",
-       "https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx"
-      ]
-     ],
+     "title": "Trunk: Meaning",
+     "mins": 4,
+     "blurb": "What you care about, what you are good at, and why it matters.",
      "scenes": [
       {
        "k": "title",
        "hero": "aspen",
-       "eyebrow": "The Six Parts, Lesson 5",
-       "h": "Leaves",
-       "sub": "Sleep, movement, real meals.",
-       "say": "This lesson is about Leaves, your body. Sleep, movement, real meals, and feeling at home in your body."
+       "eyebrow": "Tend Four, Grow Two, Lesson 5",
+       "h": "Trunk: Meaning",
+       "sub": "Goals and trying new things.",
+       "say": "This lesson is about your Trunk: Meaning. What you care about, what you are good at, and why it matters. Your trunk is one of the two parts that grow from your tending."
       },
       {
        "k": "big",
-       "h": "Leaves turn sunlight into energy for the whole tree.",
-       "say": "Leaves catch sunlight and turn it into energy for the whole tree. Your body does that for all of you. When your body gets what it needs, your mood, your focus, and your friendships all have more to work with."
-      },
-      {
-       "k": "flow",
-       "h": "Three ways to tend Leaves",
-       "steps": [
-        [
-         "Rest",
-         "Sleep, and phones out at night"
-        ],
-        [
-         "Move",
-         "In ways you enjoy"
-        ],
-        [
-         "Nourish",
-         "Real meals that keep you going"
-        ]
-       ],
-       "say": "Aspen tends Leaves in three ways. Rest, with real sleep. Move, in ways you enjoy, like sports, biking, or dancing. And nourish, with regular meals that keep your energy up all day."
-      },
-      {
-       "k": "big",
-       "h": "Most kids your age need 9 to 12 hours of sleep.",
-       "sub": "Teens need 8 to 10. Phones sleep outside.",
-       "say": "Sleep experts say most kids your age need nine to twelve hours of sleep a night, and teens need eight to ten. That is a lot! Sleep helps your mood, your focus, and how you feel about yourself. One of the biggest helps is simple. Charge your phone outside your bedroom at night."
+       "h": "The trunk carries everything up to the branches.",
+       "say": "A tree’s trunk carries water from the roots all the way up to the branches and leaves. Meaning works like that for you. It gives your days somewhere to go, and it grows when you tend your roots, bark, leaves, and branches."
       },
       {
        "k": "points",
-       "h": "What Aspen asks about Leaves",
+       "h": "Trunk can look like",
        "items": [
         [
-         "Sleep",
-         "Enough to feel rested?"
+         "Losing track of time",
+         "Doing something you love"
         ],
         [
-         "Moving and getting outside",
-         "Most days?"
+         "Getting better",
+         "A skill you are proud of"
         ],
         [
-         "Your body",
-         "Feeling okay in it?"
+         "Helping",
+         "At home, at school, around you"
         ],
         [
-         "Screens",
-         "Late nights and long scrolls"
+         "Trying new things",
+         "Before you are good at them"
         ]
        ],
-       "say": "In a check-in, Aspen asks six Leaves questions, written for your grade. Do you get enough sleep to feel rested? Do you move in ways you enjoy, or get outside most days? Some are turned around, like whether you feel bad about how your body looks, or stay up late on screens. And one asks whether you would know what to say if someone offered you a vape. Knowing your line ahead of time makes it much easier to say no."
+       "say": "Trunk can look like doing something you love so much that you lose track of time. Getting better at a skill, and feeling proud of it. Helping people, at home, at school, or around your community. And trying new things, even before you are good at them."
+      },
+      {
+       "k": "big",
+       "h": "Every skill starts with a first try.",
+       "sub": "You can be a beginner.",
+       "say": "Trying things before you are good at them is how people find what they love. A new club, an instrument, a sport, a recipe. Your first try counts, even when it is wobbly. You can be a beginner."
+      },
+      {
+       "k": "big",
+       "h": "The real you is the one worth growing.",
+       "sub": "The right people like the real you.",
+       "say": "Trunk also asks if you feel like you have to act like someone you are not, just to fit in. Or if you do things mostly because other people expect you to. That can be tiring. The real you is the one worth growing, and the right people like the real you."
+      },
+      {
+       "k": "screen",
+       "app": "aspen",
+       "app_name": "Aspen",
+       "title": "Check-in: Trunk",
+       "rows": [
+        [
+         "Is there something you love doing so much that you lose track of time?",
+         ""
+        ],
+        [
+         "Yeah, most of the time",
+         ""
+        ],
+        [
+         "Sometimes",
+         ""
+        ],
+        [
+         "Not really",
+         ""
+        ],
+        [
+         "Not sure",
+         ""
+        ]
+       ],
+       "tap": 1,
+       "say": "In a check-in, Trunk asks questions written for your grade. In sixth grade, one asks, is there something you love doing so much that you lose track of time? In eighth grade, one asks what you care about enough to stand up for."
       },
       {
        "k": "points",
-       "h": "How Leaves can look",
+       "h": "How Trunk can look",
        "items": [
         [
          "Strong",
-         "You rest, move, and eat in ways that fuel you",
+         "You know what you care about, and you go for it",
          "#5F7D48"
         ],
         [
          "Steady",
-         "Mostly okay, with a weak spot or two",
+         "Things you like, though some days feel flat",
          "#8B5E1A"
         ],
         [
          "Growing Edge",
-         "Tired a lot, or uneasy in your body",
+         "Bored a lot, or going through the motions",
          "#B8612F"
         ]
        ],
-       "say": "Strong leaves might mean you rest, move, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two, like late nights. And a Growing Edge might mean you feel tired a lot, or uneasy in your body. That is simply a part to tend."
-      },
-      {
-       "k": "big",
-       "h": "Your body is your home, and it is growing.",
-       "sub": "Think strength and energy.",
-       "say": "Lots of kids your age worry about how they look. Bodies change fast in middle school, and that is normal. Try thinking about what your body lets you do. Run, laugh, hug, and carry your backpack all day. If worries about food or how you look keep coming back, tell a grown-up you trust. Talking about it helps."
+       "say": "A strong trunk might mean you know what you care about, and you go for it. Steady might mean you have things you like, though some days feel flat. And a Growing Edge might mean you feel bored a lot, or like you are going through the motions. If you have stopped enjoying things you used to love, tell a grown-up you trust. That is worth some support."
       },
       {
        "k": "points",
-       "h": "Practice: Shoulders, Jaw, Hands",
+       "h": "Practice: Things I’m Good At",
        "items": [
         [
-         "Shoulders",
-         "Lift them up, then let them drop"
+         "Think",
+         "Big or small things count"
         ],
         [
-         "Jaw",
-         "Let your teeth come apart"
+         "Name three",
+         "Out loud, or on your fingers"
         ],
         [
-         "Hands",
-         "Squeeze tight, then let go"
+         "Stuck?",
+         "What do friends come to you for?"
+        ],
+        [
+         "Later",
+         "Ask someone to add one"
         ]
        ],
        "cue": {
         "w": {
-         "3": 5,
-         "5": 6,
-         "7": 4,
-         "8": 8
+         "3": 15,
+         "4": 5
         },
-        "at": [
-         2,
-         4,
-         6
-        ]
+        "at": [1, 3, 4, 5]
        },
-       "say": "Let us practice, right where you are. You can sit or lie down. Breathe in slowly, and lift your shoulders up toward your ears. Now breathe out, and let them drop. Next, your jaw. Let your teeth come apart, and let your face go soft. Last, your hands. Squeeze them into tight fists, and hold. Now let go, and notice how your body feels."
+       "say": "Let us try one from Aspen’s Bark practices, one that helps meaning grow. Think of things you are good at. They can be big or small, like being kind, being funny, or being good at drawing. Now name three of them, out loud or on your fingers. If you get stuck, think about what your friends come to you for. Later, ask someone who knows you to add one more."
       },
       {
        "k": "big",
-       "h": "Tend Leaves a little each day.",
-       "sub": "Find Leaves practices in your Growth Plan.",
-       "say": "That one helps at bedtime too. You will find practices like it in your Growth Plan, under Leaves, along with ones like a dance break or a calm bedtime plan. Hard day? Tap Easier today for a smaller version that still counts."
+       "h": "Meaning grows from your tending.",
+       "sub": "Find these practices in Growth Plan.",
+       "say": "Meaning grows when you use what you have. In Growth Plan, under Bark, you will find practices like this one, and under Branches, ideas like teaching someone a skill, or helping at home without being asked. You can write your own, too."
       },
       {
        "k": "quiz",
-       "q": "Aspen tends Leaves in three ways. What are they?",
+       "q": "What helps your Trunk grow?",
        "opts": [
-        "Rest, Move, Nourish",
-        "Win, Train, Compete",
-        "Wake, Study, Scroll"
+        "Only doing what you are already great at",
+        "Trying things, even before you are good at them",
+        "Acting like whoever fits in best"
        ],
-       "right": 0,
-       "why": "Rest, Move, and Nourish keep your leaves green.",
-       "say": "Quick question. Aspen tends Leaves in three ways. What are they?"
+       "right": 1,
+       "why": "Trying new things is how people find what they love.",
+       "say": "Quick question. What helps your Trunk grow?"
       }
      ]
     },
     {
      "id": "as-6-fruit",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 6,
-     "title": "Fruit: Hope for What's Ahead",
+     "title": "Fruit: Hope",
      "mins": 5,
      "blurb": "Looking forward, being thankful, and believing things can get better.",
      "sources": [
@@ -7617,15 +8239,15 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "aspen",
-       "eyebrow": "The Six Parts, Lesson 6",
-       "h": "Fruit",
+       "eyebrow": "Tend Four, Grow Two, Lesson 6",
+       "h": "Fruit: Hope",
        "sub": "Hope for what's ahead.",
-       "say": "This last lesson in The Six Parts is about Fruit, your hope for what is ahead."
+       "say": "This last lesson is about Fruit: Hope, your hope for what is ahead. Like your trunk, your fruit grows from your tending."
       },
       {
        "k": "big",
        "h": "Fruit takes time. It grows from the whole tree.",
-       "say": "Fruit takes time. It grows from everything else. Roots, Trunk, Bark, Branches, and Leaves all feed it. Hope works the same way. When you tend the whole tree, hope has something to grow from."
+       "say": "Fruit takes time. It grows from everything you tend. Your Roots, Bark, Leaves, and Branches all feed it. Hope works the same way. When you tend your four, hope has something to grow from."
       },
       {
        "k": "points",
@@ -7731,13 +8353,9 @@ window.GG_LEARN = {
          "5": 6,
          "6": 8
         },
-        "at": [
-         3,
-         4,
-         5
-        ]
+        "at": [3, 4, 5]
        },
-       "say": "Let us practice. This one is called Three Good Things. Think back over today, or yesterday. Say one good thing out loud, even a small one. Now say a second one. And a third. Last, pick one, and ask yourself, why did that happen?"
+       "say": "Let us practice. This one is called Three Good Things, and it lives in Roots, because giving thanks is one way to tend them. Think back over today, or yesterday. Say one good thing out loud, even a small one. Now say a second one. And a third. Last, pick one, and ask yourself, why did that happen?"
       },
       {
        "k": "words",
@@ -7749,9 +8367,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Tend the whole tree, and fruit will come.",
-       "sub": "Find Fruit practices in your Growth Plan.",
-       "say": "Tend the whole tree, a little at a time, and fruit will come. You will find practices like Three Good Things in your Growth Plan, under Fruit. That is all six parts. Well done."
+       "h": "Tend your four, and fruit will come.",
+       "sub": "Three Good Things is in your Growth Plan, under Roots.",
+       "say": "Tend your four parts, a little at a time, and fruit will come. You will find practices like Three Good Things in your Growth Plan, under Roots. The Grounded Way works when you tend all four parts. That is your whole tree. Well done."
       },
       {
        "k": "quiz",
@@ -7778,7 +8396,10 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "as-p-talk",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Talking So They'll Talk",
      "mins": 6,
@@ -7969,7 +8590,10 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-phones",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 2,
      "title": "Phones, Friends, and Group Chats",
      "mins": 5,
@@ -8150,7 +8774,10 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-faith",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 3,
      "title": "Big Questions and Faith",
      "mins": 6,
@@ -8323,7 +8950,11 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-worry",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 6,
@@ -8673,7 +9304,10 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-you",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 5,
@@ -8717,17 +9351,22 @@ window.GG_LEARN = {
        "say": "Notice the signs that you are running low. A short fuse, snapping at small things. Running on empty, tired even after a night of sleep. Carrying it all alone, with no one to talk it through with. And dreading the hard talks, putting them off, or rushing through them. These are signals, not failures. They tell you it is time to tend your own tree."
       },
       {
-       "k": "six",
-       "h": "You have six parts too",
-       "words": [
-        "What holds you up",
-        "Why you do all this",
-        "Your own feelings",
-        "Your own people",
-        "Sleep, movement, meals",
-        "Hope you can hand on"
+       "k": "points",
+       "h": "You have a tree too",
+       "say": "You have a tree too, and it grows the same way. You tend four parts. Roots, what holds you up. Bark, your own mind and feelings. Leaves, your body, with sleep, movement, and real meals. And Branches, your own people, beyond your kids. Then Trunk, the reason you do all this, and Fruit, the hope you hand on, grow from that tending.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark, Leaves, Branches"
+        ],
+        [
+         "Grow two",
+         "Trunk and Fruit"
+        ]
        ],
-       "say": "You have a tree too, with the same six parts. Roots, what holds you up. Trunk, the reason you do all this. Bark, your own mind and feelings. Branches, your own people, beyond your kids. Leaves, your body, with sleep, movement, and real meals. And Fruit, the hope you hand on."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "points",
@@ -10157,165 +10796,2084 @@ window.GG_LEARN = {
     support: { eyebrow: 'Support', title: 'Support for Right Now', intro: 'Short videos to use in the middle of a hard moment. Open one anytime, as often as you need, at your own pace.' },
     lessonsTitle: 'Learn Step by Step',
     tracks: [
-      { id: 'oak-start', title: 'Start Here', who: 'For adults tending their own tree', lessons: [
-        { id: 'ok-welcome', crisis: ['988: call or text, any time'], n: 1, title: 'Welcome to Oak', mins: 4, blurb: 'What Oak is, who it is for, what stays private, and where to begin.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Start Here, Lesson 1', h: 'Welcome to Oak', sub: 'Shelter for others. Strength for you.', say: 'Welcome to Oak. Shelter for others, and strength for you. This short lesson shows you what Oak is, who it is for, and where to begin.' },
-          { k: 'big', h: 'An oak grows strong by growing slowly.', sub: 'Deep roots, a wide crown, and shelter for many.', say: 'An oak grows slowly, and that is where its strength comes from. Deep roots, a thick trunk, and a wide crown that shelters many. The adult years ask a lot of you. Oak is built to help you stay strong while you carry it.' },
-          { k: 'trees', h: 'Oak grows between Birch and Sequoia.', say: 'Grow With Grounded has a tree for every age. Pine is for high school, and Birch is for young adults. Sequoia is for older adults, sixty and up. Oak is built for adults, twenty six to sixty, right in the full middle of life.' },
-          { k: 'parts', say: 'You are made of six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope.' },
-          { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too.' },
-          { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend.' },
-          { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', 'Guides for more than 80 of life\'s hardest seasons'], ['A tree that grows', 'From Acorn to Heritage Oak'], ['Health and Ability', 'Oak fits your body and your life']], cue: { at: [1, 3, 4, 5, 6] }, say: 'Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life\'s hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life. And when you want to go all in, The Grounded Way brings your tree, your meals, your movement, and your quiet together in one private app.' },
-          { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you.' },
-          { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Where to begin', p: 'Start a check-in. Your tree and your practices grow from there.' }, say: 'Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there.' },
-          { k: 'big', h: 'One part, one small step.', sub: 'One breath, and one way to tend a part today.', beats: ['Let us try a small practice now.', 'Sit however is comfortable.', 'Take one slow breath, in and out.', 'Think of one part of your life that has been carrying a lot lately.', { t: 'Now name one small thing that would tend it today.', w: 10 }], say: 'Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today.' },
-          { k: 'big', h: 'Small and steady is how an oak grows.', sub: 'One practice a day is enough to start.', say: 'Nice. That is the whole idea of Oak. Strong trees are not built in a day. Small and steady is how an oak grows, and one practice a day is enough to start.' },
-          { k: 'quiz', q: 'Where does your daily tending happen?', opts: ['Only at your yearly check-in', 'In the Today tab, a little each day', 'Only with a chaplain'], right: 1, why: 'Oak is built for small steps every day, in the Today tab.', say: 'Quick question. Where does your daily tending happen?' }
-        ] }
-      ] },
-      { id: 'oak-using', title: 'Using Oak', who: 'Every part of the app, step by step', certTitle: 'Oak: Using Oak', lessons: [
-
-        { id: 'ok-u-checkin', crisis: ['988: call or text, any time', '911: emergency'], n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
-          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode.' },
-          { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept.' },
-          { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
-          { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
-          { k: 'points', h: 'Open questions, and help close by', items: [['Open questions', 'About every part of your tree'], ['Stays on this device', 'Nothing is sent anywhere'], ['A quiet line', 'At the bottom of the check-in'], ['Help Is Close', 'One tap, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Every Oak question is open and curious, and Oak asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. One quiet line of type sits at the bottom of the check-in. And See help lines opens Help Is Close, with people you can reach any time.' },
-          { k: 'points', h: 'To take it well', items: [['Find a quiet moment', 'Fifteen minutes, if you can'], ['Go with your first honest answer', 'Go with your first thought'], ['Take a break anytime', 'Oak keeps your place']], cue: { w: { 5: 8 } }, say: 'A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place. Think now of one quiet moment this week when you could take your check-in.' },
-          { k: 'quiz', q: 'What does Not sure mean in a check-in?', opts: ['You did it wrong', 'An honest answer that is always okay', 'Your score goes down'], right: 1, why: 'Not sure is an honest answer, and it never counts against you.', say: 'Quick question. What does Not sure mean in a check-in?' }
-        ] },
-
-        { id: 'ok-u-levels', n: 2, title: 'Reading Your Levels', mins: 4, blurb: 'Strong, Steady, and Growing Edge, and what to do with them.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 2', h: 'Reading Your Levels', sub: 'Just a picture of right now.', say: 'After a check-in, each part of your tree gets a level. This lesson is about reading them well.' },
-          { k: 'levels', say: 'There are three levels. Strong, from eight to ten. Steady, from five to seven. And Growing Edge, from one to four.' },
-          { k: 'big', h: 'A Growing Edge is where your next growth begins.', sub: 'It is simply a part to tend.', say: 'A Growing Edge is not a failing grade. It is where your next growth begins. It is a part to tend, and Oak will help you tend it.' },
-          { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Your Results', rows: [['Roots', 'Strong', '#5F7D48'], ['Trunk', 'Steady', '#8B5E1A'], ['Bark', 'Growing Edge', '#B8612F'], ['Branches', 'Steady', '#8B5E1A'], ['Leaves', 'Steady', '#8B5E1A'], ['Fruit', 'Strong', '#5F7D48']], tap: 2, say: 'Your results show Oak\'s painting, with each part glowing by its level, and the level in words beside it. Tap a part to open it in your growth plan. Oak also names your biggest growing edge right now. That is a good place to start.' },
-          { k: 'points', h: 'Read it with kindness', items: [['Look for patterns', 'Which parts lean on each other?'], ['Notice your strengths', 'They can carry you while you grow'], ['Pick one part to start', 'One or two parts at a time']], cue: { w: { 6: 8 } }, say: 'Read your results with kindness. Look for patterns. When one part is hurting, another often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with. Think now of one strength that is carrying you this season.' },
-          { k: 'points', h: 'Rings and changes', items: [['Each full check-in adds a ring', 'Your tree grows with you'], ['Grew, Dipped, or Same', 'Compared with your last check-in'], ['Like with like', 'Full with full, quick with quick'], ['From Pine and From Birch', 'Rings that came along, shown apart']], cue: { at: [0, 1, 1, 2] }, say: 'Over time, every full check-in adds a growth ring to your tree. At the top of Season, Then and Now shows an earlier check-in beside today, with a kind line naming what grew. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one. Rings that came along from Pine or Birch are labeled From Pine or From Birch, and shown apart. And if you came from Birch, a Groundwork card opens your Groundwork notebook to read or print.' },
-          { k: 'big', h: 'Every score is a starting point.', say: 'Remember, every score is a starting point. It tells you where you are, so you can choose where to grow.' },
-          { k: 'quiz', q: 'What is a Growing Edge?', opts: ['A failing grade', 'A part to tend, where your next growth begins', 'A part you should ignore'], right: 1, why: 'A Growing Edge is simply a part to tend.', say: 'Quick question. What is a Growing Edge?' }
-        ] },
-
-        { id: 'ok-u-plan', n: 3, title: 'Building Your Growth Plan', mins: 4, blurb: 'Choosing practices that fit your life.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 3', h: 'Building Your Growth Plan', sub: 'Small practices for each part.', say: 'Your growth plan is a short list of practices for each part of your tree. This lesson shows you how to build one that fits your life.' },
-          { k: 'points', h: 'Suggestions, with room to grow', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once.' },
-          { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Growth Plan: Bark', rows: [['Slow Exhale', 'Chosen', '#5F7D48'], ['Name It', 'Chosen', '#5F7D48'], ['Worry Window', ''], ['Leaves on a Stream', ''], ['How to do this', '']], tap: 2, say: 'Tap any practice to choose it. Tap How to do this to see why it helps, the steps, and what to try if it is hard.' },
-          { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Practices written for young adults are tagged For Young Adults. Then add what fits.' },
-          { k: 'points', h: 'Practices born from stories', items: [['From the Bedside', 'Practices that grew out of real visits'], ['Linked to their story', 'Watch the lesson or read the story'], ['In the library', 'Ready to add to your plan']], say: 'Some practices are marked From the Bedside. They grew out of real stories from Chris’s work as a chaplain, like Lion’s Breath and One Woodpecker. Each one links to its story.' },
-          { k: 'points', h: 'Make it yours', items: [['Write your own', 'Anything that tends a part counts'], ['Start small', 'Two minutes beats zero'], ['Change it anytime', 'Your plan grows with you']], cue: { w: { 6: 10 } }, say: 'Make it yours. Write your own practices. Anything that tends a part counts, like calling your sister or taking the long way home. Start small. Two minutes beats zero. And change your plan anytime. Think now of one small thing you already do that tends a part of your tree.' },
-          { k: 'quiz', q: 'How many practices should you choose for a part?', opts: ['Exactly the number Oak suggests', 'As many or as few as fit your life', 'Only one'], right: 1, why: 'Oak’s numbers are suggestions, with room for more.', say: 'Quick question. How many practices should you choose for a part?' }
-        ] },
-
-        { id: 'ok-u-rhythm', n: 4, title: 'Today, Week, and Season', mins: 4, blurb: 'The rhythm that helps your tree grow.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 4', h: 'Today, Week, and Season', sub: 'A little each day adds up.', say: 'Oak has a gentle rhythm. A little each day, a short look each week, and a full check-in each season. Here is how it fits together.' },
-          { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Today', p: 'Your practices for today. Check off one, and your tree is watered.' }, say: 'Start with Today. Your practices for today are here. Check off any one, and your tree is watered for the day.' },
-          { k: 'points', h: 'On a hard day', items: [['Easier today', 'Swap in a smaller version'], ['Add a note', 'One line about how it went'], ['One is enough', 'Any practice waters your tree']], cue: { w: { 3: 8 } }, say: 'On a hard day, tap Easier today for a smaller version of a practice. Add a note if you like, just one line. And remember, one practice is enough to water your tree. Think now of one small practice you could do today.' },
-          { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 1, note: { h: 'Week', p: 'A theme, a short check-in, and a question to sit with.' }, say: 'Each week brings a theme, a short check-in, and a question to sit with. The weekly check-in asks one question for each part, plus how you are moving, resting, and eating.' },
-          { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 2, note: { h: 'Season', p: 'Twelve weeks. It begins and ends with a full check-in, and each one adds a ring.' }, say: 'A season is twelve weeks. It begins with a full check-in, and the next full check-in closes it and adds a ring to your tree. The Season tab also has your Days Tended calendar.' },
-          { k: 'points', h: 'Watch your tree grow', items: [['Tree levels', 'From Acorn to Heritage Oak'], ['Tried, Building, Mine', 'Practices you keep doing'], ['Milestones', 'And a balanced week'], ['Steady or Hardy', 'With two grace days a week']], cue: { at: [0, 1, 2, 3] }, say: 'Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all six parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support.' },
-          { k: 'big', h: 'Every day counts. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours. On a hard week, tap Rest Week on Today, and your tree rests warm and still for seven days.' },
-          { k: 'quiz', q: 'What waters your tree for the day?', opts: ['Checking off any one practice', 'Finishing every practice', 'A full check-in'], right: 0, why: 'Any one practice waters your tree. One is enough.', say: 'Quick question. What waters your tree for the day?' }
-        ] },
-
-        { id: 'ok-u-wlc', n: 5, title: 'When Life Changes', mins: 4, blurb: 'Guides for life’s hardest seasons, for you and for helpers.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 5', h: 'When Life Changes', sub: 'How to show up.', say: 'When life changes all at once, you need words and steps you can use right now. That is what When Life Changes is for.' },
-          { k: 'points', h: 'More than 80 guides', items: [['Inside Me', 'Anxiety, sadness, burnout, shame'], ['Loss and Grief', 'Every kind of goodbye'], ['Health and the End of Life', 'Diagnosis, caregiving, dying'], ['Relationships and Family', 'Marriage, divorce, aging parents'], ['Work, Money, Faith, and the World', 'And Safety'], ['Health and Ability', 'A health condition or a disability']], say: 'There are more than eighty guides, in group cards, with tabs and a search bar on top. Inside Me. Loss and Grief. Health and the End of Life. Relationships and Family. Work and Money. Faith and Meaning. Community, Country, and World. Safety. And Health and Ability.' },
-          { k: 'flow', h: 'Two sides to every guide', steps: [['For you', 'When you are going through it'], ['For the helper', 'When you are walking with someone']], cue: { w: { 3: 8 } }, say: 'Every guide has two sides. One for you, when you are the one going through it. And one for the helper, when you are walking with someone else. Think now of someone you are walking beside this season.' },
-          { k: 'points', h: 'Inside a guide', items: [['A Quick Reference', 'The first things to know'], ['What to say, and what to skip', 'Words that help'], ['Faith and meaning', 'For all faith traditions and everything in-between'], ['Practices and where to get help', 'Real next steps']], say: 'Tap Read on a guide card. Inside, start with the Quick Reference, the first things to know. Then words to say and words to skip. Faith and meaning, for all faith traditions and everything in-between. And practices, plus where to get help.' },
-          { k: 'card', title: 'Search', body: 'Type what is happening in your own words.', fields: [['Search', 'my dad has dementia']], btns: ['Search'], tap: 0, result: 'Caring for Someone with Dementia', say: 'Search in your own words, like my dad has dementia, and Oak finds the right guide.' },
-          { k: 'big', h: 'Two short videos for every guide.', sub: 'For You, and For the Helper.', say: 'Every guide has two short videos, right on its card. For You, if this is what you are facing. And For the Helper, if you are walking beside someone who is. Each one is a few minutes long, narrated aloud.' },
-          { k: 'quiz', q: 'Every When Life Changes guide has two sides. What are they?', opts: ['Easy and hard', 'For you, and for the helper', 'Short and long'], right: 1, why: 'Each guide speaks to the person going through it and the person walking with them.', say: 'Quick question. Every guide has two sides. What are they?' }
-        ] },
-
-        { id: 'ok-u-home', n: 6, title: 'Your Household and Your Backup', mins: 4, blurb: 'Profiles for everyone, one backup file, and The Grove.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 6', h: 'Your Household and Your Backup', sub: 'Everyone gets their own tree.', say: 'Oak works for a whole household on one device. This last lesson shows how, and how to keep everything safe.' },
-          { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine.' },
-          { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], cue: { w: { 4: 8 } }, say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back. Save to a File, and the practitioner backup, save locked files too, with a passcode you choose. Think now of the safe place where you will keep your backup file.' },
-          { k: 'points', h: 'The Grove', items: [['Your tree is yours', 'Answers always stay private'], ['The grove is ours', 'Your family’s trees, side by side'], ['You choose', 'Show my growth on The Grove, on or off']], say: 'If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings.' },
-          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose what is shared'], ['Your Birthday (Optional)', 'On your 60th birthday, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. Only you choose what is shared. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
-          { k: 'big', h: 'You know Oak now. Go tend your tree.', say: 'That is the whole tour. You know Oak now. Go tend your tree, a little at a time.' },
-          { k: 'quiz', q: 'What does Back up everything save?', opts: ['Only your answers, unlocked', 'One file with every profile, still locked', 'Nothing, it sends your data online'], right: 1, why: 'One file holds every profile on the device, each still locked.', say: 'Last question. What does Back up everything save?' }
-        ] }
-      ] },
-      { id: 'oak-six', title: 'The Six Parts', who: 'One lesson for each part of your tree, with a story and a practice', certTitle: 'Oak: The Six Parts', lessons: [
-
-        { id: 'ok-6-roots', n: 1, title: 'Roots: What Grounds You', mins: 6, blurb: 'What holds you up when life gets heavy.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 1', h: 'Roots', sub: 'What grounds you.', say: 'This lesson is about Roots, the part of you that holds you up when life gets heavy.' },
-          { k: 'big', h: 'Roots are what you lean on when the wind blows.', sub: 'Out of sight, and always needed.', say: 'Every tree stands on its roots. You cannot always see them, and you always need them. Your roots are what you lean on when the wind blows.' },
-          { k: 'points', h: 'Roots can look like', items: [['Faith and prayer', 'God, the Sacred, the Divine, the Holy'], ['Nature and wonder', 'The sky, the woods, the water'], ['Traditions', 'The ways your people mark life'], ['Quiet and meaning', 'A sense of something bigger than you']], say: 'For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Traditions, the ways your people mark birth, marriage, and death. Or quiet, and a sense of something bigger than you. Oak is made for all faith traditions and everything in-between.' },
-          { k: 'big', h: 'What grounds you can help you cope.', sub: 'Feeling abandoned, judged, or far from the sacred can weigh heavily too.', say: 'Research on spirituality and health often finds that what grounds people helps them cope with hard seasons. And the opposite is real too. Feeling abandoned, judged, or far from the sacred can weigh heavily.' },
-          { k: 'points', h: 'How Roots can look', items: [['Strong', 'You know what holds you up, and you reach for it', '#5F7D48'], ['Steady', 'It is there, though you reach for it less lately', '#8B5E1A'], ['Growing Edge', 'You feel unmoored, or faith feels heavy right now', '#B8612F']], say: 'Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is a real and honest place to be.' },
-          { k: 'story', title: 'A Presence That Cannot Be Boxed', lines: ['The nurse warned me: not religious. The family sat with their arms crossed, ready to get through my visit politely.', 'Then the wife leaned forward. We are not religious, she said. But we are deeply spiritual. We believe in a presence that cannot be boxed or labeled or fully described.', 'We kept what felt true from each tradition and let the rest go. It is not neat or tidy. But it is ours.'], lesson: 'Roots of every shape can hold you up.', note: 'From a Grounded story by Chris Joy', say: 'On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours. I told her she had just explained God better than most sermons I had ever heard. And the whole room laughed.' },
-          { k: 'big', h: 'Oak asks what holds you up.', sub: 'It asks whether your roots are holding you up.', say: 'That is why Oak asks what holds you up. It asks whether your roots are holding you up, or weighing you down. Your roots are yours.' },
-          { k: 'points', h: 'Practice: A Presence Check', items: [['Settle', 'Feet down, one slow breath'], ['What holds me up today?', 'A person, a prayer, a place, a word'], ['Where did I feel something bigger than me this week?', 'Even for a moment'], ['Name it', 'With a word, a prayer, or a thank-you']], cue: { w: { 1: 5, 2: 15, 3: 15, 4: 10 }, at: [1, 2, 3, 4] }, say: 'Let us practice. This one is called a Presence Check. Settle in, with your feet down, and take one slow breath. Now ask yourself, what holds me up today? Maybe a person, a prayer, a place, or a word. Next, where did I feel something bigger than me this week? Even for a moment. Last, name it. With a word, a prayer, or a simple thank you.' },
-          { k: 'big', h: 'Tend your roots, and they will hold you.', sub: 'Presence Check is in the Practice Library, ready for your growth plan.', say: 'Tend your roots, and they will hold you. You will find the Presence Check in the Practice Library, ready to add to your growth plan.' },
-          { k: 'quiz', q: 'What does Oak look at in Roots?', opts: ['Which religion you belong to', 'Whether what grounds you holds you up or weighs you down', 'How often you attend services'], right: 1, why: 'Roots are about what holds you up, whatever you believe.', say: 'Quick question. What does Oak look at in Roots?' }
-        ] },
-
-        { id: 'ok-6-trunk', n: 2, title: 'Trunk: Purpose', mins: 6, blurb: 'What you live for, and what you give.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 2', h: 'Trunk', sub: 'Purpose.', say: 'This lesson is about your Trunk, your purpose. What you live for, and what you give.' },
-          { k: 'big', h: 'The trunk carries everything up to the branches.', say: 'A tree’s trunk carries everything from the roots up to the branches. Purpose works the same way. It carries your days. It gives your effort somewhere to go.' },
-          { k: 'points', h: 'Purpose can look like', items: [['Work you care about', 'Paid or not'], ['People who count on you', 'Family, friends, neighbors'], ['Something you are building', 'A skill, a garden, a business'], ['Your gifts', 'The way you show up for others']], say: 'Purpose can look like work you care about, paid or not. People who count on you. Something you are building or learning. And your gifts, the way you show up for others.' },
-          { k: 'big', h: 'A sense of purpose helps people through hard seasons.', sub: 'And purpose can change shape and still be real.', say: 'Research finds that people with a sense of purpose tend to handle stress and hard seasons better. And here is the hopeful part. Purpose can change shape, and still be real.' },
-          { k: 'points', h: 'How Trunk can look', items: [['Strong', 'You know what you are here for, and it fills you', '#5F7D48'], ['Steady', 'You have purpose, though some days feel flat', '#8B5E1A'], ['Growing Edge', 'You feel lost, or a role you loved has ended', '#B8612F']], say: 'A strong trunk might mean you know what you are here for, and it fills you. Steady might mean you have purpose, though some days feel flat. And a Growing Edge might mean you feel lost, or a role you loved has ended. That is often where the most growth begins.' },
-          { k: 'story', title: 'Finding a New Purpose', lines: ['Sophia was twenty-eight, studying to be a physical trainer, when a rare bone disease changed everything. Everything I worked for is disappearing, she said.', 'I asked her: Even if your body changes, what part of you, the real you, can still strengthen others?', 'I can’t train people to run marathons anymore, she told me later. But maybe I can help them run their own race.'], lesson: 'Roles can change. Your gifts come with you.', note: 'From a Grounded reflection by Chris Joy', say: 'Let me tell you about Sophia. She was twenty eight, building a life as a physical trainer, when a rare bone disease changed everything. She told me she was scared she would become someone people had to take care of, instead of someone who lifts others up. I did not rush in with answers. I stayed and listened. Then, gently, I asked, even if your body changes, what part of you, the real you, can still strengthen others? Sophia had always been an encourager. That gift had not gone anywhere. One day she said, I cannot train people to run marathons anymore. But maybe I can help them run their own race.' },
-          { k: 'big', h: 'Roles can change. Your gifts come with you.', say: 'Roles change. Jobs end. Kids grow up. Bodies change. But your gifts come with you, and they can find a new shape.' },
-          { k: 'points', h: 'Practice: The Real You', items: [['Name three gifts', 'Gifts like encouraging, fixing, noticing, making people laugh.'], ['Find who needs one', 'A person, a group, a cause'], ['Choose one way this week', 'Small is fine']], cue: { w: { 1: 20, 2: 15, 3: 12 }, at: [1, 2, 3] }, say: 'Let us practice. This one is called The Real You. First, name three of your gifts. Not job titles. Things like encouraging, fixing, noticing, or making people laugh. Now, who could use one of those gifts? A person, a group, or a cause. Last, choose one way to use it this week. Small is fine.' },
-          { k: 'big', h: 'Purpose grows when you use it.', sub: 'The Real You is in the Practice Library.', say: 'Purpose grows when you use it, a little at a time. You will find The Real You in the Practice Library.' },
-          { k: 'quiz', q: 'What does Sophia’s story show about purpose?', opts: ['When a role ends, purpose is gone', 'Your gifts can find a new shape', 'Only paid work counts'], right: 1, why: 'Roles change, and your gifts come with you.', say: 'Quick question. What does Sophia’s story show about purpose?' }
-        ] },
-
-        { id: 'ok-6-bark', crisis: ['988: call or text, any time'], n: 3, title: 'Bark: Mind and Feelings', mins: 6, blurb: 'Bending without breaking.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 3', h: 'Bark', sub: 'Mind and feelings.', say: 'This lesson is about Bark, your mind and your feelings.' },
-          { k: 'big', h: 'Bark protects the tree, and it flexes as the tree grows.', say: 'Bark protects a tree from storms and sun, and it has to flex as the tree grows. Your mind and feelings work the same way. Healthy bark bends and holds.' },
-          { k: 'points', h: 'Healthy bark can look like', items: [['Thoughts that settle', 'Worry comes, and it also goes'], ['Feelings you can name', 'Sad, scared, angry, tired, glad'], ['Bouncing back', 'Hard days stay in their place'], ['Asking for help', 'Before it gets too heavy']], say: 'Healthy bark can look like thoughts that settle, so worry comes and also goes. Feelings you can name. Bouncing back, so a hard day does not take over the whole week. And asking for help before it gets too heavy.' },
-          { k: 'big', h: 'Putting a feeling into words can turn down the alarm.', sub: 'Name it to tame it.', say: 'Here is something researchers have found. Simply putting a feeling into words can turn down the body’s alarm. Some people call it, name it to tame it.' },
-          { k: 'points', h: 'How Bark can look', items: [['Strong', 'You feel your feelings and find your way back', '#5F7D48'], ['Steady', 'Mostly steady, with some heavy stretches', '#8B5E1A'], ['Growing Edge', 'Worry, sadness, or stress is wearing you down', '#B8612F']], say: 'Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly steady, with some heavy stretches. And a Growing Edge might mean worry, sadness, or stress is wearing you down. That deserves tending, and sometimes more support.' },
-          { k: 'story', title: 'Emotional Resilience', lines: ['I sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver.', 'I placed my hand lightly on the patient’s, breathed slowly, and reminded myself: this moment is sacred, and so is my capacity to stay rooted.', 'Resilience is not the absence of sorrow. It is bending without breaking, letting the waves move through us instead of pulling us under.'], lesson: 'Let the feeling move through you.', note: 'From a Grounded reflection by Chris Joy', say: 'I once sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver. So I placed my hand lightly on the patient’s hand, and breathed slowly. I did not push the feeling away. I made room for it. Resilience, I realized, is not the absence of sorrow. It is bending without breaking. Letting the waves move through us, instead of pulling us under.' },
-          { k: 'points', h: 'Practice: Shake Off the Raindrops', items: [['Name it', 'This is grief. This is fear.'], ['Ground it', 'Feet on the floor, breath moving'], ['Shake it off', 'Shake your hands like raindrops'], ['Find one bright moment', 'A smile, a kindness, a bit of light']], cue: { w: { 1: 8, 3: 10, 5: 10, 7: 12 }, at: [0, 2, 4, 6] }, say: 'Let us practice four steps from that day. Name it. Say softly inside, this is grief, or this is fear. Ground it. Feel your feet on the floor, and your breath moving in and out. Shake it off. Shake your hands gently, as if you are letting go of heavy raindrops. Then find one bright moment from today. A smile, a kindness, a bit of light.' },
-          { k: 'big', h: 'Heavy for weeks? You deserve more support.', sub: 'Talk with your doctor or a counselor.', say: 'If your feelings stay heavy for weeks, you deserve more support. Talk with your doctor or a counselor. Getting help is a strong thing to do.' },
-          { k: 'quiz', q: 'What is emotional resilience?', opts: ['Never feeling sad', 'Bending without breaking', 'Keeping your feelings hidden'], right: 1, why: 'Resilience lets feelings move through you without pulling you under.', say: 'Quick question. What is emotional resilience?' }
-        ] },
-
-        { id: 'ok-6-branches', n: 4, title: 'Branches: Relationships', mins: 6, blurb: 'Reaching toward people, and repairing what breaks.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 4', h: 'Branches', sub: 'Relationships.', say: 'This lesson is about Branches, your relationships. The people you reach toward.' },
-          { k: 'big', h: 'Branches reach out. That is how a tree catches light.', say: 'Branches reach out. That is how a tree catches light. People are the same. We were made to reach toward each other.' },
-          { k: 'points', h: 'Branches can look like', items: [['Someone to call', 'When the news is good, or bad'], ['Belonging', 'A family, a team, a congregation, a circle'], ['Giving and receiving', 'Help goes both ways'], ['Repair', 'Making it right when things break']], say: 'Branches can look like someone to call, when the news is good or bad. Belonging, in a family, a team, a congregation, or a circle of friends. Giving and receiving help. And repair, making it right when things break.' },
-          { k: 'big', h: 'Close relationships are among the strongest helps for health.', sub: 'And loneliness weighs on body and mind.', say: 'Research keeps finding that close relationships are among the strongest helps for health and long life. And loneliness weighs on both body and mind. Your branches matter.' },
-          { k: 'points', h: 'How Branches can look', items: [['Strong', 'You have people, and you reach for them', '#5F7D48'], ['Steady', 'Good people, though some ties feel thin', '#8B5E1A'], ['Growing Edge', 'You feel alone, or a key relationship is hurting', '#B8612F']], say: 'Strong branches might mean you have people, and you reach for them. Steady might mean good people, though some ties feel thin. And a Growing Edge might mean you feel alone, or an important relationship is hurting.' },
-          { k: 'story', title: 'The Recovery', lines: ['I broke a dying woman’s saucer. Antique china. She had just shown it to me, the one good thing in her hard day.', 'I dropped to my knees and said how sorry I was. Instead of anger, I got grace. Someone broke a special one on me once, she said. Didn’t even say sorry. At least you did.', 'That night I glued what I could, and found a nearly identical saucer. Not the mistake. The recovery.'], lesson: 'What happens after a break matters most.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/the-recovery', label: 'Read the Full Story: The Recovery' }, say: 'Let me tell you about Gail, who lives in memory care, and keeps her whole life in a china cabinet. One day she showed me a new cup and saucer. I picked it up, and the saucer let go and shattered on the floor. I dropped to my knees and told her how sorry I was. And instead of anger, she gave me grace. Someone broke a special one on me once, she said. Did not even say sorry. At least you did. We ended up laughing together. That night I glued what I could, and found a nearly identical saucer to bring back, with flowers. What stays, I have come to believe, is not the mistake. It is the recovery.' },
-          { k: 'big', h: 'Every relationship has breaks.', sub: 'What happens after matters most.', say: 'Every relationship has breaks. Words we wish we could take back. Times we let someone down. What happens after matters most.' },
-          { k: 'points', h: 'Practice: Make the Repair', items: [['Own it plainly', 'I did that. I am sorry.'], ['Skip the but', 'Own it, plainly'], ['Ask what would help', 'What can I do to make this right?'], ['Follow through', 'Then do it']], cue: { w: { 1: 15, 7: 12 }, at: [2, 3, 5, 6] }, say: 'Let us practice. Think of one relationship that could use a repair, big or small. Take a moment. Here are the steps. Own it plainly. I did that, and I am sorry. Skip the but. No excuses, and no explaining it away. Ask, what can I do to make this right? Then follow through. Now picture your first step.' },
-          { k: 'big', h: 'Repair takes courage, and it grows trust.', sub: 'Make the Repair is in the Practice Library.', say: 'Repair takes courage, and it grows trust. If a relationship is not safe for you, your safety comes first, and When Life Changes has a guide for that. You will find Make the Repair in the Practice Library.' },
-          { k: 'quiz', q: 'In The Recovery, what mattered most?', opts: ['That the saucer never broke', 'What happened after the break', 'Who was to blame'], right: 1, why: 'Not the mistake. The recovery.', say: 'Quick question. In The Recovery, what mattered most?' }
-        ] },
-
-        { id: 'ok-6-leaves', n: 5, title: 'Leaves: Body', mins: 6, blurb: 'Move, rest, and nourish.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 5', h: 'Leaves', sub: 'Body.', say: 'This lesson is about Leaves, your body.' },
-          { k: 'big', h: 'Leaves turn light into energy for the whole tree.', say: 'Leaves turn sunlight into energy for the whole tree. Your body does something like that for all of you. When your body is cared for, everything else has more to work with.' },
-          { k: 'flow', h: 'Three ways to tend Leaves', steps: [['Move', 'In a way that fits your body'], ['Rest', 'Sleep, and small pauses'], ['Nourish', 'Water and real food']], say: 'Oak tends Leaves in three ways. Move, in a way that fits your body. Rest, with sleep and small pauses. And nourish, with water and real food.' },
-          { k: 'big', h: 'Body and mind talk to each other all day long.', sub: 'Small amounts of movement, rest, and steady meals can lift mood and energy.', say: 'Your body and mind talk to each other all day long. Research finds that even small amounts of movement, regular rest, and steady meals can lift mood and energy. You do not need a big plan to start.' },
-          { k: 'points', h: 'How Leaves can look', items: [['Strong', 'You move, rest, and eat in ways that fuel you', '#5F7D48'], ['Steady', 'Mostly okay, with a weak spot or two', '#8B5E1A'], ['Growing Edge', 'Worn out, running on empty, or hurting', '#B8612F']], say: 'Strong leaves might mean you move, rest, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two. And a Growing Edge might mean you feel worn out, run down, or in pain.' },
-          { k: 'story', title: 'A Lion-Sized Reset', lines: ['My alarm didn’t go off, the dog got into the trash, and I walked out the door with two different shoes on.', 'A detour added twenty minutes. By the time I pulled up to my first visit, my head was spinning.', 'So I parked a little early, rolled down the window, and roared. Three times. By the third one, I was laughing at myself, and I was ready.'], lesson: 'Your body can reset your mind.', note: 'From a Grounded reflection by Chris Joy', say: 'One morning went wrong from the start. No alarm, the dog in the trash, two different shoes, and a twenty minute detour. By my first visit, my head was spinning. So I parked, rolled down the window, and did a lion’s breath. A deep breath in, then mouth wide, tongue out, and a long, loud haaa. Three times. My jaw loosened, my shoulders dropped, and I started laughing at myself. My body reset my mind.' },
-          { k: 'points', h: 'Practice: A Body Check-in', items: [['Move', 'What would feel good to move right now?'], ['Rest', 'When will I rest today?'], ['Nourish', 'Have I had water and a real meal?']], cue: { w: { 1: 10, 2: 10, 3: 10, 5: 20 }, at: [1, 2, 3] }, say: 'Let us do a quick body check in. Move. What would feel good to move right now? Rest. When will I rest today, even for five minutes? Nourish. Have I had water, and a real meal? Now pick one, and do it right now. Stand and stretch, or go get a glass of water. I will wait.' },
-          { k: 'big', h: 'Your body is part of the whole you.', sub: 'Set your Movement Level in settings. Talk with your doctor before big changes.', say: 'Your body is part of the whole you, not separate from it. In settings, choose your movement level, gentle, moderate, or athletic, so practices fit your body. And talk with your doctor before big changes. Lion’s Breath is in the Practice Library too.' },
-          { k: 'quiz', q: 'Oak tends Leaves in three ways. What are they?', opts: ['Move, Rest, Nourish', 'Run, Lift, Diet', 'Sleep, Work, Play'], right: 0, why: 'Move, Rest, and Nourish keep your leaves green.', say: 'Quick question. Oak tends Leaves in three ways. What are they?' }
-        ] },
-
-        { id: 'ok-6-fruit', crisis: ['988: call or text, any time', '911: emergency'], n: 6, title: 'Fruit: Hope', mins: 6, blurb: 'What grows when the whole tree is tended.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 6', h: 'Fruit', sub: 'Hope.', say: 'This last lesson is about Fruit, your hope.' },
-          { k: 'big', h: 'Fruit takes time. It grows from everything else.', say: 'Fruit takes time. It grows from everything else. Roots, trunk, bark, branches, and leaves all feed it. Hope works the same way.' },
-          { k: 'points', h: 'Hope can look like', items: [['Something to look forward to', 'Big or small'], ['Noticing good', 'Even on hard days'], ['A future you can picture', 'And a next step toward it'], ['Believing things can change', 'For you, and for others']], say: 'Hope can look like something to look forward to, big or small. Noticing the good, even on hard days. A future you can picture, and a next step toward it. And believing that things can change.' },
-          { k: 'big', h: 'Hope can be grown.', sub: 'It is a goal, a way forward, and the will to keep going.', say: 'Researchers who study hope describe it as three things together. A goal, a way forward, and the will to keep going. And hope can be grown, like anything else you tend.' },
-          { k: 'points', h: 'How Fruit can look', items: [['Strong', 'You look ahead with hope, even when it is hard', '#5F7D48'], ['Steady', 'Hope is there, though some days it fades', '#8B5E1A'], ['Growing Edge', 'It is hard to see anything good ahead', '#B8612F']], say: 'Strong fruit might mean you look ahead with hope, even when it is hard. Steady might mean hope is there, though some days it fades. And a Growing Edge might mean it is hard to see anything good ahead right now.' },
-          { k: 'story', title: 'A Day of Contrasts', lines: ['At the end of a muddy dirt road, a woman who had lived on her farm for nearly eighty years set out orange juice and a plate of cookies.', 'She pointed out the window. Can you see that right there? A little woodpecker on the tree.', 'That’s the reason I’m here, she said. That’s all I need to be happy. I’m simple. It doesn’t take much.'], lesson: 'Hope often starts with noticing what is already good.', note: 'From a Grounded reflection by Chris Joy', say: 'One visit took me to the end of a muddy dirt road, to a woman who had lived on her farm for almost eighty years and raised nine children there. Over orange juice and cookies, she asked, can you see that right there? I spotted a little woodpecker, on the tree outside. That is the reason I am here, she said. That is all I need to be happy. I am simple. It does not take much. I left with my heart full.' },
-          { k: 'points', h: 'Practice: One Woodpecker', items: [['Look around', 'Find one small good thing, right now'], ['Say it', 'Out loud, or write it down'], ['Look ahead', 'Name one small thing to look forward to']], cue: { w: { 1: 15, 2: 10, 3: 12 }, at: [1, 2, 3] }, say: 'Let us practice. This one is called One Woodpecker. Look around and find one small good thing, right now. Say it out loud, or write it down. Then name one small thing to look forward to, today or this week.' },
-          { k: 'big', h: 'Losing hope? Let someone help you hold it.', say: 'If it is hard to see anything good ahead, let someone help you hold that.' },
-          { k: 'big', h: 'Tend the whole tree, and fruit will come.', sub: 'One Woodpecker is in the Practice Library.', say: 'Tend the whole tree, a little at a time, and fruit will come. One Woodpecker is in the Practice Library. That is all six parts. Well done.' },
-          { k: 'quiz', q: 'Where does hope often start?', opts: ['With a big change', 'With noticing one small good thing', 'With having no problems'], right: 1, why: 'Hope often starts with noticing what is already good.', say: 'Last question. Where does hope often start?' }
-        ] }
-      ] },
+      {
+       "id": "oak-start",
+       "title": "Start Here",
+       "who": "For adults tending their own tree",
+       "lessons": [
+        {
+         "id": "ok-welcome",
+         "crisis": [
+          "988: call or text, any time"
+         ],
+         "n": 1,
+         "title": "Welcome to Oak",
+         "mins": 4,
+         "blurb": "What Oak is, who it is for, what stays private, and where to begin.",
+         "faithScenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Start Here, Lesson 1",
+           "h": "Welcome to Oak",
+           "sub": "Shelter for others. Strength for you.",
+           "say": "Welcome to Oak. Shelter for others, and strength for you. This short lesson shows you what Oak is, who it is for, and where to begin."
+          },
+          {
+           "k": "big",
+           "h": "An oak grows strong by growing slowly.",
+           "sub": "Deep roots, a wide crown, and shelter for many.",
+           "say": "An oak grows slowly, and that is where its strength comes from. Deep roots, a thick trunk, and a wide crown that shelters many. The adult years ask a lot of you. Oak is built to help you stay strong while you carry it."
+          },
+          {
+           "k": "trees",
+           "h": "Oak grows between Birch and Sequoia.",
+           "say": "Grow With Grounded has a tree for every age. Pine is for high school, and Birch is for young adults. Sequoia is for older adults, sixty and up. Oak is built for adults, twenty six to sixty, right in the full middle of life."
+          },
+          {
+           "k": "parts",
+           "say": "You tend four parts of you. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body. And Branches: Relationships. Then two grow from that tending. Trunk: Meaning, and Fruit: Hope."
+          },
+          {
+           "k": "big",
+           "h": "Tend all four, and meaning and hope grow.",
+           "sub": "The Grounded Way works when you tend all four parts.",
+           "say": "The Grounded Way works when you tend all four parts. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too. Meaning and hope grow from that tending."
+          },
+          {
+           "k": "levels",
+           "say": "Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend."
+          },
+          {
+           "k": "points",
+           "h": "What Oak gives you",
+           "items": [
+            [
+             "A check-in",
+             "Full, or a quick two minutes"
+            ],
+            [
+             "A growth plan",
+             "Practices for the four you tend"
+            ],
+            [
+             "When Life Changes",
+             "Guides for more than 80 of life's hardest seasons"
+            ],
+            [
+             "A tree that grows",
+             "From Acorn to Heritage Oak"
+            ],
+            [
+             "Health and Ability",
+             "Oak fits your body and your life"
+            ]
+           ],
+           "cue": {
+            "at": [1, 3, 4, 5, 6]
+           },
+           "say": "Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for the four parts you tend, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life's hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life. And The Grounded Way brings your tree, your meals, your movement, and your quiet together on your daily Home."
+          },
+          {
+           "k": "big",
+           "h": "Your answers are yours.",
+           "sub": "Locked on this device with your own passcode.",
+           "say": "Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you."
+          },
+          {
+           "k": "tabs",
+           "app": "oak",
+           "app_name": "Oak",
+           "tabs": [
+            "Today",
+            "Week",
+            "Season",
+            "Growth Plan",
+            "When Life Changes",
+            "Learn"
+           ],
+           "tap": 0,
+           "note": {
+            "h": "Where to begin",
+            "p": "Start a check-in. Your tree and your practices grow from there."
+           },
+           "say": "Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there."
+          },
+          {
+           "k": "big",
+           "h": "One part, one small step.",
+           "sub": "One breath, and one way to tend a part today.",
+           "beats": [
+            "Let us try a small practice now.",
+            "Sit however is comfortable.",
+            "Take one slow breath, in and out.",
+            "Think of one part of your life that has been carrying a lot lately.",
+            {
+             "t": "Now name one small thing that would tend it today.",
+             "w": 10
+            }
+           ],
+           "say": "Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today."
+          },
+          {
+           "k": "big",
+           "h": "Small and steady is how an oak grows.",
+           "sub": "One practice a day is enough to start.",
+           "say": "Nice. That is the whole idea of Oak. Strong trees are not built in a day. Small and steady is how an oak grows, and one practice a day is enough to start."
+          },
+          {
+           "k": "quiz",
+           "q": "Where does your daily tending happen?",
+           "opts": [
+            "Only at your yearly check-in",
+            "In the Today tab, a little each day",
+            "Only with a chaplain"
+           ],
+           "right": 1,
+           "why": "Oak is built for small steps every day, in the Today tab.",
+           "say": "Quick question. Where does your daily tending happen?"
+          }
+         ],
+         "plainScenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Start Here, Lesson 1",
+           "h": "Welcome to Oak",
+           "sub": "Shelter for others. Strength for you.",
+           "say": "Welcome to Oak. Shelter for others, and strength for you. This short lesson shows you what Oak is, who it is for, and where to begin."
+          },
+          {
+           "k": "big",
+           "h": "An oak grows strong by growing slowly.",
+           "sub": "Deep roots, a wide crown, and shelter for many.",
+           "say": "An oak grows slowly, and that is where its strength comes from. Deep roots, a thick trunk, and a wide crown that shelters many. The adult years ask a lot of you. Oak is built to help you stay strong while you carry it."
+          },
+          {
+           "k": "trees",
+           "h": "Oak grows between Birch and Sequoia.",
+           "say": "Grow With Grounded has a tree for every age. Pine is for high school, and Birch is for young adults. Sequoia is for older adults, sixty and up. Oak is built for adults, twenty six to sixty, right in the full middle of life."
+          },
+          {
+           "k": "parts",
+           "say": "You tend four parts of you. Roots, what grounds you. Bark: Mind, your thoughts and feelings. Leaves: Body. And Branches: Relationships. Then two grow from that tending. Trunk: Meaning, and Fruit: Hope."
+          },
+          {
+           "k": "big",
+           "h": "Tend all four, and meaning and hope grow.",
+           "sub": "The Grounded Way works when you tend all four parts.",
+           "say": "The Grounded Way works when you tend all four parts. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too. Meaning and hope grow from that tending."
+          },
+          {
+           "k": "levels",
+           "say": "Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend."
+          },
+          {
+           "k": "points",
+           "h": "What Oak gives you",
+           "items": [
+            [
+             "A check-in",
+             "Full, or a quick two minutes"
+            ],
+            [
+             "A growth plan",
+             "Practices for the four you tend"
+            ],
+            [
+             "When Life Changes",
+             "Guides for more than 80 of life's hardest seasons"
+            ],
+            [
+             "A tree that grows",
+             "From Acorn to Heritage Oak"
+            ],
+            [
+             "Health and Ability",
+             "Oak fits your body and your life"
+            ]
+           ],
+           "cue": {
+            "at": [1, 3, 4, 5, 6]
+           },
+           "say": "Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for the four parts you tend, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life's hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life. And The Grounded Way brings your tree, your meals, your movement, and your quiet together on your daily Home."
+          },
+          {
+           "k": "big",
+           "h": "Your answers are yours.",
+           "sub": "Locked on this device with your own passcode.",
+           "say": "Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you."
+          },
+          {
+           "k": "tabs",
+           "app": "oak",
+           "app_name": "Oak",
+           "tabs": [
+            "Today",
+            "Week",
+            "Season",
+            "Growth Plan",
+            "When Life Changes",
+            "Learn"
+           ],
+           "tap": 0,
+           "note": {
+            "h": "Where to begin",
+            "p": "Start a check-in. Your tree and your practices grow from there."
+           },
+           "say": "Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there."
+          },
+          {
+           "k": "big",
+           "h": "One part, one small step.",
+           "sub": "One breath, and one way to tend a part today.",
+           "beats": [
+            "Let us try a small practice now.",
+            "Sit however is comfortable.",
+            "Take one slow breath, in and out.",
+            "Think of one part of your life that has been carrying a lot lately.",
+            {
+             "t": "Now name one small thing that would tend it today.",
+             "w": 10
+            }
+           ],
+           "say": "Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today."
+          },
+          {
+           "k": "big",
+           "h": "Small and steady is how an oak grows.",
+           "sub": "One practice a day is enough to start.",
+           "say": "Nice. That is the whole idea of Oak. Strong trees are not built in a day. Small and steady is how an oak grows, and one practice a day is enough to start."
+          },
+          {
+           "k": "quiz",
+           "q": "Where does your daily tending happen?",
+           "opts": [
+            "Only at your yearly check-in",
+            "In the Today tab, a little each day",
+            "Only with a chaplain"
+           ],
+           "right": 1,
+           "why": "Oak is built for small steps every day, in the Today tab.",
+           "say": "Quick question. Where does your daily tending happen?"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "oak-using",
+       "title": "Using Oak",
+       "who": "Every part of the app, step by step",
+       "certTitle": "Oak: Using Oak",
+       "lessons": [
+        {
+         "id": "ok-u-checkin",
+         "crisis": [
+          "988: call or text, any time",
+          "911: emergency"
+         ],
+         "n": 1,
+         "title": "Your First Check-in",
+         "mins": 4,
+         "blurb": "How the check-in works, and how to take it well.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Using Oak, Lesson 1",
+           "h": "Your First Check-in",
+           "sub": "An honest look at your whole tree.",
+           "say": "Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect."
+          },
+          {
+           "k": "card",
+           "title": "Your Private Profile",
+           "body": "Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.",
+           "fields": [
+            [
+             "Your name",
+             "Sam"
+            ],
+            [
+             "Passcode",
+             "••••••"
+            ]
+           ],
+           "btns": [
+            "Create My Profile",
+            "Maybe Later"
+           ],
+           "tap": 0,
+           "say": "First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode."
+          },
+          {
+           "k": "flow",
+           "h": "Two kinds of check-in",
+           "steps": [
+            [
+             "Full Check-in",
+             "Eight questions for each part"
+            ],
+            [
+             "Quick Check-in",
+             "One question for each part"
+            ]
+           ],
+           "say": "There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept."
+          },
+          {
+           "k": "screen",
+           "app": "oak",
+           "app_name": "Oak",
+           "title": "Check-in: Roots",
+           "rows": [
+            [
+             "I have something that grounds me when life is hard.",
+             ""
+            ],
+            [
+             "Often",
+             ""
+            ],
+            [
+             "Sometimes",
+             ""
+            ],
+            [
+             "Rarely",
+             ""
+            ],
+            [
+             "Not sure",
+             ""
+            ]
+           ],
+           "tap": 2,
+           "say": "Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer."
+          },
+          {
+           "k": "points",
+           "h": "Some questions are turned around",
+           "items": [
+            [
+             "Most ask about what is going well",
+             "Yes counts up"
+            ],
+            [
+             "A few ask about what is hard",
+             "Yes counts down"
+            ],
+            [
+             "Answer each one plainly",
+             "Oak does the math"
+            ]
+           ],
+           "say": "A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math."
+          },
+          {
+           "k": "points",
+           "h": "Open questions, and help close by",
+           "items": [
+            [
+             "Open questions",
+             "About every part of your tree"
+            ],
+            [
+             "Stays on this device",
+             "Nothing is sent anywhere"
+            ],
+            [
+             "A quiet line",
+             "At the bottom of the check-in"
+            ],
+            [
+             "Help Is Close",
+             "One tap, any time"
+            ]
+           ],
+           "cue": {
+            "at": [0, 1, 2, 3]
+           },
+           "say": "Every Oak question is open and curious, and Oak asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. One quiet line of type sits at the bottom of the check-in. And See help lines opens Help Is Close, with people you can reach any time."
+          },
+          {
+           "k": "points",
+           "h": "To take it well",
+           "items": [
+            [
+             "Find a quiet moment",
+             "Fifteen minutes, if you can"
+            ],
+            [
+             "Go with your first honest answer",
+             "Go with your first thought"
+            ],
+            [
+             "Take a break anytime",
+             "Oak keeps your place"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "5": 8
+            }
+           },
+           "say": "A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place. Think now of one quiet moment this week when you could take your check-in."
+          },
+          {
+           "k": "quiz",
+           "q": "What does Not sure mean in a check-in?",
+           "opts": [
+            "You did it wrong",
+            "An honest answer that is always okay",
+            "Your score goes down"
+           ],
+           "right": 1,
+           "why": "Not sure is an honest answer, and it never counts against you.",
+           "say": "Quick question. What does Not sure mean in a check-in?"
+          }
+         ]
+        },
+        {
+         "id": "ok-u-levels",
+         "n": 2,
+         "title": "Reading Your Levels",
+         "mins": 4,
+         "blurb": "Strong, Steady, and Growing Edge, and what to do with them.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Using Oak, Lesson 2",
+           "h": "Reading Your Levels",
+           "sub": "Just a picture of right now.",
+           "say": "After a check-in, each part of your tree gets a level. This lesson is about reading them well."
+          },
+          {
+           "k": "levels",
+           "say": "There are three levels. Strong, from eight to ten. Steady, from five to seven. And Growing Edge, from one to four."
+          },
+          {
+           "k": "big",
+           "h": "A Growing Edge is where your next growth begins.",
+           "sub": "It is simply a part to tend.",
+           "say": "A Growing Edge is not a failing grade. It is where your next growth begins. It is a part to tend, and Oak will help you tend it."
+          },
+          {
+           "k": "screen",
+           "app": "oak",
+           "app_name": "Oak",
+           "title": "Your Results",
+           "rows": [
+            [
+             "Roots",
+             "Strong",
+             "#5F7D48"
+            ],
+            [
+             "Trunk",
+             "Steady",
+             "#8B5E1A"
+            ],
+            [
+             "Bark",
+             "Growing Edge",
+             "#B8612F"
+            ],
+            [
+             "Branches",
+             "Steady",
+             "#8B5E1A"
+            ],
+            [
+             "Leaves",
+             "Steady",
+             "#8B5E1A"
+            ],
+            [
+             "Fruit",
+             "Strong",
+             "#5F7D48"
+            ]
+           ],
+           "tap": 2,
+           "say": "Your results show Oak's painting, with each part glowing by its level, and the level in words beside it. Tap a part to open it in your growth plan. Oak also names your biggest growing edge right now. That is a good place to start."
+          },
+          {
+           "k": "points",
+           "h": "Read it with kindness",
+           "items": [
+            [
+             "Look for patterns",
+             "Which parts lean on each other?"
+            ],
+            [
+             "Notice your strengths",
+             "They can carry you while you grow"
+            ],
+            [
+             "Pick one part to start",
+             "One or two parts at a time"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "6": 8
+            }
+           },
+           "say": "Read your results with kindness. Look for patterns. When one part is hurting, another often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with. Think now of one strength that is carrying you this season."
+          },
+          {
+           "k": "points",
+           "h": "Rings and changes",
+           "items": [
+            [
+             "Each full check-in adds a ring",
+             "Your tree grows with you"
+            ],
+            [
+             "Grew, Dipped, or Same",
+             "Compared with your last check-in"
+            ],
+            [
+             "Like with like",
+             "Full with full, quick with quick"
+            ],
+            [
+             "From Pine and From Birch",
+             "Rings that came along, shown apart"
+            ]
+           ],
+           "cue": {
+            "at": [0, 1, 1, 2]
+           },
+           "say": "Over time, every full check-in adds a growth ring to your tree. At the top of Season, Then and Now shows an earlier check-in beside today, with a kind line naming what grew. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one. Rings that came along from Pine or Birch are labeled From Pine or From Birch, and shown apart. And if you came from Birch, a Groundwork card opens your Groundwork notebook to read or print."
+          },
+          {
+           "k": "big",
+           "h": "Every score is a starting point.",
+           "say": "Remember, every score is a starting point. It tells you where you are, so you can choose where to grow."
+          },
+          {
+           "k": "quiz",
+           "q": "What is a Growing Edge?",
+           "opts": [
+            "A failing grade",
+            "A part to tend, where your next growth begins",
+            "A part you should ignore"
+           ],
+           "right": 1,
+           "why": "A Growing Edge is simply a part to tend.",
+           "say": "Quick question. What is a Growing Edge?"
+          }
+         ]
+        },
+        {
+         "id": "ok-u-plan",
+         "n": 3,
+         "title": "Building Your Growth Plan",
+         "mins": 4,
+         "blurb": "Choosing practices that fit your life.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Using Oak, Lesson 3",
+           "h": "Building Your Growth Plan",
+           "sub": "Small practices for the four you tend.",
+           "say": "Your growth plan is a short list of practices for the four parts you tend. This lesson shows you how to build one that fits your life."
+          },
+          {
+           "k": "points",
+           "h": "Suggestions, with room to grow",
+           "items": [
+            [
+             "Strong: about 3",
+             "To keep it strong",
+             "#5F7D48"
+            ],
+            [
+             "Steady: about 4",
+             "To help it grow",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge: about 5",
+             "More ways to tend it",
+             "#B8612F"
+            ]
+           ],
+           "say": "Oak suggests a few practices for each of the four parts you tend, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once."
+          },
+          {
+           "k": "screen",
+           "app": "oak",
+           "app_name": "Oak",
+           "title": "Growth Plan: Bark",
+           "rows": [
+            [
+             "Slow Exhale",
+             "Chosen",
+             "#5F7D48"
+            ],
+            [
+             "Name It",
+             "Chosen",
+             "#5F7D48"
+            ],
+            [
+             "Worry Window",
+             ""
+            ],
+            [
+             "Leaves on a Stream",
+             ""
+            ],
+            [
+             "How to do this",
+             ""
+            ]
+           ],
+           "tap": 2,
+           "say": "Tap any practice to choose it. Tap How to do this to see why it helps, the steps, and what to try if it is hard."
+          },
+          {
+           "k": "card",
+           "title": "Find more practices",
+           "body": "Browse by part, or search: sleep, calm, friends, prayer.",
+           "fields": [
+            [
+             "Search",
+             "sleep"
+            ]
+           ],
+           "btns": [
+            "Add to my practices",
+            "Show me how"
+           ],
+           "tap": 0,
+           "say": "At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Practices written for young adults are tagged For Young Adults. Then add what fits."
+          },
+          {
+           "k": "points",
+           "h": "Practices born from stories",
+           "items": [
+            [
+             "From the Bedside",
+             "Practices that grew out of real visits"
+            ],
+            [
+             "Linked to their story",
+             "Watch the lesson or read the story"
+            ],
+            [
+             "In the library",
+             "Ready to add to your plan"
+            ]
+           ],
+           "say": "Some practices are marked From the Bedside. They grew out of real stories from Chris’s work as a chaplain, like Lion’s Breath and One Woodpecker. Each one links to its story."
+          },
+          {
+           "k": "points",
+           "h": "Make it yours",
+           "items": [
+            [
+             "Write your own",
+             "Anything that tends a part counts"
+            ],
+            [
+             "Start small",
+             "Two minutes beats zero"
+            ],
+            [
+             "Change it anytime",
+             "Your plan grows with you"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "6": 10
+            }
+           },
+           "say": "Make it yours. Write your own practices. Anything that tends a part counts, like calling your sister or taking the long way home. Start small. Two minutes beats zero. And change your plan anytime. Think now of one small thing you already do that tends a part of your tree."
+          },
+          {
+           "k": "quiz",
+           "q": "How many practices should you choose for a part?",
+           "opts": [
+            "Exactly the number Oak suggests",
+            "As many or as few as fit your life",
+            "Only one"
+           ],
+           "right": 1,
+           "why": "Oak’s numbers are suggestions, with room for more.",
+           "say": "Quick question. How many practices should you choose for a part?"
+          }
+         ]
+        },
+        {
+         "id": "ok-u-rhythm",
+         "n": 4,
+         "title": "Today, Week, and Season",
+         "mins": 4,
+         "blurb": "The rhythm that helps your tree grow.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Using Oak, Lesson 4",
+           "h": "Today, Week, and Season",
+           "sub": "A little each day adds up.",
+           "say": "Oak has a gentle rhythm. A little each day, a short look each week, and a full check-in each season. Here is how it fits together."
+          },
+          {
+           "k": "tabs",
+           "app": "oak",
+           "app_name": "Oak",
+           "tabs": [
+            "Today",
+            "Week",
+            "Season",
+            "Growth Plan",
+            "When Life Changes",
+            "Learn"
+           ],
+           "tap": 0,
+           "note": {
+            "h": "Today",
+            "p": "Your practices for today. Check off one, and your tree is watered."
+           },
+           "say": "Start with Today. Your practices for today are here. Check off any one, and your tree is watered for the day."
+          },
+          {
+           "k": "points",
+           "h": "On a hard day",
+           "items": [
+            [
+             "Easier today",
+             "Swap in a smaller version"
+            ],
+            [
+             "Add a note",
+             "One line about how it went"
+            ],
+            [
+             "One is enough",
+             "Any practice waters your tree"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "3": 8
+            }
+           },
+           "say": "On a hard day, tap Easier today for a smaller version of a practice. Add a note if you like, just one line. And remember, one practice is enough to water your tree. Think now of one small practice you could do today."
+          },
+          {
+           "k": "tabs",
+           "app": "oak",
+           "app_name": "Oak",
+           "tabs": [
+            "Today",
+            "Week",
+            "Season",
+            "Growth Plan",
+            "When Life Changes",
+            "Learn"
+           ],
+           "tap": 1,
+           "note": {
+            "h": "Week",
+            "p": "A theme, a short check-in, and a question to sit with."
+           },
+           "say": "Each week brings a theme, a short check-in, and a question to sit with. The weekly check-in asks one question for each part, plus how you are moving, resting, and eating."
+          },
+          {
+           "k": "tabs",
+           "app": "oak",
+           "app_name": "Oak",
+           "tabs": [
+            "Today",
+            "Week",
+            "Season",
+            "Growth Plan",
+            "When Life Changes",
+            "Learn"
+           ],
+           "tap": 2,
+           "note": {
+            "h": "Season",
+            "p": "Twelve weeks. It begins and ends with a full check-in, and each one adds a ring."
+           },
+           "say": "A season is twelve weeks. It begins with a full check-in, and the next full check-in closes it and adds a ring to your tree. The Season tab also has your Days Tended calendar."
+          },
+          {
+           "k": "points",
+           "h": "Watch your tree grow",
+           "items": [
+            [
+             "Tree levels",
+             "From Acorn to Heritage Oak"
+            ],
+            [
+             "Tried, Building, Mine",
+             "Practices you keep doing"
+            ],
+            [
+             "Milestones",
+             "And a balanced week"
+            ],
+            [
+             "Steady or Hardy",
+             "With two grace days a week"
+            ]
+           ],
+           "cue": {
+            "at": [0, 1, 2, 3]
+           },
+           "say": "Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all four parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support."
+          },
+          {
+           "k": "big",
+           "h": "Every day counts. Growth only adds.",
+           "sub": "Missed a few days? Pick up today.",
+           "say": "There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours. On a hard week, tap Rest Week on Today, and your tree rests warm and still for seven days."
+          },
+          {
+           "k": "quiz",
+           "q": "What waters your tree for the day?",
+           "opts": [
+            "Checking off any one practice",
+            "Finishing every practice",
+            "A full check-in"
+           ],
+           "right": 0,
+           "why": "Any one practice waters your tree. One is enough.",
+           "say": "Quick question. What waters your tree for the day?"
+          }
+         ]
+        },
+        {
+         "id": "ok-u-wlc",
+         "n": 5,
+         "title": "When Life Changes",
+         "mins": 4,
+         "blurb": "Guides for life’s hardest seasons, for you and for helpers.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Using Oak, Lesson 5",
+           "h": "When Life Changes",
+           "sub": "How to show up.",
+           "say": "When life changes all at once, you need words and steps you can use right now. That is what When Life Changes is for."
+          },
+          {
+           "k": "points",
+           "h": "More than 80 guides",
+           "items": [
+            [
+             "Inside Me",
+             "Anxiety, sadness, burnout, shame"
+            ],
+            [
+             "Loss and Grief",
+             "Every kind of goodbye"
+            ],
+            [
+             "Health and the End of Life",
+             "Diagnosis, caregiving, dying"
+            ],
+            [
+             "Relationships and Family",
+             "Marriage, divorce, aging parents"
+            ],
+            [
+             "Work, Money, Faith, and the World",
+             "And Safety"
+            ],
+            [
+             "Health and Ability",
+             "A health condition or a disability"
+            ]
+           ],
+           "say": "There are more than eighty guides, in group cards, with tabs and a search bar on top. Inside Me. Loss and Grief. Health and the End of Life. Relationships and Family. Work and Money. Faith and Meaning. Community, Country, and World. Safety. And Health and Ability."
+          },
+          {
+           "k": "flow",
+           "h": "Two sides to every guide",
+           "steps": [
+            [
+             "For you",
+             "When you are going through it"
+            ],
+            [
+             "For the helper",
+             "When you are walking with someone"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "3": 8
+            }
+           },
+           "say": "Every guide has two sides. One for you, when you are the one going through it. And one for the helper, when you are walking with someone else. Think now of someone you are walking beside this season."
+          },
+          {
+           "k": "points",
+           "h": "Inside a guide",
+           "items": [
+            [
+             "A Quick Reference",
+             "The first things to know"
+            ],
+            [
+             "What to say, and what to skip",
+             "Words that help"
+            ],
+            [
+             "Faith and meaning",
+             "For all faith traditions and everything in-between"
+            ],
+            [
+             "Practices and where to get help",
+             "Real next steps"
+            ]
+           ],
+           "say": "Tap Read on a guide card. Inside, start with the Quick Reference, the first things to know. Then words to say and words to skip. Faith and meaning, for all faith traditions and everything in-between. And practices, plus where to get help."
+          },
+          {
+           "k": "card",
+           "title": "Search",
+           "body": "Type what is happening in your own words.",
+           "fields": [
+            [
+             "Search",
+             "my dad has dementia"
+            ]
+           ],
+           "btns": [
+            "Search"
+           ],
+           "tap": 0,
+           "result": "Caring for Someone with Dementia",
+           "say": "Search in your own words, like my dad has dementia, and Oak finds the right guide."
+          },
+          {
+           "k": "big",
+           "h": "Two short videos for every guide.",
+           "sub": "For You, and For the Helper.",
+           "say": "Every guide has two short videos, right on its card. For You, if this is what you are facing. And For the Helper, if you are walking beside someone who is. Each one is a few minutes long, narrated aloud."
+          },
+          {
+           "k": "quiz",
+           "q": "Every When Life Changes guide has two sides. What are they?",
+           "opts": [
+            "Easy and hard",
+            "For you, and for the helper",
+            "Short and long"
+           ],
+           "right": 1,
+           "why": "Each guide speaks to the person going through it and the person walking with them.",
+           "say": "Quick question. Every guide has two sides. What are they?"
+          }
+         ]
+        },
+        {
+         "id": "ok-u-home",
+         "n": 6,
+         "title": "Your Household and Your Backup",
+         "mins": 4,
+         "blurb": "Profiles for everyone, one backup file, and The Grove.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Using Oak, Lesson 6",
+           "h": "Your Household and Your Backup",
+           "sub": "Everyone gets their own tree.",
+           "say": "Oak works for a whole household on one device. This last lesson shows how, and how to keep everything safe."
+          },
+          {
+           "k": "card",
+           "title": "Who’s tending today?",
+           "body": "Each adult has their own private profile and passcode.",
+           "fields": [
+            [
+             "",
+             "Sam"
+            ],
+            [
+             "",
+             "Jordan"
+            ]
+           ],
+           "btns": [
+            "Add a Person",
+            "Switch Person"
+           ],
+           "tap": 0,
+           "say": "When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine."
+          },
+          {
+           "k": "points",
+           "h": "One file for everything",
+           "items": [
+            [
+             "Back up everything",
+             "Every profile, still locked"
+            ],
+            [
+             "Keep the file somewhere safe",
+             "Email it to yourself, or save it to a drive"
+            ],
+            [
+             "Load a backup",
+             "On a new phone, or after a reset"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "4": 8
+            }
+           },
+           "say": "Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back. Save to a File, and the practitioner backup, save locked files too, with a passcode you choose. Think now of the safe place where you will keep your backup file."
+          },
+          {
+           "k": "points",
+           "h": "The Grove",
+           "items": [
+            [
+             "Your tree is yours",
+             "Answers always stay private"
+            ],
+            [
+             "The grove is ours",
+             "Your family’s trees, side by side"
+            ],
+            [
+             "You choose",
+             "Show my growth on The Grove, on or off"
+            ]
+           ],
+           "say": "If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings."
+          },
+          {
+           "k": "points",
+           "h": "Settings that fit you",
+           "items": [
+            [
+             "Add a Helper",
+             "Off unless you turn it on"
+            ],
+            [
+             "What Helpers See",
+             "You choose what is shared"
+            ],
+            [
+             "Your Birthday (Optional)",
+             "On your 60th birthday, a gentle step into Sequoia"
+            ],
+            [
+             "Reminders and display",
+             "Movement, voice, and text size"
+            ]
+           ],
+           "cue": {
+            "at": [1, 3, 5, 7]
+           },
+           "say": "Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. Only you choose what is shared. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size."
+          },
+          {
+           "k": "big",
+           "h": "You know Oak now. Go tend your tree.",
+           "say": "That is the whole tour. You know Oak now. Go tend your tree, a little at a time."
+          },
+          {
+           "k": "quiz",
+           "q": "What does Back up everything save?",
+           "opts": [
+            "Only your answers, unlocked",
+            "One file with every profile, still locked",
+            "Nothing, it sends your data online"
+           ],
+           "right": 1,
+           "why": "One file holds every profile on the device, each still locked.",
+           "say": "Last question. What does Back up everything save?"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "oak-six",
+       "title": "Tend Four, Grow Two",
+       "who": "Four parts you tend, two that grow from your tending, each with a story and a practice",
+       "certTitle": "Oak: Tend Four, Grow Two",
+       "lessons": [
+        {
+         "id": "ok-6-roots",
+         "n": 1,
+         "title": "Roots: Spirit",
+         "mins": 6,
+         "blurb": "What holds you up when life gets heavy.",
+         "faithScenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 1",
+           "h": "Roots: Spirit",
+           "sub": "Your connection with God and the sacred.",
+           "say": "This is Tend Four, Grow Two. You tend four parts of you each day, and meaning and hope grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred, the part of you that holds you up when life gets heavy."
+          },
+          {
+           "k": "big",
+           "h": "Roots are what you lean on when the wind blows.",
+           "sub": "Out of sight, and always needed.",
+           "say": "Every tree stands on its roots. You cannot always see them, and you always need them. Your roots are what you lean on when the wind blows."
+          },
+          {
+           "k": "points",
+           "h": "Roots can look like",
+           "items": [
+            [
+             "Faith and prayer",
+             "God, the Sacred, the Divine, the Holy"
+            ],
+            [
+             "Nature and wonder",
+             "The sky, the woods, the water"
+            ],
+            [
+             "Traditions",
+             "The ways your people mark life"
+            ],
+            [
+             "Quiet and meaning",
+             "A sense of something bigger than you"
+            ]
+           ],
+           "say": "For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Traditions, the ways your people mark birth, marriage, and death. Or quiet, and a sense of something bigger than you. Oak is made for all faith traditions and everything in-between."
+          },
+          {
+           "k": "big",
+           "h": "What grounds you can help you cope.",
+           "sub": "Feeling abandoned, judged, or far from the sacred can weigh heavily too.",
+           "say": "Research on spirituality and health often finds that what grounds people helps them cope with hard seasons. And the opposite is real too. Feeling abandoned, judged, or far from the sacred can weigh heavily."
+          },
+          {
+           "k": "points",
+           "h": "How Roots can look",
+           "items": [
+            [
+             "Strong",
+             "You know what holds you up, and you reach for it",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "It is there, though you reach for it less lately",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "You feel unmoored, or faith feels heavy right now",
+             "#B8612F"
+            ]
+           ],
+           "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is a real and honest place to be."
+          },
+          {
+           "k": "story",
+           "title": "A Presence That Cannot Be Boxed",
+           "lines": [
+            "The nurse warned me: not religious. The family sat with their arms crossed, ready to get through my visit politely.",
+            "Then the wife leaned forward. We are not religious, she said. But we are deeply spiritual. We believe in a presence that cannot be boxed or labeled or fully described.",
+            "We kept what felt true from each tradition and let the rest go. It is not neat or tidy. But it is ours."
+           ],
+           "lesson": "Roots of every shape can hold you up.",
+           "note": "From a Grounded story by Chris Joy",
+           "say": "On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours. I told her she had just explained God better than most sermons I had ever heard. And the whole room laughed."
+          },
+          {
+           "k": "big",
+           "h": "Oak asks what holds you up.",
+           "sub": "It asks whether your roots are holding you up.",
+           "say": "That is why Oak asks what holds you up. It asks whether your roots are holding you up, or weighing you down. Your roots are yours."
+          },
+          {
+           "k": "points",
+           "h": "Practice: A Presence Check",
+           "items": [
+            [
+             "Settle",
+             "Feet down, one slow breath"
+            ],
+            [
+             "What holds me up today?",
+             "A person, a prayer, a place, a word"
+            ],
+            [
+             "Where did I feel something bigger than me this week?",
+             "Even for a moment"
+            ],
+            [
+             "Name it",
+             "With a word, a prayer, or a thank-you"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 5,
+             "2": 15,
+             "3": 15,
+             "4": 10
+            },
+            "at": [1, 2, 3, 4]
+           },
+           "say": "Let us practice. This one is called a Presence Check. Settle in, with your feet down, and take one slow breath. Now ask yourself, what holds me up today? Maybe a person, a prayer, a place, or a word. Next, where did I feel something bigger than me this week? Even for a moment. Last, name it. With a word, a prayer, or a simple thank you."
+          },
+          {
+           "k": "big",
+           "h": "Tend your roots, and they will hold you.",
+           "sub": "Presence Check is in the Practice Library, ready for your growth plan.",
+           "say": "Tend your roots, and they will hold you. You will find the Presence Check in the Practice Library, ready to add to your growth plan."
+          },
+          {
+           "k": "quiz",
+           "q": "What does Oak look at in Roots?",
+           "opts": [
+            "Which religion you belong to",
+            "Whether what grounds you holds you up or weighs you down",
+            "How often you attend services"
+           ],
+           "right": 1,
+           "why": "Roots are about what holds you up, whatever you believe.",
+           "say": "Quick question. What does Oak look at in Roots?"
+          }
+         ],
+         "plainScenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 1",
+           "h": "Roots",
+           "sub": "What grounds you.",
+           "say": "This is Tend Four, Grow Two. You tend four parts of you each day, and meaning and hope grow from that tending. This first lesson is about Roots, what grounds you, the part of you that holds you up when life gets heavy."
+          },
+          {
+           "k": "big",
+           "h": "Roots are what you lean on when the wind blows.",
+           "sub": "Out of sight, and always needed.",
+           "say": "Every tree stands on its roots. You cannot always see them, and you always need them. Your roots are what you lean on when the wind blows."
+          },
+          {
+           "k": "points",
+           "h": "Roots can look like",
+           "items": [
+            [
+             "Faith and prayer",
+             "God, the Sacred, the Divine, the Holy"
+            ],
+            [
+             "Nature and wonder",
+             "The sky, the woods, the water"
+            ],
+            [
+             "Traditions",
+             "The ways your people mark life"
+            ],
+            [
+             "Quiet and meaning",
+             "A sense of something bigger than you"
+            ]
+           ],
+           "say": "For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Traditions, the ways your people mark birth, marriage, and death. Or quiet, and a sense of something bigger than you. Oak is made for all faith traditions and everything in-between."
+          },
+          {
+           "k": "big",
+           "h": "What grounds you can help you cope.",
+           "sub": "Feeling abandoned, judged, or far from the sacred can weigh heavily too.",
+           "say": "Research on spirituality and health often finds that what grounds people helps them cope with hard seasons. And the opposite is real too. Feeling abandoned, judged, or far from the sacred can weigh heavily."
+          },
+          {
+           "k": "points",
+           "h": "How Roots can look",
+           "items": [
+            [
+             "Strong",
+             "You know what holds you up, and you reach for it",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "It is there, though you reach for it less lately",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "You feel unmoored, or faith feels heavy right now",
+             "#B8612F"
+            ]
+           ],
+           "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is a real and honest place to be."
+          },
+          {
+           "k": "story",
+           "title": "A Presence That Cannot Be Boxed",
+           "lines": [
+            "The nurse warned me: not religious. The family sat with their arms crossed, ready to get through my visit politely.",
+            "Then the wife leaned forward. We are not religious, she said. But we are deeply spiritual. We believe in a presence that cannot be boxed or labeled or fully described.",
+            "We kept what felt true from each tradition and let the rest go. It is not neat or tidy. But it is ours."
+           ],
+           "lesson": "Roots of every shape can hold you up.",
+           "note": "From a Grounded story by Chris Joy",
+           "say": "On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours. I told her she had just explained God better than most sermons I had ever heard. And the whole room laughed."
+          },
+          {
+           "k": "big",
+           "h": "Oak asks what holds you up.",
+           "sub": "It asks whether your roots are holding you up.",
+           "say": "That is why Oak asks what holds you up. It asks whether your roots are holding you up, or weighing you down. Your roots are yours."
+          },
+          {
+           "k": "points",
+           "h": "Practice: A Presence Check",
+           "items": [
+            [
+             "Settle",
+             "Feet down, one slow breath"
+            ],
+            [
+             "What holds me up today?",
+             "A person, a prayer, a place, a word"
+            ],
+            [
+             "Where did I feel something bigger than me this week?",
+             "Even for a moment"
+            ],
+            [
+             "Name it",
+             "With a word, a prayer, or a thank-you"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 5,
+             "2": 15,
+             "3": 15,
+             "4": 10
+            },
+            "at": [1, 2, 3, 4]
+           },
+           "say": "Let us practice. This one is called a Presence Check. Settle in, with your feet down, and take one slow breath. Now ask yourself, what holds me up today? Maybe a person, a prayer, a place, or a word. Next, where did I feel something bigger than me this week? Even for a moment. Last, name it. With a word, a prayer, or a simple thank you."
+          },
+          {
+           "k": "big",
+           "h": "Tend your roots, and they will hold you.",
+           "sub": "Presence Check is in the Practice Library, ready for your growth plan.",
+           "say": "Tend your roots, and they will hold you. You will find the Presence Check in the Practice Library, ready to add to your growth plan."
+          },
+          {
+           "k": "quiz",
+           "q": "What does Oak look at in Roots?",
+           "opts": [
+            "Which religion you belong to",
+            "Whether what grounds you holds you up or weighs you down",
+            "How often you attend services"
+           ],
+           "right": 1,
+           "why": "Roots are about what holds you up, whatever you believe.",
+           "say": "Quick question. What does Oak look at in Roots?"
+          }
+         ],
+         "plainTitle": "Roots: What Grounds You"
+        },
+        {
+         "id": "ok-6-bark",
+         "crisis": [
+          "988: call or text, any time"
+         ],
+         "n": 2,
+         "title": "Bark: Mind",
+         "mins": 6,
+         "blurb": "Bending without breaking.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 2",
+           "h": "Bark: Mind",
+           "sub": "Mind and feelings.",
+           "say": "This lesson is about Bark: Mind, your thoughts and your feelings. It is one of the four parts you tend each day."
+          },
+          {
+           "k": "big",
+           "h": "Bark protects the tree, and it flexes as the tree grows.",
+           "say": "Bark protects a tree from storms and sun, and it has to flex as the tree grows. Your mind and feelings work the same way. Healthy bark bends and holds."
+          },
+          {
+           "k": "points",
+           "h": "Healthy bark can look like",
+           "items": [
+            [
+             "Thoughts that settle",
+             "Worry comes, and it also goes"
+            ],
+            [
+             "Feelings you can name",
+             "Sad, scared, angry, tired, glad"
+            ],
+            [
+             "Bouncing back",
+             "Hard days stay in their place"
+            ],
+            [
+             "Asking for help",
+             "Before it gets too heavy"
+            ]
+           ],
+           "say": "Healthy bark can look like thoughts that settle, so worry comes and also goes. Feelings you can name. Bouncing back, so a hard day does not take over the whole week. And asking for help before it gets too heavy."
+          },
+          {
+           "k": "big",
+           "h": "Putting a feeling into words can turn down the alarm.",
+           "sub": "Name it to tame it.",
+           "say": "Here is something researchers have found. Simply putting a feeling into words can turn down the body’s alarm. Some people call it, name it to tame it."
+          },
+          {
+           "k": "points",
+           "h": "How Bark can look",
+           "items": [
+            [
+             "Strong",
+             "You feel your feelings and find your way back",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "Mostly steady, with some heavy stretches",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "Worry, sadness, or stress is wearing you down",
+             "#B8612F"
+            ]
+           ],
+           "say": "Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly steady, with some heavy stretches. And a Growing Edge might mean worry, sadness, or stress is wearing you down. That deserves tending, and sometimes more support."
+          },
+          {
+           "k": "story",
+           "title": "Emotional Resilience",
+           "lines": [
+            "I sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver.",
+            "I placed my hand lightly on the patient’s, breathed slowly, and reminded myself: this moment is sacred, and so is my capacity to stay rooted.",
+            "Resilience is not the absence of sorrow. It is bending without breaking, letting the waves move through us instead of pulling us under."
+           ],
+           "lesson": "Let the feeling move through you.",
+           "note": "From a Grounded reflection by Chris Joy",
+           "say": "I once sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver. So I placed my hand lightly on the patient’s hand, and breathed slowly. I did not push the feeling away. I made room for it. Resilience, I realized, is not the absence of sorrow. It is bending without breaking. Letting the waves move through us, instead of pulling us under."
+          },
+          {
+           "k": "points",
+           "h": "Practice: Shake Off the Raindrops",
+           "items": [
+            [
+             "Name it",
+             "This is grief. This is fear."
+            ],
+            [
+             "Ground it",
+             "Feet on the floor, breath moving"
+            ],
+            [
+             "Shake it off",
+             "Shake your hands like raindrops"
+            ],
+            [
+             "Find one bright moment",
+             "A smile, a kindness, a bit of light"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 8,
+             "3": 10,
+             "5": 10,
+             "7": 12
+            },
+            "at": [0, 2, 4, 6]
+           },
+           "say": "Let us practice four steps from that day. Name it. Say softly inside, this is grief, or this is fear. Ground it. Feel your feet on the floor, and your breath moving in and out. Shake it off. Shake your hands gently, as if you are letting go of heavy raindrops. Then find one bright moment from today. A smile, a kindness, a bit of light."
+          },
+          {
+           "k": "big",
+           "h": "Heavy for weeks? You deserve more support.",
+           "sub": "Talk with your doctor or a counselor.",
+           "say": "If your feelings stay heavy for weeks, you deserve more support. Talk with your doctor or a counselor. Getting help is a strong thing to do."
+          },
+          {
+           "k": "quiz",
+           "q": "What is emotional resilience?",
+           "opts": [
+            "Never feeling sad",
+            "Bending without breaking",
+            "Keeping your feelings hidden"
+           ],
+           "right": 1,
+           "why": "Resilience lets feelings move through you without pulling you under.",
+           "say": "Quick question. What is emotional resilience?"
+          }
+         ]
+        },
+        {
+         "id": "ok-6-leaves",
+         "n": 3,
+         "title": "Leaves: Body",
+         "mins": 6,
+         "blurb": "Move, rest, and nourish.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 3",
+           "h": "Leaves: Body",
+           "sub": "Body.",
+           "say": "This lesson is about Leaves: Body. Move, rest, and nourish. It is one of the four parts you tend each day."
+          },
+          {
+           "k": "big",
+           "h": "Leaves turn light into energy for the whole tree.",
+           "say": "Leaves turn sunlight into energy for the whole tree. Your body does something like that for all of you. When your body is cared for, everything else has more to work with."
+          },
+          {
+           "k": "flow",
+           "h": "Three ways to tend Leaves",
+           "steps": [
+            [
+             "Move",
+             "In a way that fits your body"
+            ],
+            [
+             "Rest",
+             "Sleep, and small pauses"
+            ],
+            [
+             "Nourish",
+             "Water and real food"
+            ]
+           ],
+           "say": "Oak tends Leaves in three ways. Move, in a way that fits your body. Rest, with sleep and small pauses. And nourish, with water and real food."
+          },
+          {
+           "k": "big",
+           "h": "Body and mind talk to each other all day long.",
+           "sub": "Small amounts of movement, rest, and steady meals can lift mood and energy.",
+           "say": "Your body and mind talk to each other all day long. Research finds that even small amounts of movement, regular rest, and steady meals can lift mood and energy. You do not need a big plan to start."
+          },
+          {
+           "k": "points",
+           "h": "How Leaves can look",
+           "items": [
+            [
+             "Strong",
+             "You move, rest, and eat in ways that fuel you",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "Mostly okay, with a weak spot or two",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "Worn out, running on empty, or hurting",
+             "#B8612F"
+            ]
+           ],
+           "say": "Strong leaves might mean you move, rest, and eat in ways that fuel you. Steady might mean mostly okay, with a weak spot or two. And a Growing Edge might mean you feel worn out, run down, or in pain."
+          },
+          {
+           "k": "story",
+           "title": "A Lion-Sized Reset",
+           "lines": [
+            "My alarm didn’t go off, the dog got into the trash, and I walked out the door with two different shoes on.",
+            "A detour added twenty minutes. By the time I pulled up to my first visit, my head was spinning.",
+            "So I parked a little early, rolled down the window, and roared. Three times. By the third one, I was laughing at myself, and I was ready."
+           ],
+           "lesson": "Your body can reset your mind.",
+           "note": "From a Grounded reflection by Chris Joy",
+           "say": "One morning went wrong from the start. No alarm, the dog in the trash, two different shoes, and a twenty minute detour. By my first visit, my head was spinning. So I parked, rolled down the window, and did a lion’s breath. A deep breath in, then mouth wide, tongue out, and a long, loud haaa. Three times. My jaw loosened, my shoulders dropped, and I started laughing at myself. My body reset my mind."
+          },
+          {
+           "k": "points",
+           "h": "Practice: A Body Check-in",
+           "items": [
+            [
+             "Move",
+             "What would feel good to move right now?"
+            ],
+            [
+             "Rest",
+             "When will I rest today?"
+            ],
+            [
+             "Nourish",
+             "Have I had water and a real meal?"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 10,
+             "2": 10,
+             "3": 10,
+             "5": 20
+            },
+            "at": [1, 2, 3]
+           },
+           "say": "Let us do a quick body check in. Move. What would feel good to move right now? Rest. When will I rest today, even for five minutes? Nourish. Have I had water, and a real meal? Now pick one, and do it right now. Stand and stretch, or go get a glass of water. I will wait."
+          },
+          {
+           "k": "big",
+           "h": "Your body is part of the whole you.",
+           "sub": "Set your Movement Level in settings. Talk with your doctor before big changes.",
+           "say": "Your body is part of the whole you, not separate from it. In settings, choose your movement level, gentle, moderate, or athletic, so practices fit your body. And talk with your doctor before big changes. Lion’s Breath is in the Practice Library too."
+          },
+          {
+           "k": "quiz",
+           "q": "Oak tends Leaves in three ways. What are they?",
+           "opts": [
+            "Move, Rest, Nourish",
+            "Run, Lift, Diet",
+            "Sleep, Work, Play"
+           ],
+           "right": 0,
+           "why": "Move, Rest, and Nourish keep your leaves green.",
+           "say": "Quick question. Oak tends Leaves in three ways. What are they?"
+          }
+         ]
+        },
+        {
+         "id": "ok-6-branches",
+         "n": 4,
+         "title": "Branches: Relationships",
+         "mins": 6,
+         "blurb": "Reaching toward people, and repairing what breaks.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 4",
+           "h": "Branches: Relationships",
+           "sub": "Relationships.",
+           "say": "This lesson is about Branches: Relationships, the people you reach toward. It is one of the four parts you tend each day."
+          },
+          {
+           "k": "big",
+           "h": "Branches reach out. That is how a tree catches light.",
+           "say": "Branches reach out. That is how a tree catches light. People are the same. We were made to reach toward each other."
+          },
+          {
+           "k": "points",
+           "h": "Branches can look like",
+           "items": [
+            [
+             "Someone to call",
+             "When the news is good, or bad"
+            ],
+            [
+             "Belonging",
+             "A family, a team, a congregation, a circle"
+            ],
+            [
+             "Giving and receiving",
+             "Help goes both ways"
+            ],
+            [
+             "Repair",
+             "Making it right when things break"
+            ]
+           ],
+           "say": "Branches can look like someone to call, when the news is good or bad. Belonging, in a family, a team, a congregation, or a circle of friends. Giving and receiving help. And repair, making it right when things break."
+          },
+          {
+           "k": "big",
+           "h": "Close relationships are among the strongest helps for health.",
+           "sub": "And loneliness weighs on body and mind.",
+           "say": "Research keeps finding that close relationships are among the strongest helps for health and long life. And loneliness weighs on both body and mind. Your branches matter."
+          },
+          {
+           "k": "points",
+           "h": "How Branches can look",
+           "items": [
+            [
+             "Strong",
+             "You have people, and you reach for them",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "Good people, though some ties feel thin",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "You feel alone, or a key relationship is hurting",
+             "#B8612F"
+            ]
+           ],
+           "say": "Strong branches might mean you have people, and you reach for them. Steady might mean good people, though some ties feel thin. And a Growing Edge might mean you feel alone, or an important relationship is hurting."
+          },
+          {
+           "k": "story",
+           "title": "The Recovery",
+           "lines": [
+            "I broke a dying woman’s saucer. Antique china. She had just shown it to me, the one good thing in her hard day.",
+            "I dropped to my knees and said how sorry I was. Instead of anger, I got grace. Someone broke a special one on me once, she said. Didn’t even say sorry. At least you did.",
+            "That night I glued what I could, and found a nearly identical saucer. Not the mistake. The recovery."
+           ],
+           "lesson": "What happens after a break matters most.",
+           "note": "From a Grounded story by Chris Joy",
+           "link": {
+            "href": "https://chri5j0y.substack.com/p/the-recovery",
+            "label": "Read the Full Story: The Recovery"
+           },
+           "say": "Let me tell you about Gail, who lives in memory care, and keeps her whole life in a china cabinet. One day she showed me a new cup and saucer. I picked it up, and the saucer let go and shattered on the floor. I dropped to my knees and told her how sorry I was. And instead of anger, she gave me grace. Someone broke a special one on me once, she said. Did not even say sorry. At least you did. We ended up laughing together. That night I glued what I could, and found a nearly identical saucer to bring back, with flowers. What stays, I have come to believe, is not the mistake. It is the recovery."
+          },
+          {
+           "k": "big",
+           "h": "Every relationship has breaks.",
+           "sub": "What happens after matters most.",
+           "say": "Every relationship has breaks. Words we wish we could take back. Times we let someone down. What happens after matters most."
+          },
+          {
+           "k": "points",
+           "h": "Practice: Make the Repair",
+           "items": [
+            [
+             "Own it plainly",
+             "I did that. I am sorry."
+            ],
+            [
+             "Skip the but",
+             "Own it, plainly"
+            ],
+            [
+             "Ask what would help",
+             "What can I do to make this right?"
+            ],
+            [
+             "Follow through",
+             "Then do it"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 15,
+             "7": 12
+            },
+            "at": [2, 3, 5, 6]
+           },
+           "say": "Let us practice. Think of one relationship that could use a repair, big or small. Take a moment. Here are the steps. Own it plainly. I did that, and I am sorry. Skip the but. No excuses, and no explaining it away. Ask, what can I do to make this right? Then follow through. Now picture your first step."
+          },
+          {
+           "k": "big",
+           "h": "Repair takes courage, and it grows trust.",
+           "sub": "Make the Repair is in the Practice Library.",
+           "say": "Repair takes courage, and it grows trust. If a relationship is not safe for you, your safety comes first, and When Life Changes has a guide for that. You will find Make the Repair in the Practice Library."
+          },
+          {
+           "k": "quiz",
+           "q": "In The Recovery, what mattered most?",
+           "opts": [
+            "That the saucer never broke",
+            "What happened after the break",
+            "Who was to blame"
+           ],
+           "right": 1,
+           "why": "Not the mistake. The recovery.",
+           "say": "Quick question. In The Recovery, what mattered most?"
+          }
+         ]
+        },
+        {
+         "id": "ok-6-trunk",
+         "n": 5,
+         "title": "Trunk: Meaning",
+         "mins": 6,
+         "blurb": "What you live for, and what you give, growing from all you tend.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 5",
+           "h": "Trunk: Meaning",
+           "sub": "Meaning and purpose.",
+           "say": "This lesson is about your Trunk: Meaning, often called meaning and purpose. What you live for, and what you give. Your trunk is one of the two parts that grow from your tending."
+          },
+          {
+           "k": "big",
+           "h": "The trunk carries everything up to the branches.",
+           "say": "A tree’s trunk carries everything from the roots up to the branches, and it thickens ring by ring. Meaning works the same way. It carries your days. It gives your effort somewhere to go."
+          },
+          {
+           "k": "points",
+           "h": "Purpose can look like",
+           "items": [
+            [
+             "Work you care about",
+             "Paid or not"
+            ],
+            [
+             "People who count on you",
+             "Family, friends, neighbors"
+            ],
+            [
+             "Something you are building",
+             "A skill, a garden, a business"
+            ],
+            [
+             "Your gifts",
+             "The way you show up for others"
+            ]
+           ],
+           "say": "Purpose can look like work you care about, paid or not. People who count on you. Something you are building or learning. And your gifts, the way you show up for others."
+          },
+          {
+           "k": "big",
+           "h": "Meaning grows from what you give yourself to.",
+           "sub": "And it can change shape and still be real.",
+           "say": "Meaning is hard to chase directly. It grows as you give yourself to the people and the work you love, and to something larger than yourself. Research also finds that people with a sense of purpose tend to handle stress and hard seasons better. And here is the hopeful part. Purpose can change shape, and still be real."
+          },
+          {
+           "k": "points",
+           "h": "How Trunk can look",
+           "items": [
+            [
+             "Strong",
+             "You know what you are here for, and it fills you",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "You have purpose, though some days feel flat",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "You feel lost, or a role you loved has ended",
+             "#B8612F"
+            ]
+           ],
+           "say": "A strong trunk might mean you know what you are here for, and it fills you. Steady might mean you have purpose, though some days feel flat. And a Growing Edge might mean you feel lost, or a role you loved has ended. That is often where the most growth begins."
+          },
+          {
+           "k": "story",
+           "title": "Finding a New Purpose",
+           "lines": [
+            "Sophia was twenty-eight, studying to be a physical trainer, when a rare bone disease changed everything. Everything I worked for is disappearing, she said.",
+            "I asked her: Even if your body changes, what part of you, the real you, can still strengthen others?",
+            "I can’t train people to run marathons anymore, she told me later. But maybe I can help them run their own race."
+           ],
+           "lesson": "Roles can change. Your gifts come with you.",
+           "note": "From a Grounded reflection by Chris Joy",
+           "say": "Let me tell you about Sophia. She was twenty eight, building a life as a physical trainer, when a rare bone disease changed everything. She told me she was scared she would become someone people had to take care of, instead of someone who lifts others up. I did not rush in with answers. I stayed and listened. Then, gently, I asked, even if your body changes, what part of you, the real you, can still strengthen others? Sophia had always been an encourager. That gift had not gone anywhere. One day she said, I cannot train people to run marathons anymore. But maybe I can help them run their own race."
+          },
+          {
+           "k": "big",
+           "h": "Roles can change. Your gifts come with you.",
+           "say": "Roles change. Jobs end. Kids grow up. Bodies change. But your gifts come with you, and they can find a new shape."
+          },
+          {
+           "k": "points",
+           "h": "Practice: The Real You",
+           "items": [
+            [
+             "Name three gifts",
+             "Gifts like encouraging, fixing, noticing, making people laugh."
+            ],
+            [
+             "Find who needs one",
+             "A person, a group, a cause"
+            ],
+            [
+             "Choose one way this week",
+             "Small is fine"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 20,
+             "2": 15,
+             "3": 12
+            },
+            "at": [1, 2, 3]
+           },
+           "say": "Let us practice. This one is called The Real You, and it lives in Bark: Mind. First, name three of your gifts. Not job titles. Things like encouraging, fixing, noticing, or making people laugh. Now, who could use one of those gifts? A person, a group, or a cause. Last, choose one way to use it this week. Small is fine."
+          },
+          {
+           "k": "big",
+           "h": "Meaning grows when you use your gifts.",
+           "sub": "The Real You is in the Practice Library, under Bark: Mind.",
+           "say": "Meaning grows when you use your gifts, a little at a time. Tend your four, and your trunk thickens, ring by ring. You will find The Real You in the Practice Library, under Bark: Mind."
+          },
+          {
+           "k": "quiz",
+           "q": "What does Sophia’s story show about purpose?",
+           "opts": [
+            "When a role ends, purpose is gone",
+            "Your gifts can find a new shape",
+            "Only paid work counts"
+           ],
+           "right": 1,
+           "why": "Roles change, and your gifts come with you.",
+           "say": "Quick question. What does Sophia’s story show about purpose?"
+          }
+         ]
+        },
+        {
+         "id": "ok-6-fruit",
+         "crisis": [
+          "988: call or text, any time",
+          "911: emergency"
+         ],
+         "n": 6,
+         "title": "Fruit: Hope",
+         "mins": 6,
+         "blurb": "What grows when the whole tree is tended.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Tend Four, Grow Two, Lesson 6",
+           "h": "Fruit: Hope",
+           "sub": "Hope.",
+           "say": "This last lesson is about Fruit: Hope. Like your trunk, your fruit grows from your tending."
+          },
+          {
+           "k": "big",
+           "h": "Fruit takes time. It grows from everything else.",
+           "say": "Fruit takes time. It grows from everything else. Roots, bark, leaves, and branches all feed it. Hope works the same way."
+          },
+          {
+           "k": "points",
+           "h": "Hope can look like",
+           "items": [
+            [
+             "Something to look forward to",
+             "Big or small"
+            ],
+            [
+             "Noticing good",
+             "Even on hard days"
+            ],
+            [
+             "A future you can picture",
+             "And a next step toward it"
+            ],
+            [
+             "Believing things can change",
+             "For you, and for others"
+            ]
+           ],
+           "say": "Hope can look like something to look forward to, big or small. Noticing the good, even on hard days. A future you can picture, and a next step toward it. And believing that things can change."
+          },
+          {
+           "k": "big",
+           "h": "Hope can be grown.",
+           "sub": "It is a goal, a way forward, and the will to keep going.",
+           "say": "Researchers who study hope describe it as three things together. A goal, a way forward, and the will to keep going. And hope can be grown, like anything else you tend."
+          },
+          {
+           "k": "points",
+           "h": "How Fruit can look",
+           "items": [
+            [
+             "Strong",
+             "You look ahead with hope, even when it is hard",
+             "#5F7D48"
+            ],
+            [
+             "Steady",
+             "Hope is there, though some days it fades",
+             "#8B5E1A"
+            ],
+            [
+             "Growing Edge",
+             "It is hard to see anything good ahead",
+             "#B8612F"
+            ]
+           ],
+           "say": "Strong fruit might mean you look ahead with hope, even when it is hard. Steady might mean hope is there, though some days it fades. And a Growing Edge might mean it is hard to see anything good ahead right now."
+          },
+          {
+           "k": "story",
+           "title": "A Day of Contrasts",
+           "lines": [
+            "At the end of a muddy dirt road, a woman who had lived on her farm for nearly eighty years set out orange juice and a plate of cookies.",
+            "She pointed out the window. Can you see that right there? A little woodpecker on the tree.",
+            "That’s the reason I’m here, she said. That’s all I need to be happy. I’m simple. It doesn’t take much."
+           ],
+           "lesson": "Hope often starts with noticing what is already good.",
+           "note": "From a Grounded reflection by Chris Joy",
+           "say": "One visit took me to the end of a muddy dirt road, to a woman who had lived on her farm for almost eighty years and raised nine children there. Over orange juice and cookies, she asked, can you see that right there? I spotted a little woodpecker, on the tree outside. That is the reason I am here, she said. That is all I need to be happy. I am simple. It does not take much. I left with my heart full."
+          },
+          {
+           "k": "points",
+           "h": "Practice: One Woodpecker",
+           "items": [
+            [
+             "Look around",
+             "Find one small good thing, right now"
+            ],
+            [
+             "Say it",
+             "Out loud, or write it down"
+            ],
+            [
+             "Look ahead",
+             "Name one small thing to look forward to"
+            ]
+           ],
+           "cue": {
+            "w": {
+             "1": 15,
+             "2": 10,
+             "3": 12
+            },
+            "at": [1, 2, 3]
+           },
+           "say": "Let us practice. This one is called One Woodpecker, and it lives in Bark: Mind. Look around and find one small good thing, right now. Say it out loud, or write it down. Then name one small thing to look forward to, today or this week."
+          },
+          {
+           "k": "big",
+           "h": "Losing hope? Let someone help you hold it.",
+           "say": "If it is hard to see anything good ahead, let someone help you hold that."
+          },
+          {
+           "k": "big",
+           "h": "Tend all four, and fruit will come.",
+           "sub": "One Woodpecker is in the Practice Library, under Bark: Mind.",
+           "say": "Tend all four, a little at a time, and fruit will come. One Woodpecker is in the Practice Library, under Bark: Mind. The Grounded Way works when you tend all four parts. And when storms come, a tended tree bends without breaking, because its roots hold. That is the whole tree. Well done."
+          },
+          {
+           "k": "quiz",
+           "q": "Where does hope often start?",
+           "opts": [
+            "With a big change",
+            "With noticing one small good thing",
+            "With having no problems"
+           ],
+           "right": 1,
+           "why": "Hope often starts with noticing what is already good.",
+           "say": "Last question. Where does hope often start?"
+          }
+         ]
+        }
+       ]
+      },
       { id: 'oak-shelter', title: 'Shelter for Others', who: 'For parents, partners, friends, and caregivers', certTitle: 'Oak: Shelter for Others', lessons: [
 
         { id: 'ok-s-present', n: 1, title: 'Being There Is the Gift', mins: 5, blurb: 'Presence matters more than the perfect words.', scenes: [
@@ -10533,7 +13091,9 @@ window.GG_LEARN = {
        "lessons": [
         {
          "id": "ok-sh-grief-love",
-         "crisis": ["988: call or text, any time"],
+         "crisis": [
+          "988: call or text, any time"
+         ],
          "n": 1,
          "title": "Grief Is Love We Carry",
          "mins": 4,
@@ -10770,8 +13330,8 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Meaning grows in every season.",
-           "sub": "In Oak, this is your Trunk, your purpose.",
-           "say": "Meaning grows in every season of life. In Oak, this is your Trunk, your purpose, and these three paths are ways to tend it. The Practice Library has more ways, whenever you are ready."
+           "sub": "In Oak, this is your Trunk: Meaning.",
+           "say": "Meaning grows in every season of life. In Oak, this is your Trunk: Meaning, and it grows as you walk these three paths and tend your four. The Practice Library has more ways, whenever you are ready."
           },
           {
            "k": "quiz",
@@ -11332,14 +13892,14 @@ window.GG_LEARN = {
        "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
        "lowkey": "sober",
        "certTitle": "Growing a Healthy Tree",
-       "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+       "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all four parts of your tree.",
        "lessons": [
         {
          "id": "ok-ls-tree",
          "n": 1,
          "title": "The Healthy Tree",
          "mins": 6,
-         "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
+         "blurb": "Your tree, tend four and grow two, and Chris's three kinds of tools: mind, body, and spirit.",
          "sources": [
           "samhsarec"
          ],
@@ -11357,7 +13917,7 @@ window.GG_LEARN = {
            "hero": "oak",
            "eyebrow": "Growing a Healthy Tree, Lesson 1",
            "h": "The Healthy Tree",
-           "sub": "Six parts, tended a little each day.",
+           "sub": "Tend four, grow two, a little each day.",
            "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
           },
           {
@@ -11383,41 +13943,34 @@ window.GG_LEARN = {
            "h": "Your tree, whole and growing",
            "items": [
             [
-             "Roots",
+             "Roots: Spirit",
              "What you are anchored in"
             ],
             [
-             "Trunk",
-             "Meaning"
-            ],
-            [
-             "Bark",
+             "Bark: Mind",
              "Your mind"
             ],
             [
-             "Branches",
-             "Your people"
-            ],
-            [
-             "Leaves",
+             "Leaves: Body",
              "Your body"
             ],
             [
-             "Fruit",
-             "Hope"
+             "Branches: Relationships",
+             "Your people"
+            ],
+            [
+             "Trunk: Meaning",
+             "Grows from your tending"
+            ],
+            [
+             "Fruit: Hope",
+             "Grows from your tending"
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             4,
-             5,
-             7,
-             8,
-             10
-            ]
+            "at": [2, 5, 7, 9, 10, 10]
            },
-           "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
+           "say": "Grounded pictures your life as a tree. Four parts are tended, and two grow from that tending. Roots are your spirit, what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. Bark is your mind. Calming down, processing hard emotions, and healing over well. Leaves are your body. Sleep, movement, food, breath, and medical care. Branches are your people. Then the trunk, meaning, the larger story you live inside, and the fruit, hope, the evidence that a future is still growing, grow from that tending. A Sober life grows strongest when all four are tended."
           },
           {
            "k": "flow",
@@ -11437,11 +13990,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             3,
-             5
-            ]
+            "at": [1, 3, 5]
            },
            "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
           },
@@ -11569,13 +14118,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             5,
-             6,
-             8
-            ]
+            "at": [1, 2, 5, 6, 8]
            },
            "say": "Here is one rhythm. Water first, a full glass, before anything else. Then light. Step outside, or open a window, and let morning light reach your eyes. It helps set your body clock for the day and for sleep tonight. Then breath, two minutes, slow and steady. Then choose. Say your intention for a Sober day, in your own words. And move. A walk around the block, even five minutes."
           },
@@ -11630,12 +14173,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3,
-             4
-            ]
+            "at": [1, 2, 3, 4]
            },
            "say": "A few things make it easy to keep. Set it up the night before, with a glass by the sink and shoes by the door. Let your phone wait until after your rhythm, so your first minutes are yours. Keep the same order each day, so your body learns it. And short counts. Five minutes is a whole rhythm."
           },
@@ -11715,11 +14253,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             1,
-             2
-            ]
+            "at": [0, 1, 2]
            },
            "say": "A craving shows up in the body, like a tight chest, restless hands, or a dry mouth. It shows up in the mind, with thoughts like, just this once, or, I deserve it. And it often comes with a certain time, place, or feeling, like the end of a workday, payday, or a lonely evening."
           },
@@ -11745,12 +14279,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             3,
-             4,
-             5
-            ]
+            "at": [1, 3, 4, 5]
            },
            "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
           },
@@ -11799,12 +14328,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             3,
-             4,
-             5
-            ]
+            "at": [1, 3, 4, 5]
            },
            "say": "When the wave settles, take care of yourself. Change the scene. Step outside, or into another room. Reach out, and text one person in your corner. Have water and something to eat, because hunger and thirst can feel a lot like a craving. And write down the time and the place, so next time you can plan for it."
           },
@@ -11884,11 +14408,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             3,
-             5
-            ]
+            "at": [1, 3, 5]
            },
            "say": "Here is the shape of it. Slow. Breathe in gently through your nose. Low. Let your belly rise, and let your shoulders stay soft. Long. Let the breath out a little longer than the breath in."
           },
@@ -11946,12 +14466,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             1,
-             2,
-             3
-            ]
+            "at": [0, 1, 2, 3]
            },
            "say": "Use it during a craving, and breathe while the wave passes. Use it with anger, with three slow breaths before you answer. Use it on a hard night, lying down with your eyes closed. And use it anywhere. At work, in line, or in the car. It stays quiet and private."
           },
@@ -12048,12 +14563,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3,
-             5
-            ]
+            "at": [1, 2, 3, 5]
            },
            "say": "Here is a simple way to keep it easy. Start at a pace where you can still talk. If you have a heart rate watch, one well known guide sets a top number of one hundred eighty, minus your age. Stay under it. Slow down, or walk, when you pass it. Then add a few minutes each week."
           },
@@ -12098,12 +14608,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             2,
-             3,
-             4
-            ]
+            "at": [0, 2, 3, 4]
            },
            "say": "Find your kind of moving. A daily walk, outside whenever you can. A run or a bike ride, easy and steady. Moving with someone, a friend, a walking group, or a team, which adds connection too. And on gentle days, stretching or a slow walk counts."
           },
@@ -12199,12 +14704,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3,
-             4
-            ]
+            "at": [1, 2, 3, 4]
            },
            "say": "To try heat gently, keep it simple. Drink water before and after. Start short, five to ten minutes. Listen to your body, and step out right away if you feel dizzy or unwell. Then cool down slowly, rest, and sip water. No sauna nearby? A warm bath works too."
           },
@@ -12226,11 +14726,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3
-            ]
+            "at": [1, 2, 3]
            },
            "say": "Cool water can be gentle too. Splash cool water on your face for a few breaths, which can help a racing heart slow down. Or turn your shower cool for the last thirty seconds. Either way, breathe slowly, with long breaths out, the whole time."
           },
@@ -12350,13 +14846,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             2,
-             3,
-             4,
-             5
-            ]
+            "at": [0, 2, 3, 4, 5]
            },
            "say": "Walk slowly, and take it in one sense at a time. See the light, the leaves, and the colors. Hear the birds, the wind, or water. Smell the earth and the green things. Touch the bark, a leaf, or the air on your skin. And breathe, slow and deep."
           },
@@ -12405,12 +14895,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             2,
-             3,
-             4
-            ]
+            "at": [0, 2, 3, 4]
            },
            "say": "Make it a habit. Go unplugged, with your phone in your pocket and the sound off. Aim for twenty minutes, or start with five. Return to the same place, and watch it change with the seasons. And invite someone to walk with you, quietly. A walk among trees is a strong answer to a craving, too."
           },
@@ -12500,12 +14985,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             4,
-             6
-            ]
+            "at": [1, 2, 4, 6]
            },
            "say": "Here is a simple way to begin. Set a timer for ten minutes. Write freely. Spelling and neatness are beside the point. Go to the feeling. What happened, and how did it feel? Then close kindly, with one line about what you need now."
           },
@@ -12550,12 +15030,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             1,
-             2,
-             3
-            ]
+            "at": [0, 1, 2, 3]
            },
            "say": "When a craving comes, ask, what am I really hungry for? For an old hurt, ask, what happened, and what did I need back then? For anger, ask, what matters to me here? And on a good day, ask, what went well today?"
           },
@@ -12647,11 +15122,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             4,
-             5
-            ]
+            "at": [1, 4, 5]
            },
            "say": "Your story belongs to you. Use your own words for who you are. Some people use a label for themselves, and some choose other words. Both are welcome here. Say what happened, plainly. And say what helps, and what you are growing now. Words matter. Research finds that the words we use about people can shape how they are treated, so Grounded speaks of people growing sober."
           },
@@ -12673,11 +15144,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             2,
-             3
-            ]
+            "at": [0, 2, 3]
            },
            "say": "Start small. One true sentence, written down first. One safe person, someone steady and kind. And one good time to say it, calm, private, and Sober."
           },
@@ -12717,11 +15184,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3
-            ]
+            "at": [1, 2, 3]
            },
            "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like SMART Recovery or Refuge Recovery, where people walking the same road share their stories too."
           },
@@ -12815,12 +15278,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3,
-             5
-            ]
+            "at": [1, 2, 3, 5]
            },
            "say": "Here are a few ideas. Something special to sip, like sparkling water with fruit, juice, or a good tea. Good food, made and shared together. Music and movement. A dance, a song, or a walk at sunset. And a blessing, a few words for the day, or for the person you are celebrating."
           },
@@ -12846,12 +15304,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             2,
-             3,
-             4,
-             5
-            ]
+            "at": [2, 3, 4, 5]
            },
            "say": "Going to a party? Make a plan. Bring your own drink, something you love, so your hands are full. Bring a friend who is in your corner. Plan your way home, with your own ride and a time to leave. And have your answer ready. No thanks, I'm good."
           },
@@ -12891,11 +15344,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             3,
-             4
-            ]
+            "at": [0, 3, 4]
            },
            "say": "Celebrate your own growth too. Mark your days. Thirty days, ninety days, a year. Tell someone, and let them celebrate with you. And give yourself a gift that feeds your tree, like new running shoes, a day outdoors, or a good book."
           },
@@ -12978,13 +15427,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             1,
-             2,
-             3,
-             4
-            ]
+            "at": [0, 1, 2, 3, 4]
            },
            "say": "Start with the same wake time every day, even on weekends. Get morning light, outside, early in the day. Give yourself an Unplugged hour before bed, with screens put away. Keep your room cool, dark, and calm. And wind down with a warm shower, a book, or a slow breath."
           },
@@ -13033,12 +15476,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             2,
-             3,
-             4
-            ]
+            "at": [0, 2, 3, 4]
            },
            "say": "If you wake at night, stay calm. Quiet rest still helps your body. Breathe slowly, in for four and out for six. After a while, get up, sit in dim light with a calm book, and go back to bed when you feel sleepy. And turn the clock away, so the hours stay a mystery."
           },
@@ -13131,11 +15569,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             1,
-             2,
-             3
-            ]
+            "at": [1, 2, 3]
            },
            "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it become part of you."
           },
@@ -13180,12 +15614,7 @@ window.GG_LEARN = {
             ]
            ],
            "cue": {
-            "at": [
-             0,
-             2,
-             3,
-             4
-            ]
+            "at": [0, 2, 3, 4]
            },
            "say": "Here is good to look for. Clear mornings, waking up rested and present. Your people, a call returned, and trust growing back. Your body, growing stronger and steadier. And small wins, like another Sober day."
           },
@@ -13211,7 +15640,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Let the good sink in.",
            "sub": "Your tree is growing.",
-           "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
+           "say": "You have finished Growing a Healthy Tree. Roots, bark, leaves, and branches, tended a little each day, and meaning and hope growing from it. Let the good sink in. Your tree is growing."
           }
          ]
         }
@@ -14246,165 +16675,173 @@ window.GG_LEARN = {
       /* Willow Learn, premium (GWG BLD 728): Start Here, Using Willow, The Six Parts, For You, and For the People Who Love Them.
          Generated from patches/bld728/source in grounded-workshop. */
       {
-  "id": "willow-start",
-  "title": "Start Here",
-  "who": "For the person in hospice, and the people who love them",
-  "lessons": [
-   {
-    "id": "wl-welcome",
-    "crisis": ["988: call or text, any time", "911: emergency"],
-    "n": 1,
-    "title": "Welcome to Willow",
-    "mins": 4,
-    "blurb": "What Willow is, who it is for, and where to begin.",
-    "scenes": [
-     {
-      "k": "title",
-      "hero": "willow",
-      "eyebrow": "Start Here, Lesson 1",
-      "h": "Welcome to Willow",
-      "sub": "Held gently, all the way home.",
-      "say": "Welcome to Willow. A tree for the last part of the path, for the person in hospice, and the people who love them."
-     },
-     {
-      "k": "big",
-      "h": "A willow bends, and it holds.",
-      "sub": "Near the end of life, everyone in the room is bending.",
-      "say": "A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone."
-     },
-     {
-      "k": "flow",
-      "h": "Built for two",
-      "steps": [
-       [
-        "This is for me",
-        "I'm in hospice care, or facing the end of life"
-       ],
-       [
-        "I'm caring for someone I love",
-        "A parent, a partner, a friend, or family"
+       "id": "willow-start",
+       "title": "Start Here",
+       "who": "For the person in hospice, and the people who love them",
+       "lessons": [
+        {
+         "id": "wl-welcome",
+         "crisis": [
+          "988: call or text, any time",
+          "911: emergency"
+         ],
+         "n": 1,
+         "title": "Welcome to Willow",
+         "mins": 4,
+         "blurb": "What Willow is, who it is for, and where to begin.",
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "willow",
+           "eyebrow": "Start Here, Lesson 1",
+           "h": "Welcome to Willow",
+           "sub": "Held gently, all the way home.",
+           "say": "Welcome to Willow. A tree for the last part of the path, for the person in hospice, and the people who love them."
+          },
+          {
+           "k": "big",
+           "h": "A willow bends, and it holds.",
+           "sub": "Near the end of life, everyone in the room is bending.",
+           "say": "A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone."
+          },
+          {
+           "k": "flow",
+           "h": "Built for two",
+           "steps": [
+            [
+             "This is for me",
+             "I'm in hospice care, or facing the end of life"
+            ],
+            [
+             "I'm caring for someone I love",
+             "A parent, a partner, a friend, or family"
+            ]
+           ],
+           "cue": {
+            "at": [2, 3]
+           },
+           "say": "Willow is built for two. When you begin, it asks, is Willow for you, or for someone you love? This is for me, if you are in hospice care. Or I'm caring for someone I love, if you are caring for a parent, a partner, a friend, or family. Helpers open the person's tree with their own passcode, and see only what the person chooses to share."
+          },
+          {
+           "k": "points",
+           "h": "One tree, tended gently",
+           "say": "Willow looks gently at the whole tree. Four parts are tended. Roots: Spirit, what grounds you. Bark, peace inside. Leaves, comfort. And Branches, love said out loud. Two grow from that tending: Trunk, a life that mattered, and Fruit, hope and readiness.",
+           "items": [
+            [
+             "Four, tended gently",
+             "Spirit, peace inside, comfort, love said out loud"
+            ],
+            [
+             "Two that grow",
+             "A life that mattered, hope and readiness"
+            ]
+           ],
+           "cue": {
+            "at": [0, 5]
+           }
+          },
+          {
+           "k": "points",
+           "h": "A gentle check-in",
+           "items": [
+            [
+             "Quick Check-in",
+             "One question for each part"
+            ],
+            [
+             "Full Check-in",
+             "Three questions for each part"
+            ],
+            [
+             "Faith comes first",
+             "Asked gently, every time"
+            ],
+            [
+             "Gentle words in place of scores",
+             "Every part of a tree has seasons"
+            ]
+           ],
+           "say": "A check-in is how Willow listens. The Quick Check-in asks one question for each part. The Full Check-in asks three. Faith comes first, and every answer is welcome, including none. Afterward, Willow shows gentle words in place of scores, and each check-in the person answers adds a ring to their tree."
+          },
+          {
+           "k": "tabs",
+           "app": "willow",
+           "app_name": "Willow",
+           "tabs": [
+            "Today",
+            "What Matters",
+            "Cuttings",
+            "Bedside",
+            "When Life Changes",
+            "Readings",
+            "Learn"
+           ],
+           "tap": 0,
+           "note": {
+            "h": "Seven tabs",
+            "p": "Start with Today: the tree, one gentle practice, and the hospice line."
+           },
+           "say": "Today holds the tree, one gentle practice, and the hospice line. What Matters keeps the person's own words. Cuttings keeps stories and letters to leave behind. Bedside has what to do when you don't know what to do. When Life Changes has words for the hardest conversations. Readings has words to read aloud. And Learn is right here."
+          },
+          {
+           "k": "big",
+           "h": "Call your hospice first, day or night.",
+           "beats": [
+            "Your hospice has a line you can call day or night.",
+            "Add it in Willow Settings, and it sits at the top of Today.",
+            "For anything worrying at home, call your hospice first.",
+            {
+             "t": "If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge.",
+             "w": 10
+            }
+           ],
+           "say": "Your hospice has a line you can call day or night. Add it in Willow Settings, and it sits at the top of Today. For anything worrying at home, call your hospice first. If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge."
+          },
+          {
+           "k": "big",
+           "h": "A chaplain's questions, kept gently.",
+           "sub": "What grounds you? What matters most? Who do you want close?",
+           "say": "Willow was made by Chris Joy, a hospice chaplain, from the questions he asks every day. What grounds you? What matters most? Who do you want close? Willow keeps them gently in one place, on this device."
+          },
+          {
+           "k": "points",
+           "h": "Where to go next",
+           "items": [
+            [
+             "Using Willow",
+             "A short tour of each tab"
+            ],
+            [
+             "Tend Four, Grow Two",
+             "One lesson for each part"
+            ],
+            [
+             "For You",
+             "For the person in hospice"
+            ],
+            [
+             "For the People Who Love Them",
+             "For family and helpers"
+            ]
+           ],
+           "say": "From here, Using Willow walks through each tab, and Tend Four, Grow Two gives a lesson to each part. For You is for the person in hospice, and For the People Who Love Them is for family and helpers."
+          },
+          {
+           "k": "quiz",
+           "q": "Who is Willow built for?",
+           "opts": [
+            "Only the hospice team",
+            "The person in hospice, and the people who love them",
+            "Only the family"
+           ],
+           "right": 1,
+           "why": "Willow is built for two: the person, and the people who love them.",
+           "say": "One question. Who is Willow built for?"
+          }
+         ]
+        }
        ]
-      ],
-      "cue": {
-       "at": [2, 3]
       },
-      "say": "Willow is built for two. When you begin, it asks, is Willow for you, or for someone you love? This is for me, if you are in hospice care. Or I'm caring for someone I love, if you are caring for a parent, a partner, a friend, or family. Helpers open the person's tree with their own passcode, and see only what the person chooses to share."
-     },
-     {
-      "k": "six",
-      "h": "Six parts of one tree",
-      "words": [
-       "What grounds you",
-       "A life that mattered",
-       "Peace inside",
-       "Love said out loud",
-       "Comfort",
-       "Hope and readiness"
-      ],
-      "say": "Willow looks gently at six parts of a tree. Roots, what grounds you. Trunk, a life that mattered. Bark, peace inside. Branches, love said out loud. Leaves, comfort. And Fruit, hope and readiness."
-     },
-     {
-      "k": "points",
-      "h": "A gentle check-in",
-      "items": [
-       [
-        "Quick Check-in",
-        "One question for each part"
-       ],
-       [
-        "Full Check-in",
-        "Three questions for each part"
-       ],
-       [
-        "Faith comes first",
-        "Asked gently, every time"
-       ],
-       [
-        "Gentle words in place of scores",
-        "Every part of a tree has seasons"
-       ]
-      ],
-      "say": "A check-in is how Willow listens. The Quick Check-in asks one question for each part. The Full Check-in asks three. Faith comes first, and every answer is welcome, including none. Afterward, Willow shows gentle words in place of scores, and each check-in the person answers adds a ring to their tree."
-     },
-     {
-      "k": "tabs",
-      "app": "willow",
-      "app_name": "Willow",
-      "tabs": [
-       "Today",
-       "What Matters",
-       "Cuttings",
-       "Bedside",
-       "When Life Changes",
-       "Readings",
-       "Learn"
-      ],
-      "tap": 0,
-      "note": {
-       "h": "Seven tabs",
-       "p": "Start with Today: the tree, one gentle practice, and the hospice line."
-      },
-      "say": "Today holds the tree, one gentle practice, and the hospice line. What Matters keeps the person's own words. Cuttings keeps stories and letters to leave behind. Bedside has what to do when you don't know what to do. When Life Changes has words for the hardest conversations. Readings has words to read aloud. And Learn is right here."
-     },
-     {
-      "k": "big",
-      "h": "Call your hospice first, day or night.",
-      "beats": [
-       "Your hospice has a line you can call day or night.",
-       "Add it in Willow Settings, and it sits at the top of Today.",
-       "For anything worrying at home, call your hospice first.",
-       {
-        "t": "If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge.",
-        "w": 10
-       }
-      ],
-      "say": "Your hospice has a line you can call day or night. Add it in Willow Settings, and it sits at the top of Today. For anything worrying at home, call your hospice first. If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge."
-     },
-     {
-      "k": "big",
-      "h": "A chaplain's questions, kept gently.",
-      "sub": "What grounds you? What matters most? Who do you want close?",
-      "say": "Willow was made by Chris Joy, a hospice chaplain, from the questions he asks every day. What grounds you? What matters most? Who do you want close? Willow keeps them gently in one place, on this device."
-     },
-     {
-      "k": "points",
-      "h": "Where to go next",
-      "items": [
-       [
-        "Using Willow",
-        "A short tour of each tab"
-       ],
-       [
-        "The Six Parts",
-        "One lesson for each part"
-       ],
-       [
-        "For You",
-        "For the person in hospice"
-       ],
-       [
-        "For the People Who Love Them",
-        "For family and helpers"
-       ]
-      ],
-      "say": "From here, Using Willow walks through each tab, and The Six Parts gives a lesson to each part. For You is for the person in hospice, and For the People Who Love Them is for family and helpers."
-     },
-     {
-      "k": "quiz",
-      "q": "Who is Willow built for?",
-      "opts": [
-       "Only the hospice team",
-       "The person in hospice, and the people who love them",
-       "Only the family"
-      ],
-      "right": 1,
-      "why": "Willow is built for two: the person, and the people who love them.",
-      "say": "One question. Who is Willow built for?"
-     }
-    ]
-   }
-  ]
- },
  {
   "id": "willow-using",
   "title": "Using Willow",
@@ -14414,7 +16851,10 @@ window.GG_LEARN = {
   "lessons": [
    {
     "id": "wl-u-today",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": [
+     "988: call or text, any time",
+     "911: emergency"
+    ],
     "n": 1,
     "title": "Today",
     "mins": 6,
@@ -14513,7 +16953,7 @@ window.GG_LEARN = {
         "A growing edge, where new growth begins"
        ]
       },
-      "say": "Next comes the tree. After a check-in, each of the six parts shows a few gentle words in place of a score. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins. Below the tree are two buttons. Quick Check-in, and Full Check-in."
+      "say": "Next comes the tree. After a check-in, each part of the tree shows a few gentle words in place of a score. Well tended right now. Holding, where a little tending could help. Or a growing edge, where new growth begins. Below the tree are two buttons. Quick Check-in, and Full Check-in."
      },
      {
       "k": "flow",
@@ -14886,7 +17326,9 @@ window.GG_LEARN = {
     "title": "Cuttings",
     "mins": 5,
     "blurb": "Stories, letters, lessons, and blessings, kept for the people who stay.",
-    "sources": ["byock4"],
+    "sources": [
+     "byock4"
+    ],
     "scenes": [
      {
       "k": "title",
@@ -15346,7 +17788,10 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-u-changes",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": [
+     "988: call or text, any time",
+     "911: emergency"
+    ],
     "n": 5,
     "title": "When Life Changes",
     "mins": 5,
@@ -15991,25 +18436,25 @@ window.GG_LEARN = {
  },
  {
   "id": "willow-six",
-  "title": "The Six Parts",
-  "who": "One lesson for each part of the tree at the end of life, with a story and a practice",
-  "certTitle": "Willow: The Six Parts",
-  "certLine": "For finishing every lesson on the six parts of the tree at the end of life.",
+  "title": "Tend Four, Grow Two",
+  "who": "Four parts tended gently at the end of life, two that grow from the tending, each with a story and a practice",
+  "certTitle": "Willow: Tend Four, Grow Two",
+  "certLine": "For finishing every lesson on the tree at the end of life, tended gently.",
   "lessons": [
    {
     "id": "wl-6-roots",
     "n": 1,
-    "title": "Roots: What Grounds You",
+    "title": "Roots: Spirit",
     "mins": 8,
     "blurb": "Faith, spirit, or whatever holds you up, and how Willow listens for it.",
     "scenes": [
      {
       "k": "title",
       "hero": "willow",
-      "eyebrow": "The Six Parts, Lesson 1",
-      "h": "Roots",
-      "sub": "What grounds you.",
-      "say": "This lesson is about Roots, the first part of the willow. Roots are what grounds you."
+      "eyebrow": "Tend Four, Grow Two, Lesson 1",
+      "h": "Roots: Spirit",
+      "sub": "Your spirit, and what grounds you.",
+      "say": "This lesson is about Roots: Spirit, the first part of the willow. Roots are your connection with God and the sacred, or whatever grounds you. They are the first of the four parts Willow tends gently."
      },
      {
       "k": "big",
@@ -16185,12 +18630,7 @@ window.GG_LEARN = {
         "5": 8,
         "8": 25
        },
-       "at": [
-        2,
-        6,
-        7,
-        8
-       ]
+       "at": [2, 6, 7, 8]
       },
       "say": "Let us try one of Willow's practices together. It is called Breath Prayer. Choose two short phrases, one for breathing in, and one for breathing out. Some people use, be still, and know. Some use, I am held, I am loved. Any words that are true for you will do. Breathe in gently on the first phrase. Breathe out on the second, slowly. Stay with it for a few breaths, lying down if you like. Never force the breath, and stop if breathing feels hard."
      },
@@ -16215,19 +18655,608 @@ window.GG_LEARN = {
     ]
    },
    {
-    "id": "wl-6-trunk",
+    "id": "wl-6-bark",
+    "crisis": [
+     "911: emergency"
+    ],
     "n": 2,
-    "title": "Trunk: A Life That Mattered",
+    "title": "Bark: Mind",
+    "mins": 6,
+    "blurb": "Fear and worry, and the moments of calm between.",
+    "sources": [
+     "singh"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Tend Four, Grow Two, Lesson 2",
+      "h": "Bark: Mind",
+      "sub": "Peace inside.",
+      "say": "This lesson is about Bark: Mind. In Willow, bark is peace inside, one of the four parts tended gently."
+     },
+     {
+      "k": "big",
+      "h": "Bark is where the tree meets the weather.",
+      "sub": "Fear and worry, and the calm between.",
+      "say": "Bark is where a tree meets the weather. Willow describes it this way. Peace inside. Fear and worry, and the moments of calm between."
+     },
+     {
+      "k": "points",
+      "h": "Bark can look like",
+      "items": [
+       [
+        "Moments of peace",
+        "Even brief ones count"
+       ],
+       [
+        "Feeling like yourself",
+        "More than your illness"
+       ],
+       [
+        "Naming a fear",
+        "Out loud, to someone"
+       ],
+       [
+        "Calm between the waves",
+        "Worry comes, and it also goes"
+       ]
+      ],
+      "say": "Bark can look like moments of peace, and even brief ones count. Feeling like yourself, more than your illness. Naming a fear out loud, to someone who will listen. And calm between the waves, where worry comes, and it also goes."
+     },
+     {
+      "k": "flow",
+      "h": "The three Bark questions",
+      "steps": [
+       [
+        "At peace",
+        "Even for a moment"
+       ],
+       [
+        "Like yourself",
+        "More than your illness"
+       ],
+       [
+        "Afraid or restless",
+        "Worried inside"
+       ]
+      ],
+      "say": "A full check-in asks three Bark questions. Lately, how often have you felt at peace, even for a moment? That one is also the quick check-in question. How often have you felt like yourself, more than your illness? And how often have you felt afraid, worried, or restless inside?"
+     },
+     {
+      "k": "points",
+      "h": "What each question listens for",
+      "items": [
+       [
+        "At peace, even briefly",
+        "How the spirit is doing"
+       ],
+       [
+        "Still you",
+        "Dignity starts there"
+       ],
+       [
+        "Fear is normal",
+        "So is getting help with it"
+       ]
+      ],
+      "say": "Here is what each one listens for. Feeling at peace, even for a moment, says a lot about how the spirit is doing. The second says, you are still you, and dignity starts there. The third is turned around on purpose. Fear is normal, and so is getting help with it."
+     },
+     {
+      "k": "points",
+      "h": "Each kind of fear has its own help",
+      "items": [
+       [
+        "Pain or restlessness",
+        "Tell the hospice nurse"
+       ],
+       [
+        "What dying is like",
+        "A guide in When Life Changes"
+       ],
+       [
+        "What comes after",
+        "A chaplain, or your own clergy"
+       ],
+       [
+        "Leaving people",
+        "Words to say, and Cuttings to keep"
+       ]
+      ],
+      "say": "If you are helping, ask gently what the fear is about. Pain. The process of dying. What comes after. Or leaving people. Each has its own help. For pain or restlessness, tell the hospice nurse. When Life Changes has a guide called What Dying Looks Like. A chaplain, or the person's own clergy, can sit with fears about what comes after. And for leaving people, there are words to say, and Cuttings to keep."
+     },
+     {
+      "k": "points",
+      "h": "Gentle words in place of scores",
+      "items": [
+       [
+        "Strong",
+        "Feels well tended right now",
+        "#5F7D48"
+       ],
+       [
+        "Steady",
+        "Holding. A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others near",
+        "#B8612F"
+       ]
+      ],
+      "say": "After a check-in, the person sees gentle words, never a score. Well tended bark might mean peace comes often, even on hard days. Steady bark is holding, with some restless stretches. And a growing edge might mean fear or worry is close most of the time. That is where new growth begins, and it is tended with others beside you."
+     },
+     {
+      "k": "story",
+      "title": "Enlightenment",
+      "lines": [
+       "Matthew is a monk in his eighties. Sixty years of prayer, and now he wanted company for the rest of the walk.",
+       "Picture standing on a dock your whole life, I said, gripping the post while the tide pulls at your ankles.",
+       "I have spent my whole life learning how to hold on well, he said. Perhaps I only have one more thing left to learn."
+      ],
+      "lesson": "Peace can come with open hands.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/enlightenment",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Matthew. He is a Catholic monk in his eighties. He has spent sixty years in prayer and silence, and he wanted to experience enlightenment when he died. He asked me to walk with him through a book about dying. One day I offered him a picture. Picture standing on a dock your whole life, gripping the post while the tide pulls at your ankles. We spend a lifetime believing holiness means holding on tighter. But maybe the ones who arrive fully present are the ones who finally let their hands open. Matthew went quiet. Then he looked down at his hands, folded loose in his lap. I have spent my whole life learning how to hold on well, he said. Perhaps I only have one more thing left to learn."
+     },
+     {
+      "k": "big",
+      "h": "Peace inside can be something you let in.",
+      "sub": "A moment at a time.",
+      "say": "Matthew had spent his life learning to hold on well. Near the end, peace looked like opening his hands. Peace inside often comes that way, as something you let in, a moment at a time."
+     },
+     {
+      "k": "points",
+      "h": "Practice: Long Out-Breath",
+      "items": [
+       [
+        "Let your hands rest open",
+        "In your lap, or on the blanket"
+       ],
+       [
+        "Breathe in gently",
+        "No need to fill up"
+       ],
+       [
+        "Let the breath out slower",
+        "Longer than the breath in"
+       ],
+       [
+        "A few more breaths",
+        "Never force it"
+       ]
+      ],
+      "cue": {
+       "p": {
+        "2": 3
+       },
+       "w": {
+        "7": 25
+       },
+       "at": [2, 3, 4, 7]
+      },
+      "say": "Let us try one of Willow's practices together. It is called Long Out-Breath. Let your hands rest open, in your lap or on the blanket. Breathe in gently. Now let the breath out slower, and longer. Again. In gently, and out slow. Stay with it for a few more breaths. Never force it, and stop if breathing feels hard."
+     },
+     {
+      "k": "big",
+      "h": "Fear or restlessness that stays? Call your hospice.",
+      "sub": "Their 24/7 line first, day or night.",
+      "say": "Long Out-Breath is one of the practices Willow offers in Today, one gentle thing at a time. If fear or restlessness stays, call your hospice's 24/7 line, day or night. That is what it is there for."
+     },
+     {
+      "k": "quiz",
+      "q": "Someone you love is afraid. What helps first?",
+      "opts": [
+       "Telling them not to worry",
+       "Asking gently what the fear is about",
+       "Changing the subject"
+      ],
+      "right": 1,
+      "why": "Each kind of fear has its own help, so ask which one it is.",
+      "say": "Quick question. Someone you love is afraid. What helps first?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-leaves",
+    "n": 3,
+    "title": "Leaves: Body",
+    "mins": 8,
+    "blurb": "Comfort in the body, rest without guilt, and small joys for the senses.",
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Tend Four, Grow Two, Lesson 3",
+      "h": "Leaves: Body",
+      "sub": "Comfort, rest, and the senses.",
+      "say": "This lesson is about Leaves: Body. In Willow, Leaves is about comfort, rest, and small joys for the senses, one of the four parts tended gently."
+     },
+     {
+      "k": "big",
+      "h": "Leaves are where the tree meets the light.",
+      "sub": "Near the end, the body asks for comfort.",
+      "say": "Leaves are where a tree meets the light and the air. Near the end of life, growth looks different. It is about peace, and comfort, and being yourself to the last. So Leaves is a gentle part. It asks how the body is resting, and what small joys still reach you."
+     },
+     {
+      "k": "flow",
+      "h": "Three strands of Leaves",
+      "steps": [
+       [
+        "Comfort",
+        "Comfortable enough to rest"
+       ],
+       [
+        "Rest",
+        "Sleep that truly helps"
+       ],
+       [
+        "The senses",
+        "A taste, a sound, a touch, the light"
+       ]
+      ],
+      "say": "Willow asks three questions for Leaves, one for each strand. Comfort. Have you felt comfortable enough in your body to rest? Rest. Have you rested or slept in a way that helped? And the senses. Have you enjoyed something small, like a taste, a sound, a touch, or the light?"
+     },
+     {
+      "k": "big",
+      "h": "Comfort matters, and your hospice team can do a lot.",
+      "sub": "Pain or hard breathing? Tell the hospice nurse today.",
+      "say": "The first question is about comfort, and comfort matters. Your hospice team can do a lot. If pain or breathing is hard, tell the hospice nurse today. And for anything urgent at home, call your hospice's twenty four hour line first, day or night. It sits at the top of Today."
+     },
+     {
+      "k": "big",
+      "h": "Rest is part of comfort.",
+      "sub": "Sleep is allowed. Rest is part of comfort.",
+      "say": "The second question is about rest. Many people near the end sleep more, and some feel guilty about it. Sleep is allowed. Rest is part of comfort. A helper can ask what helps you settle. A voice, a light, a song."
+     },
+     {
+      "k": "points",
+      "h": "Small joys are still joys",
+      "items": [
+       [
+        "Music I love",
+        "Favorite songs or hymns"
+       ],
+       [
+        "Gentle touch",
+        "Lotion on the hands, hair brushed"
+       ],
+       [
+        "One small taste",
+        "A taste of ripe fruit, the smell of coffee"
+       ],
+       [
+        "Air and light",
+        "Window open, sun on your hands"
+       ]
+      ],
+      "cue": {
+       "at": [3, 4, 5, 6]
+      },
+      "say": "The third question is about the senses. Small joys are still joys. Here are a few from Willow's practices. Music you love, favorite songs or hymns. Gentle touch, like lotion on the hands, or hair brushed, if touch is welcome. One small taste, like a bite of ripe fruit, or the smell of coffee. And air and light. A window open, and sun on your hands."
+     },
+     {
+      "k": "points",
+      "h": "How Leaves can look",
+      "items": [
+       [
+        "Feels well tended",
+        "Comfortable, rested, a small joy or two",
+        "#5F7D48"
+       ],
+       [
+        "Holding",
+        "A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others beside you",
+        "#B8612F"
+       ]
+      ],
+      "cue": {
+       "at": [2, 3, 4]
+      },
+      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Leaves feels well tended, you may feel comfortable, rested, and able to enjoy a small thing or two. When it is holding, comfort is mostly there, and a little tending could help, like a better place to rest, or one small joy planned for today. When Leaves is a growing edge, comfort or sleep may be hard to find. That is where new growth begins, and the hospice team and the people who love you can tend it with you."
+     },
+     {
+      "k": "story",
+      "title": "Prayer",
+      "lines": [
+       "Dee sat alone in her wheelchair, folding a napkin back and forth in her lap.",
+       "I reached for the worn Bible on her shelf. The moment I opened it, her hands went still.",
+       "Then she prayed for me, her voice steady and her sentences whole."
+      ],
+      "lesson": "What is familiar can still reach us.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/thank-god-for-sending-you",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Dee. I found her alone in a small activity room, folding a napkin back and forth in her lap. Dementia had taken her sense of time, and her sense of names. In her room, I held her hand, and we went through her photographs one by one. Then I reached for the worn Bible on her shelf. I don't read it as well as I used to, she said. The moment I opened it, her hands, which had been moving the whole visit, went still. She closed her eyes, and her breathing slowed. When I prayed, her hand tightened around mine. Then she said, I want to pray for you. Her voice steadied, and the sentences that had been scattering all visit came out whole."
+     },
+     {
+      "k": "big",
+      "h": "What is familiar can still reach us.",
+      "sub": "A song, a voice, a touch, words known by heart.",
+      "say": "Dee's hands went still, and her breathing slowed. What is familiar can still reach us, even when so much else has slipped. For Dee it was prayer. For someone else, it may be a song, a voice they love, a hand on theirs, or words they have known by heart for years."
+     },
+     {
+      "k": "points",
+      "h": "Practice: One Small Joy",
+      "items": [
+       [
+        "Settle",
+        "Let your body rest right where it is"
+       ],
+       [
+        "Listen",
+        "One sound, near or far"
+       ],
+       [
+        "Feel",
+        "One touch: a hand, a blanket, the air"
+       ],
+       [
+        "Choose one small joy",
+        "A taste, a song, the light"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "3": 5,
+        "5": 8,
+        "7": 8,
+        "9": 10
+       },
+       "at": [3, 4, 6, 8]
+      },
+      "say": "Let us practice. This one is called One Small Joy. You can do it lying down, or with a helper. Let your body rest right where it is. Now listen. Notice one sound, near or far. Now feel. Notice one touch, a hand, a blanket, or the air on your skin. Last, choose one small joy for today. A taste, a song, or the light."
+     },
+     {
+      "k": "card",
+      "title": "One small taste",
+      "body": "A favorite flavor: a taste of ripe fruit, the smell of coffee.",
+      "fields": [
+       [
+        "Leaves",
+        "2 min"
+       ]
+      ],
+      "btns": [
+       "Did it today",
+       "Something else"
+      ],
+      "tap": 0,
+      "say": "On Today, Willow offers one gentle thing a day, and some days it comes from Leaves. Every practice works lying down, and every one can be done with a helper. Tap Did it today when it is done, or Something else for a different one. One a day is plenty, and none is okay."
+     },
+     {
+      "k": "big",
+      "h": "Write down what helped.",
+      "sub": "One line is enough for the next helper.",
+      "say": "If you are helping someone you love, plan one small joy a day with the family. When something brings comfort, add a line to What Helped Today. She settled when we played Amazing Grace. The next person on shift will know. And your own leaves matter too. Food, sleep, and breaks. Your body is carrying this too."
+     },
+     {
+      "k": "quiz",
+      "q": "What are the three strands of Leaves in Willow?",
+      "opts": [
+       "Comfort, rest, and the senses",
+       "Exercise, diet, and sleep",
+       "Medicine, meals, and visits"
+      ],
+      "right": 0,
+      "why": "Leaves holds comfort, rest, and small joys for the senses.",
+      "say": "Quick question. What are the three strands of Leaves in Willow?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-branches",
+    "n": 4,
+    "title": "Branches: Relationships",
+    "mins": 7,
+    "blurb": "Feeling loved, and saying what matters to the people who matter.",
+    "sources": [
+     "byock4",
+     "esv"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "Tend Four, Grow Two, Lesson 4",
+      "h": "Branches: Relationships",
+      "sub": "The people you love.",
+      "say": "This lesson is about Branches: Relationships, the people you love. In Willow, Branches has another name. Love said out loud. It is one of the four parts tended gently."
+     },
+     {
+      "k": "big",
+      "h": "Love is the main thing, at the end more than ever.",
+      "sub": "Branches reach toward the people we love.",
+      "say": "A tree's branches reach out toward the light. Near the end of life, we reach toward the people we love. Willow puts it simply. Love is the main thing, at the end more than ever."
+     },
+     {
+      "k": "points",
+      "h": "Three questions for Branches",
+      "items": [
+       [
+        "Felt loved and cared for?",
+        "The quick check-in question"
+       ],
+       [
+        "Said what you want to say?",
+        "To the people who matter"
+       ],
+       [
+        "Felt like a burden?",
+        "Turned around, and asked gently"
+       ]
+      ],
+      "cue": {
+       "at": [2, 3, 5]
+      },
+      "say": "Willow asks three questions for Branches, and each one starts with, lately, how often have you. The first is the quick check-in question. Felt loved and cared for? The second asks whether you have said what you want to say to the people who matter. The third is turned around on purpose. Felt like a burden to the people caring for you? Any answer is welcome, and Not sure is always an honest one."
+     },
+     {
+      "k": "words",
+      "h": "Words that are always in time",
+      "items": [
+       "Please forgive me.",
+       "I forgive you.",
+       "Thank you.",
+       "I love you.",
+       "Goodbye."
+      ],
+      "say": "The second question names the words that matter most near the end. Please forgive me. I forgive you. Thank you. I love you. And goodbye. These words are always in time. They can be said out loud, written down, or kept as a letter. Forgiveness is always a choice, and it is never owed to someone unsafe."
+     },
+     {
+      "k": "big",
+      "h": "Receiving care is part of love too.",
+      "sub": "Feeling like a burden is common near the end.",
+      "say": "The third question asks about feeling like a burden. Many people near the end feel this sometimes, and the people caring for them usually see it differently. If it comes up, you can let it be said. Ask what being cared for is like. Receiving care is part of love too."
+     },
+     {
+      "k": "points",
+      "h": "How Branches can look",
+      "items": [
+       [
+        "Feels well tended",
+        "Loved, with the words said or on their way",
+        "#5F7D48"
+       ],
+       [
+        "Holding",
+        "A little tending could help",
+        "#8B5E1A"
+       ],
+       [
+        "Growing Edge",
+        "Where new growth begins, with others beside you",
+        "#B8612F"
+       ]
+      ],
+      "cue": {
+       "at": [2, 3, 4]
+      },
+      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Branches feels well tended, you may feel loved, with the important words said or on their way. When it is holding, the love is there, and a little tending could help, like a call, a visit, or a thank you. When Branches is a growing edge, someone may feel far away, words may be waiting, or being cared for may feel heavy. That is where new growth begins, and you can tend it with others beside you."
+     },
+     {
+      "k": "story",
+      "title": "Love.",
+      "lines": [
+       "Kathy's dementia has taken most of her words. I've been visiting her for over a year, long enough to learn how to hear her anyway.",
+       "I read her a chapter from my small Bible. She closed her eyes and took the words in slowly, like water.",
+       "She tapped the page. This is true. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
+      ],
+      "lesson": "Love reaches past words.",
+      "note": "From a Grounded story by Chris Joy",
+      "link": {
+       "href": "https://chri5j0y.substack.com/p/love",
+       "label": "Read the Full Story"
+      },
+      "hold": 2,
+      "say": "Let me tell you about Kathy. Her dementia has taken most of her words. I have been visiting her for over a year, long enough to learn how to hear her anyway. One day she was glowing, more animated than I had seen her in months. I asked if I could read a chapter from the Bible, and she said, yes, that would be nice. If I speak in the tongues of men and of angels, but have not love, I am a noisy gong or a clanging cymbal. She closed her eyes and took the words in slowly, like water. When I told her it all comes down to love, she tapped the page. This is true, she said. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
+     },
+     {
+      "k": "big",
+      "h": "Love reaches past words.",
+      "sub": "A hand held. A face close. Time together.",
+      "say": "Kathy's words came out scrambled, and her meaning came through whole. Love reaches past words. When words run short, love can still be said with a hand held, a face close, and time together."
+     },
+     {
+      "k": "points",
+      "h": "Practice: One of the Four Things",
+      "items": [
+       [
+        "Settle",
+        "One easy breath"
+       ],
+       [
+        "Picture one person",
+        "Whoever comes to mind first"
+       ],
+       [
+        "Choose one of the words",
+        "Forgive me, I forgive you, thank you, I love you"
+       ],
+       [
+        "Say it",
+        "Out loud, in your heart, or to them"
+       ]
+      ],
+      "cue": {
+       "w": {
+        "2": 5,
+        "3": 10,
+        "8": 8,
+        "9": 12
+       },
+       "at": [2, 3, 4, 9]
+      },
+      "say": "Let us practice. This one is called One of the Four Things. Settle in, and take one easy breath. Now picture one person, whoever comes to mind first. Choose one of the words for them. Please forgive me. I forgive you. Thank you. Or, I love you. Now say it, out loud, or quietly in your heart, or to them if they are near."
+     },
+     {
+      "k": "card",
+      "title": "One of the Four Things",
+      "body": "Please forgive me. I forgive you. Thank you. I love you.",
+      "fields": [
+       [
+        "A title",
+        "Thank you"
+       ],
+       [
+        "For (optional)",
+        "For my son"
+       ]
+      ],
+      "btns": [
+       "Save this cutting",
+       "Cancel"
+      ],
+      "tap": 0,
+      "say": "When you are ready, Willow can keep the words. In Cuttings, choose One of the Four Things, or A letter to keep, for now or for later. Type it, or have a helper type while you talk. And on Today, the one gentle practice for the day is sometimes a Branches practice, like a thank-you list, or the call or visit you want."
+     },
+     {
+      "k": "big",
+      "h": "Helping someone say it",
+      "sub": "Ask who they feel loved by. Offer to write while they talk.",
+      "say": "If you are helping someone you love, ask who they feel loved by, and help them say thank you. Offer to write the words down while they talk. Your own Branches matter too. In your own check-in, Willow asks whether you have someone to lean on."
+     },
+     {
+      "k": "quiz",
+      "q": "In Willow, what does Branches listen for?",
+      "opts": [
+       "How many visitors come by",
+       "Feeling loved, and the words you want to say",
+       "Who is to blame for old hurts"
+      ],
+      "right": 1,
+      "why": "Branches is love said out loud: feeling loved, and saying what matters.",
+      "say": "Quick question. In Willow, what does Branches listen for?"
+     }
+    ]
+   },
+   {
+    "id": "wl-6-trunk",
+    "n": 5,
+    "title": "Trunk: Meaning",
     "mins": 7,
     "blurb": "Your story, knowing your life mattered, and passing on what you know.",
     "scenes": [
      {
       "k": "title",
       "hero": "willow",
-      "eyebrow": "The Six Parts, Lesson 2",
-      "h": "Trunk",
+      "eyebrow": "Tend Four, Grow Two, Lesson 5",
+      "h": "Trunk: Meaning",
       "sub": "A life that mattered.",
-      "say": "This lesson is about the Trunk, the second part of the willow. In Willow, the trunk is a life that mattered."
+      "say": "This lesson is about the Trunk: Meaning. In Willow, the trunk is a life that mattered. It grows from the tending, right to the end."
      },
      {
       "k": "big",
@@ -16403,14 +19432,9 @@ window.GG_LEARN = {
         "4": 15,
         "5": 20
        },
-       "at": [
-        2,
-        3,
-        5,
-        6
-       ]
+       "at": [2, 3, 5, 6]
       },
-      "say": "Let us try one of Willow's practices. It is called Three Things I Learned. Settle in, sitting up or lying down. Now name one thing life taught you, and say it out loud. Take your time. Then a second, and a third, for the people you love. When you are ready, keep them in Cuttings, under Things I learned. A helper can type while you talk."
+      "say": "Let us try one of Willow's practices. It is called Three Things I Learned. It lives in Branches: Relationships, because it is a gift for the people you love. Settle in, sitting up or lying down. Now name one thing life taught you, and say it out loud. Take your time. Then a second, and a third, for the people you love. When you are ready, keep them in Cuttings, under Things I learned. A helper can type while you talk."
      },
      {
       "k": "big",
@@ -16433,639 +19457,23 @@ window.GG_LEARN = {
     ]
    },
    {
-    "id": "wl-6-bark",
-    "crisis": ["911: emergency"],
-    "n": 3,
-    "title": "Bark: Peace Inside",
-    "mins": 6,
-    "blurb": "Fear and worry, and the moments of calm between.",
-    "sources": [
-     "singh"
-    ],
-    "scenes": [
-     {
-      "k": "title",
-      "hero": "willow",
-      "eyebrow": "The Six Parts, Lesson 3",
-      "h": "Bark",
-      "sub": "Peace inside.",
-      "say": "This lesson is about Bark, the third part of the willow. In Willow, bark is peace inside."
-     },
-     {
-      "k": "big",
-      "h": "Bark is where the tree meets the weather.",
-      "sub": "Fear and worry, and the calm between.",
-      "say": "Bark is where a tree meets the weather. Willow describes it this way. Peace inside. Fear and worry, and the moments of calm between."
-     },
-     {
-      "k": "points",
-      "h": "Bark can look like",
-      "items": [
-       [
-        "Moments of peace",
-        "Even brief ones count"
-       ],
-       [
-        "Feeling like yourself",
-        "More than your illness"
-       ],
-       [
-        "Naming a fear",
-        "Out loud, to someone"
-       ],
-       [
-        "Calm between the waves",
-        "Worry comes, and it also goes"
-       ]
-      ],
-      "say": "Bark can look like moments of peace, and even brief ones count. Feeling like yourself, more than your illness. Naming a fear out loud, to someone who will listen. And calm between the waves, where worry comes, and it also goes."
-     },
-     {
-      "k": "flow",
-      "h": "The three Bark questions",
-      "steps": [
-       [
-        "At peace",
-        "Even for a moment"
-       ],
-       [
-        "Like yourself",
-        "More than your illness"
-       ],
-       [
-        "Afraid or restless",
-        "Worried inside"
-       ]
-      ],
-      "say": "A full check-in asks three Bark questions. Lately, how often have you felt at peace, even for a moment? That one is also the quick check-in question. How often have you felt like yourself, more than your illness? And how often have you felt afraid, worried, or restless inside?"
-     },
-     {
-      "k": "points",
-      "h": "What each question listens for",
-      "items": [
-       [
-        "At peace, even briefly",
-        "How the spirit is doing"
-       ],
-       [
-        "Still you",
-        "Dignity starts there"
-       ],
-       [
-        "Fear is normal",
-        "So is getting help with it"
-       ]
-      ],
-      "say": "Here is what each one listens for. Feeling at peace, even for a moment, says a lot about how the spirit is doing. The second says, you are still you, and dignity starts there. The third is turned around on purpose. Fear is normal, and so is getting help with it."
-     },
-     {
-      "k": "points",
-      "h": "Each kind of fear has its own help",
-      "items": [
-       [
-        "Pain or restlessness",
-        "Tell the hospice nurse"
-       ],
-       [
-        "What dying is like",
-        "A guide in When Life Changes"
-       ],
-       [
-        "What comes after",
-        "A chaplain, or your own clergy"
-       ],
-       [
-        "Leaving people",
-        "Words to say, and Cuttings to keep"
-       ]
-      ],
-      "say": "If you are helping, ask gently what the fear is about. Pain. The process of dying. What comes after. Or leaving people. Each has its own help. For pain or restlessness, tell the hospice nurse. When Life Changes has a guide called What Dying Looks Like. A chaplain, or the person's own clergy, can sit with fears about what comes after. And for leaving people, there are words to say, and Cuttings to keep."
-     },
-     {
-      "k": "points",
-      "h": "Gentle words in place of scores",
-      "items": [
-       [
-        "Strong",
-        "Feels well tended right now",
-        "#5F7D48"
-       ],
-       [
-        "Steady",
-        "Holding. A little tending could help",
-        "#8B5E1A"
-       ],
-       [
-        "Growing Edge",
-        "Where new growth begins, with others near",
-        "#B8612F"
-       ]
-      ],
-      "say": "After a check-in, the person sees gentle words, never a score. Well tended bark might mean peace comes often, even on hard days. Steady bark is holding, with some restless stretches. And a growing edge might mean fear or worry is close most of the time. That is where new growth begins, and it is tended with others beside you."
-     },
-     {
-      "k": "story",
-      "title": "Enlightenment",
-      "lines": [
-       "Matthew is a monk in his eighties. Sixty years of prayer, and now he wanted company for the rest of the walk.",
-       "Picture standing on a dock your whole life, I said, gripping the post while the tide pulls at your ankles.",
-       "I have spent my whole life learning how to hold on well, he said. Perhaps I only have one more thing left to learn."
-      ],
-      "lesson": "Peace can come with open hands.",
-      "note": "From a Grounded story by Chris Joy",
-      "link": {
-       "href": "https://chri5j0y.substack.com/p/enlightenment",
-       "label": "Read the Full Story"
-      },
-      "hold": 2,
-      "say": "Let me tell you about Matthew. He is a Catholic monk in his eighties. He has spent sixty years in prayer and silence, and he wanted to experience enlightenment when he died. He asked me to walk with him through a book about dying. One day I offered him a picture. Picture standing on a dock your whole life, gripping the post while the tide pulls at your ankles. We spend a lifetime believing holiness means holding on tighter. But maybe the ones who arrive fully present are the ones who finally let their hands open. Matthew went quiet. Then he looked down at his hands, folded loose in his lap. I have spent my whole life learning how to hold on well, he said. Perhaps I only have one more thing left to learn."
-     },
-     {
-      "k": "big",
-      "h": "Peace inside can be something you let in.",
-      "sub": "A moment at a time.",
-      "say": "Matthew had spent his life learning to hold on well. Near the end, peace looked like opening his hands. Peace inside often comes that way, as something you let in, a moment at a time."
-     },
-     {
-      "k": "points",
-      "h": "Practice: Long Out-Breath",
-      "items": [
-       [
-        "Let your hands rest open",
-        "In your lap, or on the blanket"
-       ],
-       [
-        "Breathe in gently",
-        "No need to fill up"
-       ],
-       [
-        "Let the breath out slower",
-        "Longer than the breath in"
-       ],
-       [
-        "A few more breaths",
-        "Never force it"
-       ]
-      ],
-      "cue": {
-       "p": {
-        "2": 3
-       },
-       "w": {
-        "7": 25
-       },
-       "at": [
-        2,
-        3,
-        4,
-        7
-       ]
-      },
-      "say": "Let us try one of Willow's practices together. It is called Long Out-Breath. Let your hands rest open, in your lap or on the blanket. Breathe in gently. Now let the breath out slower, and longer. Again. In gently, and out slow. Stay with it for a few more breaths. Never force it, and stop if breathing feels hard."
-     },
-     {
-      "k": "big",
-      "h": "Fear or restlessness that stays? Call your hospice.",
-      "sub": "Their 24/7 line first, day or night.",
-      "say": "Long Out-Breath is one of the practices Willow offers in Today, one gentle thing at a time. If fear or restlessness stays, call your hospice's 24/7 line, day or night. That is what it is there for."
-     },
-     {
-      "k": "quiz",
-      "q": "Someone you love is afraid. What helps first?",
-      "opts": [
-       "Telling them not to worry",
-       "Asking gently what the fear is about",
-       "Changing the subject"
-      ],
-      "right": 1,
-      "why": "Each kind of fear has its own help, so ask which one it is.",
-      "say": "Quick question. Someone you love is afraid. What helps first?"
-     }
-    ]
-   },
-   {
-    "id": "wl-6-branches",
-    "n": 4,
-    "title": "Branches: The People You Love",
-    "mins": 7,
-    "blurb": "Feeling loved, and saying what matters to the people who matter.",
-    "sources": [
-     "byock4",
-     "esv"
-    ],
-    "scenes": [
-     {
-      "k": "title",
-      "hero": "willow",
-      "eyebrow": "The Six Parts, Lesson 4",
-      "h": "Branches",
-      "sub": "The people you love.",
-      "say": "This lesson is about Branches, the people you love. In Willow, Branches has another name. Love said out loud."
-     },
-     {
-      "k": "big",
-      "h": "Love is the main thing, at the end more than ever.",
-      "sub": "Branches reach toward the people we love.",
-      "say": "A tree's branches reach out toward the light. Near the end of life, we reach toward the people we love. Willow puts it simply. Love is the main thing, at the end more than ever."
-     },
-     {
-      "k": "points",
-      "h": "Three questions for Branches",
-      "items": [
-       [
-        "Felt loved and cared for?",
-        "The quick check-in question"
-       ],
-       [
-        "Said what you want to say?",
-        "To the people who matter"
-       ],
-       [
-        "Felt like a burden?",
-        "Turned around, and asked gently"
-       ]
-      ],
-      "cue": {
-       "at": [
-        2,
-        3,
-        5
-       ]
-      },
-      "say": "Willow asks three questions for Branches, and each one starts with, lately, how often have you. The first is the quick check-in question. Felt loved and cared for? The second asks whether you have said what you want to say to the people who matter. The third is turned around on purpose. Felt like a burden to the people caring for you? Any answer is welcome, and Not sure is always an honest one."
-     },
-     {
-      "k": "words",
-      "h": "Words that are always in time",
-      "items": [
-       "Please forgive me.",
-       "I forgive you.",
-       "Thank you.",
-       "I love you.",
-       "Goodbye."
-      ],
-      "say": "The second question names the words that matter most near the end. Please forgive me. I forgive you. Thank you. I love you. And goodbye. These words are always in time. They can be said out loud, written down, or kept as a letter. Forgiveness is always a choice, and it is never owed to someone unsafe."
-     },
-     {
-      "k": "big",
-      "h": "Receiving care is part of love too.",
-      "sub": "Feeling like a burden is common near the end.",
-      "say": "The third question asks about feeling like a burden. Many people near the end feel this sometimes, and the people caring for them usually see it differently. If it comes up, you can let it be said. Ask what being cared for is like. Receiving care is part of love too."
-     },
-     {
-      "k": "points",
-      "h": "How Branches can look",
-      "items": [
-       [
-        "Feels well tended",
-        "Loved, with the words said or on their way",
-        "#5F7D48"
-       ],
-       [
-        "Holding",
-        "A little tending could help",
-        "#8B5E1A"
-       ],
-       [
-        "Growing Edge",
-        "Where new growth begins, with others beside you",
-        "#B8612F"
-       ]
-      ],
-      "cue": {
-       "at": [
-        2,
-        3,
-        4
-       ]
-      },
-      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Branches feels well tended, you may feel loved, with the important words said or on their way. When it is holding, the love is there, and a little tending could help, like a call, a visit, or a thank you. When Branches is a growing edge, someone may feel far away, words may be waiting, or being cared for may feel heavy. That is where new growth begins, and you can tend it with others beside you."
-     },
-     {
-      "k": "story",
-      "title": "Love.",
-      "lines": [
-       "Kathy's dementia has taken most of her words. I've been visiting her for over a year, long enough to learn how to hear her anyway.",
-       "I read her a chapter from my small Bible. She closed her eyes and took the words in slowly, like water.",
-       "She tapped the page. This is true. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
-      ],
-      "lesson": "Love reaches past words.",
-      "note": "From a Grounded story by Chris Joy",
-      "link": {
-       "href": "https://chri5j0y.substack.com/p/love",
-       "label": "Read the Full Story"
-      },
-      "hold": 2,
-      "say": "Let me tell you about Kathy. Her dementia has taken most of her words. I have been visiting her for over a year, long enough to learn how to hear her anyway. One day she was glowing, more animated than I had seen her in months. I asked if I could read a chapter from the Bible, and she said, yes, that would be nice. If I speak in the tongues of men and of angels, but have not love, I am a noisy gong or a clanging cymbal. She closed her eyes and took the words in slowly, like water. When I told her it all comes down to love, she tapped the page. This is true, she said. You have it right. Then she gripped my hands. Thank you. Thank you. Thank you."
-     },
-     {
-      "k": "big",
-      "h": "Love reaches past words.",
-      "sub": "A hand held. A face close. Time together.",
-      "say": "Kathy's words came out scrambled, and her meaning came through whole. Love reaches past words. When words run short, love can still be said with a hand held, a face close, and time together."
-     },
-     {
-      "k": "points",
-      "h": "Practice: One of the Four Things",
-      "items": [
-       [
-        "Settle",
-        "One easy breath"
-       ],
-       [
-        "Picture one person",
-        "Whoever comes to mind first"
-       ],
-       [
-        "Choose one of the words",
-        "Forgive me, I forgive you, thank you, I love you"
-       ],
-       [
-        "Say it",
-        "Out loud, in your heart, or to them"
-       ]
-      ],
-      "cue": {
-       "w": {
-        "2": 5,
-        "3": 10,
-        "8": 8,
-        "9": 12
-       },
-       "at": [
-        2,
-        3,
-        4,
-        9
-       ]
-      },
-      "say": "Let us practice. This one is called One of the Four Things. Settle in, and take one easy breath. Now picture one person, whoever comes to mind first. Choose one of the words for them. Please forgive me. I forgive you. Thank you. Or, I love you. Now say it, out loud, or quietly in your heart, or to them if they are near."
-     },
-     {
-      "k": "card",
-      "title": "One of the Four Things",
-      "body": "Please forgive me. I forgive you. Thank you. I love you.",
-      "fields": [
-       [
-        "A title",
-        "Thank you"
-       ],
-       [
-        "For (optional)",
-        "For my son"
-       ]
-      ],
-      "btns": [
-       "Save this cutting",
-       "Cancel"
-      ],
-      "tap": 0,
-      "say": "When you are ready, Willow can keep the words. In Cuttings, choose One of the Four Things, or A letter to keep, for now or for later. Type it, or have a helper type while you talk. And on Today, the one gentle practice for the day is sometimes a Branches practice, like a thank-you list, or the call or visit you want."
-     },
-     {
-      "k": "big",
-      "h": "Helping someone say it",
-      "sub": "Ask who they feel loved by. Offer to write while they talk.",
-      "say": "If you are helping someone you love, ask who they feel loved by, and help them say thank you. Offer to write the words down while they talk. Your own Branches matter too. In your own check-in, Willow asks whether you have someone to lean on."
-     },
-     {
-      "k": "quiz",
-      "q": "In Willow, what does Branches listen for?",
-      "opts": [
-       "How many visitors come by",
-       "Feeling loved, and the words you want to say",
-       "Who is to blame for old hurts"
-      ],
-      "right": 1,
-      "why": "Branches is love said out loud: feeling loved, and saying what matters.",
-      "say": "Quick question. In Willow, what does Branches listen for?"
-     }
-    ]
-   },
-   {
-    "id": "wl-6-leaves",
-    "n": 5,
-    "title": "Leaves: Comfort, Rest, and the Senses",
-    "mins": 8,
-    "blurb": "Comfort in the body, rest without guilt, and small joys for the senses.",
-    "scenes": [
-     {
-      "k": "title",
-      "hero": "willow",
-      "eyebrow": "The Six Parts, Lesson 5",
-      "h": "Leaves",
-      "sub": "Comfort, rest, and the senses.",
-      "say": "This lesson is about Leaves, the body. In Willow, Leaves is about comfort, rest, and small joys for the senses."
-     },
-     {
-      "k": "big",
-      "h": "Leaves are where the tree meets the light.",
-      "sub": "Near the end, the body asks for comfort.",
-      "say": "Leaves are where a tree meets the light and the air. Near the end of life, growth looks different. It is about peace, and comfort, and being yourself to the last. So Leaves is a gentle part. It asks how the body is resting, and what small joys still reach you."
-     },
-     {
-      "k": "flow",
-      "h": "Three strands of Leaves",
-      "steps": [
-       [
-        "Comfort",
-        "Comfortable enough to rest"
-       ],
-       [
-        "Rest",
-        "Sleep that truly helps"
-       ],
-       [
-        "The senses",
-        "A taste, a sound, a touch, the light"
-       ]
-      ],
-      "say": "Willow asks three questions for Leaves, one for each strand. Comfort. Have you felt comfortable enough in your body to rest? Rest. Have you rested or slept in a way that helped? And the senses. Have you enjoyed something small, like a taste, a sound, a touch, or the light?"
-     },
-     {
-      "k": "big",
-      "h": "Comfort matters, and your hospice team can do a lot.",
-      "sub": "Pain or hard breathing? Tell the hospice nurse today.",
-      "say": "The first question is about comfort, and comfort matters. Your hospice team can do a lot. If pain or breathing is hard, tell the hospice nurse today. And for anything urgent at home, call your hospice's twenty four hour line first, day or night. It sits at the top of Today."
-     },
-     {
-      "k": "big",
-      "h": "Rest is part of comfort.",
-      "sub": "Sleep is allowed. Rest is part of comfort.",
-      "say": "The second question is about rest. Many people near the end sleep more, and some feel guilty about it. Sleep is allowed. Rest is part of comfort. A helper can ask what helps you settle. A voice, a light, a song."
-     },
-     {
-      "k": "points",
-      "h": "Small joys are still joys",
-      "items": [
-       [
-        "Music I love",
-        "Favorite songs or hymns"
-       ],
-       [
-        "Gentle touch",
-        "Lotion on the hands, hair brushed"
-       ],
-       [
-        "One small taste",
-        "A taste of ripe fruit, the smell of coffee"
-       ],
-       [
-        "Air and light",
-        "Window open, sun on your hands"
-       ]
-      ],
-      "cue": {
-       "at": [
-        3,
-        4,
-        5,
-        6
-       ]
-      },
-      "say": "The third question is about the senses. Small joys are still joys. Here are a few from Willow's practices. Music you love, favorite songs or hymns. Gentle touch, like lotion on the hands, or hair brushed, if touch is welcome. One small taste, like a bite of ripe fruit, or the smell of coffee. And air and light. A window open, and sun on your hands."
-     },
-     {
-      "k": "points",
-      "h": "How Leaves can look",
-      "items": [
-       [
-        "Feels well tended",
-        "Comfortable, rested, a small joy or two",
-        "#5F7D48"
-       ],
-       [
-        "Holding",
-        "A little tending could help",
-        "#8B5E1A"
-       ],
-       [
-        "Growing Edge",
-        "Where new growth begins, with others beside you",
-        "#B8612F"
-       ]
-      ],
-      "cue": {
-       "at": [
-        2,
-        3,
-        4
-       ]
-      },
-      "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Leaves feels well tended, you may feel comfortable, rested, and able to enjoy a small thing or two. When it is holding, comfort is mostly there, and a little tending could help, like a better place to rest, or one small joy planned for today. When Leaves is a growing edge, comfort or sleep may be hard to find. That is where new growth begins, and the hospice team and the people who love you can tend it with you."
-     },
-     {
-      "k": "story",
-      "title": "Prayer",
-      "lines": [
-       "Dee sat alone in her wheelchair, folding a napkin back and forth in her lap.",
-       "I reached for the worn Bible on her shelf. The moment I opened it, her hands went still.",
-       "Then she prayed for me, her voice steady and her sentences whole."
-      ],
-      "lesson": "What is familiar can still reach us.",
-      "note": "From a Grounded story by Chris Joy",
-      "link": {
-       "href": "https://chri5j0y.substack.com/p/thank-god-for-sending-you",
-       "label": "Read the Full Story"
-      },
-      "hold": 2,
-      "say": "Let me tell you about Dee. I found her alone in a small activity room, folding a napkin back and forth in her lap. Dementia had taken her sense of time, and her sense of names. In her room, I held her hand, and we went through her photographs one by one. Then I reached for the worn Bible on her shelf. I don't read it as well as I used to, she said. The moment I opened it, her hands, which had been moving the whole visit, went still. She closed her eyes, and her breathing slowed. When I prayed, her hand tightened around mine. Then she said, I want to pray for you. Her voice steadied, and the sentences that had been scattering all visit came out whole."
-     },
-     {
-      "k": "big",
-      "h": "What is familiar can still reach us.",
-      "sub": "A song, a voice, a touch, words known by heart.",
-      "say": "Dee's hands went still, and her breathing slowed. What is familiar can still reach us, even when so much else has slipped. For Dee it was prayer. For someone else, it may be a song, a voice they love, a hand on theirs, or words they have known by heart for years."
-     },
-     {
-      "k": "points",
-      "h": "Practice: One Small Joy",
-      "items": [
-       [
-        "Settle",
-        "Let your body rest right where it is"
-       ],
-       [
-        "Listen",
-        "One sound, near or far"
-       ],
-       [
-        "Feel",
-        "One touch: a hand, a blanket, the air"
-       ],
-       [
-        "Choose one small joy",
-        "A taste, a song, the light"
-       ]
-      ],
-      "cue": {
-       "w": {
-        "3": 5,
-        "5": 8,
-        "7": 8,
-        "9": 10
-       },
-       "at": [
-        3,
-        4,
-        6,
-        8
-       ]
-      },
-      "say": "Let us practice. This one is called One Small Joy. You can do it lying down, or with a helper. Let your body rest right where it is. Now listen. Notice one sound, near or far. Now feel. Notice one touch, a hand, a blanket, or the air on your skin. Last, choose one small joy for today. A taste, a song, or the light."
-     },
-     {
-      "k": "card",
-      "title": "One small taste",
-      "body": "A favorite flavor: a taste of ripe fruit, the smell of coffee.",
-      "fields": [
-       [
-        "Leaves",
-        "2 min"
-       ]
-      ],
-      "btns": [
-       "Did it today",
-       "Something else"
-      ],
-      "tap": 0,
-      "say": "On Today, Willow offers one gentle thing a day, and some days it comes from Leaves. Every practice works lying down, and every one can be done with a helper. Tap Did it today when it is done, or Something else for a different one. One a day is plenty, and none is okay."
-     },
-     {
-      "k": "big",
-      "h": "Write down what helped.",
-      "sub": "One line is enough for the next helper.",
-      "say": "If you are helping someone you love, plan one small joy a day with the family. When something brings comfort, add a line to What Helped Today. She settled when we played Amazing Grace. The next person on shift will know. And your own leaves matter too. Food, sleep, and breaks. Your body is carrying this too."
-     },
-     {
-      "k": "quiz",
-      "q": "What are the three strands of Leaves in Willow?",
-      "opts": [
-       "Comfort, rest, and the senses",
-       "Exercise, diet, and sleep",
-       "Medicine, meals, and visits"
-      ],
-      "right": 0,
-      "why": "Leaves holds comfort, rest, and small joys for the senses.",
-      "say": "Quick question. What are the three strands of Leaves in Willow?"
-     }
-    ]
-   },
-   {
     "id": "wl-6-fruit",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": [
+     "988: call or text, any time",
+     "911: emergency"
+    ],
     "n": 6,
-    "title": "Fruit: Hope and Readiness",
+    "title": "Fruit: Hope",
     "mins": 8,
     "blurb": "Hope that changes shape, and getting ready for what is ahead.",
     "scenes": [
      {
       "k": "title",
       "hero": "willow",
-      "eyebrow": "The Six Parts, Lesson 6",
-      "h": "Fruit",
+      "eyebrow": "Tend Four, Grow Two, Lesson 6",
+      "h": "Fruit: Hope",
       "sub": "Hope and readiness.",
-      "say": "This last lesson of the six is about Fruit. Hope that changes shape, and getting ready for what is ahead."
+      "say": "This last lesson is about Fruit: Hope. Hope that changes shape, and getting ready for what is ahead. Like the trunk, fruit grows from the tending."
      },
      {
       "k": "big",
@@ -17091,11 +19499,7 @@ window.GG_LEARN = {
        ]
       ],
       "cue": {
-       "at": [
-        2,
-        3,
-        6
-       ]
+       "at": [2, 3, 6]
       },
       "say": "Willow asks three questions for Fruit. The first is the quick check-in question. Have you felt hopeful about something, even something small? The second asks whether you have felt ready, or getting ready, for what is ahead. Readiness grows a little at a time. The third is asked gently, with room for anything. Have you felt that each day still holds something good for you?"
      },
@@ -17121,12 +19525,7 @@ window.GG_LEARN = {
        ]
       ],
       "cue": {
-       "at": [
-        1,
-        2,
-        3,
-        4
-       ]
+       "at": [1, 2, 3, 4]
       },
       "say": "Ask what someone is hoping for now, and listen. It may be peace. A visit from someone they love. A good day. Or what comes after, in their own faith, or in their own way."
      },
@@ -17206,11 +19605,7 @@ window.GG_LEARN = {
        ]
       ],
       "cue": {
-       "at": [
-        2,
-        3,
-        4
-       ]
+       "at": [2, 3, 4]
       },
       "say": "After a check-in, Willow shows gentle words instead of scores. These are words, not grades. When Fruit feels well tended, there may be something to hope for, and some peace with what is ahead. When it is holding, hope is there, and a little tending could help, like one good thing planned for tomorrow. When Fruit is a growing edge, hope may feel far away right now. That is where new growth begins, and you can tend it with others beside you."
      },
@@ -17261,14 +19656,9 @@ window.GG_LEARN = {
         "4": 8,
         "5": 10
        },
-       "at": [
-        2,
-        3,
-        4,
-        5
-       ]
+       "at": [2, 3, 4, 5]
       },
-      "say": "Let us practice. This one is called What I'm Hoping For. Settle in, and take one easy breath. Now name one hope for today, however small. Say it out loud, or to someone near you. Last, plan one good thing for tomorrow."
+      "say": "Let us practice. This one is called What I'm Hoping For, and it lives in Bark: Mind. Settle in, and take one easy breath. Now name one hope for today, however small. Say it out loud, or to someone near you. Last, plan one good thing for tomorrow."
      },
      {
       "k": "points",
@@ -17292,20 +19682,15 @@ window.GG_LEARN = {
        ]
       ],
       "cue": {
-       "at": [
-        1,
-        2,
-        3,
-        4
-       ]
+       "at": [1, 2, 3, 4]
       },
-      "say": "On Today, the one gentle practice is sometimes from Fruit. What I'm hoping for today. Plan one good thing. Give something away, while you can watch them receive it. And in Cuttings, you can leave a blessing, for a birthday, a wedding, or a hard day. If you are helping someone you love, your own Fruit matters too. In your own check-in, Willow asks whether you can picture yourself getting through what comes after."
+      "say": "On Today, the one gentle practice sometimes grows hope. What I'm hoping for today. Plan one good thing. Give something away, while you can watch them receive it. And in Cuttings, you can leave a blessing, for a birthday, a wedding, or a hard day. If you are helping someone you love, your own Fruit matters too. In your own check-in, Willow asks whether you can picture yourself getting through what comes after."
      },
      {
       "k": "big",
       "h": "Every part still matters, to the very end.",
       "sub": "Held gently, all the way home.",
-      "say": "That is all six parts. Roots, trunk, bark, branches, leaves, and fruit. Every part still matters, to the very end. Held gently, all the way home."
+      "say": "That is the whole tree. Four parts tended gently, roots, bark, leaves, and branches, and two that grow, the trunk and the fruit. Every part still matters, to the very end. Held gently, all the way home."
      },
      {
       "k": "quiz",
@@ -17351,17 +19736,22 @@ window.GG_LEARN = {
       "say": "Here is what Willow believes. You are still growing, right up to the end. A willow bends in a storm, so far you would think it should break, and it doesn't. Willow is here so no one bends alone."
      },
      {
-      "k": "six",
-      "h": "Six parts of you",
-      "words": [
-       "What grounds you",
-       "A life that mattered",
-       "Peace inside",
-       "Love said out loud",
-       "Comfort",
-       "Hope and readiness"
+      "k": "points",
+      "h": "Your whole tree",
+      "say": "Your tree is whole. Four parts are tended gently. Roots, for your spirit and what grounds you. Bark, for peace inside. Leaves, for comfort. And Branches, for love said out loud. Two grow from that tending: Trunk, for a life that mattered, and Fruit, for hope and readiness. Every one of them still matters.",
+      "items": [
+       [
+        "Four, tended gently",
+        "Spirit, peace inside, comfort, love said out loud"
+       ],
+       [
+        "Two that grow",
+        "A life that mattered, hope and readiness"
+       ]
       ],
-      "say": "Your tree has six parts. Roots, for what grounds you. Trunk, for a life that mattered. Bark, for peace inside. Branches, for love said out loud. Leaves, for comfort. And Fruit, for hope and readiness. Every one of them still matters."
+      "cue": {
+       "at": [0, 5]
+      }
      },
      {
       "k": "tabs",
@@ -17541,7 +19931,9 @@ window.GG_LEARN = {
     "title": "What Matters to You",
     "mins": 6,
     "blurb": "Keeping who you are and what you want to leave, in your own words.",
-    "sources": ["byock4"],
+    "sources": [
+     "byock4"
+    ],
     "scenes": [
      {
       "k": "title",
@@ -17759,7 +20151,10 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-y-help",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": [
+     "988: call or text, any time",
+     "911: emergency"
+    ],
     "n": 3,
     "title": "Letting Others Help",
     "mins": 6,
@@ -20129,7 +22524,7 @@ window.GG_LEARN = {
      "title": "Welcome to Sequoia",
      "mins": 4,
      "blurb": "What Sequoia is, who it is for, and where to begin.",
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "sequoia",
@@ -20164,17 +22559,152 @@ window.GG_LEARN = {
        "say": "Sequoia is built for older adults, sixty and up. Anyone fifty five or older may choose it, and make Sequoia their own tree. And the people who walk with you, a grown child, a spouse, or a friend, can join you as helpers, but only when you invite them."
       },
       {
-       "k": "six",
-       "h": "Six parts, one tree",
-       "words": [
-        "What you are anchored in",
-        "Knowing your life matters, still",
-        "How you calm down and heal",
-        "Who shows up, and who you show up for",
-        "Movement, balance, rest, and food",
-        "Something worth looking forward to"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Sequoia sees your life as a tree. You tend four parts. Roots: Spirit, your connection with God and the sacred, the things you are anchored in. Bark: Mind, how you calm down, carry worry, and heal. Leaves: Body, in the ways your body allows. And Branches: Relationships, who shows up for you, and who you show up for. Then two grow from that tending. Trunk: Meaning, knowing your life matters, now and still. And Fruit: Hope, something still worth looking forward to.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Sequoia sees your life as a tree with six parts. Roots, what grounds you, the things you are anchored in. Trunk, your purpose, knowing your life matters, now and still. Bark, your mind and feelings, how you calm down, carry worry, and heal. Branches, your relationships, who shows up for you, and who you show up for. Leaves, your body, in the ways your body allows. And Fruit, your hope, something still worth looking forward to."
+       "cue": {
+        "at": [1, 6]
+       }
+      },
+      {
+       "k": "points",
+       "h": "Made for later life",
+       "items": [
+        [
+         "Larger text from the start",
+         "And larger still, if you like"
+        ],
+        [
+         "One question on the screen at a time",
+         "Take all the time you need"
+        ],
+        [
+         "Practices for every body",
+         "Seated, standing, or in bed"
+        ],
+        [
+         "A Legacy Book",
+         "For the stories you want to pass on"
+        ]
+       ],
+       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and you can take all the time you need. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide. Health and Ability, in Settings, with a private Living Sober choice, helps Sequoia fit your life. And when you want to go all in, The Grounded Way brings your tree, your meals, your movement, and your quiet together in one private app."
+      },
+      {
+       "k": "big",
+       "h": "Everything stays on this device.",
+       "sub": "Locked in your profile, with a passcode only you know.",
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Nothing you write is sent to Grounded or anyone else."
+      },
+      {
+       "k": "tabs",
+       "app": "sequoia",
+       "app_name": "Sequoia",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Legacy Book",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Where to begin",
+        "p": "Tap Start a check-in at the top. Your tree and your practices grow from there."
+       },
+       "say": "Sequoia has seven tabs along the top, or along the bottom on a phone. Today, Week, Season, Growth Plan, Legacy Book, When Life Changes, and Learn. The best place to begin is a check-in. Tap Start a check-in at the top of the page. Your tree, and your daily practices, grow from there."
+      },
+      {
+       "k": "big",
+       "h": "Hopes Big and Small",
+       "sub": "One hope for today, said out loud.",
+       "beats": [
+        "Before you go, here is a small practice called Hopes Big and Small.",
+        "Sit however is comfortable.",
+        "Think of one hope you have for today, even a small one.",
+        "A good cup of coffee, a call from someone, a little sunshine.",
+        {
+         "t": "Now say it out loud: Today, I hope for this.",
+         "w": 10
+        }
+       ],
+       "say": "Before you go, here is a small practice called Hopes Big and Small. Sit however is comfortable. Think of one hope you have for today, even a small one. A good cup of coffee, a call from someone, a little sunshine. Now say it out loud: Today, I hope for this."
+      },
+      {
+       "k": "quiz",
+       "q": "Where does what you write in Sequoia stay?",
+       "opts": [
+        "On a Grounded server",
+        "On this device, locked in your profile",
+        "With your doctor"
+       ],
+       "right": 1,
+       "why": "Everything stays on this device, locked with a passcode only you know.",
+       "say": "Quick question. Where does what you write in Sequoia stay?"
+      }
+     ],
+     "plainScenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Sequoia",
+       "sub": "A long life, still growing.",
+       "say": "Welcome to Sequoia. A long life, still growing. This short lesson shows you what Sequoia is, who it is for, and where to begin."
+      },
+      {
+       "k": "big",
+       "h": "Sequoias keep growing all their lives.",
+       "sub": "So can you.",
+       "say": "Giant sequoias are among the oldest living things on earth, and they keep growing all their lives. Sequoia is built on that same hope. Growth keeps going at every age, and a long life has a great deal to grow from."
+      },
+      {
+       "k": "points",
+       "h": "Who Sequoia is for",
+       "items": [
+        [
+         "Built for 60 and up",
+         "Older adults, in every season of later life"
+        ],
+        [
+         "Anyone 55 or older may choose it",
+         "Make Sequoia your tree"
+        ],
+        [
+         "Helpers welcome",
+         "Family and friends, only when you invite them"
+        ]
+       ],
+       "say": "Sequoia is built for older adults, sixty and up. Anyone fifty five or older may choose it, and make Sequoia their own tree. And the people who walk with you, a grown child, a spouse, or a friend, can join you as helpers, but only when you invite them."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Sequoia sees your life as a tree. You tend four parts. Roots, what grounds you, the things you are anchored in. Bark: Mind, how you calm down, carry worry, and heal. Leaves: Body, in the ways your body allows. And Branches: Relationships, who shows up for you, and who you show up for. Then two grow from that tending. Trunk: Meaning, knowing your life matters, now and still. And Fruit: Hope, something still worth looking forward to.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
+       ],
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "points",
@@ -20266,7 +22796,13 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "sq-u-checkin",
-     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "MAARC (Minnesota): 1-844-880-1574", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Veterans: 988, then press 1",
+      "MAARC (Minnesota): 1-844-880-1574",
+      "Eldercare Locator: 1-800-677-1116",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 6,
@@ -20277,8 +22813,8 @@ window.GG_LEARN = {
        "hero": "sequoia",
        "eyebrow": "Using Sequoia, Lesson 1",
        "h": "Your First Check-in",
-       "sub": "An honest look at all six parts.",
-       "say": "Everything in Sequoia starts with a check-in. It is an honest look at all six parts of your tree. This lesson walks you through your first one, so you know just what to expect."
+       "sub": "An honest look at your whole tree.",
+       "say": "Everything in Sequoia starts with a check-in. It is an honest look at your whole tree. This lesson walks you through your first one, so you know just what to expect."
       },
       {
        "k": "flow",
@@ -20485,7 +23021,9 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-u-tree",
-     "crisis": ["988: call or text, any time"],
+     "crisis": [
+      "988: call or text, any time"
+     ],
      "n": 2,
      "title": "Your Tree and Your Levels",
      "mins": 5,
@@ -20601,18 +23139,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Read it with kindness",
        "sub": "Your strongest part, and one Growing Edge.",
-       "beats": [
-        "Read your results with kindness, the way you would read a letter from a good friend.",
-        "Let's practice that now.",
-        "Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit.",
-        "Which one feels strongest right now?",
-        "And which one would you most like to tend?",
-        {
-         "t": "Say both out loud: My strongest part is this one, and the part I will tend is this one.",
-         "w": 10
-        }
-       ],
-       "say": "Read your results with kindness, the way you would read a letter from a good friend. Let's practice that now. Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
+       "say": "Read your results with kindness, the way you would read a letter from a good friend. Let's practice that now. Think of your whole tree: Roots, Bark, Leaves, and Branches, and the Trunk and Fruit that grow from them. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
       },
       {
        "k": "tabs",
@@ -20734,7 +23261,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part of your tree. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once."
+       "say": "Your growth plan is a short list of practices for the four parts you tend. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once."
       },
       {
        "k": "screen",
@@ -20803,7 +23330,7 @@ window.GG_LEARN = {
          "Any practice tends your tree"
         ]
        ],
-       "say": "When you do a practice, tap the big circle beside it. A big checkmark fills it, and a few kind words appear, like, good work, a little each day adds up over a long life. Sequoia counts how many of your six parts you tended today. One practice is enough to tend your tree."
+       "say": "When you do a practice, tap the big circle beside it. A big checkmark fills it, and a few kind words appear, like, good work, a little each day adds up over a long life. Sequoia counts how many of your four parts you tended today. One practice is enough to tend your tree."
       },
       {
        "k": "points",
@@ -20857,7 +23384,7 @@ window.GG_LEARN = {
         ],
         [
          "This Week",
-         "Six dots, one for each part"
+         "Four dots, one for each part you tend"
         ],
         [
          "Milestones",
@@ -20865,13 +23392,9 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         3
-        ]
+        "at": [0, 1, 3]
        },
-       "say": "Every day you tend moves your tree toward its next level, from Seed and Sprout, through Sapling and Young Sequoia, to Tall Sequoia and Giant Sequoia. The This Week card shows six dots, one for each part you tended this week. Tend all six, and it is a balanced week. Milestones, like your first day tended and your first balanced week, are kept under Season. Every level you reach is yours to keep, and nothing is ever lost."
+       "say": "Every day you tend moves your tree toward its next level, from Seed and Sprout, through Sapling and Young Sequoia, to Tall Sequoia and Giant Sequoia. The This Week card shows four dots, one for each part you tended this week. Tend all four, and it is a balanced week. Milestones, like your first day tended and your first balanced week, are kept under Season. Every level you reach is yours to keep, and nothing is ever lost."
       },
       {
        "k": "points",
@@ -20910,7 +23433,7 @@ window.GG_LEARN = {
         "h": "Week",
         "p": "A theme, a short check-in, a question to sit with, and your calendar."
        },
-       "say": "The Week tab brings a theme for each week, a short check-in, and a question to sit with in Reflection. Its calendar fills in each day you tend your tree, and shows a ring on days you tended all six parts."
+       "say": "The Week tab brings a theme for each week, a short check-in, and a question to sit with in Reflection. Its calendar fills in each day you tend your tree, and shows a ring on days you tended all four parts."
       },
       {
        "k": "flow",
@@ -20953,7 +23476,9 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-u-legacy",
-     "crisis": ["988: call or text, any time"],
+     "crisis": [
+      "988: call or text, any time"
+     ],
      "n": 4,
      "title": "Your Legacy Book",
      "mins": 5,
@@ -21550,42 +24075,47 @@ window.GG_LEARN = {
   },
   {
    "id": "sequoia-six",
-   "title": "The Six Parts",
-   "who": "One lesson for each part of your tree, with a practice",
-   "certTitle": "Sequoia: The Six Parts",
-   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "title": "Tend Four, Grow Two",
+   "who": "Four parts you tend, two that grow from your tending, each with a practice",
+   "certTitle": "Sequoia: Tend Four, Grow Two",
+   "certLine": "For finishing every lesson on the four parts you tend, and the two that grow.",
    "lessons": [
     {
      "id": "sq-6-roots",
      "n": 1,
-     "title": "Roots: What Grounds You",
+     "title": "Roots: Spirit",
      "mins": 6,
      "blurb": "What holds you up, and how it can change shape over a long life.",
      "sources": [
       "krause",
       "rcope"
      ],
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "sequoia",
-       "eyebrow": "The Six Parts, Lesson 1",
-       "h": "Roots",
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots: Spirit",
        "sub": "What grounds you.",
-       "say": "Welcome to The Six Parts. Sequoia sees your life as a tree with six parts, and this first lesson is about Roots, what grounds you."
+       "say": "Welcome to Tend Four, Grow Two. Sequoia sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred."
       },
       {
-       "k": "six",
-       "h": "Six parts, one tree",
-       "words": [
-        "Faith, peace, wonder",
-        "A life that matters",
-        "A calm, clear mind",
-        "People who know you",
-        "Move, rest, nourish",
-        "Something good ahead"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body, in the ways your body allows. And Branches: Relationships. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows how it can keep growing at any age.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Here are all six. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope. Each lesson takes one part, and shows how it can keep growing at any age."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
@@ -21701,12 +24231,7 @@ window.GG_LEARN = {
          "6": 5,
          "9": 30
         },
-        "at": [
-         2,
-         3,
-         7,
-         8
-        ]
+        "at": [2, 3, 7, 8]
        },
        "say": "Let us practice. This one is called Breath Prayer. Sit or lie however is comfortable, and let your shoulders soften. Now choose a short phrase with two halves. It might be, be still, and know. Or, I am held, I am loved. Or, with no words about God at all, breathing in, I am here, breathing out, I let go. Breathe in on the first half, and out on the second. Keep your breath easy and natural, and never force it. Let us take half a minute together, right now. Good."
       },
@@ -21728,204 +24253,180 @@ window.GG_LEARN = {
        "why": "Roots are about what holds you up, whatever you believe.",
        "say": "Quick question. What does Sequoia look at in Roots?"
       }
-     ]
-    },
-    {
-     "id": "sq-6-trunk",
-     "crisis": ["988: call or text, any time"],
-     "n": 2,
-     "title": "Trunk: Purpose",
-     "mins": 5,
-     "blurb": "A life that matters, and roles that can change shape.",
-     "sources": [
-      "boyle",
-      "alimujiang",
-      "retire",
-      "anderson"
      ],
-     "scenes": [
+     "plainScenes": [
       {
        "k": "title",
        "hero": "sequoia",
-       "eyebrow": "The Six Parts, Lesson 2",
-       "h": "Trunk",
-       "sub": "Purpose.",
-       "say": "This lesson is about your Trunk, your purpose. The reasons you get up, and the good you still give."
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots",
+       "sub": "What grounds you.",
+       "say": "Welcome to Tend Four, Grow Two. Sequoia sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots, what grounds you."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is the whole tree. You tend four parts. Roots, what grounds you. Bark: Mind, your thoughts and feelings. Leaves: Body, in the ways your body allows. And Branches: Relationships. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows how it can keep growing at any age.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
+       ],
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
-       "h": "A sequoia’s trunk keeps growing wider all its life.",
-       "sub": "Every year adds another ring.",
-       "say": "A giant sequoia’s trunk keeps growing wider for as long as the tree lives. Every year adds another ring. A long life is like that. Purpose does not stop at a certain age. It keeps growing, and it can change shape."
+       "h": "A giant sequoia’s roots spread wide, close to the surface.",
+       "sub": "What holds it up comes from many places.",
+       "say": "A giant sequoia can stand for thousands of years, and its roots are surprisingly shallow. They spread wide instead, far out from the trunk. Your roots can be like that. What holds you up can come from many places, and after a long life, you may have more of them than you think."
       },
       {
        "k": "points",
-       "h": "Purpose in later life can look like",
+       "h": "Roots can look like",
        "items": [
         [
-         "Being needed",
-         "Paid or unpaid, both count fully"
+         "Faith and prayer",
+         "God, the Holy, the Sacred"
         ],
         [
-         "Passing it on",
-         "What you know, to someone younger"
+         "Nature and wonder",
+         "A garden, the sky, the view from a window"
         ],
         [
-         "Making and learning",
-         "A quilt, a garden, a new skill"
+         "Music and quiet",
+         "Songs that have carried you for years"
         ],
         [
-         "Peace with your story",
-         "Hard chapters included"
+         "Love and meaning",
+         "Something larger than yourself"
         ]
        ],
-       "say": "Purpose in later life can look like being needed, paid or unpaid. Passing on what you know to someone younger. Making things, and learning new ones. And peace with the life you have lived, hard chapters included."
+       "say": "For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Music and quiet. Or love, and a sense of something larger than yourself. Sequoia is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "points",
+       "h": "Roots can change shape",
+       "items": [
+        [
+         "Worship from home",
+         "Radio, TV, phone, or online"
+        ],
+        [
+         "Prayers you know by heart",
+         "Words learned long ago"
+        ],
+        [
+         "Quiet on purpose",
+         "Time alone that feeds you"
+        ]
+       ],
+       "say": "In later life, the way you tend your roots may change. Maybe getting to services is harder now, so worship comes by radio, TV, phone, or online. Maybe the prayers or poems you learned long ago come back when you need them. And many people find that quiet time alone grows richer with age. A practice can change shape and still feed you."
       },
       {
        "k": "big",
-       "h": "A sense of purpose is linked with a longer life.",
-       "sub": "And a reason to get up in the morning counts.",
-       "say": "Research with older adults keeps finding the same thing. People with a strong sense of purpose tend to live longer. And purpose does not have to be big. A reason to get up in the morning counts."
+       "h": "Honest questions are welcome here, at any age.",
+       "sub": "Faith can be a comfort. It can also feel like a weight.",
+       "say": "Research with older adults found something hopeful. People who explored their questions about faith, instead of pushing them down, tended to have better health. So honest questions and doubts are welcome here, at any age. And faith can be a comfort, or it can feel like a weight. Feeling far from the sacred, let down by it, or hurt by people of faith is real, and it matters too."
       },
       {
        "k": "points",
-       "h": "When roles change",
-       "items": [
-        [
-         "Work ends",
-         "Room to breathe, and a real loss"
-        ],
-        [
-         "The house gets quiet",
-         "The people you raised are busy"
-        ],
-        [
-         "The body asks for help",
-         "Some things take longer now"
-        ],
-        [
-         "New roles open",
-         "Unpaid roles count fully"
-        ]
-       ],
-       "say": "Later life often takes away roles that gave the days their shape. Work ends. The house gets quiet. The body asks for more help. Losing a role can feel like losing a piece of yourself. And new roles can open. Mentor, neighbor, volunteer, grandparent, the one who remembers. Unpaid roles count fully."
-      },
-      {
-       "k": "points",
-       "h": "Ways purpose can grow now",
-       "items": [
-        [
-         "Volunteer",
-         "Your time, where it is needed"
-        ],
-        [
-         "Mentor Someone",
-         "Over coffee, by phone, or in a program"
-        ],
-        [
-         "Pass On a Skill",
-         "A recipe, a repair, a card game"
-        ],
-        [
-         "Write Your Story",
-         "One memory at a time"
-        ]
-       ],
-       "say": "Purpose can grow in many ways now. Giving your time where it is needed is linked with better well-being and health in later life. You might volunteer, mentor someone younger, or pass on a skill, like a recipe, a repair, or a card game. Or you might write your story, one memory at a time. Each of these is a practice you can add to your growth plan."
-      },
-      {
-       "k": "points",
-       "h": "How Trunk can look",
+       "h": "How Roots can look",
        "items": [
         [
          "Strong",
-         "You feel your life matters, and you are needed",
+         "You know what holds you up, and reach for it",
          "#5F7D48"
         ],
         [
          "Steady",
-         "Purpose is there, though some days feel flat",
+         "It is there, though harder to reach lately",
          "#8B5E1A"
         ],
         [
          "Growing Edge",
-         "You feel you have no place, or feel a burden",
+         "You feel unmoored, or faith feels heavy",
          "#B8612F"
         ]
        ],
-       "say": "A strong trunk might mean you feel your life matters, and you are needed. Steady might mean purpose is there, though some days feel flat. And a Growing Edge might mean you feel you have no place anymore, or you feel like a burden to the people around you. Many people feel that in later life. It is worth saying out loud to someone you trust."
+       "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though it has been harder to reach lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is an honest place to be. A chaplain or spiritual director can be a good listener there."
       },
       {
        "k": "big",
-       "h": "You matter, even on days it is hard to see.",
-       "say": "You matter, even on days it is hard to see. If feeling like a burden ever turns into not wanting to be here, please tell someone."
+       "h": "Sequoia asks what holds you up.",
+       "sub": "It asks whether your roots are holding you up.",
+       "say": "That is why Sequoia asks what holds you up. It asks whether your roots are holding you up, or weighing you down. Your roots are yours."
       },
       {
        "k": "big",
-       "h": "One small reason can change how a day begins.",
-       "sub": "A friend, a plant, a pet, a phone call.",
-       "say": "Picture a quiet morning, with no alarm and no job to get to. Many people find that one small reason changes how the day begins. A friend who will call. A tomato plant that needs water. A cat waiting by the door. That is today’s practice."
+       "h": "A few words, matched to your breath.",
+       "sub": "For waiting rooms, long nights, and ordinary moments.",
+       "say": "Picture a long wait at the doctor’s office, or a night when sleep will not come. Many people find that a few words, matched to the breath, can steady them right where they are. That is today’s practice."
       },
       {
        "k": "points",
-       "h": "Practice: Reason to Get Up",
+       "h": "Practice: Breath Prayer",
        "items": [
         [
          "Settle",
-         "One easy breath"
+         "Sit or lie however is comfortable"
         ],
         [
-         "Name one",
-         "A person or thing glad you are here"
+         "Choose two short halves",
+         "Be still, and know. Or: I am here, I let go."
         ],
         [
-         "Say it out loud",
-         "Today, my reason is..."
+         "Breathe with the words",
+         "In on the first half, out on the second"
         ],
         [
-         "Keep it close",
-         "A card by your bed for tomorrow"
+         "Keep it easy",
+         "Let your breath stay natural"
         ]
        ],
        "cue": {
         "w": {
-         "5": 15,
-         "7": 8
+         "6": 5,
+         "9": 30
         },
-        "at": [
-         2,
-         3,
-         6,
-         8
-        ]
+        "at": [2, 3, 7, 8]
        },
-       "say": "Let us practice. This one is called Reason to Get Up. Take one easy breath. Now name one person or thing that is glad you are here today. A friend, a pet, a garden, a neighbor, a grandchild. Take your time. Now say it out loud, if you can. Today, my reason is, and then the name. Tonight, you might write tomorrow’s reason on a card by your bed."
+       "say": "Let us practice. This one is called Breath Prayer. Sit or lie however is comfortable, and let your shoulders soften. Now choose a short phrase with two halves. It might be, be still, and know. Or, I am held, I am loved. Or, with no words about God at all, breathing in, I am here, breathing out, I let go. Breathe in on the first half, and out on the second. Keep your breath easy and natural, and never force it. Let us take half a minute together, right now. Good."
       },
       {
        "k": "big",
-       "h": "Roles can change. Your gifts come with you.",
-       "sub": "Reason to Get Up is ready for your growth plan.",
-       "say": "Roles can change. Your gifts come with you. If you would like to pass on what you know, Sequoia’s Legacy Book is there whenever you choose, one memory at a time. And Reason to Get Up is ready to add to your growth plan."
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "Breath Prayer is ready for your growth plan.",
+       "say": "Tend your roots, and they will hold you. Breath Prayer works anywhere, even in bed, and it is ready to add to your growth plan."
       },
       {
        "k": "quiz",
-       "q": "Which roles count toward purpose?",
+       "q": "What does Sequoia look at in Roots?",
        "opts": [
-        "Only paid work",
-        "Paid and unpaid roles, fully",
-        "Only roles from younger years"
+        "Which religion you belong to",
+        "Whether what grounds you holds you up",
+        "How often you attend services"
        ],
        "right": 1,
-       "why": "Being needed counts, paid or unpaid.",
-       "say": "Quick question. Which roles count toward purpose?"
+       "why": "Roots are about what holds you up, whatever you believe.",
+       "say": "Quick question. What does Sequoia look at in Roots?"
       }
-     ]
+     ],
+     "plainTitle": "Roots: What Grounds You"
     },
     {
      "id": "sq-6-bark",
-     "crisis": ["988: call or text, any time"],
-     "n": 3,
-     "title": "Bark: Mind and Feelings",
+     "crisis": [
+      "988: call or text, any time"
+     ],
+     "n": 2,
+     "title": "Bark: Mind",
      "mins": 5,
      "blurb": "Steadiness earned over a long life, and help when it runs thin.",
      "sources": [
@@ -21940,10 +24441,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "sequoia",
-       "eyebrow": "The Six Parts, Lesson 3",
-       "h": "Bark",
+       "eyebrow": "Tend Four, Grow Two, Lesson 2",
+       "h": "Bark: Mind",
        "sub": "Mind and feelings.",
-       "say": "This lesson is about Bark, your mind and your feelings."
+       "say": "This lesson is about Bark: Mind, your thoughts and your feelings. Bark is one of the four parts you tend."
       },
       {
        "k": "big",
@@ -22064,12 +24565,7 @@ window.GG_LEARN = {
          "9": 8,
          "10": 8
         },
-        "at": [
-         2,
-         3,
-         5,
-         8
-        ]
+        "at": [2, 3, 5, 8]
        },
        "say": "Let us practice. This one is called Name It. Sit or lie however is comfortable, and take one easy breath. Now notice what you are feeling, right now, in this moment. Take your time. Put it into one word. Sad, afraid, angry, lonely, tired, or glad. If no word fits, heavy or stirred up is enough. Now say your word out loud, softly. This is, and then your word. Notice it begin to settle, even just a little."
       },
@@ -22093,8 +24589,197 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "sq-6-leaves",
+     "n": 3,
+     "title": "Leaves: Body",
+     "mins": 5,
+     "blurb": "Move, rest, and nourish, in the body you have today.",
+     "sources": [
+      "seated",
+      "pag",
+      "niasleep",
+      "cdcfalls",
+      "steadi"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Tend Four, Grow Two, Lesson 3",
+       "h": "Leaves: Body",
+       "sub": "Body.",
+       "say": "This lesson is about Leaves: Body. Leaves are one of the four parts you tend."
+      },
+      {
+       "k": "big",
+       "h": "Leaves turn light into strength for the whole tree.",
+       "sub": "Even a giant depends on small green needles.",
+       "say": "Leaves turn sunlight into strength for the whole tree. Even the largest sequoia depends on its small green needles. Your body is your leaves. Sequoia asks about what your body allows today, never about being perfectly healthy."
+      },
+      {
+       "k": "flow",
+       "h": "Three ways to tend Leaves",
+       "steps": [
+        [
+         "Move",
+         "In whatever way your body allows"
+        ],
+        [
+         "Rest",
+         "Restful sleep, and some daylight"
+        ],
+        [
+         "Nourish",
+         "Regular meals, and enough to drink"
+        ]
+       ],
+       "say": "Sequoia tends Leaves in three ways. Move, in whatever way your body allows. Rest, with restful sleep and some daylight. And nourish, with regular meals and enough to drink."
+      },
+      {
+       "k": "big",
+       "h": "Seated movement counts.",
+       "sub": "So does lying down. So do small amounts.",
+       "say": "Research finds that movement helps at every age and every ability. Exercise from a chair is safe for most people, and it helps strength and mood. Guidelines for older adults ask each person to move as their own ability allows. Seated counts. Lying down counts. Small amounts count."
+      },
+      {
+       "k": "points",
+       "h": "Rest in later life",
+       "items": [
+        [
+         "Seven to nine hours",
+         "About the same as younger adults"
+        ],
+        [
+         "A steady wake time",
+         "Weekends included"
+        ],
+        [
+         "Morning daylight",
+         "It helps set your body clock"
+        ],
+        [
+         "Short, early naps",
+         "So nights stay restful"
+        ]
+       ],
+       "say": "Rest matters just as much. Older adults need about seven to nine hours of sleep, about the same as younger adults. A steady wake time helps, weekends included. So does some morning daylight, and keeping naps short and early. If you snore with pauses in your breathing, or feel sleepy all day, tell your doctor."
+      },
+      {
+       "k": "points",
+       "h": "Leaves in later life",
+       "items": [
+        [
+         "Steady on your feet",
+         "With whatever help you use"
+        ],
+        [
+         "Hearing and seeing",
+         "Enough to join in"
+        ],
+        [
+         "Pain",
+         "Loud some days, quieter on others"
+        ],
+        [
+         "Appetite",
+         "Smaller now, and still important"
+        ]
+       ],
+       "say": "Leaves in later life also means feeling steady as you get around, with a cane, a walker, or whatever help you use. Hearing and seeing well enough to join in, and glasses, hearing aids, and captions all count. Pain, which can be loud some days and quieter on others. And appetite, which often gets smaller. If you are losing weight without trying, tell your doctor."
+      },
+      {
+       "k": "big",
+       "h": "Tell your doctor about every fall.",
+       "sub": "Fear of falling can ease, with a plan and practice.",
+       "say": "Falls are common. More than one in four adults sixty five and older fall each year, and fewer than half tell their doctor. Tell your doctor about any fall, even a small one. And if fear of falling is keeping you home, that fear can ease, with a plan and a little practice."
+      },
+      {
+       "k": "points",
+       "h": "How Leaves can look",
+       "items": [
+        [
+         "Strong",
+         "You move, rest, and eat in ways that help",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Mostly okay, with a weak spot or two",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Worn out, unsteady, or in pain",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong leaves might mean you move, rest, and eat in ways that help you. Steady might mean mostly okay, with a weak spot or two. And a Growing Edge might mean you feel worn out, unsteady, or in pain. That is a good place to start, gently."
+      },
+      {
+       "k": "big",
+       "h": "A few gentle stretches, right where you sit.",
+       "sub": "For long afternoons in the same chair.",
+       "say": "Picture a long afternoon in the same chair, with a good book or a ballgame. Many people find that when they finally stand, everything feels stiff. A few gentle stretches, right where you sit, can change that. That is today’s practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Chair Stretch",
+       "items": [
+        [
+         "Sit tall",
+         "As tall as is comfortable"
+        ],
+        [
+         "Roll your shoulders",
+         "Slowly, back and down"
+        ],
+        [
+         "Turn your head",
+         "Gently, side to side"
+        ],
+        [
+         "Circle your ankles",
+         "Or simply wiggle your toes"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "6": 10,
+         "7": 10,
+         "8": 10
+        },
+        "at": [5, 6, 7, 8]
+       },
+       "say": "Let us practice. This one is called Chair Stretch. You can do it in a chair or a wheelchair, and most of it works lying in bed too. Stretch gently. It should never hurt, so stop if you feel pain or dizziness. Sit as tall as is comfortable. Roll your shoulders slowly, back and down. Now turn your head gently to one side, and then the other. Last, circle your ankles, or simply wiggle your toes. Good."
+      },
+      {
+       "k": "big",
+       "h": "Your body is part of the whole you.",
+       "sub": "Chair Stretch is ready for your growth plan.",
+       "say": "Your body is part of the whole you. Talk with your doctor before starting something new, especially after a fall, a new diagnosis, or a change in medicines. Chair Stretch is ready to add to your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "Which movement counts in Sequoia?",
+       "opts": [
+        "Only walking",
+        "Any kind your body allows, seated too",
+        "Only exercise classes"
+       ],
+       "right": 1,
+       "why": "Seated counts, lying down counts, and small amounts count.",
+       "say": "Quick question. Which movement counts in Sequoia?"
+      }
+     ]
+    },
+    {
      "id": "sq-6-branches",
-     "crisis": ["MAARC (Minnesota): 1-844-880-1574", "Eldercare Locator: 1-800-677-1116", "Elder Fraud Hotline: 1-833-372-8311", "911: emergency"],
+     "crisis": [
+      "MAARC (Minnesota): 1-844-880-1574",
+      "Eldercare Locator: 1-800-677-1116",
+      "Elder Fraud Hotline: 1-833-372-8311",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "Branches: Relationships",
      "mins": 6,
@@ -22111,10 +24796,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "sequoia",
-       "eyebrow": "The Six Parts, Lesson 4",
-       "h": "Branches",
+       "eyebrow": "Tend Four, Grow Two, Lesson 4",
+       "h": "Branches: Relationships",
        "sub": "Relationships.",
-       "say": "This lesson is about Branches, your relationships. The people you reach toward, and the people who reach toward you."
+       "say": "This lesson is about Branches: Relationships. The people you reach toward, and the people who reach toward you. Branches are one of the four parts you tend."
       },
       {
        "k": "big",
@@ -22257,12 +24942,7 @@ window.GG_LEARN = {
          "6": 10,
          "11": 15
         },
-        "at": [
-         3,
-         4,
-         7,
-         12
-        ]
+        "at": [3, 4, 7, 12]
        },
        "say": "Let us practice. This one is called Loving-Kindness. It comes from an old meditation tradition, and it needs no religion at all, so anyone can do it. Sit or lie comfortably, and take one easy breath. Now picture someone you love. See their face, and hear their voice. Take a moment. Now say these wishes softly, to them. May you be safe. May you be well. May you be at peace. Say them once more, in your own time. Last, if you like, send the same wishes to a neighbor, and then to yourself."
       },
@@ -22287,197 +24967,200 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "sq-6-leaves",
+     "id": "sq-6-trunk",
+     "crisis": [
+      "988: call or text, any time"
+     ],
      "n": 5,
-     "title": "Leaves: Body",
+     "title": "Trunk: Meaning",
      "mins": 5,
-     "blurb": "Move, rest, and nourish, in the body you have today.",
+     "blurb": "A life that matters, and roles that can change shape.",
      "sources": [
-      "seated",
-      "pag",
-      "niasleep",
-      "cdcfalls",
-      "steadi"
+      "boyle",
+      "alimujiang",
+      "retire",
+      "anderson",
+      "frankl46"
      ],
      "scenes": [
       {
        "k": "title",
        "hero": "sequoia",
-       "eyebrow": "The Six Parts, Lesson 5",
-       "h": "Leaves",
-       "sub": "Body.",
-       "say": "This lesson is about Leaves, your body."
+       "eyebrow": "Tend Four, Grow Two, Lesson 5",
+       "h": "Trunk: Meaning",
+       "sub": "Purpose.",
+       "say": "This lesson is about your Trunk: Meaning. The reasons you get up, and the good you still give. Your trunk is one of the two parts that grow from your tending."
       },
       {
        "k": "big",
-       "h": "Leaves turn light into strength for the whole tree.",
-       "sub": "Even a giant depends on small green needles.",
-       "say": "Leaves turn sunlight into strength for the whole tree. Even the largest sequoia depends on its small green needles. Your body is your leaves. Sequoia asks about what your body allows today, never about being perfectly healthy."
-      },
-      {
-       "k": "flow",
-       "h": "Three ways to tend Leaves",
-       "steps": [
-        [
-         "Move",
-         "In whatever way your body allows"
-        ],
-        [
-         "Rest",
-         "Restful sleep, and some daylight"
-        ],
-        [
-         "Nourish",
-         "Regular meals, and enough to drink"
-        ]
-       ],
-       "say": "Sequoia tends Leaves in three ways. Move, in whatever way your body allows. Rest, with restful sleep and some daylight. And nourish, with regular meals and enough to drink."
-      },
-      {
-       "k": "big",
-       "h": "Seated movement counts.",
-       "sub": "So does lying down. So do small amounts.",
-       "say": "Research finds that movement helps at every age and every ability. Exercise from a chair is safe for most people, and it helps strength and mood. Guidelines for older adults ask each person to move as their own ability allows. Seated counts. Lying down counts. Small amounts count."
+       "h": "A sequoia’s trunk keeps growing wider all its life.",
+       "sub": "Every year adds another ring.",
+       "say": "A giant sequoia’s trunk keeps growing wider for as long as the tree lives. Every year adds another ring. A long life is like that. Meaning does not stop at a certain age. It grows from what you tend, and it can change shape."
       },
       {
        "k": "points",
-       "h": "Rest in later life",
+       "h": "Purpose in later life can look like",
        "items": [
         [
-         "Seven to nine hours",
-         "About the same as younger adults"
+         "Being needed",
+         "Paid or unpaid, both count fully"
         ],
         [
-         "A steady wake time",
-         "Weekends included"
+         "Passing it on",
+         "What you know, to someone younger"
         ],
         [
-         "Morning daylight",
-         "It helps set your body clock"
+         "Making and learning",
+         "A quilt, a garden, a new skill"
         ],
         [
-         "Short, early naps",
-         "So nights stay restful"
+         "Peace with your story",
+         "Hard chapters included"
         ]
        ],
-       "say": "Rest matters just as much. Older adults need about seven to nine hours of sleep, about the same as younger adults. A steady wake time helps, weekends included. So does some morning daylight, and keeping naps short and early. If you snore with pauses in your breathing, or feel sleepy all day, tell your doctor."
-      },
-      {
-       "k": "points",
-       "h": "Leaves in later life",
-       "items": [
-        [
-         "Steady on your feet",
-         "With whatever help you use"
-        ],
-        [
-         "Hearing and seeing",
-         "Enough to join in"
-        ],
-        [
-         "Pain",
-         "Loud some days, quieter on others"
-        ],
-        [
-         "Appetite",
-         "Smaller now, and still important"
-        ]
-       ],
-       "say": "Leaves in later life also means feeling steady as you get around, with a cane, a walker, or whatever help you use. Hearing and seeing well enough to join in, and glasses, hearing aids, and captions all count. Pain, which can be loud some days and quieter on others. And appetite, which often gets smaller. If you are losing weight without trying, tell your doctor."
+       "say": "Purpose in later life can look like being needed, paid or unpaid. Passing on what you know to someone younger. Making things, and learning new ones. And peace with the life you have lived, hard chapters included."
       },
       {
        "k": "big",
-       "h": "Tell your doctor about every fall.",
-       "sub": "Fear of falling can ease, with a plan and practice.",
-       "say": "Falls are common. More than one in four adults sixty five and older fall each year, and fewer than half tell their doctor. Tell your doctor about any fall, even a small one. And if fear of falling is keeping you home, that fear can ease, with a plan and a little practice."
+       "h": "A sense of purpose is linked with a longer life.",
+       "sub": "And a reason to get up in the morning counts.",
+       "say": "Meaning is hard to chase directly. It grows as you give yourself to the people and the work you love, and to something larger than yourself. Research with older adults keeps finding the same thing. People with a strong sense of purpose tend to live longer. And purpose does not have to be big. A reason to get up in the morning counts."
       },
       {
        "k": "points",
-       "h": "How Leaves can look",
+       "h": "When roles change",
+       "items": [
+        [
+         "Work ends",
+         "Room to breathe, and a real loss"
+        ],
+        [
+         "The house gets quiet",
+         "The people you raised are busy"
+        ],
+        [
+         "The body asks for help",
+         "Some things take longer now"
+        ],
+        [
+         "New roles open",
+         "Unpaid roles count fully"
+        ]
+       ],
+       "say": "Later life often takes away roles that gave the days their shape. Work ends. The house gets quiet. The body asks for more help. Losing a role can feel like losing a piece of yourself. And new roles can open. Mentor, neighbor, volunteer, grandparent, the one who remembers. Unpaid roles count fully."
+      },
+      {
+       "k": "points",
+       "h": "Ways purpose can grow now",
+       "items": [
+        [
+         "Volunteer",
+         "Your time, where it is needed"
+        ],
+        [
+         "Mentor Someone",
+         "Over coffee, by phone, or in a program"
+        ],
+        [
+         "Pass On a Skill",
+         "A recipe, a repair, a card game"
+        ],
+        [
+         "Write Your Story",
+         "One memory at a time"
+        ]
+       ],
+       "say": "Purpose can grow in many ways now. Giving your time where it is needed is linked with better well-being and health in later life. You might volunteer, mentor someone younger, or pass on a skill, like a recipe, a repair, or a card game. Or you might write your story, one memory at a time. Each of these is a practice you can add to your growth plan."
+      },
+      {
+       "k": "points",
+       "h": "How Trunk can look",
        "items": [
         [
          "Strong",
-         "You move, rest, and eat in ways that help",
+         "You feel your life matters, and you are needed",
          "#5F7D48"
         ],
         [
          "Steady",
-         "Mostly okay, with a weak spot or two",
+         "Purpose is there, though some days feel flat",
          "#8B5E1A"
         ],
         [
          "Growing Edge",
-         "Worn out, unsteady, or in pain",
+         "You feel you have no place, or feel a burden",
          "#B8612F"
         ]
        ],
-       "say": "Strong leaves might mean you move, rest, and eat in ways that help you. Steady might mean mostly okay, with a weak spot or two. And a Growing Edge might mean you feel worn out, unsteady, or in pain. That is a good place to start, gently."
+       "say": "A strong trunk might mean you feel your life matters, and you are needed. Steady might mean purpose is there, though some days feel flat. And a Growing Edge might mean you feel you have no place anymore, or you feel like a burden to the people around you. Many people feel that in later life. It is worth saying out loud to someone you trust."
       },
       {
        "k": "big",
-       "h": "A few gentle stretches, right where you sit.",
-       "sub": "For long afternoons in the same chair.",
-       "say": "Picture a long afternoon in the same chair, with a good book or a ballgame. Many people find that when they finally stand, everything feels stiff. A few gentle stretches, right where you sit, can change that. That is today’s practice."
+       "h": "You matter, even on days it is hard to see.",
+       "say": "You matter, even on days it is hard to see. If feeling like a burden ever turns into not wanting to be here, please tell someone."
+      },
+      {
+       "k": "big",
+       "h": "One small reason can change how a day begins.",
+       "sub": "A friend, a plant, a pet, a phone call.",
+       "say": "Picture a quiet morning, with no alarm and no job to get to. Many people find that one small reason changes how the day begins. A friend who will call. A tomato plant that needs water. A cat waiting by the door. That is today’s practice."
       },
       {
        "k": "points",
-       "h": "Practice: Chair Stretch",
+       "h": "Practice: Reason to Get Up",
        "items": [
         [
-         "Sit tall",
-         "As tall as is comfortable"
+         "Settle",
+         "One easy breath"
         ],
         [
-         "Roll your shoulders",
-         "Slowly, back and down"
+         "Name one",
+         "A person or thing glad you are here"
         ],
         [
-         "Turn your head",
-         "Gently, side to side"
+         "Say it out loud",
+         "Today, my reason is..."
         ],
         [
-         "Circle your ankles",
-         "Or simply wiggle your toes"
+         "Keep it close",
+         "A card by your bed for tomorrow"
         ]
        ],
        "cue": {
         "w": {
-         "6": 10,
-         "7": 10,
-         "8": 10
+         "5": 15,
+         "7": 8
         },
-        "at": [
-         5,
-         6,
-         7,
-         8
-        ]
+        "at": [2, 3, 6, 8]
        },
-       "say": "Let us practice. This one is called Chair Stretch. You can do it in a chair or a wheelchair, and most of it works lying in bed too. Stretch gently. It should never hurt, so stop if you feel pain or dizziness. Sit as tall as is comfortable. Roll your shoulders slowly, back and down. Now turn your head gently to one side, and then the other. Last, circle your ankles, or simply wiggle your toes. Good."
+       "say": "Let us practice. This one is called Reason to Get Up, and it lives in Bark: Mind. Take one easy breath. Now name one person or thing that is glad you are here today. A friend, a pet, a garden, a neighbor, a grandchild. Take your time. Now say it out loud, if you can. Today, my reason is, and then the name. Tonight, you might write tomorrow’s reason on a card by your bed."
       },
       {
        "k": "big",
-       "h": "Your body is part of the whole you.",
-       "sub": "Chair Stretch is ready for your growth plan.",
-       "say": "Your body is part of the whole you. Talk with your doctor before starting something new, especially after a fall, a new diagnosis, or a change in medicines. Chair Stretch is ready to add to your growth plan."
+       "h": "Roles can change. Your gifts come with you.",
+       "sub": "Reason to Get Up is ready for your growth plan.",
+       "say": "Roles can change. Your gifts come with you. If you would like to pass on what you know, Sequoia’s Legacy Book is there whenever you choose, one memory at a time. And Reason to Get Up is ready to add to your growth plan, under Bark: Mind."
       },
       {
        "k": "quiz",
-       "q": "Which movement counts in Sequoia?",
+       "q": "Which roles count toward purpose?",
        "opts": [
-        "Only walking",
-        "Any kind your body allows, seated too",
-        "Only exercise classes"
+        "Only paid work",
+        "Paid and unpaid roles, fully",
+        "Only roles from younger years"
        ],
        "right": 1,
-       "why": "Seated counts, lying down counts, and small amounts count.",
-       "say": "Quick question. Which movement counts in Sequoia?"
+       "why": "Being needed counts, paid or unpaid.",
+       "say": "Quick question. Which roles count toward purpose?"
       }
      ]
     },
     {
      "id": "sq-6-fruit",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -22491,16 +25174,16 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "sequoia",
-       "eyebrow": "The Six Parts, Lesson 6",
-       "h": "Fruit",
+       "eyebrow": "Tend Four, Grow Two, Lesson 6",
+       "h": "Fruit: Hope",
        "sub": "Hope.",
-       "say": "This last lesson is about Fruit, your hope."
+       "say": "This last lesson is about Fruit: Hope. Like your trunk, your fruit grows from your tending."
       },
       {
        "k": "big",
        "h": "Some sequoia cones wait many years to open.",
        "sub": "Then heat, or time, sets the seeds loose.",
-       "say": "A giant sequoia’s cones can stay green and closed on the branch for many years, some for twenty years or more. Then heat, or time, opens them, and the seeds fall. Fruit takes time. Hope is like that. It grows from everything else, and it can come out of hard seasons."
+       "say": "A giant sequoia’s cones can stay green and closed on the branch for many years, some for twenty years or more. Then heat, or time, opens them, and the seeds fall. Fruit takes time. Hope is like that. It grows from everything you tend, and it can come out of hard seasons."
       },
       {
        "k": "points",
@@ -22541,7 +25224,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Peace about what lies ahead can grow too.",
        "sub": "Share your wishes with someone you trust.",
-       "say": "For many people, hope in later life includes peace about what lies ahead. Talking with someone you trust about what matters most to you, in your health and your future, can bring real peace. Sequoia has a practice for that, called Make Your Wishes Known."
+       "say": "For many people, hope in later life includes peace about what lies ahead. Talking with someone you trust about what matters most to you, in your health and your future, can bring real peace. Sequoia has a practice for that, called Make Your Wishes Known, in Branches: Relationships."
       },
       {
        "k": "points",
@@ -22602,20 +25285,15 @@ window.GG_LEARN = {
          "5": 15,
          "7": 8
         },
-        "at": [
-         2,
-         5,
-         6,
-         8
-        ]
+        "at": [2, 5, 6, 8]
        },
-       "say": "Let us practice. This one is called Something to Look Forward To. Think about the week ahead. What is one small good thing you could plan? A call, a coffee, a drive, a favorite show. Choose one. Now say it out loud, like this. This week, I am looking forward to, and then your one thing. Last, make it real. Put it on the calendar, or ask someone to plan it with you."
+       "say": "Let us practice. This one is called Something to Look Forward To, and it lives in Bark: Mind. Think about the week ahead. What is one small good thing you could plan? A call, a coffee, a drive, a favorite show. Choose one. Now say it out loud, like this. This week, I am looking forward to, and then your one thing. Last, make it real. Put it on the calendar, or ask someone to plan it with you."
       },
       {
        "k": "big",
-       "h": "Tend the whole tree, and fruit will come.",
+       "h": "Tend all four, and fruit will come.",
        "sub": "It is ready for your growth plan.",
-       "say": "Tend the whole tree, a little at a time, and fruit will come. Something to Look Forward To is ready to add to your growth plan. That is all six parts. A long life, still growing. Well done."
+       "say": "Tend all four, a little at a time, and fruit will come. Something to Look Forward To is ready to add to your growth plan, under Bark: Mind. The Grounded Way works when you tend all four parts. That is the whole tree. A long life, still growing. Well done."
       },
       {
        "k": "quiz",
@@ -24174,14 +26852,14 @@ window.GG_LEARN = {
    "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
    "lowkey": "sober",
    "certTitle": "Growing a Healthy Tree",
-   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all four parts of your tree.",
    "lessons": [
     {
      "id": "sq-ls-tree",
      "n": 1,
      "title": "The Healthy Tree",
      "mins": 6,
-     "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
+     "blurb": "Your tree, tend four and grow two, and Chris's three kinds of tools: mind, body, and spirit.",
      "sources": [
       "samhsarec"
      ],
@@ -24199,7 +26877,7 @@ window.GG_LEARN = {
        "hero": "sequoia",
        "eyebrow": "Growing a Healthy Tree, Lesson 1",
        "h": "The Healthy Tree",
-       "sub": "Six parts, tended a little each day.",
+       "sub": "Tend four, grow two, a little each day.",
        "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
       },
       {
@@ -24225,41 +26903,34 @@ window.GG_LEARN = {
        "h": "Your tree, whole and growing",
        "items": [
         [
-         "Roots",
+         "Roots: Spirit",
          "What you are anchored in"
         ],
         [
-         "Trunk",
-         "Meaning"
-        ],
-        [
-         "Bark",
+         "Bark: Mind",
          "Your mind"
         ],
         [
-         "Branches",
-         "Your people"
-        ],
-        [
-         "Leaves",
+         "Leaves: Body",
          "Your body"
         ],
         [
-         "Fruit",
-         "Hope"
+         "Branches: Relationships",
+         "Your people"
+        ],
+        [
+         "Trunk: Meaning",
+         "Grows from your tending"
+        ],
+        [
+         "Fruit: Hope",
+         "Grows from your tending"
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         4,
-         5,
-         7,
-         8,
-         10
-        ]
+        "at": [2, 5, 7, 9, 10, 10]
        },
-       "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
+       "say": "Grounded pictures your life as a tree. Four parts are tended, and two grow from that tending. Roots are your spirit, what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. Bark is your mind. Calming down, processing hard emotions, and healing over well. Leaves are your body. Sleep, movement, food, breath, and medical care. Branches are your people. Then the trunk, meaning, the larger story you live inside, and the fruit, hope, the evidence that a future is still growing, grow from that tending. A Sober life grows strongest when all four are tended."
       },
       {
        "k": "flow",
@@ -24279,11 +26950,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         5
-        ]
+        "at": [1, 3, 5]
        },
        "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
       },
@@ -24411,13 +27078,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         5,
-         6,
-         8
-        ]
+        "at": [1, 2, 5, 6, 8]
        },
        "say": "Here is one rhythm. Water first, a full glass, before anything else. Then light. Step outside, or open a window, and let morning light reach your eyes. It helps set your body clock for the day and for sleep tonight. Then breath, two minutes, slow and steady. Then choose. Say your intention for a Sober day, in your own words. And move. A walk around the block, even five minutes."
       },
@@ -24472,12 +27133,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "A few things make it easy to keep. Set it up the night before, with a glass by the sink and shoes by the door. Let your phone wait until after your rhythm, so your first minutes are yours. Keep the same order each day, so your body learns it. And short counts. Five minutes is a whole rhythm."
       },
@@ -24557,11 +27213,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2
-        ]
+        "at": [0, 1, 2]
        },
        "say": "A craving shows up in the body, like a tight chest, restless hands, or a dry mouth. It shows up in the mind, with thoughts like, just this once, or, I deserve it. And it often comes with a certain time, place, or feeling, like the end of a workday, payday, or a lonely evening."
       },
@@ -24587,12 +27239,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         4,
-         5
-        ]
+        "at": [1, 3, 4, 5]
        },
        "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
       },
@@ -24641,12 +27288,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         4,
-         5
-        ]
+        "at": [1, 3, 4, 5]
        },
        "say": "When the wave settles, take care of yourself. Change the scene. Step outside, or into another room. Reach out, and text one person in your corner. Have water and something to eat, because hunger and thirst can feel a lot like a craving. And write down the time and the place, so next time you can plan for it."
       },
@@ -24726,11 +27368,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         5
-        ]
+        "at": [1, 3, 5]
        },
        "say": "Here is the shape of it. Slow. Breathe in gently through your nose. Low. Let your belly rise, and let your shoulders stay soft. Long. Let the breath out a little longer than the breath in."
       },
@@ -24788,12 +27426,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
        "say": "Use it during a craving, and breathe while the wave passes. Use it with anger, with three slow breaths before you answer. Use it on a hard night, lying down with your eyes closed. And use it anywhere. At work, in line, or in the car. It stays quiet and private."
       },
@@ -24890,12 +27523,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         5
-        ]
+        "at": [1, 2, 3, 5]
        },
        "say": "Here is a simple way to keep it easy. Start at a pace where you can still talk. If you have a heart rate watch, one well known guide sets a top number of one hundred eighty, minus your age. Stay under it. Slow down, or walk, when you pass it. Then add a few minutes each week."
       },
@@ -24940,12 +27568,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Find your kind of moving. A daily walk, outside whenever you can. A run or a bike ride, easy and steady. Moving with someone, a friend, a walking group, or a team, which adds connection too. And on gentle days, stretching or a slow walk counts."
       },
@@ -25041,12 +27664,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "To try heat gently, keep it simple. Drink water before and after. Start short, five to ten minutes. Listen to your body, and step out right away if you feel dizzy or unwell. Then cool down slowly, rest, and sip water. No sauna nearby? A warm bath works too."
       },
@@ -25068,11 +27686,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Cool water can be gentle too. Splash cool water on your face for a few breaths, which can help a racing heart slow down. Or turn your shower cool for the last thirty seconds. Either way, breathe slowly, with long breaths out, the whole time."
       },
@@ -25192,13 +27806,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [0, 2, 3, 4, 5]
        },
        "say": "Walk slowly, and take it in one sense at a time. See the light, the leaves, and the colors. Hear the birds, the wind, or water. Smell the earth and the green things. Touch the bark, a leaf, or the air on your skin. And breathe, slow and deep."
       },
@@ -25247,12 +27855,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Make it a habit. Go unplugged, with your phone in your pocket and the sound off. Aim for twenty minutes, or start with five. Return to the same place, and watch it change with the seasons. And invite someone to walk with you, quietly. A walk among trees is a strong answer to a craving, too."
       },
@@ -25342,12 +27945,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         4,
-         6
-        ]
+        "at": [1, 2, 4, 6]
        },
        "say": "Here is a simple way to begin. Set a timer for ten minutes. Write freely. Spelling and neatness are beside the point. Go to the feeling. What happened, and how did it feel? Then close kindly, with one line about what you need now."
       },
@@ -25392,12 +27990,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
        "say": "When a craving comes, ask, what am I really hungry for? For an old hurt, ask, what happened, and what did I need back then? For anger, ask, what matters to me here? And on a good day, ask, what went well today?"
       },
@@ -25489,11 +28082,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         4,
-         5
-        ]
+        "at": [1, 4, 5]
        },
        "say": "Your story belongs to you. Use your own words for who you are. Some people use a label for themselves, and some choose other words. Both are welcome here. Say what happened, plainly. And say what helps, and what you are growing now. Words matter. Research finds that the words we use about people can shape how they are treated, so Grounded speaks of people growing sober."
       },
@@ -25515,11 +28104,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3
-        ]
+        "at": [0, 2, 3]
        },
        "say": "Start small. One true sentence, written down first. One safe person, someone steady and kind. And one good time to say it, calm, private, and Sober."
       },
@@ -25559,11 +28144,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like SMART Recovery or Refuge Recovery, where people walking the same road share their stories too."
       },
@@ -25657,12 +28238,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         5
-        ]
+        "at": [1, 2, 3, 5]
        },
        "say": "Here are a few ideas. Something special to sip, like sparkling water with fruit, juice, or a good tea. Good food, made and shared together. Music and movement. A dance, a song, or a walk at sunset. And a blessing, a few words for the day, or for the person you are celebrating."
       },
@@ -25688,12 +28264,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [2, 3, 4, 5]
        },
        "say": "Going to a party? Make a plan. Bring your own drink, something you love, so your hands are full. Bring a friend who is in your corner. Plan your way home, with your own ride and a time to leave. And have your answer ready. No thanks, I'm good."
       },
@@ -25733,11 +28304,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         3,
-         4
-        ]
+        "at": [0, 3, 4]
        },
        "say": "Celebrate your own growth too. Mark your days. Thirty days, ninety days, a year. Tell someone, and let them celebrate with you. And give yourself a gift that feeds your tree, like new running shoes, a day outdoors, or a good book."
       },
@@ -25820,13 +28387,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 1, 2, 3, 4]
        },
        "say": "Start with the same wake time every day, even on weekends. Get morning light, outside, early in the day. Give yourself an Unplugged hour before bed, with screens put away. Keep your room cool, dark, and calm. And wind down with a warm shower, a book, or a slow breath."
       },
@@ -25875,12 +28436,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "If you wake at night, stay calm. Quiet rest still helps your body. Breathe slowly, in for four and out for six. After a while, get up, sit in dim light with a calm book, and go back to bed when you feel sleepy. And turn the clock away, so the hours stay a mystery."
       },
@@ -25973,11 +28529,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it become part of you."
       },
@@ -26022,12 +28574,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Here is good to look for. Clear mornings, waking up rested and present. Your people, a call returned, and trust growing back. Your body, growing stronger and steadier. And small wins, like another Sober day."
       },
@@ -26053,7 +28600,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Let the good sink in.",
        "sub": "Your tree is growing.",
-       "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
+       "say": "You have finished Growing a Healthy Tree. Roots, bark, leaves, and branches, tended a little each day, and meaning and hope growing from it. Let the good sink in. Your tree is growing."
       }
      ]
     }
@@ -27259,7 +29806,7 @@ window.GG_LEARN = {
      "title": "Welcome to Pine",
      "mins": 4,
      "blurb": "What Pine is, who it is for, what stays private, and where to begin.",
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "pine",
@@ -27280,17 +29827,22 @@ window.GG_LEARN = {
        "say": "Grow With Grounded has a tree for every age. Maple and Aspen are for younger students. Birch is for young adults, and Oak is for adults. Pine is the tree built for grades nine to twelve, for people who are building their own lives."
       },
       {
-       "k": "six",
-       "h": "Six parts make you whole",
-       "words": [
-        "What holds you steady",
-        "What you care about",
-        "Stress and big feelings",
-        "Friends, family, trusted adults",
-        "Move, rest, and nourish",
-        "What you look forward to"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Pine sees your life as a tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending. Trunk: Meaning, what you care about and where you are headed. And Fruit: Hope, what you look forward to and believe is possible. Pine helps you learn to tend all four.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Pine sees your life as a tree with six parts. Roots, what holds you steady. Trunk, what you care about and where you are headed. Bark, how you handle stress, mistakes, and big feelings. Branches, your friends, your family, and the adults in your corner. Leaves, your body, how you move, rest, and eat. And Fruit, what you look forward to and believe is possible. Six parts make you whole. Pine helps you learn to tend them all."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "points",
@@ -27298,11 +29850,11 @@ window.GG_LEARN = {
        "items": [
         [
          "A check-in",
-         "An honest look at all six parts"
+         "An honest look at your whole tree"
         ],
         [
          "A growth plan",
-         "Small practices that fit your life"
+         "Small practices for the four you tend"
         ],
         [
          "Next Steps",
@@ -27317,7 +29869,134 @@ window.GG_LEARN = {
          "Levels, milestones, and rings"
         ]
        ],
-       "say": "Here is what Pine gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Next Steps, a private notebook for your goals and your plans after high school. When Life Changes, guides for the seasons of high school, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, helps Pine fit your body and your health."
+       "say": "Here is what Pine gives you. A check-in, an honest look at your whole tree. A growth plan, small practices for the four parts you tend, that fit your real life. Next Steps, a private notebook for your goals and your plans after high school. When Life Changes, guides for the seasons of high school, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, helps Pine fit your body and your health."
+      },
+      {
+       "k": "big",
+       "h": "Your answers are yours.",
+       "sub": "Locked on this device with your own passcode.",
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. Pine sends nothing anywhere. And help lines are always close, on your growth plan, any time you want them."
+      },
+      {
+       "k": "tabs",
+       "app": "pine",
+       "app_name": "Pine",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Next Steps",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Where to begin",
+        "p": "Start a check-in. Your tree and your practices grow from there."
+       },
+       "say": "Pine has seven tabs. Today, Week, Season, Growth Plan, Next Steps, When Life Changes, and Learn. The best place to begin is a check-in. Your tree, and your daily practices, grow from there."
+      },
+      {
+       "k": "big",
+       "h": "Start on purpose",
+       "sub": "One breath and one thing that matters, before your phone.",
+       "beats": [
+        "Today has a short practice for the morning, called Start on purpose.",
+        "Let's try it now.",
+        "Sit up, wherever you are.",
+        "Take one slow breath, in and out.",
+        "Now pick one thing that matters to you today.",
+        {
+         "t": "Say it out loud: Today, what matters is this.",
+         "w": 10
+        }
+       ],
+       "say": "Today has a short practice for the morning, called Start on purpose. Let's try it now. Sit up, wherever you are. Take one slow breath, in and out. Now pick one thing that matters to you today. Say it out loud: Today, what matters is this."
+      },
+      {
+       "k": "big",
+       "h": "Small and steady is how a pine grows.",
+       "sub": "One practice a day is enough to start.",
+       "say": "Nice. That is the whole idea of Pine. Small and steady is how a pine grows. You do not have to fix everything at once. One practice a day is enough to start."
+      },
+      {
+       "k": "quiz",
+       "q": "What does your grown-up see from your Pine check-in?",
+       "opts": [
+        "Every answer you give",
+        "None of your answers. They stay yours.",
+        "Your levels and your notes"
+       ],
+       "right": 1,
+       "why": "Your answers, levels, notes, and Next Steps stay yours, on this device.",
+       "say": "Quick question. What does your grown-up see from your Pine check-in?"
+      }
+     ],
+     "plainScenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Pine",
+       "sub": "Stand tall through every season.",
+       "say": "Welcome to Pine. Stand tall through every season. This short lesson shows you what Pine is, who it is for, and where to begin."
+      },
+      {
+       "k": "big",
+       "h": "Pines stay green through every season.",
+       "sub": "Wind, snow, heat, and drought. They keep growing.",
+       "say": "Pine trees stay green all year. Wind, snow, summer heat, a dry stretch. They bend, they hold, and they keep growing. The high school years have seasons like that too. Pine is built to help you stand tall through all of them."
+      },
+      {
+       "k": "trees",
+       "h": "Pine grows between Aspen and Birch.",
+       "say": "Grow With Grounded has a tree for every age. Maple and Aspen are for younger students. Birch is for young adults, and Oak is for adults. Pine is the tree built for grades nine to twelve, for people who are building their own lives."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Pine sees your life as a tree. You tend four parts. Roots, what holds you steady. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending. Trunk: Meaning, what you care about and where you are headed. And Fruit: Hope, what you look forward to and believe is possible. Pine helps you learn to tend all four.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
+       ],
+       "cue": {
+        "at": [1, 6]
+       }
+      },
+      {
+       "k": "points",
+       "h": "What Pine gives you",
+       "items": [
+        [
+         "A check-in",
+         "An honest look at your whole tree"
+        ],
+        [
+         "A growth plan",
+         "Small practices for the four you tend"
+        ],
+        [
+         "Next Steps",
+         "A private notebook for life after high school"
+        ],
+        [
+         "When Life Changes",
+         "Guides, each with two short videos"
+        ],
+        [
+         "A tree that grows",
+         "Levels, milestones, and rings"
+        ]
+       ],
+       "say": "Here is what Pine gives you. A check-in, an honest look at your whole tree. A growth plan, small practices for the four parts you tend, that fit your real life. Next Steps, a private notebook for your goals and your plans after high school. When Life Changes, guides for the seasons of high school, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, helps Pine fit your body and your health."
       },
       {
        "k": "big",
@@ -27393,7 +30072,12 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-u-checkin",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "Childhelp: call or text 1-800-422-4453",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
@@ -27404,8 +30088,8 @@ window.GG_LEARN = {
        "hero": "pine",
        "eyebrow": "Using Pine, Lesson 1",
        "h": "Your First Check-in",
-       "sub": "An honest look at all six parts.",
-       "say": "Everything in Pine starts with a check-in. It is an honest look at all six parts of your tree. This lesson walks you through it, so you know exactly what to expect."
+       "sub": "An honest look at your whole tree.",
+       "say": "Everything in Pine starts with a check-in. It is an honest look at your whole tree. This lesson walks you through it, so you know exactly what to expect."
       },
       {
        "k": "flow",
@@ -27422,10 +30106,7 @@ window.GG_LEARN = {
        ],
        "say": "There are two ways to check in. The full check-in asks seven questions for each part, forty two in all, and takes about ten minutes. The Quick Check-in asks one question for each part, and takes about two. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept. The first time, Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve.",
        "cue": {
-        "at": [
-         1,
-         2
-        ]
+        "at": [1, 2]
        }
       },
       {
@@ -27508,17 +30189,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Try one real question",
        "sub": "Looked forward to something, soon or someday?",
-       "beats": [
-        "Let's try one real question now.",
-        "This is the first question for Fruit, your hope.",
-        "In the past two weeks, how often have you looked forward to something, soon or someday?",
-        "A game, a trip, a friend, or a plan all count.",
-        {
-         "t": "Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure.",
-         "w": 10
-        }
-       ],
-       "say": "Let's try one real question now. This is the first question for Fruit, your hope. In the past two weeks, how often have you looked forward to something, soon or someday? A game, a trip, a friend, or a plan all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
+       "say": "Let's try one real question now. This is the first question for Fruit: Hope. In the past two weeks, how often have you looked forward to something, soon or someday? A game, a trip, a friend, or a plan all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
       },
       {
        "k": "points",
@@ -27681,18 +30352,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Read it like a friend would",
        "sub": "Your strongest part, and one Growing Edge.",
-       "beats": [
-        "Read your results the way a good friend would read them, honestly and kindly.",
-        "Let's practice that now.",
-        "Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit.",
-        "Which one feels strongest right now?",
-        "And which one would you most like to tend?",
-        {
-         "t": "Say both out loud: My strongest part is this one, and the part I will tend is this one.",
-         "w": 10
-        }
-       ],
-       "say": "Read your results the way a good friend would read them, honestly and kindly. Let's practice that now. Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
+       "say": "Read your results the way a good friend would read them, honestly and kindly. Let's practice that now. Think of your whole tree: Roots, Bark, Leaves, and Branches, and the Trunk and Fruit that grow from them. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
       },
       {
        "k": "flow",
@@ -27787,7 +30447,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+       "say": "Your growth plan is a short list of practices for the four parts you tend. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
       },
       {
        "k": "tabs",
@@ -27856,14 +30516,14 @@ window.GG_LEARN = {
         ],
         [
          "Balanced week",
-         "All six parts tended in one week"
+         "All four parts tended in one week"
         ],
         [
          "Your own pace",
          "Your tree is only about you"
         ]
        ],
-       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Tend all six parts in one week, and you get a balanced week. Your tree is all about you, and it grows at your own pace."
+       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Tend all four parts in one week, and you get a balanced week. Your tree is all about you, and it grows at your own pace."
       },
       {
        "k": "points",
@@ -28072,7 +30732,11 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-u-private",
-     "crisis": ["Childhelp: call or text 1-800-422-4453", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
+     "crisis": [
+      "Childhelp: call or text 1-800-422-4453",
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "911: emergency"
+     ],
      "n": 5,
      "title": "Private, Saved, and Shared",
      "mins": 5,
@@ -28226,7 +30890,9 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-u-settings",
-     "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
+     "crisis": [
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"
+     ],
      "n": 6,
      "title": "Make Pine Yours",
      "mins": 4,
@@ -28380,15 +31046,15 @@ window.GG_LEARN = {
   },
   {
    "id": "pine-six",
-   "title": "The Six Parts",
-   "who": "One lesson for each part of your tree, with a practice",
-   "certTitle": "Pine: The Six Parts",
-   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "title": "Tend Four, Grow Two",
+   "who": "Four parts you tend, two that grow from your tending, each with a practice",
+   "certTitle": "Pine: Tend Four, Grow Two",
+   "certLine": "For finishing every lesson on the four parts you tend, and the two that grow.",
    "lessons": [
     {
      "id": "pn-6-roots",
      "n": 1,
-     "title": "Roots: What Holds You Steady",
+     "title": "Roots: Spirit",
      "mins": 5,
      "blurb": "Peace, faith, values, and the things that hold you steady when life gets loud.",
      "sources": [
@@ -28396,27 +31062,32 @@ window.GG_LEARN = {
       "smithdenton",
       "bmmrsteen"
      ],
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "pine",
-       "eyebrow": "The Six Parts, Lesson 1",
-       "h": "Roots",
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots: Spirit",
        "sub": "What holds you steady.",
-       "say": "Welcome to The Six Parts. Pine sees your life as a tree with six parts, and this first lesson is about Roots, what holds you steady."
+       "say": "Welcome to Tend Four, Grow Two. Pine sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred, and what holds you steady."
       },
       {
-       "k": "six",
-       "h": "Six parts, one tree",
-       "words": [
-        "What holds you steady",
-        "What you care about",
-        "Stress and big feelings",
-        "Friends, family, trusted adults",
-        "Move, rest, and nourish",
-        "What you look forward to"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending: Trunk: Meaning, what you care about and where you are headed, and Fruit: Hope. Each lesson takes one part, and shows what it looks like in the high school years.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Here are all six. Roots, what holds you steady. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope. Each lesson takes one part, and shows what it looks like in the high school years."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
@@ -28527,12 +31198,7 @@ window.GG_LEARN = {
          "5": 8,
          "6": 8
         },
-        "at": [
-         3,
-         4,
-         6,
-         8
-        ]
+        "at": [3, 4, 6, 8]
        },
        "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a field, a car, a court. Last, things you do that help, like prayer, music, time outside, or a family tradition. Short lists are fine. Later, write them down and keep them in your phone notes or on your wall."
       },
@@ -28554,192 +31220,177 @@ window.GG_LEARN = {
        "why": "Roots are about what holds you steady, whatever you believe.",
        "say": "Quick question. What does Pine look at in Roots?"
       }
-     ]
-    },
-    {
-     "id": "pn-6-trunk",
-     "n": 2,
-     "title": "Trunk: What You Care About and Where You’re Headed",
-     "mins": 5,
-     "blurb": "Purpose in the high school years: what matters to you, what you are working toward, and who it helps.",
-     "sources": [
-      "damon03",
-      "bronk18",
-      "schreier13",
-      "yeager18"
      ],
-     "scenes": [
+     "plainScenes": [
       {
        "k": "title",
        "hero": "pine",
-       "eyebrow": "The Six Parts, Lesson 2",
-       "h": "Trunk",
-       "sub": "What you care about, and where you’re headed.",
-       "say": "This lesson is about Trunk, your purpose. What you care about, and where you are headed."
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots",
+       "sub": "What holds you steady.",
+       "say": "Welcome to Tend Four, Grow Two. Pine sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots, what holds you steady."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is the whole tree. You tend four parts. Roots, what holds you steady. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending: Trunk: Meaning, what you care about and where you are headed, and Fruit: Hope. Each lesson takes one part, and shows what it looks like in the high school years.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
+       ],
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
-       "h": "A pine grows one layer of branches a year.",
-       "sub": "Straight up, toward the light, a little at a time.",
-       "say": "A young pine grows straight up toward the light, adding one new layer of branches each year. You can almost count its age by the layers. Purpose grows the same way. Not all at once, but a little each year, toward what matters to you."
+       "h": "A pine’s roots always work together.",
+       "sub": "Underground partners reach farther than the roots can.",
+       "say": "A pine's roots always work together. Underground, they partner with tiny fungi that reach much farther than the roots could on their own, bringing back water and food. Your roots can be like that. What holds you steady often comes from more places than you would guess."
       },
       {
        "k": "points",
-       "h": "Purpose has three parts",
+       "h": "Roots can look like",
        "items": [
         [
-         "Something you care about",
-         "It matters to you, personally"
+         "Faith, prayer, or worship",
+         "For many people, a door to peace"
         ],
         [
-         "Something you work toward",
-         "A goal, and a next step"
+         "Quiet and reflection",
+         "A few quiet minutes, unplugged"
         ],
         [
-         "Something beyond you",
-         "It helps someone else too"
+         "Nature, music, and wonder",
+         "A night sky, a song, a long run"
+        ],
+        [
+         "Family traditions and values",
+         "What you want to keep, or start"
         ]
        ],
-       "say": "Researchers who study purpose in young people describe it in three parts. Something you care about. Something you are working toward, with a next step. And a way it reaches beyond you, to help someone else. They also found that purpose often starts taking shape right in the high school years. You do not need it all figured out. You are building it."
-      },
-      {
-       "k": "points",
-       "h": "Purpose can live in",
-       "items": [
-        [
-         "School and learning",
-         "A subject that grabs you"
-        ],
-        [
-         "A sport, a craft, or a job",
-         "Getting better at something real"
-        ],
-        [
-         "Family and faith",
-         "Showing up for people you love"
-        ],
-        [
-         "Helping others",
-         "A team, a younger kid, your town"
-        ]
-       ],
-       "say": "Purpose can live in a lot of places. A class that grabs you. A sport, an instrument, a craft, or a job. Your family, or your faith. Or helping others, like coaching younger kids, or showing up for your team. Caring for a little brother counts. So does fixing bikes."
+       "say": "Roots look different for different people. For some, roots are faith, prayer, or worship, and God, by whatever name they use. For others, roots are quiet time, nature, music, or a long run. For many, roots are family traditions and the values they live by. Often it is a mix. Pine is made for all faith traditions and everything in-between."
       },
       {
        "k": "big",
-       "h": "Helping is good for the helper too.",
-       "sub": "Teens who volunteered with younger kids had healthier hearts.",
-       "say": "Here is something surprising. In one study, teens who volunteered with younger kids for a few months ended up with healthier hearts than teens who waited their turn. Giving is good for the giver, in body as well as spirit."
+       "h": "Feeling connected matters more than showing up.",
+       "sub": "Peace deep down is the root of it.",
+       "say": "Research with teens found something interesting. Feeling a real, personal connection to something larger went with lighter moods, more than just showing up did. So Roots is less about where you go, and more about what actually steadies you deep down."
       },
       {
        "k": "points",
-       "h": "Your values, your choice",
+       "h": "Questions belong here",
        "items": [
         [
-         "Plans you choose yourself",
-         "Are the ones you keep going on"
+         "Doubts are normal",
+         "A normal part of growing"
         ],
         [
-         "Every path counts",
-         "Work, college, a trade, service, the military"
+         "Faith can hurt too",
+         "And that is worth talking about"
         ],
         [
-         "Be the real you",
-         "The right people want that"
+         "Pine asks what holds you up",
+         "It asks what holds you steady"
         ]
        ],
-       "say": "Research also finds that teens do best when their own values are respected. Plans you choose yourself are the ones you keep going on. Work, college, a trade, an apprenticeship, service, the military, a gap year, or staying close to home are all real paths. And acting like someone you are not, all day, is exhausting. The right people want the real you."
+       "say": "A large national study found that many teens find faith hard to put into words. That is normal. Honest questions and doubts are part of growing up. And sometimes faith, or rules from a family or a community, can leave someone feeling scared or not good enough. In teens, experiences like that go with heavier moods, so they are worth talking through with someone you trust. That is why Pine asks what holds you up. It asks whether your roots are holding you up."
       },
       {
        "k": "points",
-       "h": "How Trunk can look",
+       "h": "How Roots can look",
        "items": [
         [
          "Strong",
-         "You know what you care about, and your next step",
+         "You know what steadies you, and you reach for it",
          "#5F7D48"
         ],
         [
          "Steady",
-         "Some direction, with days that feel empty",
+         "It is there, though harder to reach lately",
          "#8B5E1A"
         ],
         [
          "Growing Edge",
-         "Going through the motions for other people",
+         "You feel empty, unmoored, or weighed down",
          "#B8612F"
         ]
        ],
-       "say": "Strong trunk might mean you know what you care about, and your next step. Steady might mean some direction, with days that feel empty. And a Growing Edge might mean you are mostly going through the motions for other people. That is common, and a little room to choose for yourself can change a lot."
+       "say": "Strong roots might mean you know what steadies you, and you reach for it. Steady might mean it is there, but harder to reach lately. And a Growing Edge might mean you feel empty, unmoored, or weighed down right now. That is an honest place to be, and roots can grow again."
       },
       {
        "k": "big",
-       "h": "Your gifts point toward your purpose.",
-       "sub": "What you really bring, beyond grades and titles.",
-       "say": "One of the easiest ways into purpose is to notice your gifts. Not grades, and not titles. Things like noticing who is left out, making people laugh, fixing things, or staying calm when everyone else panics. That is today's practice."
+       "h": "A list made on a good day is a map for a hard one.",
+       "sub": "Today’s practice: What Holds Me Up.",
+       "say": "When things get hard, it is easy to forget what helps. Picture a night when everything feels loud at once. That is when a list made on a good day becomes a map. That is today's practice."
       },
       {
        "k": "points",
-       "h": "Practice: Name Your Gifts",
+       "h": "Practice: What Holds Me Up",
        "items": [
         [
-         "Gift one",
-         "Something people count on you for"
+         "People who steady me",
+         "One name is a real start"
         ],
         [
-         "Gift two",
-         "Something you do well, beyond grades"
+         "Places that calm me",
+         "A room, a field, a car, a court"
         ],
         [
-         "Gift three",
-         "Ask: what do friends come to me for?"
+         "Things I do that help",
+         "Faith, music, nature, traditions"
         ],
         [
-         "Who has it helped?",
-         "One person for each gift"
+         "Keep it where you will see it",
+         "Your phone notes, or your wall"
         ]
        ],
        "cue": {
         "w": {
-         "2": 6,
-         "4": 6,
+         "3": 8,
          "5": 8,
-         "7": 10
+         "6": 8
         },
-        "at": [
-         2,
-         3,
-         5,
-         6
-        ]
+        "at": [3, 4, 6, 8]
        },
-       "say": "Let's practice. This one is called Name Your Gifts. Think of one thing people count on you for. Now a second thing you do well that is not a grade or a title. Take a moment. For a third, ask yourself, what do my friends come to me for? Now, for each gift, picture one person it has helped. Say them out loud if you can. Those are real gifts, and they point toward where you fit."
+       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a field, a car, a court. Last, things you do that help, like prayer, music, time outside, or a family tradition. Short lists are fine. Later, write them down and keep them in your phone notes or on your wall."
       },
       {
        "k": "big",
-       "h": "You have something real to give.",
-       "sub": "Name Your Gifts is ready for your growth plan.",
-       "say": "You have something real to give, right now, not someday. Name Your Gifts is ready for your growth plan. And when you are ready, add a goal or a path to Next Steps, so your trunk keeps growing toward the light."
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "What Holds Me Up is ready for your growth plan.",
+       "say": "Nice work. Tend your roots, and they will hold you when the season gets hard. What Holds Me Up is ready to add to your growth plan, and you can add to your lists any time."
       },
       {
        "k": "quiz",
-       "q": "What are the three parts of purpose?",
+       "q": "What does Pine look at in Roots?",
        "opts": [
-        "Grades, test scores, and awards",
-        "Something you care about, work toward, and that helps others",
-        "A plan your family chose for you"
+        "Which religion you belong to",
+        "Whether what grounds you holds you steady",
+        "How often you go to services"
        ],
        "right": 1,
-       "why": "Purpose is something you care about, something you work toward, and a way it reaches beyond you.",
-       "say": "Quick question. What are the three parts of purpose?"
+       "why": "Roots are about what holds you steady, whatever you believe.",
+       "say": "Quick question. What does Pine look at in Roots?"
       }
-     ]
+     ],
+     "plainTitle": "Roots: What Grounds You"
     },
     {
      "id": "pn-6-bark",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
-     "n": 3,
-     "title": "Bark: Stress, Mistakes, and Big Feelings",
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
+     "n": 2,
+     "title": "Bark: Mind",
      "mins": 6,
      "blurb": "Handling stress, mistakes, and big feelings, and knowing when to bring in help.",
      "sources": [
@@ -28753,10 +31404,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "pine",
-       "eyebrow": "The Six Parts, Lesson 3",
-       "h": "Bark",
+       "eyebrow": "Tend Four, Grow Two, Lesson 2",
+       "h": "Bark: Mind",
        "sub": "Stress, mistakes, and big feelings.",
-       "say": "This lesson is about Bark, your mind and your feelings. How you handle stress, mistakes, and big feelings."
+       "say": "This lesson is about Bark: Mind. How you handle stress, mistakes, and big feelings. Bark is one of the four parts you tend."
       },
       {
        "k": "big",
@@ -28852,12 +31503,7 @@ window.GG_LEARN = {
         "w": {
          "7": 45
         },
-        "at": [
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [2, 3, 4, 5]
        },
        "say": "Let's practice. This one is called Slow Exhale. Sit or stand however is comfortable, and let your shoulders drop. Breathe in through your nose for a count of four. Then breathe out slowly, for a count of six. Do that five times, at your own pace. If you feel lightheaded, breathe normally for a moment. Go ahead now. Good."
       },
@@ -28899,169 +31545,9 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "pn-6-branches",
-     "crisis": ["Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
-     "n": 4,
-     "title": "Branches: Friends, Family, and Adults in Your Corner",
-     "mins": 6,
-     "blurb": "Friends who have your back, family, belonging, trusted adults, and relationships built on respect.",
-     "sources": [
-      "cdcconnect23",
-      "wyman10",
-      "murthy",
-      "steinberg89"
-     ],
-     "scenes": [
-      {
-       "k": "title",
-       "hero": "pine",
-       "eyebrow": "The Six Parts, Lesson 4",
-       "h": "Branches",
-       "sub": "Friends, family, and the adults in your corner.",
-       "say": "This lesson is about Branches, your relationships. Your friends, your family, and the adults in your corner."
-      },
-      {
-       "k": "big",
-       "h": "Pines that grow together break the wind for each other.",
-       "sub": "Trees stand tall together.",
-       "say": "A pine standing alone in an open field takes the full force of every storm. Pines that grow together in a stand break the wind for each other. People are like that too. The ones around you help you stand tall, and you do the same for them."
-      },
-      {
-       "k": "points",
-       "h": "Strong branches can look like",
-       "items": [
-        [
-         "Friends who have your back",
-         "In person when you can"
-        ],
-        [
-         "Someone at home",
-         "Close, even when you disagree"
-        ],
-        [
-         "A place you belong",
-         "A team, a club, a job, a group"
-        ],
-        [
-         "A trusted adult",
-         "Besides a parent"
-        ]
-       ],
-       "say": "Strong branches can look like friends who have your back. Someone in your family you feel close to, even when you disagree. A place you belong, like a team, a club, a job, a band, or a faith community. And at least one adult besides a parent you could go to."
-      },
-      {
-       "k": "big",
-       "h": "Belonging is one of the strongest protections there is.",
-       "sub": "Students who felt close to people at school felt far less hopeless.",
-       "say": "Here is what the research shows. High school students who feel close to people at school are much less likely to feel sad or hopeless. In one national survey, about one in three of them had a long stretch of sadness, compared with more than half of students who did not feel close to people at school. Belonging somewhere is protective, and it is worth building on purpose."
-      },
-      {
-       "k": "big",
-       "h": "A trusted adult makes it easier to get help.",
-       "sub": "For you, or for a friend.",
-       "say": "Trusted adults matter too. A coach, a teacher, a counselor, a relative, a boss, or a youth leader. In a peer leader program in high schools, more students came to see adults as people they could go to, and more were willing to bring a struggling friend to one. That is a big deal."
-      },
-      {
-       "k": "points",
-       "h": "Relationships built on respect",
-       "items": [
-        [
-         "Respect looks like trust",
-         "Room to have your own friends and time"
-        ],
-        [
-         "Checking your phone is a sign",
-         "So is deciding who you can see"
-        ]
-       ],
-       "say": "Good relationships, with friends or someone you are going out with, are built on respect. That looks like trust, and room to have your own friends and your own time. Someone checking your phone, or telling you who you can see, is a sign worth noticing."
-      },
-      {
-       "k": "points",
-       "h": "How Branches can look",
-       "items": [
-        [
-         "Strong",
-         "People have your back, and you have theirs",
-         "#5F7D48"
-        ],
-        [
-         "Steady",
-         "Some good people, with gaps",
-         "#8B5E1A"
-        ],
-        [
-         "Growing Edge",
-         "Lonely, left out, or bullied",
-         "#B8612F"
-        ]
-       ],
-       "say": "Strong branches might mean people have your back, and you have theirs. Steady might mean some good people, with a few gaps. And a Growing Edge might mean you feel lonely, even with people around, or someone is bullying you. Young people are among the loneliest groups today, so you are far from the only one. Bullying is never your fault. Save the messages, and tell an adult you trust."
-      },
-      {
-       "k": "big",
-       "h": "Name the adult before you need them.",
-       "sub": "Today’s practice: Name Your Trusted Adult.",
-       "say": "It is much easier to go to someone when something is big if you have already talked about something small. That is today's practice."
-      },
-      {
-       "k": "points",
-       "h": "Practice: Name Your Trusted Adult",
-       "items": [
-        [
-         "Think wide",
-         "A coach, teacher, counselor, relative, or boss"
-        ],
-        [
-         "Name one or two",
-         "Besides your parents"
-        ],
-        [
-         "Pick one small reach-out",
-         "A question, a thank you, a quick hello"
-        ],
-        [
-         "No one comes to mind?",
-         "Start with your school counselor"
-        ]
-       ],
-       "cue": {
-        "w": {
-         "3": 10,
-         "5": 10
-        },
-        "at": [
-         2,
-         3,
-         4,
-         7
-        ]
-       },
-       "say": "Let's practice. This one is called Name Your Trusted Adult. Think about the adults in your life besides your parents: coaches, teachers, counselors, relatives, a boss, a neighbor, a youth leader. Name one or two, out loud or in your head. Now pick one of them. What is one small way you could reach out this week, like a question, a thank you, or a quick hello? If no one comes to mind, that is okay. Start with your school counselor. Talking with students is part of their job."
-      },
-      {
-       "k": "big",
-       "h": "If someone is hurting you, help is outside your home too.",
-       "say": "Name Your Trusted Adult is ready for your growth plan."
-      },
-      {
-       "k": "quiz",
-       "q": "What is a sign worth noticing in a relationship?",
-       "opts": [
-        "They give you room to see your friends",
-        "They check your phone or decide who you can see",
-        "They listen when you disagree"
-       ],
-       "right": 1,
-       "why": "Checking your phone or deciding who you see are signs of control.",
-       "say": "Quick question. What is a sign worth noticing in a relationship?"
-      }
-     ]
-    },
-    {
      "id": "pn-6-leaves",
-     "n": 5,
-     "title": "Leaves: Move, Rest, and Nourish",
+     "n": 3,
+     "title": "Leaves: Body",
      "mins": 5,
      "blurb": "Sleep and the teen body clock, moving in ways you enjoy, food as fuel, and your body on its own terms.",
      "sources": [
@@ -29076,10 +31562,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "pine",
-       "eyebrow": "The Six Parts, Lesson 5",
-       "h": "Leaves",
+       "eyebrow": "Tend Four, Grow Two, Lesson 3",
+       "h": "Leaves: Body",
        "sub": "Move, rest, and nourish.",
-       "say": "This lesson is about Leaves, your body. How you move, how you rest, and how you fuel up."
+       "say": "This lesson is about Leaves: Body. How you move, how you rest, and how you fuel up. Leaves are one of the four parts you tend."
       },
       {
        "k": "big",
@@ -29207,12 +31693,7 @@ window.GG_LEARN = {
         "w": {
          "7": 30
         },
-        "at": [
-         4,
-         5,
-         6,
-         9
-        ]
+        "at": [4, 5, 6, 9]
        },
        "say": "Let's practice. This one is called Stretch Break. Stand up if you can, or stay in your seat. Both work. Reach your arms up high, as far as feels good. Roll your shoulders back in slow circles. Twist gently from side to side, and shake out your hands. Take your time with it. Good. Now one slow breath."
       },
@@ -29237,10 +31718,349 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "pn-6-branches",
+     "crisis": [
+      "Childhelp: call or text 1-800-422-4453",
+      "Day One (Minnesota): 1-866-223-1111",
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "911: emergency"
+     ],
+     "n": 4,
+     "title": "Branches: Relationships",
+     "mins": 6,
+     "blurb": "Friends who have your back, family, belonging, trusted adults, and relationships built on respect.",
+     "sources": [
+      "cdcconnect23",
+      "wyman10",
+      "murthy",
+      "steinberg89"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Tend Four, Grow Two, Lesson 4",
+       "h": "Branches: Relationships",
+       "sub": "Friends, family, and the adults in your corner.",
+       "say": "This lesson is about Branches: Relationships. Your friends, your family, and the adults in your corner. Branches are one of the four parts you tend."
+      },
+      {
+       "k": "big",
+       "h": "Pines that grow together break the wind for each other.",
+       "sub": "Trees stand tall together.",
+       "say": "A pine standing alone in an open field takes the full force of every storm. Pines that grow together in a stand break the wind for each other. People are like that too. The ones around you help you stand tall, and you do the same for them."
+      },
+      {
+       "k": "points",
+       "h": "Strong branches can look like",
+       "items": [
+        [
+         "Friends who have your back",
+         "In person when you can"
+        ],
+        [
+         "Someone at home",
+         "Close, even when you disagree"
+        ],
+        [
+         "A place you belong",
+         "A team, a club, a job, a group"
+        ],
+        [
+         "A trusted adult",
+         "Besides a parent"
+        ]
+       ],
+       "say": "Strong branches can look like friends who have your back. Someone in your family you feel close to, even when you disagree. A place you belong, like a team, a club, a job, a band, or a faith community. And at least one adult besides a parent you could go to."
+      },
+      {
+       "k": "big",
+       "h": "Belonging is one of the strongest protections there is.",
+       "sub": "Students who felt close to people at school felt far less hopeless.",
+       "say": "Here is what the research shows. High school students who feel close to people at school are much less likely to feel sad or hopeless. In one national survey, about one in three of them had a long stretch of sadness, compared with more than half of students who did not feel close to people at school. Belonging somewhere is protective, and it is worth building on purpose."
+      },
+      {
+       "k": "big",
+       "h": "A trusted adult makes it easier to get help.",
+       "sub": "For you, or for a friend.",
+       "say": "Trusted adults matter too. A coach, a teacher, a counselor, a relative, a boss, or a youth leader. In a peer leader program in high schools, more students came to see adults as people they could go to, and more were willing to bring a struggling friend to one. That is a big deal."
+      },
+      {
+       "k": "points",
+       "h": "Relationships built on respect",
+       "items": [
+        [
+         "Respect looks like trust",
+         "Room to have your own friends and time"
+        ],
+        [
+         "Checking your phone is a sign",
+         "So is deciding who you can see"
+        ]
+       ],
+       "say": "Good relationships, with friends or someone you are going out with, are built on respect. That looks like trust, and room to have your own friends and your own time. Someone checking your phone, or telling you who you can see, is a sign worth noticing."
+      },
+      {
+       "k": "points",
+       "h": "How Branches can look",
+       "items": [
+        [
+         "Strong",
+         "People have your back, and you have theirs",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some good people, with gaps",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Lonely, left out, or bullied",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong branches might mean people have your back, and you have theirs. Steady might mean some good people, with a few gaps. And a Growing Edge might mean you feel lonely, even with people around, or someone is bullying you. Young people are among the loneliest groups today, so you are far from the only one. Bullying is never your fault. Save the messages, and tell an adult you trust."
+      },
+      {
+       "k": "big",
+       "h": "Name the adult before you need them.",
+       "sub": "Today’s practice: Name Your Trusted Adult.",
+       "say": "It is much easier to go to someone when something is big if you have already talked about something small. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name Your Trusted Adult",
+       "items": [
+        [
+         "Think wide",
+         "A coach, teacher, counselor, relative, or boss"
+        ],
+        [
+         "Name one or two",
+         "Besides your parents"
+        ],
+        [
+         "Pick one small reach-out",
+         "A question, a thank you, a quick hello"
+        ],
+        [
+         "No one comes to mind?",
+         "Start with your school counselor"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 10,
+         "5": 10
+        },
+        "at": [2, 3, 4, 7]
+       },
+       "say": "Let's practice. This one is called Name Your Trusted Adult. Think about the adults in your life besides your parents: coaches, teachers, counselors, relatives, a boss, a neighbor, a youth leader. Name one or two, out loud or in your head. Now pick one of them. What is one small way you could reach out this week, like a question, a thank you, or a quick hello? If no one comes to mind, that is okay. Start with your school counselor. Talking with students is part of their job."
+      },
+      {
+       "k": "big",
+       "h": "If someone is hurting you, help is outside your home too.",
+       "say": "Name Your Trusted Adult is ready for your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a sign worth noticing in a relationship?",
+       "opts": [
+        "They give you room to see your friends",
+        "They check your phone or decide who you can see",
+        "They listen when you disagree"
+       ],
+       "right": 1,
+       "why": "Checking your phone or deciding who you see are signs of control.",
+       "say": "Quick question. What is a sign worth noticing in a relationship?"
+      }
+     ]
+    },
+    {
+     "id": "pn-6-trunk",
+     "n": 5,
+     "title": "Trunk: Meaning",
+     "mins": 5,
+     "blurb": "Purpose in the high school years: what matters to you, what you are working toward, and who it helps.",
+     "sources": [
+      "damon03",
+      "bronk18",
+      "schreier13",
+      "yeager18",
+      "frankl46"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Tend Four, Grow Two, Lesson 5",
+       "h": "Trunk: Meaning",
+       "sub": "What you care about, and where you’re headed.",
+       "say": "This lesson is about your Trunk: Meaning. What you care about, and where you are headed. Your trunk is one of the two parts that grow from your tending."
+      },
+      {
+       "k": "big",
+       "h": "A pine grows one layer of branches a year.",
+       "sub": "Straight up, toward the light, a little at a time.",
+       "say": "A young pine grows straight up toward the light, adding one new layer of branches each year. You can almost count its age by the layers. Purpose grows the same way. Not all at once, but a little each year, toward what matters to you."
+      },
+      {
+       "k": "points",
+       "h": "Purpose has three parts",
+       "items": [
+        [
+         "Something you care about",
+         "It matters to you, personally"
+        ],
+        [
+         "Something you work toward",
+         "A goal, and a next step"
+        ],
+        [
+         "Something beyond you",
+         "It helps someone else too"
+        ]
+       ],
+       "say": "Meaning is hard to chase directly. It grows as you give yourself to the people and the work you love, and to something larger than yourself. Researchers who study purpose in young people describe it in three parts. Something you care about. Something you are working toward, with a next step. And a way it reaches beyond you, to help someone else. They also found that purpose often starts taking shape right in the high school years. You do not need it all figured out. You are building it."
+      },
+      {
+       "k": "points",
+       "h": "Purpose can live in",
+       "items": [
+        [
+         "School and learning",
+         "A subject that grabs you"
+        ],
+        [
+         "A sport, a craft, or a job",
+         "Getting better at something real"
+        ],
+        [
+         "Family and faith",
+         "Showing up for people you love"
+        ],
+        [
+         "Helping others",
+         "A team, a younger kid, your town"
+        ]
+       ],
+       "say": "Purpose can live in a lot of places. A class that grabs you. A sport, an instrument, a craft, or a job. Your family, or your faith. Or helping others, like coaching younger kids, or showing up for your team. Caring for a little brother counts. So does fixing bikes."
+      },
+      {
+       "k": "big",
+       "h": "Helping is good for the helper too.",
+       "sub": "Teens who volunteered with younger kids had healthier hearts.",
+       "say": "Here is something surprising. In one study, teens who volunteered with younger kids for a few months ended up with healthier hearts than teens who waited their turn. Giving is good for the giver, in body as well as spirit."
+      },
+      {
+       "k": "points",
+       "h": "Your values, your choice",
+       "items": [
+        [
+         "Plans you choose yourself",
+         "Are the ones you keep going on"
+        ],
+        [
+         "Every path counts",
+         "Work, college, a trade, service, the military"
+        ],
+        [
+         "Be the real you",
+         "The right people want that"
+        ]
+       ],
+       "say": "Research also finds that teens do best when their own values are respected. Plans you choose yourself are the ones you keep going on. Work, college, a trade, an apprenticeship, service, the military, a gap year, or staying close to home are all real paths. And acting like someone you are not, all day, is exhausting. The right people want the real you."
+      },
+      {
+       "k": "points",
+       "h": "How Trunk can look",
+       "items": [
+        [
+         "Strong",
+         "You know what you care about, and your next step",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some direction, with days that feel empty",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Going through the motions for other people",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong trunk might mean you know what you care about, and your next step. Steady might mean some direction, with days that feel empty. And a Growing Edge might mean you are mostly going through the motions for other people. That is common, and a little room to choose for yourself can change a lot."
+      },
+      {
+       "k": "big",
+       "h": "Your gifts point toward your purpose.",
+       "sub": "What you really bring, beyond grades and titles.",
+       "say": "One of the easiest ways into purpose is to notice your gifts. Not grades, and not titles. Things like noticing who is left out, making people laugh, fixing things, or staying calm when everyone else panics. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Name Your Gifts",
+       "items": [
+        [
+         "Gift one",
+         "Something people count on you for"
+        ],
+        [
+         "Gift two",
+         "Something you do well, beyond grades"
+        ],
+        [
+         "Gift three",
+         "Ask: what do friends come to me for?"
+        ],
+        [
+         "Who has it helped?",
+         "One person for each gift"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "2": 6,
+         "4": 6,
+         "5": 8,
+         "7": 10
+        },
+        "at": [2, 3, 5, 6]
+       },
+       "say": "Let's practice. This one is called Name Your Gifts, and it lives in Bark: Mind. Think of one thing people count on you for. Now a second thing you do well that is not a grade or a title. Take a moment. For a third, ask yourself, what do my friends come to me for? Now, for each gift, picture one person it has helped. Say them out loud if you can. Those are real gifts, and they point toward where you fit."
+      },
+      {
+       "k": "big",
+       "h": "You have something real to give.",
+       "sub": "Name Your Gifts is in Bark: Mind.",
+       "say": "You have something real to give, right now, not someday. Name Your Gifts is ready for your growth plan, under Bark: Mind. And when you are ready, add a goal or a path to Next Steps. Tend your four, and your trunk keeps growing toward the light."
+      },
+      {
+       "k": "quiz",
+       "q": "What are the three parts of purpose?",
+       "opts": [
+        "Grades, test scores, and awards",
+        "Something you care about, work toward, and that helps others",
+        "A plan your family chose for you"
+       ],
+       "right": 1,
+       "why": "Purpose is something you care about, something you work toward, and a way it reaches beyond you.",
+       "say": "Quick question. What are the three parts of purpose?"
+      }
+     ]
+    },
+    {
      "id": "pn-6-fruit",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 6,
-     "title": "Fruit: What You Look Forward To",
+     "title": "Fruit: Hope",
      "mins": 6,
      "blurb": "Hope as a goal, a way there, and a next step, and what to do when hope runs low.",
      "sources": [
@@ -29253,10 +32073,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "pine",
-       "eyebrow": "The Six Parts, Lesson 6",
-       "h": "Fruit",
+       "eyebrow": "Tend Four, Grow Two, Lesson 6",
+       "h": "Fruit: Hope",
        "sub": "What you look forward to.",
-       "say": "This last lesson is about Fruit, your hope. What you look forward to, and what you believe is possible."
+       "say": "This last lesson is about Fruit: Hope. What you look forward to, and what you believe is possible. Like your trunk, your fruit grows from your tending."
       },
       {
        "k": "big",
@@ -29373,20 +32193,15 @@ window.GG_LEARN = {
          "4": 8,
          "7": 10
         },
-        "at": [
-         2,
-         3,
-         5,
-         7
-        ]
+        "at": [2, 3, 5, 7]
        },
-       "say": "Let's practice. This one is called Tiny Next Step. Name one thing you hope for, big or small. Now ask, what is the smallest step I could take toward it today? Take a moment. If it still feels big, make it smaller. One email, one minute, one question. Now say it out loud: Today, my tiny next step is this. Then go do it."
+       "say": "Let's practice. This one is called Tiny Next Step, and it lives in Bark: Mind. Name one thing you hope for, big or small. Now ask, what is the smallest step I could take toward it today? Take a moment. If it still feels big, make it smaller. One email, one minute, one question. Now say it out loud: Today, my tiny next step is this. Then go do it."
       },
       {
        "k": "big",
        "h": "Stand tall through every season.",
-       "sub": "Tiny Next Step is ready for your growth plan.",
-       "say": "Tiny Next Step is ready for your growth plan. Do one tiny step every day for a week, and watch what grows. You can stand tall through every season, and you never have to do it alone."
+       "sub": "Tiny Next Step is in Bark: Mind.",
+       "say": "Tiny Next Step is ready for your growth plan, under Bark: Mind. Do one tiny step every day for a week, and watch what grows. The Grounded Way works when you tend all four parts. You can stand tall through every season, and you never have to do it alone."
       },
       {
        "k": "quiz",
@@ -29413,7 +32228,10 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-p-talk",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Talking with Your Teen About How They Are Really Doing",
      "mins": 7,
@@ -29583,7 +32401,13 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-privacy",
-     "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Childhelp: call or text 1-800-422-4453",
+      "Day One (Minnesota): 1-866-223-1111",
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "911: emergency"
+     ],
      "n": 2,
      "title": "Privacy That Builds Trust",
      "mins": 6,
@@ -29920,7 +32744,15 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-worry",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "Childhelp: call or text 1-800-422-4453",
+      "Day One (Minnesota): 1-866-223-1111",
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "SAMHSA National Helpline: 1-800-662-4357",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 7,
@@ -30273,7 +33105,11 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-you",
-     "crisis": ["988: call or text, any time", "NAMI HelpLine: 1-800-950-6264", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "NAMI HelpLine: 1-800-950-6264",
+      "911: emergency"
+     ],
      "n": 6,
      "title": "Taking Care of Yourself Too",
      "mins": 6,
@@ -30362,7 +33198,7 @@ window.GG_LEARN = {
          "Oak, for adults 26 to 60"
         ]
        ],
-       "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same six parts as Pine."
+       "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same tree as Pine."
       },
       {
        "k": "big",
@@ -30703,7 +33539,7 @@ window.GG_LEARN = {
    "who": "For teens growing strong and Sober, and for anyone who loves someone who drinks, vapes, or uses.",
    "lowkey": "sober",
    "certTitle": "Growing a Healthy Tree",
-   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all four parts of your tree.",
    "lessons": [
     {
      "id": "pn-ls-feelings",
@@ -30762,11 +33598,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         4
-        ]
+        "at": [0, 2, 4]
        },
        "say": "First, feel it. Where is it in your body? Then name it. Angry, lonely, scared, or sad. Then move it. Walk, breathe, write, or talk."
       },
@@ -30818,12 +33650,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Here are healthy ways to change how you feel. Move your body, with a run, a ride, or a dance. Get outside, into fresh air and trees. Play music, sing, or drum. And talk to someone you trust."
       },
@@ -30906,12 +33733,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "Here is how. Notice it, and say to yourself, an urge is here. Find where you feel it in your body. Breathe slowly, like a surfer riding a wave. And watch it rise, peak, and fall."
       },
@@ -30959,12 +33781,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "After the wave, move. Walk, stretch, or shoot hoops. Text a friend who is on your side. Change the place, and leave the spot where the urge started. And plan ahead. Notice when urges show up, so you can be ready next time."
       },
@@ -31044,11 +33861,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         4
-        ]
+        "at": [0, 2, 4]
        },
        "say": "Slow. Breathe in gently through your nose. Low. Let your belly rise. Long. Breathe out a little longer than you breathed in."
       },
@@ -31180,11 +33993,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3
-        ]
+        "at": [0, 2, 3]
        },
        "say": "Find your kind of moving. With friends, like a game, a walk, or a team. On your own, like a run, a ride, or dancing in your room. And outside whenever you can, because fresh air and trees add a lift of their own. Teens do best with about an hour of moving spread through the day, and every bit counts."
       },
@@ -31280,12 +34089,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
        "say": "Safe adults to tell include a parent or guardian, or another family member you trust. At school, a school counselor, a nurse, a coach, or a teacher. A doctor, who keeps it private and is trained to help. Or another trusted adult, like a coach, a mentor, or a youth leader."
       },
@@ -31334,11 +34138,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2
-        ]
+        "at": [0, 1, 2]
        },
        "say": "Call for emergency help right now if someone will not wake up, or won't respond to your voice. If they are breathing very slowly, or making gurgling or snoring sounds. If their lips or fingertips turn blue, or their pupils are tiny. Naloxone, also called Narcan, reverses an opioid overdose. Use it if you have it, then stay with them until help comes."
       },
@@ -32608,7 +35408,7 @@ window.GG_LEARN = {
      "sources": [
       "arnett"
      ],
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "birch",
@@ -32635,17 +35435,22 @@ window.GG_LEARN = {
        "say": "These years are full of trying, moving, starting, and starting over. Research on this stage of life calls it a time of exploring who you are and what is possible. Some people are in school or training. Some are working, serving, or raising a child. Some are between things. Every one of those is a real path, and Birch fits them all."
       },
       {
-       "k": "six",
-       "h": "Six parts make you whole",
-       "words": [
-        "What grounds you",
-        "Purpose and direction",
-        "Mind and feelings",
-        "Your people",
-        "Move, rest, and nourish",
-        "Hope for what is ahead"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Birch sees your life as a tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending. Trunk: Meaning, your direction. And Fruit: Hope, for what is ahead. The Grounded Way works when you tend all four parts.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Birch sees your life as a tree with six parts. Roots, what grounds you. Trunk, your purpose and direction. Bark, your mind and feelings. Branches, your people. Leaves, your body, how you move, rest, and eat. And Fruit, your hope for what is ahead. Six parts make you whole."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "points",
@@ -32653,11 +35458,11 @@ window.GG_LEARN = {
        "items": [
         [
          "A check-in",
-         "An honest look at all six parts"
+         "An honest look at your whole tree"
         ],
         [
          "A growth plan",
-         "Small practices that fit your life"
+         "Small practices for the four you tend"
         ],
         [
          "Groundwork",
@@ -32672,7 +35477,140 @@ window.GG_LEARN = {
          "Levels, milestones, and rings"
         ]
        ],
-       "say": "Here is what Birch gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. When Life Changes, guides for the changes these years bring, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, with a private Living Sober choice, helps Birch fit your life. And when you want to go all in, The Grounded Way brings your tree, your meals, your movement, and your quiet together in one private app."
+       "say": "Here is what Birch gives you. A check-in, an honest look at your whole tree. A growth plan, small practices for the four parts you tend, that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. When Life Changes, guides for the changes these years bring, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, with a private Living Sober choice, helps Birch fit your life. And The Grounded Way brings your tree, your meals, your movement, and your quiet together on your daily Home."
+      },
+      {
+       "k": "big",
+       "h": "Your answers are yours.",
+       "sub": "Locked on this device with your own passcode.",
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. And help lines are always close, on your growth plan."
+      },
+      {
+       "k": "tabs",
+       "app": "birch",
+       "app_name": "Birch",
+       "tabs": [
+        "Today",
+        "Week",
+        "Season",
+        "Growth Plan",
+        "Groundwork",
+        "When Life Changes",
+        "Learn"
+       ],
+       "tap": 0,
+       "note": {
+        "h": "Where to begin",
+        "p": "Start a check-in. Your tree and your practices grow from there."
+       },
+       "say": "Birch has seven tabs. Today, Week, Season, Growth Plan, Groundwork, When Life Changes, and Learn. The best place to begin is a check-in. Your tree and your daily practices grow from there."
+      },
+      {
+       "k": "big",
+       "h": "What are you building?",
+       "sub": "One breath, and one thing you are working toward.",
+       "beats": [
+        "Let's start on purpose.",
+        "Sit or stand however is comfortable.",
+        "Take one slow breath, in and out.",
+        "Now think of one thing you are building in this season of your life.",
+        "A skill, a home, a friendship, a plan, or simply getting steadier.",
+        {
+         "t": "Say it out loud: Right now, I am building this.",
+         "w": 10
+        }
+       ],
+       "say": "Let's start on purpose. Sit or stand however is comfortable. Take one slow breath, in and out. Now think of one thing you are building in this season of your life. A skill, a home, a friendship, a plan, or simply getting steadier. Say it out loud: Right now, I am building this."
+      },
+      {
+       "k": "big",
+       "h": "Small and steady is how a birch grows.",
+       "sub": "One practice a day is enough to start.",
+       "say": "Nice. That is the whole idea of Birch. You do not have to have it all figured out. Small and steady is how a birch grows. One practice a day is enough to start."
+      },
+      {
+       "k": "quiz",
+       "q": "Who sees your Birch answers?",
+       "opts": [
+        "Your parents, automatically",
+        "Only you, unless you choose to share",
+        "Anyone on this device"
+       ],
+       "right": 1,
+       "why": "Your answers stay locked with your passcode. Helpers are off unless you turn them on, and you choose what they see.",
+       "say": "Quick question. Who sees your Birch answers?"
+      }
+     ],
+     "plainScenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Start Here, Lesson 1",
+       "h": "Welcome to Birch",
+       "sub": "New ground, deep roots.",
+       "say": "Welcome to Birch. New ground, deep roots. This short lesson shows you what Birch is, who it is for, and where to begin."
+      },
+      {
+       "k": "big",
+       "h": "Birch is the first tree to grow in open ground.",
+       "sub": "Light, quick to start, and strong in new places.",
+       "say": "After a fire or a clearing, the birch is often the first tree to grow back. It takes root in open ground where nothing has grown yet. The years from eighteen to twenty six are a lot like that. New ground, new places, new starts. Birch is built for exactly that season."
+      },
+      {
+       "k": "trees",
+       "h": "Birch grows between Pine and Oak.",
+       "say": "Grow With Grounded has a tree for every age. Pine is for high school. Oak is for adults, and Sequoia for older adults. Birch is built for young adults, eighteen to twenty six. It speaks to you as a capable adult who is building a life."
+      },
+      {
+       "k": "big",
+       "h": "Every path counts here.",
+       "sub": "School, training, work, service, parenting, or between things.",
+       "say": "These years are full of trying, moving, starting, and starting over. Research on this stage of life calls it a time of exploring who you are and what is possible. Some people are in school or training. Some are working, serving, or raising a child. Some are between things. Every one of those is a real path, and Birch fits them all."
+      },
+      {
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Birch sees your life as a tree. You tend four parts. Roots, what grounds you. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending. Trunk: Meaning, your direction. And Fruit: Hope, for what is ahead. The Grounded Way works when you tend all four parts.",
+       "items": [
+        [
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
+       ],
+       "cue": {
+        "at": [1, 6]
+       }
+      },
+      {
+       "k": "points",
+       "h": "What Birch gives you",
+       "items": [
+        [
+         "A check-in",
+         "An honest look at your whole tree"
+        ],
+        [
+         "A growth plan",
+         "Small practices for the four you tend"
+        ],
+        [
+         "Groundwork",
+         "A private notebook and Skills I’ve Got"
+        ],
+        [
+         "When Life Changes",
+         "Guides, each with two short videos"
+        ],
+        [
+         "A tree that grows",
+         "Levels, milestones, and rings"
+        ]
+       ],
+       "say": "Here is what Birch gives you. A check-in, an honest look at your whole tree. A growth plan, small practices for the four parts you tend, that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. When Life Changes, guides for the changes these years bring, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, with a private Living Sober choice, helps Birch fit your life. And The Grounded Way brings your tree, your meals, your movement, and your quiet together on your daily Home."
       },
       {
        "k": "big",
@@ -32748,7 +35686,15 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "br-u-checkin",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "RAINN: 1-800-656-4673", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "Veterans: 988, then press 1",
+      "Day One (Minnesota): 1-866-223-1111",
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "RAINN: 1-800-656-4673",
+      "911: emergency"
+     ],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
@@ -32759,8 +35705,8 @@ window.GG_LEARN = {
        "hero": "birch",
        "eyebrow": "Using Birch, Lesson 1",
        "h": "Your First Check-in",
-       "sub": "An honest look at all six parts.",
-       "say": "Everything in Birch starts with a check-in. It is an honest look at all six parts of your tree. This lesson walks you through it."
+       "sub": "An honest look at your whole tree.",
+       "say": "Everything in Birch starts with a check-in. It is an honest look at your whole tree. This lesson walks you through it."
       },
       {
        "k": "flow",
@@ -32777,10 +35723,7 @@ window.GG_LEARN = {
        ],
        "say": "There are two ways to check in. The full check-in asks eight questions for each part, forty eight in all, and takes about ten to twelve minutes. The Quick Check-in asks one question for each part, for a fast look on a busy week. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept.",
        "cue": {
-        "at": [
-         1,
-         2
-        ]
+        "at": [1, 2]
        }
       },
       {
@@ -32863,17 +35806,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Try one real question",
        "sub": "Looked forward to something, soon or someday?",
-       "beats": [
-        "Let's try one real question now.",
-        "This is the first question for Fruit, your hope.",
-        "In the past two weeks, how often have you looked forward to something, soon or someday?",
-        "A trip, a payday, a person, a plan, or a quiet weekend all count.",
-        {
-         "t": "Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure.",
-         "w": 10
-        }
-       ],
-       "say": "Let's try one real question now. This is the first question for Fruit, your hope. In the past two weeks, how often have you looked forward to something, soon or someday? A trip, a payday, a person, a plan, or a quiet weekend all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
+       "say": "Let's try one real question now. This is the first question for Fruit: Hope. In the past two weeks, how often have you looked forward to something, soon or someday? A trip, a payday, a person, a plan, or a quiet weekend all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
       },
       {
        "k": "points",
@@ -33044,17 +35977,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Read it like a friend would",
        "sub": "Your strongest part, and one Growing Edge.",
-       "beats": [
-        "Let's practice reading your tree the way a good friend would, honestly and kindly.",
-        "Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit.",
-        "Which one feels strongest right now?",
-        "And which one would you most like to tend?",
-        {
-         "t": "Say both out loud: My strongest part is this one, and the part I will tend is this one.",
-         "w": 10
-        }
-       ],
-       "say": "Let's practice reading your tree the way a good friend would, honestly and kindly. Think of your six parts: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
+       "say": "Let's practice reading your tree the way a good friend would, honestly and kindly. Think of your whole tree: Roots, Bark, Leaves, and Branches, and the Trunk and Fruit that grow from them. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
       },
       {
        "k": "flow",
@@ -33149,7 +36072,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part. Birch suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+       "say": "Your growth plan is a short list of practices for the four parts you tend. Birch suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
       },
       {
        "k": "tabs",
@@ -33222,14 +36145,14 @@ window.GG_LEARN = {
         ],
         [
          "Balanced week",
-         "All six parts tended in one week"
+         "All four parts tended in one week"
         ],
         [
          "Your own pace",
          "Your tree is only about you"
         ]
        ],
-       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Marking a skill done in Groundwork, like reading a lease or setting up a budget, counts as a milestone too. Tend all six parts in one week, and you get a balanced week. Your tree is all about you, and it grows at your own pace."
+       "say": "Along the way, you earn milestones, like your first day tended, your first full week, and your first ring. Marking a skill done in Groundwork, like reading a lease or setting up a budget, counts as a milestone too. Tend all four parts in one week, and you get a balanced week. Your tree is all about you, and it grows at your own pace."
       },
       {
        "k": "points",
@@ -33461,7 +36384,12 @@ window.GG_LEARN = {
     },
     {
      "id": "br-u-private",
-     "crisis": ["Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "RAINN: 1-800-656-4673", "911: emergency"],
+     "crisis": [
+      "Day One (Minnesota): 1-866-223-1111",
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "RAINN: 1-800-656-4673",
+      "911: emergency"
+     ],
      "n": 5,
      "title": "Private, Saved, and Shared",
      "mins": 5,
@@ -33743,42 +36671,47 @@ window.GG_LEARN = {
   },
   {
    "id": "birch-six",
-   "title": "The Six Parts",
-   "who": "One lesson for each part of your tree, with a practice",
-   "certTitle": "Birch: The Six Parts",
-   "certLine": "For finishing every lesson on the six parts of your tree.",
+   "title": "Tend Four, Grow Two",
+   "who": "Four parts you tend, two that grow from your tending, each with a practice",
+   "certTitle": "Birch: Tend Four, Grow Two",
+   "certLine": "For finishing every lesson on the four parts you tend, and the two that grow.",
    "lessons": [
     {
      "id": "br-6-roots",
      "n": 1,
-     "title": "Roots: What Grounds You",
+     "title": "Roots: Spirit",
      "mins": 5,
      "blurb": "Faith, quiet, values, and whatever steadies you as you make your own way.",
      "sources": [
       "smithsnell",
       "exline"
      ],
-     "scenes": [
+     "faithScenes": [
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "The Six Parts, Lesson 1",
-       "h": "Roots",
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots: Spirit",
        "sub": "What grounds you.",
-       "say": "Welcome to The Six Parts. Birch sees your life as a tree with six parts, and this first lesson is about Roots, what grounds you."
+       "say": "Welcome to Tend Four, Grow Two. Birch sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred."
       },
       {
-       "k": "six",
-       "h": "Six parts, one tree",
-       "words": [
-        "What grounds you",
-        "Purpose and direction",
-        "Mind and feelings",
-        "Your people",
-        "Move, rest, and nourish",
-        "Hope for what is ahead"
+       "k": "points",
+       "h": "Tend four. Grow two.",
+       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows what it looks like from eighteen to twenty six.",
+       "items": [
+        [
+         "Tend four",
+         "Roots: Spirit, Bark: Mind, Leaves: Body, Branches: Relationships"
+        ],
+        [
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
+        ]
        ],
-       "say": "Here are all six. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your people. Leaves, your body. And Fruit, your hope. Each lesson takes one part, and shows what it looks like from eighteen to twenty six."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
@@ -33889,12 +36822,7 @@ window.GG_LEARN = {
          "5": 8,
          "6": 8
         },
-        "at": [
-         3,
-         4,
-         6,
-         8
-        ]
+        "at": [3, 4, 6, 8]
        },
        "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a trail, a car, a friend's couch. Last, things you do that help, like prayer, music, time outside, or a call home. Short lists are fine. Later, write them down and keep them in your phone notes or in Groundwork."
       },
@@ -33916,159 +36844,178 @@ window.GG_LEARN = {
        "why": "Roots are about what grounds you, whatever you believe.",
        "say": "Quick question. What does Birch look at in Roots?"
       }
-     ]
-    },
-    {
-     "id": "br-6-trunk",
-     "n": 2,
-     "title": "Trunk: What Matters and Where You’re Headed",
-     "mins": 5,
-     "blurb": "What matters most to you, where you are headed, and your next step on any path.",
-     "sources": [
-      "damon08",
-      "mlq",
-      "sumner",
-      "act"
      ],
-     "scenes": [
+     "plainScenes": [
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "The Six Parts, Lesson 2",
-       "h": "Trunk",
-       "sub": "Purpose and direction.",
-       "say": "This lesson is about your Trunk, your purpose. What matters most to you, where you are headed, and your next step."
-      },
-      {
-       "k": "big",
-       "h": "Many birches grow more than one trunk.",
-       "sub": "From the same roots, reaching different ways.",
-       "say": "Look closely at a clump of birches, and you will often see two or three trunks rising from the same roots, each reaching its own way. Purpose in these years can look like that. You might be working and studying, serving and parenting, or trying one path and then another. It all grows from the same roots, what matters most to you."
+       "eyebrow": "Tend Four, Grow Two, Lesson 1",
+       "h": "Roots",
+       "sub": "What grounds you.",
+       "say": "Welcome to Tend Four, Grow Two. Birch sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots, what grounds you."
       },
       {
        "k": "points",
-       "h": "Purpose can look like",
+       "h": "Tend four. Grow two.",
+       "say": "Here is the whole tree. You tend four parts. Roots, what grounds you. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows what it looks like from eighteen to twenty six.",
        "items": [
         [
-         "Knowing what matters to you",
-         "And living by it"
+         "Tend four",
+         "Roots, Bark: Mind, Leaves: Body, Branches: Relationships"
         ],
         [
-         "A direction",
-         "School, a trade, work, service, family"
-        ],
-        [
-         "Using your strengths",
-         "In ways that feel like you"
-        ],
-        [
-         "Helping beyond yourself",
-         "Someone counts on you"
+         "Grow two",
+         "Trunk: Meaning and Fruit: Hope"
         ]
        ],
-       "say": "Purpose can look like knowing what matters to you, and making your own choices by it. Having a direction you are working toward, in school, a trade, a job, service, or raising a family. Using your strengths in ways that feel like you. And doing something that helps someone beyond yourself."
+       "cue": {
+        "at": [1, 6]
+       }
       },
       {
        "k": "big",
-       "h": "Searching is part of these years.",
-       "sub": "Still looking is normal, and it is part of growing.",
-       "say": "If you do not have it all figured out, you are in good company. A five year study of young people up to age twenty six found only about one in five had a clear, engaged purpose. Researchers also find that searching for meaning is its own healthy thing, separate from having found it. Birch asks about your direction and your next step, never about having it all figured out."
-      },
-      {
-       "k": "big",
-       "h": "Purpose grows on every path.",
-       "sub": "Every path can hold a real sense of purpose.",
-       "say": "Here is something else worth knowing. Research comparing adults with and without college found similar levels of purpose. Education shaped what people's purpose was about, not whether they had it. A welder, a nursing student, a soldier, a new parent, and someone between jobs can each have a strong trunk."
+       "h": "A birch can root in thin, rocky soil.",
+       "sub": "Its roots spread wide and hold on.",
+       "say": "A birch can take root where other trees cannot, in thin soil, on rocky ground, in places that were just cleared. Its roots spread wide and hold on. When you move out, start over, or land somewhere new, your roots have to do the same. They are what keep you steady in new ground."
       },
       {
        "k": "points",
-       "h": "How Trunk can look",
+       "h": "Roots can look like",
+       "items": [
+        [
+         "Faith, prayer, or worship",
+         "God, by whatever name you use"
+        ],
+        [
+         "Quiet and reflection",
+         "A few quiet minutes, unplugged"
+        ],
+        [
+         "Nature, music, and wonder",
+         "A trail, a song, a night sky"
+        ],
+        [
+         "The values you live by",
+         "What you keep, and what you choose"
+        ]
+       ],
+       "say": "Roots look different for different people. For some, roots are faith, prayer, or worship, and God, by whatever name they use. For others, roots are quiet, time outside, music, or the values they live by. Often it is a mix. Birch is made for all faith traditions and everything in-between."
+      },
+      {
+       "k": "big",
+       "h": "These are the years roots get chosen.",
+       "sub": "Strengthened, set aside, or reshaped, and made your own.",
+       "say": "After high school, a lot of people find their roots changing shape. A long national study that followed teens into their twenties found faith grew stronger for some, was set aside by others, and was reshaped by many. Practices from home get tested by new freedom. What you keep, you start to choose for yourself."
+      },
+      {
+       "k": "points",
+       "h": "Questions belong here",
+       "items": [
+        [
+         "Doubt is common",
+         "Part of making it your own"
+        ],
+        [
+         "Faith can hurt too",
+         "And that is worth talking through"
+        ],
+        [
+         "Birch asks what holds you up",
+         "It asks what grounds you"
+        ]
+       ],
+       "say": "Honest questions and doubts are common in these years. And for some people, a faith or a community they grew up with has left them feeling ashamed, afraid, or pushed out. Research finds struggles like that weigh on people, so they are worth talking through with someone you trust. That is why Birch asks what holds you up. It asks whether your roots are holding you up, or weighing you down."
+      },
+      {
+       "k": "points",
+       "h": "How Roots can look",
        "items": [
         [
          "Strong",
-         "You know what matters, and move toward it",
+         "You know what grounds you, and you reach for it",
          "#5F7D48"
         ],
         [
          "Steady",
-         "Some direction, with stretches of drifting",
+         "It is there, though harder to reach lately",
          "#8B5E1A"
         ],
         [
          "Growing Edge",
-         "Stuck, behind, or living by what others expect",
+         "You feel empty, unmoored, or weighed down",
          "#B8612F"
         ]
        ],
-       "say": "A strong trunk might mean you know what matters, and your days mostly move toward it. Steady might mean some direction, with stretches of drifting. And a Growing Edge might mean you feel stuck, behind everyone your age, or like you are living mostly by what others expect. Everyone's timeline is different. The question is simply, what is one next step?"
+       "say": "Strong roots might mean you know what grounds you, and you reach for it. Steady might mean it is there, but harder to reach in a busy season. And a Growing Edge might mean you feel empty, unmoored, or weighed down right now. That is an honest place to be, and roots can grow again."
       },
       {
        "k": "big",
-       "h": "Know what you stand for, and choices get easier.",
-       "sub": "Today’s practice: Values Sort.",
-       "say": "These years are full of choices about work, school, money, and people. Values are what you want to stand for, not rules someone hands you. When you know yours, each choice gets a little easier. That is today's practice."
+       "h": "A list made on a good day is a map for a hard one.",
+       "sub": "Today’s practice: What Holds Me Up.",
+       "say": "When things get hard, it is easy to forget what helps. Picture a night in a new place when everything feels loud at once. That is when a list made on a good day becomes a map. That is today's practice."
       },
       {
        "k": "points",
-       "h": "Practice: Values Sort",
+       "h": "Practice: What Holds Me Up",
        "items": [
         [
-         "Words that matter",
-         "As many as come to you"
+         "People who steady me",
+         "One name is a real start"
         ],
         [
-         "Pick your top three",
-         "The ones that matter most"
+         "Places that calm me",
+         "A room, a trail, a car, a couch"
         ],
         [
-         "One choice this week",
-         "That lives one of them out"
+         "Things I do that help",
+         "Faith, music, nature, a call home"
         ],
         [
-         "Not sure?",
-         "Think of someone you admire"
+         "Keep it close",
+         "Your phone notes, or Groundwork"
         ]
        ],
        "cue": {
         "w": {
-         "3": 12,
-         "4": 10,
-         "6": 10
+         "3": 8,
+         "5": 8,
+         "6": 8
         },
-        "at": [
-         2,
-         4,
-         6,
-         7
-        ]
+        "at": [3, 4, 6, 8]
        },
-       "say": "Let's practice. This one is called Values Sort. Think of words that matter to you, like honesty, faith, family, courage, freedom, fairness, security, or creativity. Name as many as come to you. Now pick the three that matter most. Take a moment. Then choose one of the three, and think of one choice you could make this week that lives it out. If you are not sure what you value, think of someone you admire. What are they standing for?"
+       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a trail, a car, a friend's couch. Last, things you do that help, like prayer, music, time outside, or a call home. Short lists are fine. Later, write them down and keep them in your phone notes or in Groundwork."
       },
       {
        "k": "big",
-       "h": "A strong trunk carries the whole tree.",
-       "sub": "Values Sort is ready for your growth plan.",
-       "say": "Nice work. A strong trunk carries the whole tree. Values Sort is ready to add to your growth plan, and Groundwork has more room to think it through."
+       "h": "Tend your roots, and they will hold you.",
+       "sub": "What Holds Me Up is ready for your growth plan.",
+       "say": "Nice work. Tend your roots, and they will hold you in new ground. What Holds Me Up is ready to add to your growth plan."
       },
       {
        "k": "quiz",
-       "q": "What does Birch ask about in Trunk?",
+       "q": "What does Birch look at in Roots?",
        "opts": [
-        "Whether you have a degree",
-        "Your direction and your next step, on any path",
-        "How much money you make"
+        "Which religion you belong to",
+        "Whether what grounds you holds you up",
+        "How often you go to services"
        ],
        "right": 1,
-       "why": "Every path can hold purpose. Birch asks about direction and next steps, never having it all figured out.",
-       "say": "Quick question. What does Birch ask about in Trunk?"
+       "why": "Roots are about what grounds you, whatever you believe.",
+       "say": "Quick question. What does Birch look at in Roots?"
       }
-     ]
+     ],
+     "plainTitle": "Roots: What Grounds You"
     },
     {
      "id": "br-6-bark",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "911: emergency"],
-     "n": 3,
-     "title": "Bark: Stress, Setbacks, and Adult Life",
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "Veterans: 988, then press 1",
+      "911: emergency"
+     ],
+     "n": 2,
+     "title": "Bark: Mind",
      "mins": 6,
      "blurb": "Stress, worry, low moods, and money pressure, and knowing when to bring in help.",
      "sources": [
@@ -34081,10 +37028,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "The Six Parts, Lesson 3",
-       "h": "Bark",
+       "eyebrow": "Tend Four, Grow Two, Lesson 2",
+       "h": "Bark: Mind",
        "sub": "Mind and feelings.",
-       "say": "This lesson is about Bark, your mind and your feelings. How you handle stress, worry, mistakes, and heavy stretches."
+       "say": "This lesson is about Bark: Mind. How you handle stress, worry, mistakes, and heavy stretches. Bark is one of the four parts you tend."
       },
       {
        "k": "big",
@@ -34186,12 +37133,7 @@ window.GG_LEARN = {
         "w": {
          "7": 45
         },
-        "at": [
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [2, 3, 4, 5]
        },
        "say": "Let's practice. This one is called Slow Exhale. Sit or stand however is comfortable, and let your shoulders drop. Breathe in through your nose for a count of four. Then breathe out slowly, for a count of six. Do that five times, at your own pace. If you feel lightheaded, breathe normally for a moment. Go ahead now. Good."
       },
@@ -34216,156 +37158,12 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "br-6-branches",
-     "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
-     "n": 4,
-     "title": "Branches: The People in Your Corner",
-     "mins": 5,
-     "blurb": "Friends after school, family as adults, belonging somewhere, and relationships that feel safe.",
-     "sources": [
-      "mcc21",
-      "murthy",
-      "pewparents",
-      "nisvs"
-     ],
-     "scenes": [
-      {
-       "k": "title",
-       "hero": "birch",
-       "eyebrow": "The Six Parts, Lesson 4",
-       "h": "Branches",
-       "sub": "Your people.",
-       "say": "This lesson is about Branches, your people. Friends, family, the people who have your back, and the places you belong."
-      },
-      {
-       "k": "big",
-       "h": "Birches grow together, in stands.",
-       "sub": "Together they take hold of open ground.",
-       "say": "Birches rarely grow alone. When they take root in open ground, they come up together, a whole stand of them, sheltering each other from the wind. People are like that too. People grow best near others too, and these years often ask us to find our stand again."
-      },
-      {
-       "k": "big",
-       "h": "If you feel lonely, you are far from alone.",
-       "sub": "Young adults report more loneliness than any other age.",
-       "say": "Here is something many people do not expect. In a national survey, about six in ten young adults reported serious loneliness, far more than adults overall. The Surgeon General has named loneliness a real health concern. When school ends, so do the built-in places where friends are made. After that, friendship takes a little more on purpose, and that is normal."
-      },
-      {
-       "k": "points",
-       "h": "Strong branches can look like",
-       "items": [
-        [
-         "People who have your back",
-         "Someone you could call at any hour"
-        ],
-        [
-         "Friends you made or kept",
-         "Since school"
-        ],
-        [
-         "Belonging somewhere",
-         "Work, a team, a class, a unit, a group"
-        ],
-        [
-         "Family, on new terms",
-         "Closer, as the relationship changes"
-        ]
-       ],
-       "say": "Strong branches can look like people who have your back, someone you could call at any hour. Friends you have made or kept since school. Belonging somewhere, at work, on a team, in a class, a unit, a group, or a faith community. And closeness with family as your relationship changes. Most young adults in a large survey said they were satisfied with their relationship with their parents. Every family is different, and Birch never assumes."
-      },
-      {
-       "k": "big",
-       "h": "You deserve to feel safe and respected.",
-       "sub": "With anyone you date, live with, or love.",
-       "say": "If you are dating, living with someone, or married, you deserve to feel safe, respected, and able to be yourself. Research finds that most people who are hurt by a partner were first hurt before age twenty five. If someone close to you is controlling, threatening, or hurting you, it is never your fault."
-      },
-      {
-       "k": "points",
-       "h": "How Branches can look",
-       "items": [
-        [
-         "Strong",
-         "Your people are close, and you reach for them",
-         "#5F7D48"
-        ],
-        [
-         "Steady",
-         "Some good people, and some distance lately",
-         "#8B5E1A"
-        ],
-        [
-         "Growing Edge",
-         "Lonely, even with people around",
-         "#B8612F"
-        ]
-       ],
-       "say": "Strong branches might mean your people are close, and you reach for them. Steady might mean you have some good people, with some distance lately, maybe after a move. And a Growing Edge might mean you feel lonely, even with people around. That is common in these years, and branches grow back one reach at a time."
-      },
-      {
-       "k": "big",
-       "h": "A specific plan beats we should hang out.",
-       "sub": "Today’s practice: Make One Plan.",
-       "say": "After school, friendships do not happen on their own anymore. They happen on purpose, and the simplest way to start is one specific plan with one person. That is today's practice."
-      },
-      {
-       "k": "points",
-       "h": "Practice: Make One Plan",
-       "items": [
-        [
-         "Pick one person",
-         "Someone you would like to see"
-        ],
-        [
-         "A time, a place, a thing",
-         "Tacos Thursday at six?"
-        ],
-        [
-         "Send it this week",
-         "Or say yes to one invitation"
-        ],
-        [
-         "New in town?",
-         "Be the one who invites"
-        ]
-       ],
-       "cue": {
-        "w": {
-         "3": 8,
-         "6": 10
-        },
-        "at": [
-         2,
-         4,
-         6,
-         7
-        ]
-       },
-       "say": "Let's practice. This one is called Make One Plan. Think of one person you would like to see more, a friend, a coworker, a cousin, a neighbor. Picture their face. Now think of a specific plan: a time, a place, and a thing. Tacos Thursday at six beats we should hang out sometime. Say the plan out loud, as if you were texting it. If you are new in town or between friend groups, that is common, and it changes. Be the one who invites."
-      },
-      {
-       "k": "big",
-       "h": "One reach at a time.",
-       "sub": "Make One Plan is ready for your growth plan.",
-       "say": "Nice work. Branches grow one reach at a time. Make One Plan is ready to add to your growth plan."
-      },
-      {
-       "k": "quiz",
-       "q": "Why can friendship take more effort after school?",
-       "opts": [
-        "Because something is wrong with you",
-        "Because the built-in places to make friends end",
-        "Because adults do not need friends"
-       ],
-       "right": 1,
-       "why": "When school ends, friendships take more on purpose. That is normal, and it can be learned.",
-       "say": "Quick question. Why can friendship take more effort after school?"
-      }
-     ]
-    },
-    {
      "id": "br-6-leaves",
-     "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
-     "n": 5,
-     "title": "Leaves: Move, Rest, and Nourish",
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357"
+     ],
+     "n": 3,
+     "title": "Leaves: Body",
      "mins": 5,
      "blurb": "Sleep on any schedule, movement you enjoy, relaxed meals, and healthy ways to cope.",
      "sources": [
@@ -34378,10 +37176,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "The Six Parts, Lesson 5",
-       "h": "Leaves",
+       "eyebrow": "Tend Four, Grow Two, Lesson 3",
+       "h": "Leaves: Body",
        "sub": "Move, rest, and nourish.",
-       "say": "This lesson is about Leaves, your body. How you move, how you rest, and how you nourish yourself, on whatever schedule your life runs."
+       "say": "This lesson is about Leaves: Body. How you move, how you rest, and how you nourish yourself, on whatever schedule your life runs. Leaves are one of the four parts you tend."
       },
       {
        "k": "big",
@@ -34486,12 +37284,7 @@ window.GG_LEARN = {
         "w": {
          "7": 30
         },
-        "at": [
-         4,
-         5,
-         6,
-         9
-        ]
+        "at": [4, 5, 6, 9]
        },
        "say": "Let's practice. This one is called Stretch Break. Stand up if you can, or stay in your seat. Both work. Reach your arms up high, as far as feels good. Roll your shoulders back in slow circles. Twist gently from side to side, and shake out your hands. Take your time with it. Good. Now one slow breath."
       },
@@ -34516,10 +37309,300 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "br-6-branches",
+     "crisis": [
+      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
+      "911: emergency"
+     ],
+     "n": 4,
+     "title": "Branches: Relationships",
+     "mins": 5,
+     "blurb": "Friends after school, family as adults, belonging somewhere, and relationships that feel safe.",
+     "sources": [
+      "mcc21",
+      "murthy",
+      "pewparents",
+      "nisvs"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Tend Four, Grow Two, Lesson 4",
+       "h": "Branches: Relationships",
+       "sub": "Your people.",
+       "say": "This lesson is about Branches: Relationships. Friends, family, the people who have your back, and the places you belong. Branches are one of the four parts you tend."
+      },
+      {
+       "k": "big",
+       "h": "Birches grow together, in stands.",
+       "sub": "Together they take hold of open ground.",
+       "say": "Birches rarely grow alone. When they take root in open ground, they come up together, a whole stand of them, sheltering each other from the wind. People are like that too. People grow best near others too, and these years often ask us to find our stand again."
+      },
+      {
+       "k": "big",
+       "h": "If you feel lonely, you are far from alone.",
+       "sub": "Young adults report more loneliness than any other age.",
+       "say": "Here is something many people do not expect. In a national survey, about six in ten young adults reported serious loneliness, far more than adults overall. The Surgeon General has named loneliness a real health concern. When school ends, so do the built-in places where friends are made. After that, friendship takes a little more on purpose, and that is normal."
+      },
+      {
+       "k": "points",
+       "h": "Strong branches can look like",
+       "items": [
+        [
+         "People who have your back",
+         "Someone you could call at any hour"
+        ],
+        [
+         "Friends you made or kept",
+         "Since school"
+        ],
+        [
+         "Belonging somewhere",
+         "Work, a team, a class, a unit, a group"
+        ],
+        [
+         "Family, on new terms",
+         "Closer, as the relationship changes"
+        ]
+       ],
+       "say": "Strong branches can look like people who have your back, someone you could call at any hour. Friends you have made or kept since school. Belonging somewhere, at work, on a team, in a class, a unit, a group, or a faith community. And closeness with family as your relationship changes. Most young adults in a large survey said they were satisfied with their relationship with their parents. Every family is different, and Birch never assumes."
+      },
+      {
+       "k": "big",
+       "h": "You deserve to feel safe and respected.",
+       "sub": "With anyone you date, live with, or love.",
+       "say": "If you are dating, living with someone, or married, you deserve to feel safe, respected, and able to be yourself. Research finds that most people who are hurt by a partner were first hurt before age twenty five. If someone close to you is controlling, threatening, or hurting you, it is never your fault."
+      },
+      {
+       "k": "points",
+       "h": "How Branches can look",
+       "items": [
+        [
+         "Strong",
+         "Your people are close, and you reach for them",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some good people, and some distance lately",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Lonely, even with people around",
+         "#B8612F"
+        ]
+       ],
+       "say": "Strong branches might mean your people are close, and you reach for them. Steady might mean you have some good people, with some distance lately, maybe after a move. And a Growing Edge might mean you feel lonely, even with people around. That is common in these years, and branches grow back one reach at a time."
+      },
+      {
+       "k": "big",
+       "h": "A specific plan beats we should hang out.",
+       "sub": "Today’s practice: Make One Plan.",
+       "say": "After school, friendships do not happen on their own anymore. They happen on purpose, and the simplest way to start is one specific plan with one person. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Make One Plan",
+       "items": [
+        [
+         "Pick one person",
+         "Someone you would like to see"
+        ],
+        [
+         "A time, a place, a thing",
+         "Tacos Thursday at six?"
+        ],
+        [
+         "Send it this week",
+         "Or say yes to one invitation"
+        ],
+        [
+         "New in town?",
+         "Be the one who invites"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 8,
+         "6": 10
+        },
+        "at": [2, 4, 6, 7]
+       },
+       "say": "Let's practice. This one is called Make One Plan. Think of one person you would like to see more, a friend, a coworker, a cousin, a neighbor. Picture their face. Now think of a specific plan: a time, a place, and a thing. Tacos Thursday at six beats we should hang out sometime. Say the plan out loud, as if you were texting it. If you are new in town or between friend groups, that is common, and it changes. Be the one who invites."
+      },
+      {
+       "k": "big",
+       "h": "One reach at a time.",
+       "sub": "Make One Plan is ready for your growth plan.",
+       "say": "Nice work. Branches grow one reach at a time. Make One Plan is ready to add to your growth plan."
+      },
+      {
+       "k": "quiz",
+       "q": "Why can friendship take more effort after school?",
+       "opts": [
+        "Because something is wrong with you",
+        "Because the built-in places to make friends end",
+        "Because adults do not need friends"
+       ],
+       "right": 1,
+       "why": "When school ends, friendships take more on purpose. That is normal, and it can be learned.",
+       "say": "Quick question. Why can friendship take more effort after school?"
+      }
+     ]
+    },
+    {
+     "id": "br-6-trunk",
+     "n": 5,
+     "title": "Trunk: Meaning",
+     "mins": 5,
+     "blurb": "What matters most to you, where you are headed, and your next step on any path.",
+     "sources": [
+      "damon08",
+      "mlq",
+      "sumner",
+      "act",
+      "frankl46"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Tend Four, Grow Two, Lesson 5",
+       "h": "Trunk: Meaning",
+       "sub": "Meaning and direction.",
+       "say": "This lesson is about your Trunk: Meaning. What matters most to you, where you are headed, and your next step. Your trunk is one of the two parts that grow from your tending."
+      },
+      {
+       "k": "big",
+       "h": "Many birches grow more than one trunk.",
+       "sub": "From the same roots, reaching different ways.",
+       "say": "Look closely at a clump of birches, and you will often see two or three trunks rising from the same roots, each reaching its own way. Purpose in these years can look like that. You might be working and studying, serving and parenting, or trying one path and then another. It all grows from the same roots, what matters most to you."
+      },
+      {
+       "k": "points",
+       "h": "Purpose can look like",
+       "items": [
+        [
+         "Knowing what matters to you",
+         "And living by it"
+        ],
+        [
+         "A direction",
+         "School, a trade, work, service, family"
+        ],
+        [
+         "Using your strengths",
+         "In ways that feel like you"
+        ],
+        [
+         "Helping beyond yourself",
+         "Someone counts on you"
+        ]
+       ],
+       "say": "Purpose can look like knowing what matters to you, and making your own choices by it. Having a direction you are working toward, in school, a trade, a job, service, or raising a family. Using your strengths in ways that feel like you. And doing something that helps someone beyond yourself."
+      },
+      {
+       "k": "big",
+       "h": "Searching is part of these years.",
+       "sub": "Still looking is normal, and it is part of growing.",
+       "say": "Meaning is hard to chase directly. It grows as you give yourself to the people and the work you love, and to something larger than yourself. If you do not have it all figured out, you are in good company. A five year study of young people up to age twenty six found only about one in five had a clear, engaged purpose. Researchers also find that searching for meaning is its own healthy thing, separate from having found it. Birch asks about your direction and your next step, never about having it all figured out."
+      },
+      {
+       "k": "big",
+       "h": "Purpose grows on every path.",
+       "sub": "Every path can hold a real sense of purpose.",
+       "say": "Here is something else worth knowing. Research comparing adults with and without college found similar levels of purpose. Education shaped what people's purpose was about, not whether they had it. A welder, a nursing student, a soldier, a new parent, and someone between jobs can each have a strong trunk."
+      },
+      {
+       "k": "points",
+       "h": "How Trunk can look",
+       "items": [
+        [
+         "Strong",
+         "You know what matters, and move toward it",
+         "#5F7D48"
+        ],
+        [
+         "Steady",
+         "Some direction, with stretches of drifting",
+         "#8B5E1A"
+        ],
+        [
+         "Growing Edge",
+         "Stuck, behind, or living by what others expect",
+         "#B8612F"
+        ]
+       ],
+       "say": "A strong trunk might mean you know what matters, and your days mostly move toward it. Steady might mean some direction, with stretches of drifting. And a Growing Edge might mean you feel stuck, behind everyone your age, or like you are living mostly by what others expect. Everyone's timeline is different. The question is simply, what is one next step?"
+      },
+      {
+       "k": "big",
+       "h": "Know what you stand for, and choices get easier.",
+       "sub": "Today’s practice: Values Sort.",
+       "say": "These years are full of choices about work, school, money, and people. Values are what you want to stand for, not rules someone hands you. When you know yours, each choice gets a little easier. That is today's practice."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Values Sort",
+       "items": [
+        [
+         "Words that matter",
+         "As many as come to you"
+        ],
+        [
+         "Pick your top three",
+         "The ones that matter most"
+        ],
+        [
+         "One choice this week",
+         "That lives one of them out"
+        ],
+        [
+         "Not sure?",
+         "Think of someone you admire"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 12,
+         "4": 10,
+         "6": 10
+        },
+        "at": [2, 4, 6, 7]
+       },
+       "say": "Let's practice. This one is called Values Sort, and it lives in Bark: Mind. Think of words that matter to you, like honesty, faith, family, courage, freedom, fairness, security, or creativity. Name as many as come to you. Now pick the three that matter most. Take a moment. Then choose one of the three, and think of one choice you could make this week that lives it out. If you are not sure what you value, think of someone you admire. What are they standing for?"
+      },
+      {
+       "k": "big",
+       "h": "A strong trunk carries the whole tree.",
+       "sub": "Values Sort is in Bark: Mind.",
+       "say": "Nice work. Tend your four, and a strong trunk grows to carry the whole tree. Values Sort is ready to add to your growth plan, under Bark: Mind, and Groundwork has more room to think it through."
+      },
+      {
+       "k": "quiz",
+       "q": "What does Birch ask about in Trunk?",
+       "opts": [
+        "Whether you have a degree",
+        "Your direction and your next step, on any path",
+        "How much money you make"
+       ],
+       "right": 1,
+       "why": "Every path can hold purpose. Birch asks about direction and next steps, never having it all figured out.",
+       "say": "Quick question. What does Birch ask about in Trunk?"
+      }
+     ]
+    },
+    {
      "id": "br-6-fruit",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "Crisis Text Line: text HOME to 741741",
+      "911: emergency"
+     ],
      "n": 6,
-     "title": "Fruit: What You Look Forward To",
+     "title": "Fruit: Hope",
      "mins": 5,
      "blurb": "Hope, a way forward, the pull of comparison, and help when hope runs low.",
      "sources": [
@@ -34531,10 +37614,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "birch",
-       "eyebrow": "The Six Parts, Lesson 6",
-       "h": "Fruit",
+       "eyebrow": "Tend Four, Grow Two, Lesson 6",
+       "h": "Fruit: Hope",
        "sub": "Hope.",
-       "say": "This last lesson is about Fruit, your hope. What you look forward to, and what you believe is possible."
+       "say": "This last lesson is about Fruit: Hope. What you look forward to, and what you believe is possible. Like your trunk, your fruit grows from your tending."
       },
       {
        "k": "big",
@@ -34632,25 +37715,20 @@ window.GG_LEARN = {
          "4": 12,
          "6": 8
         },
-        "at": [
-         2,
-         4,
-         6,
-         7
-        ]
+        "at": [2, 4, 6, 7]
        },
-       "say": "Let's practice. This one is called Your Own Timeline. Think back to where you were two years ago. Picture it for a moment. Now name three things that are true for you now that were not true then: a skill, a place, a person, or a lesson. Take your time. Next, name one next step on your own road, however small. Later, think about muting or unfollowing accounts that leave you feeling behind."
+       "say": "Let's practice. This one is called Your Own Timeline, and it lives in Bark: Mind. Think back to where you were two years ago. Picture it for a moment. Now name three things that are true for you now that were not true then: a skill, a place, a person, or a lesson. Take your time. Next, name one next step on your own road, however small. Later, think about muting or unfollowing accounts that leave you feeling behind."
       },
       {
        "k": "big",
        "h": "If hope runs out, reach out.",
-       "say": "Your Own Timeline is ready for your growth plan. And if hope ever runs out, please reach out. Thoughts of not wanting to live are more common between eighteen and twenty five than at any other age, and they can get better with help. And tell someone you trust."
+       "say": "Your Own Timeline is ready for your growth plan, under Bark: Mind. And if hope ever runs out, please reach out. Thoughts of not wanting to live are more common between eighteen and twenty five than at any other age, and they can get better with help. And tell someone you trust."
       },
       {
        "k": "big",
-       "h": "Tend all six, and your tree bears fruit.",
+       "h": "Tend all four, and your tree bears fruit.",
        "sub": "New ground, deep roots.",
-       "say": "That is the whole tree. Roots, Trunk, Bark, Branches, Leaves, and Fruit. Tend them a little at a time, and your tree will bear fruit. New ground, deep roots."
+       "say": "That is the whole tree. You tend Roots, Bark, Leaves, and Branches, and your Trunk and Fruit grow from that tending. The Grounded Way works when you tend all four parts. New ground, deep roots."
       },
       {
        "k": "quiz",
@@ -35610,14 +38688,14 @@ window.GG_LEARN = {
    "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
    "lowkey": "sober",
    "certTitle": "Growing a Healthy Tree",
-   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all four parts of your tree.",
    "lessons": [
     {
      "id": "br-ls-tree",
      "n": 1,
      "title": "The Healthy Tree",
      "mins": 6,
-     "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
+     "blurb": "Your tree, tend four and grow two, and Chris's three kinds of tools: mind, body, and spirit.",
      "sources": [
       "samhsarec"
      ],
@@ -35635,7 +38713,7 @@ window.GG_LEARN = {
        "hero": "birch",
        "eyebrow": "Growing a Healthy Tree, Lesson 1",
        "h": "The Healthy Tree",
-       "sub": "Six parts, tended a little each day.",
+       "sub": "Tend four, grow two, a little each day.",
        "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
       },
       {
@@ -35661,41 +38739,34 @@ window.GG_LEARN = {
        "h": "Your tree, whole and growing",
        "items": [
         [
-         "Roots",
+         "Roots: Spirit",
          "What you are anchored in"
         ],
         [
-         "Trunk",
-         "Meaning"
-        ],
-        [
-         "Bark",
+         "Bark: Mind",
          "Your mind"
         ],
         [
-         "Branches",
-         "Your people"
-        ],
-        [
-         "Leaves",
+         "Leaves: Body",
          "Your body"
         ],
         [
-         "Fruit",
-         "Hope"
+         "Branches: Relationships",
+         "Your people"
+        ],
+        [
+         "Trunk: Meaning",
+         "Grows from your tending"
+        ],
+        [
+         "Fruit: Hope",
+         "Grows from your tending"
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         4,
-         5,
-         7,
-         8,
-         10
-        ]
+        "at": [2, 5, 7, 9, 10, 10]
        },
-       "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
+       "say": "Grounded pictures your life as a tree. Four parts are tended, and two grow from that tending. Roots are your spirit, what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. Bark is your mind. Calming down, processing hard emotions, and healing over well. Leaves are your body. Sleep, movement, food, breath, and medical care. Branches are your people. Then the trunk, meaning, the larger story you live inside, and the fruit, hope, the evidence that a future is still growing, grow from that tending. A Sober life grows strongest when all four are tended."
       },
       {
        "k": "flow",
@@ -35715,11 +38786,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         5
-        ]
+        "at": [1, 3, 5]
        },
        "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
       },
@@ -35847,13 +38914,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         5,
-         6,
-         8
-        ]
+        "at": [1, 2, 5, 6, 8]
        },
        "say": "Here is one rhythm. Water first, a full glass, before anything else. Then light. Step outside, or open a window, and let morning light reach your eyes. It helps set your body clock for the day and for sleep tonight. Then breath, two minutes, slow and steady. Then choose. Say your intention for a Sober day, in your own words. And move. A walk around the block, even five minutes."
       },
@@ -35908,12 +38969,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "A few things make it easy to keep. Set it up the night before, with a glass by the sink and shoes by the door. Let your phone wait until after your rhythm, so your first minutes are yours. Keep the same order each day, so your body learns it. And short counts. Five minutes is a whole rhythm."
       },
@@ -35993,11 +39049,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2
-        ]
+        "at": [0, 1, 2]
        },
        "say": "A craving shows up in the body, like a tight chest, restless hands, or a dry mouth. It shows up in the mind, with thoughts like, just this once, or, I deserve it. And it often comes with a certain time, place, or feeling, like the end of a workday, payday, or a lonely evening."
       },
@@ -36023,12 +39075,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         4,
-         5
-        ]
+        "at": [1, 3, 4, 5]
        },
        "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
       },
@@ -36077,12 +39124,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         4,
-         5
-        ]
+        "at": [1, 3, 4, 5]
        },
        "say": "When the wave settles, take care of yourself. Change the scene. Step outside, or into another room. Reach out, and text one person in your corner. Have water and something to eat, because hunger and thirst can feel a lot like a craving. And write down the time and the place, so next time you can plan for it."
       },
@@ -36162,11 +39204,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         3,
-         5
-        ]
+        "at": [1, 3, 5]
        },
        "say": "Here is the shape of it. Slow. Breathe in gently through your nose. Low. Let your belly rise, and let your shoulders stay soft. Long. Let the breath out a little longer than the breath in."
       },
@@ -36224,12 +39262,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
        "say": "Use it during a craving, and breathe while the wave passes. Use it with anger, with three slow breaths before you answer. Use it on a hard night, lying down with your eyes closed. And use it anywhere. At work, in line, or in the car. It stays quiet and private."
       },
@@ -36326,12 +39359,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         5
-        ]
+        "at": [1, 2, 3, 5]
        },
        "say": "Here is a simple way to keep it easy. Start at a pace where you can still talk. If you have a heart rate watch, one well known guide sets a top number of one hundred eighty, minus your age. Stay under it. Slow down, or walk, when you pass it. Then add a few minutes each week."
       },
@@ -36376,12 +39404,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Find your kind of moving. A daily walk, outside whenever you can. A run or a bike ride, easy and steady. Moving with someone, a friend, a walking group, or a team, which adds connection too. And on gentle days, stretching or a slow walk counts."
       },
@@ -36477,12 +39500,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "To try heat gently, keep it simple. Drink water before and after. Start short, five to ten minutes. Listen to your body, and step out right away if you feel dizzy or unwell. Then cool down slowly, rest, and sip water. No sauna nearby? A warm bath works too."
       },
@@ -36504,11 +39522,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Cool water can be gentle too. Splash cool water on your face for a few breaths, which can help a racing heart slow down. Or turn your shower cool for the last thirty seconds. Either way, breathe slowly, with long breaths out, the whole time."
       },
@@ -36628,13 +39642,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [0, 2, 3, 4, 5]
        },
        "say": "Walk slowly, and take it in one sense at a time. See the light, the leaves, and the colors. Hear the birds, the wind, or water. Smell the earth and the green things. Touch the bark, a leaf, or the air on your skin. And breathe, slow and deep."
       },
@@ -36683,12 +39691,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Make it a habit. Go unplugged, with your phone in your pocket and the sound off. Aim for twenty minutes, or start with five. Return to the same place, and watch it change with the seasons. And invite someone to walk with you, quietly. A walk among trees is a strong answer to a craving, too."
       },
@@ -36778,12 +39781,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         4,
-         6
-        ]
+        "at": [1, 2, 4, 6]
        },
        "say": "Here is a simple way to begin. Set a timer for ten minutes. Write freely. Spelling and neatness are beside the point. Go to the feeling. What happened, and how did it feel? Then close kindly, with one line about what you need now."
       },
@@ -36828,12 +39826,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
        "say": "When a craving comes, ask, what am I really hungry for? For an old hurt, ask, what happened, and what did I need back then? For anger, ask, what matters to me here? And on a good day, ask, what went well today?"
       },
@@ -36925,11 +39918,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         4,
-         5
-        ]
+        "at": [1, 4, 5]
        },
        "say": "Your story belongs to you. Use your own words for who you are. Some people use a label for themselves, and some choose other words. Both are welcome here. Say what happened, plainly. And say what helps, and what you are growing now. Words matter. Research finds that the words we use about people can shape how they are treated, so Grounded speaks of people growing sober."
       },
@@ -36951,11 +39940,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3
-        ]
+        "at": [0, 2, 3]
        },
        "say": "Start small. One true sentence, written down first. One safe person, someone steady and kind. And one good time to say it, calm, private, and Sober."
       },
@@ -36995,11 +39980,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like SMART Recovery or Refuge Recovery, where people walking the same road share their stories too."
       },
@@ -37093,12 +40074,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         5
-        ]
+        "at": [1, 2, 3, 5]
        },
        "say": "Here are a few ideas. Something special to sip, like sparkling water with fruit, juice, or a good tea. Good food, made and shared together. Music and movement. A dance, a song, or a walk at sunset. And a blessing, a few words for the day, or for the person you are celebrating."
       },
@@ -37124,12 +40100,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [2, 3, 4, 5]
        },
        "say": "Going to a party? Make a plan. Bring your own drink, something you love, so your hands are full. Bring a friend who is in your corner. Plan your way home, with your own ride and a time to leave. And have your answer ready. No thanks, I'm good."
       },
@@ -37169,11 +40140,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         3,
-         4
-        ]
+        "at": [0, 3, 4]
        },
        "say": "Celebrate your own growth too. Mark your days. Thirty days, ninety days, a year. Tell someone, and let them celebrate with you. And give yourself a gift that feeds your tree, like new running shoes, a day outdoors, or a good book."
       },
@@ -37256,13 +40223,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 1, 2, 3, 4]
        },
        "say": "Start with the same wake time every day, even on weekends. Get morning light, outside, early in the day. Give yourself an Unplugged hour before bed, with screens put away. Keep your room cool, dark, and calm. And wind down with a warm shower, a book, or a slow breath."
       },
@@ -37311,12 +40272,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "If you wake at night, stay calm. Quiet rest still helps your body. Breathe slowly, in for four and out for six. After a while, get up, sit in dim light with a calm book, and go back to bed when you feel sleepy. And turn the clock away, so the hours stay a mystery."
       },
@@ -37409,11 +40365,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it become part of you."
       },
@@ -37458,12 +40410,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         2,
-         3,
-         4
-        ]
+        "at": [0, 2, 3, 4]
        },
        "say": "Here is good to look for. Clear mornings, waking up rested and present. Your people, a call returned, and trust growing back. Your body, growing stronger and steadier. And small wins, like another Sober day."
       },
@@ -37489,7 +40436,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Let the good sink in.",
        "sub": "Your tree is growing.",
-       "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
+       "say": "You have finished Growing a Healthy Tree. Roots, bark, leaves, and branches, tended a little each day, and meaning and hope growing from it. Let the good sink in. Your tree is growing."
       }
      ]
     }
@@ -39159,12 +42106,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2,
-         3
-        ]
+        "at": [0, 1, 2, 3]
        },
        "say": "A Faith Community grove is for a congregation, a Sunday school class, a youth group, or a ministry team. It starts with Faith words, welcomes all faith traditions and everything in-between, and switches to Plain words with one tap. A Small or Discussion Group grove is for a support group, a book or study group, or a residents’ group. The group chooses Faith or Plain words together in its first session."
       },
@@ -39200,8 +42142,8 @@ window.GG_LEARN = {
          "Words, questions, and practices"
         ],
         [
-         "The six parts stay",
-         "Roots to Fruit, in every grove"
+         "The tree stays",
+         "Tend four, grow two, in every grove"
         ],
         [
          "One shared answer stays",
@@ -39212,7 +42154,7 @@ window.GG_LEARN = {
          "On every screen"
         ]
        ],
-       "say": "The kind changes the words, the questions, and the practices. Some things never change. Every grove has the same six parts. Every check-in keeps one shared answer, never anyone’s own. And the help lines are always close."
+       "say": "The kind changes the words, the questions, and the practices. Some things never change. Every grove has the same tree: four parts to tend, and two that grow. Every check-in keeps one shared answer, never anyone’s own. And the help lines are always close."
       },
       {
        "k": "flow",
@@ -39288,11 +42230,11 @@ window.GG_LEARN = {
        "q": "What stays the same in every kind of grove?",
        "opts": [
         "The questions, word for word",
-        "The six parts, and one shared answer",
+        "The tree, and one shared answer",
         "The Wall"
        ],
        "right": 1,
-       "why": "Every kind keeps the six parts and one shared answer, talked over together. The words, questions, and practices fit the kind.",
+       "why": "Every kind keeps the same tree, four parts to tend and two that grow, and one shared answer, talked over together. The words, questions, and practices fit the kind.",
        "say": "Quick question. What stays the same in every kind of grove?"
       }
      ]
@@ -39381,11 +42323,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         0
-        ]
+        "at": [0, 1, 0]
        },
        "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Every check-in stays on this device, and nothing is sent anywhere."
       },
@@ -39537,14 +42475,14 @@ window.GG_LEARN = {
         ],
         [
          "Parts tended this week glow",
-         "Roots, leaves, fruit, and more"
+         "Roots, leaves, branches, and more"
         ],
         [
          "Each at its own pace",
          "Each tree grows at its own pace"
         ]
        ],
-       "say": "Watch the trees closely. Each tree grows taller as its person tends it, day by day. The parts someone tended this week show brighter, like their roots, their leaves, or their fruit. Each tree grows at its own pace."
+       "say": "Watch the trees closely. Each tree grows taller as its person tends it, day by day. The parts someone tended this week show brighter, like their roots, their leaves, or their branches. Each tree grows at its own pace."
       },
       {
        "k": "points",
@@ -39587,14 +42525,9 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         4,
-         5
-        ]
+        "at": [1, 2, 4, 5]
        },
-       "say": "Below the grove, the Growing Together card adds up the whole family's growth. This week shows days tended, practices done together, and how many of the six parts were tended. In all shows the totals since you began, plus the rings in the grove. It counts only trees whose Show my growth switch is on, and it never shows anyone person by person. Ten Family Milestones, like your first practice together, or a week when every tree was tended, are reached once and kept for good. It is never a contest, and no one is ranked."
+       "say": "Below the grove, the Growing Together card adds up the whole family's growth. This week shows days tended, practices done together, and how many of the four parts were tended. In all shows the totals since you began, plus the rings in the grove. It counts only trees whose Show my growth switch is on, and it never shows anyone person by person. Ten Family Milestones, like your first practice together, or a week when every tree was tended, are reached once and kept for good. It is never a contest, and no one is ranked."
       },
       {
        "k": "points",
@@ -39702,13 +42635,7 @@ window.GG_LEARN = {
         "Dusk"
        ],
        "cue": {
-        "at": [
-         2,
-         2,
-         2,
-         2,
-         2
-        ]
+        "at": [2, 2, 2, 2, 2]
        },
        "beats": [
         "Let us choose together, just for fun.",
@@ -39743,7 +42670,10 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-checkin",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "The Group Check-in",
      "mins": 5,
@@ -39969,7 +42899,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Each of the six parts lands in one of three places. A Shared Strength, something you already do well together. Steady, good ground to grow from. Or a Growing Edge, where your group wants to grow next."
+       "say": "Each part of the tree lands in one of three places. A Shared Strength, something you already do well together. Steady, good ground to grow from. Or a Growing Edge, where your group wants to grow next."
       },
       {
        "k": "screen",
@@ -40031,7 +42961,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Every family has a Growing Edge.",
        "sub": "Every grove has its own shape.",
-       "say": "Every result ends with the same kind of line. No family, and no group, is strong in all six. Every grove has its own shape. Strong groups usually show a few clear strengths, not every one."
+       "say": "Every result ends with the same kind of line. No family, and no group, is strong in every part. Every grove has its own shape. Strong groups usually show a few clear strengths, not every one."
       },
       {
        "k": "points",
@@ -40311,11 +43241,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         0,
-         1,
-         2
-        ]
+        "at": [0, 1, 2]
        },
        "say": "Tap Print Our Growth Plan for one page, for the fridge, the classroom wall, or the team room. There is a small practice card too. And you can change your plan any time."
       },
@@ -40395,17 +43321,30 @@ window.GG_LEARN = {
        "say": "At the top, you will find this week’s theme, with one practice picked for it. There are twelve themes, like Start where you are, and Love between us. Each week brings the next one, and after twelve weeks, they begin again. Once you make a Growth Plan, your plan’s practices sit at the top instead."
       },
       {
-       "k": "six",
-       "h": "Practices for all six parts",
-       "words": [
-        "Gratitude Round",
-        "Make Something Together",
-        "Family Reset",
-        "Game Night",
-        "Kitchen Dance Party",
-        "Plant a Seed"
+       "k": "points",
+       "h": "Practices for the four parts you tend",
+       "say": "Below the theme, practices are grouped by the four parts you tend. Roots, Bark, Leaves, and Branches. Tap a part to see just its practices, or tap All parts to see them all. Each kind of grove has its own practices, so a class, a group, or a team sees ones made for them.",
+       "items": [
+        [
+         "Roots",
+         "Spirit"
+        ],
+        [
+         "Bark",
+         "Mind"
+        ],
+        [
+         "Leaves",
+         "Body"
+        ],
+        [
+         "Branches",
+         "Relationships"
+        ]
        ],
-       "say": "Below the theme, practices are grouped by the six parts of the tree. Roots, Trunk, Bark, Branches, Leaves, and Fruit. Tap a part to see just its practices, or tap All parts to see them all. Each kind of grove has its own practices, so a class, a group, or a team sees ones made for them."
+       "cue": {
+        "at": [1, 1, 1, 1]
+       }
       },
       {
        "k": "points",
@@ -40483,13 +43422,7 @@ window.GG_LEARN = {
         "Curious"
        ],
        "cue": {
-        "at": [
-         3,
-         3,
-         3,
-         3,
-         3
-        ]
+        "at": [3, 3, 3, 3, 3]
        },
        "beats": [
         "Let us try one right now.",
@@ -40753,7 +43686,10 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-wall",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 9,
      "title": "The Wall",
      "mins": 5,
@@ -41174,7 +44110,10 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-private",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 11,
      "title": "Your Tree Is Yours, the Grove Is Ours",
      "mins": 6,
@@ -41381,7 +44320,11 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-lock",
-     "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "MAARC (Minnesota): 1-844-880-1574",
+      "911: emergency"
+     ],
      "n": 12,
      "title": "Keeping Your Grove Private",
      "mins": 4,
@@ -42588,26 +45531,29 @@ window.GG_LEARN = {
   },
   {
    "id": "grove-six",
-   "title": "The Six Parts, Together",
-   "who": "One lesson for each part of a family grove, with a practice to do together",
-   "certTitle": "The Grove: The Six Parts, Together",
-   "certLine": "For finishing every lesson on tending the six parts together as a family.",
+   "title": "Tend Four, Grow Two, Together",
+   "who": "Four parts a family tends, two that grow from that tending, each with a practice to do together",
+   "certTitle": "The Grove: Tend Four, Grow Two, Together",
+   "certLine": "For finishing every lesson on tending four parts together as a family, and the two that grow.",
    "lessons": [
     {
      "id": "gr-6-roots",
      "n": 1,
-     "title": "Roots: What Grounds You",
+     "title": "Roots: Spirit",
      "mins": 5,
      "blurb": "What holds your family up, together.",
-     "sources": ["ggsc", "sturm"],
+     "sources": [
+      "ggsc",
+      "sturm"
+     ],
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 1",
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 1",
        "h": "Roots",
        "sub": "What grounds you.",
-       "say": "This lesson is about Roots, what grounds you. For a family, roots are what hold everyone up, together."
+       "say": "This lesson is about Roots, what grounds you. For a family, roots are what hold everyone up, together. Roots are the first of the four parts a family tends."
       },
       {
        "k": "big",
@@ -42721,11 +45667,7 @@ window.GG_LEARN = {
          "3": 30,
          "4": 20
         },
-        "at": [
-         1,
-         3,
-         4
-        ]
+        "at": [1, 3, 4]
        },
        "say": "Let us try a short one together, right now. Everyone, sit close. Close your eyes, or look at the floor. Now be very quiet, and listen for every sound you can hear. Now go around, and each person share one sound you heard."
       },
@@ -42758,10 +45700,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 1",
-       "h": "Roots",
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 1",
+       "h": "Roots: Spirit",
        "sub": "What grounds you.",
-       "say": "This lesson is about Roots, what grounds you. For a family, roots are what hold everyone up, together."
+       "say": "This lesson is about Roots: Spirit, your connection with God and the sacred. For a family, roots are what hold everyone up, together. Roots are the first of the four parts a family tends."
       },
       {
        "k": "big",
@@ -42875,11 +45817,7 @@ window.GG_LEARN = {
          "3": 30,
          "4": 20
         },
-        "at": [
-         1,
-         3,
-         4
-        ]
+        "at": [1, 3, 4]
        },
        "say": "Let us try a short one together, right now. Everyone, sit close. Close your eyes, or look at the floor. Now be very quiet, and listen for every sound you can hear. Now go around, and each person share one sound you heard."
       },
@@ -42907,151 +45845,17 @@ window.GG_LEARN = {
        "why": "Roots are about what holds your family up, whatever anyone believes.",
        "say": "Quick question. What matters most in a family’s roots?"
       }
-     ]
-    },
-    {
-     "id": "gr-6-trunk",
-     "n": 2,
-     "title": "Trunk: Purpose",
-     "mins": 5,
-     "blurb": "What your family lives for, and the things you make along the way.",
-     "scenes": [
-      {
-       "k": "title",
-       "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 2",
-       "h": "Trunk",
-       "sub": "Purpose.",
-       "say": "This lesson is about the Trunk, purpose. What your family lives for, and the things you make along the way."
-      },
-      {
-       "k": "big",
-       "h": "The trunk carries everything up to the branches.",
-       "say": "A tree’s trunk carries water from the roots all the way up to the branches. Purpose works the same way in a family. It carries your days, and it gives everyone’s effort somewhere to go."
-      },
-      {
-       "k": "points",
-       "h": "Purpose for a family can look like",
-       "items": [
-        [
-         "Making things together",
-         "Build, bake, draw, or plant"
-        ],
-        [
-         "Knowing what you stand for",
-         "Kind, brave, honest, fun"
-        ],
-        [
-         "Helping others",
-         "A neighbor, a friend, a stranger"
-        ],
-        [
-         "Everyone has a job",
-         "Even the smallest helper"
-        ]
-       ],
-       "say": "Purpose for a family can look like making things together. Building, baking, drawing, or planting. Knowing what your family stands for, like kind, brave, honest, or fun. Helping others, a neighbor, a friend, or even a stranger. And everyone having a job, even the smallest helper."
-      },
-      {
-       "k": "big",
-       "h": "Everyone in the family has something to give.",
-       "sub": "Little hands and grown-up hands both count.",
-       "say": "Here is a big idea. Everyone in the family has something to give. A little one can set out the spoons. A teenager can teach a grandparent the new phone. A grandparent can tell how things used to be. Purpose belongs to every age."
-      },
-      {
-       "k": "points",
-       "h": "How families tend the Trunk",
-       "items": [
-        [
-         "Make Something Together",
-         "Start to finish, even if it’s messy"
-        ],
-        [
-         "Our Family Words",
-         "Three words, hung where everyone sees"
-        ],
-        [
-         "Help Someone Together",
-         "One kind thing, as a family"
-        ],
-        [
-         "A Job That Matters",
-         "Side by side, and name who it helps"
-        ]
-       ],
-       "say": "Here are a few ways families tend the trunk. Make Something Together, one small thing, start to finish, even if it is messy. Our Family Words, three words for what your family stands for, written big and hung where everyone sees them. Help Someone Together, one kind thing for someone, as a family. And A Job That Matters. Do a household job side by side, and name who it helps, even if the answer is all of us."
-      },
-      {
-       "k": "card",
-       "title": "Our Family Words",
-       "body": "Choose three words for what your family stands for, and put them where everyone sees them.",
-       "tap": 1,
-       "btns": [
-        "We did this today",
-        "Show me how"
-       ],
-       "say": "You will find these on the Together tab, under Trunk. At the top, This week’s theme shows one practice picked for your family’s week. Tap Show me how to see the steps. For Our Family Words, everyone suggests words, you talk about why each one matters, and then you choose three together."
-      },
-      {
-       "k": "points",
-       "h": "Practice: Dream Out Loud",
-       "items": [
-        [
-         "Ask the question",
-         "What do you hope to do someday?"
-        ],
-        [
-         "Every dream is welcome",
-         "From astronaut to a new bike trick"
-        ],
-        [
-         "Ask one curious question",
-         "About someone’s dream"
-        ]
-       ],
-       "cue": {
-        "w": {
-         "3": 25,
-         "4": 15
-        },
-        "at": [
-         2,
-         3,
-         4
-        ]
-       },
-       "say": "Let us practice one together, right now. It is called Dream Out Loud. Someone ask the question: what is one thing you hope to do or become someday? Go around, and let every answer be welcome, from astronaut to a new bike trick. Now pick one dream, and ask that person one curious question about it."
-      },
-      {
-       "k": "big",
-       "h": "A dream grows when someone is curious about it.",
-       "say": "Big or small, a dream grows when someone is curious about it. When you have done a family practice, tap We did this today, and the grove grows too."
-      },
-      {
-       "k": "big",
-       "h": "Purpose can change shape and still be real.",
-       "sub": "New seasons bring new ways to give.",
-       "say": "Families change. A new baby arrives. Someone moves away, or retires, or gets sick. When that happens, purpose can change shape and still be real. Ask each other, what can each of us still give? There is always an answer."
-      },
-      {
-       "k": "quiz",
-       "q": "Who has something to give in a family?",
-       "opts": [
-        "Only the grown-ups",
-        "Everyone, at every age",
-        "Only the people with jobs"
-       ],
-       "right": 1,
-       "why": "Purpose belongs to every age, from the smallest helper to the oldest.",
-       "say": "Quick question. Who has something to give in a family?"
-      }
-     ]
+     ],
+     "plainTitle": "Roots: What Grounds You"
     },
     {
      "id": "gr-6-bark",
-     "crisis": ["988: call or text, any time", "911: emergency"],
-     "n": 3,
-     "title": "Bark: Mind and Feelings",
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
+     "n": 2,
+     "title": "Bark: Mind",
      "mins": 5,
      "blurb": "Big feelings, calm breaths, and kind thoughts, for the whole family.",
      "sources": [
@@ -43062,10 +45866,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 3",
-       "h": "Bark",
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 2",
+       "h": "Bark: Mind",
        "sub": "Mind and feelings.",
-       "say": "This lesson is about Bark, mind and feelings. Big feelings, calm breaths, and kind thoughts, for the whole family."
+       "say": "This lesson is about Bark: Mind. Big feelings, calm breaths, and kind thoughts, for the whole family. Bark is one of the four parts a family tends."
       },
       {
        "k": "big",
@@ -43157,11 +45961,7 @@ window.GG_LEARN = {
          "2": 8,
          "3": 20
         },
-        "at": [
-         1,
-         3,
-         4
-        ]
+        "at": [1, 3, 4]
        },
        "say": "Let us try it together, right now. First, everyone think quietly about the weather inside you today. Is it sunny, cloudy, rainy, or stormy? Now go around once, and each person say their weather. If someone says rainy or stormy, just say, thanks for telling us."
       },
@@ -43197,8 +45997,172 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "gr-6-leaves",
+     "n": 3,
+     "title": "Leaves: Body",
+     "mins": 5,
+     "blurb": "Moving, resting, and eating well, together.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 3",
+       "h": "Leaves: Body",
+       "sub": "Body.",
+       "say": "This lesson is about Leaves: Body. Moving, resting, and eating in ways that are good for every body in the family. Leaves are one of the four parts a family tends."
+      },
+      {
+       "k": "big",
+       "h": "Leaves turn sunlight into energy for the whole tree.",
+       "say": "Leaves turn sunlight into energy for the whole tree. Bodies do something like that for a family. When bodies are rested and fed, everyone has more to give."
+      },
+      {
+       "k": "flow",
+       "h": "Three ways to tend Leaves",
+       "steps": [
+        [
+         "Move",
+         "Every body, at its own pace"
+        ],
+        [
+         "Rest",
+         "Sleep and cozy breaks"
+        ],
+        [
+         "Nourish",
+         "Good food and meals together"
+        ]
+       ],
+       "say": "The Grove tends Leaves in three ways. Move, with every body going at its own pace. Rest, with sleep and cozy breaks. And Nourish, with good food, water, and meals together."
+      },
+      {
+       "k": "big",
+       "h": "Every body moves its own way.",
+       "sub": "Walking, rolling, stretching, dancing in a chair. It all counts.",
+       "say": "Every body is different, and every body moves its own way. Walking, rolling, stretching, or dancing in a chair. It all counts. On a Family Walk, the slowest walker sets the pace, so no one gets left behind."
+      },
+      {
+       "k": "points",
+       "h": "Leaves practices in Together",
+       "items": [
+        [
+         "Family Walk",
+         "Fifteen minutes, at the slowest pace"
+        ],
+        [
+         "Kitchen Dance Party",
+         "One song, everyone dances"
+        ],
+        [
+         "Early Night",
+         "Lights low, thirty minutes early"
+        ],
+        [
+         "Cook Together",
+         "Everyone gets a job"
+        ]
+       ],
+       "say": "The Together tab has five Leaves practices. Family Walk, fifteen minutes at the pace of the slowest walker. Kitchen Dance Party, one song, and everyone dances. Early Night, when everyone winds down thirty minutes early, with the lights low. Cook Together, where everyone gets a job. And Stretch Together, which we will do in a moment."
+      },
+      {
+       "k": "story",
+       "eyebrow": "A Family Moment",
+       "title": "Thank the Cooks",
+       "lines": [
+        "On a busy night, a family cooks together. One person washes. One stirs. The littlest sets the table, a little crooked.",
+        "The meal takes longer than usual, and it is not perfect.",
+        "When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them."
+       ],
+       "lesson": "Nourish is about the table as much as the food.",
+       "chris": false,
+       "say": "Picture a busy night. A family decides to cook together. One person washes. One stirs. The littlest sets the table, a little crooked. The meal takes longer than usual, and it is not perfect. When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them. Nourish is about the table as much as the food."
+      },
+      {
+       "k": "big",
+       "h": "Rest is part of how bodies grow.",
+       "sub": "Early Night is one way to rest together.",
+       "say": "Rest matters too. Rest is part of how bodies grow, for kids and grown-ups alike. Early Night is a simple way to rest together. Pick a night this week. Turn the lights low, put screens away, and read, talk quietly, or just rest."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Stretch Together",
+       "items": [
+        [
+         "Reach up tall",
+         "Like a tree"
+        ],
+        [
+         "Fold over slowly",
+         "Like a rag doll"
+        ],
+        [
+         "Stretch out wide",
+         "Like a star"
+        ],
+        [
+         "Three slow breaths",
+         "All together"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "3": 8,
+         "4": 8,
+         "5": 8,
+         "6": 12
+        },
+        "at": [3, 4, 5, 6]
+       },
+       "say": "Let us move together, right now. This one is called Stretch Together. Stand up, or sit tall in your chair, and only stretch in ways that feel good. Reach up tall, like a tree. Now fold over slowly, like a rag doll. Come back up, and stretch out wide, like a star. Last, take three slow breaths, all together."
+      },
+      {
+       "k": "screen",
+       "app": "grove",
+       "app_name": "The Grove",
+       "title": "The Wall",
+       "tap": 2,
+       "rows": [
+        [
+         "Together",
+         "This week"
+        ],
+        [
+         "The family did Family Walk together.",
+         ""
+        ],
+        [
+         "Proud of you",
+         "React"
+        ]
+       ],
+       "say": "When you finish a practice, tap We did this today, and the grove grows. The Wall shows that the family did it together. Anyone can react with Proud of you, or a Hug."
+      },
+      {
+       "k": "big",
+       "h": "Every body in the family matters.",
+       "sub": "Talk with a doctor before big changes.",
+       "say": "Every body in your family matters, big and small, fast and slow. Talk with a doctor before any big changes. And you will find Stretch Together in the Together tab, under Leaves."
+      },
+      {
+       "k": "quiz",
+       "q": "On a Family Walk, who sets the pace?",
+       "opts": [
+        "The fastest walker",
+        "The slowest walker",
+        "Whoever is in front"
+       ],
+       "right": 1,
+       "why": "The slowest walker sets the pace, so no one gets left behind.",
+       "say": "Quick question. On a Family Walk, who sets the pace?"
+      }
+     ]
+    },
+    {
      "id": "gr-6-branches",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 4,
      "title": "Branches: Relationships",
      "mins": 5,
@@ -43207,10 +46171,10 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 4",
-       "h": "Branches",
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 4",
+       "h": "Branches: Relationships",
        "sub": "Relationships.",
-       "say": "This lesson is about Branches, the part of a family that reaches toward people, and lets them reach back."
+       "say": "This lesson is about Branches: Relationships, the part of a family that reaches toward people, and lets them reach back. Branches are one of the four parts a family tends."
       },
       {
        "k": "big",
@@ -43335,12 +46299,7 @@ window.GG_LEARN = {
          "3": 20,
          "5": 20
         },
-        "at": [
-         2,
-         3,
-         4,
-         5
-        ]
+        "at": [2, 3, 4, 5]
        },
        "say": "Let us try one together, right now. This one is called Rose and Thorn. Gather everyone who is watching. Go around once, and each person shares a rose, the best part of their day. Then go around again for a thorn, the hardest part of their day. Just listen, and after each one, say, thanks for telling us."
       },
@@ -43377,174 +46336,145 @@ window.GG_LEARN = {
      ]
     },
     {
-     "id": "gr-6-leaves",
+     "id": "gr-6-trunk",
      "n": 5,
-     "title": "Leaves: Body",
+     "title": "Trunk: Meaning",
      "mins": 5,
-     "blurb": "Moving, resting, and eating well, together.",
+     "blurb": "What your family lives for, and the things you make along the way.",
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 5",
-       "h": "Leaves",
-       "sub": "Body.",
-       "say": "This lesson is about Leaves, the body. Moving, resting, and eating in ways that are good for every body in the family."
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 5",
+       "h": "Trunk: Meaning",
+       "sub": "Meaning.",
+       "say": "This lesson is about the Trunk: Meaning. What your family lives for, and the things you make along the way. The trunk is one of the two parts that grow from a family’s tending."
       },
       {
        "k": "big",
-       "h": "Leaves turn sunlight into energy for the whole tree.",
-       "say": "Leaves turn sunlight into energy for the whole tree. Bodies do something like that for a family. When bodies are rested and fed, everyone has more to give."
-      },
-      {
-       "k": "flow",
-       "h": "Three ways to tend Leaves",
-       "steps": [
-        [
-         "Move",
-         "Every body, at its own pace"
-        ],
-        [
-         "Rest",
-         "Sleep and cozy breaks"
-        ],
-        [
-         "Nourish",
-         "Good food and meals together"
-        ]
-       ],
-       "say": "The Grove tends Leaves in three ways. Move, with every body going at its own pace. Rest, with sleep and cozy breaks. And Nourish, with good food, water, and meals together."
-      },
-      {
-       "k": "big",
-       "h": "Every body moves its own way.",
-       "sub": "Walking, rolling, stretching, dancing in a chair. It all counts.",
-       "say": "Every body is different, and every body moves its own way. Walking, rolling, stretching, or dancing in a chair. It all counts. On a Family Walk, the slowest walker sets the pace, so no one gets left behind."
+       "h": "The trunk carries everything up to the branches.",
+       "say": "A tree’s trunk carries water from the roots all the way up to the branches. Meaning works the same way in a family. It carries your days, and it gives everyone’s effort somewhere to go."
       },
       {
        "k": "points",
-       "h": "Leaves practices in Together",
+       "h": "Purpose for a family can look like",
        "items": [
         [
-         "Family Walk",
-         "Fifteen minutes, at the slowest pace"
+         "Making things together",
+         "Build, bake, draw, or plant"
         ],
         [
-         "Kitchen Dance Party",
-         "One song, everyone dances"
+         "Knowing what you stand for",
+         "Kind, brave, honest, fun"
         ],
         [
-         "Early Night",
-         "Lights low, thirty minutes early"
+         "Helping others",
+         "A neighbor, a friend, a stranger"
         ],
         [
-         "Cook Together",
-         "Everyone gets a job"
+         "Everyone has a job",
+         "Even the smallest helper"
         ]
        ],
-       "say": "The Together tab has five Leaves practices. Family Walk, fifteen minutes at the pace of the slowest walker. Kitchen Dance Party, one song, and everyone dances. Early Night, when everyone winds down thirty minutes early, with the lights low. Cook Together, where everyone gets a job. And Stretch Together, which we will do in a moment."
-      },
-      {
-       "k": "story",
-       "eyebrow": "A Family Moment",
-       "title": "Thank the Cooks",
-       "lines": [
-        "On a busy night, a family cooks together. One person washes. One stirs. The littlest sets the table, a little crooked.",
-        "The meal takes longer than usual, and it is not perfect.",
-        "When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them."
-       ],
-       "lesson": "Nourish is about the table as much as the food.",
-       "chris": false,
-       "say": "Picture a busy night. A family decides to cook together. One person washes. One stirs. The littlest sets the table, a little crooked. The meal takes longer than usual, and it is not perfect. When they sit down, someone says, thank you to the cooks. Everyone laughs, because that is all of them. Nourish is about the table as much as the food."
+       "say": "Purpose for a family can look like making things together. Building, baking, drawing, or planting. Knowing what your family stands for, like kind, brave, honest, or fun. Helping others, a neighbor, a friend, or even a stranger. And everyone having a job, even the smallest helper."
       },
       {
        "k": "big",
-       "h": "Rest is part of how bodies grow.",
-       "sub": "Early Night is one way to rest together.",
-       "say": "Rest matters too. Rest is part of how bodies grow, for kids and grown-ups alike. Early Night is a simple way to rest together. Pick a night this week. Turn the lights low, put screens away, and read, talk quietly, or just rest."
+       "h": "Everyone in the family has something to give.",
+       "sub": "Little hands and grown-up hands both count.",
+       "say": "Here is a big idea. Everyone in the family has something to give. A little one can set out the spoons. A teenager can teach a grandparent the new phone. A grandparent can tell how things used to be. Purpose belongs to every age."
       },
       {
        "k": "points",
-       "h": "Practice: Stretch Together",
+       "h": "How families tend the Trunk",
        "items": [
         [
-         "Reach up tall",
-         "Like a tree"
+         "Make Something Together",
+         "Start to finish, even if it’s messy"
         ],
         [
-         "Fold over slowly",
-         "Like a rag doll"
+         "Our Family Words",
+         "Three words, hung where everyone sees"
         ],
         [
-         "Stretch out wide",
-         "Like a star"
+         "Help Someone Together",
+         "One kind thing, as a family"
         ],
         [
-         "Three slow breaths",
-         "All together"
+         "A Job That Matters",
+         "Side by side, and name who it helps"
+        ]
+       ],
+       "say": "Here are a few ways a family grows meaning, from practices in the four parts you tend. Make Something Together, one small thing, start to finish, even if it is messy. Our Family Words, three words for what your family stands for, written big and hung where everyone sees them. Help Someone Together, one kind thing for someone, as a family. And A Job That Matters. Do a household job side by side, and name who it helps, even if the answer is all of us."
+      },
+      {
+       "k": "card",
+       "title": "Our Family Words",
+       "body": "Choose three words for what your family stands for, and put them where everyone sees them.",
+       "tap": 1,
+       "btns": [
+        "We did this today",
+        "Show me how"
+       ],
+       "say": "You will find these on the Together tab. Make Something Together, Help Someone Together, and A Job That Matters are under Branches, and Our Family Words is under Bark. At the top, This week’s theme shows one practice picked for your family’s week. Tap Show me how to see the steps. For Our Family Words, everyone suggests words, you talk about why each one matters, and then you choose three together."
+      },
+      {
+       "k": "points",
+       "h": "Practice: Dream Out Loud",
+       "items": [
+        [
+         "Ask the question",
+         "What do you hope to do someday?"
+        ],
+        [
+         "Every dream is welcome",
+         "From astronaut to a new bike trick"
+        ],
+        [
+         "Ask one curious question",
+         "About someone’s dream"
         ]
        ],
        "cue": {
         "w": {
-         "3": 8,
-         "4": 8,
-         "5": 8,
-         "6": 12
+         "3": 25,
+         "4": 15
         },
-        "at": [
-         3,
-         4,
-         5,
-         6
-        ]
+        "at": [2, 3, 4]
        },
-       "say": "Let us move together, right now. This one is called Stretch Together. Stand up, or sit tall in your chair, and only stretch in ways that feel good. Reach up tall, like a tree. Now fold over slowly, like a rag doll. Come back up, and stretch out wide, like a star. Last, take three slow breaths, all together."
-      },
-      {
-       "k": "screen",
-       "app": "grove",
-       "app_name": "The Grove",
-       "title": "The Wall",
-       "tap": 2,
-       "rows": [
-        [
-         "Together",
-         "This week"
-        ],
-        [
-         "The family did Family Walk together.",
-         ""
-        ],
-        [
-         "Proud of you",
-         "React"
-        ]
-       ],
-       "say": "When you finish a practice, tap We did this today, and the grove grows. The Wall shows that the family did it together. Anyone can react with Proud of you, or a Hug."
+       "say": "Let us practice one together, right now. It is called Dream Out Loud. Someone ask the question: what is one thing you hope to do or become someday? Go around, and let every answer be welcome, from astronaut to a new bike trick. Now pick one dream, and ask that person one curious question about it."
       },
       {
        "k": "big",
-       "h": "Every body in the family matters.",
-       "sub": "Talk with a doctor before big changes.",
-       "say": "Every body in your family matters, big and small, fast and slow. Talk with a doctor before any big changes. And you will find Stretch Together in the Together tab, under Leaves."
+       "h": "A dream grows when someone is curious about it.",
+       "say": "Big or small, a dream grows when someone is curious about it. When you have done a family practice, tap We did this today, and the grove grows too."
+      },
+      {
+       "k": "big",
+       "h": "Purpose can change shape and still be real.",
+       "sub": "New seasons bring new ways to give.",
+       "say": "Families change. A new baby arrives. Someone moves away, or retires, or gets sick. When that happens, purpose can change shape and still be real. Ask each other, what can each of us still give? There is always an answer."
       },
       {
        "k": "quiz",
-       "q": "On a Family Walk, who sets the pace?",
+       "q": "Who has something to give in a family?",
        "opts": [
-        "The fastest walker",
-        "The slowest walker",
-        "Whoever is in front"
+        "Only the grown-ups",
+        "Everyone, at every age",
+        "Only the people with jobs"
        ],
        "right": 1,
-       "why": "The slowest walker sets the pace, so no one gets left behind.",
-       "say": "Quick question. On a Family Walk, who sets the pace?"
+       "why": "Purpose belongs to every age, from the smallest helper to the oldest.",
+       "say": "Quick question. Who has something to give in a family?"
       }
      ]
     },
     {
      "id": "gr-6-fruit",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -43553,15 +46483,15 @@ window.GG_LEARN = {
       {
        "k": "title",
        "hero": "grove",
-       "eyebrow": "The Six Parts, Together, Lesson 6",
-       "h": "Fruit",
+       "eyebrow": "Tend Four, Grow Two, Together, Lesson 6",
+       "h": "Fruit: Hope",
        "sub": "Hope.",
-       "say": "This last lesson is about Fruit, a family’s hope. Looking forward, noticing the good, and growing toward it."
+       "say": "This last lesson is about Fruit: Hope, a family’s hope. Looking forward, noticing the good, and growing toward it. Like the trunk, fruit grows from a family’s tending."
       },
       {
        "k": "big",
        "h": "Fruit grows from the whole tree.",
-       "say": "Fruit takes time, and it grows from the whole tree. Roots, trunk, bark, branches, and leaves all feed it. A family’s hope grows the same way, from all the small things you do together."
+       "say": "Fruit takes time, and it grows from the whole tree. Roots, bark, leaves, and branches all feed it. A family’s hope grows the same way, from all the small things you do together."
       },
       {
        "k": "points",
@@ -43594,7 +46524,7 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Fruit practices in Together",
+       "h": "Practices that grow hope",
        "items": [
         [
          "Something to Look Forward To",
@@ -43613,7 +46543,7 @@ window.GG_LEARN = {
          "Check on it each week"
         ]
        ],
-       "say": "The Together tab has five Fruit practices. Something to Look Forward To, where you plan one small thing and put it on the calendar. Good News Round, where everyone shares one good thing from the week. Secret Kindness, where everyone does a kind thing without telling, and at the end of the week, you guess who did what. Remember Together, with old photos and the story of a good day. And Plant a Seed, which you check on each week, because growth takes time."
+       "say": "These five practices grow hope, and each one lives in one of the four parts you tend. Something to Look Forward To, where you plan one small thing and put it on the calendar. Good News Round, where everyone shares one good thing from the week. Secret Kindness, where everyone does a kind thing without telling, and at the end of the week, you guess who did what. Remember Together, with old photos and the story of a good day. And Plant a Seed, which you check on each week, because growth takes time."
       },
       {
        "k": "story",
@@ -43682,11 +46612,7 @@ window.GG_LEARN = {
          "3": 10,
          "5": 25
         },
-        "at": [
-         2,
-         4,
-         5
-        ]
+        "at": [2, 4, 5]
        },
        "say": "Let us practice together. This one is called Good News Round. Everyone, think of one good thing that happened this week. Small counts, like a good sandwich or a funny moment. Now go around once, and each person shares their good thing. After each one, everyone cheers."
       },
@@ -43698,9 +46624,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Tend the whole tree together, and fruit will come.",
-       "sub": "Good News Round is in Together, under Fruit.",
-       "say": "Tend the whole tree together, a little at a time, and fruit will come. Good News Round is in the Together tab, under Fruit. That is all six parts. Well done, all of you."
+       "h": "Tend all four together, and fruit will come.",
+       "sub": "Good News Round is in Together, under Branches.",
+       "say": "Tend all four together, a little at a time, and fruit will come. Good News Round is in the Together tab, under Branches. The Grounded Way works when you tend all four parts. That is the whole tree. Well done, all of you."
       },
       {
        "k": "quiz",
@@ -44176,10 +47102,7 @@ window.GG_LEARN = {
         "Thorn: the hardest part of my day."
        ],
        "cue": {
-        "at": [
-         1,
-         2
-        ]
+        "at": [1, 2]
        },
        "say": "One family favorite is called Rose and Thorn. Your rose is the best part of your day. Your thorn is the hardest part. Everyone shares both."
       },
@@ -44916,7 +47839,10 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-hardday",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 7,
      "title": "Hard Day Huddle",
      "mins": 3,
@@ -44958,11 +47884,7 @@ window.GG_LEARN = {
          "3": 3,
          "4": 4
         },
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "First, land. Sit close, wherever you are. Breathe in through your nose, slow, for a count of four. Then breathe out slowly, like you are blowing on hot soup. One more time, all together."
       },
@@ -45018,11 +47940,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         2,
-         3,
-         4
-        ]
+        "at": [2, 3, 4]
        },
        "say": "Here is the secret. Just listen, and offer advice only when someone asks. Just listen. Stay close, with a hand, a hug, or a seat nearby. Then ask one gentle question. What do we need right now?"
       },
@@ -45060,7 +47978,10 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-repair",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 8,
      "title": "Making Up After a Fight",
      "mins": 3,
@@ -45101,11 +48022,7 @@ window.GG_LEARN = {
         "p": {
          "3": 5
         },
-        "at": [
-         1,
-         3,
-         4
-        ]
+        "at": [1, 3, 4]
        },
        "say": "It starts with a Family Reset. First, pause. Anyone can say your family’s reset word, like stop, or pause. Then breathe, three slow breaths, all together. And start again, kinder this time."
       },
@@ -45127,11 +48044,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         3,
-         5,
-         7
-        ]
+        "at": [3, 5, 7]
        },
        "say": "Here is something important. Grown-ups go first. When a grown-up says sorry, kids learn that everyone makes mistakes, and everyone can make things right. Name what you did. I yelled, and that was not fair. Own it. I am sorry. Then make it right. Next time, I will take a breath first."
       },
@@ -45177,7 +48090,10 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-meeting",
-     "crisis": ["988: call or text, any time", "911: emergency"],
+     "crisis": [
+      "988: call or text, any time",
+      "911: emergency"
+     ],
      "n": 9,
      "title": "Family Meeting",
      "mins": 3,
@@ -45362,12 +48278,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "There are lots of ways to celebrate. A Good News Round, where each person shares one good thing. A cheer, as loud or as quiet as you like. In The Grove, you can post on The Wall, or tap Proud of you on someone’s post. Or a Kitchen Dance Party. Someone picks one song, and everyone dances."
       },
@@ -45405,19 +48316,15 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Celebrate the trying, not only the winning. Cheer when someone keeps at it, even when it is hard. Cheer when someone has the courage to try something new. And cheer when someone is kind."
       },
       {
        "k": "big",
        "h": "Every person gets a turn to shine.",
-       "sub": "Good News Round is in Together, under Fruit.",
-       "say": "In a family, every person gets a turn to shine. The youngest, the oldest, and everyone in-between. You can find Good News Round in Together, under Fruit. When you do it, tap We did this today, and the grove grows."
+       "sub": "Good News Round is in Together, under Branches.",
+       "say": "In a family, every person gets a turn to shine. The youngest, the oldest, and everyone in-between. You can find Good News Round in Together, under Branches. When you do it, tap We did this today, and the grove grows."
       }
      ]
     },
@@ -45470,12 +48377,7 @@ window.GG_LEARN = {
          "5": 8,
          "6": 10
         },
-        "at": [
-         2,
-         3,
-         5,
-         6
-        ]
+        "at": [2, 3, 5, 6]
        },
        "say": "Let us stretch together. Stand or sit tall. Reach up tall, like a tree. Fold over slowly, like a rag doll. Let your arms hang loose. Now stretch out wide, like a star. Finish with three slow breaths, all together."
       },
@@ -45497,11 +48399,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "The Grove has more ways to move together. A Family Walk, for fifteen minutes, where the slowest walker sets the pace. Count things along the way, like dogs, red cars, or birds. Or a Kitchen Dance Party. Someone picks one song, and everyone dances, any way at all."
       },
@@ -45520,7 +48418,9 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-memorybox",
-     "crisis": ["988: call or text, any time"],
+     "crisis": [
+      "988: call or text, any time"
+     ],
      "n": 12,
      "title": "Building a Memory Box Together",
      "mins": 4,
@@ -45588,12 +48488,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "What can go inside? Photos, and drawings the children make of them. Keepsakes, like a recipe card, a scarf, or a ticket from a day you shared. Notes, with things you want to say to them. And their favorites, like a list of their songs, a saying they used, or a pressed flower."
       },
@@ -45631,11 +48526,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Open the box again on the days that matter. Their birthday, and the holidays. Hard days, when missing them feels big. Or any day at all, just to remember. Add something new each time."
       },
@@ -45645,18 +48536,18 @@ window.GG_LEARN = {
        "items": [
         [
          "Build a Memory Box",
-         "In Together, under Fruit"
+         "In Together, under Bark"
         ],
         [
          "Remember Together",
-         "Under Fruit too"
+         "Under Branches"
         ],
         [
          "We did this today",
          "Tap it, and the grove grows"
         ]
        ],
-       "say": "You will find Build a Memory Box in Together, under Fruit, next to Remember Together. When you have done it, tap We did this today, and the grove grows."
+       "say": "You will find Build a Memory Box in Together, under Bark, and Remember Together under Branches. When you have done it, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -45732,11 +48623,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Good listening looks like this. Stay quiet until the speaker finishes, and save your ideas for later. Stay close, and face them, calm and kind. And when they finish, say back what you heard in your own words, so they know they were truly heard."
       },
@@ -45754,11 +48641,7 @@ window.GG_LEARN = {
          "2": 1.5,
          "3": 2
         },
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Here are some questions for a round. What made you smile today? What is on your mind? What is one thing you need this week?"
       },
@@ -45868,11 +48751,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
        "say": "Make the drinks special. Sparkling water, with a slice of orange or a few berries. Fresh juice, poured into the good glasses. Or tea, iced in summer and warm in winter. Let the kids name the drink of the night."
       },
@@ -45898,12 +48777,7 @@ window.GG_LEARN = {
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
        "say": "Here are some fun things to try. A walk after dinner, looking for the moon or the first star. Music, with one song picked by each person, or a kitchen dance. A game or a puzzle everyone can play. Or a story round, where someone tells a favorite family story."
       },
@@ -45955,7 +48829,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Family Night",
-         "In Together, under Fruit"
+         "In Together, under Branches"
         ],
         [
          "Anchor it",
@@ -45966,7 +48840,7 @@ window.GG_LEARN = {
          "Tap it, and the grove grows"
         ]
        ],
-       "say": "You will find Family Night in Together, under Fruit. Put it in your Growth Plan, anchored to your night. When you have done it, tap We did this today, and the grove grows."
+       "say": "You will find Family Night in Together, under Branches. Put it in your Growth Plan, anchored to your night. When you have done it, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -46129,17 +49003,13 @@ window.GG_LEARN = {
         ],
         [
          "Goodbye Circle",
-         "Under Fruit"
+         "Under Roots"
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3
-        ]
+        "at": [1, 2, 3]
        },
-       "say": "In a Classroom grove, you will find these in Together. Name Greeting is under Branches. Movement Break is under Leaves. And Goodbye Circle is under Fruit. Anchor them to Morning Meeting or End of Day in your Class Plan."
+       "say": "In a Classroom grove, you will find these in Together. Name Greeting is under Branches. Movement Break is under Leaves. And Goodbye Circle is under Roots. Anchor them to Morning Meeting or End of Day in your Class Plan."
       },
       {
        "k": "big",
@@ -46551,22 +49421,17 @@ window.GG_LEARN = {
         ],
         [
          "Closing Thanks",
-         "Under Fruit"
+         "Under Roots"
         ],
         [
          "Group Agreements",
-         "Under Trunk"
+         "Under Branches"
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
-       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Fruit. And Group Agreements is under Trunk. Faith communities and small groups also have Sending Words, under Roots."
+       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Roots too. And Group Agreements is under Branches. Faith communities and small groups also have Sending Words, under Roots."
       },
       {
        "k": "big",
@@ -46675,22 +49540,17 @@ window.GG_LEARN = {
         ],
         [
          "Closing Thanks",
-         "Under Fruit"
+         "Under Roots"
         ],
         [
          "Group Agreements",
-         "Under Trunk"
+         "Under Branches"
         ]
        ],
        "cue": {
-        "at": [
-         1,
-         2,
-         3,
-         4
-        ]
+        "at": [1, 2, 3, 4]
        },
-       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Fruit. And Group Agreements is under Trunk. Faith communities and small groups also have Sending Blessing, or Sending Words in Plain wording, under Roots."
+       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Roots too. And Group Agreements is under Branches. Faith communities and small groups also have Sending Blessing, or Sending Words in Plain wording, under Roots."
       },
       {
        "k": "big",
@@ -46943,7 +49803,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Closing Thanks",
-         "Under Fruit"
+         "Under Roots"
         ],
         [
          "Thanks Round",
@@ -46954,7 +49814,7 @@ window.GG_LEARN = {
          "Under Roots"
         ]
        ],
-       "say": "You will find these in Together. Closing Thanks is under Fruit. Thanks Round and Three Good Things are under Roots. Anchor your closing to Closing Our Time, or Our Weekly Gathering, in your Growth Plan. When you have done one, tap We did this today, and the grove grows."
+       "say": "You will find these in Together. Closing Thanks, Thanks Round, and Three Good Things are all under Roots. Anchor your closing to Closing Our Time, or Our Weekly Gathering, in your Growth Plan. When you have done one, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -47063,7 +49923,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Closing Thanks",
-         "Under Fruit"
+         "Under Roots"
         ],
         [
          "Thanks Round",
@@ -47074,7 +49934,7 @@ window.GG_LEARN = {
          "Under Roots"
         ]
        ],
-       "say": "You will find these in Together. Closing Thanks is under Fruit. Thanks Round and Three Good Things are under Roots. Anchor your closing to Closing Our Time, or Our Weekly Gathering, in your Growth Plan. When you have done one, tap We did this today, and the grove grows."
+       "say": "You will find these in Together. Closing Thanks, Thanks Round, and Three Good Things are all under Roots. Anchor your closing to Closing Our Time, or Our Weekly Gathering, in your Growth Plan. When you have done one, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -47202,14 +50062,14 @@ window.GG_LEARN = {
         ],
         [
          "Send-Off Words",
-         "Under Fruit"
+         "Under Roots"
         ],
         [
          "Closing Thanks",
-         "Under Fruit"
+         "Under Roots"
         ]
        ],
-       "say": "You will find Sending Words in Together, under Roots. When someone is moving on, try Send-Off Words, under Fruit. And Closing Thanks, also under Fruit, is a good partner for it. When you have done one, tap We did this today, and the grove grows."
+       "say": "You will find Sending Words in Together, under Roots. When someone is moving on, try Send-Off Words, under Roots too. And Closing Thanks, also under Roots, is a good partner for it. When you have done one, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -47330,14 +50190,14 @@ window.GG_LEARN = {
         ],
         [
          "Blessing for the Road",
-         "Under Fruit"
+         "Under Roots"
         ],
         [
          "Passing the Peace",
          "Under Branches"
         ]
        ],
-       "say": "You will find Sending Blessing in Together, under Roots. When someone is moving on, try Blessing for the Road, under Fruit. And Faith Community groves also have Passing the Peace, under Branches. When you have done one, tap We did this today, and the grove grows."
+       "say": "You will find Sending Blessing in Together, under Roots. When someone is moving on, try Blessing for the Road, under Roots too. And Faith Community groves also have Passing the Peace, under Branches. When you have done one, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -47349,7 +50209,9 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-joys",
-     "crisis": ["911: emergency"],
+     "crisis": [
+      "911: emergency"
+     ],
      "n": 5,
      "title": "Sharing Joys and Concerns",
      "mins": 4,
@@ -48237,6 +51099,40 @@ window.GG_LEARN = {
   }); });
 })();
 /* end The Grove Learn, Faith or Plain */
+
+/* ---------- BLD 907 Roots: Spirit, Faith or Plain ----------
+   Tend Four, Grow Two (GWG BLD 907): a lesson with faithScenes and plainScenes (Maple, Aspen, Pine, Birch, Oak, Sequoia) plays
+   Roots: Spirit, your connection with God and the sacred, in Faith wording, and Roots: what grounds you in Plain wording, with
+   no God language (a school lock, or a person or family who chose Plain). plainTitle names the lesson in Plain wording.
+   Which wording: window.GG_LEARN_PLAIN (true, false, or a function) when a page sets it; else the tree page's own choice
+   (gwPlainOn in Oak, Sequoia, Pine, and Birch; curWording in Maple; isPlain in Aspen); else Faith, each tree's default.
+   Same id either way, so watched marks carry. Written by grounded-workshop patches/bld907/F1/apply907.js. */
+(function () {
+  var L = window.GG_LEARN || {};
+  function plainNow() {
+    try {
+      var p = window.GG_LEARN_PLAIN;
+      if (typeof p === 'boolean') return p;
+      if (typeof p === 'function') return !!p();
+      if (typeof window.gwPlainOn === 'function') return !!window.gwPlainOn();
+      if (typeof window.curWording === 'function') return window.curWording() === 'plain';
+      if (typeof window.isPlain === 'function') return !!window.isPlain();
+    } catch (e) {}
+    return false;
+  }
+  Object.keys(L).forEach(function (app) {
+    if (app === 'grove') return;
+    ((L[app] || {}).tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) {
+      if (!l.faithScenes || !l.plainScenes) return;
+      var f = l.faithScenes, p = l.plainScenes, ft = l.title, pt = l.plainTitle || l.title;
+      try {
+        Object.defineProperty(l, 'scenes', { configurable: true, enumerable: true, get: function () { return plainNow() ? p : f; } });
+        Object.defineProperty(l, 'title', { configurable: true, enumerable: true, get: function () { return plainNow() ? pt : ft; } });
+      } catch (e) { l.scenes = f; }
+    }); });
+  });
+})();
+/* end BLD 907 Roots: Spirit, Faith or Plain */
 
 /* ---------- Who each video is for (GWG BLD 743) ----------
    Each lesson gets a 'for' field, shown as a small label on its card and under its title in the player

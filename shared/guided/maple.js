@@ -38,7 +38,7 @@ window.GG_GUIDED["maple"] = {
   "start": {
    "open": [
     [
-     "Hi there! Welcome to your very first check-in. We're so glad you're here. Your tree has six parts, and we'll visit each one. We ask a question. You tap the answer that fits you best. Every answer helps your tree grow. Let's begin!",
+     "Hi there! Welcome to your very first check-in. We're so glad you're here. We'll visit every part of your tree, one at a time. We ask a question. You tap the answer that fits you best. Every answer helps your tree grow. Let's begin!",
      "Hello, and welcome to Maple! Today we get to meet your tree. We'll ask some questions, one at a time. Tap the answer that feels true for you. If you're unsure, tap I don't know. Ready? Here we go!",
      "Welcome! This is your first check-in, and it's a special day. Every tree starts with a first look. Listen, think, and tap the answer that fits. Take your time. We'll go together."
     ]
@@ -46,7 +46,7 @@ window.GG_GUIDED["maple"] = {
    "enter": {
     "roots": [
      "First up, your roots!",
-     "Let's start with your roots: feeling safe and loved."
+     "Let's start with your roots: your spirit, and feeling safe and loved."
     ],
     "trunk": [
      "Next up, your trunk!",
@@ -148,6 +148,12 @@ window.GG_GUIDED["maple"] = {
       "Here's something small to try. Before bed, name one thing you're thankful for.",
       "You are loved, and you have people with you. Tell a grown-up how you feel, any time."
      ]
+    },
+    "enter": {
+     "roots": [
+      "First up, your roots!",
+      "Let's start with your roots: feeling safe and loved."
+     ]
     }
    }
   },
@@ -163,7 +169,7 @@ window.GG_GUIDED["maple"] = {
    "enter": {
     "roots": [
      "First up, your roots!",
-     "Let's start with your roots: feeling safe and loved."
+     "Let's start with your roots: your spirit, and feeling safe and loved."
     ],
     "trunk": [
      "Next up, your trunk!",
@@ -265,6 +271,12 @@ window.GG_GUIDED["maple"] = {
       "Here's something small to try. Before bed, name one thing you're thankful for.",
       "You are loved, and you have people with you. Tell a grown-up how you feel, any time."
      ]
+    },
+    "enter": {
+     "roots": [
+      "First up, your roots!",
+      "Let's start with your roots: feeling safe and loved."
+     ]
     }
    }
   },
@@ -344,7 +356,7 @@ window.GG_GUIDED["maple"] = {
   "plan": {
    "open": [
     [
-     "Now for the fun part! Let's build your growth plan. We'll look at one part of your tree at a time. Tap one, two, or three things you'd like to try.",
+     "Now for the fun part! Let's build your growth plan. We'll look at the four parts you take care of, one at a time. Tap one, two, or three things you'd like to try.",
      "Let's pick things to practice! We'll start with the parts that can grow the most. Pick what sounds fun to you."
     ]
    ],
@@ -352,10 +364,6 @@ window.GG_GUIDED["maple"] = {
     "roots": [
      "Roots hold a tree tight. Quiet times, family, and prayer help your roots grow deep.",
      "Your roots help you feel safe and loved. Let's pick something to help them grow."
-    ],
-    "trunk": [
-     "Your trunk is what makes you, you! Let's pick something that helps you shine.",
-     "A strong trunk helps a tree stand tall. Let's find a way to grow yours."
     ],
     "bark": [
      "Your bark helps with big feelings. Let's pick a way to feel calm and strong.",
@@ -368,10 +376,6 @@ window.GG_GUIDED["maple"] = {
     "leaves": [
      "Your leaves are sleep, food, and play. Let's pick something fun for your body.",
      "Leaves soak up the sun. Let's find a way to move, rest, or eat something yummy and good."
-    ],
-    "fruit": [
-     "Your fruit is the happy things to look forward to. Let's pick something bright.",
-     "Fruit grows when we have hope. Let's find something that makes tomorrow fun."
     ]
    },
    "close": [

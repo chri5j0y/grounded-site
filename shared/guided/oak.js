@@ -52,11 +52,11 @@
   };
   var ENTER = {
     "roots": [
-      "First, Roots: what grounds you.",
-      "We will begin with Roots, what holds you steady."
+      "First, Roots: Spirit, your connection with God and the sacred.",
+      "We will begin with Roots: Spirit, what holds you steady."
     ],
     "trunk": [
-      "Next, your Trunk: purpose and meaning.",
+      "Next, your Trunk: meaning. It grows from all you tend.",
       "On to Trunk, the larger story you are living."
     ],
     "bark": [
@@ -76,6 +76,8 @@
       "Finally, Fruit, the good you are growing toward."
     ]
   };
+  var ROOTS_FAITH = ENTER.roots, ROOTS_PLAIN = ["First, Roots: what grounds you.","We will begin with Roots, what holds you steady."];
+  Object.defineProperty(ENTER, "roots", { enumerable: true, configurable: true, get: function () { try { return typeof gwPlainOn === "function" && gwPlainOn() ? ROOTS_PLAIN : ROOTS_FAITH; } catch (e) { return ROOTS_FAITH; } } });
   window.GG_GUIDED["oak"] = {
     "voice": "brian",
     "tipSkip": [],
@@ -83,7 +85,7 @@
       "start": {
         "open": [
           [
-            "Welcome. We will walk through your tree together, one question at a time, six parts in all.",
+            "Welcome. We will walk through your whole tree together, one question at a time: the four parts you tend, and the two that grow from your tending.",
             "Every honest answer is the right answer here. Think about the past two weeks, and go at your own pace.",
             "Take a breath. This is time set apart for you. We will go one question at a time, and you can pause whenever you like.",
             "This first check-in plants your tree. Answer with what is true for the past two weeks, and we will take it from there."
@@ -115,7 +117,7 @@
         "open": [
           [
             "Welcome back. Let us see how your tree is growing, one question at a time, for the past two weeks.",
-            "Good to see you again. Settle in, take a breath, and we will walk through all six parts together.",
+            "Good to see you again. Settle in, take a breath, and we will walk through your whole tree together.",
             "Time for a check-in. Answer with what is true right now, and notice how far you have come.",
             "Here we go again, one part at a time. Your answers stay on this device."
           ]
@@ -253,19 +255,15 @@
       "plan": {
         "open": [
           [
-            "Now let us build your Growth Plan. We will go one part at a time, starting with your Growing Edge, and you will choose one to three practices for each.",
-            "Let us choose what you will tend this season. Start small: one to three practices for a part is plenty.",
-            "Here comes the fun part. For each part of your tree, pick the practices that fit your life right now."
+            "Now let us build your Growth Plan. We will go through the four parts you tend, one at a time, starting with your Growing Edge, and you will choose one to three practices for each.",
+            "Let us choose what you will tend this season. Start small: one to three practices for a part is plenty. The Grounded Way works when you tend all four parts.",
+            "Here comes the fun part. For each of the four parts you tend, pick the practices that fit your life right now. Meaning and hope grow from that tending."
           ]
         ],
         "part": {
           "roots": [
             "Your roots hold you steady when life shakes. A small practice here keeps you anchored.",
             "Roots grow quietly, out of sight. A few quiet minutes here feed everything above."
-          ],
-          "trunk": [
-            "Your trunk is your sense of purpose. Tending it helps a hard day feel like part of something larger.",
-            "A clear sense of what you live for gives your days a spine. Choose a practice that brings your values into ordinary life."
           ],
           "bark": [
             "Your bark is how you calm down and heal over. A practice here gives you a tool for the next hard moment.",
@@ -278,10 +276,6 @@
           "leaves": [
             "Your leaves are your body: rest, movement, and nourishment. Small, steady habits here lift every other part.",
             "Your body often speaks first. A simple practice here helps you listen and respond."
-          ],
-          "fruit": [
-            "Your fruit is hope. A practice here helps you notice the good that is still growing.",
-            "Fruit is what a tree grows toward. Choose a practice that keeps something good in view."
           ]
         },
         "close": [

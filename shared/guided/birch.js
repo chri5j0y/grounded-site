@@ -17,19 +17,30 @@
    birch/app.js, since the player's help field is the line under a question), and the optional
    question. No safety step (GWG BLD 887), and no help line
    is ever spoken.
-   Roots lines name no faith, so they fit Faith and Plain wording alike.
+   Roots enter lines say Spirit in Faith wording and what grounds you in Plain wording
+   (BLD 907, rootsLive); every other Roots line names no faith, so it fits both.
+   BLD 907: tend four, grow two. The check-in still visits the whole tree; the Growth Plan
+   walks the four parts you tend (Trunk and Fruit grow from the tending), and Trunk is meaning.
    Voice: the Birch narrator (the BLD 778 voice map). No line names a narrator.
    No dashes. Edit words here; keep them warm, brief, and forward. */
 (function () {
 window.GG_GUIDED = window.GG_GUIDED || {};
+// BLD 907 (F1): Roots says Spirit in Faith wording and what grounds you in Plain wording, read live from the tree
+// page (gwPlainOn, set up in BLD 907 C). A page without it hears the Faith lines.
+function rootsLive(faith, plain) {
+  return { get: function () { try { return typeof gwPlainOn === 'function' && gwPlainOn() ? plain : faith; } catch (e) { return faith; } }, enumerable: true, configurable: true };
+}
 const ENTER = {
-  roots: ['First, Roots: what grounds you.', 'We\'ll start with Roots, the peace and values you\'re making your own.'],
-  trunk: ['Next, your Trunk: purpose, and where you\'re headed.', 'On to Trunk, what matters to you.'],
+  roots: [],
+  trunk: ['Next, your Trunk: meaning, and where you\'re headed.', 'On to Trunk, what matters to you.'],
   bark: ['Now Bark: stress, setbacks, and everything adult life asks.', 'Next is Bark, your mind and feelings.'],
   branches: ['Now Branches: friends, family, and the people in your corner.', 'On to Branches, your people.'],
   leaves: ['Now Leaves: Move, Rest, and Nourish.', 'Next is Leaves, how your body is doing.'],
   fruit: ['Last part, Fruit: hope, and what you look forward to.', 'Fruit to finish: what you believe is possible.']
 };
+Object.defineProperty(ENTER, 'roots', rootsLive(
+  ['First, Roots: Spirit, your connection with God and the sacred.', 'We\'ll start with Roots: Spirit, the peace and values you\'re making your own.'],
+  ['First, Roots: what grounds you.', 'We\'ll start with Roots, the peace and values you\'re making your own.']));
 const TIPS = {
   roots: [
     'Something small to try: five quiet minutes today, phone in another room, just breathing.',
@@ -82,7 +93,7 @@ const G = window.GG_GUIDED.birch = {
     start: {
       open: [
         'Welcome to Birch. We\'re glad you\'re here.',
-        'This is your first check-in, a look at six parts of your life.',
+        'This is your first check-in, a look at your whole tree.',
         'One question at a time. Think about the past two weeks, and pick what fits best.',
         'Every answer is welcome. Honest answers grow the strongest trees.',
         'Your answers stay on this device, locked in your profile. Take your time.'
@@ -109,7 +120,7 @@ const G = window.GG_GUIDED.birch = {
     full: {
       open: [
         ['Welcome back. Let\'s see how your tree is growing.', 'Good to see you. Time for a full check-in.'],
-        'Six parts, one question at a time. Think about the past two weeks.',
+        'Your whole tree, one question at a time. Think about the past two weeks.',
         'Pick what fits best. Every answer is welcome.',
         'Settle in. This time is for you.'
       ],
@@ -176,8 +187,9 @@ const G = window.GG_GUIDED.birch = {
       open: [
         'Let\'s build your Growth Plan together.',
         'This is where your tree starts to grow.',
-        'We\'ll go one part at a time, starting with your Growing Edge.',
-        'Pick one to three practices for each part you want to tend. Small and steady is perfect.',
+        'We\'ll go through the four parts you tend, one at a time, starting with your Growing Edge.',
+        'Pick one to three practices for each. Small and steady is perfect.',
+        'The Grounded Way works when you tend all four parts.',
         'Tap How on any card to see the steps.'
       ],
       part: {
@@ -185,11 +197,6 @@ const G = window.GG_GUIDED.birch = {
           'Roots hold you steady through change. A little quiet time goes a long way.',
           'These years bring a lot of change. Strong roots help you stay grounded through it.',
           'This season, your roots are ready to grow deeper.'
-        ],
-        trunk: [
-          'Your Trunk is purpose. A direction is enough, and small steps count.',
-          'What matters to you deserves real time. Let\'s give it some.',
-          'This is a great season to grow your sense of where you\'re headed.'
         ],
         bark: [
           'Bark is how you meet stress and setbacks. A few steady skills make every week easier.',
@@ -205,11 +212,6 @@ const G = window.GG_GUIDED.birch = {
           'Your body carries everything you do. Move, Rest, and Nourish help it feel its best.',
           'Small steps with sleep, movement, and meals add up.',
           'This season, let\'s give your body some steady attention.'
-        ],
-        fruit: [
-          'Hope is a skill you can grow. These practices help you see what\'s ahead.',
-          'Something to look forward to brightens every week.',
-          'This season, let\'s grow your hope a little each day.'
         ]
       },
       close: [

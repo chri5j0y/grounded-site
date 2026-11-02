@@ -13356,7 +13356,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "big",
      "h": "Grow the whole tree.",
      "sub": "Body, feelings, people, purpose, hope.",
-     "say": "So getting sober is more than stopping. It's growing the whole tree. Your leaves: sleep, water, real food, and moving your body. Your bark: learning to feel a hard feeling and let it move through you. Your branches: people who are glad you're sober. Your roots and trunk: what holds you steady, and what you care about. And your fruit: things to look forward to."
+     "say": "So getting sober is more than stopping. It's growing the whole tree. Your leaves: sleep, water, real food, and moving your body. Your bark: learning to feel a hard feeling and let it move through you. Your branches: people who are glad you're sober. Your roots: what holds you steady. And your trunk and fruit, what you care about and things to look forward to, grow from that tending."
     },
     {
      "k": "big",

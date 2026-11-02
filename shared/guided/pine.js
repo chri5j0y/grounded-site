@@ -13,11 +13,19 @@
    tipSkip names the questions that never get a tip: any question the tree
    still marks with a flag, and the optional questions. No safety step (GWG
    BLD 887), and no help line is ever spoken.
-   Roots lines name no faith, so they fit Faith and Plain wording alike.
+   Roots enter lines say Spirit in Faith wording and what grounds you in Plain wording
+   (BLD 907, rootsLive); every other Roots line names no faith, so it fits both.
+   BLD 907: tend four, grow two. The check-in still visits the whole tree; the Growth Plan
+   walks the four parts you tend (Trunk and Fruit grow from the tending), and Trunk is meaning.
    Voice: the Pine narrator (the BLD 778 voice map). No line names a narrator.
    No dashes. Edit words here; keep them warm, brief, and forward. */
 (function () {
 window.GG_GUIDED = window.GG_GUIDED || {};
+// BLD 907 (F1): Roots says Spirit in Faith wording and what grounds you in Plain wording, read live from the tree
+// page (gwPlainOn, set up in BLD 907 C). A page without it hears the Faith lines.
+function rootsLive(faith, plain) {
+  return { get: function () { try { return typeof gwPlainOn === 'function' && gwPlainOn() ? plain : faith; } catch (e) { return faith; } }, enumerable: true, configurable: true };
+}
 const G = window.GG_GUIDED.pine = {
   voice: 'jenny',
   tipSkip: ['flag', 'sens'],
@@ -26,13 +34,13 @@ const G = window.GG_GUIDED.pine = {
       open: [
         'Welcome to Pine. We\'re really glad you\'re here.',
         'This is your first check-in, and it\'s all about you.',
-        'We\'ll ask about six parts of your life, one question at a time.',
+        'We\'ll ask about your whole tree, one question at a time.',
         'Think about the past two weeks, and pick the answer that fits best. Every answer helps your tree.',
         'Your answers stay on this device, just for you. Take your time.'
       ],
       enter: {
-        roots: ['First up, Roots: what keeps you steady.', 'We\'ll start at the Roots, with what holds you steady.'],
-        trunk: ['Next, your Trunk: what you care about and where you\'re headed.', 'On to your Trunk, your sense of purpose.'],
+        roots: [],
+        trunk: ['Next, your Trunk: what you care about and where you\'re headed.', 'On to your Trunk, your sense of meaning.'],
         bark: ['Now your Bark: stress, mistakes, and big feelings.', 'Next is Bark, how you handle what life throws at you.'],
         branches: ['Now Branches: your friends, your family, and the adults in your corner.', 'On to Branches, the people in your life.'],
         leaves: ['Now Leaves: Move, Rest, and Nourish.', 'Next is Leaves, how your body is doing.'],
@@ -58,13 +66,13 @@ const G = window.GG_GUIDED.pine = {
     full: {
       open: [
         ['Welcome back. Let\'s see how your tree is growing.', 'Good to see you. Time for a full check-in.'],
-        'Six parts, one question at a time. Think about the past two weeks.',
+        'Your whole tree, one question at a time. Think about the past two weeks.',
         'Pick what fits best. Every answer is welcome.',
         'Get comfy. This is your time.'
       ],
       enter: {
-        roots: ['Let\'s start with Roots, what keeps you steady.', 'Roots first: peace and what holds you up.'],
-        trunk: ['On to your Trunk, your purpose.', 'Next, your Trunk: what matters to you.'],
+        roots: [],
+        trunk: ['On to your Trunk, your meaning.', 'Next, your Trunk: what matters to you.'],
         bark: ['Now Bark, your mind and feelings.', 'On to Bark: stress, setbacks, and how you bounce back.'],
         branches: ['Now Branches, your people.', 'Next, Branches: friends, family, and your crew.'],
         leaves: ['Now Leaves: Move, Rest, and Nourish.', 'On to Leaves, your body.'],
@@ -154,8 +162,9 @@ const G = window.GG_GUIDED.pine = {
       open: [
         'Let\'s build your Growth Plan together.',
         'This is where your tree starts growing.',
-        'We\'ll go one part at a time, starting with your Growing Edge.',
-        'Pick one to three practices for each part you want to tend. Small is perfect.',
+        'We\'ll go through the four parts you tend, one at a time, starting with your Growing Edge.',
+        'Pick one to three practices for each. Small is perfect.',
+        'The Grounded Way works when you tend all four parts.',
         'Tap How on any card to see the steps.'
       ],
       part: {
@@ -163,11 +172,6 @@ const G = window.GG_GUIDED.pine = {
           'Roots hold you steady when life gets loud. A few quiet minutes go a long way.',
           'Strong roots help you bend and spring back. Let\'s give yours some attention.',
           'This season, your roots are ready to grow deeper.'
-        ],
-        trunk: [
-          'Your Trunk is purpose. A direction is enough, and small steps count.',
-          'What you care about matters. Let\'s give it a little time each week.',
-          'This is a great season to grow your sense of where you\'re headed.'
         ],
         bark: [
           'Bark is how you handle stress and big feelings. A few calm skills make every day easier.',
@@ -183,11 +187,6 @@ const G = window.GG_GUIDED.pine = {
           'Your body carries everything you do. Move, Rest, and Nourish help it feel its best.',
           'Small steps with sleep, movement, and meals add up fast.',
           'This season, let\'s give your body some steady tending.'
-        ],
-        fruit: [
-          'Hope is a skill you can grow. These practices help you see what\'s ahead.',
-          'Something to look forward to makes every week brighter.',
-          'This season, let\'s grow your hope a little each day.'
         ]
       },
       close: [
@@ -203,4 +202,11 @@ const G = window.GG_GUIDED.pine = {
 // The first check-in and the Quick Check-in share the full check-in's tips.
 G.kinds.start.tips = G.kinds.full.tips;
 G.kinds.quick.tips = G.kinds.full.tips;
+// BLD 907: the Roots enter lines, Faith or Plain (see rootsLive).
+Object.defineProperty(G.kinds.start.enter, 'roots', rootsLive(
+  ['First up, Roots: Spirit, what keeps you steady.', 'We\'ll start at the Roots, with your spirit and what holds you steady.'],
+  ['First up, Roots: what keeps you steady.', 'We\'ll start at the Roots, with what holds you steady.']));
+Object.defineProperty(G.kinds.full.enter, 'roots', rootsLive(
+  ['Let\'s start with Roots: Spirit, what keeps you steady.', 'Roots first: your spirit, and what holds you up.'],
+  ['Let\'s start with Roots, what keeps you steady.', 'Roots first: peace and what holds you up.']));
 })();
