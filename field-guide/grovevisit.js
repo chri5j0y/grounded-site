@@ -294,7 +294,7 @@ function resultsInner(forFam){
   if (none.length) h += `<p class="fw-soft">${esc(list3(none.map(p => p.name)))}: passed this time.</p>`;
   const t = talkList();
   if (t.length) h += `<h4>Things to Talk About</h4><p class="fw-soft">${esc(Wk(GW('results.talkIntro'), gk()) || 'You saw these differently. Talk them over gently, never about who saw it which way.')}</p><ul>${t.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
-  h += `<p class="gv-shape">${esc(Wk(GW('results.oneShape'), gk()) || 'No family is strong in all six. Every grove has its own shape.')}</p>`;
+  h += `<p class="gv-shape">${esc(Wk(GW('results.oneShape'), gk()) || 'No family is strong in every part. Every grove has its own shape.')}</p>`;
   if (c.quick && isFam()) h += `<p class="fw-soft">${esc(Wk(GW('results.quickLine'), gk()) || 'A quick check-in is a short look.')}</p>`;
   return h;
 }

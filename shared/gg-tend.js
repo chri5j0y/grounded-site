@@ -747,7 +747,7 @@
     check: function (safe) {
       var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.d.indexOf(id), before = health(s);
       if (i >= 0) x.d.splice(i, 1); else x.d.push(id);
-      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (C.onCheck) C.onCheck(true, id.split('|')[0], s, p, before); else if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('The sun is finding your tree again.'); } else if (C.onCheck) C.onCheck(false, id.split('|')[0], s);
+      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()), p4 = window.GGParts && GGParts.countTend ? GGParts.countTend(((s.days[today()] || {}).d || []).map(function (k) { return k.split('|')[0]; })) : p; if (C.onCheck) C.onCheck(true, id.split('|')[0], s, p, before); else if (p4 >= 4) toast('All four parts tended today.'); else if (before > 0) toast('The sun is finding your tree again.'); } else if (C.onCheck) C.onCheck(false, id.split('|')[0], s);
       renderWeek(); if (C.seasonExtra) renderSeason();
     },
     anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); publish(s); renderToday(); if (i < 0) { perk(); if (C.onCheck) C.onCheck(true, '', s, partsOn(s, today()), 0); } renderWeek(); },
