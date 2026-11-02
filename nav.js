@@ -94,7 +94,8 @@
   }
 
   var css = '' +
-    '.gn-tools-btn{font:inherit;background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;}' +
+    '.gn-tools-btn{font:inherit;background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}' +
+    '.site-menu a.gg-way-link{white-space:nowrap;}' + // BLD 907: longer labels stay on one line
     '.gn-tools-btn svg{width:12px;height:12px;transition:transform .2s ease;}' +
     '.gn-tools-btn[aria-expanded="true"] svg{transform:rotate(180deg);}' +
     '.gn-panel{position:fixed;z-index:9999;max-height:calc(100vh - 90px);overflow-y:auto;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
@@ -605,7 +606,9 @@
   // line with no sideways scroll: first the search word and tighter links, then the tightest spacing.
   var FIT = '@media (min-width:981px){html.gg-fit1 .topbar-inner{gap:6px!important;}html.gg-fit1 .ggs-btn{padding:8px 10px;}html.gg-fit1 .ggs-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}' +
     'html.gg-fit1 .site-menu a,html.gg-fit1 .site-menu .gn-tools-btn{padding-left:5px!important;padding-right:5px!important;letter-spacing:.4px!important;}' +
-    'html.gg-fit2 .topbar-inner{gap:4px!important;}html.gg-fit2 .site-menu a,html.gg-fit2 .site-menu .gn-tools-btn{padding-left:3px!important;padding-right:3px!important;letter-spacing:0!important;}html.gg-fit2 .site-menu a.gg-way-link{padding:7px 9px!important;margin:0 1px;}}';
+    'html.gg-fit2 .topbar-inner{gap:4px!important;}html.gg-fit2 .site-menu a,html.gg-fit2 .site-menu .gn-tools-btn{padding-left:3px!important;padding-right:3px!important;letter-spacing:0!important;}html.gg-fit2 .site-menu a.gg-way-link{padding:7px 9px!important;margin:0 1px;}' +
+    // BLD 907: one more step for the longer Begin The Grounded Way pill and Ceremonies and Support on the fullest headers
+    'html.gg-fit3 .site-menu a,html.gg-fit3 .site-menu .gn-tools-btn{font-size:13px!important;}html.gg-fit3 .topbar-inner .brand-name{font-size:.86em;}html.gg-fit3 .topbar-inner > .gg-theme,html.gg-fit3 .topbar-inner > .gg-now{margin:0;}}';
   function over() {
     var inner = document.querySelector('.topbar-inner'); if (!inner) return false;
     var r = document.documentElement.clientWidth + 1, kids = inner.querySelectorAll('.site-menu > *, .topbar-inner > *');
@@ -614,12 +617,12 @@
   }
   function fit() {
     var h = document.documentElement, btn = document.querySelector('.menu-btn');
-    h.classList.remove('gg-fit1', 'gg-fit2');
+    h.classList.remove('gg-fit1', 'gg-fit2', 'gg-fit3');
     if (window.innerWidth < 981 || (btn && btn.offsetParent)) return;
     if (!document.getElementById('gg-fit-css')) { var c = document.createElement('style'); c.id = 'gg-fit-css'; c.textContent = FIT; document.head.appendChild(c); }
     if (!over()) return;
     var now = document.querySelector('.topbar-inner > .gg-now:not(.gg-now-ic)'); if (now) { now.classList.add('gg-now-ic'); if (!over()) return; }
-    h.classList.add('gg-fit1'); if (over()) h.classList.add('gg-fit2');
+    h.classList.add('gg-fit1'); if (over()) { h.classList.add('gg-fit2'); if (over()) h.classList.add('gg-fit3'); }
   }
   var ft = 0; function fitSoon() { clearTimeout(ft); ft = setTimeout(fit, 60); }
   window.addEventListener('load', fitSoon); window.addEventListener('resize', fitSoon);
