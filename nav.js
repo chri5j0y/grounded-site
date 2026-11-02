@@ -24,34 +24,42 @@
     speak: '<svg viewBox="0 0 24 24" fill="none" stroke="#6E4A14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>',
     lock: '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
   };
+  // BLD 907 The One Grounded Way: the menu follows the one path. The Grounded Way first, with its age trees, seasons,
+  // and the Grove inside it; then Grounded Recipes and the libraries; then the helpers and the Field Guide.
+  // Ceremonies and Support has its own menu beside this one.
+  var WAYIC = '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">';
   var GN_GROUPS = [
-    { name: 'The Trees', items: [
+    { name: 'The Grounded Way', items: [
+      { id: 'home', title: 'Begin The Grounded Way', desc: 'Make your profile, meet your tree, and tend your four, a few minutes a day', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
+      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Wake up, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: ic.tree, bg: '#F1E6CC' },
+      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: ic.leaf, bg: '#E3EFD6' }
+    ] },
+    { name: 'Age Trees', items: [
       { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4' },
       { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/aspen/', icon: ic.aspen, bg: '#DDF0EC' },
       { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', href: HOME + '/pine/', icon: ic.pine, bg: '#E2EEDB' },
       { id: 'birch', title: 'Birch', desc: 'For ages 18 to 26', href: HOME + '/birch/', icon: ic.birch, bg: '#F3EED9' },
       { id: 'oak', title: 'Oak', desc: 'For ages 26 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
-      { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
-      { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
+      { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' }
     ] },
-    { name: 'Together', items: [
-      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
-      { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' }
+    { name: 'Seasons', items: [
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' },
+      { id: 'heartwood', title: 'Heartwood', desc: 'For marriage: the couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' },
+      { id: 'willow', title: 'Willow', desc: 'For the last season of life, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' },
+      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/tools.html#when-life-changes', icon: ic.door, bg: '#F1E6CC', color: '#6E4A14' }
     ] },
-    // Healthy Living (BLD 868): The Grounded Way (with Tending) and Living Sober, matching the Tools page. Grounded Recipes joins in BLD 875.
-    { name: 'Healthy Living', items: [
-      { id: 'way', title: 'The Grounded Way', desc: 'The app: Today, Week, Grow, and Library, with your plan, your tree, and Tending in one private place', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">', bg: '#E2EEDB' },
+    { name: 'Growing Together', items: [
+      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+    ] },
+    { name: 'Grounded Recipes and Libraries', items: [
       { id: 'recipes', title: 'Grounded Recipes', desc: 'Every meal and the big days, sized for your table, with ingredients, steps, and a calm voice to guide you', href: HOME + '/recipes/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-recipes.webp?v=b875" alt="" width="42" height="42">', bg: '#F3E5CC' },
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' }
+      { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
+      { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
     ] },
     { name: 'When Someone Dies', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
       { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.obituary, bg: '#F1E6CC' },
       { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.eulogy, bg: '#F1E6CC' }
-    ] },
-    { name: 'Libraries', items: [
-      { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
-      { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
       { id: 'field', title: 'Field Guide', desc: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide', href: HOME + '/the-field-guide.html', icon: ic.fieldguide, bg: '#EDE7DA' }
@@ -81,6 +89,7 @@
     if (p.indexOf('/the-grounded-way') === 0) return 'way'; // GWG BLD 866
     if (p.indexOf('/recipes') === 0) return 'recipes'; // GWG BLD 875
     if (p.indexOf('/home/') === 0 || p === '/home') return 'home';
+    if (p.indexOf('/try-one-practice') === 0) return 'try'; // BLD 907
     return '';
   }
 
@@ -137,7 +146,7 @@
     return '@media (prefers-color-scheme: dark){' + scope(':root:not([data-theme="light"])') + '}' + scope(':root[data-theme="dark"]');
   }
 
-  /* The Services menu (GWG BLD 772): The Grounded Marriage one tap away, then the six families of services.
+  /* The Ceremonies and Support menu (BLD 907, formerly Services, GWG BLD 772): The Grounded Marriage one tap away, then the six families of services.
      Each family is a picture card that opens its own page (BLD 817, services-<family>.html); See all services stays at the foot.
      It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_FEATURED = { title: 'The Grounded Marriage', desc: 'Premarital sessions with Chris and Kayti, with Heartwood', href: HOME + '/the-grounded-marriage.html', bg: '#E3EAF2',
@@ -176,7 +185,7 @@
     return '<div class="gn-group"><div class="gn-h">Featured Program</div>' +
       '<a class="gn-tool' + (fh ? ' gn-here' : '') + '" href="' + f.href + '"' + (fh ? ' aria-current="page"' : '') + '><span class="gn-ic" style="background:' + f.bg + '">' + f.icon + '</span>' +
       '<span><b>' + f.title + (fh ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + f.desc + '</small></span></a></div>' +
-      '<div class="gn-group"><div class="gn-h">Services</div>' +
+      '<div class="gn-group"><div class="gn-h">Ceremonies and Support</div>' +
       SVC_FAMILIES.map(function (x) {
         var href = HOME + '/services-' + x[2] + '.html', h = onPage(href);
         return '<a class="gn-tool' + (h ? ' gn-here' : '') + '" href="' + href + '"' + (h ? ' aria-current="page"' : '') + '><span class="gn-ic"><img class="gn-mark" src="' + HOME + '/shared/cards/fam-' + x[2] + '.webp" alt="" width="42" height="42"></span>' +
@@ -305,10 +314,10 @@
     if (!menu) return;
     var links = Array.prototype.slice.call(menu.querySelectorAll('a'));
     var link = links.filter(function (a) { return /#tools$/.test(a.getAttribute('href') || '') || /^\s*tools\s*$/i.test(a.textContent); })[0];
-    var svc = links.filter(function (a) { return /^\s*services\s*$/i.test(a.textContent); })[0];
+    var svc = links.filter(function (a) { return /^\s*(services|ceremonies and support)\s*$/i.test(a.textContent); })[0];
     if (!link && !svc) return;
     var st = document.createElement('style'); st.textContent = css + themed(GN_DARK); document.head.appendChild(st);
-    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Services', aria: 'Grounded services', body: svcBody, all: ['See all services', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
+    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Ceremonies and Support', aria: 'Ceremonies and Support', body: svcBody, all: ['See all Ceremonies and Support', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
     if (link) dropdown(menu, link, { id: 'gn-panel', label: 'Tools', aria: 'Grounded tools', body: toolsBody, all: ['See all tools', HOME + '/tools.html'] });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
@@ -567,13 +576,13 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { wait(0); }); else wait(0);
 })();
 
-/* BLD 870: The Grounded Way in the main menu bar on every page, right after Home, as a gold pill (a plain row in the phone menu). */
+/* BLD 870: The Grounded Way in the main menu bar (BLD 907: it reads Begin The Grounded Way) on every page, right after Home, as a gold pill (a plain row in the phone menu). */
 (function () {
   function add() {
     var menu = document.getElementById('site-menu') || document.querySelector('.site-menu');
     if (!menu || menu.querySelector('.gg-way-link')) return;
     var p = location.pathname, here = /^\/home\//.test(p) || /^\/the-grounded-way/.test(p);
-    var a = document.createElement('a'); a.href = '/home/'; a.className = 'gg-way-link' + (here ? ' current' : ''); a.textContent = 'The Grounded Way';
+    var a = document.createElement('a'); a.href = '/home/'; a.className = 'gg-way-link' + (here ? ' current' : ''); a.textContent = 'Begin The Grounded Way'; // BLD 907
     if (here) a.setAttribute('aria-current', 'page');
     var first = menu.querySelector('a'); if (first && /index\.html$|\/$/.test(first.getAttribute('href') || '') && /home/i.test(first.textContent)) { first.classList.add('gg-home-link'); first.after(a); } else menu.insertBefore(a, menu.firstChild);
     if (here) menu.querySelectorAll('a.current').forEach(function (x) { if (x !== a) { x.classList.remove('current'); x.removeAttribute('aria-current'); } });

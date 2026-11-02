@@ -1958,7 +1958,7 @@
   ];
   var WP_SP = {}; WP_SPIRIT.forEach(function (x) { WP_SP[x.id] = x; });
   /* The tree's own practice record where its library has one, so a spirit item and the tree's practice are one record. */
-  var SP_REC = { gratitude: 'fruit|Three Good Things', kindness: 'branches|Kindness', nature: 'roots|A Walk Among Trees', quiet: 'bark|Quiet Reflection', pause: 'roots|Sacred Pause', prayer: 'roots|Prayer' };
+  var SP_REC = { gratitude: 'bark|Three Good Things', kindness: 'branches|Kindness', nature: 'roots|A Walk Among Trees', quiet: 'bark|Quiet Reflection', pause: 'roots|Sacred Pause', prayer: 'roots|Prayer' };
   function spiritPid(id, tree) { return id === 'nature' && tree === 'pine' ? 'roots|Time Outside' : SP_REC[id]; }
   var FLOW_NAME = { daily: 'Flow', yoga: 'Yoga', taichi: 'Balance', stretch: 'Stretch' };
   /* BLD 894 (Chris, October 29, 2026: "i want these 6 categories exactly.. not the 3"): Body is one choice of six, any mix. */

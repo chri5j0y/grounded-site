@@ -19,23 +19,22 @@ const PERSON = {
     ['wr-rite', `A Rite From Your Tradition`, `Ask for the sacrament, blessing, or ritual your faith offers. Willow helps call the right person.`, `Varies`, 'wisdom'],
     ['wr-honest', `Honest Prayer`, `Tell God, or the silence, what's really true, even if it's angry. The Psalms do this.`, `2 min`, 'growing'],
     ['wr-bless', `Receive a Blessing`, `Ask a chaplain, clergy, or family member to bless you, in words that fit your faith, or wherever you are in-between.`, `2 min`, 'wisdom'],
-    ['wr-awe', `Awe at the Window`, `Notice something vast or beautiful: the sky, a tree, a grandchild's hand. Stay with it.`, `3 min`, 'growing']
-  ],
-  trunk: [
-    ['wt-story', `One Story`, `Tell one story you want remembered. A helper writes or records it into Cuttings.`, `5 min`, 'well'],
-    ['wt-learned', `Three Things I Learned`, `Say three things life taught you, for the people you love.`, `5 min`, 'well'],
-    ['wt-photos', `Photo Time`, `Look at old photos with someone. Let the stories come.`, `10 min`, 'growing'],
+    ['wr-awe', `Awe at the Window`, `Notice something vast or beautiful: the sky, a tree, a grandchild's hand. Stay with it.`, `3 min`, 'growing'],
     ['wt-gave', `What I Gave`, `Name what you gave: to your kids, your work, your town, your faith.`, `3 min`, 'well'],
-    ['wt-facing', `How I'm Facing This`, `Say how you want to carry this time. "With humor." "With my eyes open." "Holding my wife's hand."`, `2 min`, 'well'],
-    ['wt-give', `Something Still to Give`, `Choose one gift: a blessing, a recipe, a piece of advice, a keepsake for someone.`, `5 min`, 'wisdom']
+    ['wf-welcome', `Picture the Welcome`, `In your own faith, picture what comes after. Or picture the people and the earth you return to.`, `3 min`, 'wisdom']
   ],
+  trunk: [],
   bark: [
     ['wb-exhale', `Long Out-Breath`, `Breathe in gently. Let the breath out slower and longer. Never force it. Stop if breathing feels hard.`, `1 to 3 min`, 'growing'],
     ['wb-name', `Say It Out Loud`, `Name the feeling to someone: "I'm scared." Naming a feeling helps settle it.`, `1 min`, 'growing'],
     ['wb-54321', `5-4-3-2-1`, `Five things you see, four you feel, three you hear, two you smell, one you taste. (Grounded in Coffee)`, `2 min`, 'wisdom'],
     ['wb-kind', `Kindness for Me`, `Say slowly: "May I be at peace. May I be gentle with myself. May I be held."`, `2 min`, 'well'],
     ['wb-settle', `Settle the Body`, `Let attention rest, part by part, from feet to head, wherever it's comfortable.`, `3 min`, 'well'],
-    ['wb-handoff', `Hand Off a Worry`, `Give one practical worry to someone else to carry. Tell the team about the rest.`, `2 min`, 'wisdom']
+    ['wb-handoff', `Hand Off a Worry`, `Give one practical worry to someone else to carry. Tell the team about the rest.`, `2 min`, 'wisdom'],
+    ['wt-facing', `How I'm Facing This`, `Say how you want to carry this time. "With humor." "With my eyes open." "Holding my wife's hand."`, `2 min`, 'well'],
+    ['wf-hope', `What I'm Hoping for Today`, `Say one hope for today, however small.`, `1 min`, 'growing'],
+    ['wf-good', `Plan One Good Thing`, `Plan one good thing for tomorrow.`, `2 min`, 'wisdom'],
+    ['wf-talk', `Talk About Dying, Once`, `Say out loud what you think and feel about dying, to someone who can hear it. Asking about it doesn't cause harm.`, `10 min`, 'growing']
   ],
   branches: [
     ['wbr-four', `One of the Four Things`, `Pick one person and one of the four: please forgive me, I forgive you, thank you, I love you. Say it, write it, or record it.`, `5 min`, 'wisdom'],
@@ -43,7 +42,13 @@ const PERSON = {
     ['wbr-forgive', `One Step Toward Forgiveness`, `Name the hurt. Decide if you want to forgive. Forgiving is not the same as reconciling, and it's never owed to someone unsafe.`, `5 min`, 'growing'],
     ['wbr-thanks', `Thank-You List`, `Name the people you're grateful for, one at a time. A helper writes them down.`, `3 min`, 'growing'],
     ['wbr-receive', `Let Them Help`, `When someone helps, say "Thank you for this." Receiving care is part of love too.`, `1 min`, 'wisdom'],
-    ['wbr-visit', `The Call or Visit I Want`, `Name someone you'd like to see or hear. A helper makes it happen.`, `Varies`, 'wisdom']
+    ['wbr-visit', `The Call or Visit I Want`, `Name someone you'd like to see or hear. A helper makes it happen.`, `Varies`, 'wisdom'],
+    ['wt-story', `One Story`, `Tell one story you want remembered. A helper writes or records it into Cuttings.`, `5 min`, 'well'],
+    ['wt-learned', `Three Things I Learned`, `Say three things life taught you, for the people you love.`, `5 min`, 'well'],
+    ['wt-photos', `Photo Time`, `Look at old photos with someone. Let the stories come.`, `10 min`, 'growing'],
+    ['wt-give', `Something Still to Give`, `Choose one gift: a blessing, a recipe, a piece of advice, a keepsake for someone.`, `5 min`, 'wisdom'],
+    ['wf-matters', `What Matters to Me`, `Fill in the What Matters to Me sheet with someone. Make it official with an Honoring Choices Minnesota directive.`, `15 min`, 'well'],
+    ['wf-giveaway', `Give Something Away`, `Give a meaningful object to someone while you can watch them receive it.`, `5 min`, 'wisdom']
   ],
   leaves: [
     ['wl-music', `Music I Love`, `Play favorite songs or hymns. Make a playlist for the last days too.`, `10 min`, 'growing'],
@@ -53,14 +58,7 @@ const PERSON = {
     ['wl-light', `Air and Light`, `Window open, curtains back, sun on your hands.`, `5 min`, 'growing'],
     ['wl-rest', `Rest Without Guilt`, `Sleep is allowed. Rest is part of comfort.`, `Any`, 'wisdom']
   ],
-  fruit: [
-    ['wf-hope', `What I'm Hoping for Today`, `Say one hope for today, however small.`, `1 min`, 'growing'],
-    ['wf-matters', `What Matters to Me`, `Fill in the What Matters to Me sheet with someone. Make it official with an Honoring Choices Minnesota directive.`, `15 min`, 'well'],
-    ['wf-good', `Plan One Good Thing`, `Plan one good thing for tomorrow.`, `2 min`, 'wisdom'],
-    ['wf-welcome', `Picture the Welcome`, `In your own faith, picture what comes after. Or picture the people and the earth you return to.`, `3 min`, 'wisdom'],
-    ['wf-giveaway', `Give Something Away`, `Give a meaningful object to someone while you can watch them receive it.`, `5 min`, 'wisdom'],
-    ['wf-talk', `Talk About Dying, Once`, `Say out loud what you think and feel about dying, to someone who can hear it. Asking about it doesn't cause harm.`, `10 min`, 'growing']
-  ]
+  fruit: []
 };
 
 const BEDSIDE = [
