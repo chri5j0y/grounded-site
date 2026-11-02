@@ -174,7 +174,8 @@
     });
     return x;
   }
-  window.GGParts = { id: pkId, tag: pkTag, fix: pkFix, name: function (n) { return Object.prototype.hasOwnProperty.call(PK_NAME, n) ? PK_NAME[n] : n; } };
+  // One object with shared/gg-parts.js (GWG BLD 907): these helpers join the parts model, whichever file loads first.
+  window.GGParts = Object.assign(window.GGParts || {}, { id: pkId, tag: pkTag, fix: pkFix, name: function (n) { return Object.prototype.hasOwnProperty.call(PK_NAME, n) ? PK_NAME[n] : n; } });
 
   /* ---------------- LINKS ---------------- */
   function toolOf(url) {
