@@ -1834,8 +1834,9 @@
         : { id: 'quiet', name: 'Grounded Meditation', count: '', plain: 'Today\'s meditation', line: 'Today\'s meditation, Morning Quiet, and Get Grounded Now: calm in a minute or two.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
     ].filter(Boolean);
   }
+  // BLD 911 (Chris: "1"): a small Grounded over the short name on the Library shelves; the full name everywhere else (and in search).
   function shelfHtml(s) {
-    return '<button type="button" class="hm-shelf ' + s.cls + '" data-hm-shelf="' + s.id + '"><img class="bg" src="' + s.art + '" alt="" loading="lazy" decoding="async"><span class="ct" data-hm-count="' + s.id + '">' + esc(s.count || s.plain) + '</span><span class="nm">' + esc(s.name) + '</span><span class="ln">' + esc(s.line) + '</span></button>';
+    return '<button type="button" class="hm-shelf ' + s.cls + '" data-hm-shelf="' + s.id + '"><img class="bg" src="' + s.art + '" alt="" loading="lazy" decoding="async"><span class="ct" data-hm-count="' + s.id + '">' + esc(s.count || s.plain) + '</span>' + (/^Grounded /.test(s.name) ? '<span class="nm"><small class="br">Grounded</small>' + esc(s.name.slice(9)) + '</span>' : '<span class="nm">' + esc(s.name) + '</span>') + '<span class="ln">' + esc(s.line) + '</span></button>';
   }
   function libraryHtml() {
     var more = [['/get-grounded-now.html', HERO + 'page-get-grounded-now-narrow.webp', 'Get Grounded Now', 'Calm in a minute or two'], ['/readings.html', HERO + 'page-readings-narrow.webp', 'Readings Library', 'Prayers, poems, and blessings'], ['/stories.html', IMG + 'tend-fruit.webp', 'Grounded Stories', member() ? 'Every story, read aloud' : 'Stories from the bedside and the road'], ['/library/', HERO + 'library-phone.webp', 'Book Library', 'Books and studies we draw from'],

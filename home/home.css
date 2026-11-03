@@ -1356,3 +1356,7 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-grp .hm-badge.hm-pb,.hm-tg .hm-badge.hm-pb{width:46px;height:46px;border-radius:14px;}
 .hm-pv-hd .hm-badge.hm-pb{width:60px;height:60px;}
 .hm-spc img.hm-sppic{width:62px;height:62px;border-radius:50%;object-fit:cover;}
+/* BLD 911: a small Grounded over the short name on a Library shelf */
+.hm-shelf .nm .br{display:block;font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;line-height:1.2;opacity:.85;margin-bottom:2px;}
+/* BLD 911: a small Grounded over the short name on a Library shelf */
+.hm-shelf .nm .br{display:block;font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;line-height:1.2;opacity:.85;margin-bottom:2px;}
