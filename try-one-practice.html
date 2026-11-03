@@ -26,13 +26,18 @@
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
 <link rel="stylesheet" href="style.css?v=b817">
 <style>
-/* Try One Practice: Tend Four in Four (GWG BLD 907). Four steps, one minute each, written, with a simple timer. Nothing is saved. */
+/* Try One Practice: Tend Four in Four (GWG BLD 907). Four steps, one minute each, written, with a simple timer. Nothing is saved.
+   BLD 908: the guided video plays first, in the shared player (shared/tend-four.js); the written steps and timer stay below as the text version. */
 :root{--t4-ring:#E6DCC8;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--t4-ring:#3A322A;}}
 :root[data-theme="dark"]{--t4-ring:#3A322A;}
 .t4-hero{min-height:clamp(340px,30vw,480px);}
 .t4-hero .pg-sub{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6);max-width:680px;margin:14px auto 0;font-size:clamp(18px,1.8vw,22px);}
 .t4{padding:44px 0 56px;}
+.t4-video{margin:0 0 30px;}
+.t4-video .ggl-player{margin-top:0;}
+.t4-video-note{margin:12px 0 0;color:var(--ink-soft);font-size:16px;}
+.t4-read{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,36px);line-height:1.12;margin:0 0 10px;color:var(--ink);}
 .t4-wrap{max-width:860px;}
 .t4-intro{font-size:clamp(18px,1.6vw,20px);color:var(--ink-soft);margin:0 0 22px;}
 .t4-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
@@ -82,13 +87,18 @@
 </section>
 <section class="t4" aria-labelledby="t4-title">
   <div class="wrap t4-wrap">
-    <h2 id="t4-title" class="sr-only">The four steps</h2>
+    <h2 id="t4-title" class="sr-only">Tend Four in Four, the guided video</h2>
+    <div class="t4-video">
+      <div id="t4-player" class="t4-player" aria-label="Video: Tend Four in Four, about 5 minutes"></div>
+      <p class="t4-video-note">Press Play and follow along: one minute each, with a voice to guide you. The same four steps are written below with a gentle timer, for anyone who would rather read.</p>
+    </div>
+    <h2 class="t4-read">The Four Steps, Written</h2>
     <p class="t4-intro">Here is The Grounded Way in four minutes. Read each step, then press Begin. A gentle timer gives you one minute for each, and you can move on whenever you are ready.</p>
     <ol class="t4-steps" id="t4-steps">
       <li class="t4-step" data-i="0" style="--k:#7A3FA8"><b>Bark: Mind</b><h3>Breathe</h3><p>Sit tall and let your shoulders drop. Breathe in slowly through your nose, then let a long, easy breath out. Keep that rhythm for one minute.</p></li>
       <li class="t4-step" data-i="1" style="--k:#4E7D4A"><b>Leaves: Body</b><h3>Stand and Stretch</h3><p>Stand up and reach your arms toward the sky. Roll your shoulders, turn gently side to side, and stretch in whatever way feels good, seated if you like.</p></li>
       <li class="t4-step" data-i="2" style="--k:#7A4E2D"><b>Roots: Spirit</b><h3>A Moment of Gratitude</h3><p>Name one thing you are grateful for today and let it settle in. Offer a quiet prayer or simply sit with the gift, in your own way.</p></li>
-      <li class="t4-step" data-i="3" style="--k:#3F6F94"><b>Branches: Relationships</b><h3>Reach Out</h3><p>Text someone you love. A simple line is plenty: I&rsquo;m thinking of you today, and I&rsquo;m grateful for you.</p></li>
+      <li class="t4-step" data-i="3" style="--k:#3F6F94"><b>Branches: Relationships</b><h3>Reach Out</h3><p>Think of one person you love and send them a kind word, face to face if they are close by, or with a call or a message. A simple line is plenty: I&rsquo;m thinking of you today, and I&rsquo;m grateful for you.</p></li>
     </ol>
 
     <div class="t4-run" id="t4-run" aria-live="polite">
@@ -122,6 +132,9 @@
 </div></footer>
 <script src="site.js?v=b779n"></script>
 <script src="nav.js?v=b908" defer></script>
+<script src="/read.js?v=b813" defer></script>
+<script src="/shared/gg-learn.js?v=b908m" defer></script>
+<script src="/shared/tend-four.js?v=b908" defer></script>
 <script>
 /* Tend Four in Four (BLD 907): a simple written timer. Nothing is saved or sent anywhere. */
 (function () {
