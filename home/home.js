@@ -992,7 +992,7 @@
     });
   }
   function tendSoonHtml() {
-    return '<div class="hm-card hm-p-leaves"><div class="hm-k">Tending</div><h2 class="hm-h2">Tending Opens Here</h2>' +
+    return '<div class="hm-card hm-p-leaves"><div class="hm-hd">' + pb(IMG + 'tend-body.webp') + '<div style="min-width:0"><div class="hm-k">Tending</div><h2 class="hm-h2">Tending Opens Here</h2></div></div>' +
       '<p class="hm-sub" style="margin-top:6px">Food for your goal, movement for every level, quiet, and your own numbers, kept on this device inside your locked profile. Tending is getting ready for The Grounded Way. Your tree, check-ins, and practices are all here today.</p></div>';
   }
   /* Tending asks the Home to redraw (C.render) or to show itself (C.go). */
@@ -1690,7 +1690,7 @@
     }).join('');
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
     var nw = hasFn('news') ? hCall('news') : null;
-    var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-k">' + esc(nw.title) + '</div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
+    var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-hd">' + pb(IMG + 'growth-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">' + esc(nw.title) + '</div></div></div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
     return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div></div></div>';
   }
 
@@ -1929,7 +1929,7 @@
     if (sub === 'settings') {
       var on = {}; h.parts.forEach(function (k) { on[k] = true; });
       // BLD 907: Your Four, as set up one area at a time, with Change My Setup; Labs and Numbers and Living Sober stay as switches.
-      b.innerHTML = '<article class="hm-card hm-p-roots hm-sufour"><div class="hm-k">Choose What You Use</div><h3 class="hm-h3">Your Four</h3><p class="hm-sub" style="margin:6px 0 12px">' + esc(promise()) + ' Each part keeps at least one practice, by the Grounded Plan or your own.</p>' + suSummaryHtml() +
+      b.innerHTML = '<article class="hm-card hm-p-roots hm-sufour"><div class="hm-hd">' + pb(treeArt(S.tree)) + '<div style="min-width:0"><div class="hm-k">Choose What You Use</div><h3 class="hm-h3">Your Four</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">' + esc(promise()) + ' Each part keeps at least one practice, by the Grounded Plan or your own.</p>' + suSummaryHtml() +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-setup="roots">' + I('sprout') + 'Change My Setup</button></div>' +
         '<h4 class="hm-label">Also</h4>' + extrasHtml(on, 'data-hm-setpart') +
         (h.hidden.tend ? '<div class="hm-quiet" style="margin-top:12px"><button type="button" data-hm="showtend">Show the Start Tending card again</button></div>' : '') + '</article>' +
@@ -2232,7 +2232,7 @@
   }
   function wayNoteHtml() {
     var w = wayRec(); if (!w.note) return '';
-    return '<article class="hm-card hm-p-leaves hm-waynote" role="status"><div class="hm-k">Week 3 · Your Plan Grows</div><h3 class="hm-h3">Spirit and practices join your day</h3>' +
+    return '<article class="hm-card hm-p-leaves hm-waynote" role="status"><div class="hm-hd">' + pb(IMG + 'way-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">Week 3 · Your Plan Grows</div><h3 class="hm-h3">Spirit and practices join your day</h3></div></div>' +
       '<p class="hm-sub">Two good weeks of movement, meditation, and dinner. Today the rest of your plan joins in: your spirit choices and the practices for your Growing Edges.</p>' +
       '<div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-wpnote="1">Got It</button></div></article>';
   }
@@ -3271,7 +3271,8 @@
   function memberGrowHtml() {
     if (isKid(S.p)) return '';
     if (!member()) return inviteHtml('plan');
-    var card = function (cls, ey, title, body, id) { return '<article class="hm-card hm-gcard ' + cls + '" id="' + id + '"><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3>' + body + '</article>'; };
+    var ART_M = { 'hm-phist': IMG + 'tending-sq.webp', 'hm-custom': IMG + 'way-plan-sq.webp', 'hm-remind': IMG + 'quiet-morning-sq.webp' };
+    var card = function (cls, ey, title, body, id) { return '<article class="hm-card hm-gcard ' + cls + '" id="' + id + '"><div class="hm-hd">' + pb(ART_M[id] || IMG + 'growth-plan-sq.webp') + '<div><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3></div></div>' + body + '</article>'; };
     return card('hm-p-leaves hm-mcard', 'Membership', 'Practice History', historyHtml(), 'hm-phist') +
       card('hm-p-roots hm-mcard', 'Membership', 'My Custom Practices', customHtml(), 'hm-custom') +
       card('hm-p-branches hm-mcard', 'Membership', 'Reminders', '<p class="hm-sub">A calendar file with each daily and weekly practice at its time of day, with a gentle alert five minutes before. Save it once, and your phone keeps the rhythm.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-remind="1">' + I('clock') + 'Save My Reminders</button></div>', 'hm-remind');
@@ -3430,13 +3431,13 @@
     if (isKid(S.p)) return '';
     var x = window.GG_START_VIDEOS ? dailyMed() : null;
     if (!window.GG_START_VIDEOS) load(START_JS).then(function () { var el = document.getElementById('hm-dmed'); if (el && dailyMed()) el.outerHTML = dailyMedHtml(); });
-    return dailySpiritHtml() + '<article class="hm-card hm-p-bark hm-dmed" id="hm-dmed"><div class="hm-k">Today\'s Meditation</div><h3 class="hm-h3">' + esc(x ? x.title : 'A Few Quiet Minutes') + '</h3><p class="hm-sub">' + esc(x ? (x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '') : 'A guided meditation for today, with a calm voice.') + '</p>' +
+    return dailySpiritHtml() + '<article class="hm-card hm-p-bark hm-dmed" id="hm-dmed"><div class="hm-hd">' + pb(IMG + 'quiet-meditation-sq.webp') + '<div style="min-width:0"><div class="hm-k">Today\'s Meditation</div><h3 class="hm-h3">' + esc(x ? x.title : 'A Few Quiet Minutes') + '</h3></div></div><p class="hm-sub">' + esc(x ? (x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '') : 'A guided meditation for today, with a calm voice.') + '</p>' +
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="1">' + I('play') + 'Begin</button></div></article>';
   }
   /* Core Spirit (Start): the day's Spirit session when shared/start-videos.js carries a spirit section; never in Plain wording. */
   function dailySpiritHtml() {
     var x = window.GG_START_VIDEOS && !plainNow() ? dailyMed('spirit') : null; if (!x) return '';
-    return '<article class="hm-card hm-p-roots hm-dmed"><div class="hm-k">Today\'s Spirit Practice</div><h3 class="hm-h3">' + esc(x.title) + '</h3><p class="hm-sub">' + esc((x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '')) + '</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="spirit">' + I('play') + 'Begin</button></div></article>';
+    return '<article class="hm-card hm-p-roots hm-dmed"><div class="hm-hd">' + pb(IMG + 'tend-spirit.webp') + '<div style="min-width:0"><div class="hm-k">Today\'s Spirit Practice</div><h3 class="hm-h3">' + esc(x.title) + '</h3></div></div><p class="hm-sub">' + esc((x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '')) + '</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="spirit">' + I('play') + 'Begin</button></div></article>';
   }
   function openDailyMed(sec) {
     load(START_JS).then(function () {
@@ -3576,7 +3577,7 @@
   }
   function checkinTabHtml() {
     var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck);
-    var trends = member() ? '<article class="hm-card hm-gcard hm-p-bark hm-mcard" id="hm-trend"><div class="hm-time">Membership</div><h3 class="hm-h3">Trends</h3>' + trendsHtml() + '</article>' : '';
+    var trends = member() ? '<article class="hm-card hm-gcard hm-p-bark hm-mcard" id="hm-trend"><div class="hm-hd">' + pb(IMG + 'progress-sq.webp') + '<div><div class="hm-time">Membership</div><h3 class="hm-h3">Trends</h3></div></div>' + trendsHtml() + '</article>' : '';
     return '<div class="hm-grow"><div class="hm-gcol hm-col">' + treeCardHtml(ck, ed, t) + '</div><div class="hm-gcol hm-col">' + seasonCardHtml() + trends +
       '<p class="hm-sub hm-cknote">The questions come from your ' + esc(t.n) + '. Every person on this device has a tree of their own, with questions made for their age.</p></div></div>';
   }
