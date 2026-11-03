@@ -3361,7 +3361,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b908';
+  var LEARN_JS = '/shared/gg-learn.js?v=b908m';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -3386,7 +3386,7 @@
   /* One lesson in the shared player (STD's call: a one-lesson support track). */
   function playLesson(host, lesson, onDone) {
     var tr = { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] };
-    try { GGLearn.player(host, { app: ROOM_TREES.test(S.tree) ? S.tree : 'site', lesson: lesson, track: tr, tracks: [tr], voice: lesson.voice || 'brian', done: {}, onDone: onDone || null }); }
+    try { GGLearn.player(host, { app: ROOM_TREES.test(S.tree) ? S.tree : 'site', lesson: lesson, track: tr, tracks: [tr], voice: lesson.voice || 'brian', clip: window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: {}, onDone: onDone || null }); }
     catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
   }
   /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */

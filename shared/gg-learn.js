@@ -832,7 +832,7 @@
     // A lesson with recorded voices keeps only the Speed choice: the device voice menu steps aside.
     var rec = l.audio ? '' : recVoice(cfg);
     // Locked clips (BLD 781) when the lesson has no public recording and the caller gave its library's audio key.
-    var SK = l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
+    var SK = !l.audio && typeof cfg.clip === 'function' && window.Audio ? { voice: rec || l.voice || cfg.voice || 'brian', clip: cfg.clip } : l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
     if (recd) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
@@ -1122,7 +1122,7 @@
     }
     // Locked clips (BLD 781): each sentence is fetched and unlocked once per player, kept as a Blob URL until the player stops.
     P.clips = {};
-    function sealedGet(text) { if (!P.clips[text]) P.clips[text] = sealedClip(SK.key, SK.voice, text).then(null, function () { return null; }); return P.clips[text]; }
+    function sealedGet(text) { if (!P.clips[text]) P.clips[text] = (SK.clip ? Promise.resolve().then(function () { return SK.clip(SK.voice, text); }) : sealedClip(SK.key, SK.voice, text)).then(null, function () { return null; }); return P.clips[text]; }
     // While one sentence plays, the next one (or the next scene's first, or a question's reply) is fetched and unlocked.
     function sealedAhead(i) {
       var nx = P.B[i + 1];
@@ -1147,7 +1147,7 @@
       });
       return true;
     }
-    function sealedFree() { var C = P.clips; P.clips = {}; Object.keys(C).forEach(function (k) { C[k].then(function (u) { if (u) try { URL.revokeObjectURL(u); } catch (e) {} }); }); }
+    function sealedFree() { if (SK && SK.clip) { P.clips = {}; return; } var C = P.clips; P.clips = {}; Object.keys(C).forEach(function (k) { C[k].then(function (u) { if (u) try { URL.revokeObjectURL(u); } catch (e) {} }); }); }
     // The first tap plays a moment of silence on the one audio element, so it may play the clips that follow.
     function unlock() {
       if (!SK || P.unl || !window.Audio) return; P.unl = true;
