@@ -50,6 +50,24 @@
 .card.tool .tool-tag{margin:2px 0 8px;font-family:'Cormorant Garamond',Georgia,serif;font-size:21px;font-weight:700;line-height:1.25;color:var(--ink)}
 @media (max-width:640px){.tool-mark{width:120px;height:120px;border-radius:22px}}
 .card.tool.ff-tool{grid-template-columns:1fr;}
+/* BLD 911: the short picture index */
+.tx-group{margin:0 0 30px;}
+.tx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.tx-card{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:inherit;text-decoration:none;min-width:0;transition:border-color .2s ease,transform .2s ease;}
+.tx-card:hover,.tx-card:focus-visible{border-color:var(--gold);transform:translateY(-2px);}
+.tx-card img{width:80px;height:80px;border-radius:14px;object-fit:cover;flex:none;}
+.tx-card span{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.tx-card b{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.15;color:var(--ink);}
+.tx-card small{font-size:15px;line-height:1.35;color:var(--ink-soft);}
+.tx-hero{position:relative;display:block;border-radius:22px;overflow:hidden;color:#FFFCF6;text-decoration:none;}
+.tx-hero img{display:block;width:100%;height:320px;object-fit:cover;}
+.tx-hero span{position:absolute;inset:auto 0 0 0;padding:60px 24px 22px;background:linear-gradient(transparent,rgba(28,20,12,.8));display:flex;flex-direction:column;gap:6px;}
+.tx-hero b{font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1.05;}
+.tx-hero small{font-size:16px;max-width:60ch;}
+.tx-hero em{font-style:normal;align-self:flex-start;margin-top:6px;padding:10px 18px;border-radius:999px;background:#FFFCF6;color:#2C1810;font-family:'Barlow Condensed',Barlow,sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:15px;}
+.tx-links{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 4px 0;}
+@media (max-width:1000px){.tx-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:600px){.tx-grid{grid-template-columns:1fr;}.tx-hero img{height:260px;}.tx-hero b{font-size:28px;}}
 </style>
 <style>
 /* ===================== ROUND: a fuller home page ===================== */
@@ -306,192 +324,54 @@ body.bro-open{overflow:hidden;}
 <section class="pg-hero strip ph-tools" style="--img:url(/shared/heroes/page-tools-wide.webp);--img-n:url(/shared/heroes/page-tools-narrow.webp)">
   <div class="wrap pg-hero-in">
     <div class="eyebrow">Tools</div>
-    <h1>Tools for The Grounded Way.</h1><p class="pg-sub">A tree for every age, and a season for every chapter.</p>
+    <h1>Tools for The Grounded Way.</h1><p class="pg-sub">One app for every age, and a tool for every chapter.</p>
     <!-- PAGE VIDEO (BLD 761) --><p class="gg-watch-row"><button type="button" class="btn btn-ghost gg-watch" data-gg-watch="demo-tools" hidden>Watch the Video</button></p><!-- /PAGE VIDEO -->
   </div>
 </section>
-<!-- BLD 909 Clean Site: one row to see the whole page at a glance -->
-<nav class="gg-jump" aria-label="On this page"><ul><li><a href="#age-trees">The Grounded Way</a></li><li><a href="#willow">Willow</a></li><li><a href="#together">Together</a></li><li><a href="#living-sober">Healthy Living</a></li><li><a href="#when-life-changes">When Life Changes</a></li><li><a href="#for-families">For Families</a></li><li><a href="#print-and-share">Print and Share</a></li><li><a href="#further-reading">Further Reading</a></li><li><a href="#for-professionals">For Professionals</a></li></ul></nav>
+<!-- BLD 911 (Chris: "this tools page is so long", then "1"): a short picture index. One card per tool, one line each;
+     each tool's own page holds the full story. The anchors other pages link to stay on their cards. -->
+<nav class="gg-jump" aria-label="On this page"><ul><li><a href="#age-trees">The Grounded Way</a></li><li><a href="#seasons">Seasons</a></li><li><a href="#together">Together</a></li><li><a href="#for-families">Helpers</a></li><li><a href="#for-professionals">For Professionals</a></li></ul></nav>
 <section id="tools" class="after-strip">
   <div class="wrap">
-    <p class="lead">Every tool here lives inside The Grounded Way, built from real chaplain work for every age and stage. Each tree helps you tend four parts each day, Roots: Spirit, Bark: Mind, Leaves: Body, and Branches: Relationships, so Trunk: Meaning and Fruit: Hope grow in their season. The Grounded Way works when you tend all four parts. So when life gets hard, there is something to hold onto. Your answers stay on your device. For therapy or medical care, see a licensed professional.</p>
-    <p class="lead"><button type="button" class="btn btn-secondary" onclick="window.GGOpenSearch&&GGOpenSearch()">Search guides, practices, and more</button></p>
-    <h2 class="tool-group" id="age-trees">The Grounded Way</h2>
-    <p class="tool-group-sub">One app for every age. Your profile sets your tree, and your tree decides what you see: its own check-in, daily practices, and growth plan, guided one question at a time.</p>
-    <div class="card tw-app">
-      <picture class="tw-app-art"><source media="(max-width:600px)" srcset="/shared/heroes/home-narrow.webp"><img src="/shared/heroes/home-wide.webp" alt="" width="2160" height="864" loading="lazy"></picture>
-      <div class="tw-app-body">
-        <span class="badge live">Live now</span>
-        <h2>The Grounded Way</h2>
-        <p class="tw-app-tag">One app. Your tree grows with you.</p>
-        <p>Make your profile, and your tree is set by your age. Check in, then choose one small practice each for your mind, body, spirit, and relationships on your daily Home. As the years go by, your tree grows with you, from Maple to Sequoia, all in the same app.</p>
-        <p>From Maple to Sequoia, every tree shows what is Strong, Steady, and a Growing Edge, opens its check-ins and Growth Plan guided, with Read It All for the full form, offers daily tending, When Life Changes guides with two short videos each, and Learn videos, and comes with Backup, Read Aloud, and Save or Print. A Health and Ability box in your profile opens guides and practices for living with a disability, illness, or difference, and a private <a class="text-link" href="/living-sober.html">Living Sober</a> box opens support for growing sober and for loving someone who drinks or uses.</p>
-        <div class="tool-actions"><a class="btn btn-primary" href="/home/">Begin The Grounded Way</a><a class="text-link" href="/the-grounded-way.html">What Is The Grounded Way?</a><a class="text-link" href="/try-one-practice.html">Try One Practice</a></div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="willow">Willow</h2>
-    <p class="tool-group-sub">Its own app for the last season of life, with its own door.</p>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/willow.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <span class="badge live">Live now</span>
-          <h3>Willow</h3>
-          <p class="tool-tag">Held gently, all the way home.</p>
-          <p>A tree for the last part of the path, built for two: the person in hospice, and the people who love them. Gentle check-ins that speak right to the person in hospice, a check-in of the caregiver&rsquo;s own, a faith question every time with room for more than one tradition, a record of who answered, a page for what matters most, Cuttings for the stories and letters they want to leave, a log of what helped today, and faith cards for 29 traditions. When Life Changes offers 22 guides for the end of life, each with two short videos, one for the person and one for the helper, and Willow has short Learn videos too. Helpers open it with their own passcode and see only what the person chooses to share.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="https://growwithgrounded.com/willow/">Begin with Willow</a><a class="text-link" href="https://growwithgrounded.com/willow/#guides">When Life Changes at the end of life</a><a class="text-link" href="https://growwithgrounded.com/willow/#readings">Readings for all faith traditions and everything in-between</a><a class="text-link" href="/readings.html">Readings Library</a></div>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="together">Together</h2>
-    <p class="tool-group-sub">Where a family, a group, or a couple grows side by side.</p>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/grove.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <span class="badge live">Live now</span>
-          <h3>The Grove</h3>
-          <p class="tool-tag">Where our trees grow together.</p>
-          <p>Shared ground for a family, a faith community, a small group, or a team. Check in together with one shared answer for each question, make a Growth Plan, and do small practices side by side. When Life Changes Together offers 69 guides for the changes you go through as a group, from a new baby or a move to a loss, a leader leaving, or a hard season at work, each with a video for the group and one for the leader, and Do This Together videos lead small practices you share. In a family, everyone's own tree from Maple, Aspen, Pine, Birch, Oak, or Sequoia stands side by side. Your tree is yours. The grove is ours.</p>
-          <a class="btn btn-primary" href="https://growwithgrounded.com/grove/">Visit The Grove</a>
-        </div>
-      </div>
-      <div class="card tool" id="heartwood">
-        <div class="tool-art"><img class="tool-mark" src="/heartwood/mark.svg?v=b816" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Heartwood</h3>
-          <p class="tool-tag">Your private app for the two of you, with The Grounded Marriage.</p>
-          <p>Heartwood comes with The Grounded Marriage and opens with the code from your first session. In Before the Vows, each of you answers privately across twelve areas of married life: money, families, faith and meaning, conflict and repair, and more. Then Strengths and Growing Edges and Talk About This show where you stand together, with a question to start each conversation, plus the Couple Workbook and The Money Map. After the Vows opens after your wedding, with Practices for Two and the Monthly Check-in for Two. Each of you on your own phone, and your answers stay on your own devices.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/heartwood/">Preview Heartwood</a><a class="text-link" href="/the-grounded-marriage.html">About The Grounded Marriage</a></div>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="living-sober">Healthy Living</h2>
-    <p class="tool-group-sub">Grounded stands for living sober: a clear mind, a healthy body, and a life you're fully present for.</p>
-    <div class="grid-1">
-      <div class="card tool" id="the-grounded-way">
-        <div class="tool-art"><img class="tool-mark" src="/shared/heroes/way/grounded-way-square.webp" alt="" width="180" height="180" loading="lazy" style="object-fit:cover"></div>
-        <div>
-          <span class="badge live">Live now</span>
-          <h3>The Grounded Way</h3>
-          <p class="tool-tag">Built to thrive.</p>
-          <p>The one path for every age: get grounded, tend four, and grow in meaning and hope. My Growth Plan builds one plan from your check-in, and Tending brings it together: food for your goal from Grounded Recipes, sized for your table, with Holidays and Gatherings; movement for every level (Root, Rise, Thrive, and Gentle) in Strength, Cardio, Flow, Yoga, Balance, and Stretch, with the 12-Week Program; seven guided meditations; Morning Quiet; labs and the LDL Path, and family nutrition that tracks the food, never the body. Every recipe meets the Grounded Nutritional Standards, and everything stays on your device, locked with your passcode.</p>
-          <p><b>The Grounded Way</b> app is your own private space: Today, Check-in, Grow, Learn, and Library, with your plan, your tree, and Tending together in one place.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/home/">Begin The Grounded Way</a><a class="text-link" href="/the-grounded-way.html">What Is The Grounded Way?</a><a class="text-link" href="/the-grounded-way.html#standards">The Grounded Nutritional Standards</a><a class="text-link" href="/recipes/">Grounded Recipes</a><!-- PAGE VIDEO (BLD 866) --><button type="button" class="btn btn-secondary gg-watch-sm gg-watch" data-gg-watch="the-grounded-way" hidden>Watch the Video</button><!-- /PAGE VIDEO --></div>
-        </div>
-      </div>
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark tool-pic" src="/shared/heroes/living-sober-card.webp" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <span class="badge live">Live now</span>
-          <h3>Living Sober</h3>
-          <p class="tool-tag">One day at a time.</p>
-          <p>For anyone growing sober, at any stage, and for the people who love someone who drinks or uses. Today's encouragement and a mantra to share, words for every day of the first year, three Start Here videos, Early Days: 90 Days, one short video for each early day, Ride the Wave, Good Times, Sober, and Living Sober Together. You define your own sobriety. In Birch, Oak, and Sequoia, Living Sober opens your stage privately, a morning intention and an Evening Look Back, an optional sober date with a medallion for each milestone, and My Anchor Plan for hard moments, all locked on your device. In The Grounded Way, your day count and mantra shine on Today.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/living-sober.html">Open Living Sober</a><a class="text-link" href="/living-sober.html#early-days">Early Days: 90 Days</a><a class="text-link" href="/living-sober.html#love">For someone who loves them</a></div>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="when-life-changes">When Life Changes</h2>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/tool-life.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>When Life Changes</h3>
-          <p class="tool-tag">How to show up.</p>
-          <p>Guides for life&rsquo;s unexpected conversations: a death, a divorce, a diagnosis, a friend in trouble, a hard headline. Each one covers what to say, what helps most, and where to find support, written for every age. More than 500 guides across the trees, each with two short videos.</p>
-          <div class="tool-actions"><a class="btn btn-secondary" href="/home/?tree=maple#life">For kids, K to 5</a><a class="btn btn-secondary" href="/home/?tree=aspen#life">For grades 6 to 8</a><a class="btn btn-secondary" href="/home/?tree=pine#life">For grades 9 to 12</a><a class="btn btn-secondary" href="/home/?tree=birch#life">For ages 18 to 26</a><a class="btn btn-secondary" href="/home/?tree=oak#life">For adults</a><a class="btn btn-secondary" href="/home/?tree=sequoia#life">For older adults</a><a class="btn btn-secondary" href="/willow/#guides">At the end of life</a><a class="btn btn-secondary" href="/grove/#life">For families and groups</a></div>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="for-families">For Families</h2>
-    <p class="tool-group-sub">Gentle helps for the days around a death. Your words stay on your device.</p>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/tool-farewell.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Planning a Farewell</h3>
-          <p class="tool-tag">One thing at a time.</p>
-          <p>A checklist for families when a death is near or has just happened: the first hours, the first days, the service, and after. Check things off as they&rsquo;re done, and print it to share the work.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/planning-a-farewell.html">Open the Checklist</a></div>
-        </div>
-      </div>
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/tool-obituary.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Obituary Helper</h3>
-          <p class="tool-tag">Their life, in your words.</p>
-          <p>Guided questions, then three drafts to shape: a Death Notice, a Newspaper Obituary, and an Online Obituary, with word counts, Copy, Save or Print, and simple safety tips.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/obituary-helper.html">Write an Obituary</a></div>
-        </div>
-      </div>
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/tool-eulogy.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Eulogy Helper</h3>
-          <p class="tool-tag">For the one who will speak.</p>
-          <p>Prompts for who they were, three stories, and what they gave you, laid into a simple outline with a reading time, tips for speaking through tears, and a large-type copy to print.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/eulogy-helper.html">Write a Eulogy</a><a class="text-link" href="/readings.html#o=funeral">Readings for a funeral</a></div>
-        </div>
-      </div>
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/readings.svg?v=b815" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Readings Library</h3>
-          <p class="tool-tag">Words to read aloud.</p>
-          <p>Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between, from the churches and schools within each tradition to the paths outside organized religion. Search by tradition, kind, or moment, listen to many of them read aloud, and copy or print the words you choose.</p>
-          <div class="tool-actions"><a class="btn btn-primary" href="/readings.html">Open the Library</a><a class="text-link" href="/readings.html#o=wedding">Readings for a wedding</a><a class="text-link" href="/readings.html#t=celtic">Celtic blessings</a></div>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="print-and-share">Print and Share</h2>
-    <p class="tool-group-sub">One-page flyers for a bulletin board at school, church, work, or a conference table. Each has a QR code that opens the tool.</p>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/tool-flyers.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Flyers</h3>
-          <p>Print one for every tree, or the Grow With Grounded flyer that shows them all. Letter size, ready to print or save as a PDF.</p>
-          <div class="tool-actions"><button type="button" class="btn btn-primary" onclick="ggFlyer('overview')">Grow With Grounded Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('maple')">Maple Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('aspen')">Aspen Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('pine')">Pine Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('birch')">Birch Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('oak')">Oak Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('sequoia')">Sequoia Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('willow')">Willow Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('grove')">The Grove Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('grove','faith')">The Grove for Congregations Flyer</button><button type="button" class="btn btn-secondary" onclick="ggFlyer('grove','team')">The Grove for Teams Flyer</button></div>
-          <p class="tool-tag" style="margin-top:12px">Trained Guides get more: a framed-ready Certified Grounded Guide certificate and classroom and office posters, in the <a class="text-link" href="/the-field-guide.html">Field Guide</a>.</p>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="further-reading">Further Reading</h2>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/library.svg?v=b820" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Book Library</h3>
-          <p>The books behind Grounded: twenty years of study, chaplaincy, and late nights, from hospice and grief to prayer, the body, and picture books for kids. Search by title, author, or topic, browse by section or by part of the tree, and see which hard talks and practices each book sits close to.</p>
-          <div class="tool-actions"><a class="btn btn-secondary" href="/library/">Browse the Library</a></div>
-        </div>
-      </div>
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/tool-stories.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Grounded Stories</h3>
-          <p>Real stories from the edge of life, by Chris Joy, to watch with a recorded voice or to read. Everyone can enjoy the full stories at the top of the page and a preview of the rest; Supporters open every story with their code.</p>
-          <div class="tool-actions"><a class="btn btn-secondary" href="/stories.html">Visit Grounded Stories</a></div>
-        </div>
-      </div>
-    </div>
-    <h2 class="tool-group" id="for-professionals">For Professionals</h2>
-    <div class="grid-1">
-      <div class="card tool">
-        <div class="tool-art"><img class="tool-mark" src="/shared/marks/fieldguide.svg" alt="" width="180" height="180" loading="lazy"></div>
-        <div>
-          <h3>Field Guide</h3>
-          <p>For chaplains, pastors, teachers, school counselors, and parents who want to use Grounded tools with the people they serve: a Guide for every tree (Maple Guide, Aspen Guide, Pine Guide, Birch Guide, Oak Guide, Sequoia Guide, Willow Guide, and Grove Guide), For Guides training toward Certified Grounded Guide, The Grounded Way Walkthrough, support guides, the Guide&rsquo;s shelf, Learn, the Grounded Response Plan, and every When Life Changes guide in one place. Licensed to churches, schools, and individual practitioners.</p>
-          <div class="tool-actions"><a class="btn btn-secondary" href="/the-field-guide.html">See the Field Guide</a><a class="text-link" href="/field-guide/">Open the Field Guide</a><a class="text-link" href="/organizations.html">For Organizations</a><a class="text-link" href="/the-field-guide.html#get-it">Request access</a><!-- PAGE VIDEO (BLD 761; BLD 838 plays the Field Guide page's promo) --><button type="button" class="btn btn-secondary gg-watch-sm gg-watch" data-gg-watch="demo-the-field-guide" hidden>Watch the Video</button><!-- /PAGE VIDEO --></div>
-        </div>
-      </div>
-    </div>
-    
+  <div class="tx-group" id="age-trees" aria-labelledby="age-trees-h">
+    <h2 class="tool-group" id="age-trees-h">The Grounded Way</h2>
+    <a class="tx-hero" href="/home/"><picture><source media="(max-width:600px)" srcset="/shared/heroes/way/grounded-way-narrow.webp"><img src="/shared/heroes/way/grounded-way-wide.webp" alt="" width="1792" height="1008" loading="lazy"></picture><span><b>The Grounded Way</b><small>One app for every age. Your tree grows with you: check in, tend your four, and grow in meaning and hope.</small><em>Begin The Grounded Way</em></span></a>
+    <p class="tx-links"><a class="text-link" href="/the-grounded-way.html">What Is The Grounded Way?</a><a class="text-link" href="/try-one-practice.html">Try One Practice</a><a class="text-link" href="/recipes/">Grounded Recipes</a></p>
   </div>
-</section>
-<section>
-  <div class="wrap">
-    <p class="lead">Built by a chaplain and a teacher, from real bedside and classroom work. Each tool keeps everything you enter in your own browser, private to you.</p>
+  <div class="tx-group" id="seasons" aria-labelledby="seasons-h">
+    <h2 class="tool-group" id="seasons-h">Seasons</h2>
+    <div class="tx-grid">
+      <a class="tx-card" href="/living-sober.html" id="living-sober"><img src="/shared/heroes/living-sober-card.webp" alt="" width="160" height="160" loading="lazy"><span><b>Living Sober</b><small>For anyone growing sober and the people who love them.</small></span></a>
+      <a class="tx-card" href="/heartwood/" id="heartwood"><img src="/shared/heroes/heartwood-card.webp" alt="" width="160" height="160" loading="lazy"><span><b>Heartwood</b><small>The couples app, with The Grounded Marriage.</small></span></a>
+      <a class="tx-card" href="/willow/" id="willow"><img src="/shared/heroes/willow-phone.webp" alt="" width="160" height="160" loading="lazy"><span><b>Willow</b><small>For the last season of life, and the people who love them.</small></span></a>
+    </div>
+  </div>
+  <div class="tx-group" id="together" aria-labelledby="together-h">
+    <h2 class="tool-group" id="together-h">Together</h2>
+    <div class="tx-grid">
+      <a class="tx-card" href="/grove/"><img src="/shared/heroes/grove-phone.webp" alt="" width="160" height="160" loading="lazy"><span><b>The Grove</b><small>Families, faith communities, groups, and teams, side by side.</small></span></a>
+    </div>
+  </div>
+  <div class="tx-group" id="for-families" aria-labelledby="for-families-h">
+    <h2 class="tool-group" id="for-families-h">Helpers</h2>
+    <div class="tx-grid">
+      <a class="tx-card" href="/home/#learn" id="when-life-changes"><img src="/shared/heroes/page-hard-seasons-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>When Life Changes</b><small>Guides for grief and hard seasons, for every age.</small></span></a>
+      <a class="tx-card" href="/planning-a-farewell.html"><img src="/shared/heroes/page-planning-a-farewell-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>Planning a Farewell</b><small>One thing at a time, when a death is near or has happened.</small></span></a>
+      <a class="tx-card" href="/obituary-helper.html"><img src="/shared/heroes/page-obituary-helper-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>Obituary Helper</b><small>Their life, in your words.</small></span></a>
+      <a class="tx-card" href="/eulogy-helper.html"><img src="/shared/heroes/page-eulogy-helper-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>Eulogy Helper</b><small>For the one who will speak.</small></span></a>
+      <a class="tx-card" href="/readings.html"><img src="/shared/heroes/page-readings-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>Readings Library</b><small>Prayers, poems, and blessings to read aloud.</small></span></a>
+      <a class="tx-card" href="/stories.html"><img src="/shared/heroes/page-stories-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>Grounded Stories</b><small>Stories from the bedside and the road.</small></span></a>
+      <a class="tx-card" href="/library/" id="further-reading"><img src="/shared/heroes/library-phone.webp" alt="" width="160" height="160" loading="lazy"><span><b>Book Library</b><small>The books behind Grounded.</small></span></a>
+    </div>
+  </div>
+  <div class="tx-group" id="for-professionals" aria-labelledby="for-professionals-h">
+    <h2 class="tool-group" id="for-professionals-h">For Professionals</h2>
+    <div class="tx-grid">
+      <a class="tx-card" href="/the-field-guide.html"><img src="/shared/heroes/fieldguide-phone.webp" alt="" width="160" height="160" loading="lazy"><span><b>Field Guide</b><small>For chaplains, pastors, teachers, coaches, and anyone who walks with others.</small></span></a>
+      <a class="tx-card" href="/the-field-guide.html" id="print-and-share"><img src="/shared/heroes/page-tools-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>Flyers</b><small>One-page flyers with a QR code, for a bulletin board or a conference table.</small></span></a>
+      <a class="tx-card" href="/organizations.html"><img src="/shared/heroes/page-organizations-narrow.webp" alt="" width="160" height="160" loading="lazy"><span><b>For Organizations</b><small>Churches, schools, hospices, and teams.</small></span></a>
+    </div>
+  </div>
   </div>
 </section>
 </main>
