@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b907';
+  var V = 'b908';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -106,6 +106,86 @@
   var HAND = '<svg class="ln-ptr" viewBox="0 0 40 48" aria-hidden="true"><path d="M14 3c2.2 0 4 1.8 4 4v13l2-.4c1.6-.3 3.2.6 3.7 2.1l.2.6 2-.3c1.7-.2 3.3.8 3.8 2.4l.2.6 1.6-.2c2-.2 3.8 1.3 4 3.3L36 38c.3 4.5-3 8.5-7.5 9H18.6c-2.6 0-5-1.2-6.5-3.3L4.3 32.8c-1.2-1.7-.8-4 .9-5.1 1.5-1 3.5-.8 4.8.5L10 30V7c0-2.2 1.8-4 4-4z" fill="#FFF8EC" stroke="#2C1810" stroke-width="2"/></svg><span class="ln-ring"></span>';
   var A = function (d, extra, sty) { return ' class="a' + (extra ? ' ' + extra : '') + '" style="transition-delay:' + d + 's' + (sty ? ';' + sty : '') + '"'; };
 
+  /* ---------------- The content standard (BLD 908, patches/bld908/std/STANDARD.md in grounded-workshop) ----------------
+     Every scene can stand on one of Chris's paintings with a slow drift, and three kinds lead the eye:
+       paint   {img, h, sub, eyebrow, side}  the painting full and clear, drifting slowly; the words a soft caption
+               (readings, stillness, a story's picture). side: 'b' (bottom, the default), 'l', 'r', or 't'.
+       candle  {img, h, sub, items, side, glow: [x%, y%]}  a candle painting with its flame breathing softly; items (the lines
+               of a prayer, a blessing, or words to keep) show as their sentence starts.
+       figure  {move, img, h, sub, breath, side}  the 3D figure (shared/fig3d, the workout figure) leads a breath or a movement
+               in the painting's room. breath: [in, out] seconds (default [4, 6] for a breath move); the Breathe In and
+               Breathe Out words and the narration turn with the figure. Without WebGL (or with Simple Figure, Save Data, or a
+               software-only GPU, like the workout player) a breathing circle leads instead, on the same clock.
+     Any other kind takes img (or lesson.art[i]) as a soft backdrop: the painting blurred a little under a warm shade, with
+     light words. A scene's look (the BLD 908 content contract) maps onto these: 'candle' or 'figure[:move]' on a words,
+     big, breathe, or paint scene plays it as that kind; 'tree' uses the tree's own painting; 'image[:img]' the painting
+     named, else the lesson's own (lesson.img). The words and the recorded clips never change with the look.
+     img: a path under shared/heroes/ without .webp ('way/candle-alcove', 'learn/c103'), a hero id ('oak', 'page-growth'),
+     'tree', or a catalog number from images/originals ('c103' or '103.jpg', shared/heroes/learn/c103.webp, placed by
+     patches/bld908/std/art.py install). */
+  var CANDLE = { // the flame in each candle painting (x and y in percent, from shared/med-stage.json, BLD 899) and the words' side
+    'way/candle-alcove': [69, 54, 'l'], 'way/candle-alcove-2': [60, 54, 'l'], 'way/candle-rain': [58, 38, 'l'],
+    'way/candle-stones': [71, 51, 'l'], 'way/candle-cabin': [41, 47, 'r'], 'way/candle-cabin-2': [43, 50, 'r'],
+    'way/quiet-meditation': [70, 75, 'l'], 'way/tend-spirit': [52, 60, 'l']
+  };
+  function ART(im, app) {
+    if (!im) return '';
+    im = String(im);
+    if (im === 'tree') return HERO(app || 'oak');
+    var m = /^c?(\d+)(?:\.(?:jpg|webp))?$/.exec(im);
+    if (m) return url('/shared/heroes/learn/c' + m[1] + '.webp?v=' + V);
+    if (/^[a-z0-9-]+(\/[a-z0-9-]+)+$/i.test(im)) return url('/shared/heroes/' + im + '.webp');
+    return HERO(im);
+  }
+  var SIDES = { l: 1, r: 1, t: 1, b: 1 };
+  /* The art plan (shared/learn-art.js, window.GG_ART, made by patches/bld908/std/plan.py): the upgrade of the videos
+     already on the site, kept beside their data so no data file or old generator changes. GG_ART = {v, imgs: [img, ...],
+     m: {lessonId or 'app:lessonId': 'tok tok ...'}}, one token per scene: '-' as written; n (base 36) the painting
+     imgs[n] behind the scene (a title takes it as its own painting); pN that painting as a paint scene (big scenes);
+     cN a candle scene on it (words, big, breathe, paint); fN or fN.move the figure leads on it (breathe, big, words).
+     A scene's own img or look always wins. The plan loads with this file, so it is there by the time Play is tapped. */
+  var ARTP = { p: null };
+  function artLoad() {
+    if (window.GG_ART) return Promise.resolve(window.GG_ART);
+    if (ARTP.p) return ARTP.p;
+    ARTP.p = new Promise(function (res) {
+      try { var sc = document.createElement('script'); sc.src = url('/shared/learn-art.js?v=' + V); sc.async = true; sc.onload = sc.onerror = function () { res(window.GG_ART || null); }; document.head.appendChild(sc); } catch (e) { res(null); }
+    });
+    return ARTP.p;
+  }
+  function artTok(l, app, i) {
+    var G = window.GG_ART; if (!G || !G.m || !l || !l.id) return null;
+    var row = G.m[(app || '') + ':' + l.id] || G.m[l.id]; if (!row) return null;
+    var t = String(row).split(' ')[i]; if (!t || t === '-') return null;
+    var m = /^([pcf]?)([0-9a-z]+)(?:\.([a-z0-9-]+))?$/.exec(t); if (!m) return null;
+    var im = (G.imgs || [])[parseInt(m[2], 36)]; if (!im) return null;
+    return { img: im, look: m[1] === 'p' ? 'paint' : m[1] === 'c' ? 'candle' : m[1] === 'f' ? 'figure' + (m[3] ? ':' + m[3] : '') : 'image' };
+  }
+  // The scene as it plays: look and img resolved (the words, beats, and cues stay exactly as written).
+  function stdScene(sc, i, l, app) {
+    if (!sc) return sc;
+    if (!sc.img && !sc.look) { var T = artTok(l, app, i); if (T) sc = Object.assign({}, sc, T); }
+    var parts = String(sc.look || '').split(':'), look = parts[0], arg = parts.slice(1).join(':');
+    var img = sc.img || (l && Array.isArray(l.art) ? l.art[i] : '') || '', k = sc.k, o = {};
+    if (look === 'paint' && (k === 'big' || k === 'paint')) k = 'paint';
+    if (look === 'image' && arg && !sc.img) img = arg;
+    if (look === 'tree') img = 'tree';
+    if ((look === 'image' || look === 'candle' || look === 'figure') && !img && l && l.img) img = l.img;
+    var soft = { words: 1, big: 1, breathe: 1, paint: 1 };
+    if (look === 'candle' && soft[k]) k = 'candle';
+    if (look === 'figure' && soft[k]) { k = 'figure'; o.move = sc.move || arg || (sc.k === 'breathe' ? 'stand-breath' : 'stand-breath'); if (!sc.breath && (sc.k === 'breathe' || /breath/.test(o.move))) o.breath = [4, 6]; }
+    if (k === 'figure' && !o.move && !sc.move) o.move = 'stand-breath';
+    if (k === 'figure' && !sc.breath && !o.breath && /breath/.test(o.move || sc.move || '')) o.breath = [4, 6];
+    if (k === 'candle' && !img) img = 'way/candle-alcove';
+    if (k === 'figure' && !img) img = 'way/yoga-studio';
+    if (k === 'paint' && !img) img = (l && l.img) || 'home';
+    o.k = k; o.img = img; o._d = i % 4; o._app = app;
+    o._bd = !!img && k !== 'title' && k !== 'demo' && k !== 'paint' && k !== 'candle' && k !== 'figure' && k !== 'end' && k !== 'tale' && k !== 'screen' && k !== 'tabs';
+    if (o._bd && sc.bg) o.bg = ''; // the painting behind takes the place of an older blurred bg
+    return Object.assign({}, sc, o);
+  }
+  function isBr(sc) { return !!sc && (sc.k === 'breathe' || (sc.k === 'figure' && Array.isArray(sc.breath))); }
+
   // The demo camera (GWG BLD 824): z = [x, y, zoom] in the phone screen's own pixels (390 by 844) is placed in the
   // middle of the part of the screen that shows (280 by 494 in the stage), and the screen never slides past its edges.
   function demoCam(z) {
@@ -121,6 +201,8 @@
     switch (sc.k) {
       case 'title': {
         var hid = heroId(sc.hero || 'oak'), F = FRAME[hid] || { x: 50, s: 'l', w: 520 }, tl = String(sc.h || '').length;
+        // BLD 908: a title may name its own painting (img); frame: {x, s, w} places it like FRAME.
+        if (sc.img && sc.img !== 'tree') { F = sc.frame || { x: 50, s: SIDES[sc.side] && sc.side !== 'b' ? sc.side : 'l', w: 520 }; return '<img class="ln-hero" src="' + ART(sc.img, sc._app) + '" alt="" style="object-position:' + F.x + '% 50%"><div class="ln-shade ln-sh-' + F.s + '"></div><div class="ln-tt ln-tt-' + F.s + '" style="max-width:' + F.w + 'px"><div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow || '') + '</div><h2' + A(.9, tl > 52 ? 'ln-h4' : tl > 38 ? 'ln-h3' : tl > 24 ? 'ln-h2' : '') + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '') + '<div' + A(1.9, 'ln-by') + '>GROW WITH GROUNDED</div></div>'; }
         // sc.heroNarrow (BLD 788): a narrow painting for phones, so a phone skips the wide one (Grounded Stories uses it).
         var hsrc = sc.heroNarrow && typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 600px)').matches ? url('/shared/heroes/' + sc.heroNarrow + '.webp') : HERO(hid);
         return '<img class="ln-hero" src="' + hsrc + '" alt="" style="object-position:' + F.x + '% 50%"><div class="ln-shade ln-sh-' + F.s + '"></div><div class="ln-tt ln-tt-' + F.s + '" style="max-width:' + F.w + 'px"><div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow || '') + '</div><h2' + A(.9, tl > 52 ? 'ln-h4' : tl > 38 ? 'ln-h3' : tl > 24 ? 'ln-h2' : '') + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '') + '<div' + A(1.9, 'ln-by') + '>GROW WITH GROUNDED</div></div>';
@@ -181,6 +263,29 @@
           + shots.map(function (x, j) { return '<img src="' + dimg(x) + '" alt="" data-shot="' + h(x) + '"' + (j ? '' : ' class="on"') + '>'; }).join('')
           + it.map(function (x, j) { return x.m ? '<span class="ln-dm-mk" data-j="' + j + '" style="left:' + (x.m[0] * DK) + 'px;top:' + (x.m[1] * DK) + 'px;width:' + (x.m[2] * DK) + 'px;height:' + (x.m[3] * DK) + 'px"></span>' : ''; }).join('')
           + '</div></div></div>';
+      }
+      // BLD 908 kinds (the content standard, above)
+      case 'paint': {
+        var ps = SIDES[sc.side] ? sc.side : 'b';
+        return '<div class="ln-bd ln-bd-clear" data-d="' + (sc._d || 0) + '"><img src="' + ART(sc.img, sc._app) + '" alt=""></div>'
+          + (sc.h || sc.sub ? '<div class="ln-ps ln-ps-' + ps + '"></div><div class="ln-pn ln-pn-' + ps + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.9) + '>' + h(sc.h) + '</h3>' : '') + (sc.sub ? '<p' + A(1.7) + '>' + h(sc.sub) + '</p>' : '') + '</div>' : '');
+      }
+      case 'candle': {
+        var C = CANDLE[sc.img] || [], g = Array.isArray(sc.glow) ? sc.glow : C.length ? C : null, cs = SIDES[sc.side] ? sc.side : (C[2] || 'l');
+        var org = g ? g[0] + '% ' + g[1] + '%' : '50% 60%', ci = Array.isArray(sc.items) ? sc.items : [];
+        return '<div class="ln-bd ln-bd-clear ln-bd-slow"><img src="' + ART(sc.img, sc._app) + '" alt="" style="transform-origin:' + org + '"></div>'
+          + (g ? '<div class="ln-cd-glow" style="left:' + g[0] + '%;top:' + g[1] + '%"></div>' : '<div class="ln-cd-all"></div>')
+          + '<div class="ln-ps ln-ps-' + cs + '"></div><div class="ln-pn ln-cd ln-pn-' + cs + (ci.length > 3 ? ' ln-cd-many' : '') + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '')
+          + ci.map(function (x, j) { return '<p' + A(1.2 + j * (sc.gap || 1.2), 'ln-cd-l') + '>' + h(x) + '</p>'; }).join('')
+          + (sc.sub ? '<p' + A(1.5 + ci.length * (sc.gap || 1.2), 'ln-cd-s') + '>' + h(sc.sub) + '</p>' : '') + '</div>';
+      }
+      case 'figure': {
+        var fs = sc.side === 'r' ? 'r' : 'l';
+        return '<div class="ln-bd ln-bd-clear ln-bd-slow" data-d="' + (sc._d || 0) + '"><img src="' + ART(sc.img, sc._app) + '" alt=""></div>'
+          + '<div class="ln-ps ln-ps-' + fs + '"></div>'
+          + '<div class="ln-fg3 ln-fg3-' + (fs === 'l' ? 'r' : 'l') + '" style="--k:' + acc + '"><div class="ln-fgb"><div class="ln-brc"></div></div></div>'
+          + '<div class="ln-pn ln-pn-' + fs + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '') + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '')
+          + (Array.isArray(sc.breath) ? '<div class="ln-brt ln-fg-brt"><i>Breathe in</i><i>Breathe out</i></div>' : '') + '</div>';
       }
       case 'quiz': return '<div class="ln-qz"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>You\'ve Got It</div><h3' + A(.5) + '>' + h(sc.q) + '</h3></div>';
       case 'end': return '<div class="ln-end"><div' + A(.15, 'ln-endck', 'background:' + (sc.ok ? '#5F7D48' : acc)) + '>' + (sc.ok ? IC.check : IC.play) + '</div><div' + A(.5, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow) + '</div><h2' + A(.8) + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.3) + '>' + h(sc.sub) + '</p>' : '') + (sc.count ? '<small' + A(1.6) + '>' + h(sc.count) + '</small>' : '') + '</div>';
@@ -330,11 +435,77 @@
       '.ggl-small .ln-dm-list{display:none;}.ggl-small .ln-dm-tx{top:80px;width:440px;}.ggl-small .ln-dm-tx h3{font-size:58px;}.ggl-small .ln-dm-tx .ln-eb{font-size:28px;}.ggl-small .ln-dm-ph2{display:none;}',
       '@media (prefers-reduced-motion:reduce){.go .ln-dm-bg,.ln-dm-mk.on{animation:none !important;}.ln-dm-cam,.ln-dm-cam img,.ln-dm-mk{transition:none !important;}}',
       '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
+      /* BLD 908, the content standard: paintings behind every scene, drifting slowly; paint, candle, and figure scenes */
+      '.ln-bd{position:absolute;inset:0;overflow:hidden;z-index:-1;}.ln-bd-sh{z-index:-1;}.ln-bd img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;will-change:transform;}',
+      '.ln-bd-soft img{left:-24px;top:-24px;width:calc(100% + 48px);height:calc(100% + 48px);filter:blur(4px) saturate(1.08);}',
+      '.ln-bd-sh{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(20,13,7,.4) 0%,rgba(20,13,7,.62) 100%);}',
+      '.go .ln-bd img{animation:lnDr0 32s ease-out both;}.go .ln-bd[data-d="1"] img{animation-name:lnDr1;}.go .ln-bd[data-d="2"] img{animation-name:lnDr2;}.go .ln-bd[data-d="3"] img{animation-name:lnDr3;}.go .ln-bd-slow img{animation:lnDrS 60s ease-out both !important;}',
+      '@keyframes lnDr0{from{transform:scale(1.04)}to{transform:scale(1.14) translate(-1.6%,-.8%)}}@keyframes lnDr1{from{transform:scale(1.04)}to{transform:scale(1.14) translate(1.6%,-.8%)}}',
+      '@keyframes lnDr2{from{transform:scale(1.15) translate(0,-1%)}to{transform:scale(1.04)}}@keyframes lnDr3{from{transform:scale(1.06) translate(0,1.4%)}to{transform:scale(1.13) translate(0,-1.2%)}}@keyframes lnDrS{from{transform:scale(1.01)}to{transform:scale(1.07)}}',
+      // light words on a painting
+      '.ln-bdon{color:#F6EFE2;}.ln-bdon h3,.ln-bdon .ln-big p{color:#FFF8EC;text-shadow:0 2px 14px rgba(0,0,0,.5);}',
+      '.ln-bdon .ln-big small,.ln-bdon .ln-pt small,.ln-bdon .ln-wd small,.ln-bdon .ln-br small{color:#EBD9B6 !important;text-shadow:0 1px 8px rgba(0,0,0,.5);}',
+      '.ln-bdon .ln-pt,.ln-bdon .ln-pt b{color:#FFF8EC;text-shadow:0 1px 8px rgba(0,0,0,.45);}.ln-bdon .ln-dot{box-shadow:0 0 0 3px rgba(246,239,226,.3);}',
+      '.ln-bdon .ln-wd p{color:#FFF8EC;border-left-color:#E7B65A !important;text-shadow:0 1px 10px rgba(0,0,0,.45);}',
+      '.ln-bdon .ln-step{background:rgba(255,252,246,.95);color:#2C1810;}.ln-bdon .ln-step b{text-shadow:none;}.ln-bdon .ln-arr{color:#F2C46A;}',
+      '.ln-bdon .ln-brt{color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.5);}.ln-bdon .ln-brc{background:radial-gradient(circle,rgba(255,226,170,.85) 0%,rgba(255,226,170,0) 72%);}',
+      '.ln-bdon .ln-qz .ln-eb,.ln-bdon .ln-story .ln-eb{color:#F2C46A !important;}.ln-bdon .ln-lc,.ln-bdon .ln-sx,.ln-bdon .ln-card,.ln-bdon .ln-tr,.ln-bdon .ln-story{color:#2C1810;}.ln-bdon .ln-story h3,.ln-bdon .ln-sx h3{color:#2C1810;text-shadow:none;}',
+      // paint, candle, and figure: the words on a soft shade on one side of the painting
+      '.ln-ps{position:absolute;inset:0;pointer-events:none;}.ln-ps-b{background:linear-gradient(0deg,rgba(20,13,7,.78) 0%,rgba(20,13,7,.42) 30%,rgba(20,13,7,0) 55%);}',
+      '.ln-ps-l{background:linear-gradient(90deg,rgba(20,13,7,.74) 0%,rgba(20,13,7,.46) 38%,rgba(20,13,7,0) 62%);}.ln-ps-r{background:linear-gradient(270deg,rgba(20,13,7,.74) 0%,rgba(20,13,7,.46) 38%,rgba(20,13,7,0) 62%);}',
+      '.ln-ps-t{background:linear-gradient(180deg,rgba(20,13,7,.74) 0%,rgba(20,13,7,.4) 32%,rgba(20,13,7,0) 58%);}',
+      '.ln-pn{position:absolute;color:#FFF8EC;}.ln-pn-l{left:56px;top:56px;width:440px;}.ln-pn-r{right:56px;top:56px;width:440px;text-align:right;}.ln-pn-t{left:90px;right:90px;top:42px;text-align:center;}.ln-pn-b{left:60px;right:60px;bottom:46px;}',
+      '.ln-pn h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:50px;line-height:1.06;margin:6px 0 0;text-wrap:balance;text-shadow:0 2px 14px rgba(0,0,0,.55);}',
+      '.ln-pn>p{font-size:24px;line-height:1.35;margin:12px 0 0;color:#F2DDB5;text-shadow:0 1px 8px rgba(0,0,0,.55);}.ln-pn-b h3{font-size:46px;}',
+      '.ln-cd .ln-cd-l{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:34px;line-height:1.18;margin:14px 0 0;color:#FFF8EC;}.ln-cd-many .ln-cd-l{font-size:28px;margin-top:9px;}.ln-cd .ln-cd-s{font-size:21px;color:#EBD9B6;margin-top:16px;}',
+      '.ln-cd-glow{position:absolute;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,214,140,.5) 0%,rgba(255,190,110,.16) 34%,rgba(255,190,110,0) 68%);mix-blend-mode:screen;animation:lnFl 3.4s ease-in-out infinite alternate;}',
+      '.ln-cd-all{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 60%,rgba(255,200,120,.16),rgba(255,200,120,0) 60%);mix-blend-mode:screen;animation:lnFl 3.4s ease-in-out infinite alternate;}',
+      '@keyframes lnFl{0%{opacity:.72;transform:scale(.96)}30%{opacity:1;transform:scale(1.03)}55%{opacity:.84;transform:scale(.99)}80%{opacity:.96;transform:scale(1.02)}100%{opacity:.8;transform:scale(.98)}}',
+      '.ln-fg3{position:absolute;top:30px;bottom:30px;width:420px;display:flex;align-items:center;justify-content:center;}.ln-fg3-r{right:30px;}.ln-fg3-l{left:30px;}',
+      '.ln-fgb{position:relative;width:300px;height:300px;}.ln-fg3 .ln-brc{background:radial-gradient(circle,rgba(255,236,200,.34) 0%,rgba(255,236,200,.2) 52%,rgba(255,242,218,.8) 62%,rgba(255,236,200,0) 71%);opacity:.95;}.ln-3d .ln-fgb{width:430px;height:430px;}.ln-3d .ln-fg3 .ln-brc{opacity:.8;}',
+      '.ln-fg-brt{position:relative;height:50px;width:100%;margin-top:22px;font-family:\'Cormorant Garamond\',serif;font-size:40px;font-weight:600;color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.55);}.ln-pn-r .ln-fg-brt i{right:0;}',
+      '.ln-fig3{position:absolute;top:3%;height:92%;width:46%;pointer-events:none;opacity:0;transition:opacity .9s ease;}.ln-fig3-r{right:1%;}.ln-fig3-l{left:1%;}.ln-3d .ln-fig3{opacity:1;}',
+      '.ggl-small .ln-pn h3{font-size:62px;}.ggl-small .ln-pn>p{font-size:32px;}.ggl-small .ln-pn-l,.ggl-small .ln-pn-r{width:470px;}.ggl-small .ln-cd .ln-cd-l{font-size:42px;}.ggl-small .ln-cd-many .ln-cd-l{font-size:34px;}.ggl-small .ln-fg-brt{font-size:52px;height:62px;}.ggl-small .ln-pn-b h3{font-size:58px;}',
+      '@media (prefers-reduced-motion:reduce){.go .ln-bd img,.ln-cd-glow,.ln-cd-all{animation:none !important;}.ln-fig3{transition:none;}}',
       '@media (prefers-reduced-motion:reduce){.ln-canvas .a,.ln-ptr,.ln-ring,.ln-panel,.ln-note,.ln-res,.ln-tgt{transition:none !important;}}',
       ".ln-canvas{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;font-family:Barlow,system-ui,sans-serif;color:#2C1810;--ln-gold:#8B5E1A;}\n.ln-canvas .a{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}.go .ln-canvas .a{opacity:1;transform:none;}\n.ln-hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}\n.ln-shade{position:absolute;inset:0;pointer-events:none;}\n.ln-sh-l{background:linear-gradient(180deg,rgba(20,13,7,.34) 0%,rgba(20,13,7,0) 24%,rgba(20,13,7,0) 80%,rgba(20,13,7,.3) 100%),linear-gradient(90deg,rgba(20,13,7,.66) 0%,rgba(20,13,7,.48) 34%,rgba(20,13,7,.14) 58%,rgba(20,13,7,0) 72%);}\n.ln-sh-r{background:linear-gradient(180deg,rgba(20,13,7,.34) 0%,rgba(20,13,7,0) 24%,rgba(20,13,7,0) 80%,rgba(20,13,7,.3) 100%),linear-gradient(270deg,rgba(20,13,7,.66) 0%,rgba(20,13,7,.48) 34%,rgba(20,13,7,.14) 58%,rgba(20,13,7,0) 72%);}\n.ln-sh-t{background:linear-gradient(180deg,rgba(20,13,7,.7) 0%,rgba(20,13,7,.52) 32%,rgba(20,13,7,.14) 56%,rgba(20,13,7,0) 66%,rgba(20,13,7,0) 82%,rgba(20,13,7,.3) 100%);}\n.ln-tt.ln-tt-r{left:auto;right:48px;}.ggl-small .ln-tt.ln-tt-t{top:48px;}.ln-tt .ln-eb,.ln-tt p,.ln-tt .ln-by{text-shadow:0 1px 8px rgba(0,0,0,.45);}\n.ln-tt h2.ln-h2{font-size:52px;}.ln-tt h2.ln-h3{font-size:46px;}.ln-tt h2.ln-h4{font-size:40px;}\n.ln-tt{position:absolute;left:56px;top:48px;color:#F6EFE2;max-width:520px;}.ln-tt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:60px;line-height:1.02;margin:6px 0 0;text-shadow:0 2px 14px rgba(0,0,0,.45);}\n.ln-tt p{font-size:24px;margin:12px 0 0;color:#F2DDB5;}.ln-eb{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:20px;color:#F2C46A;}\n.ln-by{font-family:'Barlow Condensed',sans-serif;letter-spacing:2.4px;font-size:16px;margin-top:14px;opacity:.9;}\n.ln-big{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:0 90px;}.ln-big p{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:52px;line-height:1.15;margin:0;}.ln-big small{display:block;font-size:26px;color:#6B5A4D;margin-top:20px;}\n.ln-pts{padding:48px 70px;}.ln-pts h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:46px;margin:0 0 22px;}\n.ln-pt{display:flex;gap:16px;align-items:flex-start;margin:0 0 18px;font-size:28px;line-height:1.25;}.ln-pt small{display:block;font-size:21px;color:#6B5A4D;margin-top:2px;}\n.ln-dot{width:16px;height:16px;border-radius:50%;flex:none;margin-top:10px;}\n.ln-trees h3{position:absolute;top:56px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0;}\n.ln-trow{position:absolute;left:30px;right:30px;bottom:90px;display:flex;justify-content:center;gap:18px;}\n.ln-tr{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:130px;}.ln-tr img{width:110px;height:110px;border-radius:24px;}\n.ln-tr b{font-family:'Cormorant Garamond',serif;font-size:30px;margin-top:8px;}.ln-tr small{font-size:17px;color:#6B5A4D;}\n.ln-trow.ln-t8{gap:12px;left:20px;right:20px;}.ln-t8 .ln-tr img{width:92px;height:92px;border-radius:20px;}.ln-t8 .ln-tr b{font-size:26px;}.ln-t8 .ln-tr small{font-size:15px;}\n.ln-lv{position:absolute;inset:0;display:flex;gap:36px;align-items:center;justify-content:center;padding:0 60px;}\n.ln-lc{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-top:8px solid var(--k);border-radius:20px;padding:44px 20px;text-align:center;}\n.ln-lc b{display:block;font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--k);}.ln-lc small{font-size:22px;color:#6B5A4D;}\n.ln-flow{padding:50px 50px;}.ln-flow h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0 0 40px;}\n.ln-frow{display:flex;align-items:center;gap:14px;}.ln-step{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 18px;min-height:200px;}\n.ln-step b{display:block;font-size:26px;line-height:1.2;margin-top:10px;}.ln-step small{display:block;font-size:19px;color:#6B5A4D;margin-top:8px;line-height:1.3;}\n.ln-sn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#8B5E1A;color:#FFF8EC;font-weight:700;font-size:20px;}\n.ln-arr{font-size:36px;color:#8B5E1A;flex:none;}\n.ln-phone{position:absolute;left:56px;top:34px;width:380px;height:472px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:30px;overflow:hidden;font-size:21px;}\n.ln-ptop{display:flex;align-items:center;gap:10px;padding:14px 16px;color:#F6EFE2;}.ln-ptop img{width:36px;height:36px;border-radius:9px;}.ln-ptop b{font-family:'Cormorant Garamond',serif;font-size:28px;}.ln-ptop span{margin-left:auto;font-size:17px;opacity:.9;}\n.ln-prow{display:flex;justify-content:space-between;padding:13px 18px;border-top:1px solid #EFE6D4;}\n.ln-tgt{transition:background .3s ease 2.6s,box-shadow .3s ease 2.6s;}.go .ln-tgt{background:#F6EEDB;box-shadow:inset 0 0 0 2px #8B5E1A;}\n.ln-panel{position:absolute;right:56px;top:70px;width:400px;background:#FFFCF6;border:1px solid #DDD0B8;border-left:8px solid #8B5E1A;padding:22px 24px;transform:translateX(560px);transition:transform .7s ease 3s;}\n.go .ln-panel{transform:none;}.ln-panel h4{font-family:'Cormorant Garamond',serif;font-size:32px;margin:0;}.ln-panel p{font-size:19px;color:#6B5A4D;margin:6px 0 10px;}.ln-panel li{font-size:22px;line-height:1.6;}\n.ln-ptr{position:absolute;left:820px;top:520px;width:56px;z-index:5;transition:left 1.3s ease 1.1s,top 1.3s ease 1.1s;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}\n.go .ln-ptr{left:var(--px,600px);top:var(--py,300px);}\n.ln-ring{position:absolute;width:48px;height:48px;border-radius:50%;border:4px solid #8B5E1A;opacity:0;transform:scale(.3);transition:all .5s ease 2.5s;z-index:4;}.go .ln-ring{opacity:.85;transform:scale(1.5);}\n.ln-fg{position:absolute;inset:30px 40px;background:#F6F0E4;border:1px solid #DDD0B8;border-radius:22px;overflow:hidden;}\n.ln-fgtop{background:#2E2118;color:#D9A847;padding:16px 22px;font-family:'Cormorant Garamond',serif;font-size:28px;}\n.ln-fgtabs{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid #DDD0B8;flex-wrap:wrap;}.ln-fgtabs span{padding:10px 14px;border-radius:12px;font-size:20px;font-weight:600;color:#6B5A4D;}\n.ln-note{margin:26px 26px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 24px;opacity:0;transform:translateY(16px);transition:all .7s ease 3s;}.go .ln-note{opacity:1;transform:none;}\n.ln-note h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-note p{font-size:22px;color:#6B5A4D;margin:0;line-height:1.35;}\n.ln-card{position:absolute;left:70px;top:40px;width:540px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:22px;padding:24px 28px;}\n.ln-card h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-card p{font-size:19px;color:#6B5A4D;margin:0 0 10px;line-height:1.35;}\n.ln-card label{display:block;font-size:17px;font-weight:600;margin-top:10px;}.ln-in{border:1px solid #DDD0B8;border-radius:10px;padding:9px 12px;font-size:19px;margin-top:4px;background:#fff;min-height:42px;}\n.ln-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}.ln-b{border:1px solid #8B5E1A;color:#8B5E1A;border-radius:999px;padding:10px 18px;font-weight:600;font-size:18px;}.ln-b.pri{background:#8B5E1A;color:#FFF8EC;}\n.ln-res{position:absolute;right:60px;bottom:60px;max-width:300px;background:#2E2118;color:#FFF8EC;border-radius:18px;padding:16px 20px;font-size:20px;line-height:1.3;opacity:0;transform:translateY(14px);transition:all .6s ease 3.1s;}.go .ln-res{opacity:1;transform:none;}\n.ln-qz{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 80px;}.ln-qz .ln-eb{color:#8B5E1A;}.ln-qz h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:48px;line-height:1.1;margin:10px 0 0;}\n"
     ].join('\n');
     document.head.appendChild(s);
   }
+
+  /* ---------------- the 3D figure for figure scenes (BLD 908) ----------------
+     The same engine and figure data as the workout player (shared/fig3d, BLD 897), loaded only when a figure scene
+     shows, and the same rules for when it draws: WebGL, not Save Data, not Simple Figure (gg-fig3d 'off'), and a real
+     graphics chip unless the person turned 3D Figure on (gg-fig3d 'on'). */
+  var FIGV = 'b907', F3 = { p: null, bad: false, ok: null };
+  function fig3Dark() { var t = document.documentElement.getAttribute('data-theme'); if (t) return t === 'dark'; try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; } }
+  function fig3Able() {
+    if (F3.bad) return false;
+    var p = null; try { p = localStorage.getItem('gg-fig3d'); } catch (e) {}
+    if (p === 'off' || /[?&]fig=svg\b/.test(location.search)) return false;
+    try { if (navigator.connection && navigator.connection.saveData) return false; } catch (e) {}
+    if (F3.ok === null) {
+      F3.ok = false; F3.soft = false;
+      try {
+        var c = document.createElement('canvas'), g = c.getContext('webgl2') || c.getContext('webgl');
+        if (g) { var x = g.getExtension('WEBGL_debug_renderer_info'), r = String(x ? g.getParameter(x.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER) || ''); F3.ok = true; F3.soft = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r); var lc = g.getExtension('WEBGL_lose_context'); if (lc) lc.loseContext(); }
+      } catch (e) { F3.ok = false; }
+    }
+    return F3.ok && (!F3.soft || p === 'on');
+  }
+  function fig3Load() {
+    if (F3.p) return F3.p;
+    var base = url('/shared/fig3d/');
+    F3.p = new Promise(function (res, rej) {
+      var data = function () { fetch(base + 'figure.bin?v=' + FIGV).then(function (r) { if (!r.ok) throw new Error('figure'); return r.arrayBuffer(); }).then(function (b) { if (!(window.GGFigure3D && GGFigure3D.create)) throw new Error('engine'); res(b); }).catch(rej); };
+      if (window.GGFigure3D && GGFigure3D.create) return data();
+      var sc = document.createElement('script'); sc.src = base + 'fig3d.js?v=' + FIGV; sc.async = true; sc.onload = data; sc.onerror = function () { rej(new Error('engine')); }; document.head.appendChild(sc);
+    });
+    F3.p.catch(function () { F3.bad = true; });
+    return F3.p;
+  }
+
+  try { artLoad(); } catch (e) {}
 
   /* ---------------- the player ---------------- */
   var CUR = null; // the player on screen
@@ -442,7 +613,7 @@
     });
     return out.map(function (t, i) { return { t: t, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0 }; });
   }
-  var REV = { demo: '.ln-dm-pt', points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p', tale: '.ln-tl-s' };
+  var REV = { demo: '.ln-dm-pt', points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p', tale: '.ln-tl-s', candle: '.ln-cd-l' };
   var NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   var STOPW = /^(the|and|for|you|your|are|but|not|all|can|with|that|this|them|they|what|when|have|has|will|from|more|like|about|just|into|than|then|there|their|who|how|its|our|out|one's|things|thing|way|get|let|use|was|were|been|being|each|every|some|any|also|very|much|most|make|made|feel)$/;
   function words(t) { return String(t || '').toLowerCase().replace(/\b(\d{1,2})\b/g, function (m) { return NUMW[+m] || m; }).replace(/[^a-z' ]+/g, ' ').split(/\s+/).filter(function (w) { return w.length >= 3 && !STOPW.test(w); }); }
@@ -632,7 +803,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b907'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b908'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -661,7 +832,7 @@
     // A lesson with recorded voices keeps only the Speed choice: the device voice menu steps aside.
     var rec = l.audio ? '' : recVoice(cfg);
     // Locked clips (BLD 781) when the lesson has no public recording and the caller gave its library's audio key.
-    var SK = l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
+    var SK = !l.audio && typeof cfg.clip === 'function' && window.Audio ? { voice: rec || l.voice || cfg.voice || 'brian', clip: cfg.clip } : l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
     if (recd) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
@@ -710,9 +881,13 @@
       stopTimers(); t = P.tok; hush();
       if (cfg.onAt) cfg.onAt(last ? 0 : P.i);
       if (last) { var e = endScene(); sc = { k: 'end', ok: e.ok, eyebrow: e.eyebrow, h: e.h, sub: e.sub, count: e.count, say: e.say }; sc._e = e; }
-      else sc = l.scenes[P.i];
-      st.classList.remove('go'); cv.innerHTML = scene(sc, acc); cv.className = 'ln-canvas ln-k-' + sc.k;
-      st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
+      else sc = stdScene(l.scenes[P.i], P.i, l, cfg.app);
+      st.classList.remove('go');
+      // BLD 908: a painting behind the scene (the content standard), blurred a little under a warm shade, words in light ink.
+      cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
+      cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
+      brPace(sc); figScene(sc);
+      st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
@@ -796,7 +971,7 @@
         if (sc.k === 'quiz' || last) { setPlay(false); return; }
         // hold counts from when the scene started, so a breathing scene keeps its full time on screen
         var hold = (P.tg ? 2600 : 0) + 900 + (+sc.hold || 0) * 1000, rem = Math.max(900, hold - (Date.now() - P.t0)), go = function () { if (t === P.tok && P.playing) show(P.i + 1); };
-        if (sc.k !== 'breathe' && +sc.hold >= 6 && rem >= 5000) return waitRing(Math.round(rem / 1000), t, go);
+        if (!isBr(sc) && +sc.hold >= 6 && rem >= 5000) return waitRing(Math.round(rem / 1000), t, go);
         P.nx = setTimeout(go, rem);
       }
       // A recorded clip for this sentence, when a lesson has them: a page video's own folder (audio: 'pv', BLD 777),
@@ -821,10 +996,73 @@
       if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
       step();
     }
+    /* BLD 908: the 3D figure in a figure scene. One WebGL canvas per player, laid over the stage (outside the scaled
+       canvas, so it draws at the screen's own size), driven frame by frame from the scene's breath clock (P.brT0), the
+       same clock the circle, the words, and the narration use. A movement with no breath keeps its own pace. */
+    var FG = { el: null, stage: null, tok: 0, raf: 0, t0: 0 };
+    function figScene(sc) {
+      var tk = ++FG.tok; cancelAnimationFrame(FG.raf); st.classList.remove('ln-3d');
+      if (!sc || sc.k !== 'figure' || !fig3Able()) { if (FG.stage) try { FG.stage.pause(true); } catch (e) {} return; }
+      fig3Load().then(function (buf) {
+        if (tk !== FG.tok || !st.isConnected) return;
+        var mv = sc.move || 'stand-breath', E3 = window.GGFigure3D;
+        if (!FG.el) { FG.el = document.createElement('canvas'); FG.el.setAttribute('aria-hidden', 'true'); }
+        FG.el.className = 'ln-fig3 ln-fig3-' + (sc.side === 'r' ? 'l' : 'r');
+        if (FG.el.parentNode !== st) st.insertBefore(FG.el, cv.nextSibling);
+        if (!FG.stage) {
+          var body = lsGet('gg-fig-body') === 'woman' ? 'woman' : 'man';
+          FG.stage = E3.create(FG.el, buf, { dark: fig3Dark(), move: mv, body: body, still: brReduced(), paper: false, palette: 'paint', zoom: .8,
+            extra: function (name) { return fetch(url('/shared/fig3d/figure-' + name + '.bin?v=' + FIGV)).then(function (r) { if (!r.ok) throw new Error(name); return r.arrayBuffer(); }); } });
+          FG.el.addEventListener('webglcontextlost', function (e) { e.preventDefault(); F3.bad = true; st.classList.remove('ln-3d'); });
+        } else { try { FG.stage.pause(false); FG.stage.move(mv); } catch (e) {} }
+        if (FG.stage.has && !FG.stage.has(mv)) { try { FG.stage.move('stand-breath'); } catch (e) {} }
+        try { if (FG.stage.snap) FG.stage.snap(); } catch (e) {}
+        FG.t0 = Date.now(); st.classList.add('ln-3d');
+        if (!brReduced()) figTick();
+      }, function () { st.classList.remove('ln-3d'); });
+    }
+    // The loop point: a breath move's own loop is in 4, out 6 (40 percent in); the scene's pace is warped onto it.
+    function figTick() {
+      cancelAnimationFrame(FG.raf);
+      var sc = P.sc; if (!FG.stage || !sc || sc.k !== 'figure') return;
+      var u;
+      if (Array.isArray(sc.breath)) {
+        var el = ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
+        u = el < BR_OUT ? .4 * el / BR_OUT : .4 + .6 * (el - BR_OUT) / (BR_CYC - BR_OUT);
+      } else { var ld = 0; try { ld = FG.stage.loopDur(); } catch (e) {} u = (Date.now() - FG.t0) / 1000 / (ld > 0 ? ld : 4); }
+      try { if (FG.stage.seek) FG.stage.seek(u, { t: performance.now() }); } catch (e) {}
+      if (st.isConnected) FG.raf = requestAnimationFrame(figTick);
+    }
+    function figOff() { FG.tok++; cancelAnimationFrame(FG.raf); if (FG.stage) { try { FG.stage.dispose(); } catch (e) {} } FG.stage = null; if (FG.el && FG.el.parentNode) FG.el.parentNode.removeChild(FG.el); FG.el = null; }
     // GWG BLD 898 (Chris: "we just need to ensure all these things sync in all vids"): in a breathe scene, a sentence that
     // says breathe in starts as the circle begins to grow, and one that says breathe out as it begins to shrink. The first
     // such sentence sets the circle's cycle (in 4 seconds, out 6); each later one waits for its turn in the cycle.
     var BR_CYC = 10000, BR_OUT = 4000;
+    // BLD 908: a breath scene may set its own pace (breath: [in, out] seconds); the circle, the words, the figure, and the
+    // narration's in and out sentences all follow it. [4, 6] is the standard and needs no new keyframes.
+    var BRK = {};
+    function brPace(sc) {
+      var b = isBr(sc) && Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : null, a = b ? +b[0] : 4, o = b ? +b[b.length - 1] : 6;
+      if (!(a > 0 && o > 0)) { a = 4; o = 6; }
+      BR_CYC = (a + o) * 1000; BR_OUT = a * 1000; P.brNames = null;
+      if (a === 4 && o === 6) return;
+      var r = Math.round(a / (a + o) * 1000) / 10, id = String(r).replace('.', '_'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
+      if (!BRK[id]) {
+        var el = document.createElement('style'); el.textContent = '@keyframes lnBr' + id + '{0%{transform:scale(.45)}' + q(r) + '{transform:scale(1)}100%{transform:scale(.45)}}'
+          + '@keyframes lnIn' + id + '{0%,' + q(r - 4) + '{opacity:1}' + q(r) + ',100%{opacity:0}}@keyframes lnOut' + id + '{0%,' + q(r - 2) + '{opacity:0}' + q(r + 2) + ',96%{opacity:1}100%{opacity:0}}';
+        document.head.appendChild(el); BRK[id] = 1;
+      }
+      P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id };
+      brAnim(cv, 0);
+    }
+    // Sets (or restarts) the circle and the words on this scene's pace, starting off ms into the cycle.
+    function brAnim(root, off) {
+      var N2 = P.brNames;
+      Array.prototype.forEach.call(root.querySelectorAll('.ln-brc, .ln-brt i'), function (e) {
+        var nm = !N2 ? '' : e.classList.contains('ln-brc') ? N2.brc : e.previousElementSibling ? N2.i1 : N2.i0;
+        e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = nm; e.style.animationDuration = N2 ? (BR_CYC / 1000) + 's' : ''; e.style.animationDelay = (-off / 1000) + 's';
+      });
+    }
     function brKind(x) {
       var s = String(x || '').toLowerCase(), a = s.search(/\b(breathe in|breath in|inhale|in through|smell the flower|fill (it|the|your))|^(and |once more, |again, )?in\b/),
         b = s.search(/\b(breathe out|breath out|breathe all the way out|exhale|and out|out through|blow|whoosh|float down|let it float)\b/);
@@ -832,13 +1070,13 @@
     }
     function brReduced() { try { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } }
     function brWait(i) {
-      var sc = P.sc; if (!sc || sc.k !== 'breathe' || P.brDone === i || brReduced()) return 0;
+      var sc = P.sc; if (!sc || !isBr(sc) || P.brDone === i || brReduced()) return 0;
       var k = brKind(P.B[i] && P.B[i].t); if (!k) { P.brDone = i; return 0; }
       if (!st.classList.contains('go')) return 40;
       P.brDone = i;
       if (!P.brLock) {
         P.brLock = true; var off = k === 'out' ? BR_OUT : 0;
-        Array.prototype.forEach.call(cv.querySelectorAll('.ln-brc, .ln-brt i'), function (e) { e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = ''; e.style.animationDelay = (-off / 1000) + 's'; });
+        brAnim(cv, off);
         P.brT0 = Date.now() - off; return 0;
       }
       var el = (Date.now() - P.brT0) % BR_CYC, d = ((k === 'in' ? 0 : BR_OUT) - el + BR_CYC) % BR_CYC;
@@ -884,7 +1122,7 @@
     }
     // Locked clips (BLD 781): each sentence is fetched and unlocked once per player, kept as a Blob URL until the player stops.
     P.clips = {};
-    function sealedGet(text) { if (!P.clips[text]) P.clips[text] = sealedClip(SK.key, SK.voice, text).then(null, function () { return null; }); return P.clips[text]; }
+    function sealedGet(text) { if (!P.clips[text]) P.clips[text] = (SK.clip ? Promise.resolve().then(function () { return SK.clip(SK.voice, text); }) : sealedClip(SK.key, SK.voice, text)).then(null, function () { return null; }); return P.clips[text]; }
     // While one sentence plays, the next one (or the next scene's first, or a question's reply) is fetched and unlocked.
     function sealedAhead(i) {
       var nx = P.B[i + 1];
@@ -909,7 +1147,7 @@
       });
       return true;
     }
-    function sealedFree() { var C = P.clips; P.clips = {}; Object.keys(C).forEach(function (k) { C[k].then(function (u) { if (u) try { URL.revokeObjectURL(u); } catch (e) {} }); }); }
+    function sealedFree() { if (SK && SK.clip) { P.clips = {}; return; } var C = P.clips; P.clips = {}; Object.keys(C).forEach(function (k) { C[k].then(function (u) { if (u) try { URL.revokeObjectURL(u); } catch (e) {} }); }); }
     // The first tap plays a moment of silence on the one audio element, so it may play the clips that follow.
     function unlock() {
       if (!SK || P.unl || !window.Audio) return; P.unl = true;
@@ -1000,8 +1238,9 @@
     host.addEventListener('click', onClick);
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', fit);
-    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); sealedFree(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
+    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); sealedFree(); figOff(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
     CUR = ctl;
+    if (!window.GG_ART) artLoad().then(function (G) { if (G && CUR === ctl && !P.playing && P.i >= 0 && P.i < N - 1) show(P.i); });
     fit();
     var at = Math.max(0, Math.min((cfg.at || 0), N - 2));
     if ((cfg.done || {})[l.id]) answered = true;
@@ -1055,7 +1294,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b808', oak: '/oak/guide-videos.js?v=b907', aspen: '/aspen/guide-videos.js?v=b888', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b888', pine: '/pine/guide-videos.js?v=b907', birch: '/birch/guide-videos.js?v=b907', grove: '/grove/guide-videos.js?v=b888' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b808', oak: '/oak/guide-videos.js?v=b907', aspen: '/aspen/guide-videos.js?v=b888', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b888', pine: '/pine/guide-videos.js?v=b907', birch: '/birch/guide-videos.js?v=b907', grove: '/grove/guide-videos.js?v=b908' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -1209,7 +1448,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b907'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b908'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

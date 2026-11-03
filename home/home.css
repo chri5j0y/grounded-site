@@ -1257,3 +1257,45 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-kgrow{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 0;font-size:14px;}
 .hm-kgrow b{color:var(--kp);}
 .hm-part.grows small{font-style:italic;}
+
+/* ---------- BLD 908: the one Grounded app (My Tree tools, Membership invitations and Member growth plan) ---------- */
+.hm-invite{display:flex;gap:14px;align-items:flex-start;margin-top:14px;background:var(--card-2);}
+.hm-invite .hm-acts{flex-wrap:wrap;}
+.hm-invite .hm-h3{margin:2px 0 4px;}
+.hm-mytree{margin-top:14px;}
+.hm-tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px;}
+.hm-tool{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--card-2);color:var(--ink);font:600 15px/1.2 'Barlow',sans-serif;text-align:left;cursor:pointer;min-width:0;}
+.hm-tool .i{width:20px;height:20px;flex:none;color:var(--leaves);}
+.hm-tool span{min-width:0;overflow-wrap:anywhere;}
+.hm-tool:hover{border-color:color-mix(in srgb,var(--leaves) 55%,var(--line));}
+.hm-otrees{margin-top:12px;line-height:2;}
+.hm-otrees .hm-linkbtn{margin-right:10px;min-height:32px;}
+.hm-mcard{margin-top:14px;}
+.hm-trends,.hm-hist,.hm-clist,.hm-mlist{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px;}
+.hm-trow,.hm-hrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;align-items:center;color:var(--c);}
+.hm-trow .tx b,.hm-hrow .tx b{color:var(--ink);display:block;font-size:15px;}
+.hm-trow .tx small{color:var(--ink-soft);}
+.hm-trow svg{width:100%;height:46px;display:block;}
+.hm-hbars{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;align-items:end;height:40px;}
+.hm-hbars i{display:block;height:max(3px,var(--h));background:var(--c);border-radius:4px 4px 2px 2px;opacity:.85;}
+.hm-clist li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;}
+.hm-clist .dot{width:12px;height:12px;border-radius:50%;}
+.hm-clist .tx b{display:block;}
+.hm-clist .tx small{color:var(--ink-soft);}
+.hm-cform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px;}
+.hm-cform label{display:grid;gap:4px;font-size:14px;font-weight:600;color:var(--ink-soft);min-width:0;}
+.hm-cform .wide{grid-column:1/-1;}
+.hm-cform input,.hm-cform select,.hm-cform textarea{font:inherit;font-weight:500;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0;width:100%;box-sizing:border-box;}
+@media (max-width:520px){.hm-cform{grid-template-columns:minmax(0,1fr);}}
+.hm-mlist button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--card-2);color:var(--ink);font:inherit;cursor:pointer;}
+.hm-mlist button small{display:block;color:var(--ink-soft);}
+.hm-mplayer{min-height:240px;}
+.hm-door{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0;padding:12px 14px;border-radius:18px;border:1.5px solid var(--line);background:var(--card);}
+.hm-door span{flex:1 1 220px;min-width:0;}
+.hm-door b{display:block;}
+.hm-door small{color:var(--ink-soft);}
+.hm-dmed{margin-top:14px;}
+.hm-sh-member{padding:0 18px 6px;}
+.hm-mlist button.done .i{color:var(--leaves);}
+.hm-trad{margin-top:16px;border-top:1px solid var(--line);padding-top:10px;}
+.hm-trad summary{cursor:pointer;font:700 15px/1.3 'Barlow',sans-serif;min-height:44px;display:flex;align-items:center;}
