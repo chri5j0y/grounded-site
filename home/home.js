@@ -3109,7 +3109,7 @@
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
   var CK_MOD = { oak: '/shared/checkin/oak.js?v=b912', sequoia: '/shared/checkin/sequoia.js?v=b912', birch: '/shared/checkin/birch.js?v=b912', pine: '/shared/checkin/pine.js?v=b912', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
-  var CK_READY = {};
+  var CK_READY = { maple: true, aspen: true };
   function openCheckin(kind) {
     var tree = S.tree, src = CK_MOD[tree]; if (!src || !S.id || !CK_READY[tree]) return false;
     mClose();
@@ -3119,7 +3119,7 @@
       if (arr(M.kinds).indexOf(kind) < 0) kind = 'full';
       return arr(M.files).reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
         M.run({ id: S.id, kind: kind, plain: plainWording(S.id, S.tree), member: member(),
-          onSaved: function () { toast('Check-in saved. Your tree is up to date.'); },
+          onSaved: function (entry, info) { toast(info && info.season ? info.season : 'Check-in saved. Your tree is up to date.'); },
           onClose: function () { render(); } });
       });
     }).catch(fall);

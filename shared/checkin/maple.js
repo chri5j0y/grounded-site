@@ -277,8 +277,8 @@
         else answers[key] = { qa: qa };
       });
       // finishCheckin, maple/index.html 1923 to 1938.
-      var nm = String(kid.name || '').trim();
-      if (nm) kid.name = nm.charAt(0).toUpperCase() + nm.slice(1);
+      // kid.name: the profile's name (kidRec). The tree writes the typed name here (first letter capitalized), and its
+      // next save writes the profile's name back (loadKids 1532), so the profile's name is what the record keeps.
       kid.grade = dd.grade;
       if (!plainLocked(kid, id) && (!kid.wording || dd.pickW)) kid.wording = dd.wording;
       var rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: dd.grade, std: C.version, mode: dd.mode, wording: dd.wording, answers: clone(answers), plan: null };
