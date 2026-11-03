@@ -747,11 +747,7 @@
       '</div></div>';
   }
 
-  /* ---------- BLD 869: My Tree, a tab of the app (the person's own tree, inside) ---------- */
-  function treeTabHtml() {
-    var t = TREES[S.tree] || TREES.oak;
-    return '<div class="hm-treetab"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><iframe class="hm-tree-if" src="' + t.href + '" title="My ' + esc(t.n) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe></div>';
-  }
+
 
   /* BLD 882: the practices a kid chose in their tree's growth plan, each with a done circle, in their tree's words.
      BLD 885: Every day ones first, then This week (done once this week), then Sometimes, each with How and a rhythm chip. */
@@ -1902,11 +1898,9 @@
     }).catch(frameIt);
   }
   function openLearn(lessonId) {
-    var t = TREES[S.tree] || TREES.oak;
-    if (lessonId) { openFrame(new URL(t.href + '#learn=' + encodeURIComponent(lessonId), location.href)); return; }
-    openFrame(new URL(t.href, location.href), true, function (win) {
-      var tries = 0; (function go() { try { if (win.GGLearn && typeof win.GGLearn.open === 'function') { win.GGLearn.open(S.tree); return; } } catch (e) { return; } if (++tries < 40) setTimeout(go, 150); })();
-    });
+    // A lesson that is not on this tree's shelf opens the Learn tab, where every lesson lives (BLD 912: no tree page).
+    if (lessonId) toast('That lesson is on Learn.');
+    goTo(isKid(S.p) ? 'watch' : 'learn');
   }
   function openShelf(id) {
     var t = TREES[S.tree] || TREES.oak;
@@ -3084,7 +3078,7 @@
      A tap on a tree or a tool from the Home opens it in a full-page frame with a slim Back bar, so the person
      never leaves Home. The phone's Back closes it (history state). nav.js hides the site's own top bar and footer
      inside the frame. When it closes, the Home redraws with anything new (a check-in, a sober day). */
-  var FRAME = null;
+  var FRAME = null;   // BLD 912: Home frames nothing; kept null for the checks that ask whether a frame is open.
   function inHomeLink(a) {
     if (!a || !a.getAttribute) return null;
     var href = a.getAttribute('href'); if (!href || href.charAt(0) === '#' || a.target || a.hasAttribute('download')) return null;
@@ -3094,34 +3088,14 @@
     if (a.closest('#hm-bnav, .site-footer, .topbar, .site-menu')) return null;
     return u;
   }
-  function frameTitle(u) {
+  /* BLD 912 Round 3 (Chris: "truly build 1 app--stop using sloppy shortcuts"): Home frames nothing. A tree address
+     opens that screen right here (roomGo); any other page of the site opens whole, as itself. */
+  function openFrame(u) {
     var seg = u.pathname.split('/').filter(Boolean)[0] || '';
-    if (TREES[seg]) return TREES[seg].n;
-    var t = { 'living-sober.html': 'Living Sober', 'get-grounded-now.html': 'Get Grounded Now', 'readings.html': 'Readings Library', 'the-grounded-way.html': 'The Grounded Way', 'recipes': 'Grounded Recipes' }[seg];
-    return t || 'Grounded';
+    if (ROOM_TREES.test(seg)) { roomGo(seg, u.search.replace(/^\?/, ''), u.hash); return; }
+    location.assign(u.pathname + u.search + u.hash);
   }
-  function openFrame(u, push, onload, sheet) {
-    closeFrame(true);
-    var wrap = document.createElement('div'); wrap.className = 'hm-frame' + (sheet ? ' hm-fsheet' : ''); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-label', sheet ? sheet.title : frameTitle(u));
-    // BLD 882: a tree screen opens as an in-app sheet: the app's own header (the screen's name and Done) over that one screen.
-    var bar = sheet ? '<header class="hm-fs-hd"><div class="hm-fs-l"><span class="hm-ak">' + esc(sheet.kick) + '</span><h2 class="hm-fs-t">' + esc(sheet.title) + '</h2></div><button type="button" class="hm-frame-home hm-fs-done">Done</button></header>'
-      : '<div class="hm-frame-bar"><button type="button" class="hm-frame-home">' + I('home') + '<span>Back</span></button><b class="hm-frame-t">' + esc(frameTitle(u)) + '</b><span class="hm-frame-sp"></span></div>';
-    wrap.innerHTML = bar + '<iframe class="hm-frame-if' + (sheet ? ' wait' : '') + '" title="' + esc(sheet ? sheet.title : frameTitle(u)) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>';
-    var host = document.querySelector('main.hm') || document.body; host.appendChild(wrap);
-    var ifr = wrap.querySelector('iframe'); ifr.src = u.pathname + u.search + u.hash;
-    if (sheet) { wrap._sheet = sheet; sheetMode(ifr, u.pathname); }
-    ifr.addEventListener('load', function () { if (!sheet) { try { var t = (ifr.contentDocument.title || '').replace(/\s*\|.*$/, ''); if (t) wrap.querySelector('.hm-frame-t').textContent = t; } catch (e) {} } else ifr.classList.remove('wait'); if (onload) { try { onload(ifr.contentWindow); } catch (e) {} onload = null; } });
-    wrap.querySelector('.hm-frame-home').addEventListener('click', frameDone);
-    document.documentElement.classList.add('hm-framed');
-    FRAME = wrap;
-    if (push !== false) { try { history.pushState({ hmFrame: u.pathname + u.search + u.hash }, '', location.pathname + location.hash); } catch (e) {} }
-  }
-  function closeFrame(quiet) {
-    if (!FRAME) return; FRAME.remove(); FRAME = null; document.documentElement.classList.remove('hm-framed');
-    if (!quiet) render();
-  }
-  // BLD 908: the frame closes first, so steps the tree took inside it (a Learn list, a guide) never hold Back.
-  function frameDone() { if (!FRAME) return; var pushed = !!(history.state && history.state.hmFrame); closeFrame(); if (pushed) { try { history.back(); } catch (e) {} } }
+  function closeFrame() {}
 
   /* ---------- BLD 882: tree screens as in-app sheets ----------
      The check-in, Quick Check-in, Growth Plan, history, and the tree's practices open over the tab, with the app's
@@ -3129,9 +3103,6 @@
      and tab bar step aside inside the sheet (a class and a small style added to the framed page by the Home, so the
      tree page itself is unchanged everywhere else). Done, or a check-in saved, returns to the tab, redrawn. */
   var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
-  var SHEET_CSS = 'html.gg-insheet body>.gg-hero,html.gg-insheet body>.gg-parts,html.gg-insheet body>nav#client-nav,html.gg-insheet body>nav.nav,html.gg-insheet body>nav.tabs,' +
-    'html.gg-insheet .gg-skip,html.gg-insheet .gg-wayline,html.gg-insheet .topbar,html.gg-insheet .site-menu,html.gg-insheet .site-footer{display:none!important;}' +
-    'html.gg-insheet body>main{padding-top:6px;}';
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
   var CK_MOD = { oak: '/shared/checkin/oak.js?v=b912', sequoia: '/shared/checkin/sequoia.js?v=b912', birch: '/shared/checkin/birch.js?v=b912', pine: '/shared/checkin/pine.js?v=b912', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
@@ -3167,43 +3138,19 @@
   function openTreeSheet(what) {
     if ((what === 'checkin' || what === 'quick') && openCheckin(what === 'quick' ? 'quick' : 'full')) return;
     if (what === 'plan' && !NOPLAN[S.tree] && openCheckin('plan')) return;
-    var t = TREES[S.tree] || TREES.oak, title = SHEET_SCREENS[what] || t.n;
-    var hash = what === 'today' ? '#today' : what ? treeHash(t, what).slice(t.href.length) : '';
-    // BLD 886: the check-in, Quick Check-in, and Growth Plan open guided (?guided=checkin|quick|plan, read by GGGuided.flag() in the tree).
-    var q = what === 'checkin' || what === 'quick' || what === 'plan' ? '?guided=' + what : '';
-    var ck = lastCheckin(S.id, S.tree);
-    openFrame(new URL(t.href + q + hash, location.href), true, null, { what: what, title: title, kick: 'My ' + t.n, ck: ck ? ck.count + ':' + ck.date : '' });
+    treeScreen(what, S.tree);
   }
-  function sheetMode(ifr, path) {
-    var tries = 0, done = false;
-    var style = function (d) {
-      if (done || !d || !d.documentElement || d.getElementById('gg-insheet-css')) return;
-      done = true;
-      d.documentElement.classList.add('gg-insheet');
-      var st = d.createElement('style'); st.id = 'gg-insheet-css'; st.textContent = SHEET_CSS; (d.head || d.documentElement).appendChild(st);
-      ifr.classList.remove('wait');
-    };
-    (function tick() {
-      if (!ifr.isConnected) return;
-      var w = null, d = null; try { w = ifr.contentWindow; if (w && w.location.pathname === path) d = ifr.contentDocument; } catch (e) { ifr.classList.remove('wait'); return; }
-      if (d && d.documentElement) {
-        if (d.readyState === 'loading') { w.addEventListener('DOMContentLoaded', function () { style(d); }); d.addEventListener('readystatechange', function () { style(d); }); }
-        else style(d);
-        return;
-      }
-      if (++tries < 400) setTimeout(tick, 20); else ifr.classList.remove('wait');
-    })();
-    // A move to another page inside the sheet shows that page whole.
-    ifr.addEventListener('load', function () { try { var d = ifr.contentDocument; if (d && ifr.contentWindow.location.pathname === path && !d.getElementById('gg-insheet-css')) { done = false; style(d); } } catch (e) {} });
+  /* A tree screen by name, always here in Home. */
+  function treeScreen(what, tree) {
+    tree = tree || S.tree;
+    if (what === 'checkin' || what === 'quick' || what === 'plan') { if (tree === S.tree && openCheckin(what === 'checkin' ? 'full' : what)) return; goTo('today'); return; }
+    if (what === 'history') { seasonOpen(); return; }
+    if (what === 'life') { LT.f = 'life'; goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
+    if (what === 'learn') { goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
+    if (SCR_MOD[what] && openScreen(what, tree)) return;
+    goTo(isKid(S.p) ? 'tree' : 'today');
   }
-  /* A check-in saved in the sheet: the Home hears the vault change, then returns to the tab. */
-  function sheetSaved() {
-    var sh = FRAME && FRAME._sheet; if (!sh || (sh.what !== 'checkin' && sh.what !== 'quick') || sh.closing) return;
-    var ck = lastCheckin(S.id, S.tree), now = ck ? ck.count + ':' + ck.date : '';
-    if (now === sh.ck) return;
-    sh.closing = true; toast('Check-in saved. Your tree is up to date.');
-    setTimeout(function () { if (FRAME && FRAME._sheet === sh) frameDone(); }, 900);
-  }
+  function sheetSaved() {}
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('#hm-app a[href]'); var u = inHomeLink(a); if (!u) return;
@@ -3216,9 +3163,6 @@
     if (u.pathname === own && !u.hash) { goTo('tree'); return; }
     openFrame(u);
   });
-  window.addEventListener('popstate', function () { if (FRAME && !(history.state && history.state.hmFrame)) closeFrame(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && FRAME && FRAME._sheet) frameDone(); });
-  window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data === 'gg-home-close' && FRAME) frameDone(); });
   /* =====================================================================
      BLD 908: The one Grounded app (Chris, November 3, 2026: "i want to try to have one app not many apps.. a tree is a
      profile and decides what vids and guides etc one sees"). Maple, Aspen, Pine, Birch, Oak, and Sequoia live inside
@@ -3362,34 +3306,13 @@
     var t = TREES[tree] || TREES.oak, L = TOOLS.common.filter(function (x) { return t.ck || (x[0] !== 'quick' && x[0] !== 'checkin' && x[0] !== 'plan' && x[0] !== 'week' && x[0] !== 'history'); });
     return L.slice(0, 5).concat(TOOLS[tree] || []).concat(L.slice(5));
   }
-  function myTreeHtml() {
-    if (isKid(S.p)) return '';
-    var t = TREES[S.tree] || TREES.oak;
-    return '<article class="hm-card hm-p-leaves hm-mytree" id="hm-mytree"><div class="hm-hd">' + pb(treeArt(S.tree)) + '<div><div class="hm-k">My ' + esc(t.n) + '</div><div class="hm-sub">Every ' + esc(t.n) + ' tool, right here in The Grounded Way.</div></div></div>' +
-      '<div class="hm-tools">' + toolsOf(S.tree).map(function (x) { var lb = x[2] + (/ $/.test(x[2]) ? t.n : ''); return '<button type="button" class="hm-tool" data-hm-tool="' + x[0] + '">' + I(x[1]) + '<span>' + esc(lb) + '</span></button>'; }).join('') + '</div>' +
-      '<p class="hm-sub hm-otrees">Open another tree here, for a child, a student, or someone you help: ' + ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia'].filter(function (k) { return k !== S.tree; }).map(function (k) { return '<button type="button" class="hm-linkbtn" data-hm-look="' + k + '">' + esc(TREES[k].n) + '</button>'; }).join(' ') + '</p></article>';
-  }
-  /* A tree tool: a known screen opens as a tree sheet; the rest open inside the whole tree. */
+
+  /* A tree tool: every one opens here in Home (BLD 912). */
   function openTool(what, tree) {
-    tree = tree || S.tree; var t = TREES[tree] || TREES.oak;
-    if (what === 'learn') { if (tree === S.tree) goTo(isKid(S.p) ? 'watch' : 'learn'); else openRoom(tree, '', ''); return; }
-    if (what === 'whole') { if (tree === S.tree) goTo(isKid(S.p) ? 'today' : 'grow'); else openRoom(tree, '', ''); return; }
-    if (what === 'settings' && tree === S.tree && openScreen('settings', tree)) return;
-    if (what === 'video' || what === 'settings') {
-      openFrame(new URL(t.href, location.href), true, function (win) {
-        var tries = 0; (function go() {
-          try {
-            if (what === 'settings') { if (win.document.getElementById('gt-settings')) return; var sb = win.document.querySelector('button[onclick*="openSettings"]'); if (sb && sb.offsetParent && tries > 3) sb.click(); }
-            if (what === 'video') { var b = win.document.querySelector('[data-gg-watch]:not([hidden])'); if (b) { b.click(); return; } }
-          } catch (e) { return; }
-          if (++tries < 60) setTimeout(go, 150);
-        })();
-      }, what === 'settings' ? { what: what, title: SHEET_SCREENS.settings, kick: 'My ' + t.n } : null);
-      return;
-    }
-    if (tree === S.tree && SCR_MOD[what] && openScreen(what, tree)) return;
-    if (ROOM_HASH[what] && !(what === 'today')) { if (tree === S.tree) openTreeSheet(what); else openRoom(tree, '', ROOM_HASH[what]); return; }
-    if (tree === S.tree) openTreeSheet(what); else openRoom(tree, '', '');
+    tree = tree || S.tree;
+    if (what === 'whole') { goTo(isKid(S.p) ? 'today' : 'grow'); return; }
+    if (what === 'checkin' || what === 'quick' || what === 'plan') { if (tree === S.tree) openTreeSheet(what); else treeScreen(what, tree); return; }
+    treeScreen(what, tree);
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
@@ -3447,10 +3370,19 @@
     openTool(what);
   }
   /* The whole tree inside Home, with its own tabs (and any old address it was given). */
-  function openRoom(tree, q, hash) {
-    var t = TREES[tree]; if (!t) return;
-    openFrame(new URL(t.href + (q ? '?' + q : '') + (hash || ''), location.href));
+  /* An old tree address (/<tree>/ with its query and hash) opens its screen here. */
+  function roomGo(tree, q, hash) {
+    var h = decodeURIComponent(hash || ''), m;
+    var g = /(^|&)guided=(checkin|quick|plan)\b/.exec(q || '');
+    if ((m = /^#(life|talk)=([\w-]+)/.exec(h))) { openGuide(m[2], tree); return; }
+    if ((m = /^#learn=([\w-]+)/.exec(h))) { if (tree === S.tree) playTreeLesson(m[1]); else goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
+    if (/^#(guide|grown|grownups)\b/.test(h)) { treeScreen('guide', tree); return; }
+    if (g) { treeScreen(g[2], tree); return; }
+    var sh = DOOR_SHEET[h.replace(/=.*$/, '')]; if (sh) { treeScreen(sh === 'today' ? 'today' : sh, tree); return; }
+    goTo(isKid(S.p) ? 'tree' : 'today');
   }
+  function openRoom(tree, q, hash) { roomGo(tree, q, hash); }
+
 
   /* ---------- the doors: /home/?tree=<tree> from /<tree>/ (shared/gg-room.js) ---------- */
   var ROOM_TREES = /^(maple|aspen|pine|birch|oak|sequoia)$/;
@@ -3513,12 +3445,13 @@
     // BLD 912: a Guide visit card (#gg-visit=) and the helper view (#for=) open here, never in a tree page.
     if (/gg-visit=/.test(d.hash || '')) { visitTake(d.hash, d.tree, !!a); return; }
     var hfor = /^#for=([\w-]+)/.exec(h); if (a && hfor) { openHelper(hfor[1], ''); return; }
-    if (!a) { if (h || d.q) openRoom(d.tree, d.q, d.hash); else { var b = document.querySelector('[data-hm-stage="' + d.tree + '"]'); if (b) b.setAttribute('aria-pressed', 'true'); } return; }
+    // With no profile yet, the welcome opens with that tree chosen (W.stage); its screens open once a profile does.
+    if (!a) { var b = document.querySelector('[data-hm-stage="' + d.tree + '"]'); if (b) b.setAttribute('aria-pressed', 'true'); return; }
     var mine = d.tree === S.tree;
     if (mine && guided && !h) { openTreeSheet(guided[2]); return; }
     if (mine && !d.q && (!h || h === '#')) { if (isKid(S.p)) goTo('tree'); return; }
     if (mine && !d.q && DOOR_SHEET[h] && !isKid(S.p)) { openTool(DOOR_SHEET[h] === 'today' ? 'today' : DOOR_SHEET[h]); return; }
-    openRoom(d.tree, d.q, d.hash);
+    roomGo(d.tree, d.q, d.hash);
   }
 
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
@@ -3635,7 +3568,6 @@
     if (t.hasAttribute('data-hm-hh')) { homeRec().hhKind = t.getAttribute('data-hm-hh'); saveHome(); openMShelf('relationships'); return; }
     if (t.hasAttribute('data-hm-mcode')) { e.preventDefault(); mCode(); return; }
     if (t.hasAttribute('data-hm-tool')) { openTool(t.getAttribute('data-hm-tool')); return; }
-    if (t.hasAttribute('data-hm-look')) { openRoom(t.getAttribute('data-hm-look'), '', ''); return; }
     if (t.hasAttribute('data-hm-remind')) { saveReminders(); return; }
     if (t.hasAttribute('data-hm-mclose')) { mClose(); return; }
     if (t.hasAttribute('data-hm-mplay')) { mPlay(t.getAttribute('data-hm-mplay')); return; }
@@ -3798,7 +3730,9 @@
   function openGuide(id, tree0) {
     var tr0 = tree0 && TREES[tree0] ? tree0 : S.tree, t = TREES[tr0] || TREES.oak, kid = tr0 === 'maple' || tr0 === 'aspen';
     if (kid && tr0 === S.tree && openScreen('talk', tr0, { talk: id })) return;
-    openFrame(new URL(t.href + (kid ? '#talk=' : '#life=') + encodeURIComponent(id), location.href), true, null, { what: 'life', title: SHEET_SCREENS.life, kick: 'My ' + t.n });
+    if (kid) { if (openScreen('talk', tr0, { talk: id })) return; LT.f = 'life'; goTo('watch'); return; }
+    guideRead(id, tr0);
+    void t;
   }
 
   /* The Check-in tab: the tree painting with each part's level, Check In and Quick Check-in, this season, and trends. */
@@ -3823,7 +3757,9 @@
   function growToolsHtml() {
     var t = TREES[S.tree] || TREES.oak, sp = SPECIAL[S.tree];
     return gtool('hm-p-leaves', treeArt(S.tree), 'My ' + t.n, 'Your ' + t.n + ' Grows With You', 'Your check-ins, practices, lessons, and guides are chosen for your ' + t.n + ', ' + String(t.who).toLowerCase() + '.', 'data-hm-tab="checkin"', I('check') + 'Check-in') +
-      gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day.', 'data-hm-tab="week"', I('clock') + 'Open') +
+      gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day, with the Shopping List, Sunday Together Prep, and the month.', 'data-hm-tab="week"', I('clock') + 'Open') +
+      // Chris (November 3, 2026): "where is our shopping list? The month and week stuff.. I need the Sunday prep": one tap to each.
+      '<div class="hm-acts tight hm-wkjump"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="week=shop">' + I('cart') + 'Shopping List</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=prep">' + I('sprout') + 'Sunday Prep</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week">' + I('calendar') + 'Week and Month</button></div>' +
       seasonCardHtml() +
       (sp ? gtool('hm-p-fruit', sp[3], 'My ' + t.n, sp[1], sp[2], 'data-hm-tool="' + sp[0] + '"', I('book') + 'Open') : '') +
       '<div class="hm-acts tight hm-tset"><button type="button" class="hm-btn sm line hm-pill" data-hm-tool="settings">' + I('gear') + 'Tree Settings</button></div>';
