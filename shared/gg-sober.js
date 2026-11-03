@@ -114,11 +114,23 @@
   }
   function dayOfYear() { var d = new Date(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 1)) / 864e5); }
   // Today's encouragement: by days since the sober date when set (the first 90 days in order, then rotating),
-  // otherwise by the day of the year. Someone I Love draws from its own words.
+  // otherwise by the day of the year. Someone I Love draws from its own words. BLD 908 (decision 6): the public file
+  // holds days 1 to 90; with Membership open on this device, GGSoberWords.all() adds days 91 to 365 from the Member
+  // library (GGMember.get('seasons').livingSober.daily), so a Member's first year runs in order, then rotates.
+  // Start past day 90 keeps rotating through the 90, with one quiet Membership line (never a pop-up).
+  var MEMW = { on: false };
+  function memWatch() { if (MEMW.on || !window.GGMember || typeof GGMember.on !== 'function') return; MEMW.on = true; try { GGMember.on(function () { refresh(); }); } catch (e) {} }
+  function memLine(c) {
+    memWatch();
+    if (!c || c.days < 90 || !window.GGMember) return '';
+    try { if (GGMember.has()) return ''; } catch (e) { return ''; }
+    return '<p class="ggs-soft">Growing Sober continues with a new word for every day of your first year, with Membership. <button type="button" class="ggs-link" data-ggm="open">I Have a Code</button></p>';
+  }
   function daily(tree) {
     var g = L(), st = g ? g.soberStage(tree) : '', date = g && g.soberDate ? g.soberDate(tree) : '';
     if (st === 'love') { var lv = (W().love && W().love.length ? W().love : FALL.love); return { kind: 'love', text: lv[dayOfYear() % lv.length].text, id: lv[dayOfYear() % lv.length].id }; }
-    var list = W().daily && W().daily.length ? W().daily : FALL.daily, c = date ? count(date) : null;
+    var all = typeof W().all === 'function' ? W().all() : W().daily;
+    var list = all && all.length ? all : FALL.daily, c = date ? count(date) : null;
     var i = (c ? c.days : dayOfYear()) % list.length;
     for (var k = 0; k < list.length; k++) { var x = list[(i + k) % list.length]; if (!st || !Array.isArray(x.stage) || !x.stage.length || x.stage.indexOf(st) >= 0) return { kind: 'daily', text: x.text, id: x.id }; }
     return { kind: 'daily', text: list[i].text, id: list[i].id };
@@ -276,7 +288,7 @@
       if (APP.dateOpen) html += '<div class="ggs-date"><label for="ggs-date-in" class="ggs-soft" style="flex-basis:100%">My sober date. It stays locked on this device; only the count shows.</label><input id="ggs-date-in" type="date" data-ggs="date" max="' + todayStr() + '" min="1900-01-01" value="' + esc(date) + '"><button type="button" class="btn btn-secondary btn-sm" data-ggs="datedone">Done</button>' + (date ? '<button type="button" class="ggs-link" data-ggs="nodate">Clear the Date</button>' : '') + '</div>';
     }
     if (!love) html += todayHtml(tree);
-    html += '<div class="ggs-enc"><b>' + (love ? 'For You Today' : 'Today\'s Encouragement') + '</b><q>' + esc(enc.text) + '</q><div class="ggs-row"><button type="button" class="btn btn-secondary btn-sm" data-ggs="share-daily">Share</button></div></div>';
+    html += '<div class="ggs-enc"><b>' + (love ? 'For You Today' : 'Today\'s Encouragement') + '</b><q>' + esc(enc.text) + '</q><div class="ggs-row"><button type="button" class="btn btn-secondary btn-sm" data-ggs="share-daily">Share</button></div></div>' + (love ? '' : memLine(c));
     if (!love) html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm ggs-wave" data-ggs="wave">Ride the Wave</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="week">My Week</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="gains">Milestones and Gains</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="good">Good Times, Sober</button></div>';
     html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm" data-ggs="anchor">My Anchor Plan</button>' +
       '<button type="button" class="btn btn-secondary btn-sm" data-ggs="thirty">' + esc(thirtyLabel(tree)) + '</button></div>';
