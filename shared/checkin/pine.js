@@ -21,6 +21,8 @@
      Optional: ctx.plan (false: stop after the check-in, no Growth Plan step), ctx.toast(msg) (the tree's
                toasts, at the tree's own moments), ctx.mode ('self' default, or 'trust'), ctx.lifeHost (an element for the offer card),
                ctx.onLifeChoose() (Choose Now on the offer card; else GGLife's own dialog)
+   plan(ctx) runs the Growth Plan on its own from the latest check-in (same ctx; onSaved(null, {stage: 'plan'});
+   with no check-in yet it shows the tree's toast through ctx.toast and returns null, opening nothing).
    run() returns a handle {el, close(quiet), state(), stage()} that follows what is on screen
    (the grade step, the check-in, then the Growth Plan).
 
@@ -179,7 +181,7 @@
   }
 
   /* ---------- run ---------- */
-  function run(ctx) {
+  function run(ctx, only) {
     ctx = ctx || {};
     var id = ctx.id, quick = ctx.kind === 'quick';
     var CKB = window.PINE_CHECKIN || {};
@@ -367,14 +369,35 @@
       if (!n) return;   // the tree shows "Choose at least one practice first." and saves nothing
       var saves = [];
       setPlan(d, p, saves, id);
+      // savePersonalFile runs only when a check-in finished in this same visit (currentClientEntry); the Growth Plan
+      // on its own keeps the latest entry as it is and saves the plan in tend.plan alone.
       var entry = saved.entry;
-      entry.growthPlan = deep(p);
-      var copy = deep(entry), at = d.history.findIndex(function (e) { return e && e.id === copy.id; });
-      if (at >= 0) d.history[at] = copy; else d.history.push(copy);
-      sortEntries(d.history); saves.push(GGP.save(id));
+      if (entry) {
+        entry.growthPlan = deep(p);
+        var copy = deep(entry), at = d.history.findIndex(function (e) { return e && e.id === copy.id; });
+        if (at >= 0) d.history[at] = copy; else d.history.push(copy);
+        sortEntries(d.history); saves.push(GGP.save(id));
+      }
       Promise.all(saves).then(function () { if (typeof ctx.onSaved === 'function') { try { ctx.onSaved(entry, { stage: 'plan', msg: PLAN_TOAST }); } catch (e) {} } toast(PLAN_TOAST, 700); });
     }
 
+    /* the Growth Plan on its own (Home's Grow; on the tree page #plan, then the guided plan): oakPlanOpen 1442, oakLatestEntry, startGuidedPlan 679 */
+    if (only === 'plan') {
+      // oakLatestEntry: the latest own full check-in, else the latest of any kind.
+      var list = d.history.filter(function (e) { return e && e.scores && !e.from; }), full = list.filter(function (e) { return e.type !== 'quick'; });
+      var last = full[full.length - 1] || list[list.length - 1] || null;
+      if (!last) {   // no check-in yet: the tree shows this and opens nothing
+        toast('Take a check-in first, and your Growth Plan grows from it.');
+        try { if (hadPlain) window.gwPlainOn = oldPlain; else delete window.gwPlainOn; } catch (e) { window.gwPlainOn = oldPlain; }
+        ended = true;
+        return null;
+      }
+      // oakPrefillPlan: the saved plan (GGTend.plan(), filled in on page open), else nothing chosen.
+      saved = { entry: null, scores: last.scores, unsure: last.unsure || [], prefill: ensure(d).plan || {} };
+      stage = 'plan';
+      rhythm(planRun);
+      return handle;
+    }
     /* the check-in (gdBegin 660) */
     var finished = false;
     function begin() {
@@ -404,5 +427,5 @@
     return handle;
   }
 
-  window.GGCheckin.pine = { files: FILES, kinds: ['full', 'quick'], run: run };
+  window.GGCheckin.pine = { files: FILES, kinds: ['full', 'quick'], run: function (ctx) { return run(ctx); }, plan: function (ctx) { return run(ctx, 'plan'); } };
 })();

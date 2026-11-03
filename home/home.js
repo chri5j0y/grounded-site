@@ -74,13 +74,16 @@
   function pick(list, n) { return list.length ? list[((n % list.length) + list.length) % list.length] : null; }
   function I(id) { return '<svg class="i" aria-hidden="true"><use href="#hmi-' + id + '"/></svg>'; }
   function $(s, r) { return (r || document).querySelector(s); }
+  var LOADS = {};
   function load(src) {
-    return new Promise(function (ok) {
+    // One promise per file, so a second caller waits for the same download instead of going on before it runs.
+    if (LOADS[src]) return LOADS[src];
+    return (LOADS[src] = new Promise(function (ok) {
       if (document.querySelector('script[data-hm-src="' + src + '"]')) return ok(true);
       var s = document.createElement('script'); s.src = src; s.setAttribute('data-hm-src', src);
-      s.onload = function () { ok(true); }; s.onerror = function () { ok(false); };
+      s.onload = function () { ok(true); }; s.onerror = function () { delete LOADS[src]; ok(false); };
       document.head.appendChild(s);
-    });
+    }));
   }
   function toast(m) { if (window.GGP && GGP.toast) GGP.toast(m); }
 
@@ -461,6 +464,8 @@
     // BLD 907: the Home's own records follow re-filed practices (once a profile opens; a second pass changes nothing).
     if (changed && GGP.isOpen && GGP.isOpen(a.id)) { var hr0 = GGP.data(a.id, 'home'); if (hr0 && aliasHome(hr0)) saveHome(); }
     S.view = viewOf();
+    if (VISIT_WAIT) setTimeout(visitCheck, 300);
+    if (!window.GGVisit && !VISIT_LOADING) { VISIT_LOADING = true; load(SCR_MOD.visit).then(function () { if (window.GGVisit && S.view === 'today') render(); }); }
     // BLD 907: a new profile sets up its four first; Change My Setup opens the same screens.
     if ((SU.open && SU.id === S.id) || suPending()) { renderSetup(); return; }
     // Kid profiles keep their Today and My Tree (BLD 869).
@@ -711,12 +716,12 @@
       if (open && kt === 'maple') { var kw = obj(obj(GGP.data(k.id, 'maple')).kid).wording === 'plain' ? 'Plain' : 'Faith'; set.push('<div class="hm-row hm-p-roots"><span class="ic2">' + I('feather') + '</span><div class="tx"><b>Wording: ' + kw + '</b><small>Set by you, in ' + esc(k.name) + '\'s Maple settings.</small></div></div>'); }
       set.push('<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>' + (open ? 'Your passcode opens ' + esc(k.name) + '\'s ' + t.n : 'Only ' + esc(k.name) + '\'s passcode opens ' + t.n) + '</b><small>' + (open ? 'You set it up together, so you keep the key.' : 'You see days tended here. Answers stay with ' + esc(k.name) + '.') + '</small></div></div>');
       return '<div class="hm-kidrow"><div class="hm-kidhd"><img src="' + mark(kt) + '" alt=""><h3 class="hm-h3">' + esc(k.name) + '\'s ' + t.n + '</h3></div><div class="hm-week7" aria-label="Days tended this week">' + wk + '</div><div class="hm-set" style="margin-top:10px">' + set.join('') + '</div>' +
-        '<div class="hm-acts"><a class="hm-btn hm-p-leaves" href="' + t.href + '">' + I(open ? 'lock' : 'tree') + 'Open ' + esc(k.name) + '\'s ' + t.n + '</a></div></div>';
+        '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-pick="' + esc(k.id) + '">' + I(open ? 'lock' : 'tree') + 'Open ' + esc(k.name) + '\'s ' + t.n + '</button></div></div>';
     });
     helping.forEach(function (p) {
       var t = TREES[p.tree] || TREES.oak;
       rows.push('<div class="hm-kidrow"><div class="hm-kidhd"><img src="' + mark(p.tree || 'oak') + '" alt=""><h3 class="hm-h3">' + esc(p.name) + '\'s ' + t.n + '</h3></div><p class="hm-sub" style="margin-top:6px">You are ' + esc(p.name) + '\'s helper. You see what ' + esc(p.name) + ' chooses to share.</p>' +
-        '<div class="hm-acts"><a class="hm-btn hm-p-leaves" href="' + t.href + '#for=' + encodeURIComponent(p.id) + '">' + I('love') + 'Open ' + esc(p.name) + '\'s ' + t.n + '</a></div></div>');
+        '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-helpfor="' + esc(p.id) + '|' + esc(p.tree || 'oak') + '">' + I('love') + 'Open ' + esc(p.name) + '\'s ' + t.n + '</button></div></div>');
     });
     var add = '<div class="hm-quiet" style="margin-top:12px"><button type="button" data-hm="addkid">' + I('plus') + ' Add a Family Member</button><span>·</span><button type="button" data-hm="addlove">Set Up a Profile for Someone I Love</button></div>';
     return '<article class="hm-card hm-p-leaves o7" id="hm-family"><div class="hm-hd">' + pb(treeArt('grove')) + '<div><div class="hm-k">Your Family</div><div class="hm-sub">' + (rows.length ? 'Progress at a glance: days tended, check-ins, and rings. Answers and words stay inside each tree.' : 'Add the people you tend with. Each one has a tree of their own.') + '</div></div></div>' + rows.join('') + add + '</article>';
@@ -1615,8 +1620,9 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + plate + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (T.ready ? ownLinkHtml() : '') + '</div>' +
-      '<div class="hm-col hm-tside">' + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml() + '</div></div>' + fab;
+      '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml() + '</div></div>' + fab;
   }
+  function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
   function findItem(key) { var T = todayItems(); return T.items.filter(function (x) { return x.key === key; })[0] || null; }
   /* BLD 885: Right Now's How opens that practice's How on its card in the day, in place. */
   function openHowFromNow(key) {
@@ -3129,24 +3135,38 @@
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
   var CK_MOD = { oak: '/shared/checkin/oak.js?v=b912', sequoia: '/shared/checkin/sequoia.js?v=b912', birch: '/shared/checkin/birch.js?v=b912', pine: '/shared/checkin/pine.js?v=b912', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
-  var CK_READY = { maple: true, aspen: true };
+  var NOPLAN = {};
+  var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
   function openCheckin(kind) {
     var tree = S.tree, src = CK_MOD[tree]; if (!src || !S.id || !CK_READY[tree]) return false;
     mClose();
-    var fall = function () { CK_READY[tree] = false; openTreeSheet(kind === 'quick' ? 'quick' : 'checkin'); };
+    var fall = function () { CK_READY[tree] = false; openTreeSheet(kind === 'quick' ? 'quick' : kind === 'plan' ? 'plan' : 'checkin'); };
     load(src).then(function () {
       var M = window.GGCheckin && window.GGCheckin[tree]; if (!M || typeof M.run !== 'function') { fall(); return; }
-      if (arr(M.kinds).indexOf(kind) < 0) kind = 'full';
+      if (kind === 'plan' && typeof M.plan !== 'function') { NOPLAN[tree] = true; openTreeSheet('plan'); return; }
+      if (kind !== 'plan' && arr(M.kinds).indexOf(kind) < 0) kind = 'full';
       return arr(M.files).reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
-        M.run({ id: S.id, kind: kind, plain: plainWording(S.id, S.tree), member: member(),
-          onSaved: function (entry, info) { toast(info && info.season ? info.season : 'Check-in saved. Your tree is up to date.'); },
-          onClose: function () { render(); } });
+        var lifeHost = document.createElement('div'); lifeHost.className = 'hm-lifeoffer';
+        var lifeDone = function () { mClose(); render(); };
+        var toldAt = 0, tell = function (m, ms) { toldAt = Date.now(); toast(m); void ms; };
+        M[kind === 'plan' ? 'plan' : 'run']({ id: S.id, kind: kind, plain: plainWording(S.id, S.tree), member: member(),
+          toast: tell, lifeHost: lifeHost, onLife: lifeDone, onLifeChoose: lifeDone,
+          // A module that speaks for itself (ctx.toast) is never echoed; otherwise Home says it once.
+          onSaved: function (entry, info) {
+            info = info || {};
+            if (info.stage === 'grade' || info.stage === 'plan') return;
+            setTimeout(function () { if (Date.now() - toldAt > 1500) toast(info.season || info.msg || 'Check-in saved. Your tree is up to date.'); }, 60);
+          },
+          onPlanSaved: function () { setTimeout(function () { if (Date.now() - toldAt > 1500) toast('Your Growth Plan is saved. Your practices are on Today.'); }, 60); },
+          // The Health and Ability card (GGLife.offerCard) shows once, after a full check-in, in Home's own window.
+          onClose: function () { render(); if (lifeHost.childElementCount) { mDialog('Health and Ability', ''); var b = document.getElementById('hm-mdlg-b'); if (b) b.appendChild(lifeHost); } } });
       });
     }).catch(fall);
     return true;
   }
   function openTreeSheet(what) {
     if ((what === 'checkin' || what === 'quick') && openCheckin(what === 'quick' ? 'quick' : 'full')) return;
+    if (what === 'plan' && !NOPLAN[S.tree] && openCheckin('plan')) return;
     var t = TREES[S.tree] || TREES.oak, title = SHEET_SCREENS[what] || t.n;
     var hash = what === 'today' ? '#today' : what ? treeHash(t, what).slice(t.href.length) : '';
     // BLD 886: the check-in, Quick Check-in, and Growth Plan open guided (?guided=checkin|quick|plan, read by GGGuided.flag() in the tree).
@@ -3373,8 +3393,8 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b912', talk: '/shared/home/talk.js?v=b912' };
-  var SCR_READY = { settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b912', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b912', helper: '/shared/home/helper.js?v=b912' };
+  var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
     tree = tree || S.tree; var src = SCR_MOD[name]; if (!src || !S.id || !SCR_READY[name]) return false;
@@ -3395,6 +3415,26 @@
       });
     }).catch(fail);
     return true;
+  }
+  /* BLD 912: Guide visit cards (shared/home/visit.js, GGVisit) and the helper view (shared/home/helper.js). */
+  var VISIT_WAIT = '', VISIT_LOADING = false;
+  function visitTake(hash, tree, now) {
+    load(SCR_MOD.visit).then(function () {
+      if (!window.GGVisit) return;
+      GGVisit.take(hash);
+      if (now) openScreen('visit', tree); else VISIT_WAIT = tree || 'oak';
+    });
+  }
+  function visitCheck() {
+    if (!S.id) return;
+    if (VISIT_WAIT) { var tr = VISIT_WAIT; VISIT_WAIT = ''; openScreen('visit', tr); return; }
+  }
+  function openHelper(forId, tree) {
+    load(SCR_MOD.helper).then(function () {
+      var H = window.GGScreen && GGScreen.helper; if (!H) return;
+      var tr = tree || (H.treesFor ? H.treesFor(forId)[0] : '') || 'oak';
+      openScreen('helper', tr, { forId: forId });
+    });
   }
   function screenGo(what) {
     what = String(what || '');
@@ -3470,6 +3510,9 @@
   function walkDoor() {
     if (!DOOR || DOOR.done) return; DOOR.done = true;
     var d = DOOR, a = window.GGP && GGP.active && GGP.active(), h = decodeURIComponent(d.hash || ''), guided = /(^|&)guided=(checkin|quick|plan)\b/.exec(d.q || '');
+    // BLD 912: a Guide visit card (#gg-visit=) and the helper view (#for=) open here, never in a tree page.
+    if (/gg-visit=/.test(d.hash || '')) { visitTake(d.hash, d.tree, !!a); return; }
+    var hfor = /^#for=([\w-]+)/.exec(h); if (a && hfor) { openHelper(hfor[1], ''); return; }
     if (!a) { if (h || d.q) openRoom(d.tree, d.q, d.hash); else { var b = document.querySelector('[data-hm-stage="' + d.tree + '"]'); if (b) b.setAttribute('aria-pressed', 'true'); } return; }
     var mine = d.tree === S.tree;
     if (mine && guided && !h) { openTreeSheet(guided[2]); return; }
@@ -3799,7 +3842,7 @@
       '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-gpersp],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober]');
+    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-gpersp],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober],[data-hm-helpfor]');
     if (t && t.hasAttribute('data-hm-gpersp')) { GREAD.self = t.getAttribute('data-hm-gpersp') === 'self'; guideRead(GREAD.id, GREAD.tree); return; }
     if (!t) return;
     if (t.hasAttribute('data-hm-sober')) { soberTools(t.getAttribute('data-hm-sober')); return; }
@@ -3808,6 +3851,7 @@
     if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1], gs[2]); return; }
     if (t.hasAttribute('data-hm-gread')) { var gr = t.getAttribute('data-hm-gread').split('|'); if (GUIDE_SRC2[gr[1]]) { guideRead(gr[0], gr[1]); return; } mClose(); openGuide(gr[0], gr[1]); return; }
     if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); LT.q = ''; var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
+    if (t.hasAttribute('data-hm-helpfor')) { var hf = t.getAttribute('data-hm-helpfor').split('|'); openHelper(hf[0], hf[1]); return; }
     if (t.hasAttribute('data-hm-pick')) { var id = t.getAttribute('data-hm-pick'); mClose(); if (id === S.id) return; GGP.openDialog({ id: id }).then(function () { render(); }); return; }
     if (t.hasAttribute('data-hm-padd')) { mClose(); GGP.createDialog().then(function () { render(); }); return; }
   });
