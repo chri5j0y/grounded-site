@@ -1793,33 +1793,33 @@ window.GG_LEARN = {
         ],
         [
          "Quiet times",
-         "A prayer, a song, a hug"
+         "A song, a story, a hug"
         ],
         [
          "Wonder",
          "The sky, a song, an animal"
         ]
        ],
-       "say": "Roots can look like feeling loved, just for being you. Feeling safe, at home and when you go to sleep. Quiet times, like a prayer, a song, or a hug before bed. And wonder, when the sky or an animal makes you say wow."
+       "say": "Roots can look like feeling loved, just for being you. Feeling safe, at home and when you go to sleep. Quiet times, like a song, a story, or a hug before bed. And wonder, when the sky or an animal makes you say wow."
       },
       {
        "k": "points",
        "h": "Every family has its own ways",
        "items": [
         [
-         "Some pray",
-         "Or go to worship together"
+         "Some sit quietly",
+         "Or say thank you together"
         ],
         [
-         "Some sit quietly",
-         "Or sing, or walk outside"
+         "Some go outside",
+         "Or sing, or take a walk"
         ],
         [
          "Some keep traditions",
-         "A special meal, a blessing"
+         "A special meal, a family saying"
         ]
        ],
-       "say": "Every family has its own ways. Some families pray, or go to worship together. Some sit quietly, or sing, or take a walk outside. Some share a special meal or a blessing. Ask your grown-up what your family does. All of these can help roots grow deep."
+       "say": "Every family has its own ways. Some families sit quietly, or say thank you together. Some go outside, or sing, or take a walk. Some share a special meal or a family saying. Ask your grown-up what your family does. All of these can help roots grow deep."
       },
       {
        "k": "points",
@@ -1890,20 +1890,20 @@ window.GG_LEARN = {
         ],
         [
          "Share your family's way",
-         "A prayer, a verse, a quiet practice"
+         "A song, a story, a quiet practice"
         ],
         [
          "Welcome big questions",
          "\"I wonder too\" is a fine answer"
         ]
        ],
-       "say": "For grown-ups. Say it in plain words: I love you just for being you. Share a prayer, a verse, or a quiet practice from your own family's way. And welcome their big questions. I wonder too is a fine answer. When you check in With a grown-up, a Grown-up tip shows under every question."
+       "say": "For grown-ups. Say it in plain words: I love you just for being you. Share a song, a story, or a quiet practice from your own family's way. And welcome their big questions. I wonder too is a fine answer. When you check in With a grown-up, a Grown-up tip shows under every question."
       },
       {
        "k": "big",
        "h": "Strong roots hold you up.",
        "sub": "Pick it for your growth plan.",
-       "say": "Strong roots hold you up, even on rainy days. After your check-in, tap Make My Growth Plan. You can pick My Safe Place, Wonder Walk, or Bedtime Blessing."
+       "say": "Strong roots hold you up, even on rainy days. After your check-in, tap Make My Growth Plan. You can pick My Safe Place, Wonder Walk, or Bedtime Kind Words."
       },
       {
        "k": "quiz",
@@ -7446,15 +7446,15 @@ window.GG_LEARN = {
          "Stars, music, somewhere beautiful"
         ],
         [
-         "God, prayer, worship",
-         "If your family prays or worships"
+         "Gratitude and values",
+         "Saying thanks, and what matters most"
         ],
         [
          "Quiet and traditions",
          "Nature, stillness, family ways"
         ]
        ],
-       "say": "Roots can look like a calm place, inside you or a spot you like to go. Wonder, like the stars at night or a song you love. For many families, roots are God, prayer, and worship. For others, roots are quiet, time outside, or traditions passed down in your family. Aspen is made for all faith traditions and everything in-between."
+       "say": "Roots can look like a calm place, inside you or a spot you like to go. Wonder, like the stars at night or a song you love. For many families, roots are gratitude, and the values they live by. For others, roots are quiet, time outside, or traditions passed down in your family. Aspen is made for everyone, whatever grounds them."
       },
       {
        "k": "big",
@@ -7490,13 +7490,13 @@ window.GG_LEARN = {
         ]
        ],
        "tap": 2,
-       "say": "In a check-in, Roots asks about your experience. Where you feel calm. Whether you feel like you matter. Whether something holy feels close to you. Aspen asks about what you live and feel. And if you wonder why a question is there, tap Why this question? to find out."
+       "say": "In a check-in, Roots asks about your experience. Where you feel calm. Whether you feel like you matter. Whether you feel close to something bigger than you. Aspen asks about what you live and feel. And if you wonder why a question is there, tap Why this question? to find out."
       },
       {
        "k": "big",
-       "h": "Faith should help you feel loved.",
-       "sub": "If it ever feels heavy, talk with a grown-up you trust.",
-       "say": "Roots asks one more kind of question. Sometimes thoughts about God or faith can leave a person feeling worried, scared, or not good enough. Faith should help you feel loved. If it ever feels heavy, that is worth talking about with a grown-up you trust. Big questions are a normal part of growing up."
+       "h": "Big questions are welcome here.",
+       "sub": "If they ever feel heavy, talk with a grown-up you trust.",
+       "say": "Roots asks one more kind of question. Sometimes big questions, or rules and beliefs from a family or a community, can leave a person feeling worried, scared, or not good enough. You deserve to feel loved, just as you are. If it ever feels heavy, that is worth talking about with a grown-up you trust. Big questions are a normal part of growing up."
       },
       {
        "k": "big",
@@ -7567,9 +7567,9 @@ window.GG_LEARN = {
        "k": "quiz",
        "q": "What does Aspen ask about in Roots?",
        "opts": [
-        "Which religion you belong to",
+        "Which team you cheer for",
         "What steadies you, and whether it helps or weighs on you",
-        "How often you go to services"
+        "How busy your week is"
        ],
        "right": 1,
        "why": "Roots asks about your experience, whatever you believe.",
@@ -12073,8 +12073,8 @@ window.GG_LEARN = {
            "h": "Roots can look like",
            "items": [
             [
-             "Faith and prayer",
-             "God, the Sacred, the Divine, the Holy"
+             "Gratitude",
+             "A moment of thanks, every day"
             ],
             [
              "Nature and wonder",
@@ -12089,13 +12089,13 @@ window.GG_LEARN = {
              "A sense of something bigger than you"
             ]
            ],
-           "say": "For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Traditions, the ways your people mark birth, marriage, and death. Or quiet, and a sense of something bigger than you. Oak is made for all faith traditions and everything in-between."
+           "say": "For many people, roots are gratitude, and a daily moment of thanks. For others, roots are nature and wonder. Traditions, the ways your people mark birth, marriage, and death. Or quiet, and a sense of something bigger than you. Oak is made for everyone, whatever grounds them."
           },
           {
            "k": "big",
            "h": "What grounds you can help you cope.",
-           "sub": "Feeling abandoned, judged, or far from the sacred can weigh heavily too.",
-           "say": "Research on spirituality and health often finds that what grounds people helps them cope with hard seasons. And the opposite is real too. Feeling abandoned, judged, or far from the sacred can weigh heavily."
+           "sub": "Feeling alone, judged, or cut off from what matters can weigh heavily too.",
+           "say": "Many people find that what grounds them helps them cope with hard seasons. And the opposite is real too. Feeling alone, judged, or cut off from what matters can weigh heavily."
           },
           {
            "k": "points",
@@ -12113,23 +12113,17 @@ window.GG_LEARN = {
             ],
             [
              "Growing Edge",
-             "You feel unmoored, or faith feels heavy right now",
+             "You feel unmoored, or weighed down right now",
              "#B8612F"
             ]
            ],
-           "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is a real and honest place to be."
+           "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though you reach for it less lately. And a Growing Edge might mean you feel unmoored, or weighed down right now. That is a real and honest place to be."
           },
           {
-           "k": "story",
-           "title": "A Presence That Cannot Be Boxed",
-           "lines": [
-            "The nurse warned me: not religious. The family sat with their arms crossed, ready to get through my visit politely.",
-            "Then the wife leaned forward. We are not religious, she said. But we are deeply spiritual. We believe in a presence that cannot be boxed or labeled or fully described.",
-            "We kept what felt true from each tradition and let the rest go. It is not neat or tidy. But it is ours."
-           ],
-           "lesson": "Roots of every shape can hold you up.",
-           "note": "From a Grounded story by Chris Joy",
-           "say": "On one visit, the nurse warned me, not religious. The family sat with their arms crossed. Then the wife leaned forward and said, we are not religious, but we are deeply spiritual. We believe in a presence that cannot be boxed, or labeled, or fully described. We kept what felt true from each tradition, and let the rest go. It is not neat or tidy. But it is ours. I told her she had just explained God better than most sermons I had ever heard. And the whole room laughed."
+           "k": "big",
+           "say": "Roots come in every shape. For one person, it is a garden, or an early walk. For another, it is music, a family table, or the quiet before the house wakes up. Whatever its shape, what holds you up is yours to name.",
+           "h": "Roots of every shape can hold you up.",
+           "sub": "What holds you up is yours to name."
           },
           {
            "k": "big",
@@ -12147,7 +12141,7 @@ window.GG_LEARN = {
             ],
             [
              "What holds me up today?",
-             "A person, a prayer, a place, a word"
+             "A person, a song, a place, a word"
             ],
             [
              "Where did I feel something bigger than me this week?",
@@ -12155,7 +12149,7 @@ window.GG_LEARN = {
             ],
             [
              "Name it",
-             "With a word, a prayer, or a thank-you"
+             "With a word, a quiet moment, or a thank-you"
             ]
            ],
            "cue": {
@@ -12167,7 +12161,7 @@ window.GG_LEARN = {
             },
             "at": [1, 2, 3, 4]
            },
-           "say": "Let us practice. This one is called a Presence Check. Settle in, with your feet down, and take one slow breath. Now ask yourself, what holds me up today? Maybe a person, a prayer, a place, or a word. Next, where did I feel something bigger than me this week? Even for a moment. Last, name it. With a word, a prayer, or a simple thank you."
+           "say": "Let us practice. This one is called a Presence Check. Settle in, with your feet down, and take one slow breath. Now ask yourself, what holds me up today? Maybe a person, a song, a place, or a word. Next, where did I feel something bigger than me this week? Even for a moment. Last, name it. With a word, a quiet moment, or a simple thank you."
           },
           {
            "k": "big",
@@ -12179,9 +12173,9 @@ window.GG_LEARN = {
            "k": "quiz",
            "q": "What does Oak look at in Roots?",
            "opts": [
-            "Which religion you belong to",
+            "Which team you cheer for",
             "Whether what grounds you holds you up or weighs you down",
-            "How often you attend services"
+            "How busy your week is"
            ],
            "right": 1,
            "why": "Roots are about what holds you up, whatever you believe.",
@@ -24292,8 +24286,8 @@ window.GG_LEARN = {
        "h": "Roots can look like",
        "items": [
         [
-         "Faith and prayer",
-         "God, the Holy, the Sacred"
+         "Gratitude",
+         "A moment of thanks, every day"
         ],
         [
          "Nature and wonder",
@@ -24308,32 +24302,32 @@ window.GG_LEARN = {
          "Something larger than yourself"
         ]
        ],
-       "say": "For many people, roots are faith and prayer, and God, by whatever name they use. For others, roots are nature and wonder. Music and quiet. Or love, and a sense of something larger than yourself. Sequoia is made for all faith traditions and everything in-between."
+       "say": "For many people, roots are gratitude, and a daily moment of thanks. For others, roots are nature and wonder. Music and quiet. Or love, and a sense of something larger than yourself. Sequoia is made for everyone, whatever grounds them."
       },
       {
        "k": "points",
        "h": "Roots can change shape",
        "items": [
         [
-         "Worship from home",
-         "Radio, TV, phone, or online"
+         "Connection from home",
+         "A call, a letter, a visit online"
         ],
         [
-         "Prayers you know by heart",
-         "Words learned long ago"
+         "Words you know by heart",
+         "Poems and songs learned long ago"
         ],
         [
          "Quiet on purpose",
          "Time alone that feeds you"
         ]
        ],
-       "say": "In later life, the way you tend your roots may change. Maybe getting to services is harder now, so worship comes by radio, TV, phone, or online. Maybe the prayers or poems you learned long ago come back when you need them. And many people find that quiet time alone grows richer with age. A practice can change shape and still feed you."
+       "say": "In later life, the way you tend your roots may change. Maybe getting out is harder now, so connection comes by a call, a letter, or a visit online. Maybe the poems or songs you learned long ago come back when you need them. And many people find that quiet time alone grows richer with age. A practice can change shape and still feed you."
       },
       {
        "k": "big",
        "h": "Honest questions are welcome here, at any age.",
-       "sub": "Faith can be a comfort. It can also feel like a weight.",
-       "say": "Research with older adults found something hopeful. People who explored their questions about faith, instead of pushing them down, tended to have better health. So honest questions and doubts are welcome here, at any age. And faith can be a comfort, or it can feel like a weight. Feeling far from the sacred, let down by it, or hurt by people of faith is real, and it matters too."
+       "sub": "What grounds you can be a comfort. At times it can feel like a weight.",
+       "say": "Big questions often come with a long life. Exploring them, instead of pushing them down, can bring a kind of peace. So honest questions and doubts are welcome here, at any age. What grounds you can be a comfort, and at times it can feel like a weight. Feeling far from what matters most, let down, or hurt by people you trusted is real, and it matters too."
       },
       {
        "k": "points",
@@ -24351,11 +24345,11 @@ window.GG_LEARN = {
         ],
         [
          "Growing Edge",
-         "You feel unmoored, or faith feels heavy",
+         "You feel unmoored, or weighed down",
          "#B8612F"
         ]
        ],
-       "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though it has been harder to reach lately. And a Growing Edge might mean you feel unmoored, or faith feels heavy right now. That is an honest place to be. A chaplain or spiritual director can be a good listener there."
+       "say": "Strong roots might mean you know what holds you up, and you reach for it. Steady might mean it is there, though it has been harder to reach lately. And a Growing Edge might mean you feel unmoored, or weighed down right now. That is an honest place to be. Someone you trust can be a good listener there."
       },
       {
        "k": "big",
@@ -24371,7 +24365,7 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Practice: Breath Prayer",
+       "h": "Practice: Breath and Words",
        "items": [
         [
          "Settle",
@@ -24379,7 +24373,7 @@ window.GG_LEARN = {
         ],
         [
          "Choose two short halves",
-         "Be still, and know. Or: I am here, I let go."
+         "I am here, I let go. Or: I am calm, I am loved."
         ],
         [
          "Breathe with the words",
@@ -24397,21 +24391,21 @@ window.GG_LEARN = {
         },
         "at": [2, 3, 7, 8]
        },
-       "say": "Let us practice. This one is called Breath Prayer. Sit or lie however is comfortable, and let your shoulders soften. Now choose a short phrase with two halves. It might be, be still, and know. Or, I am held, I am loved. Or, with no words about God at all, breathing in, I am here, breathing out, I let go. Breathe in on the first half, and out on the second. Keep your breath easy and natural, and never force it. Let us take half a minute together, right now. Good."
+       "say": "Let us practice. This one is called Breath and Words. Sit or lie however is comfortable, and let your shoulders soften. Now choose a short phrase with two halves. It might be, I am here, I let go. Or, I am calm, I am loved. Or, breathing in, I am safe, breathing out, I am steady. Breathe in on the first half, and out on the second. Keep your breath easy and natural, and never force it. Let us take half a minute together, right now. Good."
       },
       {
        "k": "big",
        "h": "Tend your roots, and they will hold you.",
-       "sub": "Breath Prayer is ready for your growth plan.",
-       "say": "Tend your roots, and they will hold you. Breath Prayer works anywhere, even in bed, and it is ready to add to your growth plan."
+       "sub": "Breathing practices are ready for your growth plan.",
+       "say": "Tend your roots, and they will hold you. A few words with your breath work anywhere, even in bed, and breathing practices are ready to add to your growth plan."
       },
       {
        "k": "quiz",
        "q": "What does Sequoia look at in Roots?",
        "opts": [
-        "Which religion you belong to",
+        "Which team you cheer for",
         "Whether what grounds you holds you up",
-        "How often you attend services"
+        "How busy your week is"
        ],
        "right": 1,
        "why": "Roots are about what holds you up, whatever you believe.",
@@ -31259,8 +31253,8 @@ window.GG_LEARN = {
        "h": "Roots can look like",
        "items": [
         [
-         "Faith, prayer, or worship",
-         "For many people, a door to peace"
+         "Gratitude",
+         "A moment of thanks, every day"
         ],
         [
          "Quiet and reflection",
@@ -31275,7 +31269,7 @@ window.GG_LEARN = {
          "What you want to keep, or start"
         ]
        ],
-       "say": "Roots look different for different people. For some, roots are faith, prayer, or worship, and God, by whatever name they use. For others, roots are quiet time, nature, music, or a long run. For many, roots are family traditions and the values they live by. Often it is a mix. Pine is made for all faith traditions and everything in-between."
+       "say": "Roots look different for different people. For some, roots are gratitude, and a daily moment of thanks. For others, roots are quiet time, nature, music, or a long run. For many, roots are family traditions and the values they live by. Often it is a mix. Pine is made for everyone, whatever grounds them."
       },
       {
        "k": "big",
@@ -31292,7 +31286,7 @@ window.GG_LEARN = {
          "A normal part of growing"
         ],
         [
-         "Faith can hurt too",
+         "Some things weigh on you",
          "And that is worth talking about"
         ],
         [
@@ -31300,7 +31294,7 @@ window.GG_LEARN = {
          "It asks what holds you steady"
         ]
        ],
-       "say": "A large national study found that many teens find faith hard to put into words. That is normal. Honest questions and doubts are part of growing up. And sometimes faith, or rules from a family or a community, can leave someone feeling scared or not good enough. In teens, experiences like that go with heavier moods, so they are worth talking through with someone you trust. That is why Pine asks what holds you up. It asks whether your roots are holding you up."
+       "say": "Many teens find what steadies them hard to put into words. That is normal. Honest questions and doubts are part of growing up. And sometimes rules or beliefs from a family or a community can leave someone feeling scared or not good enough. Experiences like that can weigh on a mood, so they are worth talking through with someone you trust. That is why Pine asks what holds you up. It asks whether your roots are holding you up."
       },
       {
        "k": "points",
@@ -31344,7 +31338,7 @@ window.GG_LEARN = {
         ],
         [
          "Things I do that help",
-         "Faith, music, nature, traditions"
+         "Music, nature, quiet, traditions"
         ],
         [
          "Keep it where you will see it",
@@ -31359,7 +31353,7 @@ window.GG_LEARN = {
         },
         "at": [3, 4, 6, 8]
        },
-       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a field, a car, a court. Last, things you do that help, like prayer, music, time outside, or a family tradition. Short lists are fine. Later, write them down and keep them in your phone notes or on your wall."
+       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a field, a car, a court. Last, things you do that help, like quiet time, music, time outside, or a family tradition. Short lists are fine. Later, write them down and keep them in your phone notes or on your wall."
       },
       {
        "k": "big",
@@ -31371,9 +31365,9 @@ window.GG_LEARN = {
        "k": "quiz",
        "q": "What does Pine look at in Roots?",
        "opts": [
-        "Which religion you belong to",
+        "Which team you cheer for",
         "Whether what grounds you holds you steady",
-        "How often you go to services"
+        "How busy your week is"
        ],
        "right": 1,
        "why": "Roots are about what holds you steady, whatever you believe.",
@@ -36883,8 +36877,8 @@ window.GG_LEARN = {
        "h": "Roots can look like",
        "items": [
         [
-         "Faith, prayer, or worship",
-         "God, by whatever name you use"
+         "Gratitude",
+         "A moment of thanks, every day"
         ],
         [
          "Quiet and reflection",
@@ -36899,13 +36893,13 @@ window.GG_LEARN = {
          "What you keep, and what you choose"
         ]
        ],
-       "say": "Roots look different for different people. For some, roots are faith, prayer, or worship, and God, by whatever name they use. For others, roots are quiet, time outside, music, or the values they live by. Often it is a mix. Birch is made for all faith traditions and everything in-between."
+       "say": "Roots look different for different people. For some, roots are gratitude, and a daily moment of thanks. For others, roots are quiet, time outside, music, or the values they live by. Often it is a mix. Birch is made for everyone, whatever grounds them."
       },
       {
        "k": "big",
        "h": "These are the years roots get chosen.",
        "sub": "Strengthened, set aside, or reshaped, and made your own.",
-       "say": "After high school, a lot of people find their roots changing shape. A long national study that followed teens into their twenties found faith grew stronger for some, was set aside by others, and was reshaped by many. Practices from home get tested by new freedom. What you keep, you start to choose for yourself."
+       "say": "After high school, a lot of people find their roots changing shape. For some, what grounds them grows stronger. Others set some of it aside, and many reshape it. Practices from home get tested by new freedom. What you keep, you start to choose for yourself."
       },
       {
        "k": "points",
@@ -36916,7 +36910,7 @@ window.GG_LEARN = {
          "Part of making it your own"
         ],
         [
-         "Faith can hurt too",
+         "Some things weigh on you",
          "And that is worth talking through"
         ],
         [
@@ -36924,7 +36918,7 @@ window.GG_LEARN = {
          "It asks what grounds you"
         ]
        ],
-       "say": "Honest questions and doubts are common in these years. And for some people, a faith or a community they grew up with has left them feeling ashamed, afraid, or pushed out. Research finds struggles like that weigh on people, so they are worth talking through with someone you trust. That is why Birch asks what holds you up. It asks whether your roots are holding you up, or weighing you down."
+       "say": "Honest questions and doubts are common in these years. And for some people, rules or beliefs from the family or community they grew up with have left them feeling ashamed, afraid, or pushed out. Research finds struggles like that weigh on people, so they are worth talking through with someone you trust. That is why Birch asks what holds you up. It asks whether your roots are holding you up, or weighing you down."
       },
       {
        "k": "points",
@@ -36968,7 +36962,7 @@ window.GG_LEARN = {
         ],
         [
          "Things I do that help",
-         "Faith, music, nature, a call home"
+         "Music, nature, quiet, a call home"
         ],
         [
          "Keep it close",
@@ -36983,7 +36977,7 @@ window.GG_LEARN = {
         },
         "at": [3, 4, 6, 8]
        },
-       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a trail, a car, a friend's couch. Last, things you do that help, like prayer, music, time outside, or a call home. Short lists are fine. Later, write them down and keep them in your phone notes or in Groundwork."
+       "say": "Let's practice. This one is called What Holds Me Up. You will make three short lists, in your head or out loud. First, people who steady you. Next, places that calm you. A room, a trail, a car, a friend's couch. Last, things you do that help, like quiet time, music, time outside, or a call home. Short lists are fine. Later, write them down and keep them in your phone notes or in Groundwork."
       },
       {
        "k": "big",
@@ -36995,9 +36989,9 @@ window.GG_LEARN = {
        "k": "quiz",
        "q": "What does Birch look at in Roots?",
        "opts": [
-        "Which religion you belong to",
+        "Which team you cheer for",
         "Whether what grounds you holds you up",
-        "How often you go to services"
+        "How busy your week is"
        ],
        "right": 1,
        "why": "Roots are about what grounds you, whatever you believe.",
@@ -45582,7 +45576,7 @@ window.GG_LEARN = {
          "The meaning you share"
         ]
        ],
-       "say": "Roots for a family can look like feeling thankful, and noticing the good in today. Quiet and wonder, like a still minute, or a wow outside. Family traditions, the ways your family marks a birthday, a holiday, or a hard day. And for every family, roots include what matters most to you, the meaning you share. Every family’s roots look a little different. The Grove is made for all faith traditions and everything in-between."
+       "say": "Roots for a family can look like feeling thankful, and noticing the good in today. Quiet and wonder, like a still minute, or a wow outside. Family traditions, the ways your family marks a birthday, a holiday, or a hard day. And for every family, roots include what matters most to you, the meaning you share. Every family’s roots look a little different. The Grove is made for every family, whatever grounds you."
       },
       {
        "k": "big",
@@ -45599,7 +45593,7 @@ window.GG_LEARN = {
          "One thank-you each, at dinner or bedtime"
         ],
         [
-         "Bedtime Blessing",
+         "Bedtime Kind Words",
          "A kind wish by name, in your own words"
         ],
         [
@@ -45611,7 +45605,7 @@ window.GG_LEARN = {
          "A calm place for five quiet minutes"
         ]
        ],
-       "say": "Here are a few ways families tend their roots. A Gratitude Round, where everyone names one thing they are thankful for today. A Bedtime Blessing, a short blessing or kind wish over each person, in whatever words fit your family. A kind wish, or simply, I’m glad you’re mine. A Family Awe Walk, where everyone looks for one thing that makes them say wow. And A Family Spot, one calm place where you sit together for five quiet minutes."
+       "say": "Here are a few ways families tend their roots. A Gratitude Round, where everyone names one thing they are thankful for today. Bedtime Kind Words, a short kind wish over each person, in whatever words fit your family. A kind wish, or simply, I’m glad you’re mine. A Family Awe Walk, where everyone looks for one thing that makes them say wow. And A Family Spot, one calm place where you sit together for five quiet minutes."
       },
       {
        "k": "tabs",
@@ -47262,14 +47256,14 @@ window.GG_LEARN = {
         ],
         [
          "For families and groups",
-         "And faith communities"
+         "At home, or at a shared meal"
         ],
         [
          "We did this today",
          "Tap it, and the grove grows"
         ]
        ],
-       "say": "You will find Table Thanks in Together, under Roots, in Family, Faith Community, and Small Group groves. When you have done it, tap We did this today, and the grove grows."
+       "say": "You will find Table Thanks in Together, under Roots, for families and groups. When you have done it, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -47398,13 +47392,13 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Do This Together",
-       "h": "A Bedtime Blessing",
+       "h": "Bedtime Kind Words",
        "sub": "A few kind words before sleep.",
-       "say": "This is a bedtime blessing. It is a few kind words you say over each person before they sleep. It takes less than a minute a night, and families keep it for years. Keep the lights low and the voices soft."
+       "say": "This is Bedtime Kind Words. It is a few kind words you say over each person before they sleep. It takes less than a minute a night, and families keep it for years. Keep the lights low and the voices soft."
       },
       {
        "k": "points",
-       "h": "A blessing can be",
+       "h": "Kind words can be",
        "items": [
         [
          "A kind wish",
@@ -47419,7 +47413,7 @@ window.GG_LEARN = {
          "For who they are"
         ]
        ],
-       "say": "A blessing looks different in every family. It can be a kind wish, like, sleep well, you are loved. It can be a family saying, words that belong just to you. Or it can be a thank-you for who they are. Every one of these is welcome here."
+       "say": "Kind words look different in every family. It can be a kind wish, like, sleep well, you are loved. It can be a family saying, words that belong just to you. Or it can be a thank-you for who they are. Every one of these is welcome here."
       },
       {
        "k": "words",
@@ -47453,26 +47447,26 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Bless each other now",
+       "h": "Kind words for each other now",
        "sub": "One name. A few kind words.",
        "beats": [
         "Let us try it now.",
         "Pick the words that fit your family.",
-        "Turn to the person next to you, say their name, and say your blessing.",
-        "Little ones can bless the grown-ups too.",
+        "Turn to the person next to you, say their name, and say your kind words.",
+        "Little ones can give kind words to the grown-ups too.",
         {
          "t": "Take turns, all the way around.",
          "w": 12
         }
        ],
-       "say": "Let us try it now. Pick the words that fit your family. Turn to the person next to you, say their name, and say your blessing. Little ones can bless the grown-ups too. Take turns, all the way around."
+       "say": "Let us try it now. Pick the words that fit your family. Turn to the person next to you, say their name, and say your kind words. Little ones can give kind words to the grown-ups too. Take turns, all the way around."
       },
       {
        "k": "points",
        "h": "Find it in The Grove",
        "items": [
         [
-         "Bedtime Blessing",
+         "Bedtime Kind Words",
          "In Together, under Roots"
         ],
         [
@@ -47484,7 +47478,7 @@ window.GG_LEARN = {
          "Tap it, and the grove grows"
         ]
        ],
-       "say": "You will find Bedtime Blessing in the Together tab, under Roots. For an even calmer night, try Early Night, under Leaves. When your family has done one, tap We did this today, and the grove grows."
+       "say": "You will find Bedtime Kind Words in the Together tab, under Roots. For an even calmer night, try Early Night, under Leaves. When your family has done one, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
@@ -47592,7 +47586,8 @@ window.GG_LEARN = {
        "sub": "The same words, every night, for as long as you like.",
        "say": "Say the same words every night, for as long as you like. Little by little, they become part of your family. You are loved. Sleep well."
       }
-     ]
+     ],
+     "plainTitle": "Bedtime Kind Words"
     },
     {
      "id": "gr-r-blessing",
@@ -47605,13 +47600,13 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Do This Together",
-       "h": "Family Blessing",
+       "h": "Family Good Wishes",
        "sub": "Good words to carry into the day.",
-       "say": "This is a family blessing. It is a few good words you give each other, at the door in the morning, on a birthday, or before a big day. It takes less than a minute."
+       "say": "These are family good wishes. They are a few good words you give each other, at the door in the morning, on a birthday, or before a big day. It takes less than a minute."
       },
       {
        "k": "points",
-       "h": "A blessing can be",
+       "h": "Good wishes can be",
        "items": [
         [
          "A good wish",
@@ -47626,7 +47621,7 @@ window.GG_LEARN = {
          "For who they are"
         ]
        ],
-       "say": "Every family’s blessing looks different. It can be a good wish, like, may today be kind to you. It can be your own family words, said the same way each time. Or it can be a few words of thanks for who they are. Every one of these is welcome here."
+       "say": "Every family’s good wishes look different. It can be a good wish, like, may today be kind to you. It can be your own family words, said the same way each time. Or it can be a few words of thanks for who they are. Every one of these is welcome here."
       },
       {
        "k": "words",
@@ -47641,7 +47636,7 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "When to bless",
+       "h": "When to give them",
        "items": [
         [
          "At the door",
@@ -47671,15 +47666,15 @@ window.GG_LEARN = {
          "If that feels right to them"
         ],
         [
-         "Anyone can bless",
+         "Anyone can give one",
          "Kids included"
         ]
        ],
-       "say": "Here is how. Say the person’s name. Put a hand on their shoulder, if that feels right to them. Say your few words. Anyone can give the blessing, kids included. Little ones can bless the grown-ups too."
+       "say": "Here is how. Say the person’s name. Put a hand on their shoulder, if that feels right to them. Say your few words. Anyone can give a good wish, kids included. Little ones can give one to the grown-ups too."
       },
       {
        "k": "big",
-       "h": "Bless each other now",
+       "h": "Good wishes for each other now",
        "sub": "One name. A few good words.",
        "beats": [
         "Let us try it now.",
@@ -47835,7 +47830,8 @@ window.GG_LEARN = {
        "sub": "A few good words, every day.",
        "say": "A few good words, said often, become part of who your family is. Go with our love."
       }
-     ]
+     ],
+     "plainTitle": "Family Good Wishes"
     },
     {
      "id": "gr-r-hardday",
@@ -49328,7 +49324,7 @@ window.GG_LEARN = {
        "eyebrow": "Do This Together",
        "h": "Opening and Closing a Group",
        "sub": "Arrive together. Leave together.",
-       "say": "This video is for any group that meets: a small group, a class, a team, or a faith community. It shows a simple way to open your time together, and a simple way to close it."
+       "say": "This video is for any group that meets: a small group, a class, a team, or a club. It shows a simple way to open your time together, and a simple way to close it."
       },
       {
        "k": "big",
@@ -49431,7 +49427,7 @@ window.GG_LEARN = {
        "cue": {
         "at": [1, 2, 3, 4]
        },
-       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Roots too. And Group Agreements is under Branches. Faith communities and small groups also have Sending Words, under Roots."
+       "say": "You will find these in Together. Start with Stillness is under Roots. One Word Check-in is under Bark. Closing Thanks is under Roots too. And Group Agreements is under Branches. Small groups also have Sending Words, under Roots."
       },
       {
        "k": "big",
@@ -49955,15 +49951,15 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Do This Together",
-       "h": "A Blessing for the Circle",
+       "h": "Good Words for the Circle",
        "sub": "Good words to carry into the week.",
-       "say": "This is A Blessing for the Circle. At the end of your time together, the group sends each other out with a few good words. It takes about two minutes, and it fits a congregation, a study class, a youth group, or a small group."
+       "say": "This is Good Words for the Circle. At the end of your time together, the group sends each other out with a few good words. It takes about two minutes, and it fits a study class, a youth group, a team, or a small group."
       },
       {
        "k": "big",
        "h": "A gift of good words.",
        "sub": "Something kind to carry into the week.",
-       "say": "A blessing is a gift of good words. Each person leaves carrying something kind into the week ahead."
+       "say": "Good words are a gift. Each person leaves carrying something kind into the week ahead."
       },
       {
        "k": "points",
@@ -50205,7 +50201,8 @@ window.GG_LEARN = {
        "sub": "Good words, every time you gather.",
        "say": "Go in peace, and go together. Good words, every time you gather."
       }
-     ]
+     ],
+     "plainTitle": "Good Words for the Circle"
     },
     {
      "id": "gr-r-joys",
@@ -51096,6 +51093,7 @@ window.GG_LEARN = {
     if (!l.faithScenes) return;
     var plain = l.scenes;
     try { Object.defineProperty(l, 'scenes', { configurable: true, enumerable: true, get: function () { return window.GROVE_PLAIN === false ? l.faithScenes : plain; } }); } catch (e) {}
+    if (l.plainTitle) { var ft = l.title, pt = l.plainTitle; try { Object.defineProperty(l, 'title', { configurable: true, enumerable: true, get: function () { return window.GROVE_PLAIN === false ? ft : pt; } }); } catch (e) {} } /* GWG BLD 908 PLN */
   }); });
 })();
 /* end The Grove Learn, Faith or Plain */

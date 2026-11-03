@@ -5573,7 +5573,7 @@ const TOPICS = [
      "Share the news simply and kindly, with the family's permission for what is said.",
      "Pause together when you gather: say their name, light a candle, or hold a moment of silence.",
      "Organize practical help with the family: meals, rides, childcare, help with the service.",
-     "Let people know where to bring their grief: a gathering, a pastor or leader, a quiet room."
+     "Let people know where to bring their grief: a gathering, a leader, a quiet room."
     ],
     "helps": [
      "Saying their name at gatherings in the weeks after, not only at the funeral.",
@@ -10410,7 +10410,7 @@ var TOPICS = [
      "Opening your space to recovery meetings and family groups, if you have room.",
      "A warm welcome without a spotlight: a greeter, a name remembered, a seat saved.",
      "A place to serve, offered gently and at the person's own pace.",
-     "Talking about drinking and drugs plainly, with grace, so nobody has to carry it in silence."
+     "Talking about drinking and drugs plainly, with kindness, so nobody has to carry it in silence."
     ],
     "say": [
      "“We're glad you're here.”",
@@ -10420,7 +10420,7 @@ var TOPICS = [
     "people": "Try, to someone who shares they're growing sober: “Thank you for telling me. We're glad you're here. What would help you feel at home?” To a family member: “That sounds really heavy to carry. You're welcome here too.” From the front: “Whoever you are and wherever you are on your path, including growing sober, you belong here.”"
    },
    "leader": {
-    "feel": "As a pastor, leader, or group facilitator, you may want to help and feel unsure where to start. You may also realize some of your gatherings and rituals assume drinking, or that your community has spoken about drinking with more shame than grace. Someone growing sober may be watching closely to see whether they're truly welcome. Small, clear changes show them they are.",
+    "feel": "As a leader or group facilitator, you may want to help and feel unsure where to start. You may also realize some of your gatherings and rituals assume drinking, or that your community has spoken about drinking with more shame than kindness. Someone growing sober may be watching closely to see whether they're truly welcome. Small, clear changes show them they are.",
     "say": [
      "From the front: “Whoever you are and wherever you are on your path, you belong here.”",
      "Privately: “Thank you for trusting me. What would help you feel at home?”",
@@ -10429,7 +10429,7 @@ var TOPICS = [
     ],
     "avoid": [
      "Share someone's sobriety in a request for support or an announcement without their clear okay.",
-     "Use labels from the front, or speak of drinking with shame. Grace opens doors.",
+     "Use labels from the front, or speak of drinking with shame. Kindness opens doors.",
      "Rush someone newly sober into a big spotlight or leadership role. Let them grow at their own pace.",
      "Plan gatherings where drinking is the center, with sober options as an afterthought."
     ],
@@ -10441,7 +10441,7 @@ var TOPICS = [
      "Train greeters and leaders to welcome warmly, remember names, and keep stories private.",
      "Keep help numbers close: SAMHSA, 988, 911, and local meetings."
     ],
-    "you": "You don't need a recovery program to be a recovery-friendly community. You need grace, plain words, and a welcome that doesn't need explaining. Take care of your own heart too; this work can stir your own family's story."
+    "you": "You don't need a recovery program to be a recovery-friendly community. You need kindness, plain words, and a welcome that doesn't need explaining. Take care of your own heart too; this work can stir your own family's story."
    }
   },
   "practices": [

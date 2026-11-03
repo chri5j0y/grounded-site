@@ -8749,7 +8749,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "Our Pastor or Leader Is Leaving",
+      "h": "Our Leader Is Leaving",
       "sub": "For the Group",
       "say": "This is for all of us, together, as a leader who has meant a lot to our group moves on."
      },
@@ -8985,7 +8985,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "Our Pastor or Leader Is Leaving",
+      "h": "Our Leader Is Leaving",
       "sub": "For the Leader",
       "say": "This is for whoever is guiding a community or group through a leader's leaving: an elder, a board member, a staff member, the departing leader, or a group's co-leader."
      },
@@ -9205,9 +9205,9 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "After a Loss in Our Congregation",
+      "h": "After a Loss in Our Community",
       "sub": "For the Group",
-      "say": "This is for all of us, together, after someone in our congregation or our group has died."
+      "say": "This is for all of us, together, after someone in our community or our group has died."
      },
      {
       "k": "big",
@@ -9421,7 +9421,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "After a Loss in Our Congregation",
+      "h": "After a Loss in Our Community",
       "sub": "For the Leader",
       "say": "This is for the leader, group leader, or volunteer guiding a group after one of its members has died."
      },
@@ -9860,7 +9860,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "Conflict in Our Group",
       "sub": "For the Leader",
-      "say": "This is for the pastor, board member, elder, or group leader guiding a community or group through conflict."
+      "say": "This is for the group leader, board member, or organizer guiding a community or group through conflict."
      },
      {
       "k": "big",
@@ -10256,7 +10256,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "Welcoming Newcomers",
       "sub": "For the Leader",
-      "say": "This is for the pastor, the welcome team, or the group leader helping new people find their place in a community or group."
+      "say": "This is for the group leader or the welcome team helping new people find their place in a community or group."
      },
      {
       "k": "big",
@@ -10687,7 +10687,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "When a Group Ends",
       "sub": "For the Leader",
-      "say": "This is for the leader, facilitator, or pastor bringing a small group, a support group, a study, or a ministry to a close."
+      "say": "This is for the leader or facilitator bringing a small group, a support group, a study, or a club to a close."
      },
      {
       "k": "big",
@@ -11108,7 +11108,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "When a Member Is in Crisis",
       "sub": "For the Leader",
-      "say": "This is for the pastor, group leader, or volunteer who learns that someone in their community or group is in crisis."
+      "say": "This is for the group leader or volunteer who learns that someone in their community or group is in crisis."
      },
      {
       "k": "big",
@@ -11916,7 +11916,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "Hard Conversations in Our Group",
       "sub": "For the Leader",
-      "say": "This is for the group leader, pastor, or facilitator getting ready to hold a hard conversation with a group."
+      "say": "This is for the group leader or facilitator getting ready to hold a hard conversation with a group."
      },
      {
       "k": "big",
@@ -12336,7 +12336,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "When Trust Is Broken",
       "sub": "For the Leader",
-      "say": "This is for the pastor, group leader, or board guiding a group after trust has been broken."
+      "say": "This is for the group leader or board guiding a group after trust has been broken."
      },
      {
       "k": "big",
@@ -12761,7 +12761,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "When Attendance Drifts",
       "sub": "For the Leader",
-      "say": "This is for the pastor, group leader, or care team when attendance has been drifting."
+      "say": "This is for the group leader or care team when attendance has been drifting."
      },
      {
       "k": "big",
@@ -12974,7 +12974,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "When Our Church Is Growing Smaller",
+      "h": "When Our Group Is Growing Smaller",
       "sub": "For the Group",
       "say": "This is for all of us, together, as our community or group grows smaller than it was."
      },
@@ -13177,7 +13177,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "When Our Church Is Growing Smaller",
+      "h": "When Our Group Is Growing Smaller",
       "sub": "For the Leader",
       "say": "This is for whoever is guiding a community or a group through a season of growing smaller: a leader, a board member, a coordinator, or a group leader."
      },
@@ -13603,7 +13603,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "Volunteers Running on Empty",
       "sub": "For the Leader",
-      "say": "This is for the pastor, volunteer coordinator, or group leader whose helpers are running on empty."
+      "say": "This is for the volunteer coordinator or group leader whose helpers are running on empty."
      },
      {
       "k": "big",
@@ -13783,7 +13783,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "Hurt Inside Our Faith Community",
+      "h": "Hurt Inside Our Community",
       "sub": "For the Group",
       "say": "This is for all of us, together, when someone has been hurt inside our own group or community."
      },
@@ -13987,7 +13987,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "Hurt Inside Our Faith Community",
+      "h": "Hurt Inside Our Community",
       "sub": "For the Leader",
       "say": "This is for whoever leads a community or group after someone has been hurt inside it: a leader, a board member, a coordinator, or a group leader."
      },
@@ -18915,7 +18915,7 @@ var V = [
      "eyebrow": "When Life Changes Together",
      "h": "Welcoming Someone Growing Sober",
      "sub": "For the Leader",
-     "say": "This is for the pastor, faith leader, or group facilitator who wants the community to truly welcome people growing sober, and their families. Wanting to get this right makes sense, and small changes go a long way."
+     "say": "This is for the leader or group facilitator who wants the community to truly welcome people growing sober, and their families. Wanting to get this right makes sense, and small changes go a long way."
     },
     {
      "k": "big",
