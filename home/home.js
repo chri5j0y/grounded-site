@@ -3737,13 +3737,14 @@
       '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober]');
+    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-gpersp],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober]');
+    if (t && t.hasAttribute('data-hm-gpersp')) { GREAD.self = t.getAttribute('data-hm-gpersp') === 'self'; guideRead(GREAD.id, GREAD.tree); return; }
     if (!t) return;
     if (t.hasAttribute('data-hm-sober')) { soberTools(t.getAttribute('data-hm-sober')); return; }
     if (t.hasAttribute('data-hm-lesson')) { playTreeLesson(t.getAttribute('data-hm-lesson')); return; }
     if (t.hasAttribute('data-hm-guide')) { playGuide(t.getAttribute('data-hm-guide')); return; }
     if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1], gs[2]); return; }
-    if (t.hasAttribute('data-hm-gread')) { var gr = t.getAttribute('data-hm-gread').split('|'); mClose(); openGuide(gr[0], gr[1]); return; }
+    if (t.hasAttribute('data-hm-gread')) { var gr = t.getAttribute('data-hm-gread').split('|'); if (GUIDE_SRC2[gr[1]]) { guideRead(gr[0], gr[1]); return; } mClose(); openGuide(gr[0], gr[1]); return; }
     if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); LT.q = ''; var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
     if (t.hasAttribute('data-hm-pick')) { var id = t.getAttribute('data-hm-pick'); mClose(); if (id === S.id) return; GGP.openDialog({ id: id }).then(function () { render(); }); return; }
     if (t.hasAttribute('data-hm-padd')) { mClose(); GGP.createDialog().then(function () { render(); }); return; }
@@ -3768,6 +3769,42 @@
       return '<article class="hm-card hm-hrow"><div class="hm-time">' + (e.type === 'quick' ? 'Quick Check-in' : 'Full Check-in') + '</div><h3 class="hm-h3">' + esc(niceDay(e.date)) + '</h3><ul class="hm-hparts">' + cells + '</ul></article>';
     }).join('');
     mDialog('Season and Rings', head + '<h3 class="hm-label">Your Check-ins</h3>' + (rows || '<p class="hm-sub">Your check-ins gather here, newest first.</p>'));
+  }
+
+  /* BLD 912 Round 2: Read the Guide, right here (no tree page). The grown-up trees' guides share one shape (oak/index.html
+     lcDetail 3396 to 3436, birch/app.js 1188, pine/app.js 1211, sequoia/app.js 1479): Quick Reference, I'm going through
+     this or I'm helping someone, faith, practices, when to reach out, learn more, and the sources line. */
+  var GREAD = { tree: '', id: '', self: true };
+  var FAITH_H = { oak: 'Faith and the holy', sequoia: 'Faith and the holy', birch: 'Faith and meaning', pine: 'Faith and meaning' };
+  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=b907', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b907', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b907', 'PINE_GUIDES'] };
+  function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
+  function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
+  function guideRead(id, tree) {
+    var g = GUIDE_SRC2[tree]; if (!g) { openGuide(id, tree); return; }
+    GREAD.tree = tree; GREAD.id = id;
+    var go = function () {
+      var T = window[g[1]] && arr(window[g[1]].topics).filter(function (x) { return x && x.id === id; })[0];
+      if (!T) { openGuide(id, tree); return; }
+      var self = GREAD.self, h = T.helper || {}, s = T.self || {};
+      var view = self ? '<h3>What this can feel like</h3><p>' + esc(T.feel) + '</p><h3>First steps</h3>' + gList(s.first) + '<h3>What helps</h3>' + gList(s.helps) + '<h3>What to tell yourself</h3>' + gSay(s.tell) + (s.people ? '<h3>Telling your people</h3><p>' + esc(s.people) + '</p>' : '')
+        : '<h3>What they may be carrying</h3><p>' + esc(T.feel) + ' ' + esc(h.feel || '') + '</p><h3>What to say</h3>' + gSay(h.say) + '<h3>What to avoid</h3>' + gList(h.avoid) + '<h3>Practical ways to help</h3>' + gList(h.help) + (h.you ? '<h3>Caring for yourself as the helper</h3><p>' + esc(h.you) + '</p>' : '');
+      var prac = arr(T.practices).map(function (k) { var nm = String(k).split('|')[1] || k; return '<span class="hm-gprac">' + esc(nm) + '</span>'; }).join('');
+      var html = '<div class="hm-lchips"><button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|you|' + tree + '">' + I('play') + 'Watch: For You</button><button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|helper|' + tree + '">' + I('play') + 'Watch: For the Helper</button></div>' +
+        '<div class="hm-gread"><div class="hm-gquick"><b>Quick Reference</b>' + gList(T.quick) + '</div>' +
+        '<div class="hm-lchips" role="group" aria-label="Choose a view"><button type="button" class="hm-lchip" data-hm-gpersp="self" aria-pressed="' + self + '">I\'m going through this</button><button type="button" class="hm-lchip" data-hm-gpersp="helper" aria-pressed="' + !self + '">I\'m helping someone</button></div>' +
+        view + (T.story ? '<h3>From Chris\'s Story</h3>' + gSay([T.story.text]) : '') + (T.faith ? '<h3>' + esc(FAITH_H[tree] || 'Faith and meaning') + '</h3><p>' + esc(T.faith) + '</p>' : '') +
+        (prac ? '<h3>Practices that can help</h3><p class="hm-gpracs">' + prac + '</p>' : '') +
+        (T.kids ? '<h3>If children are involved</h3><p><a class="hm-linkbtn" href="/home/?guide=' + encodeURIComponent(T.kids) + '&amp;tree=maple">A guide for talking with kids about this</a></p>' : '') +
+        '<h3>When to reach out for more help</h3>' + gList(T.reach) +
+        (arr(T.more).length ? '<h3>Learn more</h3><ul class="hm-glist">' + arr(T.more).map(function (m) { return '<li><a class="hm-linkbtn" href="' + esc(m[1]) + '" target="_blank" rel="noopener">' + esc(m[0]) + '</a></li>'; }).join('') + '</ul>' : '') +
+        (window.GGSources && GGSources.html ? GGSources.html(tree + ':' + T.id, { stories: T.story ? [T.story.title] : [] }) : '') +
+        '<p class="hm-gnote">General spiritual and emotional support. For therapy, medical care, or legal advice, see a licensed professional. Emergency: 911. Crisis: call or text 988.</p></div>';
+      if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } M_CTL = null;
+      var box = document.getElementById('hm-mdlg-b');
+      if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }
+      else mDialog(T.title, html);
+    };
+    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b908')]).then(go);
   }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;

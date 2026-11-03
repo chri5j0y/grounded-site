@@ -1372,3 +1372,13 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-hparts b{font-size:14px;}
 .hm-hparts span{font-size:13.5px;color:var(--ink-soft);}
 @media (min-width:700px){.hm-hparts{grid-template-columns:repeat(3,minmax(0,1fr));}}
+/* BLD 912: Read the Guide in the app */
+.hm-gread h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;margin:18px 0 6px;}
+.hm-gread p{margin:0 0 8px;line-height:1.55;}
+.hm-glist{margin:0 0 8px;padding-left:20px;line-height:1.55;}
+.hm-gquick{padding:14px 16px;border-radius:16px;background:var(--card-2);margin:0 0 12px;}
+.hm-gquick b{display:block;margin-bottom:6px;}
+.hm-gsay p{padding-left:12px;border-left:3px solid var(--gold);font-style:italic;}
+.hm-gpracs{display:flex;flex-wrap:wrap;gap:6px;}
+.hm-gprac{padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:14px;}
+.hm-gnote{font-size:13px;color:var(--ink-soft);margin-top:16px;}
