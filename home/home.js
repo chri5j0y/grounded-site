@@ -3361,7 +3361,7 @@
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
   var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b912', talk: '/shared/home/talk.js?v=b912' };
-  var SCR_READY = {};
+  var SCR_READY = { guide: true, talk: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
     tree = tree || S.tree; var src = SCR_MOD[name]; if (!src || !S.id || !SCR_READY[name]) return false;
@@ -3389,6 +3389,7 @@
     if (what === 'history') { seasonOpen(); return; }
     if (what === 'plan') { goTo('grow'); return; }
     if (what === 'learn') { goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
+    if (what === 'life') { LT.f = 'life'; goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
     if (/^guide:/.test(what)) { openGuide(what.slice(6)); return; }
     openTool(what);
   }
@@ -3856,5 +3857,6 @@
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;
   window.GGHome.openTool = openTool;
+  window.GGHome.openGuide = openGuide;
   window.GGHome.v908 = true;
 })();
