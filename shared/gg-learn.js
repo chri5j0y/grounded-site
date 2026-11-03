@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b908';
+  var V = 'b911r';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -819,7 +819,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b908'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b911r'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -899,6 +899,9 @@
       if (last) { var e = endScene(); sc = { k: 'end', ok: e.ok, eyebrow: e.eyebrow, h: e.h, sub: e.sub, count: e.count, say: e.say }; sc._e = e; }
       else sc = stdScene(l.scenes[P.i], P.i, l, cfg.app);
       st.classList.remove('go');
+      // BLD 911 Round 2: a breath scene that follows one on the same pace, as it plays, keeps the same breath clock, so the
+      // breath carries on across the change of scene (a hold or a rest is never cut short).
+      var carry = P.playing && P.brLock && isBr(P.sc) && isBr(sc) && P.i === P.brAt + 1 && brKey(P.sc) === brKey(sc) ? P.brT0 : 0;
       // BLD 908: a painting behind the scene (the content standard), blurred a little under a warm shade, words in light ink.
       cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
       cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
@@ -910,7 +913,7 @@
       if (last) bgStop(2500);
       else if (P.playing) bgPlay(cfg);
       if (last) $('.ln-link', host).innerHTML = srcLine(l) + musicCredit(cfg) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
-      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now(); P.brLock = false; P.brDone = -1; P.brT0 = Date.now();
+      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now(); P.brLock = !!carry; P.brDone = -1; P.brT0 = carry || Date.now(); P.brAt = P.i;
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
       $('.ggl-cn', host).textContent = last ? 'Finished' : 'Scene ' + (P.i + 1) + ' of ' + (N - 1);
@@ -923,7 +926,7 @@
       var sel = REV[sc.k], items = sel ? Array.prototype.slice.call(cv.querySelectorAll(sel)) : [];
       P.items = items; P.map = revealMap(sc, items, B);
       if (P.playing || last) items.forEach(function (el) { el.classList.add('hold'); var pv = el.previousElementSibling; if (sc.k === 'flow' && pv && pv.classList.contains('ln-arr')) pv.classList.add('hold'); });
-      requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); P.brT0 = Date.now(); }); });
+      requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); if (carry && P.brT0 === carry) brAnim(cv, ((Date.now() - carry) % BR_CYC + BR_CYC) % BR_CYC); else P.brT0 = Date.now(); }); });
       // The closing scene always speaks once, even when the lesson was stepped through by hand.
       if (!P.playing && !last) return;
       run(t);
@@ -1150,6 +1153,17 @@
       return brKind(b.t);
     }
     function brReduced() { try { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } }
+    function brKey(sc) { var b = Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : [4, 6]; return (sc.k === 'breathe' && brHolds(sc) ? 'h' : '') + b.join(','); }
+    // Where the breath is now: read from the circle's (or the candle glow's) own animation when it runs on this pace, so the
+    // voice follows exactly what the viewer sees even when a busy device starts the animation a moment late.
+    function brEl() {
+      var el = ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
+      try {
+        var c = cv.querySelector('.ln-brc') || cv.querySelector('.ln-cd-glow, .ln-cd-all'), a = c && c.getAnimations ? c.getAnimations()[0] : null, tm = a && a.effect ? a.effect.getTiming() : null;
+        if (tm && Math.abs(+tm.duration - BR_CYC) < 2 && a.currentTime != null) el = ((((+a.currentTime) - (+tm.delay || 0)) % BR_CYC) + BR_CYC) % BR_CYC;
+      } catch (e) {}
+      return el;
+    }
     function brOff(k) { return k === 'out' ? BR_OUT : k === 'sip' ? BR_SIP : k === 'hold' ? BR_HOLD : k === 'rest' ? BR_REST : 0; }
     function brWait(i) {
       var sc = P.sc; if (!sc || !isBr(sc) || P.brDone === i || brReduced()) return 0;
@@ -1161,7 +1175,7 @@
         brAnim(cv, off);
         P.brT0 = Date.now() - off; return 0;
       }
-      var el = (Date.now() - P.brT0) % BR_CYC, d = (brOff(k) - el + BR_CYC) % BR_CYC;
+      var el = brEl(), d = (brOff(k) - el + BR_CYC) % BR_CYC;
       // BLD 911 (Chris: "these guided vids need to have timing spot on"): a line that comes a moment late for its part
       // starts at once, inside its part, instead of waiting a whole breath.
       return d > BR_CYC - (BR_SIP || BR_HOLD ? 700 : 120) ? 0 : d;
@@ -1392,7 +1406,7 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=b888', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b911r', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
@@ -1532,7 +1546,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b911b'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b911r'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
