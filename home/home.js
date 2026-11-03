@@ -3560,16 +3560,31 @@
     });
   }
   function learnTabHtml() { return '<div id="hm-learn" class="hm-learn">' + (tracksOf(S.tree) && window.GG_ART ? learnBody() : '<p class="hm-loading">Opening Learn for your ' + esc((TREES[S.tree] || TREES.oak).n) + '…</p>') + '</div>'; }
+  function guideCard(g) { return '<button type="button" class="hm-lcard" data-hm-guide="' + esc(g.id) + '"><span class="im"><img src="' + guideArt(S.tree, g.id) + '" alt="" loading="lazy" decoding="async"></span><span class="tx"><b>' + esc(g.title || '') + '</b><small>Guide</small></span></button>'; }
+  // BLD 911 (Chris: "learn tab needs search bar"): one search box over the tree's lessons and guides; results show as you type.
   function learnBody() {
-    var t = TREES[S.tree] || TREES.oak, tr = arr(tracksOf(S.tree)), life = lifeTopics(S.tree), f = LT.f, n = 0;
-    var chips = [['all', 'For You'], ['learn', 'Lessons'], ['life', 'When Life Changes']].map(function (c) { return '<button type="button" class="hm-lchip" data-hm-lf="' + c[0] + '" aria-pressed="' + (c[0] === f) + '">' + c[1] + '</button>'; }).join('');
-    var feat = '<button type="button" class="hm-lfeat" data-hm-tool="video"><img src="' + treeArt(S.tree, true) + '" alt="" loading="lazy"><span class="sh"></span><span class="pl">' + I('play') + '</span><span class="tx"><small>Chosen for Your ' + esc(t.n) + '</small><b>Meet Your ' + esc(t.n) + '</b></span></button>';
-    // BLD 911 (Chris: "meet your oak, and then welcome to oak.. seem to have a lot of overlap"): Learn opens on the lessons.
-    var out = '<div class="hm-lchips" role="group" aria-label="Show">' + chips + '</div>'; void feat;
+    var chips = [['all', 'For You'], ['learn', 'Lessons'], ['life', 'When Life Changes']].map(function (c) { return '<button type="button" class="hm-lchip" data-hm-lf="' + c[0] + '" aria-pressed="' + (c[0] === LT.f && !LT.q) + '">' + c[1] + '</button>'; }).join('');
+    return '<label class="hm-search hm-lsearch"><span>Search Learn</span><input type="search" id="hm-lq" placeholder="Grief, sleep, worry, moving" autocomplete="off" enterkeyhint="search" value="' + esc(LT.q || '') + '"></label>' +
+      '<div class="hm-lchips" role="group" aria-label="Show">' + chips + '</div><div id="hm-lres">' + learnRows() + '</div>';
+  }
+  function learnRows() {
+    var tr = arr(tracksOf(S.tree)), life = lifeTopics(S.tree), f = LT.f, n = 0, q = String(LT.q || '').trim().toLowerCase();
+    if (q.length >= 2) {
+      var has = function () { for (var k = 0; k < arguments.length; k++) if (String(arguments[k] || '').toLowerCase().indexOf(q) >= 0) return true; return false; };
+      var ls = [], gs = [];
+      tr.forEach(function (x) { arr(x.lessons).forEach(function (l) { if (l && l.id && has(l.title, l.blurb, x.title)) ls.push(lessonCard(S.tree, l, n++)); }); });
+      life.forEach(function (g) { if (g && g.id && has(g.title, g.blurb, g.ring, g.group, [].concat(g.keys || []).join(' '), typeof g.quick === 'string' ? g.quick : '', g.ring === 'loss' ? 'grief loss died death' : '')) gs.push(guideCard(g)); });
+      if (!ls.length && !gs.length) return '<p class="hm-sub hm-lnone">Nothing yet for that word. Try another, like sleep, worry, or family.</p>';
+      return (ls.length ? '<div class="hm-lrow"><h2 class="hm-label">Lessons</h2><div class="hm-lgrid">' + ls.join('') + '</div></div>' : '') +
+        (gs.length ? '<div class="hm-lrow"><h2 class="hm-label">When Life Changes</h2><div class="hm-lgrid">' + gs.join('') + '</div></div>' : '');
+    }
+    var out = '';
     if (f !== 'life') tr.forEach(function (x) { out += rowHtml(x.title || 'Lessons', x.who || '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
-    if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(function (g, i) { return '<button type="button" class="hm-lcard" data-hm-guide="' + esc(g.id) + '"><span class="im"><img src="' + guideArt(S.tree, g.id) + '" alt="" loading="lazy" decoding="async"></span><span class="tx"><b>' + esc(g.title || '') + '</b><small>Guide</small></span></button>'; }).join(''));
+    if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(guideCard).join(''));
     return out;
   }
+  document.addEventListener('input', function (e) { if (!e.target || e.target.id !== 'hm-lq') return; LT.q = e.target.value; var r = document.getElementById('hm-lres'); if (r) r.innerHTML = learnRows(); document.querySelectorAll('[data-hm-lf]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-hm-lf') === LT.f && !String(LT.q || '').trim())); }); });
+
   /* A kid's Watch tab: today's short video, every kid video, and the tree's lessons. */
   function kidWatchHtml() {
     var t = TREES[S.tree], d = now(), eve = d.getHours() >= 17 || d.getHours() < 5;
@@ -3667,7 +3682,7 @@
     if (t.hasAttribute('data-hm-guide')) { playGuide(t.getAttribute('data-hm-guide')); return; }
     if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1]); return; }
     if (t.hasAttribute('data-hm-gread')) { var gid = t.getAttribute('data-hm-gread'); mClose(); openGuide(gid); return; }
-    if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
+    if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); LT.q = ''; var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
     if (t.hasAttribute('data-hm-pick')) { var id = t.getAttribute('data-hm-pick'); mClose(); if (id === S.id) return; GGP.openDialog({ id: id }).then(function () { render(); }); return; }
     if (t.hasAttribute('data-hm-padd')) { mClose(); GGP.createDialog().then(function () { render(); }); return; }
   });

@@ -27,38 +27,40 @@
   // BLD 907 The One Grounded Way: the menu follows the one path. The Grounded Way first, with its age trees, seasons,
   // and the Grove inside it; then Grounded Recipes and the libraries; then the helpers and the Field Guide.
   // Ceremonies and Support has its own menu beside this one.
+  // BLD 911 (Chris: "cards on The Grounded Way main nav menu need images.. and about cards"): every menu card shows a painting.
+  var pic = function (path) { return '<img class="gn-mark gn-pic" src="' + HOME + path + '" alt="" width="42" height="42" loading="lazy">'; };
   var WAYIC = '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">';
   // BLD 909 Clean Site: The Grounded Way has its own menu; Tools holds the rest. BLD 910 (Chris: "still the long list of your tree.. confusing"): one app, so the trees stay inside it, never listed here.
   var WAY_GROUPS = [
     { name: 'Start Here', items: [
       { id: 'home', title: 'Begin The Grounded Way', desc: 'One app for every age: make your profile, meet your tree, and tend your four, a few minutes a day. Your tree grows with you', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
-      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: ic.tree, bg: '#F1E6CC' },
-      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: ic.leaf, bg: '#E3EFD6' },
-      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, opening soon', href: HOME + '/the-grounded-way.html#ways', icon: ic.door, bg: '#F3E5CC', color: '#6E4A14' }
+      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: pic('/shared/heroes/way/grounded-way-square.webp'), bg: '#F1E6CC' },
+      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: pic('/shared/heroes/way/tending-sq.webp'), bg: '#E3EFD6' },
+      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, opening soon', href: HOME + '/the-grounded-way.html#ways', icon: pic('/shared/heroes/way/way-plan-sq.webp'), bg: '#F3E5CC', color: '#6E4A14' }
     ] },
   ];
   var GN_GROUPS = [
     { name: 'Seasons', items: [
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' },
-      { id: 'heartwood', title: 'Heartwood', desc: 'For marriage: the couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' },
-      { id: 'willow', title: 'Willow', desc: 'For the last season of life, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' },
-      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/tools.html#when-life-changes', icon: ic.door, bg: '#F1E6CC', color: '#6E4A14' }
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: pic('/shared/cards/way-sober.webp'), bg: '#DCE8E1' },
+      { id: 'heartwood', title: 'Heartwood', desc: 'For marriage: the couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: pic('/shared/heroes/heartwood-card.webp'), bg: '#E3EAF2' },
+      { id: 'willow', title: 'Willow', desc: 'For the last season of life, and the people who love them', href: HOME + '/willow/', icon: pic('/shared/heroes/willow-phone.webp'), bg: '#E8ECDD' },
+      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/tools.html#when-life-changes', icon: pic('/shared/heroes/page-hard-seasons-narrow.webp'), bg: '#F1E6CC', color: '#6E4A14' }
     ] },
     { name: 'Growing Together', items: [
-      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: pic('/shared/heroes/grove-phone.webp'), bg: '#E3EFD6' }
     ] },
     { name: 'Grounded Recipes and Libraries', items: [
-      { id: 'recipes', title: 'Grounded Recipes', desc: 'Every meal and the big days, sized for your table, with ingredients, steps, and a calm voice to guide you', href: HOME + '/recipes/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-recipes.webp?v=b875" alt="" width="42" height="42">', bg: '#F3E5CC' },
-      { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
-      { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
+      { id: 'recipes', title: 'Grounded Recipes', desc: 'Every meal and the big days, sized for your table, with ingredients, steps, and a calm voice to guide you', href: HOME + '/recipes/', icon: pic('/shared/cards/way-recipes.webp'), bg: '#F3E5CC' },
+      { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: pic('/shared/heroes/library-phone.webp'), bg: '#F1E6CC' },
+      { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: pic('/shared/heroes/page-readings-narrow.webp'), bg: '#F1E6CC' }
     ] },
     { name: 'When Someone Dies', items: [
-      { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
-      { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.obituary, bg: '#F1E6CC' },
-      { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.eulogy, bg: '#F1E6CC' }
+      { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: pic('/shared/heroes/page-planning-a-farewell-narrow.webp'), bg: '#F1E6CC' },
+      { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: pic('/shared/heroes/page-obituary-helper-narrow.webp'), bg: '#F1E6CC' },
+      { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: pic('/shared/heroes/page-eulogy-helper-narrow.webp'), bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
-      { id: 'field', title: 'Field Guide', desc: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide', href: HOME + '/the-field-guide.html', icon: ic.fieldguide, bg: '#EDE7DA' }
+      { id: 'field', title: 'Field Guide', desc: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide', href: HOME + '/the-field-guide.html', icon: pic('/shared/heroes/fieldguide-phone.webp'), bg: '#EDE7DA' }
     ] }
   ];
 
@@ -104,6 +106,7 @@
     '.gn-ic{width:42px;height:42px;border-radius:11px;flex:none;display:grid;place-items:center;}' +
     '.gn-ic svg{width:24px;height:24px;}' +
     '.gn-ic .gn-mark{width:42px;height:42px;border-radius:11px;display:block;}' +
+    '.gn-ic .gn-pic{object-fit:cover;}' +
     '.gn-tool b{display:flex;align-items:center;gap:6px;font-weight:600;font-size:15.5px;line-height:1.25;}' +
     '.gn-tool small{display:block;font-size:13px;line-height:1.35;color:#5B6A73;margin-top:1px;}' +
     '.gn-tag{font-size:11px;font-weight:600;color:#fff;background:#8B5E1A;border-radius:999px;padding:1px 8px;white-space:nowrap;}' +
@@ -148,7 +151,7 @@
      Each family is a picture card that opens its own page (BLD 817, services-<family>.html); See all services stays at the foot.
      It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_FEATURED = { title: 'The Grounded Marriage', desc: 'Premarital sessions with Chris and Kayti, with Heartwood', href: HOME + '/the-grounded-marriage.html', bg: '#E3EAF2',
-    icon: ic.gm };
+    icon: pic('/shared/heroes/page-marriage-narrow.webp') };
   var SVC_FAMILIES = [
     ['Marriage', 'Weddings and The Grounded Marriage', 'marriage'],
     ['Celebrations', 'Blessings and milestones', 'celebrations'],
@@ -181,10 +184,10 @@
   function wayBody() { return toolsBody(WAY_GROUPS); }
   // BLD 909: About holds Contact, Rates, and Organizations, so the top bar stays short.
   var ABOUT_ITEMS = [
-    { title: 'About Us', desc: 'Kayti and Chris Joy, our mission, and how we work', href: HOME + '/about.html', icon: ic.tree, bg: '#F1E6CC' },
-    { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: ic.speak, bg: '#F3E5CC' },
-    { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: ic.book, bg: '#F1E6CC' },
-    { title: 'For Organizations', desc: 'Churches, schools, hospices, and teams', href: HOME + '/organizations.html', icon: ic.shelf, bg: '#EDE7DA' }
+    { title: 'About Us', desc: 'Kayti and Chris Joy, our mission, and how we work', href: HOME + '/about.html', icon: pic('/shared/heroes/page-about-narrow.webp'), bg: '#F1E6CC' },
+    { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: pic('/shared/heroes/page-contact-narrow.webp'), bg: '#F3E5CC' },
+    { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: pic('/shared/heroes/page-supporters-narrow.webp'), bg: '#F1E6CC' },
+    { title: 'For Organizations', desc: 'Churches, schools, hospices, and teams', href: HOME + '/organizations.html', icon: pic('/shared/heroes/page-organizations-narrow.webp'), bg: '#EDE7DA' }
   ];
   function aboutBody() {
     return '<div class="gn-group"><div class="gn-h">About Grow With Grounded</div>' + ABOUT_ITEMS.map(function (t) {

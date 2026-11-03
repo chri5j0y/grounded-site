@@ -1360,3 +1360,8 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-shelf .nm .br{display:block;font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;line-height:1.2;opacity:.85;margin-bottom:2px;}
 /* BLD 911: a small Grounded over the short name on a Library shelf */
 .hm-shelf .nm .br{display:block;font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;line-height:1.2;opacity:.85;margin-bottom:2px;}
+/* BLD 911: Learn search and its results grid */
+.hm-lsearch{margin-bottom:10px;}
+.hm-lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+.hm-lgrid .hm-lcard{flex:none;width:auto;}
+.hm-lnone{margin:6px 4px;}
