@@ -669,7 +669,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b907"></script>
-<script src="../shared/gg-learn.js?v=b907"></script>
+<script src="../shared/gg-learn.js?v=b908"></script>
 <script src="../shared/gg-parts.js?v=b907"></script>
 <script src="../shared/gg-print.js?v=b907"></script>
 <script src="../shared/grove-scene.js?v=b907"></script>
@@ -688,13 +688,13 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b907"></script>
 <script src="grovevisit.js?v=b907"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b907"></script>
+<script src="../shared/gg-stories.js?v=b908"></script>
 <script src="moves.js?v=b903"></script>
 <script src="stage.js?v=b899"></script>
 <script src="coach.js?v=b898"></script>
 <script src="../shared/gg-scale.js?v=b889"></script>
 <script src="../shared/gg-holidays.js?v=b896"></script>
-<script src="health.js?v=b907"></script>
+<script src="health.js?v=b908"></script>
 <script src="vault.js?v=b907"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1970,10 +1970,10 @@ async function mStaffCopy(){
   if (!d.keys.staff && BOX.staff && BOX.staff.salt) box.salt = BOX.staff.salt;
   d.libs.staff = box; LIB = st; return true;
 }
-async function mWrap(code, kind, ends){
+async function mWrap(code, kind, ends, tag){
   const C = mCfg(), key = mKey(); if (!C || !key) return null;
   const ck = await derive(mNorm(code), unb64(C.ws), false), b = await seal(ck, {k: key, kind, ends: ends || null});
-  return {c: 'm' + Array.from(crypto.getRandomValues(new Uint8Array(6)), x => (x % 36).toString(36)).join(''), iv: b.iv, ct: b.ct, kind};
+  return {c: tag || 'm' + Array.from(crypto.getRandomValues(new Uint8Array(6)), x => (x % 36).toString(36)).join(''), iv: b.iv, ct: b.ct, kind};
 }
 const mLive = r => !!(r && r.mw && r.mw.iv && !r.cancelled && !accEnded(r));
 const mWraps = () => accRecs().filter(mLive).map(r => ({c: r.mw.c, iv: r.mw.iv, ct: r.mw.ct}));
@@ -2003,7 +2003,7 @@ async function mRotate(){
   const recs = accStore().codes.filter(r => r.mw && !r.cancelled && !accEnded(r)), lost = recs.filter(r => !DATA.founder.saved.some(x => x.id === r.id));
   if (!confirm('Rotate Member? Membership closes on every device once you upload, and each person enters their own code once more to open it again.' + (lost.length ? ' ' + lost.length + (lost.length === 1 ? ' code was' : ' codes were') + ' made on another Founder device; make those people new codes.' : ''))) return;
   FDR.member.key = newRaw(); FDR.member.rotated = today(); const d = ensureDraft(); delete d.keys.member;
-  for (const r of recs){ const sv = DATA.founder.saved.find(x => x.id === r.id); r.mw = sv ? await mWrap(sv.code, r.mw.kind || r.level, r.ends) : null; if (!sv) delete r.mw; }
+  for (const r of recs){ const sv = DATA.founder.saved.find(x => x.id === r.id); r.mw = sv ? await mWrap(sv.code, r.mw.kind || r.level, r.ends, r.mw.c) : null; if (!sv) delete r.mw; }
   await mStaffCopy(); await mSeal(plain); await persist(); await fdrKeep(); render(); toast('Member rotated. Ready to Upload has the files.');
 }
 // Open Membership on This Browser (Staff and Founders): /home/#mk=<lock key>&mt=<tier>, taken once by gg-member.js.

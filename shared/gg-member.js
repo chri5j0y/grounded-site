@@ -30,8 +30,9 @@
      GGMember.has()                 true while Membership is open on this device
      GGMember.get(section)          the decrypted section ('tend', 'meditation', 'spirit', 'relationships', 'growth',
                                     'seasons', or any other top key) or null
-     GGMember.clip(voice, text)     Promise of a playable blob URL for a Member clip in folder m, or null;
-     GGMember.clip(name)              a 32 hex clip name works too
+     GGMember.clip(voice, text[, o]) Promise of a playable URL, or null: the public v1 clip for the same voice and sentence
+                                    when one exists, otherwise the Member clip in folder m (a blob URL); o.pub true or false
+                                    skips the public check; GGMember.clip(name) with a 32 hex Member clip name works too
      GGMember.open()                shows the "I Have a Code" sheet
      GGMember.on(fn)                fn(state) runs whenever the state changes; returns a function that stops it
    Also:
@@ -53,7 +54,7 @@
   var V = 'b908', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
   var me = document.currentScript;
   var LIB = (me && me.getAttribute('data-lib')) || '/field-guide/lib-member.js';
-  var SEE = (me && me.getAttribute('data-see')) || '/the-grounded-way.html#membership';
+  var SEE = (me && me.getAttribute('data-see')) || '/the-grounded-way.html#ways';
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var SECTIONS = ['tend', 'meditation', 'spirit', 'relationships', 'growth', 'seasons'];
   var KINDS = { member: 'Member', household: 'Household', org: 'Organization', staff: 'Staff', founder: 'Founder' };
@@ -252,7 +253,32 @@
       return subtle.sign('HMAC', ks.h, enc.encode(voice + '|' + text)).then(function (sig) { return Array.prototype.map.call(new Uint8Array(sig).slice(0, 16), function (b) { return pad(b.toString(16)); }).join(''); });
     });
   }
-  function clip(voice, text) {
+  // Public first (lead, BLD 908): many Member sentences are already recorded as public v1 clips (the Readings Library, Willow,
+  // Rest in Prayer, the stories), named like shared/gg-learn.js clipName(voice, text) at <base>v1/<voice>/<name>.mp3. A
+  // Member line plays that public clip when one exists for the same voice and sentence, and folder m only for sentences
+  // recorded nowhere public, so nothing public is ever recorded twice. o.pub: true skips the check (known public), false
+  // goes straight to folder m. Known answers are kept for this visit.
+  function pubName(voice, text) {
+    if (window.GGLearn && typeof GGLearn.clipName === 'function') return GGLearn.clipName(voice, text);
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
+    for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return voice + '/' + (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+  }
+  function pubUrl(voice, text) { var r = (window.GGLearn && GGLearn.rec) || {}; return (r.base || CLIP_BASE) + (r.round || 'v1') + '/' + pubName(voice, text) + '.mp3'; }
+  var PUBK = {};
+  function pubClip(voice, text, o) {
+    if (text == null || !voice || (o && o.pub === false)) return Promise.resolve(null);
+    var u = pubUrl(voice, text);
+    if (o && o.pub === true) return Promise.resolve(u);
+    if (PUBK[u] === undefined) PUBK[u] = fetch(u, { method: 'HEAD' }).then(function (r) { return r.ok ? u : null; }, function () { return null; });
+    return PUBK[u];
+  }
+  function clip(voice, text, o) {
+    return pubClip(voice, text, o).then(function (u) { return u || sealedClip(voice, text); });
+  }
+  function sealedClip(voice, text) {
     var nameP = text == null && /^[0-9a-f]{32}$/.test(String(voice || '')) ? Promise.resolve(String(voice)) : clipName(voice, text);
     return nameP.then(function (n) {
       if (!n) return null;
@@ -292,7 +318,7 @@
   function statusLine() {
     var s = ST;
     if (s.status === 'member') return 'Membership is open on this device' + (s.kind && s.kind !== 'member' ? ' with a ' + kindName(s.kind) + ' code' : '') + (s.ends ? ', through ' + nice(s.ends) : '') + '. Every profile here has the full suite.';
-    if (s.status === 'ended') return 'Your Membership code reached its end date. Renew Membership with a new code, and everything here keeps going.';
+    if (s.status === 'ended') return 'Your Membership code has ended. Renew Membership with a new code, and everything here keeps going.';
     if (s.status === 'renew') return 'Membership has a fresh lock. Enter your code once more to keep going.';
     return 'Membership opens soon. Have a code? Add it here.';
   }
@@ -374,6 +400,8 @@
     has: function () { return ST.status === 'member' && !!LIBR; },
     get: get,
     clip: clip,
+    sealedClip: sealedClip,
+    pubUrl: pubUrl,
     open: open,
     close: close,
     on: function (fn) { if (typeof fn !== 'function') return function () {}; FNS.push(fn); return function () { FNS = FNS.filter(function (f) { return f !== fn; }); }; },

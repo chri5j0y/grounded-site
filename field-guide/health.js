@@ -45,10 +45,16 @@ const S = {sec: 'today', form: null, setup: false, open: {}, ov: null};
 const D = () => C.data ? C.data() : null;
 // A Family Kitchen code (BLD 846): the kitchen only. Dinners, cook guide, grab and go, snacks, lists, prep, reminders.
 const KIT = () => !!(C.tier && C.tier() === 'kitchen');
-const FLDH = () => { const f = C.fld && C.fld(); if (f && f.public) return f; const h = f && f.healthJourney; return h && (Array.isArray(h.food) || Array.isArray(h.fitness) || h.app) ? h : null; };
+// BLD 908: Membership. shared/tending-public.js is the Start file (start: true); the Member part lives in the sealed Member
+// library and GGMember.tend(base) folds it in on a device that holds Membership. FX() is the library every read uses.
+// START(): the public Start file with no Membership on this device: one Flow session a day and the daily meditation (the
+// day's picks), Grounded Recipes, and quiet Membership cards for the rest.
+const FX = () => { const f = C.fld && C.fld(); return f && f.public && f.start && window.GGMember && typeof GGMember.tend === 'function' ? GGMember.tend(f) : f; };
+const START = () => { const f = FX(); return !!(f && f.public && f.start); };
+const FLDH = () => { const f = FX(); if (f && f.public) return f; const h = f && f.healthJourney; return h && (Array.isArray(h.food) || Array.isArray(h.fitness) || h.app) ? h : null; };
 // BLD 866: public Tending (the library is GGTendPublic). TEEN: a profile under 18 sees no weight and no calories.
-const PUB = () => { const f = C.fld && C.fld(); return !!(f && f.public); };
-const PLIB = () => { const f = C.fld && C.fld(); return f && f.public ? f : null; };
+const PUB = () => { const f = FX(); return !!(f && f.public); };
+const PLIB = () => { const f = FX(); return f && f.public ? f : null; };
 const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
 // The painted cards (shared/heroes/way/): a host may pass C.asset(path); otherwise the site root is worked out from this script's address.
 const ROOT0 = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('../', s).href : '/'; } catch(e){ return '/'; } })();
@@ -397,7 +403,7 @@ function vJourney(){
 // FLD.healthJourney.app = {workouts, dinners: {weeks, breakfasts, lunches, snacks}, shop: {weeks: {A: {shop, sunday, wednesday, batch}}, staples}}
 // FDR.healthMine.addons = [shop items added to Week A lists]; FDR.healthMine.checks = [extra daily checks].
 // DATA.health adds: log {'YYYY-MM-DD': {key: time}}, shop {'<week no>': {items: [...], u}}, lifts {exerciseId: lb}, wlog [{id, date, s, sets, note, u}].
-const APP = () => { if (PUB()) return pubApp(); const l = FLDH(); return l && l.app && typeof l.app === 'object' ? l.app : null; };
+const APP = () => { if (PUB() && !START()) return pubApp(); const l = FLDH(); return l && l.app && typeof l.app === 'object' ? l.app : null; };
 const WK = () => (APP() || {}).workouts || {};
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
@@ -813,7 +819,7 @@ function buildWork(s){
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 // BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
-function keyVoice(){ if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio); }
+function keyVoice(){ if (VO()) VO().setKey(((FX()) || {}).audio); }
 function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } keyVoice(); S.ov = o; wake(true); tick(); rerender(true); }
 function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
 let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL) navigator.wakeLock.request('screen').then(l => { WL = l; }).catch(() => {}); if (!on && WL){ WL.release(); WL = null; } } catch(e){} }
@@ -1125,8 +1131,10 @@ function wuStep(x, part, ph){
 }
 // How many counts a warm-up item takes per turn (0: it keeps its timer). Counted only with Voice Counts Reps on and a tempo.
 const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= 20 ? n : 0; };
-const PR = () => (APP() || {}).practice || null;
-const MED = () => { const m = (APP() || {}).meditations; return m && arr(m.sessions).length ? m : null; };
+const PR = () => { const p = (APP() || {}).practice || null; if (!p || !START()) return p; const f = startPicks().flow; return Object.assign({}, p, {sessions: f ? [f] : []}); };
+function startPicks(d){ d = d || new Date(); const a = APP() || {}, ps = arr(a.practice && a.practice.sessions), ms = arr(a.meditations && a.meditations.sessions), i = (d.getDay() + 6) % 7;
+  return {flow: ps.length ? ps[i % ps.length] : null, med: ms.find(x => x.day === DOW[d.getDay()]) || ms[i % Math.max(1, ms.length)] || null}; }
+const MED = () => { const m = (APP() || {}).meditations; if (!(m && arr(m.sessions).length)) return null; if (!START()) return m; const x = startPicks().med; return Object.assign({}, m, {sessions: x ? [x] : []}); };
 const BRIAN = 'brian';
 const lineSecs = t => 1.4 + String(t).split(/\s+/).length / 2.4;
 // Morning light (workouts.light: {start, end}; an array or a string also works).
@@ -2032,7 +2040,7 @@ function detectUse(){
   return PART_IDS.filter(x => out.has(x));
 }
 const useSet = () => { const h = H(); return KIT() || Array.isArray(h.set.use); };
-function USE(){ if (KIT()) return ['food']; const u = H().set.use; return Array.isArray(u) ? PART_IDS.filter(x => u.includes(x)) : detectUse(); }
+function USE(){ if (KIT()) return ['food']; if (START()) return PART_IDS.filter(x => x === 'move' || x === 'mind'); const u = H().set.use; return Array.isArray(u) ? PART_IDS.filter(x => u.includes(x)) : detectUse(); }
 const U = id => USE().includes(id);
 
 // ---------- icons: inline SVG, 24 box, 1.9 stroke, round caps and joins (the concept set) ----------
@@ -2411,7 +2419,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b903'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b908'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -2486,13 +2494,13 @@ function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2
 function view(){
   const lib = FLDH(); if (!lib || !H()) return '';
   if (workOn()) fig3dWarm();
-  if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
+  if (VO()) VO().setKey(((FX()) || {}).audio);
   const h = H(), mine = MINE(), an = S.anim; S.anim = false;
   // Keep the start date once the plan is running, so it never drifts (BLD 857b).
   if (!KIT() && !h.set.start && firstMon()){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; save(); }
   // BLD 857c: b857b saved the Monday before a weekend of shopping and prep (one week early); put that one start right, once.
   if (!KIT() && h.set.startFix !== 2){ const d = firstLog(); if (d && h.set.start === ymd(monOf(d)) && h.set.start !== ymd(firstMon())){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; } h.set.startFix = 2; save(); }
-  if (KIT()){ const st = ((C.fld && C.fld()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep', 'kitchen', 'recipes', 'settings'].includes(S.sec)) S.sec = 'today'; }
+  if (KIT()){ const st = ((FX()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep', 'kitchen', 'recipes', 'settings'].includes(S.sec)) S.sec = 'today'; }
   const first = !h.set.u || !!h.set.needSetup, chosen = PUB() ? !!h.set.pubDone : useSet();
   // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
   const ready = mine && mine.start && (arr(mine.start.labs).length || arr(mine.start.panels).length) && !h.labs.length && !h.panels.length;
@@ -2500,7 +2508,8 @@ function view(){
   const SECS2 = ['today', 'week', 'plate', 'kitchen', 'recipes', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings', 'own', 'holidays'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
   if (!SECS2.includes(S.sec)) S.sec = 'today';
   let body;
-  if (PUB() && (!chosen || S.setup)) body = vCheck();
+  if (START()) body = vStart();
+  else if (PUB() && (!chosen || S.setup)) body = vCheck();
   else if (!chosen) body = vChoose();
   else if (!KIT() && (S.setup || (first && !ready && S.sec === 'today'))) body = `<div class="tn-sec a-numbers">${vSetup()}</div>`;
   else if (S.sec === 'own') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'My Own Items', 'Your own rhythms beside your plan, kept on this device.')}${vOwn()}</div>`;
@@ -2524,9 +2533,9 @@ function view(){
   // BLD 879: in the Field Guide, Tending for the guide, staff, and founder tiers is one card; Preview for Guides opens the full view.
   const card = MOVABLE() && !PREVIEW();
   if (card) return `<div id="hj-root" class="tn tn-one">${vCard(chosen || !!h.set.u)}${vOv()}</div>`;
-  if (chosen && !KIT()) celebrate(milestonesT());
+  if (chosen && !KIT() && !START()) celebrate(milestonesT());
   const askWho = chosen && MINE_ANY() && MINE_ANY().who && h.set.u && !h.set.who && !first ? `<div class="hj-blk hj-offer tn-card">${kick('Whose Phone Is This?')}<p class="hj-sub">Tending keeps each person's plan and numbers on their own phone.</p><div class="hj-chips" style="margin:0">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip" data-hja="whoq" data-hjv="${w}">${w}</button>`).join('')}</div></div>` : '';
-  const nav = chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
+  const nav = !START() && chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
   return `<div id="hj-root" class="tn${PUB() ? ' tn-pub' : ''}${TEEN() ? ' tn-teen' : ''}${an ? ' tn-anim' : ''}">
     ${MOVABLE() ? '<div class="row tn-tocard"><button type="button" class="btn btn-line btn-sm" data-hja="tocard">Back to the Card</button></div>' : ''}
     <div class="tn-bar"><div class="tn-brand"><b>${ic('sprout')}</b>${esc(TNAME())}</div>${nav ? navHtml('top') : ''}<span class="sp"></span>${nav ? `<button type="button" class="tn-iconbtn${S.sec === 'settings' ? ' on' : ''}" data-hja="sec" data-hjv="settings" aria-label="Settings">${ic('gear')}</button>` : ''}</div>
@@ -2618,9 +2627,15 @@ function vRisk(){
 const MOVABLE = () => !PUB() && !KIT() && !(C.host === 'home');
 // BLD 879: Preview for Guides is remembered for this browser session only.
 const PVKEY = 'gg-tend-preview';
-function PREVIEW(){ if (S.hereOk == null){ try { S.hereOk = sessionStorage.getItem(PVKEY) === '1'; } catch (e){ S.hereOk = false; } } return S.hereOk; }
+function PREVIEW(){ if (C.tier && C.tier() === 'guide') return false; if (S.hereOk == null){ try { S.hereOk = sessionStorage.getItem(PVKEY) === '1'; } catch (e){ S.hereOk = false; } } return S.hereOk; }
 function setPreview(on){ S.hereOk = on; try { if (on) sessionStorage.setItem(PVKEY, '1'); else sessionStorage.removeItem(PVKEY); } catch (e){} }
+// BLD 908 (decision 10, "guide is different from member."): a Guide's card opens The Grounded Way and points to Membership;
+// Move My Plan and Preview for Guides stay for Staff and Founders.
+const GUIDE_T = () => !!(C.tier && C.tier() === 'guide');
 function vCard(hasPlan){
+  if (GUIDE_T()) return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Tending Lives in The Grounded Way</h3>
+    <p class="hj-sub">Workouts, meal plans, Grounded Cooking, and Today's Plate open with Membership in The Grounded Way app, private on your phone. A Member code opens them there.</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button></div></div>`;
   const moved = !!H().set.movedHome, busy = S.moving;
   const move = moved ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Bring Over What\'s New'}</button>`
     : hasPlan ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Move My Plan to The Grounded Way'}</button>` : '';
@@ -2637,13 +2652,13 @@ function loadGGP(){
   return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b907a'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
-  if (S.moving) return; S.moving = true; rerender(true);
+  if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
   try {
     await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
     const ok = await window.GGP.require({reason: 'Open The Grounded Way to bring your Tending over.'});
     const a = ok && window.GGP.active && window.GGP.active(); if (!a) throw new Error('locked');
     const w = window.GGP.data(a.id, 'tending'); if (!w) throw new Error('vault');
-    const f = (C.fld && C.fld()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
+    const f = (FX()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
     w.lib = clone({healthJourney: f.healthJourney, audio: f.audio});
     w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : null;
     w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now();
@@ -2779,6 +2794,31 @@ function act(a, v){
   }
 }
 
+
+// =====================================================================
+// BLD 908: START. Public Tending without Membership on this device (decisions 2 and 3): one Flow session a day and the
+// daily meditation, each the day's pick, Grounded Recipes with Grounded Cooking, and a quiet Membership card for Grounded
+// Fitness and Grounded Nutrition (I Have a Code opens the GGMember sheet). Nothing here builds a plan or saves anything.
+// =====================================================================
+function startToday(d){
+  const sp = startPicks(d), out = [];
+  if (sp.flow) out.push({key: 'pracid:' + sp.flow.id, when: 'Today', hour: 7, title: sp.flow.title || 'Flow', sub: (sp.flow.mins ? sp.flow.mins + ' minutes. ' : '') + (sp.flow.focus || ''), btn: 'Begin', done: isDone(d, 'prac'), tint: TINT.move, kind: 'practice', image: WAY(flowArtName(sp.flow))});
+  if (sp.med) out.push({key: 'medid:' + sp.med.id, when: 'Today', hour: 7.5, title: sp.med.title || 'Meditation', sub: sp.med.focus || '', btn: 'Begin', done: isDone(d, 'med'), tint: TINT.quiet, kind: 'meditation', image: WAY(medArtFor(d))});
+  return out;
+}
+function startInvite(title, line){
+  if (window.GGMember && typeof GGMember.invite === 'function') return GGMember.invite({title, line});
+  return `<div class="tn-card"><div class="tn-k">Membership</div><b>${esc(title)}</b><p class="tn-sub">${esc(line)}</p></div>`;
+}
+function vStart(){
+  if (S.sec === 'recipes') return vRecipes();
+  if (S.sec === 'holidays') return vHol();
+  const sp = startPicks(), tile = (key, kick, title, sub, cls) => `<button type="button" class="tn-card tn-lift tn-kc ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${scene('practice', 16.8, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
+  return `<div class="tn-sec a-today">${secHead('today', 'a-today', 'Today', 'One Flow session and one meditation each day, with a calm voice guiding you. Grounded Recipes are open to everyone.')}
+    <div class="tn-kgrid">${sp.flow ? tile('pracid:' + sp.flow.id, 'Today\'s Flow' + (sp.flow.mins ? ' · ' + sp.flow.mins + ' min' : ''), sp.flow.title || 'Flow', sp.flow.focus || '', 'a-move') : ''}${sp.med ? tile('medid:' + sp.med.id, 'Today\'s Meditation · ' + medMins(1) + ' min', sp.med.title || 'Meditation', sp.med.focus || '', 'p-bark') : ''}</div>
+    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="recipes">Open Grounded Recipes</button></div>
+    <div class="tn-start-mem" style="display:grid;gap:12px;margin-top:14px">${startInvite('Grounded Fitness', 'The 12 week program, guided workouts with a coach, every Flow session, yoga, balance, and stretch.')}${startInvite('Grounded Nutrition', 'Meal plans for your household with Grounded Cooking, Today\'s Plate, shopping lists, prep, and your labs beside you.')}</div></div>`;
+}
 // =====================================================================
 // BLD 866: PUBLIC TENDING. Everything below runs only when the library is GGTendPublic (PUB()).
 // The food plan and the workouts are built by shared/gg-tend-plan.js (GGTendPlan) into the same shapes the Field Guide's views
@@ -3266,6 +3306,7 @@ document.addEventListener('input', e => { const t = e.target; if (!t.closest || 
 // ---------- the Home's summary ----------
 function pubSummary(){
   const lib = FLDH(), h = H(); if (!lib || !h) return {on: false};
+  if (START()) return {on: true, ready: false, start: true, name: TNAME(), use: [], today: {checksDone: 0, checksTotal: 0}, plate: {}, targets: {}, workout: null, nextLabs: '', kidsCount: 0};
   const ready = PUB() ? !!h.set.pubDone : useSet(), d = new Date();
   if (ready){ try { vTodayT(lib); } catch(e){ S.tally = null; } }
   const T = targets(), t = totals(today()), wk = ready && U('move') ? sesFor(d) : null;
@@ -3608,11 +3649,11 @@ function paintBare(){
   const b = S.bare; if (!b || !b.el) return;
   b.el.innerHTML = `<div id="hj-bare" class="tn tn-bare${PUB() ? ' tn-pub' : ''}${TEEN() ? ' tn-teen' : ''}" data-sec="${esc(b.section)}">${bareBody(b)}</div>`;
 }
-const setupNeeded = () => { const h = H(); return !h || (PUB() ? !h.set.pubDone : (!useSet() || !h.set.u || !!h.set.needSetup)); };
+const setupNeeded = () => { const h = H(); return !h || (START() ? false : PUB() ? !h.set.pubDone : (!useSet() || !h.set.u || !!h.set.needSetup)); };
 function bareClose(b, why){ if (b.closed) return; b.closed = true; const cb = b.opts && b.opts.onClose; if (typeof cb === 'function') setTimeout(() => { try { cb(why || b.section); } catch(e){} }, 0); }
 function bareBody(b){
   const lib = FLDH(), h = H(); if (!lib || !h) return '';
-  if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
+  if (VO()) VO().setKey(((FX()) || {}).audio);
   const sec = String(b.section || ''), base = sec.split(':')[0], box = (cls, html) => `<div class="tn-sec ${cls}">${html}</div>`;
   if (base === 'holidays'){ if (sec.length > 9) S.holId = sec.slice(9); return vHol(); } // BLD 896: open to anyone
   if (base !== 'setup' && setupNeeded()) return vSetupBare(b);
@@ -3800,6 +3841,7 @@ function openInline(b){
 function dayOf(date){ if (date instanceof Date && !isNaN(date)) return new Date(date); const p = parseD(date); if (p){ const n = new Date(); p.setHours(n.getHours(), n.getMinutes()); return p; } return new Date(); }
 function apiToday(date){
   const lib = FLDH(), h = H(); if (!lib || !h) return [];
+  if (START()) return startToday(dayOf(date));
   if (workOn()) fig3dWarm();
   const t = TD();
   if (setupNeeded()) return [{key: 'setup', when: 'Today', hour: 0, title: t.intro.start, sub: t.intro.line, btn: t.intro.start, tint: TINT.meals, done: false, kind: 'setup', image: WAY(ITEM_ART.setup)}];
@@ -3856,7 +3898,7 @@ function apiAct(key){
   return apiToggle(key);
 }
 function apiWeek(n){
-  const h = H(); if (!FLDH() || !h || setupNeeded()) return null;
+  const h = H(); if (!FLDH() || !h || setupNeeded() || START()) return null;
   const off = Math.round(+n || 0), t0 = day0(new Date()), mon = addD(monOf(t0), off * 7), N = weekNo(mon), track = h.set.track || 'strength';
   const fw = off === 0 ? foodWeek(t0) : Math.max(1, N);
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = U('food') ? dinnerFor(d) : null, wn = weekNo(d);
@@ -4658,6 +4700,9 @@ window.GGHealth = {
   // BLD 892: the player's own clock for a session (seconds), for the workshop and tests: sessionSecs(id, '1'|'2'|'3', light).
   sessionSecs(id, ph, light){ const ses = sesById(String(id || '')); return ses ? Math.round(sessSecs(ses, String(ph || phNum(new Date())), !!light)) : null; },
   view,
+  // BLD 908: Start or Membership. start() is true on the public Start file with no Membership on this device; startPicks()
+  // gives the day's Flow session and meditation {flow, med} (play with act('pracid:<id>') or act('medid:<id>')).
+  start: () => START(), startPicks: d => startPicks(d),
   open(sec){ S.sec = sec || 'today'; S.setup = false; if (C.go) C.go('health'); if (PUB()) rerender(false); },
   // BLD 866: what the Home shows. {on, ready, name, today: {checksDone, checksTotal}, plate: {sf, pro, fib, sug, na}, targets,
   // workout: {title, mins, done} or null, nextLabs, kidsCount, use: [parts]}
