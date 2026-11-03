@@ -1877,8 +1877,8 @@
   }
   function openShelf(id) {
     var t = TREES[S.tree] || TREES.oak;
-    if (id === 'learn') openLearn();
-    else if (id === 'life') openFrame(new URL(t.href + '#life', location.href));
+    // BLD 911 (Chris: "forces you to old Oak page.. with 2 different back buttons"): lessons and guides live on the Learn tab.
+    if (id === 'learn' || id === 'life') { LT.f = id === 'life' ? 'life' : 'learn'; if (isKid(S.p)) goTo('watch'); else goTo('learn'); }
     else if (id === 'recipes') openRecipe('');
     else if (id === 'holidays') { var hh = tableOf(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + '#holidays', location.href)); }
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
@@ -1977,7 +1977,7 @@
     if (t.hasAttribute('data-hm-shelf')) { openShelf(t.getAttribute('data-hm-shelf')); return; }
     if (t.hasAttribute('data-hm-res')) {
       var rs = t.getAttribute('data-hm-res').split('|'), k = rs[0], id = rs.slice(1).join('|'), tt = TREES[S.tree] || TREES.oak;
-      if (k === 'shelf') openShelf(id); else if (k === 'recipe') openRecipe(id); else if (k === 'guide') openFrame(new URL(tt.href + '#life=' + encodeURIComponent(id), location.href)); else if (k === 'lesson') openLearn(id);
+      if (k === 'shelf') openShelf(id); else if (k === 'recipe') openRecipe(id); else if (k === 'guide') { void tt; playGuide(id); } else if (k === 'lesson') playTreeLesson(id);
       return;
     }
     if (t.hasAttribute('data-hm-who')) { W.who = t.getAttribute('data-hm-who'); t.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === t)); }); return; }
@@ -3299,7 +3299,7 @@
   /* A tree tool: a known screen opens as a tree sheet; the rest open inside the whole tree. */
   function openTool(what, tree) {
     tree = tree || S.tree; var t = TREES[tree] || TREES.oak;
-    if (what === 'learn') { if (tree === S.tree) openLearn(); else openRoom(tree, '', ''); return; }
+    if (what === 'learn') { if (tree === S.tree) goTo(isKid(S.p) ? 'watch' : 'learn'); else openRoom(tree, '', ''); return; }
     if (what === 'whole') { if (tree === S.tree) goTo(isKid(S.p) ? 'today' : 'grow'); else openRoom(tree, '', ''); return; }
     if (what === 'video' || what === 'settings') {
       openFrame(new URL(t.href, location.href), true, function (win) {
@@ -3390,7 +3390,7 @@
     document.documentElement.classList.add('hm-sheeted');
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
-  function mClose() { var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
+  function mClose() { if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
   var LEARN_JS = '/shared/gg-learn.js?v=b911';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
@@ -3414,11 +3414,16 @@
   }
   function hhPickHtml() { var k = hhKind(); return '<div class="hm-acts tight" role="group" aria-label="Who this is for">' + HH_KINDS.map(function (h) { return '<button type="button" class="hm-btn sm hm-pill' + (h[0] === k ? '' : ' line') + '" aria-pressed="' + (h[0] === k) + '" data-hm-hh="' + h[0] + '">' + esc(h[1]) + '</button>'; }).join('') + '</div>'; }
   /* One lesson in the shared player (STD's call: a one-lesson support track). */
-  function playLesson(host, lesson, onDone) {
-    var tr = { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] };
-    try { GGLearn.player(host, { app: ROOM_TREES.test(S.tree) ? S.tree : 'site', lesson: lesson, track: tr, tracks: [tr], voice: lesson.voice || 'brian', clip: window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: {}, onDone: onDone || null }); }
+  // BLD 911 (Chris: "close the box with the x it no longer stops playing"): the dialog's player stops when the dialog closes.
+  var M_CTL = null;
+  function playLesson(host, lesson, onDone, track) {
+    var tr = track || { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] }, app = ROOM_TREES.test(S.tree) ? S.tree : 'site';
+    // BLD 911: the voice the tree recorded this lesson in (Jenny or Brian), so every line plays its recording.
+    var vo = lesson.voice || (track && app !== 'site' && GGLearn.recVoice ? GGLearn.recVoice({ app: app, lesson: lesson, track: tr }, true) : '') || 'brian';
+    try { M_CTL = GGLearn.player(host, { app: app, lesson: lesson, track: tr, tracks: [tr], voice: vo, clip: !track && window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: {}, onDone: onDone || null }); }
     catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
   }
+
   /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */
   var START_JS = '/shared/start-videos.js?v=b908';
   function dailyMed(sec) { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections)[sec || 'meditation']).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
@@ -3486,17 +3491,24 @@
   function heroSrc(im) { return /\//.test(im) ? HERO + im + '.webp' : im === 'marriage' ? '/heartwood/hero-wide.webp' : HERO + im + '-wide.webp'; }
   // A lesson's painting: the first painting in its art plan (shared/learn-art.js), or the tree's own painting.
   function lessonArt(app, id, i) {
-    var G = window.GG_ART, row = G && G.m ? (G.m[app + ':' + id] || G.m[id]) : null;
-    if (row) { var toks = String(row).split(' '); for (var k = 0; k < toks.length; k++) { var m = /^[pcf]?([0-9a-z]+)/.exec(toks[k]); if (!m || toks[k] === '-') continue; var im = (G.imgs || [])[parseInt(m[1], 36)]; if (im) return heroSrc(im); } }
-    var rot = [treeArt(app), IMG + 'tend-spirit.webp', IMG + 'tend-mind.webp', IMG + 'tend-people.webp', IMG + 'tend-move.webp', IMG + 'quiet-morning-sq.webp'];
-    return rot[(i || 0) % rot.length];
+    void i;
+    return planArt(app + ':' + id) || planArt(id) || treeArt(app);
   }
-  var LIFE_ART = [HERO + 'page-hard-seasons-narrow.webp', HERO + 'learn/c223.webp', IMG + 'tend-people.webp', HERO + 'svc-grief-narrow.webp', IMG + 'quiet-morning-sq.webp', IMG + 'tend-spirit.webp'];
+  // BLD 911 (Chris: "when pet dies has table with plates of food"): every card shows its own painting, from its own video's
+  // art plan; a card with no plan shows its tree's painting.
+  var GPFX = { oak: 'ok', birch: 'br', sequoia: 'sq', pine: 'pn', aspen: 'as', maple: 'mp' };
+  function planArt(key) {
+    var G = window.GG_ART, row = G && G.m ? G.m[key] : null; if (!row) return null;
+    var toks = String(row).split(' ');
+    for (var k = 0; k < toks.length; k++) { var m = /^[pcf]?([0-9a-z]+)/.exec(toks[k]); if (!m || toks[k] === '-') continue; var im = (G.imgs || [])[parseInt(m[1], 36)]; if (im) return heroSrc(im); }
+    return null;
+  }
+  function guideArt(tree, id) { var p = GPFX[tree]; return (p && (planArt(tree + ':' + p + '-g-' + id + '-you') || planArt(tree + ':' + p + '-g-' + id + '-helper'))) || treeArt(tree); }
   function tracksOf(tree) {
     var L = window.GG_LEARN && window.GG_LEARN[tree]; if (!L) return null;
     return arr(L.tracks).filter(function (t) { return t && !t.unlisted && t.kind !== 'forguides' && arr(t.lessons).length; });
   }
-  function findLesson(tree, id) { var out = null; arr(tracksOf(tree)).forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id === id) out = l; }); }); return out; }
+  function findLesson(tree, id) { var out = null; arr(tracksOf(tree)).forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id === id) out = { l: l, t: t }; }); }); return out; }
   function lessonCard(tree, l, i) {
     return '<button type="button" class="hm-lcard" data-hm-lesson="' + esc(l.id) + '"><span class="im"><img src="' + lessonArt(tree, l.id, i) + '" alt="" loading="lazy" decoding="async"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(l.title || '') + '</b>' + (l.mins ? '<small>' + esc(l.mins) + ' minutes</small>' : '') + '</span></button>';
   }
@@ -3527,9 +3539,10 @@
     var t = TREES[S.tree] || TREES.oak, tr = arr(tracksOf(S.tree)), life = lifeTopics(S.tree), f = LT.f, n = 0;
     var chips = [['all', 'For You'], ['learn', 'Lessons'], ['life', 'When Life Changes']].map(function (c) { return '<button type="button" class="hm-lchip" data-hm-lf="' + c[0] + '" aria-pressed="' + (c[0] === f) + '">' + c[1] + '</button>'; }).join('');
     var feat = '<button type="button" class="hm-lfeat" data-hm-tool="video"><img src="' + treeArt(S.tree, true) + '" alt="" loading="lazy"><span class="sh"></span><span class="pl">' + I('play') + '</span><span class="tx"><small>Chosen for Your ' + esc(t.n) + '</small><b>Meet Your ' + esc(t.n) + '</b></span></button>';
-    var out = '<div class="hm-lchips" role="group" aria-label="Show">' + chips + '</div>' + (f === 'life' ? '' : feat);
+    // BLD 911 (Chris: "meet your oak, and then welcome to oak.. seem to have a lot of overlap"): Learn opens on the lessons.
+    var out = '<div class="hm-lchips" role="group" aria-label="Show">' + chips + '</div>'; void feat;
     if (f !== 'life') tr.forEach(function (x) { out += rowHtml(x.title || 'Lessons', x.who || '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
-    if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(function (g, i) { return '<button type="button" class="hm-lcard" data-hm-guide="' + esc(g.id) + '"><span class="im"><img src="' + LIFE_ART[i % LIFE_ART.length] + '" alt="" loading="lazy" decoding="async"></span><span class="tx"><b>' + esc(g.title || '') + '</b><small>Guide</small></span></button>'; }).join(''));
+    if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(function (g, i) { return '<button type="button" class="hm-lcard" data-hm-guide="' + esc(g.id) + '"><span class="im"><img src="' + guideArt(S.tree, g.id) + '" alt="" loading="lazy" decoding="async"></span><span class="tx"><b>' + esc(g.title || '') + '</b><small>Guide</small></span></button>'; }).join(''));
     return out;
   }
   /* A kid's Watch tab: today's short video, every kid video, and the tree's lessons. */
@@ -3544,19 +3557,38 @@
     var seen = {}, ids = [];
     Object.keys(KMATCH).forEach(function (k) { arr(KMATCH[k]).forEach(function (id) { if (!seen[id] && GGN[id]) { seen[id] = 1; ids.push(id); } }); });
     var ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), lead = ed.edges.filter(isTend)[0] || ed.lead || 'none', today0 = pick(KMATCH[lead] || ids, dayIndex());
-    var KART = ['tend-mind', 'tend-spirit', 'tend-people', 'tend-move', 'tend-fruit', 'quiet-morning-sq', 'tend-body', 'balance-lawn', 'snack-fruit-sq', 'home-morning-narrow'], vn = 0;
-    var vid = function (id) { var v = GGN[id]; return '<button type="button" class="hm-lcard" data-hm-play="' + esc(id) + '"><span class="im"><img src="' + IMG + KART[(vn++) % KART.length] + '.webp" alt="" loading="lazy"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(v[0]) + '</b><small>' + esc(v[1]) + ' minutes</small></span></button>'; };
+    var vid = function (id) { var v = GGN[id]; return '<button type="button" class="hm-lcard" data-hm-play="' + esc(id) + '"><span class="im"><img src="' + (planArt(id) || treeArt(S.tree)) + '" alt="" loading="lazy"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(v[0]) + '</b><small>' + esc(v[1]) + ' minutes</small></span></button>'; };
     var n = 0, out = today0 && GGN[today0] ? rowHtml('Today', '', vid(today0)) : '';
     out += rowHtml('Calm and Strong', 'Breathing, feelings, and kind moves.', ids.map(vid).join(''));
     arr(tracksOf(S.tree)).forEach(function (x) { out += rowHtml(x.title || 'Lessons', '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
     return out;
   }
   function playTreeLesson(id) {
-    var l = findLesson(S.tree, id); if (!l) { openLearn(id); return; }
+    if (!tracksOf(S.tree)) { loadLearn().then(function () { if (tracksOf(S.tree)) playTreeLesson(id); }); return; }
+    var f = findLesson(S.tree, id); if (!f) { openLearn(id); return; }
+    var l = f.l;
     load(LEARN_JS).then(function () {
       mDialog(l.title || 'Learn', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(l.title || '') + '…</p></div>');
-      var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, l); else { mClose(); openLearn(id); }
+      var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, l, null, f.t); else { mClose(); openLearn(id); }
     });
+  }
+  /* BLD 911 (Chris: "when i chose a vid from When life changes.. i am forced to a new page and then hard to find way back"):
+     a guide's two videos (For You and For the Helper) play in the same window on Learn; Read the Guide opens the written guide. */
+  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=b907', aspen: '/aspen/guide-videos.js?v=b888', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b888', pine: '/pine/guide-videos.js?v=b907', birch: '/birch/guide-videos.js?v=b907' };
+  function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
+  function playGuide(id, side) {
+    var tree = S.tree, src = GUIDE_JS[tree]; if (!src) { openGuide(id); return; }
+    mDialog('When Life Changes', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening the guide…</p></div>');
+    Promise.all([load(LEARN_JS), load(src)]).then(function () {
+      var g = guideVideos(tree, id), x = g && (g[side || 'you'] || g.you);
+      var box = document.getElementById('hm-mdlg-b'); if (!box) return;
+      if (!g || !x || !window.GGLearn || !GGLearn.player) { mClose(); openGuide(id); return; }
+      var t = document.getElementById('hm-mdlg-t'); if (t) t.textContent = g.title || x.title || 'When Life Changes';
+      var tabs = ['you', 'helper'].filter(function (s) { return g[s]; }).map(function (s) { return '<button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|' + s + '" aria-pressed="' + (s === (side || 'you')) + '">' + esc(g[s].sideName || (s === 'you' ? 'For You' : 'For the Helper')) + '</button>'; }).join('');
+      box.innerHTML = '<div class="hm-lchips">' + tabs + '<button type="button" class="hm-lchip" data-hm-gread="' + esc(id) + '">' + I('book') + 'Read the Guide</button></div><div class="hm-mplayer" id="hm-mplayer"></div>';
+      var tr = { id: 'hm-g-' + id, kind: 'guide', title: g.title, lessons: [x] };
+      playLesson(document.getElementById('hm-mplayer'), x, null, tr);
+    }).catch(function () { mClose(); openGuide(id); });
   }
   function openGuide(id) {
     var t = TREES[S.tree] || TREES.oak, kid = S.tree === 'maple' || S.tree === 'aspen';
@@ -3604,10 +3636,12 @@
       '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-lf],[data-hm-pick],[data-hm-padd]');
+    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-lf],[data-hm-pick],[data-hm-padd]');
     if (!t) return;
     if (t.hasAttribute('data-hm-lesson')) { playTreeLesson(t.getAttribute('data-hm-lesson')); return; }
-    if (t.hasAttribute('data-hm-guide')) { openGuide(t.getAttribute('data-hm-guide')); return; }
+    if (t.hasAttribute('data-hm-guide')) { playGuide(t.getAttribute('data-hm-guide')); return; }
+    if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1]); return; }
+    if (t.hasAttribute('data-hm-gread')) { var gid = t.getAttribute('data-hm-gread'); mClose(); openGuide(gid); return; }
     if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
     if (t.hasAttribute('data-hm-pick')) { var id = t.getAttribute('data-hm-pick'); mClose(); if (id === S.id) return; GGP.openDialog({ id: id }).then(function () { render(); }); return; }
     if (t.hasAttribute('data-hm-padd')) { mClose(); GGP.createDialog().then(function () { render(); }); return; }
