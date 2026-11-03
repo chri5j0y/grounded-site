@@ -115,7 +115,9 @@ const TEND6 = PARTS6.filter(p => gvTends(p.key));
 // A part's paired label on screen (Roots: Spirit, or Roots: What grounds us in Plain wording).
 const gvLabel = p => { const k = p && p.key ? p.key : p, x = PARTS6.find(y => y.key === k); return x ? x.name + ': ' + x.sub : String(k || ''); };
 Object.defineProperty(PARTS6[0], 'sub', { configurable: true, enumerable: true, get: () => { try { return plainMode() ? 'What grounds us' : 'Spirit'; } catch (e) { return 'Spirit'; } }, set: () => {} });
-const TOOL = { adult:{ name:'Oak', href:'/oak/' }, pine:{ name:'Pine', href:'/pine/' }, birch:{ name:'Birch', href:'/birch/' }, aspen:{ name:'Aspen', href:'/aspen/' }, maple:{ name:'Maple', href:'/maple/' }, sequoia:{ name:'Sequoia', href:'/sequoia/' } };
+// BLD 911: every age tree lives in The Grounded Way (/home/); the profile chooses the tree.
+const WAY = { name:'The Grounded Way', href:'/home/' };
+const TOOL = { adult:WAY, pine:WAY, birch:WAY, aspen:WAY, maple:WAY, sequoia:WAY };
 const ADULT_TREES = ['sequoia', 'birch'];
 const adultTree = p => { if (!p || p.age !== 'adult') return ''; if (ADULT_TREES.includes(p.tree)) return p.tree; const t = ((p.shared || {}).tree || {}).tool; return ADULT_TREES.includes(t) ? t : ''; };
 const toolOf = x => { const p = x && typeof x === 'object' ? x : null, age = p ? p.age : x;
@@ -679,7 +681,7 @@ function viewGrove() {
   }
   h += `<p class="gv-grew">${days ? `${days} ${days === 1 ? 'day' : 'days'} of growing together.` : (isFamily() ? 'The grove grows when anyone tends their tree or the family does a practice together.' : 'The grove grows with every practice done together.')}${next && hasTrees() ? ` Next visitor: ${esc(next.name)}, at ${next.days} ${next.days === 1 ? 'day' : 'days'}.` : ''}</p>`;
   if (fam.length > famShown.length) h += `<p class="muted">${fam.length - famShown.length} more ${fam.length - famShown.length === 1 ? 'tree is' : 'trees are'} in the Family Trees list.</p>`;
-  if (isFamily() && !ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in the app for your age. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button>${ownTreeChips()}</div></div>` + togetherHtml(days) + moveOnHtml() + helpCardHtml();
+  if (isFamily() && !ps.length) return h + famHtml() + `<div class="card"><h3>Start with your own tree</h3><p>Make a private Grounded profile, then tend your tree in The Grounded Way. It grows here too.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create">Make my profile</button>${ownTreeChips()}</div></div>` + togetherHtml(days) + moveOnHtml() + helpCardHtml();
   if (isFamily()) {
     h += `<div class="gv-people" role="list">${ps.map(p => { const t = treeOf(p); return `<button type="button" role="listitem" class="gv-person${S.sel === p.id ? ' on' : ''}" aria-pressed="${S.sel === p.id}" data-act="sel" data-id="${esc(p.id)}">${window.GGAv ? GGAv.html(p.avatar, p.name, 44) : ''}<b>${esc(p.name)}</b><span>${t.show ? `${t.days} ${t.days === 1 ? 'day' : 'days'} tended` : 'Growing quietly'}</span></button>`; }).join('')}</div>`;
     const sp = S.sel && who(S.sel);
@@ -911,7 +913,10 @@ const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
 const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
 const GV_SRC = '/grove/guide-videos.js?v=b908';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
-const TREE_LINK = { maple: ['Maple', '/maple/#talk=', 'for grown-ups of kids, K to 5'], aspen: ['Aspen', '/aspen/#talk=', 'for grown-ups of middle schoolers'], pine: ['Pine', '/pine/#life=', 'for grades 9 to 12'], birch: ['Birch', '/birch/#life=', 'for ages 18 to 26'], oak: ['Oak', '/oak/#life=', 'for grown-ups'], sequoia: ['Sequoia', '/sequoia/#life=', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
+// BLD 911: a guide of one of the six age trees plays in The Grounded Way (/home/?guide=<id>&tree=<tree>); Willow keeps its own page.
+const TREE_LINK = { maple: ['The Grounded Way', '', 'for grown-ups of kids, K to 5'], aspen: ['The Grounded Way', '', 'for grown-ups of middle schoolers'], pine: ['The Grounded Way', '', 'for grades 9 to 12'], birch: ['The Grounded Way', '', 'for ages 18 to 26'], oak: ['The Grounded Way', '', 'for grown-ups'], sequoia: ['The Grounded Way', '', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
+const treeGuideHref = (tr, id) => TREE_LINK[tr][1] ? TREE_LINK[tr][1] + encodeURIComponent(id) : '/home/?guide=' + encodeURIComponent(id) + '&tree=' + tr;
+const treeGuideSite = tr => tr === 'willow' ? 'growwithgrounded.com/willow/' : 'growwithgrounded.com/home/';
 const HOSPICE_FIRST = ['hospice', 'hard-death'];
 S.lc = { q: '', ring: 'all', open: null, persp: 'group' };
 const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'sober' ? SOBER_RING : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
@@ -1040,7 +1045,7 @@ const lcKidsOn = () => !G || (G.kind !== 'team' && (kidsOn() || isFamily()));
 function lcFaith(t) { return plainMode() ? ((t.plain || {}).faith || '') : (t.faith || ''); }
 function lcTreeLinks(t) {
   const L = (t.trees || []).filter(x => TREE_LINK[x[0]]); if (!L.length) return '';
-  return `<h3>A guide of your own</h3><p>For anyone who wants their own guide, in the tree app for their age:</p><ul class="gv-lc-trees">${L.map(([tr, id, title]) => { const T0 = TREE_LINK[tr]; return `<li><a class="text-link" href="${T0[1]}${encodeURIComponent(id)}">${esc(title || id)}</a> <span class="muted">in ${T0[0]}, ${esc(T0[2])}</span></li>`; }).join('')}</ul>`;
+  return `<h3>A guide of your own</h3><p>For anyone who wants their own guide, chosen for their age:</p><ul class="gv-lc-trees">${L.map(([tr, id, title]) => { const T0 = TREE_LINK[tr]; return `<li><a class="text-link" href="${treeGuideHref(tr, id)}">${esc(title || id)}</a> <span class="muted">in ${T0[0]}, ${esc(T0[2])}</span></li>`; }).join('')}</ul>`;
 }
 function lcSources(t) { return window.GGSources ? GGSources.html('grove:' + t.id, { stories: t.stories || [] }) : ''; }
 function lcPracHtml(t) {
@@ -1101,7 +1106,7 @@ function lcPrint(id) {
     <h2>For the Leader</h2><p>${esc(ld.feel || '')}</p><p><b>What to say</b></p>${ul(ld.say)}<p><b>What not to say or do</b></p>${ul(ld.avoid)}<p><b>Practical ways to lead</b></p>${ul(ld.help)}<p>${esc(ld.you || '')}</p>
     ${faith ? `<h2>${plainMode() ? 'What Matters Most' : 'Faith and Meaning'}</h2><p>${esc(faith)}</p>` : ''}
     ${ps.length ? `<h2>Together Practices</h2>${ps.map(p => `<div class="card"><b>${esc(p.name)}</b><p>${esc(p.text)}</p><ol>${String(p.steps || '').split('|').filter(Boolean).map(s => `<li>${esc(s)}</li>`).join('')}</ol></div>`).join('')}` : ''}
-    ${trees.length ? `<h2>A Guide of Your Own</h2><ul>${trees.map(([tr, gid, title]) => `<li>${esc(title || gid)}, in ${TREE_LINK[tr][0]} (growwithgrounded.com/${tr}/)</li>`).join('')}</ul>` : ''}
+    ${trees.length ? `<h2>A Guide of Your Own</h2><ul>${trees.map(([tr, gid, title]) => `<li>${esc(title || gid)}, in ${TREE_LINK[tr][0]} (${treeGuideSite(tr)})</li>`).join('')}</ul>` : ''}
     <h2>When to Reach Out for More Help</h2>${ul(t.reach)}
     ${HOSPICE_FIRST.includes(t0.id) ? '<p><b>In hospice, call your hospice 24/7 line first, day or night.</b></p>' : ''}<p>If a vulnerable adult in Minnesota may be harmed, neglected, or taken advantage of, call MAARC at 1-844-880-1574, any time.</p>
     <div class="muted" style="font-size:13px">${lcSources(t0)}</div>`;
@@ -1431,7 +1436,7 @@ function viewSettings() {
 }
 
 /* ---------- move-on offers ---------- */
-function ownTreeChips() { return [['Oak', '/oak/', 'Grown-ups'], ['Birch', '/birch/', 'Young Adults'], ['Sequoia', '/sequoia/', '60 and Up'], ['Pine', '/pine/', 'High School'], ['Aspen', '/aspen/', 'Middle School'], ['Maple', '/maple/', 'Kids']].map(t => `<a class="btn btn-line btn-sm" href="${t[1]}">${t[0]}<span class="sr-only">, ${t[2]}</span></a>`).join(''); }
+function ownTreeChips() { return '<a class="btn btn-line btn-sm" href="/home/">Begin The Grounded Way</a>'; } // BLD 911: one app for every age, the profile chooses the tree
 // grove/kinds.js words may begin with the offer's own name ("Take The Grove Home: ..."); the card shows the name once.
 const moW = (k, d) => String(W('moveOn.' + k, d)).replace(/^[^:.]{3,40}:\s*/, '').replace(/^./, c => c.toUpperCase());
 function moveOnHtml(all) {
@@ -1440,7 +1445,7 @@ function moveOnHtml(all) {
   if (kind === 'faith' || kind === 'group') h += `<p><b>Take The Grove Home.</b> ${esc(moW('takeHome', 'Members can start a Family grove of their own at home. Print a card with a QR code to hand out.'))}</p><button class="btn btn-line btn-sm" data-act="print" data-id="home">Print the Take Home Card</button>`;
   if (kind === 'classroom' && all) h += `<p><b>Close Our Class Grove.</b> ${esc(moW('closeClass', 'At the end of the year: a goodbye circle, the certificate, and then the class grove is cleared from this device.'))}</p><button class="btn btn-line btn-sm" data-act="closeclass">Close Our Class Grove</button>`;
   if (isFamily() && G.hard) h += `<p><b>Willow.</b> ${esc(moW('hardSeason', 'For the person in hospice and the people who love them. A remembered willow stays in the grove.'))}</p><a class="btn btn-line btn-sm" href="/willow/">Open Willow</a>`;
-  h += `<p><b>Start Your Own Tree.</b> ${esc(moW('ownTree', 'Everyone can tend their own tree, private to them, in the app for their age.'))}</p><div class="tools-row" style="justify-content:flex-start">${ownTreeChips()}</div>`;
+  h += `<p><b>Start Your Own Tree.</b> ${esc(moW('ownTree', 'Everyone can tend their own tree, private to them, in The Grounded Way.'))}</p><div class="tools-row" style="justify-content:flex-start">${ownTreeChips()}</div>`;
   return h + `</div>`;
 }
 
@@ -1514,7 +1519,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b907').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b911b').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */
@@ -1540,7 +1545,7 @@ function viewHow() {
   ${window.GGTreeArt ? `<div class="card gv-howart"><h3>Tend Four, Grow Two</h3><p class="muted">Together we tend four parts: ${esc(TEND6.map(p => gvLabel(p)).join(', '))}. Meaning and hope grow from that tending. ${GV_GW ? esc(GV_GW.PROMISE) : ''}</p>${GGTreeArt.howItWorks(null, { app: 'grove', plain: plainMode(), parts: artParts(true), label: 'The grove painting with glowing parts to tap' })}</div>` : ''}
   <div class="card gv-how">
     <h3>Your tree is yours. The grove is ours.</h3>
-    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, <a class="text-link" href="/maple/">Maple</a> for kids, and <a class="text-link" href="/willow/">Willow</a> for the person in hospice and the people who love them. Personal check-ins, practices, and journals live there, private to each person. Each grown-up can also tend their tree inside <a class="text-link" href="/the-grounded-way.html">The Grounded Way</a>, one personal app for the whole day.</p>
+    <p>Everyone tends their own tree in <a class="text-link" href="/home/">The Grounded Way</a>, one app for every age: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, and Maple for kids, chosen by each profile. <a class="text-link" href="/willow/">Willow</a> is for the person in hospice and the people who love them. Personal check-ins, practices, and journals live there, private to each person.</p>
     <h3>Kinds of Grove</h3>
     <p>A grove can be a Family, a Classroom, a Faith Community, a Small or Discussion Group, or a Team or Workplace. The kind sets the words, the check-in questions, and the practices. One device holds up to six groves, each with its own name, kind, and lock.</p>
     <h3>Checking In Together</h3>
