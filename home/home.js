@@ -428,7 +428,7 @@
       section: function (sec) { var to = { holidays: route().tab === 'library' ? 'library=holidays' : 'week=holidays', shop: 'week=shop', prep: 'week=prep', setup: 'today=tending', numbers: 'me=numbers', settings: 'me=settings', log: 'today=log', plate: 'today=log', workouts: 'library=workouts', own: 'week=own' }[sec]; if (to && !S.quiet) goTo(to); },
       go: function (t) { if (t === 'health') tendGo(); },
       // BLD 877: a public recipe opens the public Recipes page (/recipes/#<id>) in the frame, so there is one recipe design.
-      openPage: function (path) { var u; try { u = new URL(path, location.href); } catch (e) { return false; } if (u.origin !== location.origin) return false; openFrame(u); return true; },
+      openPage: function (path) { var u; try { u = new URL(path, location.href); } catch (e) { return false; } if (u.origin !== location.origin) return false; if (/^\/recipes\/?$/.test(u.pathname)) { openRecipe(decodeURIComponent(u.hash.slice(1))); return true; } openFrame(u); return true; },
       toast: toast,
       age: function () { return S.p ? S.p.age : 'adult'; },
       name: function () { return S.p ? S.p.name : ''; }
@@ -1879,9 +1879,21 @@
       '<p class="hm-sub">Try another word, or open a shelf below.</p>';
     void t;
   }
+  /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
+  var RECIPES_JS = '/recipes/recipes.js?v=b912';
   function openRecipe(id) {
     var hh = tableOf();
-    openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + (id ? '#' + encodeURIComponent(id) : ''), location.href));
+    mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
+    var frameIt = function () { mClose(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + (id ? '#' + encodeURIComponent(id) : ''), location.href)); };
+    load(RECIPES_JS).then(function () {
+      if (!window.GGRecipes || !GGRecipes.mount) { frameIt(); return; }
+      return arr(GGRecipes.need ? GGRecipes.need() : GGRecipes.files).reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
+        var host = document.getElementById('hm-mdlg-b'); if (!host) return;
+        host.innerHTML = '';
+        SCR_CTL = GGRecipes.mount(host, { serves: hh || undefined, open: id || '',
+          onLink: function (route) { mClose(); if (/^#?week/.test(route)) goTo('week'); else goTo('today'); } });
+      });
+    }).catch(frameIt);
   }
   function openLearn(lessonId) {
     var t = TREES[S.tree] || TREES.oak;
@@ -1895,7 +1907,7 @@
     // BLD 911 (Chris: "forces you to old Oak page.. with 2 different back buttons"): lessons and guides live on the Learn tab.
     if (id === 'learn' || id === 'life') { LT.f = id === 'life' ? 'life' : 'learn'; if (isKid(S.p)) goTo('watch'); else goTo('learn'); }
     else if (id === 'recipes') openRecipe('');
-    else if (id === 'holidays') { var hh = tableOf(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + '#holidays', location.href)); }
+    else if (id === 'holidays') openRecipe('holidays');
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
     else if (id === 'quiet') { if (!member()) { openDailyMed(); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openGGN(); }
@@ -3178,6 +3190,7 @@
     if (!(window.GGP && GGP.active && GGP.active())) return;
     e.preventDefault();
     if (u.pathname === '/get-grounded-now.html') { openGGN(); return; }
+    if (/^\/recipes\/?$/.test(u.pathname)) { openRecipe(decodeURIComponent(u.hash.slice(1))); return; }
     if (u.pathname === '/living-sober.html') { goTo('today'); setTimeout(function () { var c = document.getElementById('hm-sober'); if (c) c.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 120); return; }
     var own = (TREES[S.tree] || TREES.oak).href;
     if (u.pathname === own && !u.hash) { goTo('tree'); return; }
@@ -3499,6 +3512,7 @@
     mDialog(s.name, body);
   }
   function mDialog(title, body) {
+    if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null;
     var old = document.getElementById('hm-mdlg'); if (old) old.remove();
     var w = document.createElement('div'); w.id = 'hm-mdlg'; w.className = 'hm-sheetwrap';
     w.innerHTML = '<div class="hm-sheet-bg" data-hm-mclose="1"></div><section class="hm-sheet tall" role="dialog" aria-modal="true" aria-labelledby="hm-mdlg-t" tabindex="-1"><div class="hm-sh-hd"><span></span><h2 class="hm-h2" id="hm-mdlg-t">' + esc(title) + '</h2><button type="button" class="hm-x" data-hm-mclose="1" aria-label="Close">' + I('plus') + '</button></div><div class="hm-sheet-body" id="hm-mdlg-b">' + body + '</div></section>';
