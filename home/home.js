@@ -1572,7 +1572,7 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + plate + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (T.ready ? ownLinkHtml() : '') + '</div>' +
-      '<div class="hm-col hm-tside">' + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + '</div></div>' + fab;
+      '<div class="hm-col hm-tside">' + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml() + '</div></div>' + fab;
   }
   function findItem(key) { var T = todayItems(); return T.items.filter(function (x) { return x.key === key; })[0] || null; }
   /* BLD 885: Right Now's How opens that practice's How on its card in the day, in place. */
@@ -1848,7 +1848,7 @@
     else if (id === 'holidays') { var hh = tableOf(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + '#holidays', location.href)); }
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
-    else if (id === 'quiet') { if (!member()) { openFrame(new URL('/get-grounded-now.html', location.href)); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openFrame(new URL('/get-grounded-now.html', location.href)); }
+    else if (id === 'quiet') { if (!member()) { openDailyMed(); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openFrame(new URL('/get-grounded-now.html', location.href)); }
   }
   SUBS.library.quiet = 'Quiet and Meditation';
   OLDSEC.quiet = 'today';
@@ -1871,7 +1871,8 @@
     var head = sub ? '<div class="hm-sh-hd"><button type="button" class="hm-backbtn" data-hm-me="">' + I('back') + '<span>Back</span></button><h2 class="hm-h2" id="hm-sheet-t">' + esc(SUBS.me[sub]) + '</h2><button type="button" class="hm-x" data-hm="closeme" aria-label="Close">' + I('plus') + '</button></div>'
       : '<div class="hm-sh-hd"><span class="hm-me big" aria-hidden="true">' + esc(initials(S.p && S.p.name)) + '</span><h2 class="hm-h2" id="hm-sheet-t">' + esc(S.p && S.p.name || 'You') + '</h2><button type="button" class="hm-x" data-hm="closeme" aria-label="Close">' + I('plus') + '</button></div>';
     var band = '<picture class="hm-sh-band" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + 'profile-band-narrow.webp"><img src="' + IMG + 'profile-band-wide.webp" alt="" loading="lazy"></picture>';
-    var body = sub ? '<div class="hm-sheet-body" id="hm-sheet-body"></div>' :
+    var mcard = ''; if (!sub && !isKid(S.p) && window.GGMember && typeof window.GGMember.card === 'function') { try { mcard = '<div class="hm-sh-member">' + (window.GGMember.card() || '') + '</div>'; } catch (e) { mcard = ''; } }
+    var body = sub ? '<div class="hm-sheet-body" id="hm-sheet-body"></div>' : mcard +
       '<ul class="hm-sh-rows">' + SHEET_ROWS.map(function (r) { return '<li><button type="button" data-hm-me="' + r[0] + '"><span class="ic">' + I(r[1]) + '</span><span class="tx"><b>' + r[2] + '</b><small>' + r[3] + '</small></span>' + I('arrow') + '</button></li>'; }).join('') + '</ul>' +
       '<button type="button" class="hm-done" data-hm="closeme">Done</button>';
     wrap.innerHTML = '<div class="hm-sheet-bg" data-hm="closeme"></div><section class="hm-sheet' + (sub ? ' tall' : '') + '" role="dialog" aria-modal="true" aria-labelledby="hm-sheet-t" tabindex="-1">' + (sub ? '' : band) + head + body + '</section>';
@@ -2985,17 +2986,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
 
-  /* BLD 908: what Start keeps from Tending's Today: Morning Quiet, one Flow session, one meditation, and My Own Items. */
+  /* BLD 908: what Start keeps from Tending's Today: Morning Quiet, one Flow session, one meditation, My Own Items, and Tending's own Start cards. */
   var TEND_MEMBER = /^(shop|prep|own|holidays|workouts|month|log|numbers|week|quiet)$/;
   function startTend(list) {
     if (!Array.isArray(list) || member()) return list;
     var flow = 0, med = 0;
+    // Tending folds its own Start view in (field-guide/health.js with GGMember.tend); this keeps Home right either way.
     return list.filter(function (x) {
       if (!x) return false;
-      if (x.kind === 'quiet' || x.kind === 'own' || x.kind === 'setup') return true;
+      if (/^(workout|cook|shop|holiday|prep|meal|supplement|mark)$/.test(x.kind || '')) return false;
       if (x.kind === 'practice') return !flow++;
       if (x.kind === 'meditation') return !med++;
-      return false;
+      return true;
     });
   }
   var SU_START_PLAN = {
@@ -3327,10 +3329,11 @@
   /* A section may be a list of items, {items: [...]}, or {programs: [{title, items or sessions}]}; items carry scenes. */
   function mItems(name) {
     var x = mSection(name); if (!x) return [];
-    var out = [], take = function (it, prog) { if (it && it.id && (it.title || it.h)) out.push({ id: it.id, title: it.title || it.h, mins: it.mins, need: it.need || prog || it.program || '', area: it.area || '', scenes: it.scenes, item: it }); };
+    var out = [], take = function (it, prog) { if (it && it.id && (it.title || it.h)) out.push({ id: it.id, title: it.title || it.h, mins: it.mins, need: it.need || prog || it.program || '', tradition: it.tradition || '', session: it.session, area: it.area || '', scenes: it.scenes, item: it }); };
     if (Array.isArray(x)) x.forEach(function (i) { take(i); });
     else {
       arr(x.items).forEach(function (i) { take(i); });
+      arr(x.lessons).forEach(function (i) { take(i); });
       arr(x.programs).forEach(function (p) { arr(p.items || p.sessions).forEach(function (i) { take(i, p.title || p.id); }); });
     }
     return out;
@@ -3341,9 +3344,11 @@
   }
   function openMShelf(id) {
     var s = MSHELVES.filter(function (x) { return x.id === id; })[0]; if (!s) return;
-    var L = mItems(id), groups = {};
-    L.forEach(function (x) { var g = x.need || 'More'; (groups[g] = groups[g] || []).push(x); });
-    var body = L.length ? Object.keys(groups).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3><ul class="hm-mlist">' + groups[g].map(function (x) { return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '">' + I('play') + '<span><b>' + esc(x.title) + '</b>' + (x.mins ? '<small>About ' + esc(x.mins) + ' minutes</small>' : '') + '</span></button></li>'; }).join('') + '</ul>'; }).join('')
+    var L = mItems(id), groups = {}, trad = {}, md = obj(homeRec().mdone);
+    // Programs by tradition wait in their own list, opened and chosen by the person; never suggested or preselected.
+    L.forEach(function (x) { var g = x.need || 'More', box = x.tradition ? trad : groups; (box[g] = box[g] || []).push(x); });
+    var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3><ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (x.mins ? 'About ' + esc(x.mins) + ' minutes' : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
+    var body = L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad"><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
       : '<p class="hm-sub">' + esc(s.name) + ' fills in here as soon as the Member library opens on this device.</p>';
     mDialog(s.name, body);
   }
@@ -3363,14 +3368,38 @@
     b.innerHTML = '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div>';
     load(LEARN_JS).then(function () {
       var host = document.getElementById('hm-mplayer'); if (!host || !window.GGLearn || !GGLearn.player) return;
-      try { GGLearn.player(host, { lesson: Object.assign({ id: x.id, title: x.title, scenes: arr(x.scenes) }, x.item), app: S.tree, accent: '#8B5E1A' }); } catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
+      playLesson(host, Object.assign({ id: x.id, title: x.title, scenes: arr(x.scenes) }, x.item), function () { var h = homeRec(); if (!h.mdone || typeof h.mdone !== 'object') h.mdone = {}; h.mdone[key] = today(); saveHome(); });
+    });
+  }
+  /* One lesson in the shared player (STD's call: a one-lesson support track). */
+  function playLesson(host, lesson, onDone) {
+    var tr = { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] };
+    try { GGLearn.player(host, { app: ROOM_TREES.test(S.tree) ? S.tree : 'site', lesson: lesson, track: tr, tracks: [tr], voice: lesson.voice || 'brian', done: {}, onDone: onDone || null }); }
+    catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
+  }
+  /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */
+  var START_JS = '/shared/start-videos.js?v=b908';
+  function dailyMed() { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections).meditation).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
+  function dailyMedHtml() {
+    if (isKid(S.p)) return '';
+    var x = window.GG_START_VIDEOS ? dailyMed() : null;
+    if (!window.GG_START_VIDEOS) load(START_JS).then(function () { var el = document.getElementById('hm-dmed'); if (el && dailyMed()) el.outerHTML = dailyMedHtml(); });
+    return '<article class="hm-card hm-p-bark hm-dmed" id="hm-dmed"><div class="hm-k">Today\'s Meditation</div><h3 class="hm-h3">' + esc(x ? x.title : 'A Few Quiet Minutes') + '</h3><p class="hm-sub">' + esc(x ? (x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '') : 'A guided meditation for today, with a calm voice.') + '</p>' +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="1">' + I('play') + 'Begin</button></div></article>';
+  }
+  function openDailyMed() {
+    load(START_JS).then(function () {
+      var x = dailyMed(); if (!x) { openFrame(new URL('/get-grounded-now.html', location.href)); return; }
+      mDialog('Today\'s Meditation', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div><p class="hm-sub" style="margin-top:12px">Calm in a minute or two: <a class="hm-linkbtn" href="/get-grounded-now.html">Get Grounded Now</a></p>');
+      load(LEARN_JS).then(function () { var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, x); });
     });
   }
 
   /* ---------- clicks for the BLD 908 parts ---------- */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-mcode],[data-hm-tool],[data-hm-look],[data-hm-remind],[data-hm-cdel],[data-hm-mclose],[data-hm-mplay],[data-hm-mshelf]');
+    var t = e.target.closest && e.target.closest('[data-hm-dmed],[data-hm-mcode],[data-hm-tool],[data-hm-look],[data-hm-remind],[data-hm-cdel],[data-hm-mclose],[data-hm-mplay],[data-hm-mshelf]');
     if (!t) return;
+    if (t.hasAttribute('data-hm-dmed')) { openDailyMed(); return; }
     if (t.hasAttribute('data-hm-mcode')) { e.preventDefault(); mCode(); return; }
     if (t.hasAttribute('data-hm-tool')) { openTool(t.getAttribute('data-hm-tool')); return; }
     if (t.hasAttribute('data-hm-look')) { openRoom(t.getAttribute('data-hm-look'), '', ''); return; }
