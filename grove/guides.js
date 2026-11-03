@@ -326,7 +326,61 @@ const TOPICS = [
   ],
   "sources": [
    "fiese02"
-  ]
+  ],
+  "plain": {
+   "quick": [
+    "A move is a big change, even a happy one. Saying goodbye to a place is a real loss.",
+    "Children do best when they know early, get a say in small things, and can say goodbye on purpose.",
+    "Routines that travel with you, like bedtime, Friday soup night, or a family saying, make a new place feel like home faster.",
+    "Feeling at home usually takes months, not weeks. Slow is normal."
+   ],
+   "together": {
+    "first": [
+     "Tell everyone together, as early as you can, why you're moving, when, and what will stay the same.",
+     "Give each person a small choice that is truly theirs: a paint color, which box holds their treasures, the first meal in the new house.",
+     "Plan goodbyes on purpose: a last visit to a favorite park, photos of the old rooms, addresses and numbers for friends.",
+     "Pack a first-night box for each person with pajamas, a toothbrush, a favorite stuffed animal or book, and a nightlight."
+    ],
+    "helps": [
+     "Walking through the old home one last time together, naming one memory in each room.",
+     "Setting up the children's rooms and the family's bedtime routine first, before the rest of the house.",
+     "Visiting the new school, park, library, or community center before the first big day, if you can.",
+     "Keeping one family tradition going in the first week, so the new house hears a familiar sound.",
+     "Finding one new favorite place together each weekend: a trail, a bakery, a playground.",
+     "Helping kids keep in touch with old friends with calls, letters, or video chats."
+    ],
+    "say": [
+     "“Home is where we are together.”",
+     "“We can miss the old place and still grow here.”",
+     "“We'll learn this new place one day at a time.”"
+    ],
+    "people": "Try, with a new neighbor: “We just moved in. What do you love about this neighborhood?” With a child: “What will you miss most? What are you curious about?” With each other: “This week, what's one thing that would help the new place feel like ours?”"
+   },
+   "leader": {
+    "feel": "The grown-ups often carry the hardest parts of a move out of sight: money, leases, jobs, and the loss of their own friends and routines. Children may act out, cling, regress, or go quiet in the weeks before and after. Teens may grieve friendships and a place where they were known. A partner who didn't choose the move may feel uprooted.",
+    "say": [
+     "“What will you miss most? What are you curious about?”",
+     "“Your feelings about this move make sense, even the angry ones.”",
+     "“What's one thing that would help you feel at home here?”",
+     "“Let's say goodbye to the old place on purpose.”"
+    ],
+    "avoid": [
+     "Waiting until the last minute to tell the children.",
+     "“You'll make new friends in no time.” It skips over the lonely weeks.",
+     "Throwing away a child's things to save space without asking.",
+     "Expecting everyone to feel settled in the first month."
+    ],
+    "help": [
+     "Tell the children early, with as much detail as their age can hold, and answer questions honestly.",
+     "Keep bedtime, meals, and school routines as steady as you can around moving day.",
+     "Let the new school know your child is new, and ask about a buddy or a welcome program.",
+     "Plan a goodbye ritual and a welcome ritual: a last walk at the old place, a first meal or a few good words at the new one.",
+     "Watch for loneliness that lasts. Help each person find one group, one friend, and one favorite place.",
+     "If the move came from a hard loss, like a lost home or a separation, name that loss too."
+    ],
+    "you": "Moving is one of life's bigger stressors for grown-ups too. Your own goodbyes count. Keep one thing that steadies you, a walk, a call with an old friend, a familiar meal, and ask for help with the heavy lifting, in boxes and in feelings."
+   }
+  }
  },
  {
   "id": "blended",
@@ -589,7 +643,33 @@ const TOPICS = [
   ],
   "sources": [
    "aarpcg"
-  ]
+  ],
+  "plain": {
+   "leader": {
+    "feel": "The grown-ups leading this change are often caring for a parent and for children at once. They may feel love, duty, guilt, grief for the parent they knew, and a quiet worry about money and time. The grandparent may feel like a burden, or may push back on help. Children may act out or withdraw, and couples can feel strain.",
+    "say": [
+     "“You're not a burden here. You're family.”",
+     "“What would help this feel more like home for you?”",
+     "“What's working, and what should we change?”",
+     "“I need some help. Can we talk about sharing the load?”"
+    ],
+    "avoid": [
+     "Making every decision for the grandparent without asking them.",
+     "Asking children to be caregivers beyond what fits their age.",
+     "Talking about the grandparent as if they weren't in the room.",
+     "Carrying all the caregiving yourself until you're worn out."
+    ],
+    "help": [
+     "Hold a family meeting before or soon after the move, with the grandparent at the table.",
+     "Agree on spaces, quiet hours, and how the work is shared, and revisit it after a month.",
+     "Keep the grandparent's own routines, friends, community, and interests going where possible.",
+     "Bring in the grandparent's doctor about health, medicines, falls, and memory.",
+     "Look into respite, adult day programs, or help from siblings, so the main caregiver can rest.",
+     "Watch for signs of strain in yourself and your partner, and talk about them early."
+    ],
+    "you": "Caring for a parent while raising children is one of the heaviest loads a grown-up can carry. Rest is part of caregiving. Ask for help before you need it, and find someone to talk with who isn't in the middle of it."
+   }
+  }
  },
  {
   "id": "two-homes",
@@ -722,7 +802,33 @@ const TOPICS = [
   ],
   "sources": [
    "amato01"
-  ]
+  ],
+  "plain": {
+   "leader": {
+    "feel": "Grown-ups in a separation are often grieving, angry, or relieved, and also trying to keep children steady. Children may act out, cling, go quiet, or try to take care of a parent. Some carry messages, keep secrets, or feel they have to pick a side. Teens may pull away or take on adult worries.",
+    "say": [
+     "“You never have to choose between us.”",
+     "“It's okay to love being at the other house.”",
+     "“What's the hardest part of switching homes?”",
+     "“That's a grown-up problem. We'll handle it.”"
+    ],
+    "avoid": [
+     "Arguing, or talking about court or money, where children can hear.",
+     "Asking children to carry messages or report on the other home.",
+     "Criticizing the other parent in front of the children.",
+     "Leaning on a child as your main emotional support."
+    ],
+    "help": [
+     "Keep conflict away from the children: talk with the other parent by text, email, or a co-parenting app at times they aren't around.",
+     "Share a calendar and the basics of routines between homes where you can.",
+     "Tell the school, with your child's okay, so teachers understand a rough week.",
+     "Find adult support for yourself: friends, a support group, a therapist, a community you trust.",
+     "If a child stays very sad, angry, or withdrawn for weeks, talk with their doctor or a school counselor.",
+     "If either home is unsafe, put safety first and get help right away."
+    ],
+    "you": "A separation can shake a grown-up's whole life. Your steadiness matters more than getting every word right. Find people who can hold your feelings, so your children don't have to."
+   }
+  }
  },
  {
   "id": "parent-away",
@@ -1408,7 +1514,31 @@ const TOPICS = [
   ],
   "sources": [
    "fiese02"
-  ]
+  ],
+  "plain": {
+   "together": {
+    "first": [
+     "Choose one or two meals a week to eat together, at the table, to start. Breakfast counts.",
+     "Clear the table and make it a place for people: a cloth, a candle, a jar of flowers or leaves.",
+     "Give everyone a job: washing vegetables, stirring, setting the table, pouring water.",
+     "Park the phones in a basket during the meal, grown-ups first."
+    ],
+    "helps": [
+     "Simple, whole, nourishing food: soup, eggs, beans, rice, fruit, vegetables, bread, and water to drink.",
+     "Cooking together, with kid-sized jobs, so the meal belongs to everyone.",
+     "Conversation starters: “What made you laugh today?” “What was hard, and what was good?”",
+     "Taking turns picking the meal, and trying one new food together each week.",
+     "A pause before eating to say thank you, in a song, a few words, or a simple word of thanks.",
+     "Keeping the table a calm, kind place for talk and laughter, with hard talks saved for another time."
+    ],
+    "say": [
+     "“The table is where we come back together.”",
+     "“Everyone helps, and everyone belongs.”",
+     "“Phones rest. People talk.”"
+    ],
+    "people": "Try, to everyone: “Let's eat together on Tuesdays and Sundays. Who wants to help pick the meal?” To a picky eater: “You can try a bite, or just have the rice tonight.” To a teen: “Want to be in charge of Sunday supper? I'll be your helper.”"
+   }
+  }
  },
  {
   "id": "big-feelings-home",
@@ -1693,7 +1823,31 @@ const TOPICS = [
   "sources": [
    "paulmoser09",
    "patterson02"
-  ]
+  ],
+  "plain": {
+   "together": {
+    "first": [
+     "Tell the children together, simply and calmly: “Dad's job ended. He's looking for a new one, and we're okay.”",
+     "Keep daily routines steady: wake-up times, meals, school, bedtime, and family time.",
+     "Make a short plan for the grown-ups: benefits to apply for, people to call, and help for food or bills, like 211.",
+     "Give the parent at home a daily rhythm: job search hours, movement, time outside, and something useful for the family."
+    ],
+    "helps": [
+     "A weekly family meeting about plans, kept calm and hopeful, with grown-up details saved for grown-ups.",
+     "Using the extra time well: walking the kids to school, cooking meals together, fixing things, helping with homework.",
+     "Low-cost family fun: the library, a park, a hike, a game at the table.",
+     "Naming the parent's strengths out loud, often.",
+     "Letting kids help in age-sized ways, like planning a low-cost outing.",
+     "Reaching out: friends, former coworkers, community groups, and job programs."
+    ],
+    "say": [
+     "“We are a team, and we'll get through this together.”",
+     "“Your job doesn't make you who you are. We love you.”",
+     "“Our family is strong in ways no job can change.”"
+    ],
+    "people": "Try, to a child: “Mom's job ended. She'll find new work, and we'll be okay. It's a grown-up job to figure out.” To a partner: “I'm proud of you. What do you need from me this week?” To a friend: “I'm looking for work. Do you know anyone hiring in my field?”"
+   }
+  }
  },
  {
   "id": "struggling-inside",
@@ -1838,7 +1992,31 @@ const TOPICS = [
   ],
   "sources": [
    "namiprog"
-  ]
+  ],
+  "plain": {
+   "together": {
+    "first": [
+     "Talk with the person who is struggling, with kindness: “I've noticed you seem weighed down. I care about you. How are you, really?”",
+     "Help them connect with care: their doctor, a licensed therapist, or a crisis line if it is urgent.",
+     "Tell the children, simply and honestly, what is happening and that help is on the way.",
+     "Keep daily routines steady for the children: meals, school, bedtime, and time outside."
+    ],
+    "helps": [
+     "Simple words for kids: “Mom has an illness called depression. It makes her feel very tired and sad. Doctors are helping.”",
+     "Reminding children often: “It's not because of anything you did.”",
+     "Listening without fixing, and letting the person share at their own pace.",
+     "Gentle daily rhythms for everyone: sleep, nourishing meals, water, movement, and time outdoors.",
+     "Other caring grown-ups in the children's lives: grandparents, teachers, coaches, friends.",
+     "Support for the family too: a family support group, a friend, a community you trust."
+    ],
+    "say": [
+     "“We love you, and we're in this together.”",
+     "“Getting help is a strong thing to do.”",
+     "“Feelings get better with help and time.”"
+    ],
+    "people": "Try, to the person struggling: “I'm here, and I'm staying right here with you. Can I help you call the doctor?” To a child: “Dad is sick with something called anxiety. It makes his worries feel really big. He's getting help, and you can always talk to me.” To a friend: “We're going through a hard season. Could you take the kids to the park on Saturday?”"
+   }
+  }
  },
  {
   "id": "back-to-school",
@@ -2260,7 +2438,61 @@ const TOPICS = [
     "https://www.cancer.gov/publications/patient-education/when-your-parent-has-cancer"
    ]
   ],
-  "sources": []
+  "sources": [],
+  "plain": {
+   "together": {
+    "first": [
+     "Tell everyone where the person is, why, and when you expect to know more, in simple, honest words.",
+     "Decide who will be at the hospital and who will keep home steady, and switch so no one runs out.",
+     "Prepare children before a visit: what the room looks like, the sounds, the tubes or machines, and how the person may look.",
+     "Find a simple way for everyone to stay connected: drawings, video calls, voice messages, a family photo by the bed."
+    ],
+    "helps": [
+     "Keeping children's school, meals, and bedtime as steady as you can.",
+     "Short visits for children, with a grown-up whose only job is them, and a plan to leave when they're ready.",
+     "Bringing comfort from home: a blanket, photos, music, a familiar smell.",
+     "Asking the hospital about a child life specialist or a social worker.",
+     "Letting friends help with meals, rides, pets, and laundry.",
+     "Taking turns resting. Sleep and food keep the helpers going."
+    ],
+    "say": [
+     "“The doctors and nurses are helping, and we're helping too.”",
+     "“We can be close even when we're apart.”",
+     "“We take turns, so everyone gets rest.”"
+    ],
+    "people": "Try, to a child: “Grandpa is in the hospital so the doctors can help his heart. Would you like to make him a card?” To a nurse: “What can our family do that would help most?” To a friend: “Could you take our kids to school this week?”"
+   },
+   "leader": {
+    "feel": "The grown-ups leading the family may be exhausted, scared, and pulled between the hospital and home. They may get conflicting information or wait for hours for news. Children may act out, cling, have trouble sleeping, or seem unaffected and then cry over something small. A partner or older child may quietly take on more than they can carry.",
+    "say": [
+     "“Here's what we know today.”",
+     "“What would you like to know before we visit?”",
+     "“You can come with me, or stay home and send something. Both are good choices.”",
+     "“You're doing so much. What do you need?”"
+    ],
+    "avoid": [
+     "Taking children to visit without telling them what they'll see.",
+     "Making children visit when they don't want to.",
+     "Hiding a hospital stay from children. They sense the change.",
+     "Trying to be at the hospital every hour while no one keeps home steady."
+    ],
+    "help": [
+     "Share honest, simple updates with the family at least once a day.",
+     "Prepare children before visits, keep visits short, and give them something to do: read, draw, hold a hand.",
+     "Ask for the hospital's child life specialist or social worker.",
+     "Keep a notebook for questions for the medical team and for names and updates.",
+     "Make a rotation for hospital time, home time, and rest.",
+     "Tell the school and workplaces, so others can give some room."
+    ],
+    "you": "Hospital weeks wear helpers down fast. Eat, sleep, and step outside when you can. Let others take shifts. You'll be able to stay longer if you take turns."
+   },
+   "reach": [
+    "Questions about care or what you're seeing: ask the nurse or doctor. Ask for the hospital's social worker or child life specialist.",
+    "If someone in the hospital is an older or vulnerable adult who may be neglected, exploited, or harmed at home or in a facility: call MAARC, 1-844-880-1574.",
+    "Sadness, worry, or trouble sleeping that lasts two weeks or more: talk with a doctor or school counselor.",
+    "Thoughts of not wanting to be alive: call or text 988. Danger right now: call 911."
+   ]
+  }
  },
  {
   "id": "hospice",
@@ -2409,7 +2641,39 @@ const TOPICS = [
   "sources": [
    "byock4",
    "blundon"
-  ]
+  ],
+  "plain": {
+   "quick": [
+    "Call your hospice's 24/7 line first, day or night, for anything hospice can help with.",
+    "Hospice walks with the whole family, not only the person who is ill. Lean on the nurse, the social worker, the aides, and the volunteers.",
+    "Children do best with honest, gentle words about dying, and a choice in how they say goodbye.",
+    "Simple words matter now: thank you, I love you, I'm sorry, I forgive you. Presence is enough."
+   ],
+   "leader": {
+    "feel": "The grown-ups leading the family may be the main caregivers, running on little sleep, managing medicines with the hospice nurse, fielding calls, and grieving at the same time. Some family members may not be ready to accept that death is near. Children may need honest words that the grown-ups find hard to say. Siblings and relatives may disagree about visits, treatment, or old hurts.",
+    "say": [
+     "“Call the hospice line first, any time, day or night.”",
+     "“What matters most to you now?” to the person who is dying, if they can answer.",
+     "“You can ask me anything about what's happening.”",
+     "“It's okay to step out and rest. We take turns.”"
+    ],
+    "avoid": [
+     "Using words like “sleep” or “going away” for dying with young children. They can make sleep scary.",
+     "Keeping children away from the person entirely, without asking what they want.",
+     "Waiting to call hospice until a worry becomes an emergency.",
+     "Trying to be at the bedside every hour with no relief."
+    ],
+    "help": [
+     "Learn the hospice team's names and roles: nurse, aide, social worker, volunteer.",
+     "Ask the nurse what to expect in the coming days, and what to do if a change happens at night.",
+     "Prepare children for changes they might see, like sleeping more, eating less, and breathing that changes.",
+     "Make room for the person's wishes, stories, and goodbyes, in the words and traditions they choose.",
+     "Ask the hospice social worker about family conflict, kids' grief, and bereavement support afterward.",
+     "Plan who will be called, and what happens, in the first hour after death, so it isn't decided in the moment."
+    ],
+    "you": "Caring for someone who is dying is deep, hard, and exhausting work. Let hospice carry what it can. Eat, sleep, and step outside. Your presence matters more than doing everything right."
+   }
+  }
  },
  {
   "id": "disability-together",
@@ -2701,7 +2965,33 @@ const TOPICS = [
   ],
   "sources": [
    "patterson02"
-  ]
+  ],
+  "plain": {
+   "leader": {
+    "feel": "The grown-ups leading the family may carry worry, shame, and fatigue, often while working long hours or looking for work. They may hide how bad it is, or snap more than they want to. Partners may blame each other. Older children may try to help by asking for nothing, taking jobs, or worrying in secret.",
+    "say": [
+     "“We're working on it, and it's a grown-up job.”",
+     "“Thank you for understanding. You can still tell me what you want.”",
+     "“Let's pick something fun we can do this weekend.”",
+     "“I'm stressed about money, and I'm sorry I snapped. It's not about you.”"
+    ],
+    "avoid": [
+     "Sharing every money detail, or every fear, with the children.",
+     "Arguing about money where children can hear.",
+     "Shaming children for asking for things.",
+     "Hiding the family's need from the people and programs that could help."
+    ],
+    "help": [
+     "Call or text 211 for local help with food, rent, utilities, and more. Ask the school about meal programs and fee waivers.",
+     "Make a simple plan: what's urgent, what can wait, and who to call.",
+     "Keep a few low-cost traditions steady, so home still feels like home.",
+     "Give older children a voice in the family plan, without handing them adult burdens.",
+     "Find support for yourself: a trusted friend, a community group, a financial coach through a nonprofit.",
+     "Watch for stress that turns into depression, heavy drinking, or danger at home, and reach for help."
+    ],
+    "you": "Money stress can wear on a grown-up's body and heart. You are not your bank balance. Sleep, a walk, and one honest conversation a week with someone you trust can help you keep going."
+   }
+  }
  },
  {
   "id": "recovery",
@@ -2850,7 +3140,55 @@ const TOPICS = [
   "sources": [
    "sevencs",
    "samhsarecovery"
-  ]
+  ],
+  "plain": {
+   "together": {
+    "first": [
+     "Talk together, with help from the treatment team if you can, about what recovery means for your family and what will change at home.",
+     "Tell children simply: their parent is healing and getting help; it's not their fault; they didn't cause it, and they can't cure it or control it.",
+     "Agree on a few house routines that support recovery, like meals together, regular sleep, and a home without alcohol or drugs.",
+     "Make sure each family member has their own support: a group, a counselor, a trusted friend, or a community you trust."
+    ],
+    "helps": [
+     "Celebrating milestones, big and small: a day, a week, a year, a promise kept.",
+     "Honest, calm talks about feelings, without blame.",
+     "Family time that is fun and sober: games, walks, cooking, service together.",
+     "Family groups like SMART Recovery Family and Friends, NACoA, or NAMI Family-to-Family, where others understand.",
+     "A plan for hard moments: who to call, what to do if worry rises, and what to do in a crisis.",
+     "Patience with trust. It grows back through small things done again and again."
+    ],
+    "say": [
+     "“One day at a time, together.”",
+     "“It's not your fault, and it's not your job to fix.”",
+     "“We can talk about hard things in this family.”"
+    ],
+    "people": "Try, to a child: “Dad is healing from his drinking, and he's getting help. He's working hard every day. You didn't cause it, and you can't fix it. You can always tell me how you feel.” From the person in recovery: “I'm sorry for the hurt. I'm working on it every day.” To each other: “What do you need from me this week?”"
+   },
+   "leader": {
+    "feel": "The grown-ups leading the family may carry hope and fear side by side, and old anger that hasn't had a place to go. The person in recovery may feel shame and pressure to prove themselves. Children may test limits, act very good, or withdraw. Everyone may be waiting for the next hard thing.",
+    "say": [
+     "“I'm proud of the work you're doing.”",
+     "“It's okay to still be hurt or angry. Let's talk about it.”",
+     "“You didn't cause this, and you can't fix it.”",
+     "“What do you need from me this week?”"
+    ],
+    "avoid": [
+     "Keeping recovery a family secret children must guard.",
+     "Expecting instant trust, or punishing forever.",
+     "Making a child the one who watches for a slip.",
+     "Treating a slip as the end of recovery, instead of a reason to reach for help."
+    ],
+    "help": [
+     "Learn about recovery together, with the treatment team or a family program.",
+     "Support the person's own path: their doctor, treatment, medication, therapy, peer group, and sleep.",
+     "Find your own support: SMART Recovery Family and Friends, NAMI Family-to-Family, a therapist, or a community you trust.",
+     "Give children their own place to talk: NACoA, a school counselor, or a children's program.",
+     "Plan what to do if worry rises or a crisis comes, and keep help numbers handy.",
+     "Celebrate milestones, and keep family life full of good, sober time together."
+    ],
+    "you": "Loving someone in recovery takes stamina. You matter in this too. Your own support, rest, and honesty help your family heal. You can hope and still keep your limits."
+   }
+  }
  },
  {
   "id": "family-death",
@@ -3016,7 +3354,34 @@ const TOPICS = [
   "sources": [
    "dougy",
    "stroebe99"
-  ]
+  ],
+  "plain": {
+   "leader": {
+    "feel": "You may be leading your family through this while grieving yourself. Children watch the grown-ups to learn whether it is safe to grieve here. Young children may not understand that death is permanent and may ask when the person is coming back. Older children often worry about who else might die, and some hide their feelings to protect you. Teens may grieve with friends more than at home. Grief often comes back at birthdays, holidays, and milestones, sometimes years later.",
+    "say": [
+     "“I'm sad too. It's okay to cry together.”",
+     "“What questions do you have? Every question is welcome.”",
+     "“What do you remember about her? Tell me.”",
+     "“What would help you today?”"
+    ],
+    "avoid": [
+     "“He went to sleep,” “We lost her,” or “He went away.” They confuse children and can make sleep frightening.",
+     "“Be strong for your mom,” or “You're the man of the house now.”",
+     "Hiding the death to protect children. They sense it and feel alone with it.",
+     "Expecting everyone to grieve the same way or on the same schedule.",
+     "Disappearing from friends and family after the first few weeks."
+    ],
+    "help": [
+     "Tell the truth in plain words, at each child's level, and answer the same question as many times as it comes.",
+     "Keep routines and gentle limits. Steady days help grieving children feel safe.",
+     "Let the school know, and ask the teacher and school counselor to watch for hard days.",
+     "Offer choices about the funeral, keepsakes, and rituals, and let children help plan if they want to.",
+     "Watch for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor, and call or text 988 if anyone talks about not wanting to be alive.",
+     "If hospice served your family, call them. Most offer grief support to the family for a year or more."
+    ],
+    "you": "You are grieving too. Your family doesn't need you to be fine. It helps them to see that you can be sad and still be here. Find support of your own: a friend who will listen, a grief group, a grief counselor, or a community you trust. Let other trusted adults share the load with the kids."
+   }
+  }
  },
  {
   "id": "first-holidays",
@@ -3733,7 +4098,32 @@ const TOPICS = [
   "sources": [
    "hobfoll07",
    "pfa06"
-  ]
+  ],
+  "plain": {
+   "feel": "The siren, the water, the smoke, the sound of the wind. Maybe our home was damaged or lost; maybe it was spared while the neighbors' wasn't. Some of us are running on adrenaline, making calls and filling out forms. Others feel numb, or can't stop shaking. Children may cling, have nightmares, or play the storm out with their toys over and over. Every thunderstorm or siren can bring the fear back. A disaster can take a home, a school building, a workplace, a gathering place, or a pet, and the losses keep showing up for months. Neighbors, community groups, and strangers often show up too.",
+   "together": {
+    "first": [
+     "Make sure everyone is safe, and follow the instructions of local emergency officials.",
+     "Take care of the basics together: shelter, food, water, medicine, and charging phones.",
+     "Stay together as much as you can, and let the youngest stay close to a grown-up.",
+     "Tell each other what you know, simply and truthfully, and what happens next."
+    ],
+    "helps": [
+     "Bringing back small routines, even in a new place: the same bedtime, a meal together, a familiar story.",
+     "Giving each person a job, even the youngest: carrying water, sorting supplies, checking on a neighbor.",
+     "Rest, water, and food, on purpose. Recovery work burns through energy.",
+     "Turning off the coverage of the disaster, especially video, and checking for updates once or twice a day.",
+     "Saying yes to help from neighbors, community groups, the Red Cross, and local agencies.",
+     "Talking about what happened when people are ready, and not pressing when they aren't."
+    ],
+    "say": [
+     "“We are together, and we are safe right now.”",
+     "“Things can be replaced. We can't be.”",
+     "“We will rebuild one step at a time.”"
+    ],
+    "people": "People want to help but don't know how. Try: “We could really use help hauling debris on Saturday,” or “A meal on Tuesday would mean a lot.” To a child's teacher: “We had to leave our home after the flood. Please be patient with her for a while.”"
+   }
+  }
  },
  {
   "id": "classmate-death",
@@ -8393,7 +8783,44 @@ const TOPICS = [
    "figley",
    "litz",
    "doka"
-  ]
+  ],
+  "plain": {
+   "byKind": {
+    "team": "For a hospital unit, include every shift and role in the pause and the debrief: nurses, aides, physicians, therapists, social workers, environmental services, and unit clerks."
+   },
+   "leader": {
+    "feel": "As a lead, you may be grieving too, and still need to keep the shift running, talk to the family, and do the paperwork. You may worry about a team member who was closest, and feel unsure whether to slow the team down. Slowing down for a few minutes is part of keeping a team well.",
+    "say": [
+     "“Let's pause for a minute before we go on.”",
+     "“That was a hard death. How is everyone doing with it?”",
+     "“Who needs to step away? I'll cover.”",
+     "“What do we need tonight, and what do we need this week?”",
+     "“Every way you react to this is okay.”"
+    ],
+    "avoid": [
+     "Moving straight to the next task with no pause at all.",
+     "A debrief that becomes a search for someone to blame.",
+     "Requiring people to share their feelings in front of the team.",
+     "Saying “You get used to it” or “That's the job.”",
+     "Forgetting the night shift, the aides, and the staff who weren't in the room but knew the patient."
+    ],
+    "help": [
+     "Lead a one-minute pause after the death, in person or on a call.",
+     "Hold a short, voluntary debrief within a day or two, focused on support, separate from any case review.",
+     "Give the person who was there recovery time, and cover their next task.",
+     "Share the employee assistance program and other support options plainly, more than once.",
+     "Watch for signs that someone is struggling weeks later: sleep, mood, absence, or withdrawal.",
+     "Build regular rituals: a monthly remembrance, a yearly memorial for everyone the team served."
+    ],
+    "you": "Leads absorb a lot: their own grief and the team's. Find a peer lead, a supervisor, or your own employee assistance program to talk with. Taking your own minute teaches the team that it's allowed."
+   },
+   "reach": [
+    "For the patient's family: your hospice's own 24/7 line comes first for anything about symptoms or comfort, and the hospice bereavement team for grief support afterward.",
+    "For the team: your organization's employee assistance program (EAP), the support team, and peer support.",
+    "If anyone on the team speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+    "Danger right now: call 911."
+   ]
+  }
  },
  {
   "id": "team-change",
@@ -8668,7 +9095,41 @@ const TOPICS = [
   "sources": [
    "doka",
    "stroebe99"
-  ]
+  ],
+  "plain": {
+   "leader": {
+    "feel": "You may be grieving and also responsible for telling the team, contacting the family, handling the work, and answering questions from leadership. You may wonder how much to say, how much time to give, and how to handle the empty desk. Leading a team through a death is one of the hardest things a lead does.",
+    "say": [
+     "“I have some very sad news, and I wanted to tell you together.”",
+     "“Take whatever time you need today.”",
+     "“The family has asked us to share...”",
+     "“Here's how we'll handle her work for now. No one has to rush.”",
+     "“The employee assistance program is here for all of us.”"
+    ],
+    "avoid": [
+     "Sharing the news by email first, or letting it spread as rumor.",
+     "Sharing details of the death beyond what the family has okayed.",
+     "Clearing out their desk or reassigning their work right away, without asking.",
+     "Expecting normal productivity in the first days.",
+     "Speculating about a death by suicide, or treating it as shameful."
+    ],
+    "help": [
+     "Tell the team in person and together, after the family has been told and has okayed what is shared.",
+     "Bring in the employee assistance program, and grief support if available, early.",
+     "Plan the next few days lightly: fewer meetings, cover for the closest colleagues.",
+     "Ask the family what they want: attendance at the service, a card, a memorial gift.",
+     "Decide with the team how to handle the desk, the belongings, and the work.",
+     "Mark the hard dates later, and check in with close colleagues weeks and months after."
+    ],
+    "you": "Leads grieve too. Find a peer, a supervisor, or your own employee assistance program to talk with. Letting your team see that you're sad is not weakness; it gives them permission to grieve."
+   },
+   "reach": [
+    "Your organization's employee assistance program (EAP), and grief support if your workplace has one.",
+    "Many hospices offer grief support to the community. Call your local hospice and ask.",
+    "If the coworker died by suicide, or anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+    "Danger right now: call 911."
+   ]
+  }
  },
  {
   "id": "burnout",
@@ -9594,7 +10055,19 @@ const TOPICS = [
    "litz",
    "rushton18",
    "figley"
-  ]
+  ],
+  "plain": {
+   "byKind": {
+    "team": "For first responder teams, use your peer support team and any critical incident support your agency offers. For hospice and hospital teams, the social worker, the support team, and the ethics committee are part of the team's support."
+   },
+   "reach": [
+    "For hospice patients and families: the hospice's own 24/7 line comes first for anything about symptoms or comfort.",
+    "For the team: your organization's employee assistance program (EAP), peer support team, staff support team, and ethics committee or ethics consult service.",
+    "Guilt, numbness, nightmares, or replaying a case that lasts more than a few weeks: talk with your doctor or a mental health professional who understands this work.",
+    "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+    "Danger right now: call 911."
+   ]
+  }
  }
 ];
 const PRACTICES = [];
@@ -9760,7 +10233,31 @@ var TOPICS = [
   "stories": [
    "18 Years",
    "Living Sober Is Hard"
-  ]
+  ],
+  "plain": {
+   "together": {
+    "first": [
+     "Sit down together and say it plainly: someone in our family is growing sober, and we are all part of a healthier home.",
+     "Ask the person growing sober what helps them most right now, and what makes the hard hours easier.",
+     "Agree on a few home rhythms that steady everyone: meals together, a regular bedtime, time outside, and a sober home.",
+     "Make sure each person has support of their own: a group, a therapist, a trusted friend, or a community you trust."
+    ],
+    "helps": [
+     "Talking about feelings out loud, so nobody has to carry them alone or numb them.",
+     "Tending our bodies together: sleep, water, whole food, movement, and time outdoors.",
+     "A weekly Family Night, with a meal everyone helps make, a walk, music, or a game, and small healthy moments on ordinary days too.",
+     "Family groups like SMART Recovery Family and Friends or NACoA, where others understand.",
+     "Marking milestones: a day, a week, a season, a promise kept.",
+     "A plan for hard nights: who to call, where to go, and what helps."
+    ],
+    "say": [
+     "“We can talk about anything in this family.”",
+     "“Every day counts, and so does every person.”",
+     "“We are growing a healthier home, one day at a time.”"
+    ],
+    "people": "Try, from the person growing sober: “I'm working on this every day. Thank you for walking with me.” To a child: “Dad is learning new ways to handle hard feelings, without drinking. You can ask me anything.” To each other: “What do you need from me this week?”"
+   }
+  }
  },
  {
   "id": "sober-kids-talk",
