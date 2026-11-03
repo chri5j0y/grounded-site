@@ -118,8 +118,8 @@
   var CSS = [
     '.gss{display:grid;gap:0;color:var(--ink,#2C1810);font-size:16px;line-height:1.5;min-width:0}',
     '.gss *{box-sizing:border-box}',
-    '.gss-sec{padding:14px 0;border-top:1px solid var(--line,#E6DAC4);min-width:0}',
-    '.gss-sec:first-child{border-top:0;padding-top:4px}',
+    '.gss section.gss-sec,.gss section.gss-sec:nth-of-type(even){padding:14px 0;margin:0;border-top:1px solid var(--line,#E6DAC4);min-width:0;background:none}',   // the site band on even sections (style.css 233) stays off here
+    '.gss section.gss-sec:first-child{border-top:0;padding-top:4px}',
     '.gss h3{font-family:"Barlow Condensed",system-ui,sans-serif;font-size:15px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin:0 0 6px;color:var(--gold,#8B5E1A)}',
     '.gss h4{font-size:15px;margin:12px 0 6px;color:var(--ink,#2C1810)}',
     '.gss p{margin:0 0 8px}',
