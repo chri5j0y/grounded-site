@@ -941,6 +941,12 @@
   function paintSection(box, sec) {
     if (!box) return;
     // BLD 908: the Tending suite opens with Membership; Start sees one invitation.
+    // The holiday sets are part of Grounded Recipes, open to everyone: on Start an old #library=holidays or #week=holidays opens them there.
+    if (!member() && sec === 'holidays') {
+      var rdy = window.GGMember && GGMember.ready && typeof GGMember.ready.then === 'function' ? GGMember.ready : Promise.resolve();
+      rdy.then(function () { if (member() || !box.isConnected) return; var tb = route().tab; try { history.replaceState(null, '', location.pathname + '#' + tb); } catch (e) {} render(); openShelf('holidays'); });
+      return;
+    }
     if (!member() && TEND_MEMBER.test(sec)) { box.innerHTML = inviteHtml(sec === 'numbers' ? 'numbers' : 'tend'); return; }
     loadTending().then(function () {
       if (!box.isConnected) return;
