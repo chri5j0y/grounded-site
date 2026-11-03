@@ -50,7 +50,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b910', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b908';
+  var GGN_SRC = '/shared/ggn.js?v=b911';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -535,7 +535,7 @@
         '<p class="hm-promise-line">' + I('sprout') + '<span>' + esc(promise()) + '</span></p>' +
         '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Choose My Passcode</button><div class="hm-sub" style="text-align:center">Next: your passcode and 12 Root Words, then your four, one at a time.</div></div></div>' +
     '</div>';
-    return '<div class="hm-wrap">' + hero + lookAroundHtml() + promiseHtml() +
+    return '<div class="hm-wrap">' + hero + promiseHtml() +
       '<div class="hm-plink"><a class="hm-link hm-p-leaves" href="#hm-privacy">' + I('shield') + 'How your privacy works</a><span class="hm-time">' + (back ? 'New here? Three short steps' : 'Three short steps · about a minute') + '</span></div>' +
       steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div>' + helpLine() + '</div>';
   }
@@ -3348,11 +3348,6 @@
     if (mine && !d.q && DOOR_SHEET[h] && !isKid(S.p)) { openTool(DOOR_SHEET[h] === 'today' ? 'today' : DOOR_SHEET[h]); return; }
     openRoom(d.tree, d.q, d.hash);
   }
-  function lookAroundHtml() {
-    if (!DOOR || !TREES[DOOR.tree]) return '';
-    var t = TREES[DOOR.tree];
-    return '<div class="hm-door hm-p-leaves"><img src="' + mark(DOOR.tree) + '" alt="" width="40" height="40"><span><b>' + esc(t.n) + ' lives here now, in The Grounded Way.</b><small>Make your profile below, or look around ' + esc(t.n) + ' first.</small></span><button type="button" class="hm-btn sm line hm-pill" data-hm-look="' + DOOR.tree + '">' + I('arrow') + 'Look Around ' + esc(t.n) + '</button></div>';
-  }
 
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
   var MSHELVES = [
@@ -3396,7 +3391,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b908m';
+  var LEARN_JS = '/shared/gg-learn.js?v=b911';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());

@@ -28,22 +28,13 @@
   // and the Grove inside it; then Grounded Recipes and the libraries; then the helpers and the Field Guide.
   // Ceremonies and Support has its own menu beside this one.
   var WAYIC = '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">';
-  // BLD 909 Clean Site: The Grounded Way has its own menu (the path, Membership, and the age trees); Tools holds the rest.
+  // BLD 909 Clean Site: The Grounded Way has its own menu; Tools holds the rest. BLD 910 (Chris: "still the long list of your tree.. confusing"): one app, so the trees stay inside it, never listed here.
   var WAY_GROUPS = [
     { name: 'Start Here', items: [
       { id: 'home', title: 'Begin The Grounded Way', desc: 'One app for every age: make your profile, meet your tree, and tend your four, a few minutes a day. Your tree grows with you', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
       { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: ic.tree, bg: '#F1E6CC' },
       { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: ic.leaf, bg: '#E3EFD6' },
       { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, opening soon', href: HOME + '/the-grounded-way.html#ways', icon: ic.door, bg: '#F3E5CC', color: '#6E4A14' }
-    ] },
-    // BLD 910 True One App: the six trees live inside The Grounded Way, so each one opens /home/ with that tree.
-    { name: 'Your Tree in The Grounded Way', items: [
-      { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/home/?tree=maple', icon: ic.maple, bg: '#FBE1D4' },
-      { id: 'aspen', title: 'Aspen', desc: 'For grades 6 to 8', href: HOME + '/home/?tree=aspen', icon: ic.aspen, bg: '#DDF0EC' },
-      { id: 'pine', title: 'Pine', desc: 'For grades 9 to 12', href: HOME + '/home/?tree=pine', icon: ic.pine, bg: '#E2EEDB' },
-      { id: 'birch', title: 'Birch', desc: 'For ages 18 to 26', href: HOME + '/home/?tree=birch', icon: ic.birch, bg: '#F3EED9' },
-      { id: 'oak', title: 'Oak', desc: 'For ages 26 to 60', href: HOME + '/home/?tree=oak', icon: ic.oak, bg: '#F1E6CC' },
-      { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/home/?tree=sequoia', icon: ic.sequoia, bg: '#F3DED6' }
     ] },
   ];
   var GN_GROUPS = [
