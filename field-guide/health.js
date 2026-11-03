@@ -484,7 +484,7 @@ const markNew = () => { const x = newestNew(); if (!x) return; try { localStorag
 function newestNew(){ const p = PROG(), L = arr(p && p.whatsNew); return L.length ? L[L.length - 1] : null; }
 function whatsNew(){ const x = newestNew(); if (!x || !x.v || newSeen() === x.v || setupNeeded()) return null; return x; }
 function newCard(){ const x = whatsNew(); if (!x) return ''; const pl = progLabel(new Date());
-  return `<div class="tn-card a-move tn-new" id="tn-new"><div class="tn-hd">${badge('star', 'a-move')}<div style="min-width:0;flex:1"><div class="tn-k a-move">${esc(x.title || 'What\'s New in Your Plan')}</div>${pl ? `<div class="tn-sub">You are in ${esc(pl)}.</div>` : ''}</div></div>
+  return `<div class="tn-card a-move tn-new" id="tn-new"><div class="tn-hd">${badge('star', 'a-move', 'this-season-narrow')}<div style="min-width:0;flex:1"><div class="tn-k a-move">${esc(x.title || 'What\'s New in Your Plan')}</div>${pl ? `<div class="tn-sub">You are in ${esc(pl)}.</div>` : ''}</div></div>
     <ul class="tn-newl">${arr(x.lines).map(l => `<li>${esc(l)}</li>`).join('')}</ul><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="newok">${ic('check')}Got It</button></div></div>`; }
 // After week 12: start again one level up (Root, Rise, Thrive; Thrive starts again at Thrive), or keep going at this level.
 function againCard(){ if (!progOn() || progWeek(new Date()) <= 12) return ''; const lv = H().set.level || 'root', up = PUB() ? {root: 'rise', rise: 'thrive'}[lv] : null;
@@ -2135,15 +2135,25 @@ function tck(a, v, on, label, sub, cls){
 }
 const tsw = (a, v, on, label) => `<button type="button" class="tn-sw" role="switch" aria-checked="${!!on}" data-hja="${a}" data-hjv="${esc(v)}" aria-label="${esc(label)}"></button>`;
 const tpt = p => p ? `<span class="tn-pt ${PCLS[p] || 'p-leaves'}">${esc(p)}</span>` : '';
-const badge = (n, cls) => `<span class="tn-badge${cls ? ' ' + cls : ''}">${ic(n)}</span>`;
+// BLD 910 (Chris, November 3, 2026: "all cards get high quality images"): every card's badge is one of Grounded's own paintings,
+// chosen by the card's subject; a third argument names a painting for one card so cards side by side never share one.
+const BADGE_ART = {bell: 'candle-alcove-sq', book: 'library-learn-sq', capsule: 'supplements-sq', compass: 'way-plan-sq', flask: 'progress-sq', flame: 'tend-spirit',
+  gear: 'tending-sq', kitchen: 'kitchen-room-sq', leaf: 'meal-lunch-sq', link: 'grounded-way-square', lotus: 'tend-mind', move: 'tend-move', numbers: 'progress-sq',
+  people: 'tend-people', plate: 'todays-plate-sq', shield: 'move-gentle-sq', sprout: 'welcome-narrow', star: 'tend-fruit', today: 'tending-sq', week: 'growth-plan-sq', wind: 'quiet-meditation-sq'};
+const badge = (n, cls, art) => `<span class="tn-badge tn-bimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(WAY(art || BADGE_ART[n] || 'tending-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>`;
 // BLD 866: each Today section wears its painting (shared/heroes/way/tend-*.webp), for the Field Guide and public Tending alike.
 const TIMG = {body: 'tend-body', move: 'tend-move', mind: 'tend-mind', spirit: 'tend-spirit', people: 'tend-people', fruit: 'tend-fruit'};
 const paint = (id, cls) => TIMG[id] ? `<span class="tn-gimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(asset('shared/heroes/way/' + TIMG[id] + '.webp'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>` : '';
 const grpHead = (id, title, icn, cls, part) => `<div class="tn-grp ${cls}" id="tn-${id}">${TIMG[id] ? paint(id) : badge(icn)}<h2>${esc(title)}</h2>${tpt(part)}<span class="sp"></span></div>`;
-function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${TIMG[icn] ? paint(icn, 'big') : badge(icn)}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
+// BLD 910: a section head wears a different painting from the first card beneath it.
+const SEC_ART = {plate: 'meal-lunch-sq', numbers: 'way-plan-sq'};
+function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${TIMG[icn] ? paint(icn, 'big') : badge(icn, '', SEC_ART[icn])}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
 // A plan card: scene tile, time kicker, title, one line, actions with a check.
+// BLD 910: a plan card with no painting of its own takes the painting for its scene, never a drawn one.
+const SCENE_ART = {work: 'move-strength-sq', practice: 'move-flow-sq', cook: 'kitchen-headstart-sq', bowl: 'shop-sq', dawn: 'quiet-morning-sq', night: 'supplements-sq'};
 function planCard(o){
-  return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene">${o.img ? `<img src="${esc(o.img)}" alt="" loading="lazy" decoding="async">` : scene(o.scene, o.hour)}</div><div style="min-width:0">
+  const img = o.img || WAY(SCENE_ART[o.scene] || 'tending-sq');
+  return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene"><img src="${esc(img)}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
     <div class="tn-time">${esc(o.time)}</div><h3>${esc(o.title)}</h3>${o.sub ? `<div class="tn-meta">${esc(o.sub)}</div>` : ''}
     <div class="tn-acts">${o.btn ? `<button type="button" class="tn-btn sm" data-hja="${o.ba || 'go'}" data-hjv="${esc(o.bv)}">${ic(o.bi || 'play')}${esc(o.btn)}</button>` : ''}${o.ck || ''}</div></div></div>${o.more || ''}</article>`;
 }
@@ -2212,9 +2222,9 @@ function vChoose(){
 function vSettings(bare){
   const h = H(), t = TD(), br = h.set.bridges || {}, kit = KIT(), on = remOn();
   const row = (cls, icn, title, sub, sw) => `<div class="tn-row ${cls}">${icn ? `<span class="ic2">${ic(icn)}</span>` : ''}<div class="tx"><b>${esc(title)}</b><small>${esc(sub)}</small></div>${sw}</div>`;
-  const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
+  const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves', 'tending-sq') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
     <div class="tn-set">${t.choose.map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
-  const why = kit ? '' : `<div class="tn-card p-trunk"><div class="tn-hd">${badge('compass')}<div><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${h.set.why ? esc(h.set.why) : esc(t.why.prompt)}</div></div></div>
+  const why = kit ? '' : `<div class="tn-card p-trunk"><div class="tn-hd">${badge('compass', '', 'growth-plan-sq')}<div><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${h.set.why ? esc(h.set.why) : esc(t.why.prompt)}</div></div></div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${h.set.why ? 'Change My Why' : esc(t.why.write)}</button>${h.set.whyHide && !h.set.why ? `<button type="button" class="linkbtn" data-hja="whyshow">Show the My Why Card on Today</button>` : ''}</div></div>`;
   const bridges = kit ? '' : `<div class="tn-card"><div class="tn-hd">${badge('link', 'p-trunk')}<div><div class="tn-k p-trunk">Bridges</div><div class="tn-sub">How Tending and your other Grounded tools connect. Your choices are saved now, and the bridges open in a coming update.</div></div></div>
     <div class="tn-set">${row('p-leaves', 'sprout', 'Quiet Offers', 'A small card when a tree and Tending can help each other', tsw('bridge', 'offers', br.offers !== false, 'Quiet Offers'))}
@@ -2276,16 +2286,16 @@ function fruitCards(){
   if (U('labs') && PUB()) out.push(pubLdlCard());
   else if (U('labs')){ const m = ldlModel();
     out.push(m ? `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers" aria-label="Open My LDL Path. Start ${r0(m.B)}, estimate now ${r0(m.now)}, the food plan path levels near ${r0(m.level)}.">
-      <div class="tn-hd">${badge('star')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
+      <div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
       <div class="tn-nums"><div><b>${r0(m.B)}</b><small>Start, ${esc(short(m.base.date))}</small></div><div><b>${r0(m.now)}</b><small>Estimate now</small></div><div><b class="soft">${r0(m.level)}</b><small>Food plan path</small></div></div>
       ${ldlSpark(m)}<span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`
       : `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">Fruit · My Numbers</div><div class="tn-sub">Add your lab numbers to see your path, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`); }
   const ms = milestonesT(), got = ms.filter(m => m.done), next = ms.filter(m => !m.done).sort((a, b) => (a.need - a.have) / a.need - (b.need - b.have) / b.need)[0];
-  out.push(`<div class="tn-card p-fruit" id="tn-ms"><div class="tn-hd">${badge('star')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · Milestones</div><div class="tn-sub">${got.length ? got.length + ' reached so far. ' : ''}${esc(TD().intro.quiet)}</div></div></div>
+  out.push(`<div class="tn-card p-fruit" id="tn-ms"><div class="tn-hd">${badge('star', '', 'snack-fruit-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · Milestones</div><div class="tn-sub">${got.length ? got.length + ' reached so far. ' : ''}${esc(TD().intro.quiet)}</div></div></div>
     <div class="tn-mile">${got.slice(-3).map(m => `<div><i>${ic('check')}</i><span><b>${esc(m.name)}</b><small>${esc(m.line || '')}</small></span></div>`).join('')}
     ${next ? `<div class="up"><i>${ic('star')}</i><span><b>${esc(next.name)}</b><small>${next.need > 1 ? `${Math.min(next.have, next.need)} of ${next.need}. ` : ''}${esc(next.line || '')}</small></span></div>` : ''}</div>
     ${ms.length > 4 ? `<details class="tn-more"${S.open['tnms'] ? ' open' : ''} data-hjd="tnms"><summary>See All Milestones</summary><div class="tn-mile">${ms.map(m => `<div class="${m.done ? '' : 'up'}"><i>${ic(m.done ? 'check' : 'star')}</i><span><b>${esc(m.name)}</b><small>${m.done ? 'Reached' : m.need > 1 ? Math.min(m.have, m.need) + ' of ' + m.need : 'Ahead'}</small></span></div>`).join('')}</div></details>` : ''}</div>`);
-  out.push(`<div class="tn-card p-fruit" id="tn-wk7"><div class="tn-hd">${badge('week')}<div><div class="tn-k">Fruit · My Last 7 Days</div><div class="tn-sub">Things tended each day. Every one counts.</div></div></div>${tendWeek()}
+  out.push(`<div class="tn-card p-fruit" id="tn-wk7"><div class="tn-hd">${badge('week', '', 'this-season-narrow')}<div><div class="tn-k">Fruit · My Last 7 Days</div><div class="tn-sub">Things tended each day. Every one counts.</div></div></div>${tendWeek()}
     <button type="button" class="tn-btn sm line" data-hja="fruittable" aria-pressed="${!!S.fruitTable}">${S.fruitTable ? 'View as Chart' : 'View as Table'}</button></div>`);
   return out.join('');
 }
@@ -2327,7 +2337,7 @@ function vTodayT(lib){
   const cardFor = x => { tally(partOf(x), x.done); const mark = x.k === 'mark';
     return planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: x.kick, title: x.title, sub: x.sub, btn: mark ? '' : x.k === 'cook' ? 'Grounded Cooking' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, mark ? x.btn : x.k === 'cook' ? 'Cooked' : 'Done')}); };
   if (U('move')){ const mv = ag.filter(x => partOf(x) === 'move'); mv.forEach(x => body.push(cardFor(x)));
-    if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', PUB() ? 'A walk, a stretch, fresh air' : 'A walk, the dog, fresh air')}</div></div>`); } }
+    if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move', '', 'rest-day-sq')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', PUB() ? 'A walk, a stretch, fresh air' : 'A walk, the dog, fresh air')}</div></div>`); } }
   if (U('food')){ const pl = vPlate('today'); if (pl){ tally('food', arr(day.eat).length); body.push(pl); }
     ag.filter(x => partOf(x) === 'food').forEach(x => body.push(cardFor(x))); }
   if (sp.length){ sp.forEach(s => tally('supps', c[suppId(s)]));
@@ -2358,8 +2368,8 @@ function vTodayT(lib){
   let why = '';
   if (!kit){ const ex = t.why.examples, ph = ex[(d.getDate()) % Math.max(1, ex.length)] || '';
     if (S.whyEd) why = `<div class="tn-card p-trunk" id="tn-why"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${esc(t.why.prompt)}</div><label class="hj-fld"><span>My Why, one line</span><input id="tn-whyin" maxlength="160" value="${esc(h.set.why || '')}" placeholder="${esc(ph)}" autocomplete="off"></label><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="whysave">Save</button><button type="button" class="tn-btn sm line" data-hja="whyclose">Close</button></div></div>`;
-    else if (h.set.why) why = `<div class="tn-card p-trunk tn-whyc" id="tn-why">${badge('compass')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-whyl">${esc(h.set.why)}</div></div>${tpt('Trunk')}</div>`;
-    else if (!h.set.whyHide) why = `<div class="tn-card p-trunk" id="tn-why"><div class="tn-whyc">${badge('compass')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${esc(t.why.prompt)}</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${esc(t.why.write)}</button><button type="button" class="linkbtn" data-hja="whyhide">Maybe Later</button>${tpt('Trunk')}</div></div>`; }
+    else if (h.set.why) why = `<div class="tn-card p-trunk tn-whyc" id="tn-why">${badge('compass', '', 'growth-plan-sq')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-whyl">${esc(h.set.why)}</div></div>${tpt('Trunk')}</div>`;
+    else if (!h.set.whyHide) why = `<div class="tn-card p-trunk" id="tn-why"><div class="tn-whyc">${badge('compass', '', 'growth-plan-sq')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${esc(t.why.prompt)}</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${esc(t.why.write)}</button><button type="button" class="linkbtn" data-hja="whyhide">Maybe Later</button>${tpt('Trunk')}</div></div>`; }
   const rem = U('food') ? remBlock(d) : '';
   const G = [];
   if (body.length) G.push(grpHead('body', 'Body', 'leaf', 'p-leaves', 'Leaves') + body.join(''));
@@ -2379,11 +2389,11 @@ function vKitchen(){
   const d = new Date(), fw = foodWeek(d), L = letter(fw), din = (APP() || {}).dinners || {}, w = (din.weeks || {})[L] || {}, tn = dinnerFor(d), log = H().log[today()] || {};
   const nut = x => nOk(x.nutHeart) && !KIT() ? nSf(x.nutHeart) + ' on the heart-health plate' : nSf(x.nut);
   const feat = tn ? (() => { const key = 'cook:' + tn.wk + ':' + tn.id, on = !!log[key];
-    return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene">${scene('cook', Math.max(17.8, new Date().getHours()), 400, 200)}</div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
+    return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene"><img src="${esc(WAY(dinnerArtName(tn) || 'kitchen-headstart'))}" alt="" loading="lazy" decoding="async"></div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
       ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<p class="tn-sub">Step by step, with a voice to guide you.</p><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Grounded Cooking</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
   const rest = arr(w.dinners).filter(x => !tn || x.id !== tn.id);
   return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(L)}. Dinners guided step by step.`)}${kitTabs('kitchen')}
-    <div class="tn-kgrid">${feat}${rest.map(x => `<button type="button" class="tn-card tn-lift tn-kc" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${scene('bowl', 12, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
+    <div class="tn-kgrid">${feat}${rest.map((x, i) => `<button type="button" class="tn-card tn-lift tn-kc tn-art" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${artImg(i, dinnerArtName(x) || DIN_ROT)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
     ${wbNote(w)}
     ${PUB() ? pubPlanEdit(L) + pubAims() : aims()}${ideasBlk(PUB() ? 'Lunches' : 'Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk(PUB() ? 'Breakfasts' : 'Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
 }
@@ -2472,13 +2482,13 @@ function actRecipes(a, v){
 function vMove(){
   const d = new Date(), h = H(), ses = phaseSes(), pr = arr((PR() || {}).sessions), md = U('mind') ? arr((MED() || {}).sessions) : [], n = Math.max(1, weekNo(d));
   const ag = agenda(d).filter(x => partOf(x) === 'move').map(x => Object.assign({done: isDone(d, x.key)}, x));
-  const tile = (key, sc, kick, title, sub, cls) => `<button type="button" class="tn-card tn-lift tn-kc ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${scene(sc, sc === 'work' ? 7.5 : 16.8, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
+  const tile = (key, sc, kick, title, sub, cls, art) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(0, art || SCENE_ART[sc] || 'tending-sq')}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
   const lifts = Object.entries(h.lifts || {}).filter(([, v]) => v);
   return `<div class="tn-sec a-move">${secHead('move', 'a-move', 'Move', 'Workouts and Flow, with a calm voice coaching. Play any of them, any day.')}${PUB() ? pubMoveHead() : progCard()}
     ${ag.length ? `<div class="tn-kgrid">${ag.map(x => planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: 'Today · ' + x.kick, title: x.title, sub: x.sub, btn: x.k === 'mark' ? '' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, x.k === 'mark' ? x.btn : 'Done')})).join('')}</div>` : ''}
-    ${ses.length ? `<h3 class="tn-h3">Workouts</h3><div class="tn-kgrid">${ses.map(([id, x]) => tile('work:' + id, 'work', (progOn() ? sesKick(id) : x.day || 'Session ' + id) + (x.mins ? ' · ' + x.mins + ' min' : ''), x.title || 'Session ' + id, lightOn(d) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>` : ''}
-    ${flowShelf(pr, x => tile('pracid:' + x.id, 'practice', flowKick(x), x.title, x.focus || '', 'a-move'))}
-    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map(x => tile('medid:' + x.id, 'practice', (x.day || '') + ' · ' + medMins(n) + ' min', x.title, x.focus || '', 'p-bark')).join('')}</div>` : ''}
+    ${ses.length ? `<h3 class="tn-h3">Workouts</h3><div class="tn-kgrid">${ses.map(([id, x]) => tile('work:' + id, 'work', (progOn() ? sesKick(id) : x.day || 'Session ' + id) + (x.mins ? ' · ' + x.mins + ' min' : ''), x.title || 'Session ' + id, lightOn(d) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x))).join('')}</div>` : ''}
+    ${flowShelf(pr, x => tile('pracid:' + x.id, 'practice', flowKick(x), x.title, x.focus || '', 'a-move', flowArtName(x)))}
+    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map((x, j) => tile('medid:' + x.id, 'practice', (x.day || '') + ' · ' + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', medArtName(j))).join('')}</div>` : ''}
     ${h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 8).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : ''}
     ${lifts.length ? `<div class="hj-blk">${kick('My Weights')}<ul class="hj-ms">${lifts.map(([id, v]) => `<li><b>${esc(String(id).replace(/[-_]/g, ' '))}</b><small>${esc(v)}${/^\d+(\.\d+)?$/.test(String(v)) ? ' lb' : ''}</small></li>`).join('')}</ul></div>` : ''}</div>`;
 }
@@ -2814,9 +2824,9 @@ function startInvite(title, line){
 function vStartHome(){
   if (S.sec === 'recipes') return vRecipes();
   if (S.sec === 'holidays') return vHol();
-  const sp = startPicks(), tile = (key, kick, title, sub, cls) => `<button type="button" class="tn-card tn-lift tn-kc ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${scene('practice', 16.8, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
+  const sp = startPicks(), tile = (key, kick, title, sub, cls, art) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(0, art)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
   return `<div class="tn-sec a-today">${secHead('today', 'a-today', 'Today', 'One Flow session and one meditation each day, with a calm voice guiding you. Grounded Recipes are open to everyone.')}
-    <div class="tn-kgrid">${sp.flow ? tile('pracid:' + sp.flow.id, 'Today\'s Flow' + (sp.flow.mins ? ' · ' + sp.flow.mins + ' min' : ''), sp.flow.title || 'Flow', sp.flow.focus || '', 'a-move') : ''}${sp.med ? tile('medid:' + sp.med.id, 'Today\'s Meditation · ' + medMins(1) + ' min', sp.med.title || 'Meditation', sp.med.focus || '', 'p-bark') : ''}</div>
+    <div class="tn-kgrid">${sp.flow ? tile('pracid:' + sp.flow.id, 'Today\'s Flow' + (sp.flow.mins ? ' · ' + sp.flow.mins + ' min' : ''), sp.flow.title || 'Flow', sp.flow.focus || '', 'a-move', flowArtName(sp.flow)) : ''}${sp.med ? tile('medid:' + sp.med.id, 'Today\'s Meditation · ' + medMins(1) + ' min', sp.med.title || 'Meditation', sp.med.focus || '', 'p-bark', medArtName(arr((MED() || {}).sessions).indexOf(sp.med))) : ''}</div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="recipes">Open Grounded Recipes</button></div>
     <div class="tn-start-mem" style="display:grid;gap:12px;margin-top:14px">${startInvite('Grounded Fitness', 'The 12 week program, guided workouts with a coach, every Flow session, yoga, balance, and stretch.')}${startInvite('Grounded Nutrition', 'Meal plans for your household with Grounded Cooking, Today\'s Plate, shopping lists, prep, and your labs beside you.')}</div></div>`;
 }
@@ -3036,7 +3046,7 @@ function pubTodayCards(body, people, c, tally){
   if (U('move') && s.checkYes && !s.cleared && !tm.length) body.push(`<div class="tn-card a-move"><div class="tn-hd">${badge('shield')}<div><div class="tn-k">Before You Move More</div><div class="tn-sub">${esc(K.yes || '')}</div></div></div>
     <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="team">${ic('plus')}Add My Plan from My Team</button><button type="button" class="tn-btn sm line" data-hja="pcleared">${esc((arr(K.continue).find(x => x.id === 'cleared') || {}).label || 'My doctor or therapist says I can begin')}</button></div></div>`);
   const kids = KIDS(); if (kids.length){ const k0 = today();
-    const card = `<article class="tn-card tn-edge p-branches" id="tn-kids"><div class="tn-hd">${badge('people')}<div style="min-width:0;flex:1"><div class="tn-k">Family Food</div><div class="tn-sub">${esc(((L.kids || {}).lead || '').split('.')[0] + '.')}</div></div></div>
+    const card = `<article class="tn-card tn-edge p-branches" id="tn-kids"><div class="tn-hd">${badge('people', '', 'prep-together-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Family Food</div><div class="tn-sub">${esc(((L.kids || {}).lead || '').split('.')[0] + '.')}</div></div></div>
       <div class="tn-kidl">${kids.map((k, j) => { const day = kidDay(k.id, k0), n = Object.keys(day.rainbow || {}).length + Object.values(day.g || {}).filter(v => +v > 0).length; tally('people', n > 0);
         return `<div class="tn-kidc"><b>${esc(kidName(k, j))}</b><small>${esc(bandName(k.band))}</small><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="kidopen" data-hjv="${esc(k.id)}">${ic('plate')}Log Food</button><button type="button" class="tn-btn sm line" data-hja="kidview" data-hjv="${esc(k.id)}">${ic('star')}Kid View</button></div></div>`; }).join('')}</div></article>`;
     (U('people') ? people : body).push(card); }
@@ -3192,7 +3202,7 @@ function vLdlP(){
 function pubLdlCard(){
   const e = ldlNow(), r = ldlCalc(), goal = num(H().set.goalLdl);
   if (!e) return `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">Fruit · My Numbers</div><div class="tn-sub">Add your lab numbers to see them beside their recommended ranges, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`;
-  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
+  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
     <div class="tn-nums"><div><b>${esc(e.ldl)}</b><small>LDL, ${esc(short(e.date))}</small></div>${goal ? `<div><b>${esc(goal)}</b><small>My goal</small></div>` : ''}${r && r.count ? `<div><b class="soft">${r.low} to ${r.high}</b><small>Where my choices may lead</small></div>` : ''}</div>
     <span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`;
 }
@@ -3696,7 +3706,7 @@ function vLog(mode){
     ${N.length ? `<div class="tn-notes">${N.map(n => `<div class="hj-entry"><b>${nice(n.date)}</b><p>${esc(n.text).replace(/\n/g, '<br>')}</p></div>`).join('')}</div>` : ''}</div>`;
   return `<div class="tn-sec a-plate">${plate}${note}</div>`;
 }
-function voiceCard(){ return `<div class="tn-card" id="tn-voice"><div class="tn-hd">${badge('bell', 'a-move')}<div><div class="tn-k a-move">Voice and Music</div><div class="tn-sub">The calm voice, the music, and the beeps for workouts, quiet times, and the kitchen guide.</div></div></div>${toggles(null)}</div>`; }
+function voiceCard(){ return `<div class="tn-card" id="tn-voice"><div class="tn-hd">${badge('bell', 'a-move', 'med-m5')}<div><div class="tn-k a-move">Voice and Music</div><div class="tn-sub">The calm voice, the music, and the beeps for workouts, quiet times, and the kitchen guide.</div></div></div>${toggles(null)}</div>`; }
 function houseCard(){
   if (KIT()) return ''; const h = H(), s = h.set, pub = PUB(), kids = pub ? KIDS().length : 0, a = pub ? Math.max(1, +((s.house || {}).adults) || 1) : Math.max(1, +s.household || 1);
   return `<div class="tn-card" id="tn-hh"><div class="tn-hd">${badge('people', 'p-branches')}<div><div class="tn-k p-branches">Household</div><div class="tn-sub">Recipes and the shopping list fit your table.</div></div></div>
@@ -3720,6 +3730,8 @@ const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
 // Dinner nights by recipe type (fish, chili and soup, lentil and bean, stir fry and bowl); install895.py rewrites this line with the
 // paintings present. A dinner with no night painting yet keeps the rotation (home.js FOOD_ROT, ITEM_ART.cook).
 const DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
+// BLD 910: a dinner tile with no night painting takes the next one in this rotation.
+const DIN_ROT = ['dinner-chili-sq', 'dinner-curry-sq', 'dinner-fish-sq', 'dinner-stirfry-sq', 'meal-lunch-sq', 'todays-plate-sq'];
 const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
 const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([, re]) => re.test(t)); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
 function moveKind(id, ses, lvl){
@@ -4501,7 +4513,7 @@ const CSS = `
 .tn-rc .tx{min-width:0;display:block;}.tn-rc .h3{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:20px;line-height:1.2;overflow-wrap:anywhere;}
 .tn-kc .ill{width:96px;height:96px;border-radius:20px;overflow:hidden;display:block;}.tn-kc .ill svg{display:block;}
 .tn-kc .tx{min-width:0;display:block;}.tn-kc .h3{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:22px;line-height:1.15;overflow-wrap:anywhere;}
-.tn .tn-card.tn-feature{padding:0;overflow:hidden;}.tn-fscene{height:190px;}.tn-fscene svg{display:block;}
+.tn .tn-card.tn-feature{padding:0;overflow:hidden;}.tn-fscene{height:190px;}.tn-fscene svg{display:block;}.tn-fscene img{display:block;width:100%;height:100%;object-fit:cover;}
 .tn-feature .body{padding:16px 18px 18px;}.tn-feature h3{font-size:30px;}
 .tn-more .tn-acts{margin-top:8px;}
 /* the older pieces, in the new frame */
@@ -4565,6 +4577,8 @@ const CSS = `
 /* BLD 866: the Today paintings, for every tier */
 .tn-gimg{flex:none;width:52px;height:52px;border-radius:16px;overflow:hidden;background:var(--cs,var(--bg-deep));border:1px solid color-mix(in srgb,var(--c,var(--line)) 28%,transparent);display:block;}
 .tn-gimg img{display:block;width:100%;height:100%;object-fit:cover;}
+.tn-badge.tn-bimg{overflow:hidden;padding:0;background:var(--cs,var(--bg-deep));}.tn-bimg img{display:block;width:100%;height:100%;object-fit:cover;}
+.tn-hd .tn-badge.tn-bimg,.tn-whyc .tn-badge.tn-bimg{width:52px;height:52px;border-radius:16px;}
 .tn-gimg.big{width:64px;height:64px;border-radius:19px;}
 /* BLD 866: public Tending. Base pieces a public host page may lack, scoped to public Tending only */
 :is(#hj-root,#hj-bare,#hj-ov0).tn-pub section{padding:0;border-top:0;background:none;}
@@ -4845,7 +4859,7 @@ function holChips(){ const G = holUse(); if (!G) return ''; const on = holSt().o
 function holPick(){ return holUse() ? `<h3 style="margin-top:20px">My Holidays</h3><p class="hj-sub">Choose the days you celebrate. About three weeks before each one, a card offers to set it up: the shopping on your list, the prep on your calendar, and every recipe guided step by step. Every set stays in the recipe library too.</p>${holChips()}` : ''; }
 function holShelf(){ const G = holUse(); if (!G || KIT()) return ''; return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen hj-holshelf" data-hja="holall"><span class="ill"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${G.sets.length} sets</span><span class="h3">Holidays and Gatherings</span><span class="tn-meta">Thanksgiving to a backyard gathering: whole food menus, the shopping, the prep, and every recipe step by step.</span></span></button>`; }
 function holSetCard(){ if (KIT() || !holUse()) return ''; const n = holSt().on.length;
-  return `<div class="tn-card a-kitchen" id="tn-hol"><div class="tn-hd">${badge('star', 'a-kitchen')}<div><div class="tn-k a-kitchen">My Holidays</div><div class="tn-sub">${n ? n + ' chosen. ' : ''}A card about three weeks before each one offers to set it up.</div></div></div>${holChips()}
+  return `<div class="tn-card a-kitchen" id="tn-hol"><div class="tn-hd">${badge('star', 'a-kitchen', HOL_ART.day + '-sq')}<div><div class="tn-k a-kitchen">My Holidays</div><div class="tn-sub">${n ? n + ' chosen. ' : ''}A card about three weeks before each one offers to set it up.</div></div></div>${holChips()}
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holall">${ic('arrow')}Every Holiday Set</button></div></div>`; }
 // The Holidays section: My Holidays, what is coming up, and every set; one set opens with its Set Up, timeline, and recipes.
 function vHol(){

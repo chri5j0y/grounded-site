@@ -118,9 +118,9 @@
   /* ---------- Early Days: 90 Days, one path in three chapters (BLD 856) ---------- */
   var ICON = function (id, cls) { return '<svg class="' + (cls || 'i') + '" aria-hidden="true"><use href="#lsi-' + id + '"/></svg>'; };
   var CH = [
-    { n: 1, from: 1, to: 30, acc: 'a-honey', icon: 'sunrise', title: 'Today Is Enough', line: 'The basics that steady a body and mind: water, food, sleep, your people, and riding out the first hard moments.' },
-    { n: 2, from: 31, to: 60, acc: 'a-green', icon: 'sprout', title: 'Growing Strong', line: 'A daily rhythm you enjoy: mornings, evenings, good company, saying no with ease, and your first sober celebration.' },
-    { n: 3, from: 61, to: 90, acc: 'a-blue', icon: 'tree', title: 'A Life You Love', line: 'Clear mornings, deeper rest, purpose, closeness, and a life that keeps getting fuller.' }
+    { n: 1, from: 1, to: 30, acc: 'a-honey', icon: 'sunrise', art: 'welcome-narrow', title: 'Today Is Enough', line: 'The basics that steady a body and mind: water, food, sleep, your people, and riding out the first hard moments.' },
+    { n: 2, from: 31, to: 60, acc: 'a-green', icon: 'sprout', art: 'way-plan-sq', title: 'Growing Strong', line: 'A daily rhythm you enjoy: mornings, evenings, good company, saying no with ease, and your first sober celebration.' },
+    { n: 3, from: 61, to: 90, acc: 'a-blue', icon: 'tree', art: 'home-evening-narrow', title: 'A Life You Love', line: 'Clear mornings, deeper rest, purpose, closeness, and a life that keeps getting fuller.' }
   ];
   var BIG = { 1: 1, 7: 1, 14: 1, 30: 1, 60: 1, 90: 1 };
   function chapterOf(n) { for (var i = 0; i < CH.length; i++) if (n >= CH[i].from && n <= CH[i].to) return CH[i]; return CH[0]; }
@@ -135,7 +135,7 @@
       if (!list.length) return '';
       var open = was.hasOwnProperty('chapter-' + c.n) ? was['chapter-' + c.n] : c.n === 1;
       return '<details class="ls-ch ' + c.acc + '" id="chapter-' + c.n + '"' + (open ? ' open' : '') + '><summary>'
-        + '<span class="ls-chart">' + ICON(c.icon, '') + '</span><span class="ls-cht"><small>Chapter ' + c.n + ', Days ' + c.from + ' to ' + c.to + '</small><b>' + esc(c.title) + '</b><span>' + esc(c.line) + ' ' + list.length + ' videos.</span></span>'
+        + '<span class="ls-chart" aria-hidden="true"><img src="/shared/heroes/way/' + c.art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="ls-cht"><small>Chapter ' + c.n + ', Days ' + c.from + ' to ' + c.to + '</small><b>' + esc(c.title) + '</b><span>' + esc(c.line) + ' ' + list.length + ' videos.</span></span>'
         + '<span class="ls-chev">' + ICON('chev') + '</span></summary><ol class="ls-tiles">' + list.map(function (l) {
           var m = l.mins || 2;
           return '<li class="ls-tile' + (BIG[l.n] ? ' big' : '') + '" id="day-' + l.n + '"><button type="button" class="ls-tbtn" data-ls-day="' + l.n + '" title="' + esc(l.blurb || '') + '" aria-label="Watch Day ' + l.n + ', ' + esc(l.title) + ', about ' + m + (m === 1 ? ' minute' : ' minutes') + '">'
@@ -180,7 +180,7 @@
     if (C && (h = $('#ls-craft'))) h.innerHTML = '<p>' + esc(C.intro || '') + '</p><div class="ls-gtw">' + (C.parts || []).map(function (x) {
       return '<details class="ls-gt" id="cr-' + esc(x.id) + '"><summary><b>' + esc(x.title) + '</b><small>' + esc(x.lead || '') + '</small></summary><div class="ls-gtb">' + ul(x.items) + (x.try ? '<h4>Try Saying</h4><p class="ls-try">' + esc(x.try) + '</p>' : '') + '</div></details>';
     }).join('') + '</div>' + srcs(C.credits);
-    if (B && (h = $('#ls-basics'))) h.innerHTML = '<p>' + esc(B.intro || '') + '</p><div class="ls-basics">' + (B.parts || []).map(function (x, i) { var k = ['moon', 'bowl', 'walk'][i % 3], a = ['a-blue', 'a-honey', 'a-green'][i % 3]; return '<div class="' + a + '"><h4>' + ICON(k) + esc(x.title) + '</h4>' + ul(x.items) + '</div>'; }).join('') + '</div>' +
+    if (B && (h = $('#ls-basics'))) h.innerHTML = '<p>' + esc(B.intro || '') + '</p><div class="ls-basics">' + (B.parts || []).map(function (x, i) { var k = ['candle-rain-sq', 'meal-lunch-sq', 'move-cardio-sq'][i % 3], a = ['a-blue', 'a-honey', 'a-green'][i % 3]; return '<div class="' + a + '"><h4><span class="ls-bpic" aria-hidden="true"><img src="/shared/heroes/way/' + k + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span>' + esc(x.title) + '</h4>' + ul(x.items) + '</div>'; }).join('') + '</div>' +
       (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.health ? '<p class="ls-note"><a class="text-link" href="/field-guide/">' + esc(B.health) + '</a></p>' : '') + srcs(B.credits);
   }
   function wave(from) {

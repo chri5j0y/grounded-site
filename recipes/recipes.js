@@ -139,9 +139,23 @@
     }).join('');
   }
 
-  function card(r) {
+  // BLD 910 (Chris, November 3, 2026: "all cards get high quality images"): each recipe card shows one of Grounded's own
+  // paintings: for lunch and dinner, the main of the dish when its name says (fish, chili and stews, beans and lentils, stir fry and bowls), and
+  // otherwise its meal's set in turn, so cards side by side wear different paintings.
+  var CARD_ART = { breakfast: ['weekly-batch-sq', 'snack-fruit-sq', 'kitchen-headstart-sq', 'prep-together-sq'], lunch: ['meal-lunch-sq', 'todays-plate-sq', 'prep-together-sq', 'weekly-batch-sq'],
+    dinner: ['todays-plate-sq', 'kitchen-headstart-sq', 'dinner-stirfry-sq', 'meal-lunch-sq'], snack: ['snack-fruit-sq', 'meal-lunch-sq', 'supplements-sq', 'prep-together-sq'],
+    party: ['kitchen-headstart-sq', 'todays-plate-sq', 'snack-fruit-sq'], sauce: ['prep-together-sq', 'kitchen-headstart-sq', 'weekly-batch-sq'], drink: ['drinks-sq', 'snack-fruit-sq'] };
+  function cardArt(r, i, prev) {
+    var t = String(r.name || ''), L = CARD_ART[r.meal] || CARD_ART.dinner, k = '';
+    if (r.meal === 'dinner' || r.meal === 'lunch') k = /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t) ? 'dinner-fish-sq' : /chili|soup|stew/i.test(t) ? 'dinner-chili-sq' : /lentil|bean|chickpea|curry|dal\b/i.test(t) ? 'dinner-curry-sq' : /stir fry|noodle/i.test(t) ? 'dinner-stirfry-sq' : '';
+    if (!k || k === prev) { k = L[(i || 0) % L.length]; if (k === prev) k = L[((i || 0) + 1) % L.length]; }
+    return k;
+  }
+  var lastArt = '';
+  function card(r, i) {
+    var art = cardArt(r, typeof i === 'number' ? i : 0, typeof i === 'number' && i > 0 ? lastArt : ''); lastArt = art;
     return '<button type="button" class="rc-card rc-k-' + esc(r.meal) + '" data-id="' + esc(r.id) + '">' +
-      '<span class="rc-band"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
+      '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + W + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
       '<span class="rc-cb"><b>' + esc(r.name) + '</b>' +
       '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? sv(r) : r.serves)) + '</span></span>' +
       '<span class="rc-n" title="' + esc(nutLine(r)) + '">' + esc(shortNut(r)) + '</span></span></button>';
