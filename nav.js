@@ -31,7 +31,7 @@
   var GN_GROUPS = [
     { name: 'The Grounded Way', items: [
       { id: 'home', title: 'Begin The Grounded Way', desc: 'Make your profile, meet your tree, and tend your four, a few minutes a day', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
-      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Wake up, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: ic.tree, bg: '#F1E6CC' },
+      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: ic.tree, bg: '#F1E6CC' },
       { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: ic.leaf, bg: '#E3EFD6' }
     ] },
     { name: 'Age Trees', items: [
