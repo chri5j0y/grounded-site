@@ -50,7 +50,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b911b', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b911b';
+  var GGN_SRC = '/shared/ggn.js?v=b912';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -360,12 +360,20 @@
     none: ['gg-k-calm-place-now', 'gg-k-balloon-belly-now', 'gg-k-tree-roots-now']
   };
   var ART = { bark: 'tend-mind', leaves: 'tend-move', roots: 'tend-spirit', trunk: 'tend-spirit', branches: 'tend-people', fruit: 'tend-fruit', none: 'tend-mind' };
+  /* BLD 912: Get Grounded Now opens in Home's own window (GGNow.mount), never as a page in a frame. */
+  function openGGN() {
+    mDialog('Get Grounded Now', '<div id="hm-ggn" class="ggn-root hm-ggn"><p class="hm-loading">Opening Get Grounded Now…</p></div>');
+    load(GGN_SRC).then(function () {
+      var el = document.getElementById('hm-ggn'); if (!el) return;
+      if (window.GGNow && GGNow.mount) GGNow.mount(el, { kids: isKid(S.p) }); else openFrame(new URL('/get-grounded-now.html' + (isKid(S.p) ? '#kids' : ''), location.href));
+    });
+  }
   function playVideo(id, from) {
     load(GGN_SRC).then(function () {
       var tries = 0;
       (function go() {
         if (window.GGNow && window.GG_NOW) { window.GGNow.play(id, [id], from); return; }
-        if (++tries > 60) { location.href = '/get-grounded-now.html'; return; }
+        if (++tries > 60) { openGGN(); return; }
         setTimeout(go, 100);
       })();
     });
@@ -1626,7 +1634,7 @@
     if (x.src === 'plan') { openHowFromNow(key); return; }
     if (key === 'tree') { openTreeSheet(t.ck ? 'quick' : ''); return; }
     if (key === 'quiet') { playVideo('gg-paced-now'); return; }
-    if (key === 'pray') { openFrame(new URL('/get-grounded-now.html', location.href)); return; }
+    if (key === 'pray') { openGGN(); return; }
     if (key === 'talk') { var r = todayRec(homeRec()); r.q = (+r.q || 0) + 1; saveHome(); refreshPane(); }
   }
   function itemDone(key, btn) {
@@ -1890,7 +1898,7 @@
     else if (id === 'holidays') { var hh = tableOf(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + '#holidays', location.href)); }
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
-    else if (id === 'quiet') { if (!member()) { openDailyMed(); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openFrame(new URL('/get-grounded-now.html', location.href)); }
+    else if (id === 'quiet') { if (!member()) { openDailyMed(); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openGGN(); }
   }
   SUBS.library.quiet = 'Grounded Meditation';
   OLDSEC.quiet = 'today';
@@ -3169,6 +3177,8 @@
     var a = e.target.closest && e.target.closest('#hm-app a[href]'); var u = inHomeLink(a); if (!u) return;
     if (!(window.GGP && GGP.active && GGP.active())) return;
     e.preventDefault();
+    if (u.pathname === '/get-grounded-now.html') { openGGN(); return; }
+    if (u.pathname === '/living-sober.html') { goTo('today'); setTimeout(function () { var c = document.getElementById('hm-sober'); if (c) c.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 120); return; }
     var own = (TREES[S.tree] || TREES.oak).href;
     if (u.pathname === own && !u.hash) { goTo('tree'); return; }
     openFrame(u);
@@ -3310,7 +3320,7 @@
 
   /* ---------- My Tree: every tool of the profile's tree, inside Home ---------- */
   var TOOLS = {
-    common: [['checkin', 'check', 'Check-in'], ['quick', 'clock', 'Quick Check-in'], ['plan', 'sprout', 'Growth Plan'], ['week', 'calendar', 'Week'], ['history', 'clock', 'Season and Rings'], ['life', 'book', 'When Life Changes'], ['learn', 'play', 'Learn'], ['video', 'play', 'Watch: Meet '], ['settings', 'gear', 'Tree Settings']],
+    common: [['checkin', 'check', 'Check-in'], ['quick', 'clock', 'Quick Check-in'], ['plan', 'sprout', 'Growth Plan'], ['week', 'calendar', 'Week'], ['history', 'clock', 'Season and Rings'], ['life', 'book', 'When Life Changes'], ['learn', 'play', 'Learn'], ['settings', 'gear', 'Tree Settings']],
     pine: [['next', 'arrow', 'Next Steps']], birch: [['ground', 'arrow', 'Groundwork']], sequoia: [['legacy', 'book', 'Legacy Book']]
   };
   var ROOM_HASH = { week: '#week', life: '#life', next: '#next', ground: '#groundwork', legacy: '#legacy', today: '#today', guide: '#guide' };
@@ -3331,6 +3341,7 @@
     tree = tree || S.tree; var t = TREES[tree] || TREES.oak;
     if (what === 'learn') { if (tree === S.tree) goTo(isKid(S.p) ? 'watch' : 'learn'); else openRoom(tree, '', ''); return; }
     if (what === 'whole') { if (tree === S.tree) goTo(isKid(S.p) ? 'today' : 'grow'); else openRoom(tree, '', ''); return; }
+    if (what === 'settings' && tree === S.tree && openScreen('settings', tree)) return;
     if (what === 'video' || what === 'settings') {
       openFrame(new URL(t.href, location.href), true, function (win) {
         var tries = 0; (function go() {
@@ -3343,8 +3354,43 @@
       }, what === 'settings' ? { what: what, title: SHEET_SCREENS.settings, kick: 'My ' + t.n } : null);
       return;
     }
+    if (tree === S.tree && SCR_MOD[what] && openScreen(what, tree)) return;
     if (ROOM_HASH[what] && !(what === 'today')) { if (tree === S.tree) openTreeSheet(what); else openRoom(tree, '', ROOM_HASH[what]); return; }
     if (tree === S.tree) openTreeSheet(what); else openRoom(tree, '', '');
+  }
+  /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
+     the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b912', talk: '/shared/home/talk.js?v=b912' };
+  var SCR_READY = {};
+  var SCR_CTL = null;
+  function openScreen(name, tree, extra) {
+    tree = tree || S.tree; var src = SCR_MOD[name]; if (!src || !S.id || !SCR_READY[name]) return false;
+    mDialog(SHEET_SCREENS[name] || 'Grounded', '<p class="hm-loading">Opening…</p>');
+    var fail = function () { SCR_READY[name] = false; mClose(); toast('That screen is still on its way. Please try again.'); };
+    load(src).then(function () {
+      var M = window.GGScreen && GGScreen[name]; if (!M || typeof M.open !== 'function' || (M.trees && M.trees.indexOf(tree) < 0)) { fail(); return; }
+      var files = typeof M.files === 'function' ? M.files(tree) : arr(M.files);
+      return files.reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
+        var host = document.getElementById('hm-mdlg-b'); if (!host) return;
+        var t = document.getElementById('hm-mdlg-t'); if (t && typeof M.title === 'function') t.textContent = M.title(tree, extra) || t.textContent;
+        host.innerHTML = '';
+        var ctx = { id: S.id, tree: tree, host: host, plain: plainWording(S.id, tree), member: member(),
+          toast: toast, close: function () { mClose(); render(); }, changed: function () { if (window.GGP && GGP.get) S.p = GGP.get(S.id) || S.p; S.tree = treeOfProfile(S.p) || S.tree; render(); },
+          openHome: function (what) { mClose(); screenGo(what); } };
+        if (extra) Object.keys(extra).forEach(function (k) { ctx[k] = extra[k]; });
+        SCR_CTL = M.open(ctx) || null;
+      });
+    }).catch(fail);
+    return true;
+  }
+  function screenGo(what) {
+    what = String(what || '');
+    if (what === 'checkin' || what === 'quick') { openTreeSheet(what); return; }
+    if (what === 'history') { seasonOpen(); return; }
+    if (what === 'plan') { goTo('grow'); return; }
+    if (what === 'learn') { goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
+    if (/^guide:/.test(what)) { openGuide(what.slice(6)); return; }
+    openTool(what);
   }
   /* The whole tree inside Home, with its own tabs (and any old address it was given). */
   function openRoom(tree, q, hash) {
@@ -3459,7 +3505,7 @@
     document.documentElement.classList.add('hm-sheeted');
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
-  function mClose() { if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
+  function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
   var LEARN_JS = '/shared/gg-learn.js?v=b911b';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
@@ -3517,7 +3563,7 @@
   }
   function openDailyMed(sec) {
     load(START_JS).then(function () {
-      var x = dailyMed(sec); if (!x) { openFrame(new URL('/get-grounded-now.html', location.href)); return; }
+      var x = dailyMed(sec); if (!x) { openGGN(); return; }
       mDialog(sec === 'spirit' ? 'Today\'s Spirit Practice' : 'Today\'s Meditation', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div><p class="hm-sub" style="margin-top:12px">Calm in a minute or two: <a class="hm-linkbtn" href="/get-grounded-now.html">Get Grounded Now</a></p>');
       load(LEARN_JS).then(function () { var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, x); });
     });
@@ -3693,6 +3739,7 @@
   }
   function openGuide(id, tree0) {
     var tr0 = tree0 && TREES[tree0] ? tree0 : S.tree, t = TREES[tr0] || TREES.oak, kid = tr0 === 'maple' || tr0 === 'aspen';
+    if (kid && tr0 === S.tree && openScreen('talk', tr0, { talk: id })) return;
     openFrame(new URL(t.href + (kid ? '#talk=' : '#life=') + encodeURIComponent(id), location.href), true, null, { what: 'life', title: SHEET_SCREENS.life, kick: 'My ' + t.n });
   }
 
