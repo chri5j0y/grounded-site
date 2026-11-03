@@ -49,7 +49,7 @@
   if (window.GGHome) return;
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
-  var WORDS_SRC = '/shared/sober-words.js?v=b851';
+  var WORDS_SRC = '/shared/sober-words.js?v=b908';
   var GGN_SRC = '/shared/ggn.js?v=b908';
   var IMG = '/shared/heroes/way/';
 
@@ -644,8 +644,8 @@
     load(WORDS_SRC).then(function () {
       var G = window.GGSoberWords, el2 = document.getElementById('hm-words'); if (!G || !el2) return;
       var list = arr(G.daily), c = soberCount(soberDate()); if (!list.length || !c) return;
-      // BLD 908: past day 90, a Member's words come from the Member library when it holds them.
-      if (c.days >= 90 && member()) { var ms = obj(mSection('seasons')), mw = arr(ms.soberWords || obj(ms.sober).daily); if (mw.length) list = mw; }
+      // BLD 908: GGSoberWords.all() is the 90 plus days 91 to 365 when Membership is open on this device (day n is list[n - 1]).
+      if (typeof G.all === 'function') { try { var al = arr(G.all()); if (al.length) list = al; } catch (e) {} }
       var st = obj((GGP.data(S.id) || {}).life).sober || '';
       for (var i = 0; i < list.length; i++) { var w = list[(c.days + i) % list.length]; if (!w.stage || !st || w.stage.indexOf(st) >= 0) { el2.textContent = w.text; return; } }
     });
@@ -3348,8 +3348,8 @@
     // Programs by tradition wait in their own list, opened and chosen by the person; never suggested or preselected.
     L.forEach(function (x) { var g = x.need || 'More', box = x.tradition ? trad : groups; (box[g] = box[g] || []).push(x); });
     var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3><ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (x.mins ? 'About ' + esc(x.mins) + ' minutes' : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
-    var body = L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad"><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
-      : '<p class="hm-sub">' + esc(s.name) + ' fills in here as soon as the Member library opens on this device.</p>';
+    var body = (id === 'relationships' && L.length ? hhPickHtml() : '') + (L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad"><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
+      : '<p class="hm-sub">' + esc(s.name) + ' fills in here as soon as the Member library opens on this device.</p>');
     mDialog(s.name, body);
   }
   function mDialog(title, body) {
@@ -3364,6 +3364,7 @@
   var LEARN_JS = '/shared/gg-learn.js?v=b908';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
+    if (sec === 'relationships') x = altFor(x, hhKind());
     var b = document.getElementById('hm-mdlg-b'); if (!b) return;
     b.innerHTML = '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div>';
     load(LEARN_JS).then(function () {
@@ -3371,6 +3372,17 @@
       playLesson(host, Object.assign({ id: x.id, title: x.title, scenes: arr(x.scenes) }, x.item), function () { var h = homeRec(); if (!h.mdone || typeof h.mdone !== 'object') h.mdone = {}; h.mdone[key] = today(); saveHome(); });
     });
   }
+  /* Relationships: scenes carry alt wording per household kind ({group: {beats, say, h, sub, items}}, sometimes couple);
+     the family wording is the main one. The person chooses For My Family, For Us Two, or For Our Group (home record hhKind). */
+  var HH_KINDS = [['family', 'For My Family'], ['couple', 'For Us Two'], ['group', 'For Our Group']];
+  function hhKind() { var k = homeRec().hhKind; return k === 'couple' || k === 'group' ? k : 'family'; }
+  function altFor(x, kind) {
+    if (kind === 'family') return x;
+    var item = JSON.parse(JSON.stringify(x.item || {}));
+    item.scenes = arr(item.scenes || x.scenes).map(function (sc) { var a = sc && sc.alt && sc.alt[kind]; if (!a) return sc; ['beats', 'say', 'h', 'sub', 'items'].forEach(function (f) { if (a[f] != null) sc[f] = a[f]; }); return sc; });
+    return Object.assign({}, x, { item: item, scenes: item.scenes });
+  }
+  function hhPickHtml() { var k = hhKind(); return '<div class="hm-acts tight" role="group" aria-label="Who this is for">' + HH_KINDS.map(function (h) { return '<button type="button" class="hm-btn sm hm-pill' + (h[0] === k ? '' : ' line') + '" aria-pressed="' + (h[0] === k) + '" data-hm-hh="' + h[0] + '">' + esc(h[1]) + '</button>'; }).join('') + '</div>'; }
   /* One lesson in the shared player (STD's call: a one-lesson support track). */
   function playLesson(host, lesson, onDone) {
     var tr = { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] };
@@ -3379,27 +3391,33 @@
   }
   /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */
   var START_JS = '/shared/start-videos.js?v=b908';
-  function dailyMed() { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections).meditation).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
+  function dailyMed(sec) { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections)[sec || 'meditation']).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
   function dailyMedHtml() {
     if (isKid(S.p)) return '';
     var x = window.GG_START_VIDEOS ? dailyMed() : null;
     if (!window.GG_START_VIDEOS) load(START_JS).then(function () { var el = document.getElementById('hm-dmed'); if (el && dailyMed()) el.outerHTML = dailyMedHtml(); });
-    return '<article class="hm-card hm-p-bark hm-dmed" id="hm-dmed"><div class="hm-k">Today\'s Meditation</div><h3 class="hm-h3">' + esc(x ? x.title : 'A Few Quiet Minutes') + '</h3><p class="hm-sub">' + esc(x ? (x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '') : 'A guided meditation for today, with a calm voice.') + '</p>' +
+    return dailySpiritHtml() + '<article class="hm-card hm-p-bark hm-dmed" id="hm-dmed"><div class="hm-k">Today\'s Meditation</div><h3 class="hm-h3">' + esc(x ? x.title : 'A Few Quiet Minutes') + '</h3><p class="hm-sub">' + esc(x ? (x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '') : 'A guided meditation for today, with a calm voice.') + '</p>' +
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="1">' + I('play') + 'Begin</button></div></article>';
   }
-  function openDailyMed() {
+  /* Core Spirit (Start): the day's Spirit session when shared/start-videos.js carries a spirit section; never in Plain wording. */
+  function dailySpiritHtml() {
+    var x = window.GG_START_VIDEOS && !plainNow() ? dailyMed('spirit') : null; if (!x) return '';
+    return '<article class="hm-card hm-p-roots hm-dmed"><div class="hm-k">Today\'s Spirit Practice</div><h3 class="hm-h3">' + esc(x.title) + '</h3><p class="hm-sub">' + esc((x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '')) + '</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="spirit">' + I('play') + 'Begin</button></div></article>';
+  }
+  function openDailyMed(sec) {
     load(START_JS).then(function () {
-      var x = dailyMed(); if (!x) { openFrame(new URL('/get-grounded-now.html', location.href)); return; }
-      mDialog('Today\'s Meditation', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div><p class="hm-sub" style="margin-top:12px">Calm in a minute or two: <a class="hm-linkbtn" href="/get-grounded-now.html">Get Grounded Now</a></p>');
+      var x = dailyMed(sec); if (!x) { openFrame(new URL('/get-grounded-now.html', location.href)); return; }
+      mDialog(sec === 'spirit' ? 'Today\'s Spirit Practice' : 'Today\'s Meditation', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div><p class="hm-sub" style="margin-top:12px">Calm in a minute or two: <a class="hm-linkbtn" href="/get-grounded-now.html">Get Grounded Now</a></p>');
       load(LEARN_JS).then(function () { var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, x); });
     });
   }
 
   /* ---------- clicks for the BLD 908 parts ---------- */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-dmed],[data-hm-mcode],[data-hm-tool],[data-hm-look],[data-hm-remind],[data-hm-cdel],[data-hm-mclose],[data-hm-mplay],[data-hm-mshelf]');
+    var t = e.target.closest && e.target.closest('[data-hm-hh],[data-hm-dmed],[data-hm-mcode],[data-hm-tool],[data-hm-look],[data-hm-remind],[data-hm-cdel],[data-hm-mclose],[data-hm-mplay],[data-hm-mshelf]');
     if (!t) return;
-    if (t.hasAttribute('data-hm-dmed')) { openDailyMed(); return; }
+    if (t.hasAttribute('data-hm-dmed')) { openDailyMed(t.getAttribute('data-hm-dmed') === 'spirit' ? 'spirit' : ''); return; }
+    if (t.hasAttribute('data-hm-hh')) { homeRec().hhKind = t.getAttribute('data-hm-hh'); saveHome(); openMShelf('relationships'); return; }
     if (t.hasAttribute('data-hm-mcode')) { e.preventDefault(); mCode(); return; }
     if (t.hasAttribute('data-hm-tool')) { openTool(t.getAttribute('data-hm-tool')); return; }
     if (t.hasAttribute('data-hm-look')) { openRoom(t.getAttribute('data-hm-look'), '', ''); return; }
