@@ -119,8 +119,8 @@
       return f ? f.t.title : 'When Life Changes';
     },
     files: function (tree) {
-      return ['/shared/gg-parts.js?v=b907', '/shared/gg-life.js?v=b907', '/shared/gg-shelf.js?v=b885', '/shared/gg-sources.js?v=b908', '/shared/gg-pdf.js?v=b803',
-        '/read.js?v=b813', '/shared/gg-learn.js?v=b911b', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
+      return ['/shared/gg-parts.js?v=b907', '/shared/gg-life.js?v=b907', '/shared/gg-shelf.js?v=b885', '/shared/gg-sources.js?v=b911r', '/shared/gg-pdf.js?v=b803',
+        '/read.js?v=b813', '/shared/gg-learn.js?v=b911r', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
     },
     open: function (ctx) {
       var K = window.GGKidKit, tree = ctx.tree, id = ctx.talk, host = ctx.host;

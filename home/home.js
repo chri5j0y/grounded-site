@@ -50,7 +50,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b911b', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b912';
+  var GGN_SRC = '/shared/ggn.js?v=b912r';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -1812,7 +1812,7 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b908';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b911r';
   var GUIDES = { oak: ['/oak/guides.js?v=b907', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b907', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b907', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
@@ -2069,7 +2069,8 @@
     var id = S.id;
     (function wait() {
       if (S.id !== id || T.open) return;
-      var busy = document.querySelector('.ggp-back,.hm-frame,#hm-sheet,#hm-plan');
+      // BLD 912: a check-in (.ggd), one on its way (CK_WAIT), or Home's window keeps the tour waiting.
+      var busy = document.querySelector('.ggp-back,.hm-frame,#hm-sheet,#hm-plan,#hm-mdlg,.ggd') || (CK_WAIT && Date.now() - CK_WAIT < 15000);
       if (busy || document.hidden) { if (++T.tries < 120) setTimeout(wait, 700); else T.asked[id] = 0; return; }
       if (!tourSeen()) openTour();
     })();
@@ -2859,6 +2860,7 @@
     SU.open = false; SU.d = null;
     toast('Your four are set, locked on this device.');
     if (location.hash && !/^#(today)?$/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
+    if (ck) CK_WAIT = Date.now();   // set before render, so the tour waits for the check-in
     render(); window.scrollTo(0, 0);
     if (ck) setTimeout(function () { openTreeSheet(ck); }, 200);
   }
@@ -3108,15 +3110,17 @@
   var CK_MOD = { oak: '/shared/checkin/oak.js?v=b912', sequoia: '/shared/checkin/sequoia.js?v=b912', birch: '/shared/checkin/birch.js?v=b912', pine: '/shared/checkin/pine.js?v=b912', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
   var NOPLAN = {};
   var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
+  var CK_WAIT = 0;   // when a check-in was asked for and is still loading (the tour waits for it)
   function openCheckin(kind) {
     var tree = S.tree, src = CK_MOD[tree]; if (!src || !S.id || !CK_READY[tree]) return false;
     mClose();
-    var fall = function () { CK_READY[tree] = false; openTreeSheet(kind === 'quick' ? 'quick' : kind === 'plan' ? 'plan' : 'checkin'); };
+    var fall = function () { CK_WAIT = 0; CK_READY[tree] = false; openTreeSheet(kind === 'quick' ? 'quick' : kind === 'plan' ? 'plan' : 'checkin'); };
     load(src).then(function () {
       var M = window.GGCheckin && window.GGCheckin[tree]; if (!M || typeof M.run !== 'function') { fall(); return; }
       if (kind === 'plan' && typeof M.plan !== 'function') { NOPLAN[tree] = true; openTreeSheet('plan'); return; }
       if (kind !== 'plan' && arr(M.kinds).indexOf(kind) < 0) kind = 'full';
       return arr(M.files).reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
+        CK_WAIT = 0;
         var lifeHost = document.createElement('div'); lifeHost.className = 'hm-lifeoffer';
         var lifeDone = function () { mClose(); render(); };
         var toldAt = 0, tell = function (m, ms) { toldAt = Date.now(); toast(m); void ms; };
@@ -3416,7 +3420,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b908'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b911r'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     var go = function () {
@@ -3497,7 +3501,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b911b';
+  var LEARN_JS = '/shared/gg-learn.js?v=b911r';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -3531,7 +3535,7 @@
   }
 
   /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */
-  var START_JS = '/shared/start-videos.js?v=b908';
+  var START_JS = '/shared/start-videos.js?v=b911r';
   function dailyMed(sec) { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections)[sec || 'meditation']).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
   function dailyMedHtml() {
     if (isKid(S.p)) return '';
@@ -3822,11 +3826,12 @@
   function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
   function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
   function guideRead(id, tree) {
-    var g = GUIDE_SRC2[tree]; if (!g) { openGuide(id, tree); return; }
+    // A guide id with no written guide plays its videos (or waits in Learn), never back through openGuide (that looped forever).
+    var g = GUIDE_SRC2[tree]; if (!g) { playGuide(id, '', tree); return; }
     GREAD.tree = tree; GREAD.id = id;
     var go = function () {
       var T = window[g[1]] && arr(window[g[1]].topics).filter(function (x) { return x && x.id === id; })[0];
-      if (!T) { openGuide(id, tree); return; }
+      if (!T) { playGuide(id, '', tree); return; }
       var self = GREAD.self, h = T.helper || {}, s = T.self || {};
       var view = self ? '<h3>What this can feel like</h3><p>' + esc(T.feel) + '</p><h3>First steps</h3>' + gList(s.first) + '<h3>What helps</h3>' + gList(s.helps) + '<h3>What to tell yourself</h3>' + gSay(s.tell) + (s.people ? '<h3>Telling your people</h3><p>' + esc(s.people) + '</p>' : '')
         : '<h3>What they may be carrying</h3><p>' + esc(T.feel) + ' ' + esc(h.feel || '') + '</p><h3>What to say</h3>' + gSay(h.say) + '<h3>What to avoid</h3>' + gList(h.avoid) + '<h3>Practical ways to help</h3>' + gList(h.help) + (h.you ? '<h3>Caring for yourself as the helper</h3><p>' + esc(h.you) + '</p>' : '');
@@ -3846,7 +3851,7 @@
       if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }
       else mDialog(T.title, html);
     };
-    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b908')]).then(go);
+    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b911r')]).then(go);
   }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;

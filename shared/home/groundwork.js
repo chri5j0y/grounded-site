@@ -36,7 +36,7 @@
   window.GGScreen = window.GGScreen || {};
   if (window.GGScreen.ground) return;
   var GW_JS = '/birch/groundwork.js?v=b788';
-  var COMMON = ['/shared/gg-sources.js?v=b908', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
+  var COMMON = ['/shared/gg-sources.js?v=b911r', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
   var BIRCH = ['/shared/gg-parts.js?v=b907', '/birch/practices.js?v=b907', '/birch/guides.js?v=b907', '/birch/checkin.js?v=b907'];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
   // birch/app.js 2078: skills whose Oak guide has a Birch guide that fits better.
