@@ -443,6 +443,7 @@
      ===================================================================== */
   function render() {
     var root = app(); if (!root) return;
+    if (DOOR === undefined) readDoor();
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
     if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
@@ -2976,7 +2977,8 @@
     mountIcons();
     if (!window.GGP) { var r = app(); if (r) r.innerHTML = welcomeHtml(); return; }
     GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
-    readDoor(); memberBoot();
+    // BLD 908: the door and Membership are read once this whole file has run (its later parts set their names).
+    setTimeout(memberBoot, 0);
     GGP.ready.then(function () { render(); walkDoor(); });
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
@@ -3045,7 +3047,8 @@
     if (!FRAME) return; FRAME.remove(); FRAME = null; document.documentElement.classList.remove('hm-framed');
     if (!quiet) render();
   }
-  function frameDone() { if (!FRAME) return; if (history.state && history.state.hmFrame) history.back(); else closeFrame(); }
+  // BLD 908: the frame closes first, so steps the tree took inside it (a Learn list, a guide) never hold Back.
+  function frameDone() { if (!FRAME) return; var pushed = !!(history.state && history.state.hmFrame); closeFrame(); if (pushed) { try { history.back(); } catch (e) {} } }
 
   /* ---------- BLD 882: tree screens as in-app sheets ----------
      The check-in, Quick Check-in, Growth Plan, history, and the tree's practices open over the tab, with the app's
@@ -3105,7 +3108,7 @@
   });
   window.addEventListener('popstate', function () { if (FRAME && !(history.state && history.state.hmFrame)) closeFrame(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && FRAME && FRAME._sheet) frameDone(); });
-  window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data === 'gg-home-close' && FRAME) { if (history.state && history.state.hmFrame) history.back(); else closeFrame(); } });
+  window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data === 'gg-home-close' && FRAME) frameDone(); });
   /* =====================================================================
      BLD 908: The one Grounded app (Chris, November 3, 2026: "i want to try to have one app not many apps.. a tree is a
      profile and decides what vids and guides etc one sees"). Maple, Aspen, Pine, Birch, Oak, and Sequoia live inside
@@ -3265,8 +3268,8 @@
       openFrame(new URL(t.href, location.href), true, function (win) {
         var tries = 0; (function go() {
           try {
-            if (what === 'settings' && win.GGTend && typeof win.GGTend.openSettings === 'function' && win.document.readyState !== 'loading') { win.GGTend.openSettings(); return; }
-            if (what === 'video') { var b = win.document.querySelector('[data-pv],[data-video],.pv-btn,.gg-watch,button[onclick*="Watch"],a[href*="#watch"]') || Array.prototype.filter.call(win.document.querySelectorAll('button,a'), function (x) { return /^\s*Watch/.test(x.textContent || ''); })[0]; if (b) { b.click(); return; } }
+            if (what === 'settings') { if (win.document.getElementById('gt-settings')) return; var sb = win.document.querySelector('button[onclick*="openSettings"]'); if (sb && sb.offsetParent && tries > 3) sb.click(); }
+            if (what === 'video') { var b = win.document.querySelector('[data-gg-watch]:not([hidden])'); if (b) { b.click(); return; } }
           } catch (e) { return; }
           if (++tries < 60) setTimeout(go, 150);
         })();
@@ -3287,6 +3290,7 @@
   var DOOR_SHEET = { '#checkin': 'checkin', '#quick': 'quick', '#plan': 'plan', '#season': 'history', '#progress': 'history', '#week': 'week', '#today': 'today', '#life': 'life', '#legacy': 'legacy', '#groundwork': 'ground', '#ground': 'ground', '#next': 'next', '#nextsteps': 'next' };
   var DOOR;
   function readDoor() {
+    DOOR = null;
     var sp; try { sp = new URLSearchParams(location.search); } catch (e) { return; }
     var tree = sp.get('tree'); if (!tree || !ROOM_TREES.test(tree)) return;
     sp.delete('tree');
