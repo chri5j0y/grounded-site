@@ -188,7 +188,7 @@
   // brw names the words under the circle (kids: ['Sniff', 'One more sniff', 'Whoosh']).
   function brWords(sc) {
     var three = Array.isArray(sc.breath) && sc.breath.length === 3, w = Array.isArray(sc.brw) ? sc.brw : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
-    return '<i>' + h(w[0]) + '</i>' + (three ? '<i class="ln-brs">' + h(w[1]) + '</i>' : '') + '<i>' + h(w[w.length - 1]) + '</i>';
+    return '<i>' + esc(w[0]) + '</i>' + (three ? '<i class="ln-brs">' + esc(w[1]) + '</i>' : '') + '<i>' + esc(w[w.length - 1]) + '</i>';
   }
   function isBr(sc) { return !!sc && (sc.k === 'breathe' || (sc.k === 'figure' && Array.isArray(sc.breath))); }
 
