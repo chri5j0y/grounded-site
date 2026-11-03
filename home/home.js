@@ -50,7 +50,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b910', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b908';
+  var GGN_SRC = '/shared/ggn.js?v=b911';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -535,7 +535,7 @@
         '<p class="hm-promise-line">' + I('sprout') + '<span>' + esc(promise()) + '</span></p>' +
         '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Choose My Passcode</button><div class="hm-sub" style="text-align:center">Next: your passcode and 12 Root Words, then your four, one at a time.</div></div></div>' +
     '</div>';
-    return '<div class="hm-wrap">' + hero + lookAroundHtml() + promiseHtml() +
+    return '<div class="hm-wrap">' + hero + promiseHtml() +
       '<div class="hm-plink"><a class="hm-link hm-p-leaves" href="#hm-privacy">' + I('shield') + 'How your privacy works</a><span class="hm-time">' + (back ? 'New here? Three short steps' : 'Three short steps · about a minute') + '</span></div>' +
       steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div>' + helpLine() + '</div>';
   }
@@ -801,7 +801,7 @@
   var SUBS = {
     today: { log: 'Log a Plate or a Note', tending: 'Tending' },
     week: { holidays: 'Holidays and Gatherings', shop: 'Shopping List', prep: 'Sunday Together Prep', own: 'My Own Items' },
-    library: { holidays: 'Holidays and Gatherings', workouts: 'Workouts' },
+    library: { holidays: 'Holidays and Gatherings', workouts: 'Grounded Fitness' },
     me: { numbers: 'Numbers', household: 'Household', settings: 'Settings', privacy: 'Privacy' }
   };
   // The old section names, for the fallback while GGHealth.render is missing.
@@ -935,7 +935,7 @@
     var root = app(), tab = r.tab === 'me' ? (S.under || 'today') : r.tab;
     if (r.tab !== 'me') { S.under = tab; S.sheetDepth = 0; S.sheetPushed = 0; }
     var sub = r.tab === 'me' ? '' : r.sub, body;
-    if (sub) body = subbarHtml(tab, sub) + '<div id="hm-tend" class="hm-sec" data-sec="' + sub + '"><div class="hm-loading">Opening ' + esc(SUBS[tab][sub]) + '…</div></div>';
+    if (sub) body = subbarHtml(tab, sub) + (sub === 'quiet' ? medTopHtml() : '') + '<div id="hm-tend" class="hm-sec" data-sec="' + sub + '"><div class="hm-loading">Opening ' + esc(SUBS[tab][sub]) + '…</div></div>';
     else body = tabHtml(tab);
     root.innerHTML = shellHtml(tab, body);
     paintTabbar(tab);
@@ -1793,7 +1793,9 @@
     var sober = sd ? soberHtml(sd) : (h.parts.indexOf('sober') >= 0 ? soberInviteHtml() : '');
     var fruit = tendReady() && tendIsReady() && hasFn('render') ? '<div id="hm-fruit" class="hm-sec"></div>' : '';
     void season; void ed;
-    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + growToolsHtml() + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + plan + planDoorGrow() + ready + memberGrowHtml() + sober + fruit + (h.hidden.tend || tendStarted() || !member() ? '' : offerHtml(h)) + '</div></div>';
+    // BLD 911 (Chris: "it is confusing to have 2 plans.. cant we condense to one?"): one Growth Plan. My Growth Plan (the BLD 893
+    // flow) holds the practices, body, mind, spirit, and table in one; the tree's own plan card shows only where that flow is not offered.
+    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + growToolsHtml() + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + (planOK() ? planDoorGrow() : plan) + ready + memberGrowHtml() + sober + fruit + (h.hidden.tend || tendStarted() || !member() ? '' : offerHtml(h)) + '</div></div>';
   }
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
@@ -1825,13 +1827,16 @@
       { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
       // BLD 899 (Chris: "holiday gatherings [needs no] card in library just put this in the recipes"): Holidays and Gatherings lives inside Grounded Recipes.
       { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, party food, sauces and dressings, celebration drinks, and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
-      member() ? { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout we have built, by category, with a coach.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
-      member() ? { id: 'quiet', name: 'Quiet and Meditation', count: cnt(num(c.meditations), 'practice', 'practices'), plain: 'Morning and evening', line: 'Breath and stillness, and a sacred practice when you choose it.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
-        : { id: 'quiet', name: 'Quiet', count: '', plain: 'Today\'s meditation', line: 'Today\'s meditation, Morning Quiet, and Get Grounded Now: calm in a minute or two.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
+      member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout, by category, with a coach, and the 12-week program.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
+      // BLD 911 (Chris: "we have 2 meditation sets too.. join or rename", then "1"): one Grounded Meditation: today's pick, your
+      // week of seven (Tending's), and the full library by need (Membership), on one shelf.
+      member() ? { id: 'quiet', name: 'Grounded Meditation', count: cnt((num(c.meditations) || 0) + mItems('meditation').length, 'meditation', 'meditations'), plain: 'Today, your week, and the library', line: 'Today\'s meditation, your week of seven, and the full library for sleep, worry, grief, focus, and more.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
+        : { id: 'quiet', name: 'Grounded Meditation', count: '', plain: 'Today\'s meditation', line: 'Today\'s meditation, Morning Quiet, and Get Grounded Now: calm in a minute or two.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
     ].filter(Boolean);
   }
+  // BLD 911 (Chris: "1"): a small Grounded over the short name on the Library shelves; the full name everywhere else (and in search).
   function shelfHtml(s) {
-    return '<button type="button" class="hm-shelf ' + s.cls + '" data-hm-shelf="' + s.id + '"><img class="bg" src="' + s.art + '" alt="" loading="lazy" decoding="async"><span class="ct" data-hm-count="' + s.id + '">' + esc(s.count || s.plain) + '</span><span class="nm">' + esc(s.name) + '</span><span class="ln">' + esc(s.line) + '</span></button>';
+    return '<button type="button" class="hm-shelf ' + s.cls + '" data-hm-shelf="' + s.id + '"><img class="bg" src="' + s.art + '" alt="" loading="lazy" decoding="async"><span class="ct" data-hm-count="' + s.id + '">' + esc(s.count || s.plain) + '</span>' + (/^Grounded /.test(s.name) ? '<span class="nm"><small class="br">Grounded</small>' + esc(s.name.slice(9)) + '</span>' : '<span class="nm">' + esc(s.name) + '</span>') + '<span class="ln">' + esc(s.line) + '</span></button>';
   }
   function libraryHtml() {
     var more = [['/get-grounded-now.html', HERO + 'page-get-grounded-now-narrow.webp', 'Get Grounded Now', 'Calm in a minute or two'], ['/readings.html', HERO + 'page-readings-narrow.webp', 'Readings Library', 'Prayers, poems, and blessings'], ['/stories.html', IMG + 'tend-fruit.webp', 'Grounded Stories', member() ? 'Every story, read aloud' : 'Stories from the bedside and the road'], ['/library/', HERO + 'library-phone.webp', 'Book Library', 'Books and studies we draw from'],
@@ -1877,15 +1882,15 @@
   }
   function openShelf(id) {
     var t = TREES[S.tree] || TREES.oak;
-    if (id === 'learn') openLearn();
-    else if (id === 'life') openFrame(new URL(t.href + '#life', location.href));
+    // BLD 911 (Chris: "forces you to old Oak page.. with 2 different back buttons"): lessons and guides live on the Learn tab.
+    if (id === 'learn' || id === 'life') { LT.f = id === 'life' ? 'life' : 'learn'; if (isKid(S.p)) goTo('watch'); else goTo('learn'); }
     else if (id === 'recipes') openRecipe('');
     else if (id === 'holidays') { var hh = tableOf(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + '#holidays', location.href)); }
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
     else if (id === 'quiet') { if (!member()) { openDailyMed(); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openFrame(new URL('/get-grounded-now.html', location.href)); }
   }
-  SUBS.library.quiet = 'Quiet and Meditation';
+  SUBS.library.quiet = 'Grounded Meditation';
   OLDSEC.quiet = 'today';
 
   /* ---------- the profile sheet ---------- */
@@ -1894,7 +1899,7 @@
     ['household', 'people', 'Household', 'The people at your table and your family'],
     ['settings', 'gear', 'Settings', 'Your Four, voice, music, Tending setup'],
     ['privacy', 'shield', 'Privacy', 'On this device, locked with your passcode'],
-    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Week, Grow, and Library'],
+    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Check-in, Grow, Learn, and Library'],
     ['switch', 'swap', 'Who Is Tending?', 'Open another person on this device, or add one']
   ];
   function openSheet(sub) {
@@ -1977,7 +1982,7 @@
     if (t.hasAttribute('data-hm-shelf')) { openShelf(t.getAttribute('data-hm-shelf')); return; }
     if (t.hasAttribute('data-hm-res')) {
       var rs = t.getAttribute('data-hm-res').split('|'), k = rs[0], id = rs.slice(1).join('|'), tt = TREES[S.tree] || TREES.oak;
-      if (k === 'shelf') openShelf(id); else if (k === 'recipe') openRecipe(id); else if (k === 'guide') openFrame(new URL(tt.href + '#life=' + encodeURIComponent(id), location.href)); else if (k === 'lesson') openLearn(id);
+      if (k === 'shelf') openShelf(id); else if (k === 'recipe') openRecipe(id); else if (k === 'guide') { void tt; playGuide(id); } else if (k === 'lesson') playTreeLesson(id);
       return;
     }
     if (t.hasAttribute('data-hm-who')) { W.who = t.getAttribute('data-hm-who'); t.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === t)); }); return; }
@@ -2022,15 +2027,18 @@
   var TOUR_V = 'b884';
   var TOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: a practice for each of your four, your meals, movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
-    { k: 'week', art: 'recipes', ey: 'Tab 2 of 4', t: 'Week', d: 'Seven days at a glance, or the whole month: your meals, your movement, Sunday Together Prep, and one shopping list for the week.', tr: 'Look over the next few days and pick your shopping day.' },
-    { k: 'grow', art: 'growth', ey: 'Tab 3 of 4', t: 'Grow', d: 'Your tree: the four parts you tend, the two that grow from your tending, your growth plan, and My Grounded Way Plan, with each check-in adding to your story.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
-    { k: 'library', art: 'library', ey: 'Tab 4 of 4', t: 'Library', d: 'Lessons, guides for when life changes, Grounded Recipes with holidays and gatherings, workouts, and quiet, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
+    // BLD 911: five tabs (BLD 910), and Week opens from Today and Grow.
+    { k: 'checkin', art: 'tend-mind', ey: 'Tab 2 of 5', t: 'Check-in', d: 'How each part of your tree is growing: Strong, Steady, or a Growing Edge. The questions come from your tree, made for your age.', tr: 'Take a Quick Check-in, about two minutes.' },
+    { k: 'grow', art: 'growth', ey: 'Tab 3 of 5', t: 'Grow', d: 'Your Growth Plan, your week, your season, and your family: the practices you choose, body, mind, spirit, and your table, in one plan.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
+    { k: 'learn', art: 'learn', ey: 'Tab 4 of 5', t: 'Learn', d: 'Short lessons and guides for when life changes, chosen for your tree, each playing right here.', tr: 'Play one lesson, about three minutes.' },
+    { k: 'library', art: 'library', ey: 'Tab 5 of 5', t: 'Library', d: 'Grounded Recipes with holidays and gatherings, workouts, quiet, stories, and every Grounded tool, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
   ];
   var KTOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
-    { k: 'tree', art: 'tend-fruit', ey: 'Your Tree', t: 'My Tree', d: 'You tend four parts of your tree, and the trunk and fruit grow from your tending.', tr: 'Check in with your grown-up and watch your tree light up!' }
+    { k: 'tree', art: 'tend-fruit', ey: 'Check-in', t: 'Check-in', d: 'You tend four parts of your tree, and the trunk and fruit grow from your tending. A check-in shows how each part is doing.', tr: 'Check in with your grown-up and watch your tree light up!' },
+    { k: 'watch', art: 'tend-mind', ey: 'Watch', t: 'Watch', d: 'Short videos to breathe, feel calm and strong, and learn about your tree.', tr: 'Try Birthday Candle Sigh: sniff, sniff, whoosh!' }
   ];
-  var TOUR_ART = { 'home-morning': [IMG + 'home-morning-wide.webp', IMG + 'home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'tend-mind': [IMG + 'tend-mind.webp', IMG + 'tend-mind.webp'], growth: [HERO + 'page-growth-wide.webp', HERO + 'page-growth-wide.webp'], library: [HERO + 'library-wide.webp', HERO + 'library-wide.webp'] };
+  var TOUR_ART = { learn: [HERO + 'learn/c133.webp', HERO + 'learn/c133.webp'], 'home-morning': [IMG + 'home-morning-wide.webp', IMG + 'home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'tend-mind': [IMG + 'tend-mind.webp', IMG + 'tend-mind.webp'], growth: [HERO + 'page-growth-wide.webp', HERO + 'page-growth-wide.webp'], library: [HERO + 'library-wide.webp', HERO + 'library-wide.webp'] };
   var T = { open: false, i: 0, list: TOUR, asked: {}, tries: 0, back: null };
   function tourSeen() { var h = homeRec(); return !!h.tour; }
   function maybeTour() {
@@ -2050,7 +2058,7 @@
         '<div class="hm-tour-hd"><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2>' + (T.i === 0 ? '<span class="hm-tour-open">Open to everyone during our launch season</span>' : '') + '</div></div>' +
       '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') +
         // BLD 893: the last card opens My Grounded Way Plan.
-        (last && !isKid(S.p) && planOK() ? '<button type="button" class="hm-tour-plan" data-hm-tour="plan">' + I('sprout') + '<span>' + (waySaved() ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</span></button>' : '') + '</div>' +
+        (last && !isKid(S.p) && planOK() ? '<button type="button" class="hm-tour-plan" data-hm-tour="plan">' + I('sprout') + '<span>' + (waySaved() ? 'Change My Plan' : 'Build My Growth Plan') + '</span></button>' : '') + '</div>' +
       '<div class="hm-tour-ft">' +
         (T.i > 0 ? '<button type="button" class="hm-tour-b back" data-hm-tour="back">' + I('back') + '<span>Back</span></button>' : '<span class="hm-tour-sp" aria-hidden="true"></span>') +
         '<span class="hm-tour-dots" role="img" aria-label="Card ' + (T.i + 1) + ' of ' + n + '">' + T.list.map(function (x, j) { return '<i' + (j === T.i ? ' class="on"' : '') + '></i>'; }).join('') + '</span>' +
@@ -2468,7 +2476,7 @@
       var mm = arr(info.medMins), meds = arr(info.meds);
       b = wpK('Mind · grows Bark', 'bark') + wpH('A quiet place in your day') + '<p class="hm-wp-lead">Seven guided meditations, a new one each day of the week' + (mm.length === 2 ? ', about ' + mm[0] + ' minutes to start, growing to ' + mm[1] : '') + '.</p>' +
         '<div>' + wpLbl('How often') + '<div class="hm-wp-chips">' + Object.keys(WP_MED).map(function (k) { return wpChip('set:med:' + k, WP_MED[k], d.med === k, 'bark'); }).join('') + '</div></div>' +
-        (d.med !== 'later' ? '<div>' + wpLbl('When') + '<div class="hm-wp-chips">' + [['morning', 'Morning'], ['afternoon', 'Afternoon'], ['evening', 'Evening']].map(function (x) { return wpChip('set:medTime:' + x[0], x[1], d.medTime === x[0], 'bark'); }).join('') + '</div></div>' : '<p class="hm-wp-lead sm">Meditation waits in the Library, under Quiet and Meditation, whenever you like.</p>') +
+        (d.med !== 'later' ? '<div>' + wpLbl('When') + '<div class="hm-wp-chips">' + [['morning', 'Morning'], ['afternoon', 'Afternoon'], ['evening', 'Evening']].map(function (x) { return wpChip('set:medTime:' + x[0], x[1], d.medTime === x[0], 'bark'); }).join('') + '</div></div>' : '<p class="hm-wp-lead sm">Meditation waits in the Library, under Grounded Meditation, whenever you like.</p>') +
         (meds.length && d.med !== 'later' ? '<div class="hm-wp-card">' + wpK(d.med === 'daily' ? 'This week' : d.med === 'few' ? 'Tuesday, Thursday, and Saturday' : 'Sunday', 'bark') + '<small class="hm-wp-small">' + esc(meds.filter(function (m) { return wpMedOn(d.med, WP_DOW.indexOf(m.day)); }).map(function (m) { return m.title; }).join(', ')) + '</small></div>' : '');
       f = wpBtn('next', 'Next');
     } else if (i === 4) {
@@ -2556,7 +2564,7 @@
   function paintPlan(keepScroll) {
     var wrap = document.getElementById('hm-plan'); if (!wrap || !WP.d) return;
     var i = WP.i, sc = wpScreen(), body = wrap.querySelector('.hm-wp-body'), top = keepScroll && body ? body.scrollTop : 0;
-    wrap.querySelector('.hm-wp-t').textContent = i === 0 ? 'My Grounded Way Plan' : WP_SCREENS[i];
+    wrap.querySelector('.hm-wp-t').textContent = i === 0 ? 'My Growth Plan' : WP_SCREENS[i];
     wrap.querySelector('[data-hm-wp="back"]').disabled = i === 0;
     wrap.querySelector('.hm-wp-dots').innerHTML = WP_SCREENS.map(function (_, j) { return '<i class="' + (j <= i ? 'on' : '') + '"></i>'; }).join('');
     wrap.querySelector('.hm-wp-dots').setAttribute('aria-label', 'Screen ' + (i + 1) + ' of ' + WP_SCREENS.length);
@@ -2572,7 +2580,7 @@
     WP.open = true; WP.i = at || 0; WP.snap = null; WP.sug = null; WP.back = document.activeElement;
     var wrap = document.createElement('div'); wrap.id = 'hm-plan'; wrap.className = 'hm-wpwrap';
     wrap.innerHTML = '<div class="hm-wp-bg" aria-hidden="true"></div><section class="hm-wp" role="dialog" aria-modal="true" aria-labelledby="hm-wp-tt">' +
-      '<header class="hm-wp-bar"><button type="button" class="hm-wp-back" data-hm-wp="back" aria-label="Back">' + I('back') + '</button><div class="hm-wp-t" id="hm-wp-tt">My Grounded Way Plan</div><div class="hm-wp-dots" role="img"></div>' +
+      '<header class="hm-wp-bar"><button type="button" class="hm-wp-back" data-hm-wp="back" aria-label="Back">' + I('back') + '</button><div class="hm-wp-t" id="hm-wp-tt">My Growth Plan</div><div class="hm-wp-dots" role="img"></div>' +
       '<button type="button" class="hm-wp-x" data-hm-wp="close" aria-label="Close">' + I('plus') + '</button></header>' +
       '<div class="hm-wp-body"><p class="hm-loading">Opening your plan…</p></div><footer class="hm-wp-foot"></footer></section>';
     (document.querySelector('main.hm') || document.body).appendChild(wrap);
@@ -2649,14 +2657,14 @@
   function planDoorGrow() {
     if (!planOK()) return '';
     var w = wayRec(), s = w.saved;
-    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">My Grounded Way Plan</div>' +
-      '<h3 class="hm-h3">' + (s ? 'Your Plan' : 'One Plan for Your Whole Self') + '</h3><p class="hm-sub">' + (s ? 'Body, mind, spirit, and your table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes.') + '</p>' +
-      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div></div></div></article>';
+    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Growth Plan</div>' +
+      '<h3 class="hm-h3">Your Growth Plan</h3><p class="hm-sub">' + (function () { var pc = planList(S.id, S.tree).length; return (pc ? nWord(pc) + (pc === 1 ? ' practice' : ' practices') + ' for your four. ' : '') + (s ? 'Your practices, body, mind, spirit, and table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Your practices, body, mind, spirit, and table, in one plan shaped by your latest check-in. About five minutes.'); })() + '</p>' +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Growth Plan') + '</button></div></div></div></article>';
   }
   function planDoorWeek() {
     if (!planOK()) return '';
     var s = waySaved();
-    return '<div class="hm-wplan"><span class="tx"><b>My Grounded Way Plan</b><small>' + (s ? 'Movement, meditation, spirit, and meals, on their days.' : 'Build one plan for body, mind, spirit, and your table.') + '</small></span><button type="button" class="hm-pill" data-hm-wpopen="1">' + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div>';
+    return '<div class="hm-wplan"><span class="tx"><b>My Growth Plan</b><small>' + (s ? 'Movement, meditation, spirit, and meals, on their days.' : 'Build one plan for body, mind, spirit, and your table.') + '</small></span><button type="button" class="hm-pill" data-hm-wpopen="1">' + (s ? 'Change My Plan' : 'Build My Growth Plan') + '</button></div>';
   }
   /* Week's day rows: the meditation and the spirit items on that day. */
   function weekExtra(d) {
@@ -3168,7 +3176,7 @@
   var INVITE = {
     plan: ['The Full Growth Plan', 'Membership opens every practice you choose, each day, plus your own custom practices, trends, practice history, and reminders.'],
     tend: ['Grounded Nutrition and Grounded Fitness', 'Membership opens meal plans, My Menu, one shopping list, Sunday Together Prep, Grounded Cooking in your plan, health numbers, the 12-week program, and every guided workout with a coach.'],
-    library: ['Grow Deeper', 'Membership opens the Grounded Meditation library, Grounded Spirit programs, Grounded Relationships programs, the seasons programs, and every Grounded Story read aloud.'],
+    library: ['Grow Deeper', 'Membership opens the Grounded Meditation library, Grounded Spirit programs, Grounded Relationships programs, Grounded Seasons, and every Grounded Story read aloud.'],
     numbers: ['Your Health Numbers', 'Membership opens Labs, the LDL Path, My Heart Risk, and PREVENT, kept on this device inside your locked profile.'],
     sober: ['Living Sober, the Whole Year', 'Membership opens daily words for every day of the year, Living Sober Together, and My Week trends.']
   };
@@ -3299,7 +3307,7 @@
   /* A tree tool: a known screen opens as a tree sheet; the rest open inside the whole tree. */
   function openTool(what, tree) {
     tree = tree || S.tree; var t = TREES[tree] || TREES.oak;
-    if (what === 'learn') { if (tree === S.tree) openLearn(); else openRoom(tree, '', ''); return; }
+    if (what === 'learn') { if (tree === S.tree) goTo(isKid(S.p) ? 'watch' : 'learn'); else openRoom(tree, '', ''); return; }
     if (what === 'whole') { if (tree === S.tree) goTo(isKid(S.p) ? 'today' : 'grow'); else openRoom(tree, '', ''); return; }
     if (what === 'video' || what === 'settings') {
       openFrame(new URL(t.href, location.href), true, function (win) {
@@ -3348,18 +3356,13 @@
     if (mine && !d.q && DOOR_SHEET[h] && !isKid(S.p)) { openTool(DOOR_SHEET[h] === 'today' ? 'today' : DOOR_SHEET[h]); return; }
     openRoom(d.tree, d.q, d.hash);
   }
-  function lookAroundHtml() {
-    if (!DOOR || !TREES[DOOR.tree]) return '';
-    var t = TREES[DOOR.tree];
-    return '<div class="hm-door hm-p-leaves"><img src="' + mark(DOOR.tree) + '" alt="" width="40" height="40"><span><b>' + esc(t.n) + ' lives here now, in The Grounded Way.</b><small>Make your profile below, or look around ' + esc(t.n) + ' first.</small></span><button type="button" class="hm-btn sm line hm-pill" data-hm-look="' + DOOR.tree + '">' + I('arrow') + 'Look Around ' + esc(t.n) + '</button></div>';
-  }
 
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
   var MSHELVES = [
     { id: 'meditation', name: 'Grounded Meditation', line: 'Guided meditations for sleep, worry, grief, focus, and more.', art: IMG + 'quiet-meditation.webp', cls: 'hm-sh-quiet' },
     { id: 'spirit', name: 'Grounded Spirit', line: 'Deeper guided programs for your connection with God and the sacred, in your own tradition or your own way.', art: IMG + 'tend-spirit.webp', cls: 'hm-sh-learn' },
     { id: 'relationships', name: 'Grounded Relationships', line: 'Listening, repair, unplugged time, family dinner, and a weekly connection plan.', art: IMG + 'tend-people.webp', cls: 'hm-sh-life' },
-    { id: 'seasons', name: 'Seasons Programs', line: 'Guided programs for the seasons of life, and Living Sober for the whole year.', art: HERO + 'page-hard-seasons-narrow.webp', cls: 'hm-sh-life' }
+    { id: 'seasons', name: 'Grounded Seasons', line: 'Guided programs for the seasons of life, and Living Sober for the whole year.', art: HERO + 'page-hard-seasons-narrow.webp', cls: 'hm-sh-life' }
   ];
   /* A section may be a list of items, {items: [...]}, or {programs: [{title, items or sessions}]}; items carry scenes. */
   function mItems(name) {
@@ -3375,7 +3378,7 @@
   }
   function mShelfHtml() {
     if (!member()) return '';
-    return MSHELVES.map(function (s) { var n = mItems(s.id).length; return shelfHtml({ id: 'm-' + s.id, name: s.name, count: n ? n + (n === 1 ? ' session' : ' sessions') : 'Membership', plain: 'Membership', line: s.line, cls: s.cls, art: s.art }); }).join('');
+    return MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { var n = mItems(s.id).length; return shelfHtml({ id: 'm-' + s.id, name: s.name, count: n ? n + (n === 1 ? ' session' : ' sessions') : 'Membership', plain: 'Membership', line: s.line, cls: s.cls, art: s.art }); }).join('');
   }
   function openMShelf(id) {
     var s = MSHELVES.filter(function (x) { return x.id === id; })[0]; if (!s) return;
@@ -3395,8 +3398,8 @@
     document.documentElement.classList.add('hm-sheeted');
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
-  function mClose() { var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b908m';
+  function mClose() { if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
+  var LEARN_JS = '/shared/gg-learn.js?v=b911';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -3419,11 +3422,16 @@
   }
   function hhPickHtml() { var k = hhKind(); return '<div class="hm-acts tight" role="group" aria-label="Who this is for">' + HH_KINDS.map(function (h) { return '<button type="button" class="hm-btn sm hm-pill' + (h[0] === k ? '' : ' line') + '" aria-pressed="' + (h[0] === k) + '" data-hm-hh="' + h[0] + '">' + esc(h[1]) + '</button>'; }).join('') + '</div>'; }
   /* One lesson in the shared player (STD's call: a one-lesson support track). */
-  function playLesson(host, lesson, onDone) {
-    var tr = { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] };
-    try { GGLearn.player(host, { app: ROOM_TREES.test(S.tree) ? S.tree : 'site', lesson: lesson, track: tr, tracks: [tr], voice: lesson.voice || 'brian', clip: window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: {}, onDone: onDone || null }); }
+  // BLD 911 (Chris: "close the box with the x it no longer stops playing"): the dialog's player stops when the dialog closes.
+  var M_CTL = null;
+  function playLesson(host, lesson, onDone, track) {
+    var tr = track || { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] }, app = ROOM_TREES.test(S.tree) ? S.tree : 'site';
+    // BLD 911: the voice the tree recorded this lesson in (Jenny or Brian), so every line plays its recording.
+    var vo = lesson.voice || (track && app !== 'site' && GGLearn.recVoice ? GGLearn.recVoice({ app: app, lesson: lesson, track: tr }, true) : '') || 'brian';
+    try { M_CTL = GGLearn.player(host, { app: app, lesson: lesson, track: tr, tracks: [tr], voice: vo, clip: !track && window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: {}, onDone: onDone || null }); }
     catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
   }
+
   /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */
   var START_JS = '/shared/start-videos.js?v=b908';
   function dailyMed(sec) { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections)[sec || 'meditation']).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
@@ -3438,6 +3446,13 @@
   function dailySpiritHtml() {
     var x = window.GG_START_VIDEOS && !plainNow() ? dailyMed('spirit') : null; if (!x) return '';
     return '<article class="hm-card hm-p-roots hm-dmed"><div class="hm-hd">' + pb(IMG + 'tend-spirit.webp') + '<div style="min-width:0"><div class="hm-k">Today\'s Spirit Practice</div><h3 class="hm-h3">' + esc(x.title) + '</h3></div></div><p class="hm-sub">' + esc((x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '')) + '</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="spirit">' + I('play') + 'Begin</button></div></article>';
+  }
+  /* Grounded Meditation's top (BLD 911): today's pick, then the full library by need; Tending's week of seven follows. */
+  function medTopHtml() {
+    var n = mItems('meditation').length;
+    var dm = dailyMedHtml(), sp = dailySpiritHtml(); if (sp && dm.indexOf(sp) === 0) dm = dm.slice(sp.length);
+    return dm + (n ? '<article class="hm-card hm-gcard hm-p-bark"><div class="hm-hd">' + pb(IMG + 'quiet-meditation-sq.webp') + '<div><div class="hm-time">The Full Library</div><h3 class="hm-h3">' + n + ' Meditations by Need</h3></div></div><p class="hm-sub">Sleep, worry, grief, focus, and more, each one guided.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-shelf="m-meditation">' + I('play') + 'Open the Library</button></div></article>' : '') +
+      '<h2 class="hm-label">Your Week of Meditation</h2>';
   }
   function openDailyMed(sec) {
     load(START_JS).then(function () {
@@ -3490,20 +3505,37 @@
   var ART_JS = '/shared/learn-art.js?v=b908';
   function heroSrc(im) { return /\//.test(im) ? HERO + im + '.webp' : im === 'marriage' ? '/heartwood/hero-wide.webp' : HERO + im + '-wide.webp'; }
   // A lesson's painting: the first painting in its art plan (shared/learn-art.js), or the tree's own painting.
-  function lessonArt(app, id, i) {
-    var G = window.GG_ART, row = G && G.m ? (G.m[app + ':' + id] || G.m[id]) : null;
-    if (row) { var toks = String(row).split(' '); for (var k = 0; k < toks.length; k++) { var m = /^[pcf]?([0-9a-z]+)/.exec(toks[k]); if (!m || toks[k] === '-') continue; var im = (G.imgs || [])[parseInt(m[1], 36)]; if (im) return heroSrc(im); } }
-    var rot = [treeArt(app), IMG + 'tend-spirit.webp', IMG + 'tend-mind.webp', IMG + 'tend-people.webp', IMG + 'tend-move.webp', IMG + 'quiet-morning-sq.webp'];
-    return rot[(i || 0) % rot.length];
+  // A lesson card's painting by its topic (BLD 911: the art plans spread paintings across scenes, so the first one can miss
+  // the topic); the tree's own painting for welcomes, check-ins, and anything else.
+  var TOPIC_ART = [
+    [/roots|spirit|prayer|faith|sacred|gratitude/i, IMG + 'tend-spirit.webp'], [/bark|mind|worry|anxi|calm|breath|stress|sleep/i, IMG + 'tend-mind.webp'],
+    [/leaves|body|move|walk|stretch|food|eat|meal/i, IMG + 'tend-move.webp'], [/branches|relationship|family|friend|marriage|together|household/i, IMG + 'tend-people.webp'],
+    [/trunk|meaning|purpose|values/i, HERO + 'page-growth-narrow.webp'], [/fruit|hope|joy/i, IMG + 'tend-fruit.webp'],
+    [/growth plan|practice|plan\b/i, IMG + 'growth-plan.webp'], [/when life changes|grief|loss|hard season/i, HERO + 'page-hard-seasons-narrow.webp'],
+    [/today, week|season|rings|progress/i, IMG + 'this-season.webp']
+  ];
+  function lessonArt(app, id, i, title) {
+    void i; var s = String(title || '');
+    for (var k = 0; k < TOPIC_ART.length; k++) if (TOPIC_ART[k][0].test(s)) return TOPIC_ART[k][1];
+    void id; return treeArt(app);
   }
-  var LIFE_ART = [HERO + 'page-hard-seasons-narrow.webp', HERO + 'learn/c223.webp', IMG + 'tend-people.webp', HERO + 'svc-grief-narrow.webp', IMG + 'quiet-morning-sq.webp', IMG + 'tend-spirit.webp'];
+  // BLD 911 (Chris: "when pet dies has table with plates of food"): every card shows its own painting, from its own video's
+  // art plan; a card with no plan shows its tree's painting.
+  var GPFX = { oak: 'ok', birch: 'br', sequoia: 'sq', pine: 'pn', aspen: 'as', maple: 'mp' };
+  function planArt(key) {
+    var G = window.GG_ART, row = G && G.m ? G.m[key] : null; if (!row) return null;
+    var toks = String(row).split(' ');
+    for (var k = 0; k < toks.length; k++) { var m = /^[pcf]?([0-9a-z]+)/.exec(toks[k]); if (!m || toks[k] === '-') continue; var im = (G.imgs || [])[parseInt(m[1], 36)]; if (im) return heroSrc(im); }
+    return null;
+  }
+  function guideArt(tree, id) { var p = GPFX[tree]; return (p && (planArt(tree + ':' + p + '-g-' + id + '-you') || planArt(tree + ':' + p + '-g-' + id + '-helper'))) || treeArt(tree); }
   function tracksOf(tree) {
     var L = window.GG_LEARN && window.GG_LEARN[tree]; if (!L) return null;
     return arr(L.tracks).filter(function (t) { return t && !t.unlisted && t.kind !== 'forguides' && arr(t.lessons).length; });
   }
-  function findLesson(tree, id) { var out = null; arr(tracksOf(tree)).forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id === id) out = l; }); }); return out; }
+  function findLesson(tree, id) { var out = null; arr(tracksOf(tree)).forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id === id) out = { l: l, t: t }; }); }); return out; }
   function lessonCard(tree, l, i) {
-    return '<button type="button" class="hm-lcard" data-hm-lesson="' + esc(l.id) + '"><span class="im"><img src="' + lessonArt(tree, l.id, i) + '" alt="" loading="lazy" decoding="async"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(l.title || '') + '</b>' + (l.mins ? '<small>' + esc(l.mins) + ' minutes</small>' : '') + '</span></button>';
+    return '<button type="button" class="hm-lcard" data-hm-lesson="' + esc(l.id) + '"><span class="im"><img src="' + lessonArt(tree, l.id, i, l.title) + '" alt="" loading="lazy" decoding="async"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(l.title || '') + '</b>' + (l.mins ? '<small>' + esc(l.mins) + ' minutes</small>' : '') + '</span></button>';
   }
   function rowHtml(title, sub, cards) { return '<div class="hm-lrow"><h2 class="hm-label">' + esc(title) + '</h2>' + (sub ? '<p class="hm-sub hm-lrsub">' + esc(sub) + '</p>' : '') + '<div class="hm-lscroll">' + cards + '</div></div>'; }
   function lifeTopics(tree) {
@@ -3532,9 +3564,10 @@
     var t = TREES[S.tree] || TREES.oak, tr = arr(tracksOf(S.tree)), life = lifeTopics(S.tree), f = LT.f, n = 0;
     var chips = [['all', 'For You'], ['learn', 'Lessons'], ['life', 'When Life Changes']].map(function (c) { return '<button type="button" class="hm-lchip" data-hm-lf="' + c[0] + '" aria-pressed="' + (c[0] === f) + '">' + c[1] + '</button>'; }).join('');
     var feat = '<button type="button" class="hm-lfeat" data-hm-tool="video"><img src="' + treeArt(S.tree, true) + '" alt="" loading="lazy"><span class="sh"></span><span class="pl">' + I('play') + '</span><span class="tx"><small>Chosen for Your ' + esc(t.n) + '</small><b>Meet Your ' + esc(t.n) + '</b></span></button>';
-    var out = '<div class="hm-lchips" role="group" aria-label="Show">' + chips + '</div>' + (f === 'life' ? '' : feat);
+    // BLD 911 (Chris: "meet your oak, and then welcome to oak.. seem to have a lot of overlap"): Learn opens on the lessons.
+    var out = '<div class="hm-lchips" role="group" aria-label="Show">' + chips + '</div>'; void feat;
     if (f !== 'life') tr.forEach(function (x) { out += rowHtml(x.title || 'Lessons', x.who || '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
-    if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(function (g, i) { return '<button type="button" class="hm-lcard" data-hm-guide="' + esc(g.id) + '"><span class="im"><img src="' + LIFE_ART[i % LIFE_ART.length] + '" alt="" loading="lazy" decoding="async"></span><span class="tx"><b>' + esc(g.title || '') + '</b><small>Guide</small></span></button>'; }).join(''));
+    if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(function (g, i) { return '<button type="button" class="hm-lcard" data-hm-guide="' + esc(g.id) + '"><span class="im"><img src="' + guideArt(S.tree, g.id) + '" alt="" loading="lazy" decoding="async"></span><span class="tx"><b>' + esc(g.title || '') + '</b><small>Guide</small></span></button>'; }).join(''));
     return out;
   }
   /* A kid's Watch tab: today's short video, every kid video, and the tree's lessons. */
@@ -3549,19 +3582,38 @@
     var seen = {}, ids = [];
     Object.keys(KMATCH).forEach(function (k) { arr(KMATCH[k]).forEach(function (id) { if (!seen[id] && GGN[id]) { seen[id] = 1; ids.push(id); } }); });
     var ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), lead = ed.edges.filter(isTend)[0] || ed.lead || 'none', today0 = pick(KMATCH[lead] || ids, dayIndex());
-    var KART = ['tend-mind', 'tend-spirit', 'tend-people', 'tend-move', 'tend-fruit', 'quiet-morning-sq', 'tend-body', 'balance-lawn', 'snack-fruit-sq', 'home-morning-narrow'], vn = 0;
-    var vid = function (id) { var v = GGN[id]; return '<button type="button" class="hm-lcard" data-hm-play="' + esc(id) + '"><span class="im"><img src="' + IMG + KART[(vn++) % KART.length] + '.webp" alt="" loading="lazy"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(v[0]) + '</b><small>' + esc(v[1]) + ' minutes</small></span></button>'; };
+    var vid = function (id) { var v = GGN[id]; return '<button type="button" class="hm-lcard" data-hm-play="' + esc(id) + '"><span class="im"><img src="' + (planArt(id) || treeArt(S.tree)) + '" alt="" loading="lazy"><span class="pl">' + I('play') + '</span></span><span class="tx"><b>' + esc(v[0]) + '</b><small>' + esc(v[1]) + ' minutes</small></span></button>'; };
     var n = 0, out = today0 && GGN[today0] ? rowHtml('Today', '', vid(today0)) : '';
     out += rowHtml('Calm and Strong', 'Breathing, feelings, and kind moves.', ids.map(vid).join(''));
     arr(tracksOf(S.tree)).forEach(function (x) { out += rowHtml(x.title || 'Lessons', '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
     return out;
   }
   function playTreeLesson(id) {
-    var l = findLesson(S.tree, id); if (!l) { openLearn(id); return; }
+    if (!tracksOf(S.tree)) { loadLearn().then(function () { if (tracksOf(S.tree)) playTreeLesson(id); }); return; }
+    var f = findLesson(S.tree, id); if (!f) { openLearn(id); return; }
+    var l = f.l;
     load(LEARN_JS).then(function () {
       mDialog(l.title || 'Learn', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(l.title || '') + '…</p></div>');
-      var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, l); else { mClose(); openLearn(id); }
+      var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, l, null, f.t); else { mClose(); openLearn(id); }
     });
+  }
+  /* BLD 911 (Chris: "when i chose a vid from When life changes.. i am forced to a new page and then hard to find way back"):
+     a guide's two videos (For You and For the Helper) play in the same window on Learn; Read the Guide opens the written guide. */
+  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=b907', aspen: '/aspen/guide-videos.js?v=b888', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b888', pine: '/pine/guide-videos.js?v=b907', birch: '/birch/guide-videos.js?v=b907' };
+  function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
+  function playGuide(id, side) {
+    var tree = S.tree, src = GUIDE_JS[tree]; if (!src) { openGuide(id); return; }
+    mDialog('When Life Changes', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening the guide…</p></div>');
+    Promise.all([load(LEARN_JS), load(src)]).then(function () {
+      var g = guideVideos(tree, id), x = g && (g[side || 'you'] || g.you);
+      var box = document.getElementById('hm-mdlg-b'); if (!box) return;
+      if (!g || !x || !window.GGLearn || !GGLearn.player) { mClose(); openGuide(id); return; }
+      var t = document.getElementById('hm-mdlg-t'); if (t) t.textContent = g.title || x.title || 'When Life Changes';
+      var tabs = ['you', 'helper'].filter(function (s) { return g[s]; }).map(function (s) { return '<button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|' + s + '" aria-pressed="' + (s === (side || 'you')) + '">' + esc(g[s].sideName || (s === 'you' ? 'For You' : 'For the Helper')) + '</button>'; }).join('');
+      box.innerHTML = '<div class="hm-lchips">' + tabs + '<button type="button" class="hm-lchip" data-hm-gread="' + esc(id) + '">' + I('book') + 'Read the Guide</button></div><div class="hm-mplayer" id="hm-mplayer"></div>';
+      var tr = { id: 'hm-g-' + id, kind: 'guide', title: g.title, lessons: [x] };
+      playLesson(document.getElementById('hm-mplayer'), x, null, tr);
+    }).catch(function () { mClose(); openGuide(id); });
   }
   function openGuide(id) {
     var t = TREES[S.tree] || TREES.oak, kid = S.tree === 'maple' || S.tree === 'aspen';
@@ -3609,10 +3661,12 @@
       '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-lf],[data-hm-pick],[data-hm-padd]');
+    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-lf],[data-hm-pick],[data-hm-padd]');
     if (!t) return;
     if (t.hasAttribute('data-hm-lesson')) { playTreeLesson(t.getAttribute('data-hm-lesson')); return; }
-    if (t.hasAttribute('data-hm-guide')) { openGuide(t.getAttribute('data-hm-guide')); return; }
+    if (t.hasAttribute('data-hm-guide')) { playGuide(t.getAttribute('data-hm-guide')); return; }
+    if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1]); return; }
+    if (t.hasAttribute('data-hm-gread')) { var gid = t.getAttribute('data-hm-gread'); mClose(); openGuide(gid); return; }
     if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
     if (t.hasAttribute('data-hm-pick')) { var id = t.getAttribute('data-hm-pick'); mClose(); if (id === S.id) return; GGP.openDialog({ id: id }).then(function () { render(); }); return; }
     if (t.hasAttribute('data-hm-padd')) { mClose(); GGP.createDialog().then(function () { render(); }); return; }

@@ -184,6 +184,12 @@
     if (o._bd && sc.bg) o.bg = ''; // the painting behind takes the place of an older blurred bg
     return Object.assign({}, sc, o);
   }
+  // BLD 911: a breath of three parts (breath: [in, sip, out], the Physiological Sigh) shows a third word for the sip;
+  // brw names the words under the circle (kids: ['Sniff', 'One more sniff', 'Whoosh']).
+  function brWords(sc) {
+    var three = Array.isArray(sc.breath) && sc.breath.length === 3, w = Array.isArray(sc.brw) ? sc.brw : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
+    return '<i>' + esc(w[0]) + '</i>' + (three ? '<i class="ln-brs">' + esc(w[1]) + '</i>' : '') + '<i>' + esc(w[w.length - 1]) + '</i>';
+  }
   function isBr(sc) { return !!sc && (sc.k === 'breathe' || (sc.k === 'figure' && Array.isArray(sc.breath))); }
 
   // The demo camera (GWG BLD 824): z = [x, y, zoom] in the phone screen's own pixels (390 by 844) is placed in the
@@ -246,7 +252,7 @@
           + '<div class="ln-tl">' + (sc.paras || []).map(function (p) { return p.map(function (x) { return '<span' + A(.4, 'ln-tl-s') + '>' + h(x) + '</span>'; }).join(' '); }).join('<b class="ln-tl-br"></b>') + '</div></div>';
       }
       case 'story': return '<div class="ln-story" style="--k:' + acc + '"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow || 'From the Bedside') + '</div><h3' + A(.5) + '>' + h(sc.title) + '</h3><div class="ln-st-b">' + (sc.lines || []).map(function (x, j) { return '<p' + A(1.1 + j * (sc.gap || 1.6)) + '>' + h(x) + '</p>'; }).join('') + '</div>' + (sc.lesson ? '<div' + A(1.4 + (sc.lines || []).length * (sc.gap || 1.6), 'ln-st-l') + '>' + h(sc.lesson) + '</div>' : '') + (sc.note ? '<small' + A(2, 'ln-st-n') + '>' + h(sc.note) + '</small>' : '') + '</div>';
-      case 'breathe': return '<div class="ln-br" style="--k:' + acc + '"><h3' + A(.2) + '>' + h(sc.h || 'Breathe with me') + '</h3><div class="ln-brw"><div class="ln-brc"></div><div class="ln-brt"><i>Breathe in</i><i>Breathe out</i></div></div>' + (sc.sub ? '<small' + A(.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
+      case 'breathe': return '<div class="ln-br" style="--k:' + acc + '"><h3' + A(.2) + '>' + h(sc.h || 'Breathe with me') + '</h3><div class="ln-brw"><div class="ln-brc"></div><div class="ln-brt">' + brWords(sc) + '</div></div>' + (sc.sub ? '<small' + A(.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'words': return '<div class="ln-wd"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (x, j) { return '<p' + A(.9 + j * (sc.gap || 1.2), '', 'border-color:' + acc) + '>' + h(x) + '</p>'; }).join('') + (sc.sub ? '<small' + A(1.2 + (sc.items || []).length * (sc.gap || 1.2)) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'demo': {
         // A product demo (GWG BLD 824): a real screen from the app in a phone, over the page's painting, with the words beside it.
@@ -393,6 +399,7 @@
       '.go .ln-brc{animation:lnBr 10s ease-in-out infinite;}',
       '.ln-brt{position:relative;font-family:\'Cormorant Garamond\',serif;font-size:36px;font-weight:600;height:44px;width:300px;}',
       '.ln-brt i{position:absolute;left:0;right:0;font-style:normal;opacity:0;}',
+      '.ln-brt i.ln-brs{animation:none;}',
       '.go .ln-brt i:first-child{animation:lnIn 10s linear infinite;}.go .ln-brt i:last-child{animation:lnOut 10s linear infinite;}',
       '@keyframes lnBr{0%{transform:scale(.45)}40%{transform:scale(1)}100%{transform:scale(.45)}}',
       '@keyframes lnIn{0%,36%{opacity:1}40%,100%{opacity:0}}@keyframes lnOut{0%,38%{opacity:0}42%,96%{opacity:1}100%{opacity:0}}',
@@ -1037,14 +1044,16 @@
     // GWG BLD 898 (Chris: "we just need to ensure all these things sync in all vids"): in a breathe scene, a sentence that
     // says breathe in starts as the circle begins to grow, and one that says breathe out as it begins to shrink. The first
     // such sentence sets the circle's cycle (in 4 seconds, out 6); each later one waits for its turn in the cycle.
-    var BR_CYC = 10000, BR_OUT = 4000;
+    var BR_CYC = 10000, BR_OUT = 4000, BR_SIP = 0;
     // BLD 908: a breath scene may set its own pace (breath: [in, out] seconds); the circle, the words, the figure, and the
     // narration's in and out sentences all follow it. [4, 6] is the standard and needs no new keyframes.
     var BRK = {};
     function brPace(sc) {
       var b = isBr(sc) && Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : null, a = b ? +b[0] : 4, o = b ? +b[b.length - 1] : 6;
       if (!(a > 0 && o > 0)) { a = 4; o = 6; }
-      BR_CYC = (a + o) * 1000; BR_OUT = a * 1000; P.brNames = null;
+      var s3 = b && b.length === 3 && +b[1] > 0 ? +b[1] : 0;
+      BR_CYC = (a + s3 + o) * 1000; BR_OUT = (a + s3) * 1000; BR_SIP = s3 ? a * 1000 : 0; P.brNames = null;
+      if (s3) { brPace3(a, s3, o); return; }
       if (a === 4 && o === 6) return;
       var r = Math.round(a / (a + o) * 1000) / 10, id = String(r).replace('.', '_'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
       if (!BRK[id]) {
@@ -1055,16 +1064,34 @@
       P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id };
       brAnim(cv, 0);
     }
+    // BLD 911: in, one more sip, and a long breath out: the circle grows most of the way on the breath in, the rest on the
+    // sip, then shrinks on the breath out; each word shows in its own part.
+    function brPace3(a, s, o) {
+      var T = a + s + o, ra = Math.round(a / T * 1000) / 10, rs = Math.round((a + s) / T * 1000) / 10, id = 's' + String(ra).replace('.', '_') + 'x' + String(rs).replace('.', '_'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
+      if (!BRK[id]) {
+        var el = document.createElement('style'); el.textContent = '@keyframes lnBr' + id + '{0%{transform:scale(.45)}' + q(ra) + '{transform:scale(.86)}' + q(rs) + '{transform:scale(1)}100%{transform:scale(.45)}}'
+          + '@keyframes lnIn' + id + '{0%,' + q(ra - 1) + '{opacity:1}' + q(ra) + ',100%{opacity:0}}'
+          + '@keyframes lnSip' + id + '{0%,' + q(ra - .5) + '{opacity:0}' + q(ra) + ',' + q(rs - .5) + '{opacity:1}' + q(rs) + ',100%{opacity:0}}'
+          + '@keyframes lnOut' + id + '{0%,' + q(rs - .5) + '{opacity:0}' + q(rs + 1) + ',96%{opacity:1}100%{opacity:0}}';
+        document.head.appendChild(el); BRK[id] = 1;
+      }
+      P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id, is: 'lnSip' + id };
+      brAnim(cv, 0);
+    }
     // Sets (or restarts) the circle and the words on this scene's pace, starting off ms into the cycle.
     function brAnim(root, off) {
       var N2 = P.brNames;
       Array.prototype.forEach.call(root.querySelectorAll('.ln-brc, .ln-brt i'), function (e) {
-        var nm = !N2 ? '' : e.classList.contains('ln-brc') ? N2.brc : e.previousElementSibling ? N2.i1 : N2.i0;
+        var nm = !N2 ? '' : e.classList.contains('ln-brc') ? N2.brc : e.classList.contains('ln-brs') ? (N2.is || '') : e.previousElementSibling ? N2.i1 : N2.i0;
         e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = nm; e.style.animationDuration = N2 ? (BR_CYC / 1000) + 's' : ''; e.style.animationDelay = (-off / 1000) + 's';
       });
     }
     function brKind(x) {
-      var s = String(x || '').toLowerCase(), a = s.search(/\b(breathe in|breath in|inhale|in through|smell the flower|fill (it|the|your))|^(and |once more, |again, )?in\b/),
+      var s = String(x || '').toLowerCase();
+      // BLD 911: the sip of a three part breath ("One more sip.", "A little more.", "One more little sniff.").
+      if (BR_SIP) { var sp = s.search(/\b(one more (little |small )?(sip|sniff)|a little more|a sip more|another sip|little sniff on top)\b/); if (sp >= 0) return 'sip'; }
+      if (/^(big |a big )?sniff in\b|^(and )?sniff\b/.test(s)) return 'in';
+      var a = s.search(/\b(breathe in|breath in|inhale|in through|smell the flower|fill (it|the|your))|^(and |once more, |again, )?in\b/),
         b = s.search(/\b(breathe out|breath out|breathe all the way out|exhale|and out|out through|blow|whoosh|float down|let it float)\b/);
       if (a < 0 && b < 0) return ''; if (a < 0) return 'out'; if (b < 0) return 'in'; return a < b ? 'in' : 'out';
     }
@@ -1075,12 +1102,14 @@
       if (!st.classList.contains('go')) return 40;
       P.brDone = i;
       if (!P.brLock) {
-        P.brLock = true; var off = k === 'out' ? BR_OUT : 0;
+        P.brLock = true; var off = k === 'out' ? BR_OUT : k === 'sip' ? BR_SIP : 0;
         brAnim(cv, off);
         P.brT0 = Date.now() - off; return 0;
       }
-      var el = (Date.now() - P.brT0) % BR_CYC, d = ((k === 'in' ? 0 : BR_OUT) - el + BR_CYC) % BR_CYC;
-      return d > BR_CYC - 120 ? 0 : d;
+      var el = (Date.now() - P.brT0) % BR_CYC, d = ((k === 'in' ? 0 : k === 'sip' ? BR_SIP : BR_OUT) - el + BR_CYC) % BR_CYC;
+      // BLD 911 (Chris: "these guided vids need to have timing spot on"): a line that comes a moment late for its part
+      // starts at once, inside its part, instead of waiting a whole breath.
+      return d > BR_CYC - (BR_SIP ? 700 : 120) ? 0 : d;
     }
     // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
     // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
