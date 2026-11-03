@@ -2438,61 +2438,7 @@ const TOPICS = [
     "https://www.cancer.gov/publications/patient-education/when-your-parent-has-cancer"
    ]
   ],
-  "sources": [],
-  "plain": {
-   "together": {
-    "first": [
-     "Tell everyone where the person is, why, and when you expect to know more, in simple, honest words.",
-     "Decide who will be at the hospital and who will keep home steady, and switch so no one runs out.",
-     "Prepare children before a visit: what the room looks like, the sounds, the tubes or machines, and how the person may look.",
-     "Find a simple way for everyone to stay connected: drawings, video calls, voice messages, a family photo by the bed."
-    ],
-    "helps": [
-     "Keeping children's school, meals, and bedtime as steady as you can.",
-     "Short visits for children, with a grown-up whose only job is them, and a plan to leave when they're ready.",
-     "Bringing comfort from home: a blanket, photos, music, a familiar smell.",
-     "Asking the hospital about a child life specialist or a social worker.",
-     "Letting friends help with meals, rides, pets, and laundry.",
-     "Taking turns resting. Sleep and food keep the helpers going."
-    ],
-    "say": [
-     "“The doctors and nurses are helping, and we're helping too.”",
-     "“We can be close even when we're apart.”",
-     "“We take turns, so everyone gets rest.”"
-    ],
-    "people": "Try, to a child: “Grandpa is in the hospital so the doctors can help his heart. Would you like to make him a card?” To a nurse: “What can our family do that would help most?” To a friend: “Could you take our kids to school this week?”"
-   },
-   "leader": {
-    "feel": "The grown-ups leading the family may be exhausted, scared, and pulled between the hospital and home. They may get conflicting information or wait for hours for news. Children may act out, cling, have trouble sleeping, or seem unaffected and then cry over something small. A partner or older child may quietly take on more than they can carry.",
-    "say": [
-     "“Here's what we know today.”",
-     "“What would you like to know before we visit?”",
-     "“You can come with me, or stay home and send something. Both are good choices.”",
-     "“You're doing so much. What do you need?”"
-    ],
-    "avoid": [
-     "Taking children to visit without telling them what they'll see.",
-     "Making children visit when they don't want to.",
-     "Hiding a hospital stay from children. They sense the change.",
-     "Trying to be at the hospital every hour while no one keeps home steady."
-    ],
-    "help": [
-     "Share honest, simple updates with the family at least once a day.",
-     "Prepare children before visits, keep visits short, and give them something to do: read, draw, hold a hand.",
-     "Ask for the hospital's child life specialist or social worker.",
-     "Keep a notebook for questions for the medical team and for names and updates.",
-     "Make a rotation for hospital time, home time, and rest.",
-     "Tell the school and workplaces, so others can give some room."
-    ],
-    "you": "Hospital weeks wear helpers down fast. Eat, sleep, and step outside when you can. Let others take shifts. You'll be able to stay longer if you take turns."
-   },
-   "reach": [
-    "Questions about care or what you're seeing: ask the nurse or doctor. Ask for the hospital's social worker or child life specialist.",
-    "If someone in the hospital is an older or vulnerable adult who may be neglected, exploited, or harmed at home or in a facility: call MAARC, 1-844-880-1574.",
-    "Sadness, worry, or trouble sleeping that lasts two weeks or more: talk with a doctor or school counselor.",
-    "Thoughts of not wanting to be alive: call or text 988. Danger right now: call 911."
-   ]
-  }
+  "sources": []
  },
  {
   "id": "hospice",
@@ -2643,12 +2589,6 @@ const TOPICS = [
    "blundon"
   ],
   "plain": {
-   "quick": [
-    "Call your hospice's 24/7 line first, day or night, for anything hospice can help with.",
-    "Hospice walks with the whole family, not only the person who is ill. Lean on the nurse, the social worker, the aides, and the volunteers.",
-    "Children do best with honest, gentle words about dying, and a choice in how they say goodbye.",
-    "Simple words matter now: thank you, I love you, I'm sorry, I forgive you. Presence is enough."
-   ],
    "leader": {
     "feel": "The grown-ups leading the family may be the main caregivers, running on little sleep, managing medicines with the hospice nurse, fielding calls, and grieving at the same time. Some family members may not be ready to accept that death is near. Children may need honest words that the grown-ups find hard to say. Siblings and relatives may disagree about visits, treatment, or old hurts.",
     "say": [
@@ -2664,11 +2604,11 @@ const TOPICS = [
      "Trying to be at the bedside every hour with no relief."
     ],
     "help": [
-     "Learn the hospice team's names and roles: nurse, aide, social worker, volunteer.",
+     "Learn the hospice team's names and roles: nurse, aide, social worker, chaplain, volunteer.",
      "Ask the nurse what to expect in the coming days, and what to do if a change happens at night.",
      "Prepare children for changes they might see, like sleeping more, eating less, and breathing that changes.",
      "Make room for the person's wishes, stories, and goodbyes, in the words and traditions they choose.",
-     "Ask the hospice social worker about family conflict, kids' grief, and bereavement support afterward.",
+     "Ask the hospice social worker or chaplain about family conflict, kids' grief, and bereavement support afterward.",
      "Plan who will be called, and what happens, in the first hour after death, so it isn't decided in the moment."
     ],
     "you": "Caring for someone who is dying is deep, hard, and exhausting work. Let hospice carry what it can. Eat, sleep, and step outside. Your presence matters more than doing everything right."
@@ -8785,9 +8725,6 @@ const TOPICS = [
    "doka"
   ],
   "plain": {
-   "byKind": {
-    "team": "For a hospital unit, include every shift and role in the pause and the debrief: nurses, aides, physicians, therapists, social workers, environmental services, and unit clerks."
-   },
    "leader": {
     "feel": "As a lead, you may be grieving too, and still need to keep the shift running, talk to the family, and do the paperwork. You may worry about a team member who was closest, and feel unsure whether to slow the team down. Slowing down for a few minutes is part of keeping a team well.",
     "say": [
@@ -8808,7 +8745,7 @@ const TOPICS = [
      "Lead a one-minute pause after the death, in person or on a call.",
      "Hold a short, voluntary debrief within a day or two, focused on support, separate from any case review.",
      "Give the person who was there recovery time, and cover their next task.",
-     "Share the employee assistance program and other support options plainly, more than once.",
+     "Share the employee assistance program and chaplain or other support options plainly, more than once.",
      "Watch for signs that someone is struggling weeks later: sleep, mood, absence, or withdrawal.",
      "Build regular rituals: a monthly remembrance, a yearly memorial for everyone the team served."
     ],
@@ -8816,7 +8753,7 @@ const TOPICS = [
    },
    "reach": [
     "For the patient's family: your hospice's own 24/7 line comes first for anything about symptoms or comfort, and the hospice bereavement team for grief support afterward.",
-    "For the team: your organization's employee assistance program (EAP), the support team, and peer support.",
+    "For the team: your organization's employee assistance program (EAP), the chaplain or support team, and peer support.",
     "If anyone on the team speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
     "Danger right now: call 911."
    ]
@@ -9095,41 +9032,7 @@ const TOPICS = [
   "sources": [
    "doka",
    "stroebe99"
-  ],
-  "plain": {
-   "leader": {
-    "feel": "You may be grieving and also responsible for telling the team, contacting the family, handling the work, and answering questions from leadership. You may wonder how much to say, how much time to give, and how to handle the empty desk. Leading a team through a death is one of the hardest things a lead does.",
-    "say": [
-     "“I have some very sad news, and I wanted to tell you together.”",
-     "“Take whatever time you need today.”",
-     "“The family has asked us to share...”",
-     "“Here's how we'll handle her work for now. No one has to rush.”",
-     "“The employee assistance program is here for all of us.”"
-    ],
-    "avoid": [
-     "Sharing the news by email first, or letting it spread as rumor.",
-     "Sharing details of the death beyond what the family has okayed.",
-     "Clearing out their desk or reassigning their work right away, without asking.",
-     "Expecting normal productivity in the first days.",
-     "Speculating about a death by suicide, or treating it as shameful."
-    ],
-    "help": [
-     "Tell the team in person and together, after the family has been told and has okayed what is shared.",
-     "Bring in the employee assistance program, and grief support if available, early.",
-     "Plan the next few days lightly: fewer meetings, cover for the closest colleagues.",
-     "Ask the family what they want: attendance at the service, a card, a memorial gift.",
-     "Decide with the team how to handle the desk, the belongings, and the work.",
-     "Mark the hard dates later, and check in with close colleagues weeks and months after."
-    ],
-    "you": "Leads grieve too. Find a peer, a supervisor, or your own employee assistance program to talk with. Letting your team see that you're sad is not weakness; it gives them permission to grieve."
-   },
-   "reach": [
-    "Your organization's employee assistance program (EAP), and grief support if your workplace has one.",
-    "Many hospices offer grief support to the community. Call your local hospice and ask.",
-    "If the coworker died by suicide, or anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-    "Danger right now: call 911."
-   ]
-  }
+  ]
  },
  {
   "id": "burnout",
@@ -10057,12 +9960,9 @@ const TOPICS = [
    "figley"
   ],
   "plain": {
-   "byKind": {
-    "team": "For first responder teams, use your peer support team and any critical incident support your agency offers. For hospice and hospital teams, the social worker, the support team, and the ethics committee are part of the team's support."
-   },
    "reach": [
     "For hospice patients and families: the hospice's own 24/7 line comes first for anything about symptoms or comfort.",
-    "For the team: your organization's employee assistance program (EAP), peer support team, staff support team, and ethics committee or ethics consult service.",
+    "For the team: your organization's employee assistance program (EAP), peer support team, chaplain or support team, and ethics committee or ethics consult service.",
     "Guilt, numbness, nightmares, or replaying a case that lasts more than a few weeks: talk with your doctor or a mental health professional who understands this work.",
     "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
     "Danger right now: call 911."
