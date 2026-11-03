@@ -33,7 +33,7 @@
   // BLD 909 Clean Site: The Grounded Way has its own menu; Tools holds the rest. BLD 910 (Chris: "still the long list of your tree.. confusing"): one app, so the trees stay inside it, never listed here.
   var WAY_GROUPS = [
     { name: 'Start Here', items: [
-      { id: 'home', title: 'Begin The Grounded Way', desc: 'One app for every age: make your profile, meet your tree, and tend your four, a few minutes a day. Your tree grows with you', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
+      { id: 'home', title: 'Begin The Grounded Way', desc: 'One app for every age: make your profile, meet your tree, and tend your four, every day. Your tree grows with you', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
       { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: pic('/shared/heroes/way/grounded-way-square.webp'), bg: '#F1E6CC' },
       { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: pic('/shared/heroes/way/tending-sq.webp'), bg: '#E3EFD6' },
       { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, opening soon', href: HOME + '/the-grounded-way.html#ways', icon: pic('/shared/heroes/way/way-plan-sq.webp'), bg: '#F3E5CC', color: '#6E4A14' }
@@ -459,7 +459,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b911b';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b912';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
