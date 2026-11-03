@@ -94,7 +94,16 @@
     var s = ensure(id), d = (entry && entry.date) || todayKey(), msg = null;
     if (!s.start) { s.start = d; s.season = 1; msg = 'Your first season has begun. Week 1 starts today.'; }
     else if (weekNo(s) >= 12) { s.rings = (s.rings || []).concat([{ date: d, season: s.season || 1 }]); s.season = (s.season || 1) + 1; s.start = d; msg = 'A new ring for your tree. Season ' + s.season + ' begins today.'; }
+    if (msg && s.rings && s.rings.length) ringMiles(s);
     return msg;
+  }
+  // A new ring is a milestone. The tree page's game layer stamps it the moment Today draws again after the check-in
+  // (Oak checkMiles(s, true) and milesNow, oak/index.html:2421 to 2436; pnRec 2391). The other milestones come from
+  // days tended, never from a check-in, and stay with Today.
+  function ringMiles(s) {
+    if (!s.ok || typeof s.ok !== 'object') s.ok = { miles: {}, bal: {} }; s.ok.miles = s.ok.miles || {}; s.ok.bal = s.ok.bal || {};
+    var R = s.ok;
+    s.rings.forEach(function (r, i) { var mid = i ? 'season' + (i + 1) : 'ring'; if (!R.miles[mid]) R.miles[mid] = todayKey(); });
   }
   // setPlan (gg-tend.js:733): library picks and own practices stay when the plan is rebuilt
   function setPlan(id, p) {
@@ -247,6 +256,7 @@
     ctx = ctx || {};
     var id = ctx.id, quick = ctx.kind === 'quick';
     if (!id || !window.GGP || !window.GGGuided || !window.OAK_CHECKIN) return null;
+    history(id);   // the page reads the record's history when the profile opens, before tend (profSync)
     var kind = quick ? 'quick' : fullKind(id);
     if (quick) ensure(id);   // the page's Today screen has filled the tend record before any check-in starts
     var sig = [id, kind, 'self', '', quick ? 'q' : 'f'].join('|');
