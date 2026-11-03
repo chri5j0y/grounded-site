@@ -2508,7 +2508,7 @@ function view(){
   const SECS2 = ['today', 'week', 'plate', 'kitchen', 'recipes', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings', 'own', 'holidays'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
   if (!SECS2.includes(S.sec)) S.sec = 'today';
   let body;
-  if (START()) body = vStart();
+  if (START()) body = vStartHome();
   else if (PUB() && (!chosen || S.setup)) body = vCheck();
   else if (!chosen) body = vChoose();
   else if (!KIT() && (S.setup || (first && !ready && S.sec === 'today'))) body = `<div class="tn-sec a-numbers">${vSetup()}</div>`;
@@ -2810,7 +2810,8 @@ function startInvite(title, line){
   if (window.GGMember && typeof GGMember.invite === 'function') return GGMember.invite({title, line});
   return `<div class="tn-card"><div class="tn-k">Membership</div><b>${esc(title)}</b><p class="tn-sub">${esc(line)}</p></div>`;
 }
-function vStart(){
+// Named vStartHome so it never replaces vStart(o, top), the workout, Flow, and meditation start screen (BLD 908 TRI).
+function vStartHome(){
   if (S.sec === 'recipes') return vRecipes();
   if (S.sec === 'holidays') return vHol();
   const sp = startPicks(), tile = (key, kick, title, sub, cls) => `<button type="button" class="tn-card tn-lift tn-kc ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${scene('practice', 16.8, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
