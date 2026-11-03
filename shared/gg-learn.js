@@ -196,7 +196,9 @@
     var w = Array.isArray(sc.brw) ? sc.brw : four ? ['Breathe in', 'Hold', 'Breathe out', 'Rest'] : hd ? ['Breathe in', 'Hold', 'Breathe out'] : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
     return '<i>' + esc(w[0]) + '</i>' + (three ? '<i class="ln-brs">' + esc(w[1]) + '</i>' : '') + '<i>' + esc(four ? w[2] : w[w.length - 1]) + '</i>' + (four ? '<i class="ln-brr">' + esc(w[3] || 'Rest') + '</i>' : '');
   }
-  function isBr(sc) { return !!sc && (sc.k === 'breathe' || (sc.k === 'figure' && Array.isArray(sc.breath))); }
+  // BLD 911 Round 2: a candle scene that carries a breath (a Grounded Meditation breathe scene with the candle look) keeps the
+  // breath clock too: its lines start on their own parts, and the flame's glow brightens on the breath in and softens on the out.
+  function isBr(sc) { return !!sc && (sc.k === 'breathe' || ((sc.k === 'figure' || sc.k === 'candle') && Array.isArray(sc.breath))); }
 
   // The demo camera (GWG BLD 824): z = [x, y, zoom] in the phone screen's own pixels (390 by 844) is placed in the
   // middle of the part of the screen that shows (280 by 494 in the stage), and the screen never slides past its edges.
@@ -1063,6 +1065,7 @@
       var s3 = b && b.length >= 3 && +b[1] > 0 ? +b[1] : 0, r4 = four && +b[3] > 0 ? +b[3] : 0, hd = !!b && sc.k === 'breathe' && brHolds(sc);
       BR_CYC = (a + s3 + o + r4) * 1000; BR_OUT = (a + s3) * 1000; BR_SIP = s3 && !hd ? a * 1000 : 0; P.brNames = null;
       BR_HOLD = hd && s3 ? a * 1000 : 0; BR_REST = hd && r4 ? (a + s3 + o) * 1000 : 0;
+      brCandle(sc);
       if (hd) { brPaceH(a, s3, o, r4); return; }
       if (s3) { brPace3(a, s3, o); return; }
       if (a === 4 && o === 6) return;
@@ -1105,9 +1108,20 @@
       P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id, is: s ? 'lnHo' + id : '', ir: r ? 'lnRe' + id : '' };
       brAnim(cv, 0);
     }
+    function brCandle(sc) {
+      P.brCg = '';
+      if (!sc || sc.k !== 'candle' || !isBr(sc)) return;
+      var r = Math.round(BR_OUT / BR_CYC * 1000) / 10, id = 'c' + String(r).replace('.', '_');
+      if (!BRK[id]) { var el = document.createElement('style'); el.textContent = '@keyframes lnCg' + id + '{0%{opacity:.62;transform:scale(.92)}' + r.toFixed(1) + '%{opacity:1;transform:scale(1.08)}100%{opacity:.62;transform:scale(.92)}}'; document.head.appendChild(el); BRK[id] = 1; }
+      P.brCg = 'lnCg' + id; brAnim(cv, 0);
+    }
     // Sets (or restarts) the circle and the words on this scene's pace, starting off ms into the cycle.
     function brAnim(root, off) {
       var N2 = P.brNames;
+      Array.prototype.forEach.call(root.querySelectorAll('.ln-cd-glow, .ln-cd-all'), function (e) {
+        var cg = P.brCg || ''; e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = cg;
+        e.style.animationDuration = cg ? (BR_CYC / 1000) + 's' : ''; e.style.animationDelay = cg ? (-off / 1000) + 's' : ''; e.style.animationDirection = cg ? 'normal' : ''; e.style.animationTimingFunction = cg ? 'ease-in-out' : '';
+      });
       Array.prototype.forEach.call(root.querySelectorAll('.ln-brc, .ln-brt i'), function (e) {
         var nm = !N2 ? '' : e.classList.contains('ln-brc') ? N2.brc : e.classList.contains('ln-brs') ? (N2.is || '') : e.classList.contains('ln-brr') ? (N2.ir || '') : e.previousElementSibling ? N2.i1 : N2.i0;
         e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = nm; e.style.animationDuration = N2 ? (BR_CYC / 1000) + 's' : ''; e.style.animationDelay = (-off / 1000) + 's';

@@ -371,6 +371,11 @@
           "h": "One slow team breath",
           "sub": "In while it grows. Out while it shrinks.",
           "hold": 12,
+          "beats": [
+           "Now one slow breath for your whole team.",
+           "Breathe in while the circle grows,",
+           "and out while it shrinks."
+          ],
           "say": "Now one slow breath for your whole team. Breathe in while the circle grows, and out while it shrinks."
          },
          {
@@ -1002,6 +1007,12 @@
           "h": "Breathe around it",
           "sub": "In for four. Out for six.",
           "hold": 14,
+          "beats": [
+           "Follow the circle.",
+           "In for four,",
+           "and out for six.",
+           "With each breath out, let the muscles around the pain go a little softer."
+          ],
           "say": "Follow the circle. In for four, and out for six. With each breath out, let the muscles around the pain go a little softer."
          },
          {
@@ -1723,6 +1734,12 @@
           "h": "Breathe around it",
           "sub": "In for four. Out for six.",
           "hold": 14,
+          "beats": [
+           "Follow the circle.",
+           "In for four,",
+           "and out for six.",
+           "With each breath out, let the muscles around the pain go a little softer."
+          ],
           "say": "Follow the circle. In for four, and out for six. With each breath out, let the muscles around the pain go a little softer."
          },
          {
@@ -2451,6 +2468,12 @@
           "h": "Breathe around it",
           "sub": "In for four. Out for six.",
           "hold": 14,
+          "beats": [
+           "Follow the circle.",
+           "In for four,",
+           "and out for six.",
+           "With each breath out, let the muscles around the pain go a little softer."
+          ],
           "say": "Follow the circle. In for four, and out for six. With each breath out, let the muscles around the pain go a little softer."
          },
          {
@@ -3179,6 +3202,12 @@
           "h": "Breathe around it",
           "sub": "In for four. Out for six.",
           "hold": 14,
+          "beats": [
+           "Follow the circle.",
+           "In for four,",
+           "and out for six.",
+           "With each breath out, let the muscles around the pain go a little softer."
+          ],
           "say": "Follow the circle. In for four, and out for six. With each breath out, let the muscles around the pain go a little softer."
          },
          {
@@ -3907,6 +3936,12 @@
           "h": "Breathe around it",
           "sub": "In for four. Out for six.",
           "hold": 14,
+          "beats": [
+           "Follow the circle.",
+           "In for four,",
+           "and out for six.",
+           "With each breath out, let the muscles around the pain go a little softer."
+          ],
           "say": "Follow the circle. In for four, and out for six. With each breath out, let the muscles around the pain go a little softer."
          },
          {

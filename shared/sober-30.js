@@ -1261,8 +1261,9 @@
        "t": "And out for six.",
        "p": 6
       },
+      "Again. In,",
       {
-       "t": "Again. In, and out long.",
+       "t": "and out long.",
        "p": 8
       }
      ],
@@ -4289,8 +4290,9 @@
        "t": "And out for six.",
        "p": 6
       },
+      "Again. In,",
       {
-       "t": "Again. In, and out long.",
+       "t": "and out long.",
        "p": 8
       }
      ],
@@ -6452,8 +6454,9 @@
        "t": "And let the whole day go, out long.",
        "p": 6
       },
+      "Again. In,",
       {
-       "t": "Again. In, and out long.",
+       "t": "and out long.",
        "p": 8
       }
      ],
