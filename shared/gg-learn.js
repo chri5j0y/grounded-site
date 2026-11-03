@@ -181,6 +181,7 @@
     if (k === 'paint' && !img) img = (l && l.img) || 'home';
     o.k = k; o.img = img; o._d = i % 4; o._app = app;
     o._bd = !!img && k !== 'title' && k !== 'demo' && k !== 'paint' && k !== 'candle' && k !== 'figure' && k !== 'end' && k !== 'tale' && k !== 'screen' && k !== 'tabs';
+    if (o._bd && sc.bg) o.bg = ''; // the painting behind takes the place of an older blurred bg
     return Object.assign({}, sc, o);
   }
   function isBr(sc) { return !!sc && (sc.k === 'breathe' || (sc.k === 'figure' && Array.isArray(sc.breath))); }
