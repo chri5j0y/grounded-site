@@ -1299,3 +1299,60 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-mlist button.done .i{color:var(--leaves);}
 .hm-trad{margin-top:16px;border-top:1px solid var(--line);padding-top:10px;}
 .hm-trad summary{cursor:pointer;font:700 15px/1.3 'Barlow',sans-serif;min-height:44px;display:flex;align-items:center;}
+
+/* BLD 910 True One App: five tabs with icons, the Learn rows, the Check-in tab, Grow's tool cards, kids' Watch, Who Is Tending? */
+.hm-tabbar ul{grid-template-columns:repeat(5,minmax(0,1fr));max-width:720px;}
+.hm-tabbar a{gap:4px;min-height:70px;font-size:13px;letter-spacing:.2px;}
+.hm-tabbar a .bar{height:5px;width:34px;}
+.hm-tabbar a .ic svg.i{width:24px;height:24px;}
+.hm-tabbar a[aria-current="page"] .ic{color:var(--gold);}
+.hm-learn{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.hm-lchips{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 10px;}
+.hm-lchip{min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 15px/1 'Barlow',sans-serif;}
+.hm-lchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+.hm-lfeat{position:relative;display:block;width:100%;height:220px;border:0;padding:0;border-radius:22px;overflow:hidden;text-align:left;color:#FFFCF6;background:var(--card-2);}
+.hm-lfeat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.hm-lfeat .sh{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(28,20,12,.78));}
+.hm-lfeat .pl{position:absolute;left:16px;bottom:18px;width:48px;height:48px;border-radius:50%;background:rgba(255,252,246,.95);color:#2C1810;display:grid;place-items:center;}
+.hm-lfeat .tx{position:absolute;left:76px;right:16px;bottom:16px;display:flex;flex-direction:column;}
+.hm-lfeat small{font:700 12px/1.3 'Barlow',sans-serif;letter-spacing:1.2px;text-transform:uppercase;opacity:.92;}
+.hm-lfeat b{font:700 27px/1.1 'Cormorant Garamond',Georgia,serif;}
+.hm-lrow{min-width:0;}
+.hm-lrsub{margin:-4px 4px 8px;}
+.hm-lscroll{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
+.hm-lcard{flex:0 0 172px;scroll-snap-align:start;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);color:var(--ink);padding:0;text-align:left;}
+.hm-lcard .im{position:relative;display:block;height:112px;background:var(--card-2);}
+.hm-lcard .im img{width:100%;height:100%;object-fit:cover;display:block;}
+.hm-lcard .pl{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;background:rgba(255,252,246,.94);color:#2C1810;display:grid;place-items:center;}
+.hm-lcard .pl svg.i{width:16px;height:16px;}
+.hm-lcard .tx{display:flex;flex-direction:column;gap:3px;padding:10px 12px 12px;}
+.hm-lcard b{font:600 15px/1.25 'Barlow',sans-serif;}
+.hm-lcard small{font-size:13px;color:var(--ink-soft);}
+.hm-lcard:hover{border-color:var(--gold);}
+.hm-learn.kid .hm-lcard{flex-basis:180px;border-width:2px;border-radius:20px;}
+.hm-learn.kid .hm-lcard b{font-family:'Fredoka','Barlow',sans-serif;font-size:16px;}
+.hm-cknote{margin:4px 6px 0;}
+.hm-tset{margin:0 0 6px;}
+.hm-whoband{display:block;height:150px;border-radius:18px;overflow:hidden;}
+.hm-whoband img{width:100%;height:100%;object-fit:cover;display:block;}
+.hm-wholist{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:10px;}
+.hm-who{display:flex;align-items:center;gap:14px;width:100%;min-height:76px;padding:10px 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-align:left;}
+.hm-who[aria-current="true"]{border-color:var(--gold);}
+.hm-who .av{width:56px;height:56px;flex:none;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line);}
+.hm-who .av img{width:100%;height:100%;object-fit:cover;display:block;}
+.hm-who .tx{display:flex;flex-direction:column;flex:1;min-width:0;}
+.hm-who b{font:700 22px/1.1 'Cormorant Garamond',Georgia,serif;}
+.hm-who small{font-size:14px;color:var(--ink-soft);}
+.hm-whoadd{width:100%;}
+.hm-treerow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;text-align:center;}
+.hm-treerow li{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--ink-soft);}
+.hm-treerow img{width:44px;height:44px;border-radius:50%;object-fit:cover;}
+.hm-treerow b{font-size:13px;color:var(--ink);}
+@media (max-width:380px){ .hm-tabbar a{font-size:12px;} .hm-lcard{flex-basis:150px;} }
+/* BLD 910: painted badges (every card carries a painting, never a drawn icon) */
+.hm-badge.hm-pb{padding:0;overflow:hidden;background:var(--card-2);width:56px;height:56px;border-radius:16px;}
+.hm-badge.hm-pb img{width:100%;height:100%;object-fit:cover;}
+.hm-prom .hm-badge.hm-pb,.hm-who button .hm-badge.hm-pb{width:58px;height:58px;}
+.hm-grp .hm-badge.hm-pb,.hm-tg .hm-badge.hm-pb{width:46px;height:46px;border-radius:14px;}
+.hm-pv-hd .hm-badge.hm-pb{width:60px;height:60px;}
+.hm-spc img.hm-sppic{width:62px;height:62px;border-radius:50%;object-fit:cover;}
