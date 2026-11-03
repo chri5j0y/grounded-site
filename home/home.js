@@ -48,7 +48,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b910', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b910', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
   var GGN_SRC = '/shared/ggn.js?v=b911';
   var IMG = '/shared/heroes/way/';
@@ -621,7 +621,9 @@
       '<div class="hm-sk">Today\'s Encouragement</div><p class="words" id="hm-words">Every day counts. Today is one more.</p>' +
       '<div class="hm-smantra"><span class="hm-sk">Mantra</span><b class="hm-mtext">One day at a time.</b></div>' +
       '<div class="hm-acts tight hm-shares"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="daily">' + I('open') + 'Share Today\'s Words</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="mantra">' + I('open') + 'Share the Mantra</button>' + (mile ? '<button type="button" class="hm-btn sm hm-a-sober hm-mshare" data-hm-share="mile">' + I('open') + 'Share My Milestone</button>' : '') + '</div>' +
-      '<div class="hm-acts"><a class="hm-btn sm hm-a-sober" href="/living-sober.html#today">' + I('sunrise') + 'Today\'s Intention</a><a class="hm-btn sm line hm-a-sober" href="/living-sober.html#wave">' + I('wind') + 'Ride the Wave</a></div></article>' +
+      '<div class="hm-acts"><a class="hm-btn sm hm-a-sober" href="/living-sober.html#today">' + I('sunrise') + 'Today\'s Intention</a><a class="hm-btn sm line hm-a-sober" href="/living-sober.html#wave">' + I('wind') + 'Ride the Wave</a></div>' +
+      // BLD 911: Living Sober's tools open right here in Home (shared/gg-sober.js), never a tree page.
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-sober="anchor">' + I('shield') + 'My Anchor Plan</button>' + (member() ? '<button type="button" class="hm-btn sm line hm-a-sober" data-hm-sober="mine">' + I('people') + 'My Good People</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-sober="people">' + I('sprout') + 'Healthy People, Healthy Places</button>' : '') + '</div></article>' +
       (c.days >= 90 && !member() && !isKid(S.p) ? inviteHtml('sober', 'hm-a-sober') : '');
   }
   function soberInviteHtml() {
@@ -1977,7 +1979,7 @@
     if (t.hasAttribute('data-hm-go')) { itemGo(t.getAttribute('data-hm-go')); return; }
     if (t.hasAttribute('data-hm-new')) { if (hasFn('newsSeen')) hCall('newsSeen'); refreshPane(); return; }
     if (t.hasAttribute('data-hm-wk')) { var wk = t.getAttribute('data-hm-wk'); if (wk && hasFn('act')) hCall('act', wk); return; }
-    if (t.hasAttribute('data-hm-tree')) { openTreeSheet(t.getAttribute('data-hm-tree')); return; }
+    if (t.hasAttribute('data-hm-tree')) { var tw = t.getAttribute('data-hm-tree'); if (tw === 'history') { seasonOpen(); return; } if ((tw === 'checkin' || tw === 'quick') && openCheckin(tw === 'quick' ? 'quick' : 'full')) return; openTreeSheet(tw); return; }
     if (t.hasAttribute('data-hm-share')) { shareCard(t.getAttribute('data-hm-share')); return; }
     if (t.hasAttribute('data-hm-shelf')) { openShelf(t.getAttribute('data-hm-shelf')); return; }
     if (t.hasAttribute('data-hm-res')) {
@@ -3023,7 +3025,7 @@
     GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
     // BLD 908: the door and Membership are read once this whole file has run (its later parts set their names).
     setTimeout(memberBoot, 0);
-    GGP.ready.then(function () { render(); walkDoor(); });
+    GGP.ready.then(function () { render(); walkDoor(); walkGo(); });
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
@@ -3104,7 +3106,27 @@
   var SHEET_CSS = 'html.gg-insheet body>.gg-hero,html.gg-insheet body>.gg-parts,html.gg-insheet body>nav#client-nav,html.gg-insheet body>nav.nav,html.gg-insheet body>nav.tabs,' +
     'html.gg-insheet .gg-skip,html.gg-insheet .gg-wayline,html.gg-insheet .topbar,html.gg-insheet .site-menu,html.gg-insheet .site-footer{display:none!important;}' +
     'html.gg-insheet body>main{padding-top:6px;}';
+  /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
+     GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
+  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b912', sequoia: '/shared/checkin/sequoia.js?v=b912', birch: '/shared/checkin/birch.js?v=b912', pine: '/shared/checkin/pine.js?v=b912', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
+  var CK_READY = {};
+  function openCheckin(kind) {
+    var tree = S.tree, src = CK_MOD[tree]; if (!src || !S.id || !CK_READY[tree]) return false;
+    mClose();
+    var fall = function () { CK_READY[tree] = false; openTreeSheet(kind === 'quick' ? 'quick' : 'checkin'); };
+    load(src).then(function () {
+      var M = window.GGCheckin && window.GGCheckin[tree]; if (!M || typeof M.run !== 'function') { fall(); return; }
+      if (arr(M.kinds).indexOf(kind) < 0) kind = 'full';
+      return arr(M.files).reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
+        M.run({ id: S.id, kind: kind, plain: plainWording(S.id, S.tree), member: member(),
+          onSaved: function () { toast('Check-in saved. Your tree is up to date.'); },
+          onClose: function () { render(); } });
+      });
+    }).catch(fall);
+    return true;
+  }
   function openTreeSheet(what) {
+    if ((what === 'checkin' || what === 'quick') && openCheckin(what === 'quick' ? 'quick' : 'full')) return;
     var t = TREES[S.tree] || TREES.oak, title = SHEET_SCREENS[what] || t.n;
     var hash = what === 'today' ? '#today' : what ? treeHash(t, what).slice(t.href.length) : '';
     // BLD 886: the check-in, Quick Check-in, and Growth Plan open guided (?guided=checkin|quick|plan, read by GGGuided.flag() in the tree).
@@ -3334,8 +3356,47 @@
   var ROOM_TREES = /^(maple|aspen|pine|birch|oak|sequoia)$/;
   var DOOR_SHEET = { '#checkin': 'checkin', '#quick': 'quick', '#plan': 'plan', '#season': 'history', '#progress': 'history', '#week': 'week', '#today': 'today', '#life': 'life', '#legacy': 'legacy', '#groundwork': 'ground', '#ground': 'ground', '#next': 'next', '#nextsteps': 'next' };
   var DOOR;
+  /* BLD 911 (Chris: "you will need to hard sweep the entire site"): addresses that open a place inside the app, never a tree page.
+       /home/?sober=1              turns Living Sober on (with no profile, the welcome starts with it chosen)
+       /home/?sober=learn          the same, then Learn opens on the Living Sober lessons
+       /home/?guide=<id>&tree=<t>  plays a When Life Changes guide in the window (the profile's tree, else <t>)
+       /home/?lesson=<id>&tree=<t> plays a lesson in the window */
+  var GO = null;
+  function readGo() {
+    var sp; try { sp = new URLSearchParams(location.search); } catch (e) { return; }
+    var so = sp.get('sober'), gd = sp.get('guide'), ls = sp.get('lesson'), tr = sp.get('tree');
+    if (!so && !gd && !ls) return;
+    GO = { sober: so || '', guide: gd || '', lesson: ls || '', tree: ROOM_TREES.test(tr || '') ? tr : '', done: false };
+    if (GO.sober) W.parts.sober = true;
+    if (GO.tree) W.stage = GO.tree;
+    // Living Sober's own tools (shared/gg-sober.js) read ?sober= themselves, so a sober link keeps it until they do.
+    try { history.replaceState(null, '', location.pathname + (GO.sober && GO.sober !== 'learn' ? '?sober=' + encodeURIComponent(GO.sober) : '') + (location.hash || '')); } catch (e) {}
+  }
+  function walkGo() {
+    if (!GO || GO.done) return; GO.done = true;
+    var g = GO, a = window.GGP && GGP.active && GGP.active();
+    if (g.sober && a) { var h = homeRec(); if (h.parts.indexOf('sober') < 0) { h.parts.push('sober'); saveHome(); } }
+    if (g.sober === 'learn' && a) { toast('Living Sober is on.'); LT.q = 'Healthy Tree'; goTo('learn'); return; }
+    if (g.sober) { soberTools(); if (a) goTo('today'); return; }
+    if (!a && g.tree) S.tree = g.tree;
+    if (g.guide) { if (a && !isKid(S.p)) goTo('learn'); playGuide(g.guide, '', g.tree); }
+    else if (g.lesson) { if (a && !isKid(S.p)) goTo('learn'); playTreeLesson(g.lesson); }
+  }
+  /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
+     My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b908'];
+  function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
+  function soberTools(kind) {
+    var go = function () {
+      if (!window.GGSober) return;
+      if (!soberTools.on) { soberTools.on = true; try { GGSober.init(soberTree(), { open: function () {}, create: function () { return GGP.createDialog().then(function () { render(); }); }, openProfile: function () { return GGP.openDialog().then(function () { render(); }); }, helper: function () { return false; } }); } catch (e) { console.error(e); } }
+      if (kind === 'anchor') GGSober.anchor(soberTree(), false); else if (kind) GGSober.together(soberTree(), kind);
+    };
+    return load(WORDS_SRC).then(function () { return load(SOBER_JS[0]); }).then(function () { return load(SOBER_JS[1]); }).then(go).catch(function () {});
+  }
   function readDoor() {
     DOOR = null;
+    if (GO === null) readGo();
     var sp; try { sp = new URLSearchParams(location.search); } catch (e) { return; }
     var tree = sp.get('tree'); if (!tree || !ROOM_TREES.test(tree)) return;
     sp.delete('tree');
@@ -3616,22 +3677,22 @@
      a guide's two videos (For You and For the Helper) play in the same window on Learn; Read the Guide opens the written guide. */
   var GUIDE_JS = { oak: '/oak/guide-videos.js?v=b907', aspen: '/aspen/guide-videos.js?v=b888', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b888', pine: '/pine/guide-videos.js?v=b907', birch: '/birch/guide-videos.js?v=b907' };
   function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
-  function playGuide(id, side) {
-    var tree = S.tree, src = GUIDE_JS[tree]; if (!src) { openGuide(id); return; }
+  function playGuide(id, side, tree0) {
+    var tree = tree0 && GUIDE_JS[tree0] ? tree0 : S.tree, src = GUIDE_JS[tree]; if (!src) { toast('This guide waits in Learn.'); goTo('learn'); return; }
     mDialog('When Life Changes', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening the guide…</p></div>');
     Promise.all([load(LEARN_JS), load(src)]).then(function () {
       var g = guideVideos(tree, id), x = g && (g[side || 'you'] || g.you);
       var box = document.getElementById('hm-mdlg-b'); if (!box) return;
-      if (!g || !x || !window.GGLearn || !GGLearn.player) { mClose(); openGuide(id); return; }
+      if (!g || !x || !window.GGLearn || !GGLearn.player) { mClose(); toast('This guide waits in Learn.'); goTo('learn'); return; }
       var t = document.getElementById('hm-mdlg-t'); if (t) t.textContent = g.title || x.title || 'When Life Changes';
-      var tabs = ['you', 'helper'].filter(function (s) { return g[s]; }).map(function (s) { return '<button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|' + s + '" aria-pressed="' + (s === (side || 'you')) + '">' + esc(g[s].sideName || (s === 'you' ? 'For You' : 'For the Helper')) + '</button>'; }).join('');
-      box.innerHTML = '<div class="hm-lchips">' + tabs + '<button type="button" class="hm-lchip" data-hm-gread="' + esc(id) + '">' + I('book') + 'Read the Guide</button></div><div class="hm-mplayer" id="hm-mplayer"></div>';
+      var tabs = ['you', 'helper'].filter(function (s) { return g[s]; }).map(function (s) { return '<button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|' + s + '|' + tree + '" aria-pressed="' + (s === (side || 'you')) + '">' + esc(g[s].sideName || (s === 'you' ? 'For You' : 'For the Helper')) + '</button>'; }).join('');
+      box.innerHTML = '<div class="hm-lchips">' + tabs + '<button type="button" class="hm-lchip" data-hm-gread="' + esc(id) + '|' + tree + '">' + I('book') + 'Read the Guide</button></div><div class="hm-mplayer" id="hm-mplayer"></div>';
       var tr = { id: 'hm-g-' + id, kind: 'guide', title: g.title, lessons: [x] };
-      playLesson(document.getElementById('hm-mplayer'), x, null, tr);
-    }).catch(function () { mClose(); openGuide(id); });
+      var keep = S.tree; S.tree = tree; playLesson(document.getElementById('hm-mplayer'), x, null, tr); S.tree = keep;
+    }).catch(function () { mClose(); toast('This guide waits in Learn.'); goTo('learn'); });
   }
-  function openGuide(id) {
-    var t = TREES[S.tree] || TREES.oak, kid = S.tree === 'maple' || S.tree === 'aspen';
+  function openGuide(id, tree0) {
+    var tr0 = tree0 && TREES[tree0] ? tree0 : S.tree, t = TREES[tr0] || TREES.oak, kid = tr0 === 'maple' || tr0 === 'aspen';
     openFrame(new URL(t.href + (kid ? '#talk=' : '#life=') + encodeURIComponent(id), location.href), true, null, { what: 'life', title: SHEET_SCREENS.life, kick: 'My ' + t.n });
   }
 
@@ -3676,16 +3737,38 @@
       '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-lf],[data-hm-pick],[data-hm-padd]');
+    var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober]');
     if (!t) return;
+    if (t.hasAttribute('data-hm-sober')) { soberTools(t.getAttribute('data-hm-sober')); return; }
     if (t.hasAttribute('data-hm-lesson')) { playTreeLesson(t.getAttribute('data-hm-lesson')); return; }
     if (t.hasAttribute('data-hm-guide')) { playGuide(t.getAttribute('data-hm-guide')); return; }
-    if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1]); return; }
-    if (t.hasAttribute('data-hm-gread')) { var gid = t.getAttribute('data-hm-gread'); mClose(); openGuide(gid); return; }
+    if (t.hasAttribute('data-hm-gside')) { var gs = t.getAttribute('data-hm-gside').split('|'); if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } playGuide(gs[0], gs[1], gs[2]); return; }
+    if (t.hasAttribute('data-hm-gread')) { var gr = t.getAttribute('data-hm-gread').split('|'); mClose(); openGuide(gr[0], gr[1]); return; }
     if (t.hasAttribute('data-hm-lf')) { LT.f = t.getAttribute('data-hm-lf'); LT.q = ''; var box = document.getElementById('hm-learn'); if (box) box.innerHTML = learnBody(); return; }
     if (t.hasAttribute('data-hm-pick')) { var id = t.getAttribute('data-hm-pick'); mClose(); if (id === S.id) return; GGP.openDialog({ id: id }).then(function () { render(); }); return; }
     if (t.hasAttribute('data-hm-padd')) { mClose(); GGP.createDialog().then(function () { render(); }); return; }
   });
+
+  /* BLD 912 Round 1: Season and Rings, and your check-ins, drawn right here from the tree's own records (no tree page).
+     The same reading the trees make: tend.start, tend.season, tend.rings (shared/gg-tend.js 177 to 180, 741 to 746) and each
+     check-in's scores; Grew when a part rose by 2 or more since the check-in before, Dipped when it fell by 2, else Same. */
+  function seasonOpen() {
+    var t = TREES[S.tree] || TREES.oak, tend = tendGet(S.id, S.tree), wk = weekNo(tend), rings = arr(tend.rings), list = checkinsOf(S.id, S.tree).slice().reverse();
+    var wkS = wk ? Math.min(12, wk) : 0, ready = wk >= 12;
+    var head = '<article class="hm-card hm-gcard hm-p-branches"><div class="hm-pc"><div class="scene"><img src="' + treeArt(S.tree) + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">My ' + esc(t.n) + '</div><h3 class="hm-h3">' + (tend.start ? 'Season ' + (tend.season || 1) + ', Week ' + wkS + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
+      (tend.start ? 'This season began ' + esc(niceDate(tend.start)) + '. ' : 'Your first full check-in begins your first season. ') + (rings.length ? rings.length + (rings.length === 1 ? ' ring' : ' rings') + ' on your tree, one for each season you have finished.' : 'A ring grows on your tree each time you finish a season of twelve weeks.') + '</p>' +
+      (ready ? '<p class="hm-sub"><b>Your season check-in is ready.</b> A full check-in now adds a ring and begins your next season.</p>' : '') +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tree="checkin">' + I('check') + 'Check In</button>' + ((TREES[S.tree] || {}).ck ? '<button type="button" class="hm-btn sm line hm-pill" data-hm-tree="quick">' + I('clock') + 'Quick Check-in</button>' : '') + '</div></div></div></article>';
+    var rows = list.slice(0, 12).map(function (e, i) {
+      var prev = null; for (var j = i + 1; j < list.length; j++) if (list[j].type === e.type) { prev = list[j]; break; }
+      var cells = PART_KEYS.map(function (k) {
+        var s = num(e.scores[k]), p0 = prev ? num(prev.scores[k]) : null, d = s != null && p0 != null ? s - p0 : null, word = d == null ? '' : d >= 2 ? 'Grew' : d <= -2 ? 'Dipped' : 'Same';
+        return '<li class="hm-p-' + k + '"><b>' + esc(plabel(k)) + '</b><span>' + (s == null ? 'Not sure yet' : LV[levelKey(s)][0]) + (word ? ' · ' + word : '') + '</span></li>';
+      }).join('');
+      return '<article class="hm-card hm-hrow"><div class="hm-time">' + (e.type === 'quick' ? 'Quick Check-in' : 'Full Check-in') + '</div><h3 class="hm-h3">' + esc(niceDay(e.date)) + '</h3><ul class="hm-hparts">' + cells + '</ul></article>';
+    }).join('');
+    mDialog('Season and Rings', head + '<h3 class="hm-label">Your Check-ins</h3>' + (rows || '<p class="hm-sub">Your check-ins gather here, newest first.</p>'));
+  }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;
   window.GGHome.openTool = openTool;

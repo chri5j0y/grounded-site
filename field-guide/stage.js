@@ -499,7 +499,7 @@ ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DE
 & .ggs-tint{background:linear-gradient(180deg,transparent 30%,var(--ggs-ad) 170%);opacity:.4;}
 & .ggs-hasml .ggs-tint{opacity:.12;}& .ggs-pi{filter:brightness(calc(.8 - .16 * var(--tone))) sepia(calc(.22 * var(--tone))) saturate(1.02);}& .ggs-pv{background:radial-gradient(ellipse 85% 80% at calc(var(--fx) * 100%) 58%,transparent 40%,rgba(10,6,3,.42) 100%);}`)}
 `;
-(function(){ try { if (document.getElementById('ggs-css')) return; const s = document.createElement('style'); s.id = 'ggs-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();
+(function(){ try { if (document.getElementById('ggstage-css')) return; const s = document.createElement('style'); s.id = 'ggstage-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();
 
 window.GGStage = {scene, update, colors, css: CSS, states: Object.keys(ST), med: true};
 })();

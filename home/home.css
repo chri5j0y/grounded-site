@@ -1365,3 +1365,10 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
 .hm-lgrid .hm-lcard{flex:none;width:auto;}
 .hm-lnone{margin:6px 4px;}
+/* BLD 912: Season and Rings, your check-ins */
+.hm-hrow{margin-top:10px;display:block;}
+.hm-hparts{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;}
+.hm-hparts li{display:flex;flex-direction:column;gap:1px;padding-left:10px;border-left:4px solid var(--c,var(--line));min-width:0;}
+.hm-hparts b{font-size:14px;}
+.hm-hparts span{font-size:13.5px;color:var(--ink-soft);}
+@media (min-width:700px){.hm-hparts{grid-template-columns:repeat(3,minmax(0,1fr));}}
