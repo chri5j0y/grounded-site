@@ -5362,6 +5362,7 @@ const TOPICS = [
   },
   "faith": "Many traditions have ways to send a leader off: a farewell service, laying on of hands, a blessing spoken by the whole community, or a shared meal. Many also speak of a community that belongs to something larger than any one leader, whether that is God, a sacred story, or a long line of people who kept the faith before. A time without a settled leader can feel like a wilderness, and many sacred stories tell of people being formed in the wilderness. For some, the leaving shakes their faith or their trust, especially if the goodbye is painful. That is worth hearing, not correcting. Every faith tradition and everything in-between has its own words for sending and receiving; use the words your community knows.",
   "plain": {
+    "title": "Our Leader Is Leaving",
    "short": "When a leader moves on, and the group waits for who comes next.",
    "feel": "Maybe the news came in a letter read aloud on a weekend, or in a quiet word after a meeting. Some people feel a rush of thanks. Some feel hurt, or even left. Some worry right away about what happens next: who will lead the gatherings, visit the sick, run the youth group, or keep the meetings going. Long-time members may remember other goodbyes, and some of those still ache. Newer people may wonder if they still belong now that the person who welcomed them is going. A group can feel all of this in the same room. The leader may be grieving too, and may be unsure how much to say. Every one of these reactions is part of loving a community. The season that follows, with an interim leader, a search, or just a gap, can feel unsettled. It can also become a time when a community remembers who it is.",
    "quick": [
@@ -5561,6 +5562,7 @@ const TOPICS = [
   },
   "faith": "Every tradition has ways of grieving together: funeral rites, sitting with the family, prayers for the dead, memorial days, candles, meals brought to the house, and words said year after year. These practices are a gift a community gives its grieving members, and they can hold what words can't. Many traditions speak of hope beyond death, of the communion of saints, or of the dead living on in memory and blessing. Grief can also shake faith, especially after a sudden or tragic death. Someone may ask why God allowed it, or feel far from God for a while. These questions belong in the community too. Listen to them, honor them, and resist rushing to answers. Every faith tradition and everything in-between grieves; use the words and rituals your community knows.",
   "plain": {
+    "title": "After a Loss in Our Community",
    "feel": "The empty chair is the first thing many people notice. The voice missing from the choir, the coffee no one else makes quite the same way, the name still on the group list. Some people knew the person for decades; some only by sight. Both can grieve. A long, expected death after a full life can bring sadness and thanks together. A sudden death, or the death of a child or young person, can bring shock that runs through the whole community. A death by suicide or an overdose can bring questions people are afraid to ask out loud. Old losses wake up, too: a funeral in the same room can bring back every other funeral there. Some people want to talk about it constantly; others want things to feel normal. A community can hold all of this at once.",
    "quick": [
     "When someone in a group dies, the whole group grieves, in many different ways.",
@@ -7134,6 +7136,7 @@ const TOPICS = [
   },
   "faith": "Many sacred stories tell of a faithful few: a small band of people who kept the light burning, a remnant who carried hope forward, a tiny seed that grew into something large. Many traditions also honor the people who came before, the saints and ancestors whose prayers and work still hold a community. For some, a shrinking congregation feels like a sign of failure, or even of being abandoned by God, and that is a real spiritual struggle worth hearing with kindness. For others, the closeness of a small community renews their faith. Every faith tradition and everything in-between has words for small beginnings, faithful remnants, and seasons of pruning that lead to new growth. Use the words your community knows.",
   "plain": {
+    "title": "When Our Group Is Growing Smaller",
    "short": "When a community or group is smaller than it was, and wonders who it is now and what comes next.",
    "quick": [
     "Smaller is a season with its own gifts. Many strong communities are small and know exactly who they are.",
@@ -7537,6 +7540,7 @@ const TOPICS = [
   },
   "faith": "Hurt inside a faith community can wound a person's relationship with the sacred itself. Some feel far from God, or unsure whether they belong in any faith community again. Many traditions speak of lament, of a God who stands with those who are wronged, of justice and repair, and of forgiveness as a gift given freely in its own time, never demanded. Some find healing in a new community, some in a renewed relationship with their old one, and some in quiet, personal practices for a season. All of these can be part of a healing path. Every faith tradition and everything in-between has words for confession, repair, and healing. Use the words your community knows, and let the hurt person choose their own.",
   "plain": {
+    "title": "Hurt Inside Our Community",
    "short": "When someone has been hurt inside our own group or community, and we want to heal and stay safe.",
    "quick": [
     "Hurt inside a close community cuts deep, because it happens in a place meant to be safe.",

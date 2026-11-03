@@ -8624,6 +8624,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "leader-leaving",
     "side": "you",
     "title": "Our Pastor or Leader Is Leaving",
+    "plainTitle": "Our Leader Is Leaving",
     "sideName": "For the Group",
     "mins": 4,
     "blurb": "For everyone in a community or group saying goodbye to a leader, and holding the season in between.",
@@ -8865,6 +8866,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "leader-leaving",
     "side": "helper",
     "title": "Our Pastor or Leader Is Leaving",
+    "plainTitle": "Our Leader Is Leaving",
     "sideName": "For the Leader",
     "mins": 4,
     "blurb": "For the pastor, elder, board member, or group leader guiding a community through a leader leaving.",
@@ -9100,6 +9102,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "congregation-loss",
     "side": "you",
     "title": "After a Loss in Our Congregation",
+    "plainTitle": "After a Loss in Our Community",
     "sideName": "For the Group",
     "mins": 3,
     "blurb": "For everyone in a congregation or group grieving one of their own.",
@@ -9301,6 +9304,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "congregation-loss",
     "side": "helper",
     "title": "After a Loss in Our Congregation",
+    "plainTitle": "After a Loss in Our Community",
     "sideName": "For the Leader",
     "mins": 4,
     "blurb": "For the pastor, faith leader, or group leader guiding a community through a death.",
@@ -12875,6 +12879,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "growing-smaller",
     "side": "you",
     "title": "When Our Church Is Growing Smaller",
+    "plainTitle": "When Our Group Is Growing Smaller",
     "sideName": "For the Group",
     "mins": 3,
     "blurb": "For everyone in a congregation or group that is smaller than it was.",
@@ -13063,6 +13068,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "growing-smaller",
     "side": "helper",
     "title": "When Our Church Is Growing Smaller",
+    "plainTitle": "When Our Group Is Growing Smaller",
     "sideName": "For the Leader",
     "mins": 4,
     "blurb": "For the pastor, elder, board member, or group leader guiding a community that is growing smaller.",
@@ -13690,6 +13696,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "hurt-inside",
     "side": "you",
     "title": "Hurt Inside Our Faith Community",
+    "plainTitle": "Hurt Inside Our Community",
     "sideName": "For the Group",
     "mins": 3,
     "blurb": "For everyone in a congregation or group after someone has been hurt among us.",
@@ -13867,6 +13874,7 @@ window.GG_LEARN_GUIDES.grove = {
     "guide": "hurt-inside",
     "side": "helper",
     "title": "Hurt Inside Our Faith Community",
+    "plainTitle": "Hurt Inside Our Community",
     "sideName": "For the Leader",
     "mins": 4,
     "blurb": "For the pastor, elder, board member, or group leader after someone has been hurt inside the community.",
@@ -17524,7 +17532,7 @@ window.GG_LEARN_GUIDES.grove = {
 // Faith or Plain: the grove's wording picks which scenes play. Safe to call often.
 window.GROVE_VIDS_WORDING = function (plain) {
   (window.GG_LEARN_GUIDES.grove.guides || []).forEach(function (g) {
-    ['you', 'helper'].forEach(function (k) { var r = g[k]; if (!r) return; if (!r.faithScenes) r.faithScenes = r.scenes; r.scenes = plain && r.plainScenes ? r.plainScenes : r.faithScenes; });
+    ['you', 'helper'].forEach(function (k) { var r = g[k]; if (!r) return; if (!r.faithScenes) r.faithScenes = r.scenes; r.scenes = plain && r.plainScenes ? r.plainScenes : r.faithScenes; if (r.plainTitle) { if (!r.faithTitle) r.faithTitle = r.title; r.title = plain ? r.plainTitle : r.faithTitle; } });
   });
 };
 // The Grove sets GROVE_PLAIN on every render, so a video opened from Learn plays in the grove's own words.

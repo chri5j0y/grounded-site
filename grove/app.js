@@ -962,7 +962,7 @@ function lcPickPractices(picks, max) {
   return joinOrder(out).slice(0, max);
 }
 function lcCard(t) {
-  const r = lcRing(t.ring), fit = lcFits(t), tt = lcT(t), id = esc(t.id), ttl = esc(t.title);
+  const r = lcRing(t.ring), fit = lcFits(t), tt = lcT(t), id = esc(t.id), ttl = esc(tt.title);
   return `<article class="gv-lc-card" style="--rc:${r.color}"><span class="gv-lc-label">${esc(r.name)}</span><h4>${ttl}</h4><p>${esc(tt.short || '')}</p>
     <p class="gv-lc-for">${fit && G ? 'Fits our grove' : 'For ' + esc(list3(lcKinds(t)))}${lcWatchedBoth(t.id) ? ' · Both videos watched' : ''}</p>
     <div class="gv-lc-cbtns"><button type="button" class="btn btn-gold btn-sm" data-act="lc-open" data-id="${id}" aria-label="Read: ${ttl}">Read</button><button type="button" class="btn btn-line btn-sm" data-act="lc-watch" data-id="${id}" data-side="you" aria-label="Watch For the Group: ${ttl}">${icon('play')} For the Group</button><button type="button" class="btn btn-line btn-sm" data-act="lc-watch" data-id="${id}" data-side="helper" aria-label="Watch For the Leader: ${ttl}">${icon('play')} For the Leader</button></div></article>`;
@@ -1137,13 +1137,13 @@ function lcHomeHtml() {
   const picks = lcPicks(3); if (!picks.length) return '';
   const ps = lcPickPractices(picks, 3);
   return `<div class="card gv-lc-home"><h3>Picked for Us</h3><p class="muted">From What's Changed Lately, our Growing Edges, and Who's in Our Circle. Every guide and practice stays open.</p>
-    <div class="gv-lc-links">${picks.map(t => `<button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">${esc(t.title)}</button>`).join('')}</div>
+    <div class="gv-lc-links">${picks.map(t => `<button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">${esc(lcT(t).title)}</button>`).join('')}</div>
     ${ps.length ? `<p class="gv-lc-pp">Practices: ${ps.map(p => esc(pv(p).name)).join(', ')}. <button type="button" class="text-btn" data-tab="together">Open Together</button></p>` : ''}</div>`;
 }
 // After a check-in: the guides that fit what changed and where the grove wants to grow.
 function lcAfterCheckin(ci) {
   const picks = lcPicks(4, ci); if (!picks.length) return '';
-  return `<h4>When Life Changes Together</h4><p class="muted">Guides that may help, from what changed and our Growing Edges.</p><div class="gv-lc-links">${picks.map(t => `<button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">${esc(t.title)}</button>`).join('')}</div>`;
+  return `<h4>When Life Changes Together</h4><p class="muted">Guides that may help, from what changed and our Growing Edges.</p><div class="gv-lc-links">${picks.map(t => `<button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">${esc(lcT(t).title)}</button>`).join('')}</div>`;
 }
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.grove = id => { if (LC.some(t => t.id === id)) lcOpen(id); };

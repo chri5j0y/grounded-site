@@ -11051,7 +11051,7 @@ window.GG_LEARN = {
            "opts": [
             "Only at your yearly check-in",
             "In the Today tab, a little each day",
-            "Only with a chaplain"
+            "Only with a Grounded Guide"
            ],
            "right": 1,
            "why": "Oak is built for small steps every day, in the Today tab.",
