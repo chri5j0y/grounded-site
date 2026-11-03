@@ -165,7 +165,7 @@
   // The six parts rename (Rebrand Session 4): each tree app's record moves to the new part names.
   // gg-app.js holds the rule (GGParts). The Grove's record is never touched, since its strands are not parts.
   function renameParts(v) {
-    var P = window.GGParts; if (P && v && typeof v === 'object') ['maple', 'aspen', 'oak'].forEach(function (t) { if (v[t] && typeof v[t] === 'object') P.fix(v[t]); });
+    var P = window.GGParts; if (P && typeof P.fix === 'function' && v && typeof v === 'object') ['maple', 'aspen', 'oak'].forEach(function (t) { if (v[t] && typeof v[t] === 'object') P.fix(v[t]); });
     // BLD 885: renamed practices carry forward in saved plans and day marks (shared/gg-practice-alias.js).
     if (window.GGPracticeAlias && v && typeof v === 'object') { try { window.GGPracticeAlias.fixVault(v); } catch (e) {} }
     return v;
