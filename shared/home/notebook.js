@@ -98,6 +98,7 @@
     '.ggnb-skill small{display:block;color:var(--ink-soft);font-size:14px}',
     '.ggnb-skill .more{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 0 32px}',
     '.ggnb-tbtn{background:none;border:0;padding:4px 0;color:var(--gold);font:inherit;font-size:14.5px;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-align:left}',
+    '.ggnb-skill .more .ggnb-guide{flex-basis:100%;margin-left:0}',
     '.ggnb-guide{margin:6px 0 0 32px;padding:10px 12px;border-radius:12px;background:var(--card-2);font-size:15px}',
     '.ggnb-guide p{margin:0 0 6px}',
     '.ggnb-h3{font-family:"Barlow Condensed",sans-serif;font-size:20px;margin:18px 0 8px}',
@@ -215,7 +216,7 @@
 
     function homeHtml(L) {
       var H = cfg.home(L), chs = cfg.chapters(L), total = chs.reduce(function (t, c) { return t + cfg.written(c, L); }, 0);
-      return artHtml() + '<h2>' + esc(H.title) + '</h2>' + (H.intro || []).map(function (t) { return '<p class="ggnb-lead">' + esc(t) + '</p>'; }).join('') +
+      return artHtml() + (cfg.art && cfg.art.src && cfg.art.title === H.title ? '' : '<h2>' + esc(H.title) + '</h2>') + (H.intro || []).map(function (t) { return '<p class="ggnb-lead">' + esc(t) + '</p>'; }).join('') +
         '<p class="ggnb-count">' + esc(H.count(total)) + '</p>' +
         '<div class="ggnb-chs">' + chs.map(function (c) { var n = cfg.written(c, L), closed = c.optIn && !L.opened[c.id];
           return '<button type="button" class="ggnb-ch' + (closed ? ' closed' : '') + '" data-nb="open" data-id="' + esc(c.id) + '"><b>' + esc(cfg.T(c, 'title')) + '</b><span>' + esc(cfg.chSub(c, L, n, closed)) + '</span></button>'; }).join('') +
