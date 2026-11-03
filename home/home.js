@@ -1793,7 +1793,9 @@
     var sober = sd ? soberHtml(sd) : (h.parts.indexOf('sober') >= 0 ? soberInviteHtml() : '');
     var fruit = tendReady() && tendIsReady() && hasFn('render') ? '<div id="hm-fruit" class="hm-sec"></div>' : '';
     void season; void ed;
-    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + growToolsHtml() + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + plan + planDoorGrow() + ready + memberGrowHtml() + sober + fruit + (h.hidden.tend || tendStarted() || !member() ? '' : offerHtml(h)) + '</div></div>';
+    // BLD 911 (Chris: "it is confusing to have 2 plans.. cant we condense to one?"): one Growth Plan. My Growth Plan (the BLD 893
+    // flow) holds the practices, body, mind, spirit, and table in one; the tree's own plan card shows only where that flow is not offered.
+    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + growToolsHtml() + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + (planOK() ? planDoorGrow() : plan) + ready + memberGrowHtml() + sober + fruit + (h.hidden.tend || tendStarted() || !member() ? '' : offerHtml(h)) + '</div></div>';
   }
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
@@ -1894,7 +1896,7 @@
     ['household', 'people', 'Household', 'The people at your table and your family'],
     ['settings', 'gear', 'Settings', 'Your Four, voice, music, Tending setup'],
     ['privacy', 'shield', 'Privacy', 'On this device, locked with your passcode'],
-    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Week, Grow, and Library'],
+    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Check-in, Grow, Learn, and Library'],
     ['switch', 'swap', 'Who Is Tending?', 'Open another person on this device, or add one']
   ];
   function openSheet(sub) {
@@ -2022,15 +2024,18 @@
   var TOUR_V = 'b884';
   var TOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: a practice for each of your four, your meals, movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
-    { k: 'week', art: 'recipes', ey: 'Tab 2 of 4', t: 'Week', d: 'Seven days at a glance, or the whole month: your meals, your movement, Sunday Together Prep, and one shopping list for the week.', tr: 'Look over the next few days and pick your shopping day.' },
-    { k: 'grow', art: 'growth', ey: 'Tab 3 of 4', t: 'Grow', d: 'Your tree: the four parts you tend, the two that grow from your tending, your growth plan, and My Grounded Way Plan, with each check-in adding to your story.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
-    { k: 'library', art: 'library', ey: 'Tab 4 of 4', t: 'Library', d: 'Lessons, guides for when life changes, Grounded Recipes with holidays and gatherings, workouts, and quiet, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
+    // BLD 911: five tabs (BLD 910), and Week opens from Today and Grow.
+    { k: 'checkin', art: 'tend-mind', ey: 'Tab 2 of 5', t: 'Check-in', d: 'How each part of your tree is growing: Strong, Steady, or a Growing Edge. The questions come from your tree, made for your age.', tr: 'Take a Quick Check-in, about two minutes.' },
+    { k: 'grow', art: 'growth', ey: 'Tab 3 of 5', t: 'Grow', d: 'Your Growth Plan, your week, your season, and your family: the practices you choose, body, mind, spirit, and your table, in one plan.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
+    { k: 'learn', art: 'learn', ey: 'Tab 4 of 5', t: 'Learn', d: 'Short lessons and guides for when life changes, chosen for your tree, each playing right here.', tr: 'Play one lesson, about three minutes.' },
+    { k: 'library', art: 'library', ey: 'Tab 5 of 5', t: 'Library', d: 'Grounded Recipes with holidays and gatherings, workouts, quiet, stories, and every Grounded tool, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
   ];
   var KTOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
-    { k: 'tree', art: 'tend-fruit', ey: 'Your Tree', t: 'My Tree', d: 'You tend four parts of your tree, and the trunk and fruit grow from your tending.', tr: 'Check in with your grown-up and watch your tree light up!' }
+    { k: 'tree', art: 'tend-fruit', ey: 'Check-in', t: 'Check-in', d: 'You tend four parts of your tree, and the trunk and fruit grow from your tending. A check-in shows how each part is doing.', tr: 'Check in with your grown-up and watch your tree light up!' },
+    { k: 'watch', art: 'tend-mind', ey: 'Watch', t: 'Watch', d: 'Short videos to breathe, feel calm and strong, and learn about your tree.', tr: 'Try Birthday Candle Sigh: sniff, sniff, whoosh!' }
   ];
-  var TOUR_ART = { 'home-morning': [IMG + 'home-morning-wide.webp', IMG + 'home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'tend-mind': [IMG + 'tend-mind.webp', IMG + 'tend-mind.webp'], growth: [HERO + 'page-growth-wide.webp', HERO + 'page-growth-wide.webp'], library: [HERO + 'library-wide.webp', HERO + 'library-wide.webp'] };
+  var TOUR_ART = { learn: [HERO + 'learn/c133.webp', HERO + 'learn/c133.webp'], 'home-morning': [IMG + 'home-morning-wide.webp', IMG + 'home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'tend-mind': [IMG + 'tend-mind.webp', IMG + 'tend-mind.webp'], growth: [HERO + 'page-growth-wide.webp', HERO + 'page-growth-wide.webp'], library: [HERO + 'library-wide.webp', HERO + 'library-wide.webp'] };
   var T = { open: false, i: 0, list: TOUR, asked: {}, tries: 0, back: null };
   function tourSeen() { var h = homeRec(); return !!h.tour; }
   function maybeTour() {
@@ -2050,7 +2055,7 @@
         '<div class="hm-tour-hd"><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2>' + (T.i === 0 ? '<span class="hm-tour-open">Open to everyone during our launch season</span>' : '') + '</div></div>' +
       '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') +
         // BLD 893: the last card opens My Grounded Way Plan.
-        (last && !isKid(S.p) && planOK() ? '<button type="button" class="hm-tour-plan" data-hm-tour="plan">' + I('sprout') + '<span>' + (waySaved() ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</span></button>' : '') + '</div>' +
+        (last && !isKid(S.p) && planOK() ? '<button type="button" class="hm-tour-plan" data-hm-tour="plan">' + I('sprout') + '<span>' + (waySaved() ? 'Change My Plan' : 'Build My Growth Plan') + '</span></button>' : '') + '</div>' +
       '<div class="hm-tour-ft">' +
         (T.i > 0 ? '<button type="button" class="hm-tour-b back" data-hm-tour="back">' + I('back') + '<span>Back</span></button>' : '<span class="hm-tour-sp" aria-hidden="true"></span>') +
         '<span class="hm-tour-dots" role="img" aria-label="Card ' + (T.i + 1) + ' of ' + n + '">' + T.list.map(function (x, j) { return '<i' + (j === T.i ? ' class="on"' : '') + '></i>'; }).join('') + '</span>' +
@@ -2556,7 +2561,7 @@
   function paintPlan(keepScroll) {
     var wrap = document.getElementById('hm-plan'); if (!wrap || !WP.d) return;
     var i = WP.i, sc = wpScreen(), body = wrap.querySelector('.hm-wp-body'), top = keepScroll && body ? body.scrollTop : 0;
-    wrap.querySelector('.hm-wp-t').textContent = i === 0 ? 'My Grounded Way Plan' : WP_SCREENS[i];
+    wrap.querySelector('.hm-wp-t').textContent = i === 0 ? 'My Growth Plan' : WP_SCREENS[i];
     wrap.querySelector('[data-hm-wp="back"]').disabled = i === 0;
     wrap.querySelector('.hm-wp-dots').innerHTML = WP_SCREENS.map(function (_, j) { return '<i class="' + (j <= i ? 'on' : '') + '"></i>'; }).join('');
     wrap.querySelector('.hm-wp-dots').setAttribute('aria-label', 'Screen ' + (i + 1) + ' of ' + WP_SCREENS.length);
@@ -2572,7 +2577,7 @@
     WP.open = true; WP.i = at || 0; WP.snap = null; WP.sug = null; WP.back = document.activeElement;
     var wrap = document.createElement('div'); wrap.id = 'hm-plan'; wrap.className = 'hm-wpwrap';
     wrap.innerHTML = '<div class="hm-wp-bg" aria-hidden="true"></div><section class="hm-wp" role="dialog" aria-modal="true" aria-labelledby="hm-wp-tt">' +
-      '<header class="hm-wp-bar"><button type="button" class="hm-wp-back" data-hm-wp="back" aria-label="Back">' + I('back') + '</button><div class="hm-wp-t" id="hm-wp-tt">My Grounded Way Plan</div><div class="hm-wp-dots" role="img"></div>' +
+      '<header class="hm-wp-bar"><button type="button" class="hm-wp-back" data-hm-wp="back" aria-label="Back">' + I('back') + '</button><div class="hm-wp-t" id="hm-wp-tt">My Growth Plan</div><div class="hm-wp-dots" role="img"></div>' +
       '<button type="button" class="hm-wp-x" data-hm-wp="close" aria-label="Close">' + I('plus') + '</button></header>' +
       '<div class="hm-wp-body"><p class="hm-loading">Opening your plan…</p></div><footer class="hm-wp-foot"></footer></section>';
     (document.querySelector('main.hm') || document.body).appendChild(wrap);
@@ -2649,14 +2654,14 @@
   function planDoorGrow() {
     if (!planOK()) return '';
     var w = wayRec(), s = w.saved;
-    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">My Grounded Way Plan</div>' +
-      '<h3 class="hm-h3">' + (s ? 'Your Plan' : 'One Plan for Your Whole Self') + '</h3><p class="hm-sub">' + (s ? 'Body, mind, spirit, and your table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes.') + '</p>' +
-      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div></div></div></article>';
+    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Growth Plan</div>' +
+      '<h3 class="hm-h3">Your Growth Plan</h3><p class="hm-sub">' + (function () { var pc = planList(S.id, S.tree).length; return (pc ? nWord(pc) + (pc === 1 ? ' practice' : ' practices') + ' for your four. ' : '') + (s ? 'Your practices, body, mind, spirit, and table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Your practices, body, mind, spirit, and table, in one plan shaped by your latest check-in. About five minutes.'); })() + '</p>' +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Growth Plan') + '</button></div></div></div></article>';
   }
   function planDoorWeek() {
     if (!planOK()) return '';
     var s = waySaved();
-    return '<div class="hm-wplan"><span class="tx"><b>My Grounded Way Plan</b><small>' + (s ? 'Movement, meditation, spirit, and meals, on their days.' : 'Build one plan for body, mind, spirit, and your table.') + '</small></span><button type="button" class="hm-pill" data-hm-wpopen="1">' + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div>';
+    return '<div class="hm-wplan"><span class="tx"><b>My Growth Plan</b><small>' + (s ? 'Movement, meditation, spirit, and meals, on their days.' : 'Build one plan for body, mind, spirit, and your table.') + '</small></span><button type="button" class="hm-pill" data-hm-wpopen="1">' + (s ? 'Change My Plan' : 'Build My Growth Plan') + '</button></div>';
   }
   /* Week's day rows: the meditation and the spirit items on that day. */
   function weekExtra(d) {
