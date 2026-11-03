@@ -24,7 +24,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=b792c">
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
-<link rel="stylesheet" href="style.css?v=b817">
+<link rel="stylesheet" href="style.css?v=b909">
 <style>
 /* Why Grounded exists */
 .why-story{max-width:760px;}
@@ -433,6 +433,34 @@ a.ht-wlc:hover{border-color:var(--gold);}
 .mv-go .btn{margin:0;}
 @media (max-width:760px){.mv-grid{grid-template-columns:1fr;}}
 </style>
+<style>/* BLD 909 Clean Site: a short, tidy home page. One line, one picture, picture cards, the trees, Membership, Stories. */
+.hm-paths,.hm-trees,.hm-member{padding:64px 0;}
+.hm-member{padding:44px 0;}
+.hm-h{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(30px,3.6vw,44px);line-height:1.1;margin:0 0 26px;}
+.hm-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;}
+.hm-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;color:var(--ink);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;}
+.hm-card:hover,.hm-card:focus-visible{transform:translateY(-3px);box-shadow:0 12px 28px rgba(44,24,16,.14);border-color:var(--gold);}
+.hm-card img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;}
+.hm-card-t{display:block;padding:16px 18px 18px;}
+.hm-card-t b{display:block;font-size:20px;line-height:1.25;font-weight:700;}
+.hm-card-t span{display:block;font-size:16px;line-height:1.45;color:var(--ink-soft);margin-top:4px;}
+.hm-tree-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;}
+.hm-tree-row a{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 8px;border-radius:16px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .2s ease,transform .2s ease;}
+.hm-tree-row a:hover,.hm-tree-row a:focus-visible{border-color:var(--gold);transform:translateY(-2px);}
+.hm-tree-row img{width:56px;height:56px;border-radius:14px;}
+.hm-tree-row b{font-size:18px;line-height:1.2;}
+.hm-tree-row span{font-size:14.5px;line-height:1.35;color:var(--ink-soft);}
+.hm-more{margin-top:22px;font-size:17px;color:var(--ink-soft);}
+.hm-more .text-link{margin-right:2px;}
+.hm-member-in{display:flex;justify-content:space-between;align-items:center;gap:18px 32px;flex-wrap:wrap;padding:28px 30px;border-radius:18px;border-left:5px solid var(--gold);}
+.hm-member-in > div{flex:1 1 420px;}
+.hm-member-in .hm-h{margin-bottom:8px;}
+.hm-member-in p{font-size:17.5px;color:var(--ink-soft);max-width:620px;}
+@media (max-width:900px){.hm-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}.hm-tree-row{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:600px){.hm-paths,.hm-trees{padding:44px 0;}.hm-cards{gap:12px;}.hm-card-t{padding:11px 12px 13px;}.hm-card-t b{font-size:16.5px;}.hm-card-t span{font-size:14px;}.hm-tree-row{gap:10px;}.hm-tree-row a{padding:14px 4px;}.hm-tree-row img{width:46px;height:46px;}.hm-tree-row b{font-size:16px;}.hm-tree-row span{font-size:13px;}.hm-member-in{padding:22px 20px;}.hm-member-in .btn{width:100%;text-align:center;}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hm-card:hover{box-shadow:0 12px 28px rgba(0,0,0,.4);}}
+:root[data-theme="dark"] .hm-card:hover{box-shadow:0 12px 28px rgba(0,0,0,.4);}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -455,107 +483,37 @@ a.ht-wlc:hover{border-color:var(--gold);}
   </div>
 </section>
 
-<section id="steps" class="home-steps" aria-labelledby="steps-title">
+<section id="paths" class="hm-paths" aria-labelledby="paths-title">
   <div class="wrap">
-    <div class="eyebrow">The Grounded Way</div>
-    <h2 id="steps-title" class="hw-title">Three simple steps.</h2>
-    <ol class="tg-steps hs-steps">
-      <li><span class="hs-n">1</span><b>Get grounded.</b><span>Make your profile, meet your tree, check in, and choose what to add to your daily Home.</span></li>
-      <li><span class="hs-n">2</span><b>Tend your four.</b><span>Your daily Home gives you one small practice each for mind, body, spirit, and relationships. Use Do Tomorrow whenever you need it.</span></li>
-      <li><span class="hs-n">3</span><b>Grow meaning and hope.</b><span>Keep tending and watch your tree grow, with seasons and guidance there when life calls for them.</span></li>
-    </ol>
-    <div class="hs-go"><a class="btn btn-primary" href="/home/">Begin The Grounded Way</a></div>
-  </div>
-</section>
-
-<section id="way-door" class="way-band" aria-labelledby="way-title" style="--img:url(/shared/heroes/way/grounded-way-wide.webp);--img-n:url(/shared/heroes/way/grounded-way-narrow.webp)">
-  <div class="wrap way-band-in tree-in">
-    <div class="eyebrow">Your Tree</div>
-    <h2 id="way-title">Tend four. Grow two.</h2>
-    <p>A tree grows strong when its roots, bark, leaves, and branches are tended, and so do you. Tend these four a few minutes each day, and meaning and hope grow from that tending, ring by ring and season by season.</p>
-    <h3 class="tp-h">Tend four</h3>
-    <ul class="tp-grid tp-four">
-      <li style="--k:#D9A982"><b>Roots: Spirit</b><span>Stillness, gratitude, and what grounds you, in your own way.</span></li>
-      <li style="--k:#CBA6F2"><b>Bark: Mind</b><span>Your thoughts, feelings, and focus: calm, clear, and steady.</span></li>
-      <li style="--k:#9CCB8A"><b>Leaves: Body</b><span>Whole food, water, movement, rest, and a clear, healthy body.</span></li>
-      <li style="--k:#94BAD8"><b>Branches: Relationships</b><span>The people you love, family, friends, and community, face to face.</span></li>
-    </ul>
-    <h3 class="tp-h">Grow two</h3>
-    <ul class="tp-grid tp-two">
-      <li style="--k:#E3B25A"><b>Trunk: Meaning</b><span>Thickens ring by ring, year by year. You know why you get up in the morning.</span></li>
-      <li style="--k:#F0957C"><b>Fruit: Hope</b><span>Comes in its season. You face tomorrow with trust.</span></li>
-    </ul>
-    <p class="tp-promise">The Grounded Way works when you tend all four parts.</p>
-    <div class="way-acts"><a class="btn btn-primary way-go" href="/home/">Begin The Grounded Way</a><a class="btn way-more" href="/the-grounded-way.html">What Is The Grounded Way?</a></div>
-  </div>
-</section>
-
-<section id="promises" class="home-promises" aria-labelledby="promises-title">
-  <div class="wrap">
-    <div class="eyebrow">Our Promises</div>
-    <h2 id="promises-title" class="hw-title">Made to be trusted.</h2>
-    <div class="pr-grid">
-      <div class="card pr-card"><b>Private</b><p>Your tree and your answers stay on your device.</p></div>
-      <div class="card pr-card"><b>For Every Person</b><p>Every age and stage, and all faith traditions and everything in-between.</p></div>
-      <div class="card pr-card"><b>Research-Informed</b><p>Built on proven practices and years of real chaplaincy work.</p></div>
+    <div class="eyebrow">Find Your Way</div>
+    <h2 id="paths-title" class="hm-h">Where would you like to begin?</h2>
+    <div class="hm-cards">
+      <a class="hm-card" href="/the-grounded-way.html"><img src="/shared/cards/home/way.webp" alt="" width="720" height="450" loading="lazy"><span class="hm-card-t"><b>The Grounded Way</b><span>Tend four, a few minutes a day.</span></span></a>
+      <a class="hm-card" href="living-sober.html"><img src="/shared/cards/home/sober.webp" alt="" width="720" height="450" loading="lazy"><span class="hm-card-t"><b>Living Sober</b><span>A clear mind and a healthy body.</span></span></a>
+      <a class="hm-card" href="tools.html#when-life-changes"><img src="/shared/cards/home/wlc.webp" alt="" width="720" height="450" loading="lazy"><span class="hm-card-t"><b>When Life Changes</b><span>Guides for grief and hard seasons.</span></span></a>
+      <a class="hm-card" href="/recipes/"><img src="/shared/cards/home/recipes.webp" alt="" width="720" height="450" loading="lazy"><span class="hm-card-t"><b>Grounded Recipes</b><span>Whole food, sized for your table.</span></span></a>
+      <a class="hm-card" href="services.html"><img src="/shared/cards/home/ceremonies.webp" alt="" width="720" height="450" loading="lazy"><span class="hm-card-t"><b>Ceremonies and Support</b><span>Weddings, farewells, and hard seasons.</span></span></a>
+      <a class="hm-card" href="/grove/"><img src="/shared/cards/home/grove.webp" alt="" width="720" height="450" loading="lazy"><span class="hm-card-t"><b>The Grove</b><span>Grow together as a family or group.</span></span></a>
     </div>
   </div>
 </section>
 
-<section id="tools" class="home-tools">
+<section id="trees" class="hm-trees" aria-labelledby="trees-title">
   <div class="wrap">
-    <div class="ht-head"><div><div class="eyebrow">Inside The Grounded Way</div><h2>A tree for every age, and a season for every chapter.</h2></div><a class="text-link" href="tools.html">See all tools</a></div>
-    <p class="ht-lead">Your profile sets your tree by age. Seasons open inside your Way when life calls for them, and the Grove lets you grow together.</p>
-    <h3 class="ht-sub">Age Trees</h3>
-    <div class="ht-grid ht-six"><a class="card ht-tool" style="--tc:#C4501E" href="https://growwithgrounded.com/maple/"><img class="ht-mark" src="/shared/marks/maple-small.svg" alt="" width="48" height="48" loading="lazy"><b>Maple</b><span>Grades K to 5</span></a><a class="card ht-tool" style="--tc:#1F6F74" href="https://growwithgrounded.com/aspen/"><img class="ht-mark" src="/shared/marks/aspen-small.svg" alt="" width="48" height="48" loading="lazy"><b>Aspen</b><span>Grades 6 to 8</span></a><a class="card ht-tool" style="--tc:#3A6B35" href="https://growwithgrounded.com/pine/"><img class="ht-mark" src="/shared/marks/pine-small.svg" alt="" width="48" height="48" loading="lazy"><b>Pine</b><span>Grades 9 to 12</span></a><a class="card ht-tool" style="--tc:#7F6610" href="https://growwithgrounded.com/birch/"><img class="ht-mark" src="/shared/marks/birch-small.svg" alt="" width="48" height="48" loading="lazy"><b>Birch</b><span>Young adults, 18 to 26</span></a><a class="card ht-tool" style="--tc:#3D5A73" href="https://growwithgrounded.com/oak/"><img class="ht-mark" src="/shared/marks/oak-small.svg" alt="" width="48" height="48" loading="lazy"><b>Oak</b><span>Adults, 26 to 60</span></a><a class="card ht-tool" style="--tc:#7A2E1C" href="https://growwithgrounded.com/sequoia/"><img class="ht-mark" src="/shared/marks/sequoia-small.svg" alt="" width="48" height="48" loading="lazy"><b>Sequoia</b><span>Older adults, 60 and up</span></a></div>
-    <h3 class="ht-sub">Seasons and Growing Together</h3>
-    <div class="ht-grid ht-four"><a class="card ht-tool" style="--tc:#3F6F94" href="living-sober.html"><img class="ht-mark" src="/shared/marks/living-sober.svg?v=b839" alt="" width="48" height="48" loading="lazy"><b>Living Sober</b><span>Any age, any stage</span></a><a class="card ht-tool" style="--tc:#4F6E8F" href="https://growwithgrounded.com/heartwood/"><img class="ht-mark" src="/shared/marks/heartwood-small.svg" alt="" width="48" height="48" loading="lazy"><b>Heartwood</b><span>Marriage</span></a><a class="card ht-tool" style="--tc:#5D5A6E" href="https://growwithgrounded.com/willow/"><img class="ht-mark" src="/shared/marks/willow-small.svg" alt="" width="48" height="48" loading="lazy"><b>Willow</b><span>The last season of life</span></a><a class="card ht-tool" style="--tc:#223829" href="https://growwithgrounded.com/grove/"><img class="ht-mark" src="/shared/marks/grove-small.svg" alt="" width="48" height="48" loading="lazy"><b>The Grove</b><span>Families, faith communities, and groups</span></a></div>
-    <a class="card ht-wlc" href="tools.html#when-life-changes">
-      <span class="ht-wlc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><circle cx="14.5" cy="12.5" r="1"/></svg></span>
-      <span class="ht-wlc-t"><b>When Life Changes</b><span>More than 500 guides for grief and hard seasons, for every age, each with two short videos. A pet dies, a parent gets sick, scary news.</span></span>
-      <span class="btn btn-primary ht-wlc-b">Find a Guide</span>
-    </a>
-    <a class="card ht-wlc ht-rec" href="/recipes/">
-      <span class="ht-wlc-ic" aria-hidden="true"><img src="/shared/cards/way-recipes.webp?v=b875" alt="" width="48" height="48" loading="lazy"></span>
-      <span class="ht-wlc-t"><b>Grounded Recipes</b><span>Every meal of the day and the big days, sized for your table, with a calm voice to guide each step.</span></span>
-      <span class="btn btn-secondary ht-wlc-b">See the Recipes</span>
-    </a>
+    <div class="eyebrow">Age Trees</div>
+    <h2 id="trees-title" class="hm-h">A tree for every age.</h2>
+    <div class="hm-tree-row"><a href="/maple/"><img src="/shared/marks/maple-small.svg" alt="" width="56" height="56" loading="lazy"><b>Maple</b><span>Grades K to 5</span></a><a href="/aspen/"><img src="/shared/marks/aspen-small.svg" alt="" width="56" height="56" loading="lazy"><b>Aspen</b><span>Grades 6 to 8</span></a><a href="/pine/"><img src="/shared/marks/pine-small.svg" alt="" width="56" height="56" loading="lazy"><b>Pine</b><span>Grades 9 to 12</span></a><a href="/birch/"><img src="/shared/marks/birch-small.svg" alt="" width="56" height="56" loading="lazy"><b>Birch</b><span>Ages 18 to 26</span></a><a href="/oak/"><img src="/shared/marks/oak-small.svg" alt="" width="56" height="56" loading="lazy"><b>Oak</b><span>Ages 26 to 60</span></a><a href="/sequoia/"><img src="/shared/marks/sequoia-small.svg" alt="" width="56" height="56" loading="lazy"><b>Sequoia</b><span>60 and up</span></a></div>
+    <p class="hm-more">Seasons for every chapter: <a class="text-link" href="/heartwood/">Heartwood</a> for marriage, <a class="text-link" href="/willow/">Willow</a> for the last season of life. <a class="text-link" href="tools.html">See all tools</a></p>
   </div>
 </section>
 
-<section id="living-sober" class="ls-band" aria-labelledby="ls-band-title" style="--img:url(/shared/heroes/living-sober-wide.webp?v=b839);--img-n:url(/shared/heroes/living-sober-narrow.webp?v=b839)">
-  <div class="wrap ls-band-in">
-    <img class="ls-band-mark" src="/shared/marks/living-sober.svg?v=b839" alt="" width="84" height="84" loading="lazy">
-    <div class="eyebrow">Living Sober</div>
-    <h2 id="ls-band-title">Grounded stands for living sober.</h2>
-    <p>A clear mind, a healthy body, and a life you're fully present for. Words for every day of the first year, short videos, and 90 days to begin, for anyone growing sober and the people who love them. You define your own sobriety.</p>
-    <a class="btn btn-primary ls-band-btn" href="living-sober.html">Explore Living Sober</a>
-  </div>
-</section>
-
-<section id="who" class="who-band who-home">
+<section id="membership" class="hm-member" aria-labelledby="member-title">
   <div class="wrap">
-    <div class="who-text">
-      <div class="eyebrow">Your Guides</div>
-      <h2>We know how hard change can be, and how good life is on the other side.</h2>
-      <p class="lead">Chris is a hospice chaplain and 18 years sober. He has sat with hundreds of people at the end of life and heard what truly matters.</p>
-      <p>Kayti and Chris walk with families through marriage, grief, and every season of life. The Grounded Way grows from that work: research-informed tools, made for real days, so you can live more present and love more fully.</p>
-      <a class="who-founders" href="about.html"><span class="wf-pics"><img src="kayti-joy-avatar.jpg" alt="" width="44" height="44" loading="lazy"><img src="chris.jpg?v=b830" alt="" width="44" height="44" loading="lazy"></span><span>Founded by Kayti and Chris Joy</span></a>
-      <div><a class="btn btn-primary" href="about.html">About Us</a></div>
-    </div>
-  </div>
-</section>
-
-<section id="ceremonies" class="home-cer" aria-labelledby="cer-title">
-  <div class="wrap">
-    <div class="card cer-quiet">
-      <div class="cq-text">
-        <div class="eyebrow">Ceremonies and Support</div>
-        <h2 id="cer-title">For life&rsquo;s big days and hard seasons.</h2>
-        <p>Weddings, blessings, funerals and memorials, and support through grief and hard seasons, in person with Chris and Kayti, for all faith traditions and everything in-between.</p>
-        <p class="cq-links"><a class="text-link" href="weddings.html">Weddings</a><a class="text-link" href="funerals-memorials.html">Funerals and Memorials</a><a class="text-link" href="services-hard-seasons.html">Hard Seasons</a><a class="text-link" href="the-grounded-marriage.html">The Grounded Marriage</a></p>
-      </div>
-      <div class="cq-act"><a class="btn btn-secondary" href="services.html">See Ceremonies and Support</a></div>
+    <div class="card hm-member-in">
+      <div><div class="eyebrow">Membership</div>
+      <h2 id="member-title" class="hm-h">Go as deep as you like.</h2>
+      <p>Start today with your tree and daily practices. Membership, opening soon, opens the full suite for you or your household.</p></div>
+      <a class="btn btn-secondary" href="/the-grounded-way.html#ways">See Ways to Walk It</a>
     </div>
   </div>
 </section>
@@ -574,14 +532,6 @@ a.ht-wlc:hover{border-color:var(--gold);}
     </div>
   </div>
 </section>
-<section id="mission" class="home-mission" aria-label="Our mission and vision">
-  <div class="wrap mv-grid">
-    <div><div class="eyebrow">Our Mission</div><p class="mv-line">Grounded creates simple tools and offers guidance and support that help people grow healthy in mind, body, spirit, and relationships, through every season of life.</p></div>
-    <div><div class="eyebrow">Our Vision</div><p class="mv-line">Whole people and whole families, living well from first breath to last.</p></div>
-  </div>
-  <div class="wrap mv-go"><a class="btn btn-primary" href="/home/">Begin The Grounded Way</a><a class="text-link" href="/the-grounded-way.html">What Is The Grounded Way?</a><a class="text-link" href="/try-one-practice.html">Try One Practice</a></div>
-</section>
-
 <section id="kind-words" hidden>
   <div class="wrap">
     <div class="eyebrow">Kind Words</div>
@@ -594,36 +544,9 @@ a.ht-wlc:hover{border-color:var(--gold);}
   </div>
 </section>
 
-<section id="contact" class="contact">
-  <div class="wrap">
-    <div class="eyebrow">Contact</div>
-    <h2>Reach out.</h2>
-    <p class="lead">Celebrations, farewells, hard seasons, growth, speaking, questions, or a story you want to share. We read every message and reply within two days, and the same day when it's urgent.</p>
-    <form class="inquiry card" id="inquiry" novalidate>
-      <div class="f-grid">
-        <label>Your name<input type="text" name="name" autocomplete="name" required></label>
-        <label>Email<input type="email" name="email" autocomplete="email" required></label>
-        <label><span class="lab">Phone <span class="opt">(optional)</span></span><input type="tel" name="phone" autocomplete="tel"></label>
-        <label>What can we help with?<select name="service" id="f-service"><option value="">Choose one</option><option>Funeral or memorial</option><option>Celebration of life</option><option>Wedding or vow renewal</option><option>Blessing or milestone</option><option>Hard Season Support</option><option>Spiritual Guidance</option><option>Grief or caregiver support</option><option>Pregnancy or infant loss</option><option>Premarital Sessions</option><option>Meditation, sound, or movement</option><option>Speaking or training</option><option>The Grounded Way Workshops and Retreats</option><option>Something else</option></select></label>
-        <label><span class="lab">Date, if there is one <span class="opt">(optional)</span></span><input type="text" name="date" placeholder="For example: June 14, or still deciding"></label>
-        <label><span class="lab">Location <span class="opt">(optional)</span></span><input type="text" name="location" placeholder="City, or Zoom"></label>
-      </div>
-      <label class="full">Tell me a little about what's happening<textarea name="message" rows="5" required></textarea></label>
-      <label class="check-line urgent-line"><input type="checkbox" name="urgent"> A death has happened or is close. This is urgent.</label>
-      <label class="check-line"><input type="checkbox" name="help"> I'd like to ask about a reduced rate or grace spot</label>
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
-      <div class="f-actions"><button type="submit" class="btn btn-primary">Send Message</button><span class="f-status" id="f-status" role="status"></span></div>
-      <p class="f-note">When you check the urgent box, we'll usually reach out the same day. If you're in crisis or thinking about ending your life, call or text 988 any time.</p>
-    </form>
-    <p class="call-text" hidden></p>
-    <p class="contact-email">Rather write directly? <a class="text-link email-link" data-user="chris" data-subject="Hello Chris" href="#contact"><span data-fill>chris [at] growwithgrounded [dot] com</span></a>, <a class="text-link email-link" data-user="kayti" data-subject="Hello Kayti" href="#contact"><span data-fill>kayti [at] growwithgrounded [dot] com</span></a>, or <a class="text-link email-link" data-subject="Hello from growwithgrounded.com" href="#contact"><span data-fill>hello [at] growwithgrounded [dot] com</span></a></p>
-    <p class="contact-sub">Want the Wednesday stories instead? <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>
-    <p class="sr-only" id="email-text"><noscript>hello [at] growwithgrounded [dot] com</noscript></p>
-  </div>
-</section>
 </main>
 
-<a class="float-contact" id="float-contact" href="#contact"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg> Get in touch</a>
+<a class="float-contact" id="float-contact" href="contact.html"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg> Get in touch</a>
 <div class="bro-overlay" id="bro" hidden>
   <div class="bro" role="dialog" aria-modal="true" aria-labelledby="bro-title" tabindex="-1">
     <button type="button" class="bro-close" data-close aria-label="Close">&times;</button>
@@ -642,7 +565,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b779n"></script>
-<script src="nav.js?v=b908" defer></script>
+<script src="nav.js?v=b909" defer></script>
 <script>
 /* Grounded service scenes: one small illustrated moment per topic.
    Motion plays once, then settles, except tiny living details. Reduced motion shows the still final scene. */
@@ -925,6 +848,7 @@ const FORM_ENDPOINT = '';
     const sel = $('#f-service'), s = SV[id];
     if (sel) sel.value = (offer && OFFER_TO_FORM[offer]) || (s ? s.form : '') || '';
     const form = $('#inquiry');
+    if (!form) { const want = (offer && OFFER_TO_FORM[offer]) || (s ? s.form : '') || ''; location.href = 'contact.html' + (want ? '#plan=' + encodeURIComponent(want) : ''); return; } // BLD 909: the form lives on the Contact page
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     form.classList.add('flash'); setTimeout(() => form.classList.remove('flash'), 1600);
     setTimeout(() => { const n = form.querySelector('[name=name]'); if (n) n.focus({ preventScroll: true }); }, 700);
@@ -944,7 +868,7 @@ const FORM_ENDPOINT = '';
 
   const form = $('#inquiry'), status = $('#f-status');
   const ADDRESS = 'hello' + '@' + 'growwithgrounded' + '.' + 'com';
-  form.addEventListener('submit', async e => {
+  if (form) form.addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(form);
     if (fd.get('_gotcha')) return;
@@ -982,7 +906,7 @@ const FORM_ENDPOINT = '';
     const hero = document.querySelector('.hero, .home-hero');
     let nearHero = true, nearContact = false;
     const upd = () => fc.classList.toggle('away', nearHero || nearContact);
-    new IntersectionObserver(es => { nearContact = es[0].isIntersecting; upd(); }, { threshold: 0.05 }).observe(contact);
+    if (contact) new IntersectionObserver(es => { nearContact = es[0].isIntersecting; upd(); }, { threshold: 0.05 }).observe(contact);
     if (hero) new IntersectionObserver(es => { nearHero = es[0].isIntersecting; upd(); }).observe(hero);
     upd();
   }
@@ -1056,14 +980,13 @@ const FORM_ENDPOINT = '';
 </script>
 <script>
 (function(){
+  // BLD 909: the contact form lives on the Contact page; old #contact and #plan= links go there
   function planFromHash(){
-    var h=decodeURIComponent(location.hash||'');
-    if(h.indexOf('#plan=')!==0) return;
-    var want=h.slice(6), sel=document.getElementById('f-service');
-    if(sel){ for(var i=0;i<sel.options.length;i++){ if(sel.options[i].text===want){ sel.selectedIndex=i; break; } } }
-    var c=document.getElementById('contact'); if(c) c.scrollIntoView({behavior:'smooth',block:'start'});
-    setTimeout(function(){ var n=document.querySelector('#inquiry input[name="name"]'); if(n) n.focus({preventScroll:true}); },600);
+    var h=location.hash||'';
+    if(h==='#contact') location.replace('contact.html');
+    else if(h.indexOf('#plan=')===0) location.replace('contact.html'+h);
   }
+  planFromHash();
   window.addEventListener('hashchange',planFromHash); window.addEventListener('load',planFromHash);
 })();
 </script>

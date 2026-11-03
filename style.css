@@ -624,3 +624,13 @@ section.about-lead{padding-bottom:36px;}
 .svc-art.pic{background:#2A1C10 center/cover no-repeat;}
 .ggn-band{height:clamp(150px,17vw,250px);background:#2A1C10 var(--img) center 64%/cover no-repeat;}
 @media (max-width:700px){.ggn-band{background-image:var(--img-n,var(--img));background-position:center 70%;}}
+
+/* BLD 909 Clean Site: On This Page, one row of section buttons under a long page's picture (the Living Sober pattern, shared) */
+.gg-jump{position:sticky;top:calc(68px + env(safe-area-inset-top,0px));z-index:40;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.gg-jump ul{list-style:none;margin:0 auto;padding:10px 22px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;max-width:1280px;}
+.gg-jump ul::-webkit-scrollbar{display:none;}
+.gg-jump li:first-child{margin-left:auto;}.gg-jump li:last-child{margin-right:auto;}
+.gg-jump a{display:inline-flex;align-items:center;white-space:nowrap;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;transition:border-color .2s,color .2s;}
+.gg-jump a:hover,.gg-jump a:focus-visible{border-color:var(--gold);color:var(--gold);}
+html:has(.gg-jump){scroll-padding-top:140px;}
+@media (max-width:600px){.gg-jump ul{padding:8px 16px;}.gg-jump a{font-size:14px;padding:7px 12px;min-height:38px;}}

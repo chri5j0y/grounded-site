@@ -28,11 +28,13 @@
   // and the Grove inside it; then Grounded Recipes and the libraries; then the helpers and the Field Guide.
   // Ceremonies and Support has its own menu beside this one.
   var WAYIC = '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">';
-  var GN_GROUPS = [
-    { name: 'The Grounded Way', items: [
+  // BLD 909 Clean Site: The Grounded Way has its own menu (the path, Membership, and the age trees); Tools holds the rest.
+  var WAY_GROUPS = [
+    { name: 'Start Here', items: [
       { id: 'home', title: 'Begin The Grounded Way', desc: 'Make your profile, meet your tree, and tend your four, a few minutes a day', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
       { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: ic.tree, bg: '#F1E6CC' },
-      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: ic.leaf, bg: '#E3EFD6' }
+      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: ic.leaf, bg: '#E3EFD6' },
+      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, opening soon', href: HOME + '/the-grounded-way.html#ways', icon: ic.door, bg: '#F3E5CC', color: '#6E4A14' }
     ] },
     { name: 'Age Trees', items: [
       { id: 'maple', title: 'Maple', desc: 'For grades K to 5', href: HOME + '/maple/', icon: ic.maple, bg: '#FBE1D4' },
@@ -42,6 +44,8 @@
       { id: 'oak', title: 'Oak', desc: 'For ages 26 to 60', href: HOME + '/oak/', icon: ic.oak, bg: '#F1E6CC' },
       { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' }
     ] },
+  ];
+  var GN_GROUPS = [
     { name: 'Seasons', items: [
       { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' },
       { id: 'heartwood', title: 'Heartwood', desc: 'For marriage: the couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' },
@@ -123,6 +127,7 @@
     '.gn-menu-sub > *:not(.gn-panel){display:none !important;}' +
     'a.gn-tool.gn-row{padding:6px 8px !important;}' +
     '.gn-svc .gn-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}' +
+    '.gn-one .gn-grid{grid-template-columns:1fr;}' +
     '@media (max-width:600px){.gn-grid,.gn-svc .gn-grid{grid-template-columns:1fr;}}' +
     '';
   var GN_DARK = ''+
@@ -164,9 +169,9 @@
     var a = (href.replace(HOME, '') || '/').replace(/\.html$/, ''), b = location.pathname.replace(/\.html$/, '');
     return a === b;
   }
-  function toolsBody() {
+  function toolsBody(groups) {
     var cur = here();
-    return GN_GROUPS.map(function (g) {
+    return (groups || GN_GROUPS).map(function (g) {
       return '<div class="gn-group">' + '<div class="gn-h">' + g.name + '</div>' +
         g.items.map(function (t) {
         var row;
@@ -180,6 +185,21 @@
         return row;
       }).join('') + '</div>';
     }).join('');
+  }
+  function wayBody() { return toolsBody(WAY_GROUPS); }
+  // BLD 909: About holds Contact, Rates, and Organizations, so the top bar stays short.
+  var ABOUT_ITEMS = [
+    { title: 'About Us', desc: 'Kayti and Chris Joy, our mission, and how we work', href: HOME + '/about.html', icon: ic.tree, bg: '#F1E6CC' },
+    { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: ic.speak, bg: '#F3E5CC' },
+    { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: ic.book, bg: '#F1E6CC' },
+    { title: 'For Organizations', desc: 'Churches, schools, hospices, and teams', href: HOME + '/organizations.html', icon: ic.shelf, bg: '#EDE7DA' }
+  ];
+  function aboutBody() {
+    return '<div class="gn-group"><div class="gn-h">About Grow With Grounded</div>' + ABOUT_ITEMS.map(function (t) {
+      var h = onPage(t.href);
+      return '<a class="gn-tool' + (h ? ' gn-here' : '') + '" href="' + t.href + '"' + (h ? ' aria-current="page"' : '') + '><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span>' +
+        '<span><b>' + t.title + (h ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + t.desc + '</small></span></a>';
+    }).join('') + '</div>';
   }
   function svcBody() {
     var f = SVC_FEATURED, fh = onPage(f.href);
@@ -317,9 +337,29 @@
     var link = links.filter(function (a) { return /#tools$/.test(a.getAttribute('href') || '') || /^\s*tools\s*$/i.test(a.textContent); })[0];
     var svc = links.filter(function (a) { return /^\s*(services|ceremonies and support)\s*$/i.test(a.textContent); })[0];
     if (!link && !svc) return;
+    var about = links.filter(function (a) { return /^\s*about\s*$/i.test(a.textContent); })[0];
+    var contact = links.filter(function (a) { return /^\s*contact\s*$/i.test(a.textContent); })[0];
     var st = document.createElement('style'); st.textContent = css + themed(GN_DARK); document.head.appendChild(st);
-    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Ceremonies and Support', aria: 'Ceremonies and Support', body: svcBody, all: ['See all Ceremonies and Support', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
+    // BLD 909: The Grounded Way gets its own menu, just before Tools
+    var way = null;
+    if (link) {
+      way = document.createElement('a'); way.href = HOME + '/the-grounded-way.html'; way.textContent = 'The Grounded Way';
+      var wh = here(); if (/^(way|home|try|maple|aspen|pine|birch|oak|sequoia)$/.test(wh)) { way.className = 'current'; way.setAttribute('aria-current', 'page'); }
+      if (wh && way.className && /(^|\s)current(\s|$)/.test(link.className)) { link.classList.remove('current'); link.removeAttribute('aria-current'); }
+      link.parentNode.insertBefore(way, link);
+    }
+    // Contact moves inside About (it stays in the footer and the Get in touch button too)
+    if (about && contact) {
+      if (/(^|\s)current(\s|$)/.test(contact.className) || contact.getAttribute('aria-current') || /^\/(rates|organizations)(\.html)?$/.test(location.pathname)) { about.classList.add('current'); about.setAttribute('aria-current', 'page'); }
+      contact.parentNode.removeChild(contact);
+    }
+    if (way) dropdown(menu, way, { id: 'gn-way-panel', label: 'The Grounded Way', aria: 'The Grounded Way', body: wayBody, all: ['What Is The Grounded Way?', HOME + '/the-grounded-way.html'], width: 640, cls: 'gn-svc' });
     if (link) dropdown(menu, link, { id: 'gn-panel', label: 'Tools', aria: 'Grounded tools', body: toolsBody, all: ['See all tools', HOME + '/tools.html'] });
+    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Ceremonies and Support', aria: 'Ceremonies and Support', body: svcBody, all: ['See all Ceremonies and Support', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
+    if (about && contact) dropdown(menu, about, { id: 'gn-about-panel', label: 'About', aria: 'About Grow With Grounded', body: aboutBody, all: ['Meet Kayti and Chris', HOME + '/about.html#your-guides'], width: 420, cls: 'gn-svc gn-one' });
+    // one order on every site: The Grounded Way, Tools, Ceremonies and Support, Stories, About
+    var tb = menu.querySelector('[aria-controls="gn-panel"]'), sb = menu.querySelector('[aria-controls="gn-svc-panel"]');
+    if (tb && sb && (tb.compareDocumentPosition(sb) & Node.DOCUMENT_POSITION_PRECEDING)) tb.parentNode.insertBefore(sb, tb.nextSibling);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
@@ -585,7 +625,8 @@
     var p = location.pathname, here = /^\/home\//.test(p) || /^\/the-grounded-way/.test(p);
     var a = document.createElement('a'); a.href = '/home/'; a.className = 'gg-way-link' + (here ? ' current' : ''); a.textContent = 'Begin The Grounded Way'; // BLD 907
     if (here) a.setAttribute('aria-current', 'page');
-    var first = menu.querySelector('a'); if (first && /index\.html$|\/$/.test(first.getAttribute('href') || '') && /home/i.test(first.textContent)) { first.classList.add('gg-home-link'); first.after(a); } else menu.insertBefore(a, menu.firstChild);
+    var first = menu.querySelector('a'); if (first && /index\.html$|\/$/.test(first.getAttribute('href') || '') && /home/i.test(first.textContent)) first.classList.add('gg-home-link');
+    menu.appendChild(a); // BLD 909: the gold Begin button closes the bar, after the five menus
     if (here) menu.querySelectorAll('a.current').forEach(function (x) { if (x !== a) { x.classList.remove('current'); x.removeAttribute('aria-current'); } });
     // BLD 879: Grounded Recipes lives in the Healthy Living menu group, The Grounded Way, and the front page (Chris: off the top bar).
     var st = document.createElement('style');
