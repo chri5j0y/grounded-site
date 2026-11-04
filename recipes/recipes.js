@@ -37,11 +37,16 @@
    and Grounded Cooking (played inside the element), with its own back stack, and it never reads or writes location.hash or
    history. The look lives in recipes/recipes.css (the page links it; a mount adds it once). GGRecipes.files lists the
    scripts the page loads, in order, so Home can load them before it mounts.
+   BLD 916 (Living Sober Path): the Drinks card reads Sober Drinks, the Celebration Drinks section opens with a Sober Drinks
+   line, and a search for sober finds every drink. GGRecipes.mount(el, {open: 'drinks'}) opens them straight away.
+   BLD 917 (Recipe Search and Sharing): a wider search (KEYS, stems, the Holidays and Gatherings recipes as cards, words to try
+   when nothing matches), /recipes/#hol-<set>:<recipe> opens a set with that recipe in view, and a Share button on every recipe
+   (the share sheet, or Link copied) that shares the recipe's own small page, recipes/r/<id>.html.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b912';
+  var VER = 'b917';
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=b908', 'GGTendPublic'],
@@ -57,7 +62,7 @@
 
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
-  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Drinks', 'drinks-sq'], ['bulk', 'Bulk Foods', 'shop-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Sober Drinks', 'drinks-sq'], ['bulk', 'Bulk Foods', 'shop-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
   var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['snack-fruit', 'snack-fruit-sq'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
   // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
   var SHELF = { holidays: 1, drink: 1, bulk: 1 };
@@ -107,7 +112,70 @@
     if (!k || k === prev) { k = L[(i || 0) % L.length]; if (k === prev) k = L[((i || 0) + 1) % L.length]; }
     return k;
   }
-  function hay(r) { return (r.name + ' ' + (r.ingredients || []).join(' ') + ' ' + (r.protein || '')).toLowerCase(); }
+  // BLD 916, Living Sober Path: every drink is a Sober Drink (Grounded's word for alcohol-free), so a search for sober finds them all.
+  /* BLD 917 (Chris: "tried to search pizza and I get nothing but I know we have a pizza recipe"): a wider search. Each recipe's
+     haystack holds its name, ingredients, protein, description or lead when it has one, its meal and course names, the words of
+     its fits, its holiday sets, and the words of every KEYS group it calls up, so flatbread finds the pita pizzas and noodles
+     finds the pasta. Every word also keeps its singular (stem), so tacos and taco, berries and berry, dishes and dish all meet.
+     KEYS: [what in the recipe calls the group up, the words the group adds]. */
+  var KEYS = [
+    [/pizza|flatbread/, 'pizza pizzas flatbread'],
+    [/taco|fajita|burrito|tortilla|quesadilla|enchilada/, 'taco tacos burrito tortilla fajita mexican'],
+    [/soup|stew|chili|chowder|bisque/, 'soup soups stew stews chili warm cozy'],
+    [/salad|slaw/, 'salad salads greens'],
+    [/bowl/, 'bowl bowls grain bowl'],
+    [/pasta|penne|spaghetti|noodle|lasagna|bolognese|macaroni|orzo|primavera|rotini|fusilli|linguine/, 'pasta noodle noodles spaghetti'],
+    [/smoothie|shake|\blassi\b|slush/, 'smoothie smoothies shake blend'],
+    [/\boats?\b|oatmeal|granola|overnight oat/, 'oats oatmeal porridge'],
+    [/pancake|waffle/, 'pancake pancakes waffle'],
+    [/muffin|cornbread|soda bread|\brolls?\b|biscuit|scone/, 'muffin muffins bread baking'],
+    [/burger|patty|patties/, 'burger burgers patty'],
+    [/wrap|sandwich|panini|lettuce cup/, 'wrap wraps sandwich sandwiches handheld'],
+    [/curry|\bdal\b|masala|tikka/, 'curry spiced'],
+    [/stir fry|stir-fry|teriyaki|sesame|edamame|tofu/, 'stir fry stirfry wok'],
+    [/sheet pan|one pan|roast|bake/, 'sheet pan oven roasted baked'],
+    [/slow cooker|crockpot/, 'slow cooker crockpot'],
+    [/kebab|skewer|grill|bbq|burger/, 'grill grilled bbq cookout'],
+    [/dip\b|dip,|hummus|salsa|guacamole|tzatziki|pesto|queso|ranch/, 'dip dips spread guac'],
+    [/\bcake\b|cupcake|\bpie\b|\bcrisp\b|cobbler|bark|cookie|pudding|brownie|\bbars?\b|parfait|baked apple|energy bite/, 'dessert desserts sweet treat'],
+    [/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/, 'fish seafood'],
+    [/chicken|turkey/, 'poultry'],
+    [/\beggs?\b|omelet|frittata|shakshuka/, 'egg eggs'],
+    [/\bkid\b|kids/, 'kid kids family']
+  ];
+  var MEAL_WORDS = { breakfast: 'breakfast morning brunch', lunch: 'lunch midday', dinner: 'dinner supper main', snack: 'snack snacks', party: 'party food snack snacks appetizer', sauce: 'sauce sauces dressing dressings', drink: 'drink drinks beverage' };
+  var COURSE_WORDS = { main: 'main dinner entree', side: 'side sides', dessert: 'dessert desserts sweet treat', snack: 'snack snacks appetizer', drink: 'drink drinks sober beverage', bread: 'bread', breakfast: 'breakfast brunch' };
+  var FIT_WORDS = { vegan: 'vegan plant based', vegetarian: 'vegetarian veggie meatless plant based', dairyFree: 'dairy free', glutenFree: 'gluten free', nutFree: 'nut free', eggFree: 'egg free', kidFriendly: 'kid kids kid friendly family' };
+  // The singular of one word: tacos to taco, berries to berry, dishes to dish, tomatoes to tomato; hummus and grass stay.
+  function stem(w) {
+    if (w.length > 4 && /ies$/.test(w)) return w.slice(0, -3) + 'y';
+    if (w.length > 4 && /(ches|shes|xes|sses|zes|oes)$/.test(w)) return w.slice(0, -2);
+    if (w.length > 3 && /s$/.test(w) && !/(ss|us|is)$/.test(w)) return w.slice(0, -1);
+    return w;
+  }
+  // A full haystack from plain text: the text, the words of each KEYS group the name calls up (the name only, so chili powder
+  // in a taco never reads as chili), and the singular of every word.
+  function hayOf(text, name) {
+    var t = String(text || '').toLowerCase(), n = String(name == null ? t : name).toLowerCase().replace(/shepherd.s pie|pot pie/g, ''), add = [];
+    KEYS.forEach(function (k) { if (k[0].test(n)) add.push(k[1]); });
+    t = t + ' ' + add.join(' ');
+    var st = t.split(/[^a-z0-9]+/).filter(function (w) { return w && stem(w) !== w; }).map(stem);
+    return ' ' + t + ' ' + st.join(' ') + ' ';
+  }
+  // BLD 916, Living Sober Path: every drink is a Sober Drink (Grounded's word for alcohol-free), so a search for sober finds them all.
+  function hay(r) {
+    var hol = (r.holidays || []).map(function (id) { var x = window.GGHolidays && GGHolidays.get && GGHolidays.get(id); return x ? x.name + ' holiday' : ''; }).join(' ');
+    var fits = (r.fits || []).map(function (f) { return FIT_WORDS[f] || ''; }).join(' ');
+    return hayOf(r.name + ' ' + (r.ingredients || []).join(' ') + ' ' + (r.protein || '') + ' ' + (r.lead || r.desc || r.description || '') + ' ' +
+      (MEAL_WORDS[r.meal] || r.meal || '') + ' ' + (r.course || '') + ' ' + fits + ' ' + hol + (+r.mins && +r.mins <= 20 ? ' quick fast easy' : '') + (r.meal === 'drink' ? ' sober drinks drink' : ''), r.name);
+  }
+  // One typed word is found when the haystack holds it or its singular.
+  function hit(h, w) { return h.indexOf(w) >= 0 || h.indexOf(stem(w)) >= 0; }
+  function qWords(q) { return String(q || '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean); }
+  // BLD 917: the share link. Each public recipe and each Holidays and Gatherings recipe has its own small page for link previews
+  // (recipes/r/<id>.html, made by the workshop's patches/bld917/gen-recipe-pages.py); every other recipe shares the Recipes page.
+  var SITE = 'https://growwithgrounded.com';
+  var SHARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
 
   // BLD 912: the list markup for a mount, the same as the page's #rc-list in recipes/index.html (the page keeps its own).
   function mountHTML() {
@@ -203,9 +271,43 @@
       if (st.meal !== 'all' && r.meal !== st.meal) return false;
       if (st.goal && (r.goals || []).indexOf(st.goal) < 0) return false;
       for (var i = 0; i < st.fits.length; i++) if ((r.fits || []).indexOf(st.fits[i]) < 0) return false;
-      var words = st.q.toLowerCase().split(/\s+/).filter(Boolean);
-      for (var j = 0; j < words.length; j++) if (r._h.indexOf(words[j]) < 0) return false;
+      var words = qWords(st.q);
+      for (var j = 0; j < words.length; j++) if (!hit(r._h, words[j])) return false;
       return true;
+    }
+    /* BLD 917: the search also finds each recipe inside a Holidays and Gatherings menu (Chris's pizza: Build Your Own Mini Pita
+       Pizzas, in the Birthday (Kid) set). A hit shows as a card among the results and opens that recipe in its menu
+       (/recipes/#hol-<set>:<recipe>). They join a search with no meal, goal, or fit chosen. */
+    var COURSE_MEAL = { main: 'dinner', side: 'lunch', dessert: 'snack', snack: 'snack', drink: 'drink', bread: 'breakfast', breakfast: 'breakfast' };
+    var HD = HOL ? [].concat.apply([], (HOL.sets || []).map(function (x) {
+      return (x.menu || []).map(function (m) {
+        var ing = (m.ingredients || []).map(function (g) { return g && typeof g === 'object' ? g.item : g; }).join(' ');
+        return { hd: 1, id: 'hol-' + x.id + ':' + m.id, set: x, m: m, name: m.name,
+          _h: hayOf(m.name + ' ' + ing + ' ' + (COURSE_WORDS[m.course] || m.course || '') + ' ' + x.name + ' holiday holidays gathering' + (m.course === 'drink' ? ' sober drinks' : '') + (+m.mins && +m.mins <= 20 ? ' quick fast easy' : ''), m.name + ' ' + (m.course || '')) };
+      });
+    })) : [];
+    function holHits() {
+      var words = qWords(st.q); if (!words.length || st.meal !== 'all' || st.goal || st.fits.length) return [];
+      return HD.filter(function (d) { return words.every(function (w) { return hit(d._h, w); }); });
+    }
+    function hdCard(d, i) {
+      var art = cardArt({ name: d.name, meal: COURSE_MEAL[d.m.course] || 'dinner' }, i, i > 0 ? lastArt : ''); lastArt = art;
+      var sv0 = HOL.recipe ? (HOL.recipe(d.set.id, d.m.id, serves) || {}).serves : d.m.serves;
+      return '<button type="button" class="rc-card rc-k-holidays rc-hdc" data-hd="' + esc(d.id) + '">' +
+        '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + W + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">Holidays and Gatherings</span></span>' +
+        '<span class="rc-cb"><b>' + esc(d.name) + '</b>' +
+        '<span class="rc-pills">' + (d.m.mins ? '<span class="rc-pill">' + CLOCK + esc(d.m.mins + ' min') + '</span>' : '') + (sv0 ? '<span class="rc-pill">' + PEOPLE + esc('Serves ' + sv0) + '</span>' : '') + '</span>' +
+        '<span class="rc-n">' + esc('On the ' + d.set.name + ' menu') + '</span></span></button>';
+    }
+    // When a search finds nothing: a short line and three words to try, chosen from words that always find recipes.
+    var TRY = ['soup', 'tacos', 'pasta', 'salad', 'smoothie', 'oatmeal', 'pizza', 'chicken', 'salmon', 'dip', 'bowl', 'dessert'];
+    function emptyHTML() {
+      var typed = qWords(st.q), k = typed.join('').length;
+      var pick = TRY.filter(function (w) { return typed.indexOf(w) < 0; }), out = [];
+      for (var i = 0; i < pick.length && out.length < 3; i++) out.push(pick[(i + k) % pick.length]);
+      var chosen = st.meal !== 'all' || st.goal || st.fits.length;
+      return (typed.length ? 'Try a simpler word' + (chosen ? ' or fewer choices' : '') + ', or one of these: ' : 'Try fewer choices, or one of these: ') +
+        out.map(function (w) { return '<button type="button" class="rc-chip rc-try" data-rc-try="' + esc(w) + '">' + esc(w.charAt(0).toUpperCase() + w.slice(1)) + '</button>'; }).join(' ');
     }
 
     function chip(group, key, label, on, title) {
@@ -251,17 +353,19 @@
 
     // BLD 905: a search also finds the Bulk Foods guides (by name and their keys), shown above the matching recipes.
     function bulkHits() {
-      var words = st.q.toLowerCase().split(/\s+/).filter(Boolean); if (!BK || !words.length || st.meal !== 'all') return [];
-      return BK.guides.filter(function (g) { var h = (g.name + ' ' + (g.keys || '')).toLowerCase(); return words.every(function (w) { return h.indexOf(w) >= 0; }); });
+      var words = qWords(st.q); if (!BK || !words.length || st.meal !== 'all') return [];
+      return BK.guides.filter(function (g) { var h = g._h || (g._h = ' ' + (g.name + ' ' + (g.keys || '')).toLowerCase() + ' ' + qWords(g.name + ' ' + (g.keys || '')).map(stem).join(' ') + ' '); return words.every(function (w) { return hit(h, w); }); });
     }
     function drawList() {
-      var list = ALL.filter(matches), bh = bulkHits();
+      var list = ALL.filter(matches), bh = bulkHits(), hh = holHits();
       var bhHTML = bh.length ? '<div class="rc-bkhits"><span class="rc-lab">Bulk Foods Guides</span>' + bh.map(function (g) { return '<a href="#bulk-' + esc(g.id) + '" data-bulk="' + esc(g.id) + '">' + esc(g.name) + '</a>'; }).join('') + '</div>' : '';
-      if (filtering()) $('rc-grid').innerHTML = bhHTML + (list.length ? '<div class="rc-grid">' + list.map(card).join('') + '</div>' : '');
+      if (filtering()) $('rc-grid').innerHTML = bhHTML + (list.length || hh.length ? '<div class="rc-grid">' + list.map(card).join('') + hh.map(function (d, i) { return hdCard(d, list.length + i); }).join('') + '</div>' : '');
       else $('rc-grid').innerHTML = CATS.filter(function (c) { return !SHELF[c[0]]; }).map(function (c) { return section(c, list.filter(function (r) { return r.meal === c[0]; })); }).join('');
-      var cn = list.length === 1 ? '1 recipe' : list.length + ' recipes';
+      var nAll = list.length + hh.length, cn = nAll === 1 ? '1 recipe' : nAll + ' recipes';
       $('rc-count').innerHTML = st.meal !== 'all' ? '<b>' + esc(CATS.filter(function (c) { return c[0] === st.meal; })[0][1]) + ':</b> ' + cn : cn;
-      $('rc-empty').hidden = list.length > 0 || bh.length > 0;
+      var em = $('rc-empty'), none = !nAll && !bh.length;
+      if (none) em.innerHTML = emptyHTML();
+      em.hidden = !none;
       $('rc-clear').hidden = !(st.meal !== 'all' || st.goal || st.fits.length || st.q);
     }
 
@@ -301,7 +405,7 @@
         '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
         '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
         '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? sv(r) : r.serves) + '</span>' + fits + goals + '</div>' +
-        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + '<span>Step by step, with a voice to guide you.</span></div><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
+        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + shareBtn('r:' + r.id) + '<span>Step by step, with a voice to guide you.</span></div><p class="rc-shnote" data-rc-shnote="' + esc('r:' + r.id) + '" role="status" hidden></p><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
         '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
         (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
           '<p class="rc-size-note">' + (isBatch(r) ? 'A full pitcher. Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
@@ -340,6 +444,12 @@
         }).join('') + '</div>';
     }
     function toShelf(id, smooth) { aim($(id), smooth); }
+    // A recipe inside a set, opened from a link on load: aim again once the fonts and paintings settle above it.
+    function settleDish(dc) {
+      var again = function () { if (dc.isConnected && !$('rc-detail').hidden) aim(dc, false, MNT ? OFF : 90); };
+      try { if (document.fonts && document.fonts.ready) document.fonts.ready.then(again); } catch (e) {}
+      if (document.readyState !== 'complete') window.addEventListener('load', function () { setTimeout(again, 60); }, { once: true });
+    }
     function toHolidays(smooth) { toShelf('rc-hol', smooth); }
     // On a /recipes/#holidays load (or a mount opened at a shelf), aim again once the fonts and paintings settle (the list
     // above can change height as they arrive).
@@ -356,8 +466,8 @@
       var x = HOL && HOL.get(id); if (!x) return '';
       var menu = x.menu.map(function (m) {
         var r = HOL.recipe(id, m.id, serves);
-        return '<div class="card rc-hrec"><h3>' + esc(m.name) + '</h3><p class="rc-t">' + esc([m.course ? m.course.charAt(0).toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : '', 'serves ' + r.serves].filter(Boolean).join(' · ')) + '</p>' +
-          '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Grounded Cooking</button>' + menuBtn('h:' + id + ':' + m.id) + '</div><div class="rc-mnote" data-rc-mnote="' + esc('h:' + id + ':' + m.id) + '" hidden></div>' +
+        return '<div class="card rc-hrec" id="rc-hd-' + esc(m.id) + '" tabindex="-1"><h3>' + esc(m.name) + '</h3><p class="rc-t">' + esc([m.course ? m.course.charAt(0).toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : '', 'serves ' + r.serves].filter(Boolean).join(' · ')) + '</p>' +
+          '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Grounded Cooking</button>' + menuBtn('h:' + id + ':' + m.id) + shareBtn('h:' + id + ':' + m.id) + '</div><p class="rc-shnote" data-rc-shnote="' + esc('h:' + id + ':' + m.id) + '" role="status" hidden></p><div class="rc-mnote" data-rc-mnote="' + esc('h:' + id + ':' + m.id) + '" hidden></div>' +
           (m.makeAhead ? '<p><b>Make ahead:</b> ' + esc(m.makeAhead) + '</p>' : '') + (m.note ? '<p>' + esc(m.note) + '</p>' : '') +
           '<ul class="rc-ing">' + r.ingredients.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul>' +
           '<ol class="rc-steps">' + r.steps.map(function (s) { return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
@@ -389,6 +499,7 @@
       var secs = D && (D.sections || []).length ? D.sections : [{ id: 'all', name: 'Drinks', ids: all.map(function (r) { return r.id; }) }];
       var sp = PARTY && PARTY.sparkler, stn = PARTY && PARTY.station;
       return '<div class="rc-sh"><img src="' + W + 'drinks-sq.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-drinks">' + esc((D && D.title) || 'Celebration Drinks') + '</h2><span class="rc-shn">' + all.length + ' recipes</span></div>' +
+        '<p class="rc-hl"><b>Sober Drinks.</b> Every drink here is sober: whole fruit, fresh herbs, sparkle, and warmth, made to share and to raise a glass.</p>' +
         (D && D.lead ? '<p class="rc-hl">' + esc(D.lead) + '</p>' : '') +
         '<nav class="rc-drnav" aria-label="Drink menu">' + secs.map(function (x) { return '<a href="#drinks-' + esc(x.id) + '" data-drjump="' + esc(x.id) + '">' + esc(x.name) + '</a>'; }).join('') +
         (sp ? '<a href="#drinks-sparkler" data-drjump="sparkler">' + esc(sp.title) + '</a>' : '') + (stn ? '<a href="#drinks-station" data-drjump="station">' + esc(stn.title) + '</a>' : '') + '</nav>' +
@@ -445,6 +556,44 @@
        the Shopping List. Everything stays on this device. On the page inside a frame of The Grounded Way, that is the parent
        page's GGHealth (same site); in a mount (BLD 912), opts.menuOpen when given, or this window's GGHealth. With no Tending,
        the recipe shows a gentle line and a way into The Grounded Way (/home/#recipe-<id>), where the menu lives. */
+    /* ---------- BLD 917: Share ----------
+       A Share button on each recipe and each Holidays and Gatherings recipe. The phone's own share sheet when it has one (the
+       name, one line, and the link); otherwise the link is copied and the button's line says Link copied. A public recipe shares
+       its own page (recipes/r/<id>.html, with its painting in the link preview); any recipe outside the public file shares the
+       Recipes page, and never its content. */
+    function shareBtn(ref) { return '<button type="button" class="btn btn-secondary rc-share-btn" data-rc-share="' + esc(ref) + '">' + SHARE_ICON + 'Share</button>'; }
+    var PUB = {}; ((window.GGTendPublic || {}).recipes || []).forEach(function (r) { if (r && r.id && !r.member) PUB[r.id] = 1; });
+    var OPENPUB = !!(window.GGTendPublic && window.GGTendPublic.public !== false && !window.GGTendPublic.member);
+    function shareOf(ref) {
+      var p = String(ref).split(':');
+      if (p[0] === 'h') {
+        var x = HOL && HOL.get(p[1]), m = x ? (x.menu || []).filter(function (y) { return y.id === p[2]; })[0] : null;
+        if (m) return { title: m.name, text: m.name + ', from the ' + x.name + ' menu in Grounded Recipes: whole food for the big days, guided step by step.', url: SITE + '/recipes/r/hol-' + x.id + '-' + m.id + '.html' };
+      } else {
+        var r = byId(p.slice(1).join(':'));
+        if (r && OPENPUB && PUB[r.id]) return { title: r.name, text: r.name + ', a Grounded Recipe: whole food, ready in ' + r.mins + ' minutes, guided step by step.', url: SITE + '/recipes/r/' + r.id + '.html' };
+      }
+      return { title: 'Grounded Recipes', text: 'Grounded Recipes: whole food, built to thrive, for every meal of the day.', url: SITE + '/recipes/' };
+    }
+    function copyText(t) {
+      try { if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) return navigator.clipboard.writeText(t).then(function () { return true; }, function () { return oldCopy(t); }); } catch (e) {}
+      return Promise.resolve(oldCopy(t));
+    }
+    function oldCopy(t) {
+      var a = document.createElement('textarea'); a.value = t; a.setAttribute('readonly', ''); a.style.cssText = 'position:fixed;top:0;left:0;opacity:0;width:1px;height:1px;';
+      document.body.appendChild(a); a.select(); var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} a.remove(); return ok;
+    }
+    function shareGo(ref, btn) {
+      var d = shareOf(ref), box = null;
+      root.querySelectorAll('[data-rc-shnote]').forEach(function (b) { if (b.getAttribute('data-rc-shnote') === ref) box = b; });
+      var say = function (html) { if (!box) return; box.innerHTML = html; box.hidden = false; clearTimeout(box._t); box._t = setTimeout(function () { box.hidden = true; }, 6000); };
+      var copy = function () { copyText(d.url).then(function (ok) { say(ok ? 'Link copied. Paste it anywhere to share.' : 'Copy this link to share: <a class="text-link" href="' + esc(d.url) + '">' + esc(d.url) + '</a>'); }); };
+      if (navigator.share) {
+        try { navigator.share({ title: d.title, text: d.text, url: d.url }).catch(function (e) { if (!e || e.name !== 'AbortError') copy(); }); } catch (e) { copy(); }
+        return;
+      }
+      copy();
+    }
     function menuBtn(ref) { return '<button type="button" class="btn btn-secondary rc-menu-btn" data-rc-menu="' + esc(ref) + '">' + MENU_ICON + 'Add to My Menu</button>'; }
     function homeHealth() {
       if (MNT) { if (typeof opts.menuOpen === 'function') return { menuOpen: opts.menuOpen }; var H = window.GGHealth; return H && typeof H.menuOpen === 'function' ? H : null; }
@@ -464,13 +613,18 @@
     // Shows one view: a recipe id, hol-<set>, bulk-<guide>, or the list ('' or a shelf name: holidays, drinks, bulk).
     function show(id) {
       id = id || '';
+      // BLD 917: hol-<set>:<recipe> opens the set with that recipe in view (a search hit, a shared recipe page).
+      var dish = '';
+      if (/^hol-[^:]+:./.test(id)) { dish = id.slice(id.indexOf(':') + 1); id = id.slice(0, id.indexOf(':')); }
       if (/^hol-/.test(id) && HOL && HOL.get(id.slice(4))) {
         var hl = $('rc-list'), hd = $('rc-detail');
         if (G.on() && G.id() !== id) G.close(true);
         if (!hl.hidden) listY = getY();
         hd.innerHTML = holDetail(id.slice(4)); hl.hidden = true; hd.hidden = false; lastId = id;
-        setTitle(HOL.get(id.slice(4)).name + ' | Grounded Recipes | Grow With Grounded');
+        var dc = dish ? $('rc-hd-' + dish) : null;
+        setTitle((dc ? dc.querySelector('h3').textContent + ' | ' : '') + HOL.get(id.slice(4)).name + ' | Grounded Recipes | Grow With Grounded');
         toTop();
+        if (dc) { dc.classList.add('rc-hd-on'); aim(dc, false, MNT ? OFF : 90); dc.focus({ preventScroll: true }); settleDish(dc); return; }
         var hh = $('rc-dname'); if (hh) hh.focus({ preventScroll: true }); return;
       }
       if (/^bulk-/.test(id) && BK && BK.get(id.slice(5))) {
@@ -747,8 +901,13 @@
       $('rc-clear').addEventListener('click', function () { st = { meal: 'all', goal: '', fits: [], q: '' }; $('rc-q').value = ''; drawChips(); drawList(); $('rc-q').focus(); });
       $('rc-grid').addEventListener('click', function (e) {
         var bk = e.target.closest('[data-bulk]'); if (bk) { e.preventDefault(); nav('bulk-' + bk.getAttribute('data-bulk')); return; }
+        var hd = e.target.closest('[data-hd]'); if (hd) { nav(hd.getAttribute('data-hd')); return; }
         var c = e.target.closest('.rc-card'); if (!c) return;
         nav(c.getAttribute('data-id'));
+      });
+      $('rc-empty').addEventListener('click', function (e) {
+        var t = e.target.closest('[data-rc-try]'); if (!t) return;
+        st.q = t.getAttribute('data-rc-try'); $('rc-q').value = st.q; drawList(); $('rc-q').focus();
       });
       $('rc-detail').addEventListener('click', function (e) {
         var sz = e.target.closest('[data-sz]');
@@ -756,6 +915,7 @@
         if (e.target.closest('#rc-back')) goBack();
         else if (e.target.closest('.rc-bkhol a')) { if (!MNT) fromList = true; }
         else if (e.target.closest('.rc-also .rc-card')) nav(e.target.closest('.rc-card').getAttribute('data-id'));
+        else if (e.target.closest('[data-rc-share]')) shareGo(e.target.closest('[data-rc-share]').getAttribute('data-rc-share'), e.target.closest('[data-rc-share]'));
         else if (e.target.closest('[data-rc-menu]')) menuGo(e.target.closest('[data-rc-menu]').getAttribute('data-rc-menu'));
         else if (e.target.closest('[data-rc-hguide]')) { var hv = e.target.closest('[data-rc-hguide]').getAttribute('data-rc-hguide').split('|'), hr = holRecipe(hv[0], hv[1]); if (hr) G.open(hr, e.target.closest('[data-rc-hguide]')); }
         else if (e.target.closest('[data-rc-guide]')) { var r = byId(lastId); if (r) G.open(sized(r), e.target.closest('[data-rc-guide]')); }

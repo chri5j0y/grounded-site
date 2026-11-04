@@ -1382,3 +1382,30 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-gpracs{display:flex;flex-wrap:wrap;gap:6px;}
 .hm-gprac{padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:14px;}
 .hm-gnote{font-size:13px;color:var(--ink-soft);margin-top:16px;}
+/* BLD 916: the Living Sober Path (the card leads Today, seasons, Storm and Repair, Begin Again, Write, Walk, Talk, Pray) */
+.hm-tmain>.hm-sober{margin-bottom:0;}
+.hm-sober .hm-lsseason{font-weight:600;letter-spacing:1px;color:var(--ink-soft);}
+.hm-lsgrown{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:15px;color:var(--ink-soft);}
+.hm-lsgrown .i{width:16px;height:16px;color:var(--c);}
+.hm-lsgrown b{color:var(--ink);}
+.hm-lsstorm{margin-top:14px;padding:12px 14px;border-radius:16px;background:var(--cs);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);}
+.hm-lsstorm .hm-sk{margin-top:0;}
+.hm-lsstorm .hm-sub{margin-top:4px;}
+.hm-lsstorm .hm-quiet{margin-top:10px;}
+.hm-lsearned{display:flex;gap:6px;align-items:flex-start;margin:12px 0 0;font-size:14.5px;color:var(--ink-soft);}
+.hm-lsearned .i{flex:0 0 16px;width:16px;height:16px;margin-top:2px;color:var(--c);}
+.hm-lsquiet{margin-top:14px;}
+.hm-lsset{flex:1 1 auto;min-width:0;}
+.hm-lsset summary{cursor:pointer;color:var(--ink-soft);font-weight:600;min-height:44px;display:inline-flex;align-items:center;}
+.hm-lsset .hm-sub{margin:4px 0 2px;}
+.hm-lsdlg .hm-label{display:block;margin:16px 2px 6px;}
+.hm-in{width:100%;max-width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg);font:inherit;font-size:17px;color:var(--ink);}
+.hm-ls4steps{display:grid;gap:12px;margin-top:12px;}
+.hm-lsstep{border-left:6px solid var(--c);}
+.hm-lsstep .hm-h3{margin-top:6px;}
+.hm-lshow{margin:8px 0 0;padding-left:20px;line-height:1.5;}
+.hm-lshow li{margin:2px 0;}
+.hm-src{margin-top:16px;font-size:13px;color:var(--ink-soft);}
+.hm-wp-ideas ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px;}
+.hm-wp-ideas li{padding-left:10px;border-left:3px solid var(--c);font-size:15px;line-height:1.45;}
+.hm-wp-ideas li b{color:var(--c);font-weight:700;}

@@ -25,6 +25,8 @@
                                  'solo' Strong on Your Own, 'craft' Loving Someone Who Drinks or Uses, 'mine' My Good People,
                                  'basics' Sleep, Food, and Movement in Early Sobriety. My Good People lives in vault.soberPeople.
      GGSober.daily(tree)         today's encouragement {kind, text}.
+     GGSober.intent(tree, after), look(tree, after), wave(tree)  Today's Intention, the Evening Look Back, and Ride the Wave
+                                 (BLD 916, from Home's Today); after runs once the dialog closes. dayLog(date) reads a day.
      GGSober.refresh()           repaints every card on the page.
    The ?sober= link (read once, then taken off the address): 1 turns Living Sober on, love sets the stage
    to Someone I Love (change, early, growing, long set theirs), anchor opens My Anchor Plan; people, solo,
@@ -37,7 +39,7 @@
 (function () {
   'use strict';
   if (window.GGSober) return;
-  var V = 'b911r';
+  var V = 'b916';
   var TREES = ['birch', 'oak', 'sequoia'];
   var SITE = 'https://growwithgrounded.com/living-sober';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
@@ -113,19 +115,9 @@
     return { head: fill(x.head, n), text: fill(x.text, n) };
   }
   function dayOfYear() { var d = new Date(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 1)) / 864e5); }
-  // Today's encouragement: by days since the sober date when set (the first 90 days in order, then rotating),
-  // otherwise by the day of the year. Someone I Love draws from its own words. BLD 908 (decision 6): the public file
-  // holds days 1 to 90; with Membership open on this device, GGSoberWords.all() adds days 91 to 365 from the Member
-  // library (GGMember.get('seasons').livingSober.daily), so a Member's first year runs in order, then rotates.
-  // Start past day 90 keeps rotating through the 90, with one quiet Membership line (never a pop-up).
-  var MEMW = { on: false };
-  function memWatch() { if (MEMW.on || !window.GGMember || typeof GGMember.on !== 'function') return; MEMW.on = true; try { GGMember.on(function () { refresh(); }); } catch (e) {} }
-  function memLine(c) {
-    memWatch();
-    if (!c || c.days < 90 || !window.GGMember) return '';
-    try { if (GGMember.has()) return ''; } catch (e) { return ''; }
-    return '<p class="ggs-soft">Growing Sober continues with a new word for every day of your first year, with Membership. <button type="button" class="ggs-link" data-ggm="open">I Have a Code</button></p>';
-  }
+  // Today's encouragement: by days since the sober date when set (the first 365 days in order, then rotating),
+  // otherwise by the day of the year. Someone I Love draws from its own words. BLD 916 (Chris: "i never want to charge
+  // for this, it is a gift"): every day of the year lives in the public file, open to everyone, a gift from Grounded.
   function daily(tree) {
     var g = L(), st = g ? g.soberStage(tree) : '', date = g && g.soberDate ? g.soberDate(tree) : '';
     if (st === 'love') { var lv = (W().love && W().love.length ? W().love : FALL.love); return { kind: 'love', text: lv[dayOfYear() % lv.length].text, id: lv[dayOfYear() % lv.length].id }; }
@@ -288,7 +280,7 @@
       if (APP.dateOpen) html += '<div class="ggs-date"><label for="ggs-date-in" class="ggs-soft" style="flex-basis:100%">My sober date. It stays locked on this device; only the count shows.</label><input id="ggs-date-in" type="date" data-ggs="date" max="' + todayStr() + '" min="1900-01-01" value="' + esc(date) + '"><button type="button" class="btn btn-secondary btn-sm" data-ggs="datedone">Done</button>' + (date ? '<button type="button" class="ggs-link" data-ggs="nodate">Clear the Date</button>' : '') + '</div>';
     }
     if (!love) html += todayHtml(tree);
-    html += '<div class="ggs-enc"><b>' + (love ? 'For You Today' : 'Today\'s Encouragement') + '</b><q>' + esc(enc.text) + '</q><div class="ggs-row"><button type="button" class="btn btn-secondary btn-sm" data-ggs="share-daily">Share</button></div></div>' + (love ? '' : memLine(c));
+    html += '<div class="ggs-enc"><b>' + (love ? 'For You Today' : 'Today\'s Encouragement') + '</b><q>' + esc(enc.text) + '</q><div class="ggs-row"><button type="button" class="btn btn-secondary btn-sm" data-ggs="share-daily">Share</button></div></div>';
     if (!love) html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm ggs-wave" data-ggs="wave">Ride the Wave</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="week">My Week</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="gains">Milestones and Gains</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="good">Good Times, Sober</button></div>';
     html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm" data-ggs="anchor">My Anchor Plan</button>' +
       '<button type="button" class="btn btn-secondary btn-sm" data-ggs="thirty">' + esc(thirtyLabel(tree)) + '</button></div>';
@@ -407,13 +399,13 @@
     });
   }
   function picked(box, name) { var b = box.querySelector('[data-pick="' + name + '"][aria-checked=true]'); return b ? b.getAttribute('data-v') : null; }
-  function intentDlg(tree) {
+  function intentDlg(tree, after) {
     var t = dayLog(tree);
     dialog('Today\'s Intention', '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>Today\'s Intention</h2><p class="ggs-soft">One simple aim for today. Tap one, or write your own.</p>' +
       '<div class="ggs-chips">' + INTENTS.map(function (x) { return '<button type="button" data-it="' + esc(x) + '">' + esc(x) + '</button>'; }).join('') + '</div>' +
       '<label style="margin-top:12px" for="ggs-it">My intention</label><input type="text" id="ggs-it" maxlength="160" value="' + esc(t.i || '') + '" data-first>' +
       '<div class="ggs-foot">' + (t.i ? '<button type="button" class="ggs-link" data-dd="clear">Clear</button>' : '') + '<button type="button" class="btn btn-secondary" data-dd="close">Close</button><button type="button" class="btn btn-primary" data-dd="save">Save</button></div>', function (d) {
-      d.box.setAttribute('data-ggs-intent', tree);
+      d.box.setAttribute('data-ggs-intent', tree); d.after = after;
       d.box.addEventListener('click', function (e) {
         var c = e.target.closest('[data-it]'); if (c) { var i = d.box.querySelector('#ggs-it'); i.value = c.getAttribute('data-it'); i.focus(); return; }
         var b = e.target.closest('[data-dd]'); if (!b) return; var k = b.getAttribute('data-dd');
@@ -423,7 +415,7 @@
       });
     });
   }
-  function lookDlg(tree) {
+  function lookDlg(tree, after) {
     var t = dayLog(tree), u = [];
     for (var i = 0; i <= 10; i++) u.push([i, String(i)]);
     dialog('Evening Look Back', '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>Evening Look Back</h2><p class="ggs-soft">A minute to notice today. It stays locked on this device.</p>' +
@@ -434,7 +426,7 @@
       '<h3>What helped today</h3><div class="ggs-ideas">' + HELP.map(function (x) { return '<label><input type="checkbox" name="h" value="' + x[0] + '"' + ((t.h || []).indexOf(x[0]) >= 0 ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join('') + '</div>' +
       '<label style="margin-top:10px" for="ggs-ho">In my own words (optional)</label><input type="text" id="ggs-ho" maxlength="200" value="' + esc(t.ho || '') + '">' +
       '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="close">Close</button><button type="button" class="btn btn-primary" data-dd="save">Save</button></div>', function (d) {
-      d.box.setAttribute('data-ggs-look', tree); pickable(d.box);
+      d.box.setAttribute('data-ggs-look', tree); d.after = after; pickable(d.box);
       d.box.addEventListener('click', function (e) {
         var b = e.target.closest('[data-dd]'); if (!b) return;
         if (b.getAttribute('data-dd') === 'close') { d.close(); return; }
@@ -723,6 +715,7 @@
     function close() {
       if (done) return; done = true; back.remove(); document.removeEventListener('keydown', key, true); document.body.style.overflow = overflow;
       if (last && last.focus && document.contains(last)) try { last.focus({ preventScroll: true }); } catch (e) {}
+      if (typeof api.after === 'function') try { api.after(); } catch (e) { console.error(e); }   // BLD 916: what comes next (Morning Quiet's video)
     }
     function key(e) {
       if (e.key === 'Escape') { e.stopPropagation(); close(); return; }
@@ -957,5 +950,7 @@
   }
 
   window.GGSober = { version: V, TREES: TREES.slice(), init: init, cardHtml: cardHtml, count: count, reached: reached, check: check,
-    anchor: function (tree, edit) { anchorDlg(tree || APP.tree, !!edit); }, together: function (tree, k) { openTogether(tree || APP.tree, k); }, daily: daily, refresh: refresh, share: share, milestoneWords: milestoneWords, star: starSvg };
+    anchor: function (tree, edit) { anchorDlg(tree || APP.tree, !!edit); },
+    // BLD 916: Today's Intention and the Evening Look Back open from Home's Today (Morning Quiet and the evening item).
+    intent: function (tree, done) { intentDlg(tree || APP.tree, done); }, look: function (tree, done) { lookDlg(tree || APP.tree, done); }, wave: function (tree) { waveDlg(tree || APP.tree); }, dayLog: function (d) { return dayLog(APP.tree, d); }, together: function (tree, k) { openTogether(tree || APP.tree, k); }, daily: daily, refresh: refresh, share: share, milestoneWords: milestoneWords, star: starSvg };
 })();
