@@ -4146,6 +4146,18 @@ G.define('step-up', {name: 'Step-Up', tempo: 3.4, base: 'stand', glow: {quads: [
     {br: 'in', on: 'fR', p: [1.125, .25], t: [181, 181], n: 182, ra: [4, 8], la: [4, 8], rl: {x: .11, y: .272, z: .33, f: 72}, ll: {x: .11, y: .272, z: .33, f: 72}, lift: .12, e: 1}
   ]});
 
+// BLD 915 (Chris's workout notes: "add an arm swing up as the knee drives up, to blast off, with one leg up"): the
+// Step-Up Drive. The whole right foot on a low step, arms back; drive up through that heel and blast off: the left knee
+// drives up to hip height as both arms swing up, then lower slowly back down. Out on the drive.
+G.define('step-up-drive', {name: 'Step-Up Drive', tempo: 3, base: 'stand', top: [1], hold: .2, dur: [1.2, 1.6], glow: {quads: [.4, 1], glutes: [.4, 1], flexors: [.7, 0], delts: [.4, .4]}, cam: {yaw: 10, el: 6, zoom: 1},
+  props: ['step'],
+  form: [{when: [.02, .2], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'press through the whole foot', at: 'lowerleg01.R', side: 1},
+    {when: [.4, .6], plumb: ['head', 'foot.R'], say: 'tall, knee to hip height', at: 'neck01', side: -1}],
+  k: [
+    {br: 'out', on: 'fR', p: [.88, .12], t: [170, 173], n: 177, ra: [-16, -8], la: [-16, -8], rl: {x: .11, y: .272, z: .33, f: 72, pole: [.2, 0, 1]}, ll: foot(.11, -.02), lift: .12, e: .5},
+    {br: 'in', on: 'fR', p: [1.125, .25], t: [181, 182], n: 182, ra: [128, 138], la: [128, 138], ao: 8, rl: {x: .11, y: .272, z: .33, f: 72}, ll: [96, 4, 70], e: 1}
+  ]});
+
 // ---- Presses and arms ------------------------------------------------
 // Hands placed from the pelvis (rel), so the rack and the lockout ride with the body through a squat or a dip.
 var RACK = {rel: [.24, .47, .15], pole: [1, -1, .25], f: 180}, LOCK = {rel: [.16, .925, .07], pole: [1, 0, -.2], f: 180};
@@ -5768,6 +5780,7 @@ GG3D.names = (GG3D.names || []).concat([
   [/^side lunges?$/i, 'side-lunge'],
   [/\bwalking lunges?\b/i, 'walking-lunge'],
   [/\bwide stance reach\b/i, 'wide-stance-reach'],
+  [/\bstep.?up drives?\b/i, 'step-up-drive'],   // BLD 915: the arm swing and the knee drive
   [/\bone.?arm (dumbbell |db )?swings?\b|\bsingle.?arm (dumbbell )?swings?\b/i, 'one-arm-swing'],
   [/\bbike intervals?\b/i, 'bike'],
   [/^side steps?\b/i, 'side-step']
