@@ -36,7 +36,7 @@
       { id: 'home', title: 'Begin The Grounded Way', desc: 'One app for every age: make your profile, meet your tree, and tend your four, every day. Your tree grows with you', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
       { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: pic('/shared/heroes/way/grounded-way-square.webp'), bg: '#F1E6CC' },
       { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: pic('/shared/heroes/way/tending-sq.webp'), bg: '#E3EFD6' },
-      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, opening soon', href: HOME + '/the-grounded-way.html#ways', icon: pic('/shared/heroes/way/way-plan-sq.webp'), bg: '#F3E5CC', color: '#6E4A14' }
+      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, now open to Founding Members', href: HOME + '/the-grounded-way.html#ways', icon: pic('/shared/heroes/way/way-plan-sq.webp'), bg: '#F3E5CC', color: '#6E4A14' }
     ] },
   ];
   var GN_GROUPS = [
