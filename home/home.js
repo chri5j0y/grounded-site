@@ -3124,7 +3124,7 @@
         var lifeHost = document.createElement('div'); lifeHost.className = 'hm-lifeoffer';
         var lifeDone = function () { mClose(); render(); };
         var toldAt = 0, tell = function (m, ms) { toldAt = Date.now(); toast(m); void ms; };
-        M[kind === 'plan' ? 'plan' : 'run']({ id: S.id, kind: kind, plain: plainWording(S.id, S.tree), member: member(),
+        var hand = M[kind === 'plan' ? 'plan' : 'run']({ id: S.id, kind: kind, plain: plainWording(S.id, S.tree), member: member(),
           toast: tell, lifeHost: lifeHost, onLife: lifeDone, onLifeChoose: lifeDone,
           // A module that speaks for itself (ctx.toast) is never echoed; otherwise Home says it once.
           onSaved: function (entry, info) {
@@ -3135,9 +3135,18 @@
           onPlanSaved: function () { setTimeout(function () { if (Date.now() - toldAt > 1500) toast('Your Growth Plan is saved. Your practices are on Today.'); }, 60); },
           // The Health and Ability card (GGLife.offerCard) shows once, after a full check-in, in Home's own window.
           onClose: function () { render(); if (lifeHost.childElementCount) { mDialog('Health and Ability', ''); var b = document.getElementById('hm-mdlg-b'); if (b) b.appendChild(lifeHost); } } });
+        // Start sees one quiet line over the Growth Plan (BLD 908, carried over from the old room's gg-room-plan line).
+        if (kind === 'plan' && !member() && !isKid(S.p)) setTimeout(function () { startPlanLine(hand); }, 30);
       });
     }).catch(fall);
     return true;
+  }
+  var START_PLAN = 'Your Start plan brings one practice a day for each of the four to Today, taking turns through the ones you choose. Membership opens the full growth plan: every practice each day, custom practices, trends, and reminders.';
+  function startPlanLine(hand) {
+    var root = (hand && hand.el) || document.querySelector('.ggd'); if (!root || root.querySelector('.hm-startplan')) return;
+    var st = root.querySelector('.ggd-stage'); if (!st) return;
+    if (!document.getElementById('hm-startplan-css')) { var c = document.createElement('style'); c.id = 'hm-startplan-css'; c.textContent = '.hm-startplan{margin:8px auto 0;max-width:640px;padding:10px 14px;border-radius:14px;border:1px solid rgba(139,94,26,.35);background:rgba(217,168,71,.12);font:500 15px/1.45 Barlow,system-ui,sans-serif;}'; document.head.appendChild(c); }
+    var p = document.createElement('p'); p.className = 'hm-startplan'; p.textContent = START_PLAN; st.parentNode.insertBefore(p, st);
   }
   function openTreeSheet(what) {
     if ((what === 'checkin' || what === 'quick') && openCheckin(what === 'quick' ? 'quick' : 'full')) return;
@@ -3147,6 +3156,8 @@
   /* A tree screen by name, always here in Home. */
   function treeScreen(what, tree) {
     tree = tree || S.tree;
+    // A tree with no Growth Plan step of its own (NOPLAN: Maple and Aspen) goes to its practices; asking openCheckin again looped forever.
+    if (what === 'plan' && NOPLAN[tree]) { goTo(isKid(S.p) ? 'tree' : 'grow'); return; }
     if (what === 'checkin' || what === 'quick' || what === 'plan') { if (tree === S.tree && openCheckin(what === 'checkin' ? 'full' : what)) return; goTo('today'); return; }
     if (what === 'history') { seasonOpen(); return; }
     if (what === 'life') { LT.f = 'life'; goTo(isKid(S.p) ? 'watch' : 'learn'); return; }
@@ -3328,7 +3339,9 @@
     mDialog(SHEET_SCREENS[name] || 'Grounded', '<p class="hm-loading">Opening…</p>');
     var fail = function () { SCR_READY[name] = false; mClose(); toast('That screen is still on its way. Please try again.'); };
     load(src).then(function () {
-      var M = window.GGScreen && GGScreen[name]; if (!M || typeof M.open !== 'function' || (M.trees && M.trees.indexOf(tree) < 0)) { fail(); return; }
+      var M = window.GGScreen && GGScreen[name]; if (!M || typeof M.open !== 'function') { fail(); return; }
+      // A screen this tree does not carry (Legacy Book on Oak) returns to Home and stays ready for the trees that do.
+      if (M.trees && M.trees.indexOf(tree) < 0) { mClose(); goTo(isKid(S.p) ? 'tree' : 'today'); return; }
       var files = typeof M.files === 'function' ? M.files(tree) : arr(M.files);
       return files.reduce(function (pr, f) { return pr.then(function () { return load(f); }); }, Promise.resolve()).then(function () {
         var host = document.getElementById('hm-mdlg-b'); if (!host) return;
