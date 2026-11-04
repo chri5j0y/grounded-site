@@ -455,6 +455,11 @@ a.ht-wlc:hover{border-color:var(--gold);}
 .hm-member-in{display:flex;justify-content:space-between;align-items:center;gap:18px 32px;flex-wrap:wrap;padding:28px 30px;border-radius:18px;border-left:5px solid var(--gold);}
 .hm-member-in > div{flex:1 1 420px;}
 .hm-member-in .hm-h{margin-bottom:8px;}
+/* Chris, November 4, 2026: a painting on the Membership and Grounded Stories cards. */
+.hp-pic{flex:0 0 220px;width:220px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;margin:0;background:var(--bg-deep);}
+.hp-pic img{width:100%;height:100%;object-fit:cover;display:block;}
+.hs-card .hs-text{flex:1 1 320px;min-width:0;}
+@media (max-width:700px){.hp-pic{flex:1 1 100%;width:100%;aspect-ratio:16/9;}}
 .hm-member-in p{font-size:17.5px;color:var(--ink-soft);max-width:620px;}
 @media (max-width:900px){.hm-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}.hm-tree-row{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media (max-width:600px){.hm-paths,.hm-trees{padding:44px 0;}.hm-cards{gap:12px;}.hm-card-t{padding:11px 12px 13px;}.hm-card-t b{font-size:16.5px;}.hm-card-t span{font-size:14px;}.hm-tree-row{gap:10px;}.hm-tree-row a{padding:14px 4px;}.hm-tree-row img{width:46px;height:46px;}.hm-tree-row b{font-size:16px;}.hm-tree-row span{font-size:13px;}.hm-member-in{padding:22px 20px;}.hm-member-in .btn{width:100%;text-align:center;}}
@@ -501,6 +506,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
 <section id="membership" class="hm-member" aria-labelledby="member-title">
   <div class="wrap">
     <div class="card hm-member-in">
+      <figure class="hp-pic"><img src="/shared/heroes/way/home-evening-wide.webp" alt="An oak on a hilltop at dusk, the first stars over misty hills." loading="lazy" decoding="async"></figure>
       <div><div class="eyebrow">Membership</div>
       <h2 id="member-title" class="hm-h">Go as deep as you like.</h2>
       <p>Start today with your tree and daily practices. Membership, opening soon, opens the full suite for you or your household.</p></div>
@@ -513,6 +519,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <div class="wrap">
     <!-- FEATURED STORY: to feature a different story, change the title, quote, line, and link below. -->
     <div class="card hs-card">
+      <figure class="hp-pic"><img src="/stories/img/s004.webp" alt="A woman resting in a hospice bed under a warm lamp, surrounded by family photos and children's drawings." loading="lazy" decoding="async"></figure>
       <div class="hs-text">
         <div class="eyebrow">Grounded Stories</div>
         <h2>Drift Away</h2>
