@@ -900,9 +900,11 @@
   }
 
   /* ---------- Your Tree, Then Your Grove (GM_TOGETHER), and the invites ---------- */
-  var APP_LINKS = { '/birch/': 'Open Birch', '/oak/': 'Open Oak', '/grove/': 'Open The Grove' };
+  var APP_LINKS = { '/home/': 'Open The Grounded Way', '/grove/': 'Open The Grove' };
+  // BLD 911: every tree lives in The Grounded Way (/home/), so a link into an age tree's own page opens The Grounded Way.
+  var AGE_TREE_LINK = /^(https:\/\/growwithgrounded\.com)?\/((maple|aspen|pine|birch|oak|sequoia)\/|home\/\?tree=)/;
   function siteBase() { return /^https?:$/.test(location.protocol) ? location.origin : 'https://growwithgrounded.com'; }
-  function safeLink(u) { u = String(u || ''); return /^\/[A-Za-z0-9/_#.?=&-]*$/.test(u) || /^https:\/\/growwithgrounded\.com\//.test(u) ? u : ''; }
+  function safeLink(u) { u = String(u || ''); if (AGE_TREE_LINK.test(u)) u = '/home/'; return /^\/[A-Za-z0-9/_#.?=&-]*$/.test(u) || /^https:\/\/growwithgrounded\.com\//.test(u) ? u : ''; }
   function coupleFw() {
     var s = setup(); if (!s) return { faith: false, plain: true, groups: [] };
     var ws = ['a', 'b'], f = ws.filter(function (w) { return s.fwp[w] === 'faith'; });
@@ -933,14 +935,14 @@
     var h = '<div class="ff-card gm-tg" id="gm-tg"><h2>' + esc(T.title || 'Your Tree, Then Your Grove') + '</h2>' +
       '<p class="ff-sub">' + esc(T.lead || 'Each of you grows a Tree of your own, and then the two of you grow a Grove together.') + '</p>';
     if (steps.length) h += '<ol class="gm-tg-steps">' + steps.map(function (x) {
-      var ls = (Array.isArray(x.links) ? x.links : []).map(function (k) { return k && { href: safeLink(k.href), label: k.label }; }).filter(function (k) { return k && k.href && k.label; });
+      var ls = (Array.isArray(x.links) ? x.links : []).map(function (k) { return k && { href: safeLink(k.href), label: AGE_TREE_LINK.test(String(k.href || '')) ? APP_LINKS['/home/'] : k.label }; }).filter(function (k) { return k && k.href && k.label; });
       var l = safeLink(x.link); if (l && !ls.some(function (k) { return k.href === l; })) ls.push({ href: l, label: APP_LINKS[l] || 'Open' });
       return '<li><b>' + esc(x.title) + '</b>' + (x.text ? '<p>' + esc(x.text) + '</p>' : '') + (ls.length ? '<p>' + ls.map(function (k) { return '<a href="' + esc(k.href) + '">' + esc(k.label) + '</a>'; }).join(' &middot; ') + '</p>' : '') + '</li>';
     }).join('') + '</ol>';
     // the invites: each partner onto their own Tree (Birch or Oak, by age), and the two of them into a Grove
     var person = function (w, name) {
-      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 26, and Oak for ages 26 to 60. Choose the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
-        '<div class="ff-links"><a href="/birch/">Birch, Ages 18 to 26</a><a href="/oak/">Oak, Ages 26 to 60</a></div>' +
+      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 26, and Oak for ages 26 to 60. In The Grounded Way, the profile chooses the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
+        '<div class="ff-links"><a href="/home/">Begin The Grounded Way</a></div>' +
         '<div class="ff-row">' + btn('invite', 'Copy ' + (name ? esc(name) + '’s' : 'an') + ' Invite', { to: w, cls: 'btn-secondary ff-sm' }) + '</div></div>';
     };
     h += '<div class="gm-inv"><h3>Your Invites</h3><p class="btv-small">Each Tree lives on its own device, behind its own lock, so each of you grows at your own pace.</p>' +
@@ -962,7 +964,7 @@
   function copyInvite(to) {
     var base = siteBase(), name = to === 'a' || to === 'b' ? nm(to) : '', t;
     if (to === 'grove') t = 'Let’s grow a Grove together, where our two trees stand side by side: ' + base + '/grove/';
-    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded. Birch is for ages 18 to 26: ' + base + '/birch/ and Oak is for ages 26 to 60: ' + base + '/oak/ Everything stays on your own device.';
+    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded, in The Grounded Way: ' + base + '/home/ Your profile chooses the tree that fits your age: Birch for ages 18 to 26, Oak for ages 26 to 60. Everything stays on your own device.';
     copyText(t, function (ok) { var el = $('gm-invst'); if (el) el.textContent = ok ? 'Invite copied. Paste it in a message.' : 'Copy did not work here. ' + t; });
   }
 
@@ -1325,7 +1327,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b911', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b911r', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

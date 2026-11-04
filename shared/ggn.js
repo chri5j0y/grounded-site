@@ -14,8 +14,8 @@
 (function () {
   'use strict';
   if (window.GGNow) return;
-  var V = 'b908';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911', DATA = '/shared/ggn-videos.js?v=b911', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var V = 'b911r';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911r', DATA = '/shared/ggn-videos.js?v=b911r', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
@@ -28,7 +28,7 @@
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  var S = { kids: /(^|#)kids$/.test(location.hash), voice: null, open: null, appSupport: null };
+  var S = { kids: /(^|#)kids$/.test(location.hash), voice: null, open: null, appSupport: null, el: null };
   function voice() { var v = S.voice || lsGet('ggn-voice'); return v === 'brian' || v === 'jenny' ? v : (S.kids ? 'jenny' : 'brian'); }
   function data() { return (window.GG_NOW && window.GG_NOW.lessons) || []; }
   function byId(id) { return data().filter(function (l) { return l.id === id; })[0] || null; }
@@ -112,7 +112,7 @@
     return h + '</div>';
   }
   function render() {
-    var root = document.getElementById('ggn-root'); if (!root) return;
+    var root = S.el && S.el.isConnected ? S.el : document.getElementById('ggn-root'); if (!root) return;
     css();
     var kids = S.kids, v = voice();
     root.innerHTML = '<div class="ggn-wrap">'
@@ -212,7 +212,7 @@
     var a = t.getAttribute('data-ggn-act');
     if (a === 'breathe') { var id = sighId(); if (id) play(id, [id].concat(doorList('slow').map(function (l) { return l.id; }).filter(function (x) { return x !== id; })), t); }
     else if (a === 'every') { var ev = document.getElementById('every'); if (ev) ev.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    else if (a === 'kids') { S.kids = !S.kids; try { history.replaceState(history.state, '', S.kids ? '#kids' : location.pathname); } catch (x) {} render(); }
+    else if (a === 'kids') { S.kids = !S.kids; if (!(S.el && S.el.isConnected)) { try { history.replaceState(history.state, '', S.kids ? '#kids' : location.pathname); } catch (x) {} } render(); }
     else if (a === 'apps') apps();
     else if (t.hasAttribute('data-ggn-door')) door(t.getAttribute('data-ggn-door'), t);
     else if (t.hasAttribute('data-ggn-voice')) { S.voice = t.getAttribute('data-ggn-voice'); lsSet('ggn-voice', S.voice); render(); }
@@ -223,9 +223,11 @@
       play(pid, q, t);
     }
   });
-  window.addEventListener('hashchange', function () { var k = /(^|#)kids$/.test(location.hash); if (k !== S.kids) { S.kids = k; render(); } });
+  window.addEventListener('hashchange', function () { if (S.el && S.el.isConnected) return; var k = /(^|#)kids$/.test(location.hash); if (k !== S.kids) { S.kids = k; render(); } });
 
-  window.GGNow = { play: play, door: door, render: render };
+  // BLD 912: Home shows this page inside its own window. mount(el, {kids}) draws it into el (the URL stays as it is).
+  function mount(el, o) { S.el = el; S.kids = !!(o && o.kids); return need(DATA, function () { return !!window.GG_NOW; }).then(render); }
+  window.GGNow = { play: play, door: door, render: render, mount: mount };
   function boot() { need(DATA, function () { return !!window.GG_NOW; }).then(render); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

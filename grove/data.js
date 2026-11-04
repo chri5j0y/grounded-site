@@ -537,11 +537,11 @@ const SCENERY = [
 // season and after twelve weeks. High schoolers check in with Pine. A grown-up
 // whose tree is Birch (GWG BLD 742) checks in with Birch.
 const CHECKIN = {
- maple:   { tool:"Maple",    href:"/maple/",    season:"/maple/",            full:"/maple/" },
- aspen:  { tool:"Aspen",   href:"/aspen/",   season:"/aspen/",           full:"/aspen/" },
- pine:    { tool:"Pine", href:"/pine/", season:"/pine/#quick",  full:"/pine/#checkin" },
- birch:   { tool:"Birch", href:"/birch/", season:"/birch/#quick", full:"/birch/#checkin" },
- adult:    { tool:"Oak", href:"/oak/", season:"/oak/#quick",   full:"/oak/#checkin" }
+ maple:   { tool:"Maple",    href:"/home/",    season:"/home/#checkin",            full:"/home/#checkin" },
+ aspen:  { tool:"Aspen",   href:"/home/",   season:"/home/#checkin",           full:"/home/#checkin" },
+ pine:    { tool:"Pine", href:"/home/", season:"/home/#checkin",  full:"/home/#checkin" },
+ birch:   { tool:"Birch", href:"/home/", season:"/home/#checkin", full:"/home/#checkin" },
+ adult:    { tool:"Oak", href:"/home/", season:"/home/#checkin",   full:"/home/#checkin" }
 };
 /* LIFE start: Health and Ability tags for The Grove's library (GWG BLD 756). life: shared/gg-life.js ids,
    plus gentle (a seated, lying down, short, or low energy way). adapt: one plain line. By practice name.

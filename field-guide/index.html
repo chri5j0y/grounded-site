@@ -668,10 +668,10 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
-<script src="../shared/gg-sources.js?v=b908"></script>
-<script src="../shared/gg-learn.js?v=b911"></script>
+<script src="../shared/gg-sources.js?v=b911r"></script>
+<script src="../shared/gg-learn.js?v=b911r"></script>
 <script src="../shared/gg-parts.js?v=b907"></script>
-<script src="../shared/gg-print.js?v=b907"></script>
+<script src="../shared/gg-print.js?v=b911b"></script>
 <script src="../shared/grove-scene.js?v=b907"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
@@ -688,14 +688,14 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b907"></script>
 <script src="grovevisit.js?v=b907"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b908"></script>
+<script src="../shared/gg-stories.js?v=b911r"></script>
 <script src="moves.js?v=b903"></script>
-<script src="stage.js?v=b899"></script>
+<script src="stage.js?v=b911b"></script>
 <script src="coach.js?v=b898"></script>
 <script src="../shared/gg-scale.js?v=b889"></script>
 <script src="../shared/gg-holidays.js?v=b896"></script>
-<script src="health.js?v=b910"></script>
-<script src="vault.js?v=b907"></script>
+<script src="health.js?v=b911b"></script>
+<script src="vault.js?v=b911b"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -2969,7 +2969,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b907'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b911b'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -9999,7 +9999,9 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'g
 const HTG = () => (FLD && FLD.hardTalks) || null;
 const htOpen = () => !!HTG() && (TIER !== 'guide' || !!(fgOpen(HTG().open) && (!OR() || orState().complete)));
 const HT_SITE = 'https://growwithgrounded.com';
-const HT_PATH = {maple:'/maple/#talk=', aspen:'/aspen/#talk=', pine:'/pine/#life=', birch:'/birch/#life=', oak:'/oak/#life=', sequoia:'/sequoia/#life=', willow:'/willow/#guide='};
+// BLD 911: the six age trees live in The Grounded Way (/home/), which plays a guide in its own window; Willow keeps its own page.
+const HT_PATH = {willow:'/willow/#guide='};
+const htPath = r => HT_PATH[r.src] ? HT_PATH[r.src] + encodeURIComponent(r.id) : '/home/?guide=' + encodeURIComponent(r.id) + '&tree=' + r.src;
 const HT_TM = {maple:'Maple', aspen:'Aspen', pine:'Pine', birch:'Birch', oak:'Oak', sequoia:'Sequoia', willow:'Willow'};
 // Oak, Sequoia, Pine, and Birch guides have two sides: For You (self) and For Someone Helping (helper). Pine's helper side
 // is For the Grown-up. Birch (GWG BLD 744) has Oak's shape and reads its own guides (window.BIRCH_GUIDES, T.birch).
@@ -10066,7 +10068,7 @@ function htRef(T, st){
   const i = Math.min(Math.max(+((V.hts || {})[st.id] || 0), 0), refs.length - 1);
   return Object.assign({aud: htTwo(st.src) ? ((V.hta || {})[st.id] || 'self') : 'all'}, refs[i]);
 }
-const htLink = r => HT_SITE + HT_PATH[r.src] + encodeURIComponent(r.id);
+const htLink = r => HT_SITE + htPath(r);
 
 // ----- text from the public files (Aspen's help lines carry links) -----
 const HT_A = /<a\s[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
@@ -10225,7 +10227,7 @@ function vHTTopic(T){
      ${htTwo(r.src) && r.aud === 'helper' ? '' : (quick ? `<div class="blk"><div class="lab">Quick Card</div><ul>${quick.items.map(t => `<li>${esc(htPlain(t))}</li>`).join('')}</ul></div>` : '')}
      ${x || (htTwo(r.src) && r.aud === 'helper') ? secs.filter(s => s.k !== 'quick' && (x || ['hfeel','hsay','havoid','hhelp'].includes(s.k))).map(htSecHTML).join('') : ''}
      ${x && r.src === 'willow' ? wfgInGuide(r.id) : ''}${x && r.src === 'oak' ? wfgInGuide(r.id, 'oak') : ''}${x && r.src === 'sequoia' ? wfgInGuide(r.id, 'sequoia') : ''}${x && r.src === 'pine' ? wfgInGuide(r.id, 'pine') : ''}${x && r.src === 'birch' ? wfgInGuide(r.id, 'birch') : ''}${x && r.src === 'aspen' && st.id === 'aspen' ? wfgInGuide(r.id, 'aspen') : ''}${x && r.src === 'maple' && st.id === 'maple' ? wfgInGuide(r.id, 'maple') : ''}
-     <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(HT_PATH[r.src] + encodeURIComponent(r.id))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
+     <div class="row" style="margin-top:14px"><button class="btn btn-gold btn-sm" data-act="ht-print" data-v="${esc(st.id)}">${icon('print')} Save or Print Handout</button><button class="btn btn-line btn-sm" data-act="ht-full" data-v="${esc(st.id)}">${x ? 'Show Less' : 'Read Full Guide'}</button><a class="btn btn-line btn-sm" href="..${esc(htPath(r))}" target="_blank" rel="noopener">${icon('link')} On the Site</a></div>
      ${(V.htSeen || []).includes(st.id) ? '<p class="muted" style="font-size:14px;margin-top:8px">Handout printed.</p>' : ''}</div>`;
   };
   const faithOn = !!DATA.settings.htFaith;

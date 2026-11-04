@@ -290,7 +290,7 @@ function welcomeHtml() {
       <button type="button" class="w-choice" data-w-for="me" onclick="W.setup('me')"><b>This is for me</b><span>I am in hospice care, or facing the end of life. Willow and its check-ins speak to me.</span></button>
       <button type="button" class="w-choice" data-w-for="helper" onclick="W.setup('helper')"><b>I'm caring for someone I love</b><span>A parent, a partner, a friend, or family. I set up their tree, and my own caregiver tree grows here too.</span></button>
     </div>
-    ${a && a.age !== 'adult' ? `<p class="w-small">Willow is written for grown-ups. Kids and middle schoolers have their own trees in <a class="text-link" href="/maple/">Maple</a> and <a class="text-link" href="/aspen/">Aspen</a>, and the guides and readings here are open to everyone.</p>` : ''}
+    ${a && a.age !== 'adult' ? `<p class="w-small">Willow is written for grown-ups. Kids and middle schoolers have their own trees, Maple and Aspen, in <a class="text-link" href="/home/">The Grounded Way</a>, and the guides and readings here are open to everyone.</p>` : ''}
     <p class="w-small">You don't need a profile to read the guides, the readings, or the bedside list. They're in the tabs above${window.innerWidth <= 700 ? ' and below' : ''}.</p>
   </div>`;
 }

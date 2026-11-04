@@ -104,15 +104,15 @@
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
-    { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Oak', href: '/oak/' },
-    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'Pine', href: '/pine/' },   // Pine, built for grades 9 to 12 (GWG BLD 739)
-    { id: 'aspen', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Aspen', href: '/aspen/' },
-    { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/maple/' }
+    { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Oak', href: '/home/' },
+    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'Pine', href: '/home/' },   // Pine, built for grades 9 to 12 (GWG BLD 739)
+    { id: 'aspen', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Aspen', href: '/home/' },
+    { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/home/' }
   ];
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
   // A grown-up's own tree (Sequoia, GWG BLD 733). The age stays "adult" either way.
   // Birch (GWG BLD 742) joins the same way: p.tree 'birch', the age still "adult".
-  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/oak/', who: 'Built for adults, 26 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/birch/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/sequoia/', who: 'Built for older adults, 60 and up' } };
+  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/home/', who: 'Built for adults, 26 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/home/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/home/', who: 'Built for older adults, 60 and up' } };
   // Which trees each age question offers: 26 or younger (Birch first), 55 or older.
   var BAND = { young: ['birch', 'oak'], older: ['oak', 'sequoia'] };
   function treeOf(p) { return p && p.age === 'adult' && (p.tree === 'sequoia' || p.tree === 'birch') ? p.tree : 'oak'; }
@@ -1096,9 +1096,9 @@
       html += link('/home/', 'Open The Grounded Way');
       html += link('/grove/', 'The Grove');
       var ta = toolOf(p);
-      html += link(ta.href, 'My tree in ' + ta.tool);
+      html += link('/home/#grow', 'My ' + ta.tool);
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
-      helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id), oh = oakHelp(q.id); if (sq) html += link('/sequoia/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Sequoia'); if (bh) html += link('/birch/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Birch'); if (oh) html += link('/oak/#for=' + q.id, 'Helping ' + esc(q.name) + ' in Oak'); if ((!sq && !bh && !oh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
+      helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id), oh = oakHelp(q.id); if (sq || bh || oh) html += link('/home/', 'Helping ' + esc(q.name)); if ((!sq && !bh && !oh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
       html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage My Profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
@@ -1208,13 +1208,13 @@
     if (!p) { if (box) box.remove(); return; }
     // Your tree is yours. The grove is ours. (Rebrand Session 5)
     var v = vaultNow(), chips = [], ta = toolOf(p), sq = ta.tool === 'Sequoia', pn = ta.tool === 'Pine', bc = ta.tool === 'Birch';
-    chips.push([ta.href, 'Tend my tree in ' + ta.tool]);
+    chips.push(['/home/', 'Tend my tree']);
     chips.push(['/grove/', 'Visit The Grove']);
     var h = ((sq ? v.sequoia : pn ? v.pine : bc ? v.birch : v.oak) || {}).history || [];
-    if (h.length) { var last = h[h.length - 1]; chips.push([ta.href, 'Last ' + ta.tool + ' check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
-    else { chips.push([ta.href, 'Take ' + (/^[AEIOU]/.test(ta.tool) ? 'an ' : 'a ') + ta.tool + ' check-in']); }
+    if (h.length) { var last = h[h.length - 1]; chips.push(['/home/#checkin', 'Last ' + ta.tool + ' check-in: ' + new Date(last.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })]); }
+    else { chips.push(['/home/#checkin', 'Take ' + (/^[AEIOU]/.test(ta.tool) ? 'an ' : 'a ') + ta.tool + ' check-in']); }
     if (v.willow && v.willow.started) chips.push(['/willow/', 'My tree in Willow']);
-    helping().map(getP).filter(Boolean).forEach(function (q) { if (seqHelp(q.id)) chips.push(['/sequoia/#for=' + q.id, 'Helping ' + q.name]); else if (birchHelp(q.id)) chips.push(['/birch/#for=' + q.id, 'Helping ' + q.name]); else if (oakHelp(q.id)) chips.push(['/oak/#for=' + q.id, 'Helping ' + q.name]); else chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
+    helping().map(getP).filter(Boolean).forEach(function (q) { if (seqHelp(q.id) || birchHelp(q.id) || oakHelp(q.id)) chips.push(['/home/', 'Helping ' + q.name]); else chips.push(['/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + q.name]); });
     var ns = Object.keys((v.stories || {}).saved || {}).length; if (ns) chips.push(['/stories.html#saved', ns + ' saved ' + (ns === 1 ? 'story' : 'stories')]);
     var html = '<div><h2>Welcome back, ' + esc(p.name) + '.</h2><div class="ggp-chips">' + chips.map(function (c) { return '<a class="ggp-chip" href="' + HOME + c[0] + '">' + esc(c[1]) + '</a>'; }).join('') + '</div></div>';
     if (!box) { box = document.createElement('section'); box.id = 'ggp-welcome'; box.className = 'ggp-welcome'; box.setAttribute('aria-label', 'Welcome back'); document.querySelector('.hero').insertAdjacentElement('afterend', box); }

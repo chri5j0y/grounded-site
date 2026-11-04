@@ -22,7 +22,7 @@
   'use strict';
   if (window.GGLivingSober) return;
   var PAGE = 'https://growwithgrounded.com/living-sober';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911', LESSONS = '/shared/learn-lessons.js?v=b908';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911r', LESSONS = '/shared/learn-lessons.js?v=b911r';
   var ACC = '#4E7D6A';
   // Start Here: the most welcoming three of Oak's Growing a Healthy Tree (shared/learn-lessons.js, track oak-sober).
   var START = [
@@ -162,7 +162,7 @@
     if (b) b.innerHTML = (B.intro ? '<p>' + esc(B.intro) + '</p>' : '') + '<ol class="ls-tl">' + (B.milestones || []).map(function (x) { return '<li><span class="ls-med" aria-hidden="true">' + esc(x.title) + '</span><div><b>' + esc(x.title) + '</b><p>' + esc(x.text) + '</p></div></li>'; }).join('') + '</ol>' +
       (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.credits && B.credits.length ? '<p class="ls-src">Sources: ' + B.credits.map(function (c) { return c[1] ? '<a href="' + esc(c[1]) + '" target="_blank" rel="noopener">' + esc(c[0]) + '</a>' : esc(c[0]); }).join('; ') + '</p>' : '');
   }
-  /* ---------- Living Sober Together (BLD 851): a taste of each piece, with Open in Oak for the full tool ---------- */
+  /* ---------- Living Sober Together (BLD 851): a taste of each piece, with Open in The Grounded Way for the full tool ---------- */
   function srcs(list) { return list && list.length ? '<p class="ls-src">Sources: ' + list.map(function (c) { return c[1] ? '<a href="' + esc(c[1]) + '" target="_blank" rel="noopener">' + esc(c[0]) + '</a>' : esc(c[0]); }).join('; ') + '</p>' : ''; }
   function together() {
     var M = window.GGSoberMore; if (!M) return;

@@ -1261,8 +1261,9 @@
        "t": "And out for six.",
        "p": 6
       },
+      "Again. In,",
       {
-       "t": "Again. In, and out long.",
+       "t": "and out long.",
        "p": 8
       }
      ],
@@ -4289,8 +4290,9 @@
        "t": "And out for six.",
        "p": 6
       },
+      "Again. In,",
       {
-       "t": "Again. In, and out long.",
+       "t": "and out long.",
        "p": 8
       }
      ],
@@ -6452,8 +6454,9 @@
        "t": "And let the whole day go, out long.",
        "p": 6
       },
+      "Again. In,",
       {
-       "t": "Again. In, and out long.",
+       "t": "and out long.",
        "p": 8
       }
      ],
@@ -8997,7 +9000,7 @@
 };
   // Where the site lives, from this script's own address, so the apps (/oak/, /birch/, /sequoia/) and the page share one path.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911r';
   var ACC = '#4E7D6A';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }

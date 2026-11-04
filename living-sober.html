@@ -307,6 +307,20 @@ html{scroll-padding-top:140px;}
   .ls .ls-tsh{top:2px;right:2px;}
   .ls .ls-tree{flex-wrap:wrap;}
 }
+/* BLD 911: How to Begin */
+.ls-begin h2{margin:6px 0 18px;}
+.ls-steps{list-style:none;margin:0 0 22px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.ls-steps li{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--card);min-width:0;}
+.ls-stepn{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--sage,#5F7D48);color:#FFFCF6;font-weight:700;font-size:18px;}
+.ls-steps h3{margin:2px 0 4px;font-size:21px;}
+.ls-steps p{margin:0;color:var(--ink-soft);}
+.ls-tiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.ls-tier{padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--card);display:flex;flex-direction:column;gap:8px;min-width:0;}
+.ls-tier-m{border-color:var(--gold,#8B5E1A);}
+.ls-tier h3{margin:0;font-size:24px;}
+.ls-tier ul{margin:4px 0 10px;padding-left:20px;color:var(--ink-soft);line-height:1.5;}
+.ls-tier .btn{align-self:flex-start;margin-top:auto;}
+@media (max-width:800px){.ls-steps,.ls-tiers{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -346,7 +360,7 @@ html{scroll-padding-top:140px;}
     <div class="eyebrow">Living Sober</div>
     <h1>Living Sober</h1>
     <p class="cer-sub">A clear mind, a healthy body, and a life you're fully present for.</p>
-    <div class="card-actions cer-actions ls-hero-acts gg-watch-acts"><!-- PAGE VIDEO (BLD 838) --><button type="button" class="btn btn-primary gg-watch gg-watch-hero" data-gg-watch="demo-living-sober" hidden>Watch: Living Sober</button><!-- /PAGE VIDEO --><a class="btn btn-light" href="#start">Start Here</a><a class="btn btn-light" href="#early-days">Early Days: 90 Days</a></div>
+    <div class="card-actions cer-actions ls-hero-acts gg-watch-acts"><a class="btn btn-primary" href="/home/?sober=1">Begin Living Sober</a><!-- PAGE VIDEO (BLD 838) --><button type="button" class="btn btn-secondary gg-watch gg-watch-hero" data-gg-watch="demo-living-sober" hidden>Watch: Living Sober</button><!-- /PAGE VIDEO --><a class="btn btn-light" href="#start">Start Here</a><a class="btn btn-light" href="#early-days">Early Days: 90 Days</a></div>
   </div>
 </section>
 
@@ -358,13 +372,33 @@ html{scroll-padding-top:140px;}
   </div>
 </div>
 
+<!-- BLD 911 (Chris: "you dont know what to do and how to begin using the tools.. it needs to follow sb7 and make easy for
+     person to know how to begin the program.. either free or membership"): the plan in three steps, Start and Member side by
+     side, and one clear call. Public words never say free: Start is open to you today. -->
+<section class="ls-sec ls-begin a-green" id="begin" aria-labelledby="begin-h">
+  <div class="wrap">
+    <div class="eyebrow">How to Begin</div>
+    <h2 id="begin-h">Begin Living Sober in three steps.</h2>
+    <ol class="ls-steps">
+      <li><span class="ls-stepn" aria-hidden="true">1</span><div><h3>Make Your Profile</h3><p>Open The Grounded Way and make your profile with a passcode. It lives on your device, private to you.</p></div></li>
+      <li><span class="ls-stepn" aria-hidden="true">2</span><div><h3>Turn On Living Sober</h3><p>Choose your stage and, if you like, your day one. Your count and your next medallion show on Today.</p></div></li>
+      <li><span class="ls-stepn" aria-hidden="true">3</span><div><h3>Grow One Day at a Time</h3><p>Each day: today's encouragement and mantra, a short video for the early days, Ride the Wave when an urge rises, and My Anchor Plan close at hand.</p></div></li>
+    </ol>
+    <div class="ls-tiers">
+      <div class="ls-tier"><div class="eyebrow">Start</div><h3>Open to You Today</h3><ul><li>Your day count, medallions, and share cards</li><li>The first 90 days, one short video each day</li><li>Today's encouragement and mantra</li><li>Ride the Wave and Today's Intention</li><li>My Anchor Plan</li></ul><a class="btn ls-btn" href="/home/?sober=1">Begin Living Sober</a></div>
+      <div class="ls-tier ls-tier-m"><div class="eyebrow">Membership</div><h3>The Whole Year</h3><ul><li>Everything in Start</li><li>Words for every day of the year, days 91 to 365</li><li>Living Sober Together: Healthy People, Healthy Places, Strong on Your Own, and My Good People</li><li>My Week trends</li><li>Grounded Meditation, Fitness, Nutrition, and more</li></ul><a class="btn btn-secondary" href="/the-grounded-way.html#ways">See Membership</a></div>
+    </div>
+  </div>
+</section>
+
 <nav class="ls-chips" aria-label="On this page"><ul>
+  <li><a class="a-green" href="#begin"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg>How to Begin</a></li>
   <li><a class="a-honey" href="#today"><svg class="i" aria-hidden="true"><use href="#lsi-sun"/></svg>Today</a></li>
   <li><a class="a-clay" href="#start"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg>Start Here</a></li>
   <li><a class="a-green" href="#early-days"><svg class="i" aria-hidden="true"><use href="#lsi-path"/></svg>90 Days</a></li>
   <li><a class="a-honey" href="#every-day"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg>Every Day</a></li>
   <li><a class="a-blue" href="#together"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg>Together</a></li>
-  <li><a class="a-green" href="#stages"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg>Your Tree</a></li>
+  <li><a class="a-green" href="#stages"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg>Your Stage</a></li>
   <li><a class="a-plum" href="#love"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg>Someone I Love</a></li>
   <li><a class="a-green" href="#help"><svg class="i" aria-hidden="true"><use href="#lsi-anchor"/></svg>Anchor and Help</a></li>
   <li><a class="a-clay" href="#share"><svg class="i" aria-hidden="true"><use href="#lsi-share"/></svg>Share</a></li>
@@ -376,7 +410,7 @@ html{scroll-padding-top:140px;}
       <div class="eyebrow">Welcome</div>
       <p class="ls-stance">Grounded stands for living sober and free of harmful drugs: a clear mind, a healthy body, and a life you're fully present for.</p>
       <p>Wherever you are, you belong here. Thinking about a change, counting your first days, many years along, or loving someone who drinks or uses: we meet you right where you are, and we walk with you toward a sober life, one day at a time.</p>
-      <p>Chris, one of Grounded's founders, has been sober since 2008. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, ninety days for the early days, and a private place to grow in Birch, Oak, and Sequoia.</p>
+      <p>Chris, one of Grounded's founders, has been sober since 2008. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, ninety days for the early days, and a private place to grow in The Grounded Way.</p>
       <div class="ls-sharebar"><button type="button" class="btn btn-secondary ls-share" data-ls-share="page"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share This Page</button><span class="ls-smsg" role="status" aria-live="polite"></span></div>
     </div>
     <div class="ls-rise">
@@ -404,7 +438,7 @@ html{scroll-padding-top:140px;}
 
 <section class="ls-sec a-clay" id="start">
   <div class="wrap">
-    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg></span><div><div class="eyebrow">Start Here</div><h2>Three short videos to begin.</h2><p class="ls-lead">From Growing a Healthy Tree, the Living Sober series in Birch, Oak, and Sequoia. Each one plays right here, with a calm voice and a moment to try it.</p></div></div>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg></span><div><div class="eyebrow">Start Here</div><h2>Three short videos to begin.</h2><p class="ls-lead">From Growing a Healthy Tree, the Living Sober series in The Grounded Way. Each one plays right here, with a calm voice and a moment to try it.</p></div></div>
     <div class="ls-grid3">
       <div class="ls-card ls-vid v1 a-green ls-rise"><div class="ls-vh"><img class="ls-scene" src="/shared/heroes/way/grounded-way-narrow.webp" alt="" loading="lazy" decoding="async" width="600" height="600"><small>Start Here, 1 of 3</small><b>The Healthy Tree</b></div><div class="ls-vb"><p>The parts of your tree to tend, and Chris's three kinds of tools: mind, body, and spirit. About 6 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-tree" hidden><svg aria-hidden="true" width="18" height="18"><use href="#lsi-play"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-tree" aria-label="Share The Healthy Tree" hidden><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg></button></div></div></div>
       <div class="ls-card ls-vid v2 a-honey ls-rise"><div class="ls-vh"><img class="ls-scene" src="/shared/heroes/way/quiet-morning.webp" alt="" loading="lazy" decoding="async" width="600" height="600"><small>Start Here, 2 of 3</small><b>A First Morning Rhythm</b></div><div class="ls-vb"><p>Water, light, breath, a choice, and a short walk to start a Sober day. About 4 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-morning" hidden><svg aria-hidden="true" width="18" height="18"><use href="#lsi-play"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-morning" aria-label="Share A First Morning Rhythm" hidden><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg></button></div></div></div>
@@ -436,13 +470,13 @@ html{scroll-padding-top:140px;}
   <div class="wrap">
     <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg></span><div><div class="eyebrow">Living Sober Every Day</div><h2>Tools for every day, and every big day.</h2><p class="ls-lead">Plan a great night out, watch your body grow stronger, and steady your sleep, food, and movement. You define your own sobriety; these tools meet you there.</p></div></div>
     <div class="ls-grid3">
-      <div class="ls-card ls-tool fill a-green ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/oak-phone.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>In Your Tree</h3><p>A morning intention, an evening look back, My Week, medallions for every milestone, and Money Kept, all locked on your device.</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?tree=oak&sober=1">Open in Oak</a></div></div>
+      <div class="ls-card ls-tool fill a-green ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/oak-phone.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>In Your Tree</h3><p>A morning intention, an evening look back, My Week, medallions for every milestone, and Money Kept, all locked on your device.</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?sober=1">Open in The Grounded Way</a></div></div>
       <div class="ls-card ls-tool fill a-clay ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/way/drinks-sq.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>Good Times, Sober</h3><p>Unwinding after work, celebrating, letting loose, weddings, holidays, and travel: a plan for each one.</p><div class="ls-acts"><a class="btn ls-btn" href="#good-times">See the Plans</a></div></div>
       <div class="ls-card ls-tool fill a-honey ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/way/rest-day-sq.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>What Your Body Regains</h3><p>From the first day to the first year: how sleep, energy, and health grow back, with sources for each step.</p><div class="ls-acts"><a class="btn ls-btn" href="#body-gains">See the Timeline</a></div></div>
     </div>
     <div id="good-times" class="ls-more a-clay ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg></span><h3>Good Times, Sober</h3></div><div id="ls-good"><p class="ls-empty">Loading the plans...</p></div></div>
     <div id="body-gains" class="ls-more a-honey ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-medal"/></svg></span><h3>What Your Body Regains</h3></div><div id="ls-body"><p class="ls-empty">Loading...</p></div></div>
-    <div id="early-body" class="ls-more a-green ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-moon"/></svg></span><h3>Sleep, Food, and Movement in Early Sobriety</h3></div><div id="ls-basics"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/home/?tree=oak&sober=basics">Open in Oak</a><a class="text-link" href="/recipes/">Nourishing meals in Grounded Recipes</a></div></div>
+    <div id="early-body" class="ls-more a-green ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-moon"/></svg></span><h3>Sleep, Food, and Movement in Early Sobriety</h3></div><div id="ls-basics"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/home/?sober=basics">Open in The Grounded Way</a><a class="text-link" href="/recipes/">Nourishing meals in Grounded Recipes</a></div></div>
   </div>
 </section>
 
@@ -450,9 +484,9 @@ html{scroll-padding-top:140px;}
   <div class="wrap">
     <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg></span><div><div class="eyebrow">Living Sober Together</div><h2>Healthy people, healthy places, and a strong you.</h2><p class="ls-lead">Look at the people around you, and you will see yourself in five years. Find healthy, thriving people near you, keep a short list of your good people, and grow strong on your own too.</p></div></div>
     <div class="ls-grid3">
-      <div class="ls-card ls-tool a-blue ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/cards/retreats.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>Healthy People, Healthy Places</h3><p>Running and hiking groups, classes, service, music and maker groups, leagues, and sober events: why each one helps, how to find one, and what to say the first time.</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?tree=oak&sober=people">Open in Oak</a><a class="text-link" href="#places">See the Places</a></div></div>
-      <div class="ls-card ls-tool a-honey ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/way/move-walk-sq.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>Strong on Your Own</h3><p>For people who like their own company: solo mornings, evenings, and weekends, solo celebrations and adventures, and a plan for a lonely evening.</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?tree=oak&sober=solo">Open in Oak</a><a class="text-link" href="#solo">See the Ideas</a></div></div>
-      <div class="ls-card ls-tool a-green ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/way/tend-people.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>My Good People</h3><p>A short list of the people who leave you better, names only, locked on your device. Each week it asks one gentle question: who will you see this week?</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?tree=oak&sober=mine">Open in Oak</a></div></div>
+      <div class="ls-card ls-tool a-blue ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/cards/retreats.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>Healthy People, Healthy Places</h3><p>Running and hiking groups, classes, service, music and maker groups, leagues, and sober events: why each one helps, how to find one, and what to say the first time.</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?sober=people">Open in The Grounded Way</a><a class="text-link" href="#places">See the Places</a></div></div>
+      <div class="ls-card ls-tool a-honey ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/way/move-walk-sq.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>Strong on Your Own</h3><p>For people who like their own company: solo mornings, evenings, and weekends, solo celebrations and adventures, and a plan for a lonely evening.</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?sober=solo">Open in The Grounded Way</a><a class="text-link" href="#solo">See the Ideas</a></div></div>
+      <div class="ls-card ls-tool a-green ls-rise"><span class="ls-ci ls-pic" aria-hidden="true"><img src="/shared/heroes/way/tend-people.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><h3>My Good People</h3><p>A short list of the people who leave you better, names only, locked on your device. Each week it asks one gentle question: who will you see this week?</p><div class="ls-acts"><a class="btn ls-btn" href="/home/?sober=mine">Open in The Grounded Way</a></div></div>
     </div>
     <div id="places" class="ls-more a-blue ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg></span><h3>Healthy People, Healthy Places</h3></div><div id="ls-people"><p class="ls-empty">Loading...</p></div></div>
     <div id="solo" class="ls-more a-honey ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-sunrise"/></svg></span><h3>Strong on Your Own</h3></div><div id="ls-solo"><p class="ls-empty">Loading...</p></div></div>
@@ -461,7 +495,7 @@ html{scroll-padding-top:140px;}
 
 <section class="ls-sec a-green" id="stages">
   <div class="wrap">
-    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><div><div class="eyebrow">Five Stages, Your Tree</div><h2>Wherever you are on the path.</h2><p class="ls-lead">In Birch, Oak, and Sequoia you choose your stage privately, and Living Sober fits itself to you: the guides, the videos, and the growth plan ideas for where you are.</p></div></div>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><div><div class="eyebrow">Five Stages, Your Tree</div><h2>Wherever you are on the path.</h2><p class="ls-lead">In The Grounded Way you choose your stage privately, and Living Sober fits itself to you: the guides, the videos, and the growth plan ideas for where you are.</p></div></div>
     <ol class="ls-stages">
       <li class="ls-stage a-honey ls-rise"><span class="ls-sn" aria-hidden="true">1</span><h3>Thinking About a Change</h3><p>Honest questions, a gentle look at what drinking or using does for you and costs you, and safe first steps, starting with a doctor.</p><p class="ls-who">For anyone curious about drinking or using less, or stopping.</p></li>
       <li class="ls-stage a-clay ls-rise"><span class="ls-sn" aria-hidden="true">2</span><h3>Early Days</h3><p>The first 90 days: sleep, cravings, mornings, evenings, and people in your corner. One day at a time, with Early Days: 90 Days alongside.</p><p class="ls-who">For the first weeks and months.</p></li>
@@ -471,13 +505,9 @@ html{scroll-padding-top:140px;}
       <li class="ls-stage priv a-green ls-rise"><span class="ls-sn" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#lsi-leaf"/></svg></span><h3>Your Stage Stays Yours</h3><p>Your stage, your sober date, and your plan stay on your device, locked in your own profile. Only you see them.</p><p class="ls-who">Private by design.</p></li>
     </ol>
     <div class="ls-open" id="open">
-      <div class="ls-subhd ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><h3>Living Sober, inside your tree</h3></div>
-      <p class="ls-lead ls-rise">Each button opens the app with Living Sober turned on. Inside, you'll find your stage, today's encouragement, an optional sober date with a medallion for each milestone, My Anchor Plan, and every Living Sober guide and video. With The Grounded Way, your day count, today's mantra, and your next medallion shine on Today and Grow.</p>
-      <div class="ls-trees">
-        <div class="ls-tree ls-rise"><img src="/shared/marks/birch.svg" alt="" width="64" height="64"><div><h3>Birch</h3><p>For ages 18 to 26.</p><a class="btn ls-btn" href="/home/?tree=birch&sober=1">Open in Birch</a></div></div>
-        <div class="ls-tree ls-rise"><img src="/shared/marks/oak.svg" alt="" width="64" height="64"><div><h3>Oak</h3><p>For adults, 26 to 60.</p><a class="btn ls-btn" href="/home/?tree=oak&sober=1">Open in Oak</a></div></div>
-        <div class="ls-tree ls-rise"><img src="/shared/marks/sequoia.svg" alt="" width="64" height="64"><div><h3>Sequoia</h3><p>For 60 and up.</p><a class="btn ls-btn" href="/home/?tree=sequoia&sober=1">Open in Sequoia</a></div></div>
-      </div>
+      <div class="ls-subhd ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><h3>Living Sober, inside The Grounded Way</h3></div>
+      <p class="ls-lead ls-rise">Begin Living Sober opens the app with Living Sober turned on. Inside, you'll find your stage, today's encouragement, an optional sober date with a medallion for each milestone, My Anchor Plan, and every Living Sober guide and video. With The Grounded Way, your day count, today's mantra, and your next medallion shine on Today and Grow.</p>
+      <p class="ls-acts"><a class="btn ls-btn" href="/home/?sober=1">Begin Living Sober</a></p>
       <p class="ls-note">Everything stays on your device. Make a profile with a passcode to keep your choices locked and private.</p>
     </div>
   </div>
@@ -486,19 +516,15 @@ html{scroll-padding-top:140px;}
 <section class="ls-sec ls-alt a-plum" id="love">
   <div class="wrap">
     <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg></span><div><div class="eyebrow">Someone I Love</div><h2>For the people who love someone who drinks or uses.</h2><p class="ls-lead">Loving someone through this is heavy, and you deserve support too. These guides help you speak honestly, keep yourself and your family steady, and tend your own tree.</p></div></div>
-    <div class="ls-trees">
-      <div class="ls-tree ls-rise"><img src="/shared/marks/oak.svg" alt="" width="64" height="64"><div><h3>Oak</h3><p>When Your Partner Drinks or Uses, Grieving an Overdose, and more for adults.</p><a class="btn ls-btn" href="/home/?tree=oak&sober=love">Open in Oak</a></div></div>
-      <div class="ls-tree ls-rise"><img src="/shared/marks/sequoia.svg" alt="" width="64" height="64"><div><h3>Sequoia</h3><p>When Your Adult Child Drinks or Uses, and Raising Grandchildren Through a Parent.</p><a class="btn ls-btn" href="/home/?tree=sequoia&sober=love">Open in Sequoia</a></div></div>
-      <div class="ls-tree ls-rise"><img src="/shared/marks/birch.svg" alt="" width="64" height="64"><div><h3>Birch</h3><p>A Parent, for young adults whose mom or dad drinks or uses.</p><a class="btn ls-btn" href="/home/?tree=birch&sober=love">Open in Birch</a></div></div>
-    </div>
+    <div class="ls-acts ls-rise"><p>Guides for partners, parents, grown children, and grandparents raising grandchildren, chosen for your age inside The Grounded Way.</p><a class="btn ls-btn" href="/home/?sober=love">Open Someone I Love</a></div>
     <div class="ls-more ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg></span><h3>For kids, teens, and the whole family</h3></div>
     <div class="ls-love">
-      <a href="/home/?tree=pine#life=sober-parent"><span class="ls-app">Pine, grades 9 to 12</span><b>A Parent</b><span>For teens whose parent drinks or uses.</span></a>
-      <a href="/home/?tree=aspen#talk=sober-family"><span class="ls-app">Aspen, grades 6 to 8</span><b>Someone in My Family Drinks or Uses</b><span>For middle schoolers, and the grown-ups who love them.</span></a>
-      <a href="/home/?tree=maple#talk=addiction"><span class="ls-app">Maple, grades K to 5</span><b>When a Family Member Drinks or Uses</b><span>For a grown-up to read with a child.</span></a>
+      <a href="/home/?guide=sober-parent&tree=pine"><span class="ls-app">For teens, grades 9 to 12</span><b>A Parent</b><span>For teens whose parent drinks or uses.</span></a>
+      <a href="/home/?guide=sober-family&tree=aspen"><span class="ls-app">For grades 6 to 8</span><b>Someone in My Family Drinks or Uses</b><span>For middle schoolers, and the grown-ups who love them.</span></a>
+      <a href="/home/?guide=addiction&tree=maple"><span class="ls-app">For grades K to 5</span><b>When a Family Member Drinks or Uses</b><span>For a grown-up to read with a child.</span></a>
       <a href="/grove/#life=recovery"><span class="ls-app">The Grove, together</span><b>Recovery in the Family</b><span>For the whole family, growing together.</span></a>
     </div></div>
-    <div id="craft" class="ls-more ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg></span><h3>Loving Someone Who Drinks or Uses</h3></div><div id="ls-craft"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/home/?tree=oak&sober=craft">Open in Oak</a><a class="btn ls-btn" href="/home/?tree=sequoia&sober=craft">Open in Sequoia</a><a class="btn ls-btn" href="/home/?tree=birch&sober=craft">Open in Birch</a></div></div>
+    <div id="craft" class="ls-more ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg></span><h3>Loving Someone Who Drinks or Uses</h3></div><div id="ls-craft"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/home/?sober=craft">Open in The Grounded Way</a><a class="btn ls-btn" href="/home/?sober=craft">Open in The Grounded Way</a><a class="btn ls-btn" href="/home/?sober=craft">Open in The Grounded Way</a></div></div>
     <p class="ls-sharebar" style="margin-top:22px"><button type="button" class="btn btn-secondary ls-share" data-ls-share="love"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share a Word for Families</button></p>
   </div>
 </section>
@@ -520,10 +546,8 @@ html{scroll-padding-top:140px;}
         </ul>
       </div>
       <div class="ls-acts">
-        <p>Make yours in your tree. It stays locked in your profile, ready on your phone whenever you need it.</p>
-        <a class="btn ls-btn" href="/home/?tree=birch&sober=anchor">My Anchor Plan in Birch</a>
-        <a class="btn ls-btn" href="/home/?tree=oak&sober=anchor">My Anchor Plan in Oak</a>
-        <a class="btn ls-btn" href="/home/?tree=sequoia&sober=anchor">My Anchor Plan in Sequoia</a>
+        <p>Make yours in The Grounded Way. It stays locked in your profile, ready on your phone whenever you need it.</p>
+        <a class="btn ls-btn" href="/home/?sober=anchor">Make My Anchor Plan</a>
       </div>
     </div>
     <div class="ls-more a-blue">
@@ -570,12 +594,12 @@ html{scroll-padding-top:140px;}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b779n"></script>
-<script src="nav.js?v=b911" defer></script>
+<script src="nav.js?v=b912" defer></script>
 <script src="/shared/sober-words.js?v=b908" defer></script>
-<script src="/shared/sober-30.js?v=b908" defer></script>
+<script src="/shared/sober-30.js?v=b911r" defer></script>
 <script src="/shared/sober-more.js?v=b862" defer></script>
 <script src="/shared/gg-sharecard.js?v=b839" defer></script>
-<script src="/shared/living-sober.js?v=b910" defer></script>
-<!-- PAGE VIDEO (BLD 838) --><script src="/shared/page-videos.js?v=b908" defer></script><!-- /PAGE VIDEO -->
+<script src="/shared/living-sober.js?v=b911r" defer></script>
+<!-- PAGE VIDEO (BLD 838) --><script src="/shared/page-videos.js?v=b912" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

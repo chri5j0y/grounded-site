@@ -23,14 +23,14 @@
 
   /* ---------- tools ---------- */
   var TOOLS = [
-    { title: 'Maple', sub: 'Your tree in The Grounded Way: a check-in for kids, grades K to 5, with 73 When Life Changes guides for grown-ups', href: '/home/?tree=maple', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
-    { title: 'Aspen', sub: 'Your tree in The Grounded Way: a check-in for grades 6 to 8, with 64 When Life Changes guides for grown-ups', href: '/home/?tree=aspen', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
-    { title: 'Oak', sub: 'Your tree in The Grounded Way: a check-in for adults, 26 to 60, from root to fruit, with 88 When Life Changes guides for hard seasons', href: '/home/?tree=oak', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
+    { title: 'Maple', sub: 'Your tree in The Grounded Way: a check-in for kids, grades K to 5, with 73 When Life Changes guides for grown-ups', href: '/home/', keys: 'when life changes guides hard talks kids children elementary kindergarten k 5 check-in check in checkup feelings tree critters' },
+    { title: 'Aspen', sub: 'Your tree in The Grounded Way: a check-in for grades 6 to 8, with 64 When Life Changes guides for grown-ups', href: '/home/', keys: 'when life changes guides hard talks middle school middle schooler preteen tween teen 6th 7th 8th grade check-in check in checkup' },
+    { title: 'Oak', sub: 'Your tree in The Grounded Way: a check-in for adults, 26 to 60, from root to fruit, with 88 When Life Changes guides for hard seasons', href: '/home/', keys: 'when life changes guides hard talks adult grown up spiritual health wellbeing check-in check in checkup assessment growth plan' },
     { title: 'The Grove', sub: 'Families, faith communities, small groups, and teams, growing together, with 69 When Life Changes Together guides and Do This Together videos', href: '/grove/', keys: 'practice daily habits family grove tending tend routine group check-in growth plan congregation church small group support group team workplace staff when life changes together' },
     { title: 'Field Guide', sub: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide, from $24 a month', href: '/the-field-guide.html', keys: 'field guide professional chaplain pastor doula youth leader coach small group leader parish nurse teacher counselor school staff mentor organization training guide guides for guides certified grounded guide certification certificate of completion caregiver practitioner nurse maple guide aspen guide pine guide birch guide oak guide sequoia guide willow guide grove guide hospital guide request access buy price sample video' },
-    { title: 'Pine', sub: 'Your tree in The Grounded Way: a check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and 65 When Life Changes guides', href: '/home/?tree=pine', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
-    { title: 'Birch', sub: 'Your tree in The Grounded Way: a check-in for young adults, 18 to 26, with a growth plan, daily practices, Groundwork, a private notebook for building your own life, and 65 When Life Changes guides', href: '/home/?tree=birch', keys: 'when life changes guides birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
-    { title: 'Sequoia', sub: 'Your tree in The Grounded Way: a check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and 59 When Life Changes guides', href: '/home/?tree=sequoia', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
+    { title: 'Pine', sub: 'Your tree in The Grounded Way: a check-in for high schoolers, grades 9 to 12, with a growth plan, daily practices, Next Steps for life after high school, and 65 When Life Changes guides', href: '/home/', keys: 'when life changes guides hard talks pine high school high schooler teen teens teenager 9th 10th 11th 12th grade freshman sophomore junior graduation college career check-in check in checkup growth plan next steps goals' },
+    { title: 'Birch', sub: 'Your tree in The Grounded Way: a check-in for young adults, 18 to 26, with a growth plan, daily practices, Groundwork, a private notebook for building your own life, and 65 When Life Changes guides', href: '/home/', keys: 'when life changes guides birch young adult young adults 18 19 20 21 22 23 24 25 26 twenties 20s college university trade school apprenticeship first job work career military service moving out first apartment roommates money budget groundwork skills check-in check in checkup growth plan' },
+    { title: 'Sequoia', sub: 'Your tree in The Grounded Way: a check-in for older adults, 60 and up, with a growth plan, a Legacy Book, and 59 When Life Changes guides', href: '/home/', keys: 'when life changes guides hard talks sequoia older adults older adult elders senior seniors 55 60 65 70 80 retirement retired aging grandparents grandparent grandkids legacy book life story memoir check-in check in checkup growth plan' },
     { title: 'Willow', sub: 'For hospice: the person, and the people who love them. Faith cards, 22 When Life Changes guides, readings', href: '/willow/', keys: 'when life changes guides hard talks end of life dying hospice palliative caregiver family vigil doula chaplain last days readings prayers faith' },
     { title: 'Obituary Helper', sub: 'For families: guided questions and three drafts, a Death Notice, a Newspaper Obituary, and an Online Obituary', href: '/obituary-helper.html', keys: 'obituary obituaries obit death notice newspaper online memorial write writing died death funeral family survived by preceded in death' },
     { title: 'Planning a Farewell', sub: 'For families: a checklist for the first hours, the first days, the service, and after', href: '/planning-a-farewell.html', keys: 'funeral planning plan checklist what to do after death who to call someone died death certificate certificates funeral home arrangements burial cremation memorial service hospice after a death' },
@@ -44,7 +44,7 @@
     { title: 'Readings Library', sub: 'Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between, with Listen', href: '/readings.html', keys: 'readings reading library prayer prayers scripture psalm psalms bible blessing blessings poem poems poetry hymn hymns song songs spirituals story stories parable parables funeral memorial wedding vows birth baby baptism graveside bedside grief comfort rosary catholic orthodox protestant lutheran methodist baptist quaker celtic irish scottish gaelic carmina gadelica jewish kaddish muslim quran sufi rumi hindu gita buddhist sikh bahai taoist tao te ching stoic humanist secular nature interfaith listen read aloud' },
     { title: 'Living Sober', sub: 'For anyone growing sober, and the people who love them: today\u2019s encouragement, a mantra, words for every day of the first year, Start Here videos, Early Days: 90 Days, Ride the Wave, Good Times, Sober, Living Sober Together, My Anchor Plan, and help lines', href: '/living-sober.html', keys: 'living sober sobriety sober alcohol free alcohol-free quit drinking stop drinking drinking less drugs recovery recovering addiction early days 30 days thirty days sober date milestone anniversary chip mantra encouragement anchor plan craving cravings relapse slip family of someone who drinks loved one smart recovery' },
     // The Grounded Way and its app (GWG BLD 866; current names BLD 901)
-    { title: 'What Is The Grounded Way?', sub: 'Get grounded. Tend four. Grow in meaning and hope. Tend your mind, body, spirit, and relationships a few minutes a day, with My Growth Plan, workouts, guided meditations, Grounded Recipes, and family nutrition inside', href: '/the-grounded-way.html', keys: 'what is the grounded way tend four grow two get grounded autopilot meaning hope resilience roots spirit bark mind leaves body branches relationships trunk fruit membership member household guided the grounded way grounded way all in plan my grounded way plan 12 week program twelve week foundation build peak cardio flow yoga stretch stretching tai chi my menu month view weekly batch heart risk prevent calculator whole person living tending health healthy living food nutrition eating meal plan meal planning recipes recipe cooking kitchen grocery shopping list mediterranean whole food heart cholesterol ldl ldl path labs lab results a1c blood sugar blood pressure triglycerides hdl energy healthy weight weight strength protein fiber workout workouts exercise fitness strength training gym home workout dumbbells weights root rise thrive gentle chair exercise balance walking morning quiet meditation family nutrition kids nutrition picky eater school lunch grounded nutritional standards' },
+    { title: 'What Is The Grounded Way?', sub: 'Get grounded. Tend four. Grow in meaning and hope. Tend your mind, body, spirit, and relationships every day, with My Growth Plan, workouts, guided meditations, Grounded Recipes, and family nutrition inside', href: '/the-grounded-way.html', keys: 'what is the grounded way tend four grow two get grounded autopilot meaning hope resilience roots spirit bark mind leaves body branches relationships trunk fruit membership member household guided the grounded way grounded way all in plan my grounded way plan 12 week program twelve week foundation build peak cardio flow yoga stretch stretching tai chi my menu month view weekly batch heart risk prevent calculator whole person living tending health healthy living food nutrition eating meal plan meal planning recipes recipe cooking kitchen grocery shopping list mediterranean whole food heart cholesterol ldl ldl path labs lab results a1c blood sugar blood pressure triglycerides hdl energy healthy weight weight strength protein fiber workout workouts exercise fitness strength training gym home workout dumbbells weights root rise thrive gentle chair exercise balance walking morning quiet meditation family nutrition kids nutrition picky eater school lunch grounded nutritional standards' },
     // Grounded Recipes (GWG BLD 875)
     { title: 'Grounded Recipes', sub: 'Breakfasts, lunches, dinners, and snacks that meet the Grounded Nutritional Standards, sized for your table, each with ingredients, steps, nutrition per serving, and Grounded Cooking', href: '/recipes/', keys: 'recipes recipe cooking cook kitchen meals meal ideas dinner dinners breakfast lunch snack snacks healthy recipes whole food mediterranean nutrition calories protein fiber vegan vegetarian plant based dairy free gluten free nut free kid friendly kids family dinner salmon fish shrimp tuna cod trout chicken turkey beef lentils beans chickpeas tofu tempeh eggs oats oatmeal smoothie yogurt hummus soup chili tacos stir fry bowls pasta heart cholesterol energy strength weight andrew' },
     // BLD 901: tools that had no search card yet
@@ -190,7 +190,7 @@
   // has its own copies loaded (searching from inside Maple, Aspen, Oak, or The Grove).
   var GPART = null;
   function loadGrove() {
-    return Promise.all(['/grove/data.js?v=b907', '/grove/library.js?v=b907'].map(function (u) {
+    return Promise.all(['/grove/data.js?v=b911b', '/grove/library.js?v=b907'].map(function (u) {
       return fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; });
     })).then(function (t) {
       try {
@@ -230,13 +230,13 @@
         var ring = (sp.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'k5', ageLabel: 'Kids, K to 5', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.k2, t.g35].concat(t.helps || [], t.before || [], t.after || [], t.teach || []).join(' '),
-          href: '/maple/#talk=' + encodeURIComponent(t.id), from: 'Maple', id: t.id, app: 'maple' });
+          href: '/home/?guide=' + encodeURIComponent(t.id) + '&tree=maple', from: 'The Grounded Way', id: t.id, app: 'maple' });
       });
       var sa = window.ASPEN_GUIDES;
       if (sa) sa.groups.forEach(function (g) { g.topics.forEach(function (t) {
         if (!t.quick) return;
         add({ type: 'talk', age: 'ms', ageLabel: 'Grades 6 to 8', title: t.title, sub: g.name, keys: t.keys || '', lead: t.quick, quick: t.quick,
-          body: (t.talk || []).concat(t.say || []).join(' '), href: '/aspen/#talk=' + encodeURIComponent(t.id), from: 'Aspen', id: t.id, app: 'aspen' });
+          body: (t.talk || []).concat(t.say || []).join(' '), href: '/home/?guide=' + encodeURIComponent(t.id) + '&tree=aspen', from: 'The Grounded Way', id: t.id, app: 'aspen' });
       }); });
       // Pine guides (GWG BLD 740), the same shape as Oak's and Sequoia's
       var spn = window.PINE_GUIDES;
@@ -244,7 +244,7 @@
         var ring = (spn.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'hs', ageLabel: 'Grades 9 to 12', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
-          href: '/pine/#life=' + encodeURIComponent(t.id), from: 'Pine', id: t.id, app: 'pine' });
+          href: '/home/?guide=' + encodeURIComponent(t.id) + '&tree=pine', from: 'The Grounded Way', id: t.id, app: 'pine' });
       });
       // Birch guides (GWG BLD 743), the same shape as Pine's, for young adults, 18 to 26
       var sbr = window.BIRCH_GUIDES;
@@ -252,14 +252,14 @@
         var ring = (sbr.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'ya', ageLabel: 'Ages 18 to 26', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
-          href: '/birch/#life=' + encodeURIComponent(t.id), from: 'Birch', id: t.id, app: 'birch' });
+          href: '/home/?guide=' + encodeURIComponent(t.id) + '&tree=birch', from: 'The Grounded Way', id: t.id, app: 'birch' });
       });
       var so = window.OAK_GUIDES;
       if (so) so.topics.forEach(function (t) {
         var ring = (so.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'ad', ageLabel: 'Adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
-          href: '/oak/#life=' + encodeURIComponent(t.id), from: 'Oak', id: t.id, app: 'oak' });
+          href: '/home/?guide=' + encodeURIComponent(t.id) + '&tree=oak', from: 'The Grounded Way', id: t.id, app: 'oak' });
       });
       // Sequoia guides (GWG BLD 734), the same shape as Oak's
       var sq = window.SEQUOIA_GUIDES;
@@ -267,7 +267,7 @@
         var ring = (sq.rings.find(function (r) { return r.key === t.ring; }) || {}).name || (t.ring === 'life' ? 'Health and Ability' : '');
         add({ type: 'talk', age: 'ad', ageLabel: 'Older adults', title: t.title, sub: ring, keys: t.keys, lead: t.quick, quick: t.quick,
           body: [t.feel].concat((t.self && t.self.first) || [], (t.helper && t.helper.help) || []).join(' '),
-          href: '/sequoia/#life=' + encodeURIComponent(t.id), from: 'Sequoia', id: t.id, app: 'sequoia' });
+          href: '/home/?guide=' + encodeURIComponent(t.id) + '&tree=sequoia', from: 'The Grounded Way', id: t.id, app: 'sequoia' });
       });
       // Willow guides (Willow Build Session 2)
       var sw = window.WILLOW_GUIDES;
@@ -493,7 +493,7 @@
     }
     if (!n) {
       html += '<div class="ss-empty"><p><b>Let&rsquo;s look another way for &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
-        '<a class="text-link" href="/home/?tree=maple#life">for kids, K to 5</a>, <a class="text-link" href="/home/?tree=aspen#life">for grades 6 to 8</a>, <a class="text-link" href="/home/?tree=pine#life">for grades 9 to 12</a>, <a class="text-link" href="/home/?tree=birch#life">for ages 18 to 26</a>, <a class="text-link" href="/home/?tree=oak#life">for adults</a>, <a class="text-link" href="/home/?tree=sequoia#life">for older adults</a>, <a class="text-link" href="/willow/#guides">at the end of life</a>, or <a class="text-link" href="/grove/#life">for families and groups</a>.</p></div>';
+        '<a class="text-link" href="/home/#learn">in The Grounded Way</a>, <a class="text-link" href="/willow/#guides">at the end of life</a>, or <a class="text-link" href="/grove/#life">for families and groups</a>.</p></div>';
     }
     panel.innerHTML = html;
     if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'Try another word';

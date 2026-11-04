@@ -31,6 +31,34 @@
 
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
+/* BLD809 sources start */
+    // Get Grounded Now (GWG BLD 809): credits for its practices and prayers.
+    artigas: ["Lucina Artigas and Ignacio Jarero, the Butterfly Hug", "https://connect.springerpub.com/content/book/978-0-8261-2245-2/part/part1/chapter/ch01", "a"],
+    balban23: ["Balban et al., Brief structured respiration practices enhance mood and reduce physiological arousal, Cell Reports Medicine (2023)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/"],
+    bukhari6369: ["Sahih al-Bukhari 6369, the dua for refuge from worry and grief; English meaning in common use", "https://sunnah.com/bukhari:6369"],
+    diamondgemmell: ["The Diamond Sutra, tr. William Gemmell (1912)", "https://archive.org/details/cu31924022914588", "a"],
+    ensari15: ["Ensari, Greenlee, Motl, and Petruzzello, acute exercise and state anxiety: a meta-analysis (Depression and Anxiety, 2015)", "https://doi.org/10.1002/da.22370"],
+    francis1912: ["The Prayer of Saint Francis, attributed to Saint Francis of Assisi, first printed anonymously in La Clochette (Paris, 1912); English in the form in common use", "https://growwithgrounded.com/readings.html"],
+    goessl17: ["Goessl, Curtiss, and Hofmann, The effect of heart rate variability biofeedback training on stress and anxiety: a meta-analysis, Psychological Medicine (2017)", "https://www.cambridge.org/core/journals/psychological-medicine/article/effect-of-heart-rate-variability-biofeedback-training-on-stress-and-anxiety-a-metaanalysis/A839E9C968E54774DF5C8FB186764EF0"],
+    jacobson38: ["Edmund Jacobson, Progressive Muscle Relaxation (Progressive Relaxation, 1938)", "", "a"],
+    jesusprayer: ["the Jesus Prayer, a prayer of the heart from the Eastern Orthodox tradition", "", "a"],
+    jps1917: ["The Holy Scriptures According to the Masoretic Text, Jewish Publication Society (1917), public domain", "https://www.sefaria.org/texts/Tanakh"],
+    kyriakoulis21: ["Kyriakoulis, Kyrios, Nardi, Freire, and Schier, the diving response and panic symptoms (Frontiers in Psychiatry, 2021)", "https://www.frontiersin.org/articles/10.3389/fpsyt.2021.784884/full"],
+    lehrer14: ["Paul M. Lehrer and Richard Gevirtz, Heart rate variability biofeedback: how and why does it work?, Frontiers in Psychology (2014)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC4104929/"],
+    linehanoa: ["Marsha M. Linehan, DBT Skills Training Manual, second edition (2015): Opposite Action", "https://www.guilford.com/books/DBT-Skills-Training-Manual/Marsha-Linehan/9781462516995", "a"],
+    ma17: ["Ma et al., The Effect of Diaphragmatic Breathing on Attention, Negative Affect and Stress in Healthy Adults, Frontiers in Psychology (2017)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC5455070/"],
+    muirsierra: ["John Muir, My First Summer in the Sierra (1911)", "https://www.gutenberg.org/ebooks/32540"],
+    neffgermer13: ["Neff and Germer, a pilot study and randomized controlled trial of the Mindful Self-Compassion program (Journal of Clinical Psychology, 2013)", "https://self-compassion.org/the-research/"],
+    niebuhr: ["Reinhold Niebuhr, the Serenity Prayer, in the short form in common use", ""],
+    pennington80: ["M. Basil Pennington, Centering Prayer: Renewing an Ancient Christian Prayer Form (1980)", "", "a"],
+    pickthall30: ["Marmaduke Pickthall, The Meaning of the Glorious Koran (1930), Project Gutenberg", "https://www.gutenberg.org/ebooks/16955"],
+    tnhbeing: ["Thich Nhat Hanh, Being Peace (Parallax Press, 1987), the breathing verse", "https://plumvillage.org/", "a"],
+    toussaint21: ["Toussaint and colleagues, progressive muscle relaxation, deep breathing, and guided imagery (2021)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC8272667/"],
+    upmuller: ["The Upanishads, part 2, tr. F. Max Muller (Sacred Books of the East, vol. 15, 1884), Brihadaranyaka Upanishad 1.3.28", "https://sacred-texts.com/hin/sbe15/sbe15054.htm", "a"],
+    upparamananda: ["The Upanishads, tr. Swami Paramananda (1919), the peace chant", "https://www.gutenberg.org/ebooks/3283", "a"],
+    weil478: ["Andrew Weil, MD, the 4-7-8 breath", "https://www.drweil.com/", "a"],
+    zaccaro18: ["Zaccaro et al., How Breath-Control Can Change Your Life: slow breathing review, Frontiers in Human Neuroscience (2018)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC6137615/"],
+/* BLD809 sources end */
 /* BLD866 sources start */
     // Public Tending and The Grounded Way (GWG BLD 866).
     "tend-atp3": ["Third Report of the National Cholesterol Education Program (NCEP) Adult Treatment Panel III, final report, National Cholesterol Education Program, National Heart, Lung, and Blood Institute, Circulation, 2002", "https://doi.org/10.1161/circ.106.25.3143"],
@@ -98,20 +126,6 @@
     "way-aha-fish": ["Fish and Omega-3 Fatty Acids, American Heart Association", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/fish-and-omega-3-fatty-acids"],
     "tend-prevent": ["Development and Validation of the American Heart Association PREVENT Equations, Khan SS and others, Circulation, 2024", "https://doi.org/10.1161/CIRCULATIONAHA.123.067626"],
 /* BLD866 sources end */
-/* BLD809 sources start */
-    // Get Grounded Now (GWG BLD 809): credits for its practices and prayers.
-    artigas: ["Lucina Artigas and Ignacio Jarero, the Butterfly Hug", "https://connect.springerpub.com/content/book/978-0-8261-2245-2/part/part1/chapter/ch01", "a"],
-    balban23: ["Balban et al., Brief structured respiration practices enhance mood and reduce physiological arousal, Cell Reports Medicine (2023)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/"],
-    ensari15: ["Ensari, Greenlee, Motl, and Petruzzello, acute exercise and state anxiety: a meta-analysis (Depression and Anxiety, 2015)", "https://doi.org/10.1002/da.22370"],
-    goessl17: ["Goessl, Curtiss, and Hofmann, The effect of heart rate variability biofeedback training on stress and anxiety: a meta-analysis, Psychological Medicine (2017)", "https://www.cambridge.org/core/journals/psychological-medicine/article/effect-of-heart-rate-variability-biofeedback-training-on-stress-and-anxiety-a-metaanalysis/A839E9C968E54774DF5C8FB186764EF0"],
-    jacobson38: ["Edmund Jacobson, Progressive Muscle Relaxation (Progressive Relaxation, 1938)", "", "a"],
-    kyriakoulis21: ["Kyriakoulis, Kyrios, Nardi, Freire, and Schier, the diving response and panic symptoms (Frontiers in Psychiatry, 2021)", "https://www.frontiersin.org/articles/10.3389/fpsyt.2021.784884/full"],
-    lehrer14: ["Paul M. Lehrer and Richard Gevirtz, Heart rate variability biofeedback: how and why does it work?, Frontiers in Psychology (2014)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC4104929/"],
-    ma17: ["Ma et al., The Effect of Diaphragmatic Breathing on Attention, Negative Affect and Stress in Healthy Adults, Frontiers in Psychology (2017)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC5455070/"],
-    toussaint21: ["Toussaint and colleagues, progressive muscle relaxation, deep breathing, and guided imagery (2021)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC8272667/"],
-    weil478: ["Andrew Weil, MD, the 4-7-8 breath", "https://www.drweil.com/", "a"],
-    zaccaro18: ["Zaccaro et al., How Breath-Control Can Change Your Life: slow breathing review, Frontiers in Human Neuroscience (2018)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC6137615/"],
-/* BLD809 sources end */
 /* BLD787 shelf start */
     // From Chris's Shelf (GWG BLD 787): books on Chris's shelf, linked to their Library card, and the writers' new sources.
     byock97: ["Ira Byock, Dying Well (1997)", SHELF + "DY-001"],

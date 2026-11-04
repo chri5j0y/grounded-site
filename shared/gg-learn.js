@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b908';
+  var V = 'b911r';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -173,6 +173,8 @@
     if ((look === 'image' || look === 'candle' || look === 'figure') && !img && l && l.img) img = l.img;
     var soft = { words: 1, big: 1, breathe: 1, paint: 1 };
     if (look === 'candle' && soft[k]) k = 'candle';
+    // BLD 911: a breath of three or four parts (the sip, the holds) leads with the circle, so the figure look steps aside.
+    if (look === 'figure' && sc.k === 'breathe' && Array.isArray(sc.breath) && sc.breath.length > 2) { look = 'image'; }
     if (look === 'figure' && soft[k]) { k = 'figure'; o.move = sc.move || arg || (sc.k === 'breathe' ? 'stand-breath' : 'stand-breath'); if (!sc.breath && (sc.k === 'breathe' || /breath/.test(o.move))) o.breath = [4, 6]; }
     if (k === 'figure' && !o.move && !sc.move) o.move = 'stand-breath';
     if (k === 'figure' && !sc.breath && !o.breath && /breath/.test(o.move || sc.move || '')) o.breath = [4, 6];
@@ -186,11 +188,17 @@
   }
   // BLD 911: a breath of three parts (breath: [in, sip, out], the Physiological Sigh) shows a third word for the sip;
   // brw names the words under the circle (kids: ['Sniff', 'One more sniff', 'Whoosh']).
+  // BLD 911 Round 2: breath holds. breath: [in, hold, out, rest] (Box Breathing) or [in, hold, out] with bh: true (4-7-8);
+  // the circle stays still through each hold, and the hold has its own word (default Hold, and Rest for the fourth part).
+  function brHolds(sc) { var b = sc && sc.breath; return Array.isArray(b) && (b.length >= 4 || (b.length === 3 && !!sc.bh)); }
   function brWords(sc) {
-    var three = Array.isArray(sc.breath) && sc.breath.length === 3, w = Array.isArray(sc.brw) ? sc.brw : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
-    return '<i>' + esc(w[0]) + '</i>' + (three ? '<i class="ln-brs">' + esc(w[1]) + '</i>' : '') + '<i>' + esc(w[w.length - 1]) + '</i>';
+    var n = Array.isArray(sc.breath) ? sc.breath.length : 2, three = n >= 3, four = n >= 4, hd = brHolds(sc);
+    var w = Array.isArray(sc.brw) ? sc.brw : four ? ['Breathe in', 'Hold', 'Breathe out', 'Rest'] : hd ? ['Breathe in', 'Hold', 'Breathe out'] : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
+    return '<i>' + esc(w[0]) + '</i>' + (three ? '<i class="ln-brs">' + esc(w[1]) + '</i>' : '') + '<i>' + esc(four ? w[2] : w[w.length - 1]) + '</i>' + (four ? '<i class="ln-brr">' + esc(w[3] || 'Rest') + '</i>' : '');
   }
-  function isBr(sc) { return !!sc && (sc.k === 'breathe' || (sc.k === 'figure' && Array.isArray(sc.breath))); }
+  // BLD 911 Round 2: a candle scene that carries a breath (a Grounded Meditation breathe scene with the candle look) keeps the
+  // breath clock too: its lines start on their own parts, and the flame's glow brightens on the breath in and softens on the out.
+  function isBr(sc) { return !!sc && (sc.k === 'breathe' || ((sc.k === 'figure' || sc.k === 'candle') && Array.isArray(sc.breath))); }
 
   // The demo camera (GWG BLD 824): z = [x, y, zoom] in the phone screen's own pixels (390 by 844) is placed in the
   // middle of the part of the screen that shows (280 by 494 in the stage), and the screen never slides past its edges.
@@ -441,7 +449,7 @@
       '.ln-dm-mk.on{opacity:1;transform:none;animation:lnDmPulse 2.4s ease-in-out .6s infinite;}@keyframes lnDmPulse{50%{box-shadow:0 0 0 2.5px #E7A93B,0 0 0 13px rgba(231,169,59,.16),0 0 34px rgba(231,169,59,.4)}}',
       '.ggl-small .ln-dm-list{display:none;}.ggl-small .ln-dm-tx{top:80px;width:440px;}.ggl-small .ln-dm-tx h3{font-size:58px;}.ggl-small .ln-dm-tx .ln-eb{font-size:28px;}.ggl-small .ln-dm-ph2{display:none;}',
       '@media (prefers-reduced-motion:reduce){.go .ln-dm-bg,.ln-dm-mk.on{animation:none !important;}.ln-dm-cam,.ln-dm-cam img,.ln-dm-mk{transition:none !important;}}',
-      '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
+      '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}.ln-brt i.ln-brr{display:none;}.ln-brt i:nth-child(3):nth-last-child(2){opacity:1;top:22px;}}',
       /* BLD 908, the content standard: paintings behind every scene, drifting slowly; paint, candle, and figure scenes */
       '.ln-bd{position:absolute;inset:0;overflow:hidden;z-index:-1;}.ln-bd-sh{z-index:-1;}.ln-bd img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;will-change:transform;}',
       '.ln-bd-soft img{left:-24px;top:-24px;width:calc(100% + 48px);height:calc(100% + 48px);filter:blur(4px) saturate(1.08);}',
@@ -609,7 +617,8 @@
   var ABBR = /\b(Mr|Mrs|Ms|Dr|St|Rev|Fr|Sr|Jr|vs|etc|No)\.$/i;
   function beatsOf(sc) {
     var cue = sc.cue || {};
-    if (Array.isArray(sc.beats)) return sc.beats.map(function (b, i) { return typeof b === 'string' ? { t: b, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0 } : { t: b.t || '', w: +b.w || 0, p: +b.p || 0 }; });
+    // bk (BLD 911): the part of the breath a line belongs to, by hand ('in', 'sip', 'hold', 'out', 'rest', or '-' for none).
+    if (Array.isArray(sc.beats)) return sc.beats.map(function (b, i) { return typeof b === 'string' ? { t: b, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0, bk: (cue.bk || {})[i] } : { t: b.t || '', w: +b.w || 0, p: +b.p || 0, bk: b.bk }; });
     var txt = String(sc.say || '').replace(/\s+/g, ' ').trim(); if (!txt) return [];
     var parts = txt.match(/[^.!?]+(?:[.!?]+["'\u201d\u2019)]*|$)/g) || [txt], out = [];
     parts.forEach(function (x) {
@@ -618,7 +627,7 @@
       if (prev && (ABBR.test(prev) || (/\d\.$/.test(prev) && /^\d/.test(x)) || x.length < 3)) out[out.length - 1] = prev + (/^\d/.test(x) && /\d\.$/.test(prev) ? '' : ' ') + x;
       else out.push(x);
     });
-    return out.map(function (t, i) { return { t: t, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0 }; });
+    return out.map(function (t, i) { return { t: t, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0, bk: (cue.bk || {})[i] }; });
   }
   var REV = { demo: '.ln-dm-pt', points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p', tale: '.ln-tl-s', candle: '.ln-cd-l' };
   var NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
@@ -810,7 +819,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b908'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b911r'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -890,6 +899,9 @@
       if (last) { var e = endScene(); sc = { k: 'end', ok: e.ok, eyebrow: e.eyebrow, h: e.h, sub: e.sub, count: e.count, say: e.say }; sc._e = e; }
       else sc = stdScene(l.scenes[P.i], P.i, l, cfg.app);
       st.classList.remove('go');
+      // BLD 911 Round 2: a breath scene that follows one on the same pace, as it plays, keeps the same breath clock, so the
+      // breath carries on across the change of scene (a hold or a rest is never cut short).
+      var carry = P.playing && P.brLock && isBr(P.sc) && isBr(sc) && P.i === P.brAt + 1 && brKey(P.sc) === brKey(sc) ? P.brT0 : 0;
       // BLD 908: a painting behind the scene (the content standard), blurred a little under a warm shade, words in light ink.
       cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
       cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
@@ -901,7 +913,7 @@
       if (last) bgStop(2500);
       else if (P.playing) bgPlay(cfg);
       if (last) $('.ln-link', host).innerHTML = srcLine(l) + musicCredit(cfg) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
-      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now(); P.brLock = false; P.brDone = -1; P.brT0 = Date.now();
+      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now(); P.brLock = !!carry; P.brDone = -1; P.brT0 = carry || Date.now(); P.brAt = P.i;
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
       $('.ggl-cn', host).textContent = last ? 'Finished' : 'Scene ' + (P.i + 1) + ' of ' + (N - 1);
@@ -914,7 +926,7 @@
       var sel = REV[sc.k], items = sel ? Array.prototype.slice.call(cv.querySelectorAll(sel)) : [];
       P.items = items; P.map = revealMap(sc, items, B);
       if (P.playing || last) items.forEach(function (el) { el.classList.add('hold'); var pv = el.previousElementSibling; if (sc.k === 'flow' && pv && pv.classList.contains('ln-arr')) pv.classList.add('hold'); });
-      requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); P.brT0 = Date.now(); }); });
+      requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); if (carry && P.brT0 === carry) brAnim(cv, ((Date.now() - carry) % BR_CYC + BR_CYC) % BR_CYC); else P.brT0 = Date.now(); }); });
       // The closing scene always speaks once, even when the lesson was stepped through by hand.
       if (!P.playing && !last) return;
       run(t);
@@ -948,7 +960,9 @@
       var sc = P.sc, B = P.B, last = P.last, sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1;
       function after(i) {
         var b = B[i], gap = GAP + (P.map.indexOf(i) >= 0 ? (sc.k === 'words' ? 950 : 250) : 0) + (/\?["'\u201d\u2019)]*$/.test(b.t) ? 350 : 0);
-        gap = gap / sp + (b.p || 0) * 1000;
+        // BLD 911: once the breath clock is set, the next breath line waits for its own part of the breath, so a longer pause
+        // written after a line gives way to it (a pause could push that line past its part, and it would wait a whole breath).
+        gap = gap / sp + (b.p && !(P.brLock && isBr(sc) && brKindOf(B[i + 1])) ? b.p : 0) * 1000;
         if (b.w) { P.ph = 'wait'; capOn(-1); return waitRing(b.w, t, function () { P.ph = 'say'; P.b = i + 1; step(); }); }
         P.nx = setTimeout(function () { if (t !== P.tok) return; P.b = i + 1; step(); }, gap);
       }
@@ -1044,15 +1058,18 @@
     // GWG BLD 898 (Chris: "we just need to ensure all these things sync in all vids"): in a breathe scene, a sentence that
     // says breathe in starts as the circle begins to grow, and one that says breathe out as it begins to shrink. The first
     // such sentence sets the circle's cycle (in 4 seconds, out 6); each later one waits for its turn in the cycle.
-    var BR_CYC = 10000, BR_OUT = 4000, BR_SIP = 0;
+    var BR_CYC = 10000, BR_OUT = 4000, BR_SIP = 0, BR_HOLD = 0, BR_REST = 0;
     // BLD 908: a breath scene may set its own pace (breath: [in, out] seconds); the circle, the words, the figure, and the
     // narration's in and out sentences all follow it. [4, 6] is the standard and needs no new keyframes.
     var BRK = {};
     function brPace(sc) {
-      var b = isBr(sc) && Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : null, a = b ? +b[0] : 4, o = b ? +b[b.length - 1] : 6;
+      var b = isBr(sc) && Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : null, four = !!b && b.length >= 4, a = b ? +b[0] : 4, o = b ? +b[four ? 2 : b.length - 1] : 6;
       if (!(a > 0 && o > 0)) { a = 4; o = 6; }
-      var s3 = b && b.length === 3 && +b[1] > 0 ? +b[1] : 0;
-      BR_CYC = (a + s3 + o) * 1000; BR_OUT = (a + s3) * 1000; BR_SIP = s3 ? a * 1000 : 0; P.brNames = null;
+      var s3 = b && b.length >= 3 && +b[1] > 0 ? +b[1] : 0, r4 = four && +b[3] > 0 ? +b[3] : 0, hd = !!b && sc.k === 'breathe' && brHolds(sc);
+      BR_CYC = (a + s3 + o + r4) * 1000; BR_OUT = (a + s3) * 1000; BR_SIP = s3 && !hd ? a * 1000 : 0; P.brNames = null;
+      BR_HOLD = hd && s3 ? a * 1000 : 0; BR_REST = hd && r4 ? (a + s3 + o) * 1000 : 0;
+      brCandle(sc);
+      if (hd) { brPaceH(a, s3, o, r4); return; }
       if (s3) { brPace3(a, s3, o); return; }
       if (a === 4 && o === 6) return;
       var r = Math.round(a / (a + o) * 1000) / 10, id = String(r).replace('.', '_'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
@@ -1078,38 +1095,90 @@
       P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id, is: 'lnSip' + id };
       brAnim(cv, 0);
     }
+    // BLD 911 Round 2: in, hold, out, and rest (Box Breathing), or in, hold, and out (4-7-8): the circle grows on the breath in,
+    // stays still through the hold, shrinks on the breath out, and stays still through the rest; each word shows in its own part.
+    function brPaceH(a, s, o, r) {
+      var T = a + s + o + r, f = function (x) { return Math.round(x / T * 1000) / 10; }, pa = f(a), ph = f(a + s), po = f(a + s + o);
+      var id = 'h' + [pa, ph, po].map(function (x) { return String(x).replace('.', '_'); }).join('x'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
+      if (!BRK[id]) {
+        var el = document.createElement('style'); el.textContent = '@keyframes lnBr' + id + '{0%{transform:scale(.45)}' + q(pa) + '{transform:scale(1)}' + q(ph) + '{transform:scale(1)}' + q(po) + '{transform:scale(.45)}100%{transform:scale(.45)}}'
+          + '@keyframes lnIn' + id + '{0%,' + q(pa - 1) + '{opacity:1}' + q(pa) + ',100%{opacity:0}}'
+          + (s ? '@keyframes lnHo' + id + '{0%,' + q(pa - .5) + '{opacity:0}' + q(pa) + ',' + q(ph - .5) + '{opacity:1}' + q(ph) + ',100%{opacity:0}}' : '')
+          + '@keyframes lnOut' + id + '{0%,' + q(ph - .5) + '{opacity:0}' + q(ph + 1) + ',' + q(r ? po - .5 : 96) + '{opacity:1}' + q(r ? po : 100) + ',100%{opacity:0}}'
+          + (r ? '@keyframes lnRe' + id + '{0%,' + q(po - .5) + '{opacity:0}' + q(po) + ',' + q(99) + '{opacity:1}100%{opacity:0}}' : '');
+        document.head.appendChild(el); BRK[id] = 1;
+      }
+      P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id, is: s ? 'lnHo' + id : '', ir: r ? 'lnRe' + id : '' };
+      brAnim(cv, 0);
+    }
+    function brCandle(sc) {
+      P.brCg = '';
+      if (!sc || sc.k !== 'candle' || !isBr(sc)) return;
+      var r = Math.round(BR_OUT / BR_CYC * 1000) / 10, id = 'c' + String(r).replace('.', '_');
+      if (!BRK[id]) { var el = document.createElement('style'); el.textContent = '@keyframes lnCg' + id + '{0%{opacity:.62;transform:scale(.92)}' + r.toFixed(1) + '%{opacity:1;transform:scale(1.08)}100%{opacity:.62;transform:scale(.92)}}'; document.head.appendChild(el); BRK[id] = 1; }
+      P.brCg = 'lnCg' + id; brAnim(cv, 0);
+    }
     // Sets (or restarts) the circle and the words on this scene's pace, starting off ms into the cycle.
     function brAnim(root, off) {
       var N2 = P.brNames;
+      Array.prototype.forEach.call(root.querySelectorAll('.ln-cd-glow, .ln-cd-all'), function (e) {
+        var cg = P.brCg || ''; e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = cg;
+        e.style.animationDuration = cg ? (BR_CYC / 1000) + 's' : ''; e.style.animationDelay = cg ? (-off / 1000) + 's' : ''; e.style.animationDirection = cg ? 'normal' : ''; e.style.animationTimingFunction = cg ? 'ease-in-out' : '';
+      });
       Array.prototype.forEach.call(root.querySelectorAll('.ln-brc, .ln-brt i'), function (e) {
-        var nm = !N2 ? '' : e.classList.contains('ln-brc') ? N2.brc : e.classList.contains('ln-brs') ? (N2.is || '') : e.previousElementSibling ? N2.i1 : N2.i0;
+        var nm = !N2 ? '' : e.classList.contains('ln-brc') ? N2.brc : e.classList.contains('ln-brs') ? (N2.is || '') : e.classList.contains('ln-brr') ? (N2.ir || '') : e.previousElementSibling ? N2.i1 : N2.i0;
         e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = nm; e.style.animationDuration = N2 ? (BR_CYC / 1000) + 's' : ''; e.style.animationDelay = (-off / 1000) + 's';
+        // the sip and hold words start with no animation of their own (CSS), so they are given the full loop here
+        if (e.tagName === 'I' && N2) { e.style.animationIterationCount = 'infinite'; e.style.animationTimingFunction = 'linear'; }
       });
     }
     function brKind(x) {
       var s = String(x || '').toLowerCase();
       // BLD 911: the sip of a three part breath ("One more sip.", "A little more.", "One more little sniff.").
       if (BR_SIP) { var sp = s.search(/\b(one more (little |small )?(sip|sniff)|a little more|a sip more|another sip|little sniff on top)\b/); if (sp >= 0) return 'sip'; }
+      // BLD 911 Round 2: the holds ("Hold softly for four.") and the rest of Box Breathing ("Rest for four up the other side.").
+      if (BR_HOLD && /^(and |now |then )?hold\b/.test(s)) return 'hold';
+      if (BR_REST && /^(and |now |then )?rest\b/.test(s)) return 'rest';
       if (/^(big |a big )?sniff in\b|^(and )?sniff\b/.test(s)) return 'in';
-      var a = s.search(/\b(breathe in|breath in|inhale|in through|smell the flower|fill (it|the|your))|^(and |once more, |again, )?in\b/),
-        b = s.search(/\b(breathe out|breath out|breathe all the way out|exhale|and out|out through|blow|whoosh|float down|let it float)\b/);
+      if (/^(and |then )?out\b/.test(s)) return 'out';
+      // BLD 911 Round 2: also "Breathing in, I calm my body.", "And let it out slow.", "And a long sigh out.", "out long".
+      var a = s.search(/\b(breathe in|breath in|breathing in|inhale|in through|smell the flower|fill (it|the|your))|^(and |once more, |again, )?in\b/),
+        b = s.search(/\b(breathe out|breath out|breathing out|breathe all the way out|exhale|and out|out through|blow|whoosh|float down|let it float|let it out|sigh (it )?(all the way )?out|out long)\b/);
       if (a < 0 && b < 0) return ''; if (a < 0) return 'out'; if (b < 0) return 'in'; return a < b ? 'in' : 'out';
     }
+    // A line's part of the breath: by hand (bk) or by its words.
+    function brKindOf(b) {
+      if (!b) return '';
+      if (b.bk != null && b.bk !== '') { var k = b.bk === '-' ? '' : String(b.bk); return k === 'sip' && !BR_SIP || k === 'hold' && !BR_HOLD || k === 'rest' && !BR_REST ? '' : k; }
+      return brKind(b.t);
+    }
     function brReduced() { try { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } }
+    function brKey(sc) { var b = Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : [4, 6]; return (sc.k === 'breathe' && brHolds(sc) ? 'h' : '') + b.join(','); }
+    // Where the breath is now: read from the circle's (or the candle glow's) own animation when it runs on this pace, so the
+    // voice follows exactly what the viewer sees even when a busy device starts the animation a moment late.
+    function brEl() {
+      var el = ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
+      try {
+        var c = cv.querySelector('.ln-brc') || cv.querySelector('.ln-cd-glow, .ln-cd-all'), a = c && c.getAnimations ? c.getAnimations()[0] : null, tm = a && a.effect ? a.effect.getTiming() : null;
+        if (tm && Math.abs(+tm.duration - BR_CYC) < 2 && a.currentTime != null) el = ((((+a.currentTime) - (+tm.delay || 0)) % BR_CYC) + BR_CYC) % BR_CYC;
+      } catch (e) {}
+      return el;
+    }
+    function brOff(k) { return k === 'out' ? BR_OUT : k === 'sip' ? BR_SIP : k === 'hold' ? BR_HOLD : k === 'rest' ? BR_REST : 0; }
     function brWait(i) {
       var sc = P.sc; if (!sc || !isBr(sc) || P.brDone === i || brReduced()) return 0;
-      var k = brKind(P.B[i] && P.B[i].t); if (!k) { P.brDone = i; return 0; }
+      var k = brKindOf(P.B[i]); if (!k) { P.brDone = i; return 0; }
       if (!st.classList.contains('go')) return 40;
       P.brDone = i;
       if (!P.brLock) {
-        P.brLock = true; var off = k === 'out' ? BR_OUT : k === 'sip' ? BR_SIP : 0;
+        P.brLock = true; var off = brOff(k);
         brAnim(cv, off);
         P.brT0 = Date.now() - off; return 0;
       }
-      var el = (Date.now() - P.brT0) % BR_CYC, d = ((k === 'in' ? 0 : k === 'sip' ? BR_SIP : BR_OUT) - el + BR_CYC) % BR_CYC;
+      var el = brEl(), d = (brOff(k) - el + BR_CYC) % BR_CYC;
       // BLD 911 (Chris: "these guided vids need to have timing spot on"): a line that comes a moment late for its part
       // starts at once, inside its part, instead of waiting a whole breath.
-      return d > BR_CYC - (BR_SIP ? 700 : 120) ? 0 : d;
+      return d > BR_CYC - (BR_SIP || BR_HOLD ? 700 : 120) ? 0 : d;
     }
     // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
     // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
@@ -1337,7 +1406,7 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=b888', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b911r', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
@@ -1356,7 +1425,7 @@
     });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
-  function needPrint() { return script(url('/shared/gg-print.js?v=b907'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=b911b'), function () { return !!window.GGPrint; }); }
   // Written pages (GWG BLD 787): shared/learn-pages.js, loaded the first time a page or a track with pages shows.
   function needPages() { return script(url('/shared/learn-pages.js?v=' + V), function () { return !!window.GG_LEARN_PAGES; }); }
   function pageOf(app, id) { var P = ((window.GG_LEARN_PAGES || {})[app]) || []; for (var i = 0; i < P.length; i++) if (P[i] && P[i].id === id) return P[i]; return null; }
@@ -1477,7 +1546,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b908'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b911r'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
