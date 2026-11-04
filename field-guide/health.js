@@ -49,11 +49,21 @@ const KIT = () => !!(C.tier && C.tier() === 'kitchen');
 // library and GGMember.tend(base) folds it in on a device that holds Membership. FX() is the library every read uses.
 // START(): the public Start file with no Membership on this device: one Flow session a day and the daily meditation (the
 // day's picks), Grounded Recipes, and quiet Membership cards for the rest.
-const FX = () => { const f = C.fld && C.fld(); return f && f.public && f.start && window.GGMember && typeof GGMember.tend === 'function' ? GGMember.tend(f) : f; };
+// BLD 919 (Chris, November 4, 2026): the 8 Gentle sessions are open to everyone. On a device without Membership, the Start
+// file takes the Gentle path from shared/gentle-public.js (window.GGGentlePublic), and Ava's lines play from the open public
+// Tending clips. Members keep the Gentle path of their own library. Root, Rise, and Thrive stay with Membership.
+let GPF = null;
+const FX = () => { const f = C.fld && C.fld(), m = f && f.public && f.start && window.GGMember && typeof GGMember.tend === 'function' ? GGMember.tend(f) : f;
+  const g = window.GGGentlePublic; if (!m || m !== f || !m.public || !m.start || !g || !g.gentle) return m;
+  if (GPF && GPF.f === f && GPF.g === g) return GPF.out;
+  const out = Object.assign({}, f, {gentle: g.gentle, gentleOpen: true, sources: arr(f.sources).concat(arr(g.sources).filter(x => !arr(f.sources).some(y => y && y.id === x.id)))});
+  GPF = {f, g, out}; return out; };
 const START = () => { const f = FX(); return !!(f && f.public && f.start); };
 const FLDH = () => { const f = FX(); if (f && f.public) return f; const h = f && f.healthJourney; return h && (Array.isArray(h.food) || Array.isArray(h.fitness) || h.app) ? h : null; };
 // BLD 866: public Tending (the library is GGTendPublic). TEEN: a profile under 18 sees no weight and no calories.
 const PUB = () => { const f = FX(); return !!(f && f.public); };
+// BLD 919: the open Gentle sessions on Start, for grown-ups (a teen profile and the Family Kitchen keep their own views).
+const GENTLE_START = () => START() && !TEEN() && !KIT() && !!(FX() || {}).gentleOpen;
 const PLIB = () => { const f = FX(); return f && f.public ? f : null; };
 const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
 // BLD 916, Living Sober Path: Living Sober is on when this profile holds a sober date (vault life.soberDate, read the way Home
@@ -71,7 +81,8 @@ const SOBER_TEXT = {
   level: 'For early sobriety: Root or Gentle, with a morning walk, is a strong start for deeper sleep and a brighter mood. Choose the level that fits you.',
   work: 'For early sobriety: an easy, steady pace this morning, for deeper sleep and a brighter mood.',
   walk: 'For early sobriety: 10 to 20 minutes outside in the morning light, at an easy pace, for deeper sleep and a brighter mood.',
-  move: 'For early sobriety: morning movement leads your day. A morning walk or an easy session helps sleep, mood, and steady energy.'};
+  move: 'For early sobriety: morning movement leads your day. A morning walk or an easy session helps sleep, mood, and steady energy.',
+  gentle: 'For early sobriety: a Gentle session, or your Morning Walk. Choose what fits this morning.'};
 function goalsNow(s){ s = s || ((D() || {}).health || {}).set || {}; const g = arr(s.goals).length ? arr(s.goals) : ['well']; return SOBER_ON() && !s.goalsMine ? ['energy'].concat(g.filter(x => x !== 'energy')) : g; }
 // The painted cards (shared/heroes/way/): a host may pass C.asset(path); otherwise the site root is worked out from this script's address.
 const ROOT0 = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('../', s).href : '/'; } catch(e){ return '/'; } })();
@@ -621,7 +632,9 @@ function agenda(d){
   // morning leans gentle. A morning workout carries a short For Early Sobriety line; a day with no morning workout opens with a
   // Morning Walk to check off (no new audio). The person's own level, place, and minutes stay exactly as they chose.
   if (SOBER_EARLY() && !KIT()){ const w = out.find(x => x.k === 'work'); if (w) w.sub = (w.sub ? w.sub + ' ' : '') + SOBER_TEXT.work;
-    else out.push({key: 'walk', k: 'mark', hour: 6.5, kick: 'Morning', title: 'Morning Walk', sub: SOBER_TEXT.walk, btn: 'I Walked'}); }
+    else { out.push({key: 'walk', k: 'mark', hour: 6.5, kick: 'Morning', title: 'Morning Walk', sub: SOBER_TEXT.walk, btn: 'I Walked'});
+      const gm = PUB() && !START() && (H().set.level || 'root') !== 'gentle' ? soberGentle(d) : null; // BLD 919
+      if (gm) out.push({did: true, key: gm.key, k: 'work', hour: 6.6, kick: 'Morning', title: gm.title, sub: gm.sub, btn: 'Start Workout', art: gm.art}); } }
   // Meditation for every track (Chris, October 24, 2026: "and off the meditations to her as well"): the Flow track gets it in the evening.
   if (track === 'practice' && MED() && medOn(d)){ const m1 = medFor(d); out.push({did: true, key: 'med', k: 'med', hour: 20.5, kick: 'This evening', title: 'Meditation', sub: (m1 && m1.title ? m1.title + '. ' : '') + medMins(n) + ' minutes with a candle and calm music.', btn: 'Start'}); }
   // Seven days a week (Chris, October 24, 2026: "make them 7 days a week"); weekday mornings after the shower, weekend mornings too.
@@ -1244,6 +1257,7 @@ function allLinesPub(){
   const L = PLIB() || {}, P = TP(), out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); };
   const sesLines = (sessions, w0) => Object.entries(sessions || {}).forEach(([id, ses]) => {
     [ses.mins].concat(Object.values(ses.minsByPhase || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
+    add(AVA, ses.open); add(AVA, ses.close); // BLD 919
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light, w0); S2.forEach((st, i) => { const nx = S2[i + 1];
       if (st.t === 'time'){ add(AVA, st.form && !st.lines ? LN.tname(st) : LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
       else { add(AVA, LN.ex(st)); if (st.fin) add(AVA, LN.fin); if (!st.form && !st.breathLine) add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
@@ -1259,10 +1273,12 @@ function allLinesPub(){
         const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl || 'home', gear: g || undefined, mins: m, warmup: L.warmup, cooldown: L.cooldown, track: tr, phase: ph, program: L.program}); sesLines(b.sessions, b); })))); }));
     arr(L.moves).forEach(mv => { add(AVA, mv.cue); add(AVA, sayLine(mv.form)); add(AVA, sayLine(mv.breath)); arr(mv.tips).slice(0, 2).forEach(t => add(AVA, t)); if (mv.easier) add(AVA, LN.hard(mv)); if (mv.harder) add(AVA, LN.easy(mv)); });
   }
-  const G = L.gentle || {}, walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
+  // BLD 919: the Gentle path of this library, and the open one (shared/gentle-public.js) that Start plays.
+  [L.gentle || {}].concat(window.GGGentlePublic && GGGentlePublic.gentle && GGGentlePublic.gentle !== L.gentle ? [GGGentlePublic.gentle] : []).forEach(G => {
+  const walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
   (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
-    sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); });
+    sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); }); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
   [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
@@ -1449,6 +1465,7 @@ async function runSession(o){
   if (V) V.music(o.music);
   rerender(true);
   await speak(o, o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
+  if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
   while (!o.dead && o.i < o.steps.length){
     const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; rerender(true);
@@ -1477,7 +1494,7 @@ async function runSession(o){
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
     const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, st.restAfter);
   }
-  if (!o.dead){ o.fin = true; o.run = false; rerender(true); if (o.med && typeof chime === 'function') chime(); await speak(o, o.med ? LN.mOut : o.prac ? LN.pOut : LN.out); if (!o.prac && lightLine('end')) await speak(o, lightLine('end')); if (!o.prac && !o.med && !o.feel) await speak(o, LN.feel); }
+  if (!o.dead){ o.fin = true; o.run = false; rerender(true); if (o.med && typeof chime === 'function') chime(); await speak(o, o.med ? LN.mOut : o.prac ? LN.pOut : o.close || LN.out); if (!o.prac && lightLine('end')) await speak(o, lightLine('end')); if (!o.prac && !o.med && !o.feel) await speak(o, LN.feel); }
   V && V.music(null);
 }
 function sessClock(o){ const now = Date.now(); if (!o.paused) o.active += now - (o.lastT || now); o.lastT = now; return clock(o.active); }
@@ -1704,13 +1721,14 @@ function vStart(o, top){
     <p class="hj-sub">${o.prac ? esc(o.lead || '') : `${moves.length} moves, with a warm-up and a cooldown, and a rest between moves.`}${kit.length ? ' Have ready: ' + esc(kit.join(', ')) + '.' : ''}</p>
     ${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
     ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
+    ${o.gentle && ((PLIB() || {}).gentle || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PLIB().gentle.safety)}</p>` : ''}
     ${toggles(o)}
     ${bwAsk(o) ? bwCard(o) : ''}
     ${!o.prac && o.hands !== false ? `<p class="hj-note hj-hfnote">Auto Flow: the session moves on its own, start to finish, with every set counted or timed for you. Need more time? Tap Pause anytime.</p>` : ''}
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
     ${!o.prac && !o.med ? moveWell() : ''}
-    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(progSrc(o.s))}</div></details></div>`;
+    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(o.gentle ? arr(((PLIB() || {}).gentle || {}).sources) : progSrc(o.s))}</div></details></div>`;
 }
 // BLD 915 (Chris's workout notes: "one quick question with tap choices about how it felt"): How did that feel? One tap
 // saves the workout's log on this device with the answer. Too Easy and Too Hard move the personal adjustment 5 lb for
@@ -1737,7 +1755,10 @@ function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.pr
   return `${stagePanel('done', o.med ? medOp(o) : {fig: ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
     ${!o.prac && !o.med ? feelBlock(o) : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}${wr ? `<p class="hj-sub">${esc(wr)}</p>` : ''}
     <label class="hj-fld" style="text-align:left"><span>${o.prac || o.med ? 'How did it feel? (optional)' : 'A word about it (optional)'}</span><input id="hj-wnote" placeholder="${o.prac ? 'Calm, loose, clear...' : 'Felt strong, knees easy...'}"></label>
-    <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button></div>`; }
+    <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button>${o.gentle && o.start && !o.med && !o.prac ? memMore() : ''}</div>`; }
+// BLD 919 (Chris): after a Gentle session on Start, one quiet line with a link, never a pop-up.
+const MEM_URL = '/the-grounded-way.html#ways';
+const memMore = () => `<p class="hj-sub hj-memmore" style="margin-top:14px">There's more of this in Membership: the 12-week program and every guided workout. <a href="${MEM_URL}">See Membership</a></p>`;
 function vAuto(o, top){
   const st = o.steps[o.i], pct = Math.round(100 * o.i / o.steps.length);
   if (o.fin || !st) return `${top(o.title, o.prac ? (o.med ? 'Meditation complete' : 'Flow complete') : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
@@ -2540,7 +2561,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b908'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b919'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -2921,10 +2942,23 @@ function act(a, v){
 // daily meditation, each the day's pick, Grounded Recipes with Grounded Cooking, and a quiet Membership card for Grounded
 // Fitness and Grounded Nutrition (I Have a Code opens the GGMember sheet). Nothing here builds a plan or saves anything.
 // =====================================================================
+// BLD 919, Living Sober Path: on Tuesday, Thursday, and Saturday mornings in the first 90 days, a Gentle session joins the
+// Morning Walk as a choice (Start: the open Gentle sessions; Members: their own Gentle path, when the morning has no workout).
+// The session turns through all eight in order, one each offered morning.
+function soberGentle(d){
+  if (![2, 4, 6].includes(d.getDay())) return null;
+  const L = PLIB(); if (!L || !arr((L.gentle || {}).sessions).length) return null;
+  const ses = Object.entries(gentleWo(L, Math.max(1, weekNo(d))).sessions || {}); if (!ses.length) return null;
+  const dn = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / DAYMS, n = Math.floor((dn + 4) / 7) * 3 + [2, 4, 6].indexOf(d.getDay()), [id, x] = ses[n % ses.length];
+  return {key: 'wl:gentle:' + id, title: x.title || 'Gentle', sub: SOBER_TEXT.gentle + (x.mins ? ' About ' + x.mins + ' minutes.' : ''), art: moveArtName(id, x, 'gentle')};
+}
 function startToday(d){
   const sp = startPicks(d), out = [];
   // BLD 916: Living Sober is open to everyone, so its Morning Walk shows on Start as well (first 90 days, when Move is in use).
   if (SOBER_EARLY() && U('move')) out.push({key: 'walk', when: 'Morning', hour: 6.5, title: 'Morning Walk', sub: SOBER_TEXT.walk, btn: 'I Walked', done: isDone(d, 'walk'), tint: TINT.move, kind: 'walk', image: WAY(MOVE_ART.walk)});
+  // BLD 919: and on some mornings a Gentle session beside it, so the person can choose.
+  const gm = SOBER_EARLY() && U('move') && GENTLE_START() ? soberGentle(d) : null;
+  if (gm) out.push({key: gm.key, when: 'Morning', hour: 6.6, title: gm.title, sub: gm.sub, btn: 'Begin', done: isDone(d, gm.key), tint: TINT.move, kind: 'workout', image: WAY(gm.art)});
   if (sp.flow) out.push({key: 'pracid:' + sp.flow.id, when: 'Today', hour: 7, title: sp.flow.title || 'Flow', sub: (sp.flow.mins ? sp.flow.mins + ' minutes. ' : '') + (sp.flow.focus || ''), btn: 'Begin', done: isDone(d, 'prac'), tint: TINT.move, kind: 'practice', image: WAY(flowArtName(sp.flow))});
   if (sp.med) out.push({key: 'medid:' + sp.med.id, when: 'Today', hour: 7.5, title: sp.med.title || 'Meditation', sub: sp.med.focus || '', btn: 'Begin', done: isDone(d, 'med'), tint: TINT.quiet, kind: 'meditation', image: WAY(medArtFor(d))});
   return out;
@@ -2933,14 +2967,23 @@ function startInvite(title, line){
   if (window.GGMember && typeof GGMember.invite === 'function') return GGMember.invite({title, line});
   return `<div class="tn-card"><div class="tn-k">Membership</div><b>${esc(title)}</b><p class="tn-sub">${esc(line)}</p></div>`;
 }
+// BLD 919: the 8 Gentle sessions, open to every grown-up, each with Ava guiding it start to finish.
+function startGentle(page){
+  if (!GENTLE_START()) return '';
+  const G = PLIB().gentle || {}, ses = Object.entries(gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}); if (!ses.length) return '';
+  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}
+    <div class="tn-kgrid">${ses.map(([id, x], i) => artCard(i, 'wl:gentle:' + id, (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Gentle', x.lead || '', 'a-move', moveArtName(id, x, 'gentle'))).join('')}</div>
+    ${G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}</div>`;
+}
 // Named vStartHome so it never replaces vStart(o, top), the workout, Flow, and meditation start screen (BLD 908 TRI).
 function vStartHome(){
   if (S.sec === 'recipes') return vRecipes();
   if (S.sec === 'holidays') return vHol();
   const sp = startPicks(), tile = (key, kick, title, sub, cls, art) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(0, art)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
-  return `<div class="tn-sec a-today">${secHead('today', 'a-today', 'Today', 'One Flow session and one meditation each day, with a calm voice guiding you. Grounded Recipes are open to everyone.')}
+  return `<div class="tn-sec a-today">${secHead('today', 'a-today', 'Today', GENTLE_START() ? 'One Flow session and one meditation each day, and eight Gentle sessions anytime, with a calm voice guiding you. Grounded Recipes are open to everyone.' : 'One Flow session and one meditation each day, with a calm voice guiding you. Grounded Recipes are open to everyone.')}
     <div class="tn-kgrid">${sp.flow ? tile('pracid:' + sp.flow.id, 'Today\'s Flow' + (sp.flow.mins ? ' · ' + sp.flow.mins + ' min' : ''), sp.flow.title || 'Flow', sp.flow.focus || '', 'a-move', flowArtName(sp.flow)) : ''}${sp.med ? tile('medid:' + sp.med.id, 'Today\'s Meditation · ' + medMins(1) + ' min', sp.med.title || 'Meditation', sp.med.focus || '', 'p-bark', medArtName(arr((MED() || {}).sessions).indexOf(sp.med))) : ''}</div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="recipes">Open Grounded Recipes</button></div>
+    ${startGentle()}
     <div class="tn-start-mem" style="display:grid;gap:12px;margin-top:14px">${startInvite('Grounded Fitness', 'The 12 week program, guided workouts with a coach, every Flow session, yoga, balance, and stretch.')}${startInvite('Grounded Nutrition', 'Meal plans for your household with Grounded Cooking, Today\'s Plate, shopping lists, prep, and your labs beside you.')}</div></div>`;
 }
 // =====================================================================
@@ -3791,6 +3834,7 @@ function bareBody(b){
     case 'log': return vLog((b.opts || {}).mode);
     case 'plate': return box('a-plate', vPlate('full') + (PUB() ? pubAims() : aims()));
     case 'workouts': return vWorkouts();
+    case 'gentle': return startGentle(true); // BLD 919: the open Gentle shelf (home/home.js Library, Start)
     case 'quiet': return vQuietShelf();
     case 'setup': return vSetupBare(b);
     case 'own': return box('a-week', vOwn());   // BLD 896
@@ -3882,6 +3926,8 @@ function levelSets(){
 }
 // BLD 896: a level's workout by id, from any phase (public Tending builds the phase it belongs to at that level).
 function levelSes(lvl, id){
+  // BLD 919: on Start, only the open Gentle sessions play here (built straight from the Gentle path).
+  if (START()){ if (lvl !== 'gentle' || !GENTLE_START()) return null; const g = gentleWo(PLIB(), Math.max(1, weekNo(new Date()))), ses = g.sessions[id]; return ses ? {ses, w0: g, mine: false} : null; }
   const L = levelSets().find(x => x.id === lvl), ph = lvl === 'gentle' ? '' : sesPh(id);
   if (!ph || !PUB()){ const ses = L && (L.sessions || {})[id]; return ses ? {ses, w0: L, mine: !!L.mine} : null; }
   const ses = pubPhaseSes(ph, lvl)[id]; if (!ses) return null;
@@ -3893,7 +3939,9 @@ function buildLevelWork(lvl, id){
   if (X.mine) return buildWork(id);
   const t0 = new Date(), pk = phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
-  return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
+  return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn(),
+    // BLD 919: a session's own opening and closing lines (the open Gentle sessions), its sources, and on Start the quiet Membership line.
+    open: ses.open || '', close: ses.close || '', gentle: lvl === 'gentle', start: START()};
 }
 function vWorkouts(){
   const h = H(), sets = levelSets().filter(L => L.mine); let i = 0;
@@ -3976,7 +4024,7 @@ function apiToday(date){
   const push = o => out.push(Object.assign({when: '', sub: '', btn: 'Open', done: false}, o));
   if (U('spirit')){ const qm = +h.set.quietMins || t.spirit.minutes[0]; push({key: 'quiet', when: 'Morning', hour: 6, title: t.spirit.h, sub: qm + ' minutes. ' + t.spirit.invite, btn: 'Begin', tint: TINT.quiet, done: !!c.quiet, kind: 'quiet'}); }
   agenda(d).forEach(x => { const p = partOf(x); if (!p || !U(p)) return; const base = {key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: x.btn, done: isDone(d, x.key)};
-    if (x.k === 'work' || x.k === 'prac') push(Object.assign(base, {tint: TINT.move, kind: x.k === 'work' ? 'workout' : 'practice'}));
+    if (x.k === 'work' || x.k === 'prac') push(Object.assign(base, {tint: TINT.move, kind: x.k === 'work' ? 'workout' : 'practice'}, x.art ? {art: x.art} : {}));
     else if (x.k === 'med') push(Object.assign(base, {btn: 'Begin', tint: TINT.quiet, kind: 'meditation'}));
     else if (x.k === 'mark' && x.key === 'walk') push(Object.assign(base, {tint: TINT.move, kind: 'walk', image: WAY(MOVE_ART.walk)}));
     else if (x.k === 'mark') push(Object.assign(base, {tint: TINT.move, kind: 'mark'}));
@@ -3994,7 +4042,7 @@ function apiToday(date){
   }
   if (U('supps')){ const sp = supps(); ['morning', 'evening'].forEach(w => { const L = sp.filter(s => (s.when === 'evening') === (w === 'evening')); if (!L.length) return;
     push({key: 'supp:' + w, when: w === 'morning' ? 'This morning' : 'This evening', hour: w === 'morning' ? 6.2 : 20.5, title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', tint: TINT.meals, done: L.every(s => c[suppId(s)]), kind: 'supplements'}); }); }
-  out.forEach(x => { x.image = x.kind === 'workout' ? moveArt(x.key) : x.kind === 'practice' ? WAY(flowArtName(practiceFor(d))) : x.kind === 'meditation' ? WAY(medArtFor(d))
+  out.forEach(x => { x.image = x.kind === 'workout' ? (x.art ? WAY(x.art) : moveArt(x.key)) : x.kind === 'practice' ? WAY(flowArtName(practiceFor(d))) : x.kind === 'meditation' ? WAY(medArtFor(d))
     : x.kind === 'prep' && /^prep:batch:/.test(x.key) ? WAY(ITEM_ART.batch) : x.kind === 'cook' && dinnerArtName(dinnerFor(d)) ? WAY(dinnerArtName(dinnerFor(d)))
     : WAY(ITEM_ART[x.kind] || 'tend-body'); });
   ownToday(d).forEach(x => out.push(x));   // BLD 896: My Own Items
@@ -4842,7 +4890,7 @@ window.GGHealth = {
   view,
   // BLD 908: Start or Membership. start() is true on the public Start file with no Membership on this device; startPicks()
   // gives the day's Flow session and meditation {flow, med} (play with act('pracid:<id>') or act('medid:<id>')).
-  start: () => START(), startPicks: d => startPicks(d),
+  start: () => START(), startPicks: d => startPicks(d), gentleOpen: () => GENTLE_START(),
   open(sec){ S.sec = sec || 'today'; S.setup = false; if (C.go) C.go('health'); if (PUB()) rerender(false); },
   // BLD 866: what the Home shows. {on, ready, name, today: {checksDone, checksTotal}, plate: {sf, pro, fib, sug, na}, targets,
   // workout: {title, mins, done} or null, nextLabs, kidsCount, use: [parts]}

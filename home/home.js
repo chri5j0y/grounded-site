@@ -38,7 +38,8 @@
 
    Tending host contract (helper A, field-guide/health.js public mode)
      Loaded only when Tending is chosen: field-guide/moves.js, stage.js, coach.js, health.js,
-     shared/gg-tend-plan.js, shared/tending-public.js (window.GGTendPublic; until it exists the
+     shared/gg-tend-plan.js, shared/gentle-public.js (BLD 919, the open Gentle sessions),
+     shared/tending-public.js (window.GGTendPublic; until it exists the
      Home shows a kind card and creates nothing). Then:
      GGHealth.init({data, fld: () => window.GGTendPublic, fdr: () => null, tier: () => 'public', save, render, go, toast})
      GGHealth.summary() feeds Today's Tending when it exists; GGHealth.view() fills #hm-tend.
@@ -49,7 +50,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b916', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b919', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b916';
   var IMG = '/shared/heroes/way/';
@@ -1619,6 +1620,9 @@
     if (tendReady()) {
       sm = summary(); ready = !!(sm && sm.ready !== false);
       if (ready && hasFn('today')) tendItems = startTend(hCall('today', today()));
+      // BLD 919: on Start, Tending's own morning movement joins the day: the Living Sober Morning Walk and, on some mornings,
+      // a Gentle session beside it (open to everyone).
+      else if (!ready && hasFn('start') && hasFn('today') && hCall('start')) tendItems = arr(hCall('today', today())).filter(function (x) { return x && (x.key === 'walk' || /^wl:gentle:/.test(x.key || '')); });
     }
     if (Array.isArray(tendItems)) {
       tendItems.forEach(function (x) { if (!x || !x.key) return; items.push({ key: 't:' + x.key, hkey: x.key, hour: num(x.hour) != null ? +x.hour : 12, when: x.when || '', title: x.title || '', sub: x.sub || '', btn: x.btn || 'Open', tint: x.tint || '', done: !!x.done, kind: x.kind || '', image: x.image || '', src: 'tend', opart: x.kind === 'own' ? (x.part || '') : '' }); });
@@ -2055,6 +2059,8 @@
       { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
       // BLD 899 (Chris: "holiday gatherings [needs no] card in library just put this in the recipes"): Holidays and Gatherings lives inside Grounded Recipes.
       { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, party food, sauces and dressings, celebration drinks, and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
+      // BLD 919: the 8 Gentle sessions are open to everyone; on Start they have their own shelf (a Member finds them in Grounded Fitness).
+      !member() && hCall('gentleOpen') ? { id: 'gentle', name: 'Gentle', count: '8 sessions', plain: 'Gentle Movement', line: 'Eight guided sessions for strength, balance, and easier movement, with Ava coaching every move.', cls: 'hm-sh-work', art: IMG + 'move-gentle.webp' } : null,
       member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout, by category, with a coach, and the 12-week program.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
       // BLD 911 (Chris: "we have 2 meditation sets too.. join or rename", then "1"): one Grounded Meditation: today's pick, your
       // week of seven (Tending's), and the full library by need (Membership), on one shelf.
@@ -2098,7 +2104,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=b917';
+  var RECIPES_JS = '/recipes/recipes.js?v=b919';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -2126,9 +2132,11 @@
     else if (id === 'holidays') openRecipe('holidays');
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
+    else if (id === 'gentle') goTo('library=gentle');
     else if (id === 'quiet') { if (!member()) { openDailyMed(); return; } if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openGGN(); }
   }
   SUBS.library.quiet = 'Grounded Meditation';
+  SUBS.library.gentle = 'Gentle';
   OLDSEC.quiet = 'today';
 
   /* ---------- the profile sheet ---------- */
@@ -3309,7 +3317,8 @@
     // Tending folds its own Start view in (field-guide/health.js with GGMember.tend); this keeps Home right either way.
     return list.filter(function (x) {
       if (!x) return false;
-      if (/^(workout|cook|shop|holiday|prep|meal|supplement|mark)$/.test(x.kind || '')) return false;
+      // BLD 919: a Gentle session (wl:gentle:<id>) is open to everyone, so the Living Sober morning keeps it.
+      if (/^(workout|cook|shop|holiday|prep|meal|supplement|mark)$/.test(x.kind || '') && !/^wl:gentle:/.test(x.key || '')) return false;
       if (x.kind === 'practice') return !flow++;
       if (x.kind === 'meditation') return !med++;
       return true;
@@ -3317,7 +3326,7 @@
   }
   var SU_START_PLAN = {
     food: 'A simple daily body practice from your tree: a walk, water, rest, and time outdoors. Membership opens Grounded Nutrition: meal plans, Grounded Cooking in your plan, and one shopping list.',
-    fit: 'One Flow session a day, the day\'s pick, with a coach. Membership opens Grounded Fitness: the 12-week program, every guided workout, yoga, tai chi, and stretch.'
+    fit: 'One Flow session a day, the day\'s pick, and the 8 Gentle sessions, with a coach. Membership opens Grounded Fitness: the 12-week program, every guided workout, yoga, tai chi, and stretch.'
   };
   /* The Week for Start: the week's practices and the Tomorrow list, then one invitation for meals and movement. */
   function startWeekHtml() {
@@ -3435,8 +3444,9 @@
 
      Membership (window.GGMember, shared/gg-member.js): the lock lives in one place, here. Start keeps the basic growth
      plan (one practice a day for each of the four, rotating through the practices chosen), Do Tomorrow, check-ins and
-     tree growth, check-in history, one daily meditation, one daily Flow session, core Spirit, and Living Sober days 1
-     to 90. Membership opens the full growth plan (every practice, custom practices, trends, practice history,
+     tree growth, check-in history, one daily meditation, one daily Flow session, the 8 Gentle sessions (BLD 919, with
+     the Living Sober morning offering one on some mornings), core Spirit, and all of Living Sober (BLD 916: open to
+     everyone for life, a gift from Grounded). Membership opens the full growth plan (every practice, custom practices, trends, practice history,
      reminders), the full Tending suite, the Meditation library, Spirit, Relationships, and seasons programs, and Stories
      in full. A Start person sees one quiet invitation card per feature, in forward words, never on a kid screen.
      Saved in the home record: custom: [{id, part, n, r, min, how, at}] (Member custom practices).
