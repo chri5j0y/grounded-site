@@ -1409,3 +1409,12 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-wp-ideas ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px;}
 .hm-wp-ideas li{padding-left:10px;border-left:3px solid var(--c);font-size:15px;line-height:1.45;}
 .hm-wp-ideas li b{color:var(--c);font-weight:700;}
+
+/* BLD 921: program start dates, the Family Kitchen question, and a kid's Tonight's Dinner card */
+.hm-pstart{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:2px 0 10px;font-size:14.5px;color:var(--ink-soft,inherit);}
+.hm-pstart>span{flex:1 1 200px;min-width:0;}
+.hm-pstart small{flex:1 1 100%;font-size:13px;}
+.hm-pstf{display:grid;gap:4px;flex:1 1 180px;min-width:0;font-size:13px;}
+.hm-pstf input{font:inherit;font-size:16px;padding:8px 10px;border-radius:12px;border:1px solid currentColor;background:transparent;color:inherit;min-width:0;max-width:100%;box-sizing:border-box;}
+.hm-kitdlg .hm-acts{margin-top:14px;}
+.hm-kkit .hm-linkbtn{margin-top:6px;font-size:14px;}

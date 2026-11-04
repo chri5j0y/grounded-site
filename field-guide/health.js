@@ -775,7 +775,7 @@ function vWeek(){
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
     </div></div>`; }).join('');
   const w = (din.weeks || {})[letter(n)] || {}, ideas = ideasBlk;
-  return `${ownViewTabs('week')}${ownWeekLine(mon)}<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${letter(n)}${KIT() ? '' : progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
+  return `${ownViewTabs('week')}${ownWeekLine(mon)}<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${fwl(n)}${KIT() ? '' : progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
   ${newCard()}${againCard()}${holCardsHtml()}${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
   <div class="hj-blk hj-days">${rows}</div>
   ${remOn() ? `<div class="row" style="margin:-4px 0 14px"><button type="button" class="btn btn-line btn-sm" data-hja="remics">Add Reminders to My Phone Calendar</button><button type="button" class="linkbtn" data-hja="remwk">${H().set.remWk ? 'Show Reminders on This Week' : 'Keep Reminders on Today Only'}</button></div>` : ''}
@@ -829,7 +829,7 @@ function vShop(){
   const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
   const ed = S.shopEd;
   return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${letter(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
-  ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${letter(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
+  ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${fwl(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
   <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${(PUB() ? [] : ['costco', 'grocer', 'all']).map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
     <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span>${PUB() && !tot ? '' : `<span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span>`}</div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
   ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(mmAmt(x))}${mmFor(x) ? ' · ' + esc(mmFor(x)) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
@@ -2368,9 +2368,9 @@ function vSettings(bare){
     <div class="tn-row a-today"><span class="ic2">${ic('clock')}</span><div class="tx"><b>My Phone Calendar</b><small>Steady reminders in your phone's own calendar, with an alert at each time.</small></div><button type="button" class="tn-btn sm line" data-hja="remics"${on ? '' : ' disabled'}>Add</button></div></div>
     ${kit ? '' : row('p-fruit', 'star', 'Celebrate Milestones', 'A small note when you reach one. Days you skip stay quiet.', tsw('celebrate', '', h.set.celebrate !== false, 'Celebrate Milestones'))}</div></div>`;
   const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">${MINE_ANY() && MINE_ANY().who ? 'Whose phone, your training' : 'Your training'}, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
-  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${weightCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${holSetCard()}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
+  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${weightCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${kitCard()}${startCard()}${holSetCard()}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
-    <div class="tn-two"><div class="tn-col">${weightCard()}${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}${holSetCard()}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
+    <div class="tn-two"><div class="tn-col">${weightCard()}${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}${kitCard()}${startCard()}${holSetCard()}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
 }
 
 // ---------- Morning Quiet: a gentle timer, a scene, one line at a time ----------
@@ -2457,7 +2457,7 @@ function vTodayT(lib){
   const nm = PUB() ? (() => { try { return C.name ? String(C.name() || '').trim().split(/\s+/)[0] : ''; } catch(e){ return ''; } })() : '';
   const greet = (hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening') + (['Chris', 'Kayti'].includes(h.set.who) ? ', ' + h.set.who : nm ? ', ' + nm : '');
   const plan = U('food') || U('move');
-  const chips = kit || plan ? (before ? `<span class="tn-chip">Starts ${esc(shortDate(s0))}</span>` : `<span class="tn-chip">Week ${n}</span>${U('food') ? `<span class="tn-chip g">${ic('leaf')}Food Week ${letter(foodWeek(d))}</span>` : ''}`) : '';
+  const chips = kit || plan ? (before ? `<span class="tn-chip">Starts ${esc(shortDate(s0))}</span>` : `<span class="tn-chip">Week ${n}</span>${U('food') ? `<span class="tn-chip g">${ic('leaf')}Food Week ${fwl(foodWeek(d))}</span>` : ''}`) : '';
   const hero = `<div class="tn-hero"><svg class="tn-sky" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">${outdoors(skyAt(hr), 400, 300, {flip: true})}</svg>
     <div class="in"><div class="greet">${ic(hr < 17 ? 'sunrise' : 'moon')}<span>${esc(greet)}</span></div><h2 class="day">${esc(DOWL[d.getDay()])}</h2><div class="date">${esc(MONTHS[d.getMonth()] + ' ' + d.getDate())}</div>${chips ? `<div class="chips">${chips}</div>` : ''}</div></div>`;
   const nowBtn = x => x.k === 'quiet' ? `data-hja="quiet" data-hjv=""` : x.key === 'walk' ? `data-hja="toggle" data-hjv="walk"` : x.k === 'supp' ? `data-hja="suppall" data-hjv="${esc(x.v)}"` : `data-hja="go" data-hjv="${esc(x.key)}"`;
@@ -2524,7 +2524,7 @@ function vKitchen(){
     return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene"><img src="${esc(WAY(dinnerArtName(tn) || 'kitchen-headstart'))}" alt="" loading="lazy" decoding="async"></div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
       ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<p class="tn-sub">Step by step, with a voice to guide you.</p><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Grounded Cooking</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
   const rest = arr(w.dinners).filter(x => !tn || x.id !== tn.id);
-  return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(L)}. Dinners guided step by step.`)}${kitTabs('kitchen')}
+  return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(fwlOf(L))}. Dinners guided step by step.`)}${kitTabs('kitchen')}
     <div class="tn-kgrid">${feat}${rest.map((x, i) => `<button type="button" class="tn-card tn-lift tn-kc tn-art" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${artImg(i, dinnerArtName(x) || DIN_ROT)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
     ${wbNote(w)}
     ${PUB() ? pubPlanEdit(L) + pubAims() : aims()}${ideasBlk(PUB() ? 'Lunches' : 'Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk(PUB() ? 'Breakfasts' : 'Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
@@ -3006,22 +3006,168 @@ const KIDS = () => arr(((H() || {}).set || {}).house && H().set.house.kids);
 const srcOf = id => arr((PLIB() || {}).sources).find(x => x && x.id === id) || null;
 const srcLinks = ids => arr(Array.isArray(ids) ? ids : [ids]).filter(Boolean).map(srcOf).filter(Boolean).map(x => x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}` : esc(x.t) + (x.who ? ', ' + esc(x.who) : '')).join('; ');
 // BLD 880: every public recipe is written for six, and its ingredients scale to the household (shared/gg-scale.js, GGScale).
-const pubHH = () => { const s = (H() || {}).set || {}, n = (+((s.house || {}).adults) || 0) + KIDS().length || num(s.household) || 0; return n > 0 && n < 30 ? Math.round(n) : 0; };
+const pubHH = () => { if (KJ()) return kitTable(); const s = (H() || {}).set || {}, n = (+((s.house || {}).adults) || 0) + KIDS().length || num(s.household) || 0; return n > 0 && n < 30 ? Math.round(n) : 0; };
 // A table of one cooks for two (one meal now, one for tomorrow): the smallest size on the Recipes page's Serves picker.
 const tableOf = () => { const hh = pubHH(); return hh ? Math.max(2, hh) : 0; };
 const sizeUp = r => { const hh = PUB() ? tableOf() : 0; return r && hh && window.GGScale && arr(r.ingredients).length ? GGScale.recipe(r, hh) : r; };
 const hhNote = serves => { const hh = tableOf(); return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
-function planSet(){ const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: goalsNow(s), kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
+function planSet(){ const k = KJ(); if (k) return kitSet(k); const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: goalsNow(s), kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
 // The saved plan: ids only, so a library update keeps working; a change of needs, allergies, goals, or household builds it again.
+// BLD 921, the Family Kitchen: a plan joined from a kitchen link is built from the kitchen's seed and settings with its swaps,
+// and every plan lines up with its kitchen's start week (plan.off, see kitOff), so two phones in one kitchen share each week's menu.
 function ensurePlan(force){
   const h = H(), L = PLIB(), P = TP(); if (!h || !L || !P) return null;
-  const set = planSet(), sig = JSON.stringify(set), cur = h.plan && typeof h.plan === 'object' ? h.plan : null;
+  const set = planSet(), sig = JSON.stringify(set), cur = h.plan && typeof h.plan === 'object' ? h.plan : null, off = kitOff(), k = KJ();
   const known = new Set(arr(L.recipes).map(r => r.id).concat('leftovers'));
   const intact = cur && cur.ids && 'ABCD'.split('').every(w => arr(cur.ids[w]).length === 7 && cur.ids[w].every(id => !id || known.has(id))) && cur.meals && Object.values(cur.meals).every(l => arr(l).every(id => known.has(id)));
-  if (cur && cur.sig === sig && intact && !force) return cur;
-  const seed = force || !cur ? (Date.now() % 100000) + 1 : cur.seed || 1;
+  const keep = k ? cur && cur.ku === String(k.u) && cur.sig === sig && intact : cur && cur.sig === sig && intact && !cur.ku;
+  if (keep && !force){ if ((+cur.off || 0) !== off){ cur.ids = kitRot(cur.ids, off - (+cur.off || 0)); cur.off = off; PA = null; clearShop(); save(); } return cur; }
+  if (k){ const b = kitBase(k.seed, set), sw = k.sw || {};
+    h.plan = {seed: k.seed, ids: kitRot(kitApplyD(b.ids, sw.d, known), off), meals: kitApplyM(b.meals, sw.m, known), sig, n: 0, u: Date.now(), off, ku: String(k.u)}; PA = null; save(); return h.plan; }
+  const seed = force || !cur || cur.ku ? (Date.now() % 100000) + 1 : cur.seed || 1;
   const pw = P.planWeeks(L.recipes, Object.assign({seed}, set)), meals = P.planMeals(L.recipes, Object.assign({seed}, set));
-  h.plan = {seed, ids: pw.ids, meals, sig, n: 0, u: Date.now()}; PA = null; save(); return h.plan;
+  h.plan = {seed, ids: kitRot(pw.ids, off), meals, sig, n: 0, u: Date.now(), off}; PA = null; save(); return h.plan;
+}
+// =====================================================================
+// BLD 921: THE FAMILY KITCHEN (Chris, November 4, 2026: "I say share menu and I get a qr that she or a kid scans from their
+// phone and now we are connected in family kitchen!"). DATA.health.kitchen, on this device only:
+//   own kitchen:    {id, start (a Monday, set once shared or changed), shared (last share time), u}
+//   joined kitchen: {id, joined: 1, seed, start, set: {g, n, a, h: [adults, kid bands...], l}, sw: {d: {A0: id}, m: {b0: id}}, u,
+//                    own: {plan, kitchen} (this profile's own plan and kitchen, returned by Leave the Family Kitchen)}
+// The kitchen's weeks count from its start: a phone whose own plan started another week turns its four weeks (kitOff), so the
+// same date shows the same dinner everywhere. Share Our Kitchen carries the kitchen in a link and a QR code made on this device
+// (shared/vendor/qrcode.js): https://growwithgrounded.com/home/#kitchen=<code>. The code is base64url JSON {v: 1, k: id, s: seed,
+// t: start YYYYMMDD, g: goals, n: food needs, a: allergies, h: [adults, kid bands], l: 0 when Saturday is cooked, d and m: swaps}.
+// The address hash never reaches a server. Nothing about health numbers, check-ins, Living Sober, names, or profiles travels.
+// Live sync waits for The Grove's shared storage; until then a change travels by sharing again.
+// =====================================================================
+const KIT_URL = 'https://growwithgrounded.com/home/#kitchen=';
+const KJ = () => { if (!PUB()) return null; const h = H(), k = h && h.kitchen; return k && typeof k === 'object' && k.joined && isFinite(+k.seed) ? k : null; };
+const KOWN = () => { if (!PUB()) return null; const h = H(), k = h && h.kitchen; return k && typeof k === 'object' && !k.joined ? k : null; };
+function kitSet(k){ const s = k.set || {}; return {needs: arr(s.n).map(String), allergies: String(s.a || ''), goals: arr(s.g).length ? arr(s.g).map(String) : ['well'], kids: arr(s.h).length > 1, leftovers: s.l !== 0}; }
+// The kitchen's start Monday: the joined kitchen's, the own kitchen's once set, else this plan's own start (nothing turns).
+function kitStart(){ const h = H(), k = h && h.kitchen; return (PUB() && k && parseD(k.start)) || startMon(); }
+function kitOff(){ if (!PUB()) return 0; const h = H(), k = h && h.kitchen, ks = k && parseD(k.start); if (!ks) return 0; return Math.round((startMon() - ks) / (7 * DAYMS)); }
+// ids in one week order to another: out[week i] = ids[week i + off] (the kitchen's weeks to this plan's weeks).
+const kitIdx = n => ((n % 4) + 4) % 4;
+function kitRot(ids, off){ off = Math.round(+off || 0); if (!ids || !kitIdx(off)) return ids; const W = 'ABCD', out = {}; for (let i = 0; i < 4; i++) out[W[i]] = arr(ids[W[kitIdx(i + off)]]).slice(); return out; }
+// The food week letter as the kitchen names it (the same on every phone in the kitchen).
+const fwl = n => 'ABCD'[kitIdx(Math.max(1, n) - 1 + kitOff())];
+const fwlOf = w => { const i = 'ABCD'.indexOf(w); return i < 0 ? w : 'ABCD'[kitIdx(i + kitOff())]; };
+function kitBase(seed, set){ const L = PLIB(), P = TP(); return {ids: P.planWeeks(L.recipes, Object.assign({seed}, set)).ids, meals: P.planMeals(L.recipes, Object.assign({seed}, set))}; }
+function kitApplyD(ids, d, known){ const out = {}; 'ABCD'.split('').forEach(w => { out[w] = arr(ids[w]).slice(); }); Object.entries(d && typeof d === 'object' ? d : {}).forEach(([key, id]) => { const m = /^([ABCD])([0-6])$/.exec(key); if (m && typeof id === 'string' && (!known || known.has(id))) out[m[1]][+m[2]] = id; }); return out; }
+const KIT_M = {b: 'breakfasts', l: 'lunches', s: 'snacks'};
+function kitApplyM(meals, m, known){ const out = {}; Object.keys(meals || {}).forEach(t => { out[t] = arr(meals[t]).slice(); }); Object.entries(m && typeof m === 'object' ? m : {}).forEach(([key, id]) => { const x = /^([bls])(\d{1,2})$/.exec(key), t = x && KIT_M[x[1]]; if (t && out[t] && +x[2] < out[t].length && typeof id === 'string' && (!known || known.has(id))) out[t][+x[2]] = id; }); return out; }
+// The table: the kitchen's household when joined, else this profile's own.
+const kitHouse = () => { const k = KJ(); if (k){ const hh = arr((k.set || {}).h); return {adults: Math.max(1, Math.min(12, +hh[0] || 1)), kids: hh.slice(1, 13).map(b => ({band: BAND_PORTION[b] ? b : ''}))}; } const s = H().set; return {adults: +((s.house || {}).adults) || 0, kids: KIDS()}; };
+const ymd8 = s => String(s || '').replace(/-/g, ''), ymdOf8 = n => { const m = /^(\d{4})(\d{2})(\d{2})$/.exec(String(n || '')); return m ? m[1] + '-' + m[2] + '-' + m[3] : ''; };
+const b64e = s => btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const b64d = s => decodeURIComponent(escape(atob(String(s).replace(/-/g, '+').replace(/_/g, '/'))));
+// The kitchen as it travels: this plan's seed, settings, start, and swaps (the plan against the seed's own plan, in kitchen weeks).
+function kitPack(){
+  const h = H(), L = PLIB(), P = TP(); if (!h || !L || !P || !PUB()) return null; const plan = ensurePlan(); if (!plan) return null;
+  const k = KJ(), set = planSet(), b = kitBase(plan.seed, set), K = kitRot(plan.ids, -(+plan.off || 0)), d = {}, m = {};
+  'ABCD'.split('').forEach(w => arr(K[w]).forEach((id, i) => { if (id && id !== arr(b.ids[w])[i]) d[w + i] = id; }));
+  Object.entries(KIT_M).forEach(([c, t]) => arr((plan.meals || {})[t]).forEach((id, i) => { if (id && id !== arr(b.meals[t])[i]) m[c + i] = id; }));
+  const hs = kitHouse(), o = {v: 1, k: k ? k.id : (KOWN() || {}).id, s: plan.seed, t: +ymd8(ymd(kitStart())), g: set.goals};
+  if (set.needs.length) o.n = set.needs; if (set.allergies) o.a = set.allergies.slice(0, 160);
+  o.h = [Math.max(1, +hs.adults || 1)].concat(arr(hs.kids).map(x => (x && x.band) || 0)); if (!set.leftovers) o.l = 0;
+  if (Object.keys(d).length) o.d = d; if (Object.keys(m).length) o.m = m;
+  return o;
+}
+function kitRead(code){
+  let o; try { o = JSON.parse(b64d(String(code || '').trim())); } catch(e){ return null; }
+  if (!o || o.v !== 1 || !isFinite(+o.s) || +o.s < 1 || !parseD(ymdOf8(o.t))) return null;
+  const strs = x => arr(x).filter(y => typeof y === 'string' && y.length < 40).slice(0, 12);
+  const hh = arr(o.h).slice(0, 13), adults = Math.max(1, Math.min(12, Math.round(+hh[0] || 1)));
+  const swaps = x => { const out = {}; Object.entries(x && typeof x === 'object' ? x : {}).slice(0, 60).forEach(([a, b]) => { if (/^[A-Za-z]\d{1,2}$/.test(a) && typeof b === 'string' && /^[a-z0-9-]{1,60}$/.test(b)) out[a] = b; }); return out; };
+  return {id: /^[a-z0-9]{4,16}$/.test(String(o.k || '')) ? String(o.k) : 'k' + Math.round(+o.s), seed: Math.round(+o.s), start: ymd(monOf(parseD(ymdOf8(o.t)))),
+    set: {g: strs(o.g), n: strs(o.n), a: String(o.a || '').slice(0, 160), h: [adults].concat(hh.slice(1).map(b => BAND_PORTION[b] ? b : 0)), l: o.l === 0 ? 0 : 1}, sw: {d: swaps(o.d), m: swaps(o.m)}};
+}
+function kitShare(){
+  const h = H(), o = kitPack(); if (!o) return null;
+  if (!h.kitchen || typeof h.kitchen !== 'object') h.kitchen = {};
+  const k = h.kitchen; if (!k.id){ k.id = uid().replace(/[^a-z0-9]/g, '').slice(-8); o.k = k.id; }
+  if (!k.joined && !k.start){ k.start = ymd(kitStart()); }
+  k.shared = Date.now(); if (!k.joined) k.u = Date.now(); save();
+  return KIT_URL + b64e(JSON.stringify(o));
+}
+// What a kitchen link holds, for the join prompt: {table, update} (update: this profile is already in that kitchen).
+function kitInfo(code){ const x = kitRead(code); if (!x) return null; const k = KJ(); return {table: Math.max(2, x.set.h.length - 1 + x.set.h[0]), update: !!(k && k.id === x.id), same: false}; }
+function kitJoin(code){
+  const h = H(), x = kitRead(code); if (!h || !x) return false; const k0 = KJ();
+  const own = k0 ? k0.own : {plan: h.plan ? JSON.parse(JSON.stringify(h.plan)) : null, kitchen: h.kitchen && !h.kitchen.joined ? JSON.parse(JSON.stringify(h.kitchen)) : null};
+  h.kitchen = Object.assign(x, {joined: 1, u: Math.max(Date.now(), (k0 ? +k0.u || 0 : 0) + 1), own});
+  // A profile new to Tending starts with the food part, its weeks from the kitchen's start.
+  const s = h.set; if (!s.pubDone){ s.pubDone = 1; s.use = arr(s.use).length ? s.use : ['food']; s.who = s.who || 'family'; s.remOff = true; }
+  if (!parseD(s.start) || weekNo(new Date()) < 1){ const ks = parseD(x.start), t = monOf(new Date()); s.start = ymd(ks && ks <= t ? ks : t); if (!s.progStart && PROG()) s.progStart = s.start; }
+  s.u = Date.now(); PA = null; ensurePlan(); clearShop(); save(); return true;
+}
+function kitLeave(){
+  const h = H(), k = KJ(); if (!k) return false; const own = k.own || {};
+  h.kitchen = own.kitchen || null; if (!h.kitchen) delete h.kitchen; h.plan = own.plan || null; if (!h.plan) delete h.plan;
+  h.set.u = Date.now(); PA = null; ensurePlan(); clearShop(); save(); return true;
+}
+// Tonight's dinner from the kitchen alone (a kid's Today shows it): Sunday belongs to the coming week, as in the plan.
+function kitTonight(date){
+  const h = H(), k = KJ(), L = PLIB(), P = TP(); if (!h || !k || !L || !P) return null;
+  const d = date ? (parseD(date) || new Date(date)) : new Date(), ks = parseD(k.start); if (!ks) return null;
+  const dd = d.getDay() === 0 ? addD(d, 1) : d, n = Math.floor((day0(dd) - ks) / (7 * DAYMS)) + 1;
+  const known = new Set(arr(L.recipes).map(r => r.id).concat('leftovers')), ids = kitApplyD(kitBase(k.seed, kitSet(k)).ids, (k.sw || {}).d, known);
+  const id = arr(ids['ABCD'[kitIdx(n - 1)]])[(d.getDay() + 6) % 7]; if (!id) return null;
+  const r = id === 'leftovers' ? null : recOf(id); return {id, name: r ? r.name : 'Leftovers Night', mins: r ? r.mins || null : null, week: 'ABCD'[kitIdx(n - 1)]};
+}
+// ---------- BLD 921: start dates, set and edited (Chris: "Important for workouts and other programs too") ----------
+// One plain Start date row with Change. A date snaps to its Monday; only the weeks ahead move, and every log stays as it is.
+function sdRow(kind, label, d, sub, can){
+  const ed = S.sdEd === kind;
+  return `<div class="tn-row tn-sd" data-sd="${esc(kind)}"><span class="ic2">${ic('week')}</span><div class="tx"><b>${esc(label)}</b><small>Start date: ${esc(DOWL[d.getDay()])}, ${esc(nice(ymd(d)))}${sub ? '. ' + esc(sub) : ''}</small>
+    ${ed ? `<div class="tn-sdf"><input type="date" id="hj-sd-${esc(kind)}" value="${esc(ymd(d))}" aria-label="${esc(label)} start date"><button type="button" class="tn-btn sm" data-hja="sdsave" data-hjv="${esc(kind)}">Save</button><button type="button" class="tn-btn sm line" data-hja="sdcancel">Cancel</button></div><small>Weeks count from the Monday of the date you choose. Everything you logged stays as it is.</small>` : ''}</div>
+    ${can && !ed ? `<button type="button" class="tn-btn sm line" data-hja="sdedit" data-hjv="${esc(kind)}">Change</button>` : ''}</div>`;
+}
+function kitCard(){
+  if (!PUB() || START() || KIT() || !U('food') || !ensurePlan()) return KJ() && START() ? `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">You are in a Family Kitchen for a table of ${kitTable()}.</div></div></div><button type="button" class="linkbtn" data-hja="kleave">Leave the Family Kitchen</button></div>` : '';
+  if (S.kshareGo){ S.kshareGo = 0; if (!S.kshare) setTimeout(() => act('kshare'), 0); }
+  const k = KJ(), sh = S.kshare, ks = kitStart(), w = Math.floor((day0(new Date()) - ks) / (7 * DAYMS)) + 1;
+  const sub = k ? `You are in a Family Kitchen for a table of ${kitTable()}. Your menu and shopping list match theirs each week. Your own health and check-ins stay yours.` : 'Share your menu with your family. Everyone who joins sees the same dinners and the same shopping list each week, on their own phone.';
+  return `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">${esc(sub)}</div></div></div>
+    <div class="tn-set">${sdRow('food', 'Meal Plan', ks, (w >= 1 ? 'Food Week ' + 'ABCD'[kitIdx(w - 1)] + ' this week' : 'Food Week A starts then') + (k ? '. Set by your Family Kitchen' : ''), !k)}</div>
+    ${sh ? kitShareHtml() : `<div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hja="kshare">${ic('link')}Share Our Kitchen</button></div>`}
+    ${k ? `<p class="tn-sub" style="margin-top:10px">A swap or a new start date travels when the kitchen shares again.</p><button type="button" class="linkbtn" data-hja="kleave">${S.sureLeave ? 'Tap Again to Return to My Own Plan' : 'Leave the Family Kitchen'}</button>` : (KOWN() || {}).shared ? `<p class="tn-sub" style="margin-top:10px">After a swap or a new start date, share again so your family follows.</p>` : ''}</div>`;
+}
+const kitTable = () => { const hs = kitHouse(); return Math.max(2, (+hs.adults || 1) + arr(hs.kids).length); };
+function kitShareHtml(){
+  const url = S.kshare, q = qrSvg(url);
+  return `<div class="tn-kshare"><p class="tn-sub">Scan with the phone camera, or send the link. It opens The Grounded Way and asks to join.</p>
+    ${q ? `<div class="tn-qr" role="img" aria-label="QR code for the Family Kitchen link">${q}</div>` : `<p class="tn-sub">The QR code is getting ready.</p>`}
+    <label class="hj-fld"><span>Family Kitchen link</span><input type="text" id="hj-klink" readonly value="${esc(url)}"></label>
+    <div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hja="kcopy">Copy Link</button>${navigator.share ? `<button type="button" class="tn-btn sm line" data-hja="ksend">Send the Link</button>` : ''}<button type="button" class="tn-btn sm line" data-hja="kdone">Done</button></div>
+    <p class="hj-note">The link holds the menu settings only: the start week, food needs, allergies, goals, table size, and swaps.</p></div>`;
+}
+// The QR code, drawn on this device by shared/vendor/qrcode.js (loaded the first time Share Our Kitchen opens).
+let QRL = null;
+function qrLoad(){ if (window.qrcode) return Promise.resolve(true); if (QRL) return QRL;
+  QRL = new Promise(res => { const s = document.createElement('script'); s.src = asset('shared/vendor/qrcode.js?v=b921'); s.onload = () => res(!!window.qrcode); s.onerror = () => { QRL = null; res(false); }; document.head.appendChild(s); }); return QRL; }
+function qrSvg(text){
+  if (!window.qrcode) return '';
+  try { const q = window.qrcode(0, 'M'); q.addData(text, 'Byte'); q.make(); const n = q.getModuleCount(), m = 4, N = n + m * 2; let p = '';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) p += 'M' + (c + m) + ' ' + (r + m) + 'h1v1h-1z';
+    const px = N * (N * 4 > 300 ? 3 : 4); return `<svg viewBox="0 0 ${N} ${N}" width="${px}" height="${px}" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect width="${N}" height="${N}" fill="#fff"/><path d="${p}" fill="#111"/></svg>`; } catch(e){ return ''; }
+}
+function apiSetStart(kind, v){
+  const h = H(), d = parseD(v); if (!h || !d || !PUB()) return false; const mon = ymd(monOf(d));
+  if (kind === 'food'){ if (KJ()){ toast('Your Family Kitchen sets this start date.'); return false; }
+    const k = h.kitchen = h.kitchen && typeof h.kitchen === 'object' ? h.kitchen : {}; if (!k.id) k.id = uid().replace(/[^a-z0-9]/g, '').slice(-8);
+    k.start = mon; k.u = Date.now(); PA = null; ensurePlan(); clearShop(); save();
+    toast(k.shared ? 'Saved. Share Our Kitchen again so your family follows.' : 'Saved. Your meal plan weeks count from ' + nice(mon) + '.'); return true; }
+  if (kind === 'prog'){ h.set.progStart = mon; h.set.u = Date.now(); PA = null; save(); toast('Saved. Your 12-week program counts from ' + nice(mon) + '.'); return true; }
+  return false;
+}
+function startCard(){
+  if (!PUB() || START() || KIT()) return '';
+  const rows = []; if (U('move') && workOn() && progOn()){ const ps = progStart(), w = progWeek(new Date()); rows.push(sdRow('prog', '12-Week Program', ps, w >= 1 ? progLabel(new Date()) : 'Week 1 starts then', true)); }
+  if (!rows.length) return '';
+  return `<div class="tn-card a-move" id="tn-starts"><div class="tn-hd">${badge('week', 'a-move')}<div><div class="tn-k a-move">Start Dates</div><div class="tn-sub">Move a start date and the weeks ahead follow. Everything you logged stays as it is.</div></div></div><div class="tn-set">${rows.join('')}</div></div>`;
 }
 const recOf = id => arr((PLIB() || {}).recipes).find(r => r.id === id) || (PUB() ? null : partyRecs().find(r => r.id === id)) || null;
 function ideaOf(r){ if (!r) return null; const P = TP(); r = sizeUp(r);
@@ -3233,11 +3379,11 @@ function pubPlanEdit(wk){
   const st = P.weekStats(P.weeksFromIds(PLIB().recipes, plan.ids)[wk].dinners);
   const row = (key, label, r, sub) => `<div class="tn-pe"><span class="d">${esc(label)}</span><span class="n"><b>${esc(r ? r.name : 'Leftovers Night')}</b><small>${esc(sub)}</small></span><button type="button" class="tn-btn sm line" data-hja="pswap" data-hjv="${esc(key)}">Swap</button></div>`;
   const PROT = {fish: 'Fish', poultry: 'Poultry', beans: 'Beans', lentils: 'Lentils', tofu: 'Tofu', eggs: 'Eggs', yogurt: 'Yogurt', redmeat: 'Lean red meat', mixed: 'Mixed'};
-  return `<details class="hj-doc tn-planed"${S.open['planed'] ? ' open' : ''} data-hjd="planed"><summary><span>My Plan for Food Week ${esc(wk)}</span></summary><div class="hj-body">
+  return `<details class="hj-doc tn-planed"${S.open['planed'] ? ' open' : ''} data-hjd="planed"><summary><span>My Plan for Food Week ${esc(fwlOf(wk))}</span></summary><div class="hj-body">
     <p class="hj-sub">${st.fish} fish dinners and ${st.red ? st.red + ' lean red meat dinner' : 'no red meat'} this week, about ${st.mins} minutes of cooking in all${st.cost != null ? ', about $' + st.cost : ''}. Swap any meal and the shopping list follows.</p>
     ${ids.map((id, i) => { const r = id === 'leftovers' ? null : recOf(id); return row('d|' + wk + '|' + DOW[(i + 1) % 7], DOWL[(i + 1) % 7], r, r ? [PROT[r.protein] || '', r.mins ? r.mins + ' min' : ''].filter(Boolean).join(' · ') : 'This week\'s leftovers, warmed through'); }).join('')}
     ${['breakfasts', 'lunches', 'snacks'].map(k => arr(m[k]).length ? `<h4 class="hj-sec">${k === 'breakfasts' ? 'Breakfasts' : k === 'lunches' ? 'Lunches' : 'Snacks'}</h4>` + arr(m[k]).map((id, i) => { const r = recOf(id); return r ? row('m|' + k + '|' + i, '', r, r.mins ? r.mins + ' min' : '') : ''; }).join('') : '').join('')}
-    <div class="tn-acts" style="margin-top:12px"><button type="button" class="tn-btn sm line" data-hja="pleft">${h.set.leftovers === false ? 'Make Saturday a Leftovers Night' : 'Cook Saturday Too'}</button><button type="button" class="tn-btn sm line" data-hja="pnew">${S.sureNew ? 'Tap Again for a New Plan' : 'Build a New Plan'}</button></div></div></details>`;
+    <div class="tn-acts" style="margin-top:12px"><button type="button" class="tn-btn sm line" data-hja="pleft">${h.set.leftovers === false ? 'Make Saturday a Leftovers Night' : 'Cook Saturday Too'}</button>${KJ() ? '' : `<button type="button" class="tn-btn sm line" data-hja="pnew">${S.sureNew ? 'Tap Again for a New Plan' : 'Build a New Plan'}</button>`}<button type="button" class="tn-btn sm line a-kitchen" data-hja="kopen">${ic('link')}Share Our Kitchen</button></div>${KJ() ? `<p class="tn-sub" style="margin-top:10px">Your menu follows your Family Kitchen.</p>` : ''}</div></details>`;
 }
 
 // ---------- My Plan from My Team ----------
@@ -3413,6 +3559,18 @@ function pubSettingsCard(){
 function actPub(a, v){
   const h = H();
   switch (a){
+    // BLD 921: the Family Kitchen and start dates.
+    case 'kopen': S.open['planed'] = true; if (C.section && C.host === 'home'){ S.kshareGo = 1; C.section('settings'); return true; } S.sec = 'settings'; S.kshareGo = 1; rerender(false); window.scrollTo(0, 0); return true;
+    case 'kshare': qrLoad().then(() => { S.kshare = kitShare(); if (!S.kshare) toast('Your menu is getting ready. Try again in a moment.'); rerender(true); setTimeout(() => { const el = document.getElementById('tn-kitchen'); if (el && el.scrollIntoView) el.scrollIntoView({block: 'nearest'}); }, 40); }); return true;
+    case 'kdone': S.kshare = null; rerender(true); return true;
+    case 'kcopy': { const u = S.kshare || '', el = document.getElementById('hj-klink'), sel = () => { if (el){ el.focus(); el.select(); } toast('Select the link to copy it.'); };
+      try { navigator.clipboard.writeText(u).then(() => toast('The link is copied. Send it to your family.'), sel); } catch(e){ sel(); } return true; }
+    case 'ksend': try { if (navigator.share) navigator.share({title: 'Our Family Kitchen', text: 'Join our Family Kitchen in The Grounded Way. Our menu will match.', url: S.kshare}).catch(() => {}); } catch(e){} return true;
+    case 'kleave': if (!S.sureLeave){ S.sureLeave = true; rerender(true); setTimeout(() => { if (S.sureLeave){ S.sureLeave = false; rerender(true); } }, 3500); return true; }
+      S.sureLeave = false; S.kshare = null; kitLeave(); toast('Back to your own plan.'); rerender(true); return true;
+    case 'sdedit': S.sdEd = v; rerender(true); setTimeout(() => { const el = document.getElementById('hj-sd-' + v); if (el) el.focus(); }, 30); return true;
+    case 'sdcancel': S.sdEd = null; rerender(true); return true;
+    case 'sdsave': { const el = document.getElementById('hj-sd-' + v), d = parseD(el && el.value); if (!d){ toast('Choose a date.'); return true; } S.sdEd = null; apiSetStart(v, ymd(d)); rerender(true); return true; }
     case 'setup': S.setup = true; S.ck = null; ckDraft(); if (v){ const i = ckSteps(S.ck.d).indexOf(v); if (i >= 0) S.ck.i = i; } if (bareOn()){ toSetup(); return true; } rerender(false); window.scrollTo(0, 0); return true;
     case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
       if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
@@ -4088,8 +4246,8 @@ function apiWeek(n){
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
   // BLD 894: the Week tab's Shopping List card reads the real list ("Week B · 42 items").
   const SL = U('food') ? shopList(fw) : null, sItems = SL ? arr(SL.items) : [];
-  return {hol: holCards(), ownWeek: ownWeekList(mon), shopWeek: letter(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
-    food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
+  return {hol: holCards(), ownWeek: ownWeekList(mon), shopWeek: fwl(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
+    food: U('food') ? 'Food Week ' + fwl(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + fwl(fw),
     shopImage: WAY('shop-wide'), prepImage: sp ? WAY('prep-together') : null, bulkImage: bt ? WAY(ITEM_ART.batch) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
     bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, bulkLabel: bt ? bt.title || 'Weekly Batch' : null, bulkSub: bt ? batchSub(bt) : null, days};
@@ -4674,6 +4832,9 @@ const CSS = `
 .tn-row .ic2{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--cs);color:var(--c);font-size:19px;}
 .tn-row .tx{flex:1;min-width:0;}.tn-row .tx b{display:block;font-weight:600;font-size:16px;}.tn-row .tx small{display:block;color:var(--ink-soft);font-size:13.5px;line-height:1.35;}
 .tn-set .dim{opacity:.55;}
+.tn-sdf{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 4px;}.tn-sdf input{font:inherit;font-size:16px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:inherit;min-width:0;max-width:100%;}
+.tn-kshare{display:grid;gap:10px;margin-top:10px;}.tn-kshare .hj-fld input{font-size:14px;width:100%;box-sizing:border-box;min-width:0;}
+.tn-qr{width:max-content;max-width:100%;margin:4px auto;background:#fff;border-radius:12px;padding:0;overflow:hidden;line-height:0;}.tn-qr svg{display:block;max-width:100%;height:auto;}
 /* kitchen and move */
 .tn-kgrid{display:grid;gap:14px;margin-bottom:14px;}
 @media (min-width:700px){.tn-kgrid{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -4917,7 +5078,7 @@ window.GGHealth = {
     if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
-    ['plan', 'team', 'kids', 'own', 'menu'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
+    ['plan', 'team', 'kids', 'own', 'menu', 'kitchen'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
   // BLD 881: act(key) with one item key (from today() or week()) opens or marks that item; act(action, value) is the engine's own.
@@ -4931,6 +5092,17 @@ window.GGHealth = {
   // BLD 915: the recommended weight (tests and other views): rec(step, bodyWeight?, adjustment?) gives {lb, each, line} or null.
   weights: {rec: (st, bw, adj) => recW(st, bw, adj), body: () => bodyW(), adj: () => wAdj()},
   // BLD 857: the honest estimate, for tests and for setting each session's minutes: seconds for a session id, phase '1' to '3', light week.
+  // BLD 921, the Family Kitchen: kitchenLink() shares (the link, also drawn as a QR code), kitchenInfo(code) {table, update} for
+  // the join prompt, kitchenJoin(code), kitchenLeave(), kitchen() what this profile holds, kitchenTonight(date) a kid's dinner line,
+  // qr(text) the QR code as SVG (after qrReady()), and starts() / setStart(kind, date) for the meal plan and the 12-week program.
+  kitchenLink: () => { try { return kitShare(); } catch(e){ return null; } }, kitchenInfo: c => { try { return kitInfo(c); } catch(e){ return null; } },
+  kitchenJoin: c => { try { return kitJoin(c); } catch(e){ return false; } }, kitchenLeave: () => kitLeave(),
+  kitchen: () => { const h = H(), k = h && h.kitchen; return k ? {joined: !!k.joined, id: k.id || '', start: ymd(kitStart()), table: kitTable(), shared: !!k.shared} : null; },
+  kitchenTonight: d => { try { return kitTonight(d); } catch(e){ return null; } },
+  kitchenOpen: () => { S.kshareGo = 1; },
+  qrReady: () => qrLoad(), qr: t => qrSvg(String(t || '')),
+  starts: () => H() ? {food: ymd(kitStart()), prog: progOn() ? ymd(progStart()) : null, start: ymd(startMon())} : null,
+  setStart: (kind, d) => apiSetStart(kind, d),
   planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }
 };
 // ---------- BLD 896, Holiday Sets ----------

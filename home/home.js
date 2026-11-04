@@ -50,7 +50,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b919', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b921', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b916';
   var IMG = '/shared/heroes/way/';
@@ -461,6 +461,7 @@
      ===================================================================== */
   function render() {
     var root = app(); if (!root) return;
+    if (KIN === undefined) readKitchen();
     if (DOOR === undefined) readDoor();
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
@@ -483,12 +484,14 @@
       if (S.view === 'watch') { root.innerHTML = kidWatchHtml(); paintNav('kidwatch'); fillLearn(); maybeTour(); return; }
       var kf = focusKey(); root.innerHTML = kidHtml(); paintNav('kid'); focusBack(kf); maybeTour();
       if (kck) openTreeSheet('checkin'); else if (kgu) openTool('guide');
+      kitSoon();
       return;
     }
     var wantPlan = location.hash === '#plan';
     if (wantPlan) { try { history.replaceState(null, '', location.pathname + '#today'); } catch (e) {} }
     renderApp(route());
     maybeTour();
+    kitSoon();
     // BLD 893: /home/#plan opens My Grounded Way Plan; an open plan redraws with anything new (a check-in).
     if (wantPlan) openPlan(); else if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); }
   }
@@ -994,7 +997,7 @@
         '<div class="hm-kcard" style="--c:#FF9F1C"><h2 class="hm-kh">Your ' + t.n + ' Is Growing</h2><div class="hm-kparts">' + parts + '</div>' + grow + '<p style="margin-top:10px;font-weight:500">' + esc(line) + '</p></div>' +
         '<div class="hm-kcard" style="--c:#9B5DE5"><div class="hm-kprac"><button type="button" class="ill" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + IMG + ART[lead] + '.webp" alt=""><span>' + I('play') + '</span></button><div><h3 class="hm-kh">Today: ' + esc(v[0]) + '</h3><p>' + esc(v[2]) + '</p></div></div>' +
           '<button class="hm-kbtn" type="button" style="margin-top:12px" data-hm="kiddid" aria-pressed="' + did + '">' + I('check') + (did ? 'You Did It!' : 'We Did It!') + '</button></div>' +
-        kidPracHtml() +
+        kidPracHtml() + kidKitchenHtml() +
         (did ? '<div class="hm-kcard hm-surprise" style="--c:#00B4D8"><svg viewBox="0 0 52 52" aria-hidden="true"><g class="bird"><ellipse cx="26" cy="30" rx="13" ry="10" fill="#00B4D8"/><circle cx="34" cy="22" r="7" fill="#00B4D8"/><circle cx="36" cy="21" r="1.6" fill="#2C1810"/><path d="M40 22l6 2-6 2z" fill="#FF9F1C"/><path d="M16 28c4-6 10-6 14-2-5 1-9 3-14 2z" fill="#0090B0"/></g><path d="M8 44h36" stroke="#8A5A36" stroke-width="4" stroke-linecap="round"/></svg><div><h3 class="hm-kh" style="font-size:20px">A visitor came to your tree!</h3><div style="font-size:15px;font-weight:500">A little bird stopped by because you tended your tree today.</div></div></div>' : '') +
         '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</button>' +
         '<button type="button" class="hm-khow" data-hm-tool="guide">' + I('people') + 'For Grown-ups</button>' +
@@ -1102,7 +1105,7 @@
     if (location.hash !== hash) location.hash = hash; else render();
     window.scrollTo(0, 0);
   }
-  window.addEventListener('hashchange', function () { if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { if (/^#kitchen=/.test(location.hash)) { readKitchen(); KIN_ASK = false; render(); return; } if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
 
   /* ---------- the shell: header, the tab's own page, the tab bar ---------- */
   function headingOf(tab) {
@@ -3728,6 +3731,57 @@
     roomGo(d.tree, d.q, d.hash);
   }
 
+  /* ---------- BLD 921: the Family Kitchen link (/home/#kitchen=<code>) ----------
+     Share Our Kitchen (field-guide/health.js, Tending settings) makes a link and a QR code. Opening it here reads the code from the
+     address hash (it never reaches a server), clears the hash, and asks once, in plain words, to join (or to update, when this
+     profile is already in that kitchen). With no profile open yet, the question waits until one is. Kid profiles can join too;
+     their Today shows Tonight's Dinner from the kitchen, with no Membership lines. */
+  var KIN, KIN_ASK = false;
+  function readKitchen() {
+    KIN = null;
+    var m = /^#kitchen=([A-Za-z0-9_-]{8,2000})/.exec(location.hash || '');
+    if (m) {
+      KIN = m[1];
+      try { sessionStorage.setItem('gg-kitchen-in', KIN); } catch (e) {}
+      try { history.replaceState(null, '', location.pathname + location.search + '#today'); } catch (e) {}
+    } else { try { KIN = sessionStorage.getItem('gg-kitchen-in') || null; } catch (e) { KIN = null; } }
+  }
+  function kitDone() { KIN = null; KIN_ASK = false; try { sessionStorage.removeItem('gg-kitchen-in'); } catch (e) {} }
+  function kitSoon() { if (KIN && !KIN_ASK && S.id && !(SU.open && SU.id === S.id) && !suPending()) { KIN_ASK = true; setTimeout(kitAsk, 60); } }
+  function kitAsk() {
+    var code = KIN; if (!code || !S.id) { KIN_ASK = false; return; }
+    loadTending().then(function () {
+      if (S.tendInit !== S.id) initTending();
+      var r = window.GGHealth && GGHealth.kitchenInfo ? GGHealth.kitchenInfo(code) : null;
+      if (!r) { kitDone(); toast('This Family Kitchen link needs a fresh copy. Ask for a new one.'); return; }
+      var title = r.update ? 'Update Our Kitchen?' : 'Join the Family Kitchen for a table of ' + r.table + '?';
+      var line = r.update ? 'Your menu will match theirs again, with their newest swaps and start date. Your own health and check-ins stay yours.' : 'Your menu will match theirs. Your own health and check-ins stay yours.';
+      mDialog(title, '<div class="hm-kitdlg"><p class="hm-sub">' + esc(line) + '</p>' +
+        '<div class="hm-acts"><button type="button" class="hm-btn" data-hm-kit="join">' + I('sprout') + (r.update ? 'Update' : 'Join') + '</button><button type="button" class="hm-btn line" data-hm-kit="not">Not Now</button></div></div>');
+    });
+  }
+  function kitJoin() {
+    var code = KIN; kitDone(); mClose();
+    if (!code || !window.GGHealth || !GGHealth.kitchenJoin) return;
+    var up = !!(GGHealth.kitchen && GGHealth.kitchen() && GGHealth.kitchen().joined);
+    if (GGHealth.kitchenJoin(code)) { saveHome().then(function () { toast(up ? 'Your kitchen is up to date. Your menu matches theirs.' : 'You joined the Family Kitchen. Your menu matches theirs.'); render(); }); }
+    else toast('This Family Kitchen link needs a fresh copy. Ask for a new one.');
+  }
+  function kidKitchenHtml() {
+    var w = S.id && window.GGP ? GGP.data(S.id, 'tending') : null, k = w && w.health && w.health.kitchen;
+    if (!k || !k.joined) return '';
+    if (!tendReady() || S.tendInit !== S.id) { if (!S.kidKitLoad) { S.kidKitLoad = 1; loadTending().then(function () { S.kidKitLoad = 0; if (S.id && isKid(S.p)) render(); }); } return ''; }
+    var t = hCall('kitchenTonight'); if (!t) return '';
+    return '<div class="hm-kcard hm-kkit" style="--c:#FF9F1C"><h2 class="hm-kh">Tonight\'s Dinner</h2><p class="hm-kline"><b>' + esc(t.name) + '</b>' + (t.mins ? ', about ' + esc(t.mins) + ' minutes' : '') + '</p><p class="hm-kline">From your Family Kitchen.</p><button type="button" class="hm-linkbtn" data-hm-kit="leave">Leave the Family Kitchen</button></div>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-kit]'); if (!t) return;
+    var a = t.getAttribute('data-hm-kit');
+    if (a === 'join') kitJoin();
+    else if (a === 'not') { kitDone(); mClose(); }
+    else if (a === 'leave') { if (!t.hasAttribute('data-sure')) { t.setAttribute('data-sure', '1'); t.textContent = 'Tap Again to Leave'; return; } if (window.GGHealth && GGHealth.kitchenLeave) { GGHealth.kitchenLeave(); saveHome().then(function () { toast('You left the Family Kitchen.'); render(); }); } }
+  });
+
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
   var MSHELVES = [
     { id: 'meditation', name: 'Grounded Meditation', line: 'Guided meditations for sleep, worry, grief, focus, and more.', art: IMG + 'quiet-meditation.webp', cls: 'hm-sh-quiet' },
@@ -3756,11 +3810,45 @@
     var L = mItems(id), groups = {}, trad = {}, md = obj(homeRec().mdone);
     // Programs by tradition wait in their own list, opened and chosen by the person; never suggested or preselected.
     L.forEach(function (x) { var g = x.need || 'More', box = x.tradition ? trad : groups; (box[g] = box[g] || []).push(x); });
-    var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3><ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (x.mins ? 'About ' + esc(x.mins) + ' minutes' : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
+    var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3>' + pstartRow(id, g, md) + '<ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (x.mins ? 'About ' + esc(x.mins) + ' minutes' : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
     var body = (id === 'relationships' && L.length ? hhPickHtml() : '') + (L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad"><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
       : '<p class="hm-sub">' + esc(s.name) + ' fills in here as soon as the Member library opens on this device.</p>');
     mDialog(s.name, body);
   }
+  /* BLD 921 (Chris: "Important for workouts and other programs too"): each Spirit, Relationships, and Seasons program a Member
+     has started shows one plain Start date row with Change. A program starts on the day its first session is finished (from
+     home.mdone); a changed date saves in home.pstart {'<section>|<program id>': 'YYYY-MM-DD'}, snapped to its Monday (a monthly
+     program, like A Grief Year, keeps the day). Only the weeks ahead move; every finished session stays finished. */
+  function progOfTitle(sec, title) { var x = mSection(sec), P = x && !Array.isArray(x) ? arr(x.programs) : []; return P.filter(function (p) { return p && (p.title === title || p.id === title); })[0] || null; }
+  function progStartOf(sec, p, md) {
+    var ps = obj(homeRec().pstart), key = sec + '|' + p.id; if (parse(ps[key])) return ps[key];
+    var first = ''; arr(p.items || p.sessions).forEach(function (it) { var d = it && md[sec + '|' + it.id]; if (parse(d) && (!first || d < first)) first = d; });
+    return first;
+  }
+  function monOfStr(s) { var d = parse(s); if (!d) return ''; d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return ymd(d); }
+  function pstartRow(sec, title, md) {
+    var p = progOfTitle(sec, title); if (!p) return '';
+    var st = progStartOf(sec, p, md); if (!st) return '';
+    var key = sec + '|' + p.id, n = Math.max(0, between(st, today())), at = p.monthly ? 'Month ' + (Math.floor(n / 30.44) + 1) : 'Week ' + (Math.floor(n / 7) + 1);
+    if (between(st, today()) < 0) at = 'Starts then';
+    return '<div class="hm-pstart" data-hm-pkey="' + esc(key) + '"><span>Start date: ' + esc(niceDay(st)) + ' · ' + esc(at) + '</span><button type="button" class="hm-btn sm line" data-hm-pst="' + esc(key) + '">Change</button></div>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-pst],[data-hm-psts],[data-hm-pstc]'); if (!t) return;
+    var key = t.getAttribute('data-hm-pst') || t.getAttribute('data-hm-psts') || t.getAttribute('data-hm-pstc'), sec = key.split('|')[0];
+    var row = document.querySelector('.hm-pstart[data-hm-pkey="' + key + '"]'); if (!row) return;
+    if (t.hasAttribute('data-hm-pst')) {
+      var p = progOfTitle(sec, key.slice(sec.length + 1)), cur = p ? progStartOf(sec, p, obj(homeRec().mdone)) : today();
+      row.innerHTML = '<label class="hm-pstf"><span>Start date</span><input type="date" id="hm-pst-in" value="' + esc(cur) + '"></label><button type="button" class="hm-btn sm" data-hm-psts="' + esc(key) + '">Save</button><button type="button" class="hm-btn sm line" data-hm-pstc="' + esc(key) + '">Cancel</button><small>' + (p && p.monthly ? 'Months count from the day you choose.' : 'Weeks count from the Monday of the day you choose.') + ' Every finished session stays finished.</small>';
+      var inp = document.getElementById('hm-pst-in'); if (inp) inp.focus(); return;
+    }
+    if (t.hasAttribute('data-hm-psts')) {
+      var v = (document.getElementById('hm-pst-in') || {}).value || '', pr = progOfTitle(sec, key.slice(sec.length + 1)); if (!parse(v)) { toast('Choose a date.'); return; }
+      var h = homeRec(); h.pstart = obj(h.pstart); h.pstart[key] = pr && pr.monthly ? v.slice(0, 10) : monOfStr(v);
+      saveHome().then(function () { toast('Saved. The weeks ahead follow your new start date.'); openMShelf(sec); }); return;
+    }
+    openMShelf(sec);
+  });
   function mDialog(title, body) {
     if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null;
     var old = document.getElementById('hm-mdlg'); if (old) old.remove();
