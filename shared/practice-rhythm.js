@@ -6,6 +6,7 @@
      x     with 'f' only: times per week (2 to 5)
      min   typical minutes for one time (0: no set time, like a whole rest day or a sober week)
      how   two to five short steps, shown in place on the card
+     vid   (BLD 914) the practice's own Get Grounded Now video id; How on Home's Today card plays it
    Keys are the names the Growth Plan saves (tend.plan and tend.days 'part|Name'): Oak, Birch,
    Sequoia, and Pine use the practice's own name (Plain wording only changes what is shown);
    Maple and Aspen save the shown words, so their Plain names are keys too. Willow has no Growth
@@ -75,6 +76,9 @@ window.GG_RHYTHM = {
     "bark|Slow, Low, and Long": {"r": "d", "min": 3, "how": ["Breathe in through your nose for four, and let your belly rise.", "Breathe out for six.", "Do ten breaths, then name what you feel in one word."]},
     "bark|Write It Out": {"r": "d", "min": 10, "how": ["Set a timer for ten minutes.", "Start with: Today I feel.", "Keep writing, honest and unedited.", "Close with: What I need right now is."]},
     "bark|Let the Good Sink In": {"r": "d", "min": 2, "how": ["Notice one good moment today: a clear morning, a kind word, a laugh.", "Stay with it for ten to twenty seconds.", "Feel it in your body."]},
+    "bark|Mindful Meal": {"r": "d", "min": 5, "how": ["At one meal today, set your phone aside.", "Take one easy breath before the first bite.", "Give the first few bites your full attention: color, smell, texture, taste.", "Let a little thanks rise for the food and the hands that made it."], "vid": "gg-mm-meal-now"},
+    "bark|Present Drive": {"r": "d", "min": 2, "how": ["Before you drive, while parked, take one easy breath with your eyes open.", "Choose one word for the drive, like calm or patient.", "At each stop, eyes on the road: soften your grip and take one easy breath.", "Watch the video before you go, or listen while parked."], "vid": "gg-mm-drive-now"},
+    "bark|Mindful Walk": {"r": "d", "min": 10, "how": ["Choose a safe, easy place to walk, inside or out.", "Walk a little slower than usual, and feel each step: heel, roll, toes.", "Breathe in for three steps and out for four.", "Notice one thing you see, one you hear, and one you feel."], "vid": "gg-mm-walk-now"},
     "leaves|Breathe": {"r": "d", "min": 2, "how": ["Sit comfortably.", "Breathe in gently through your nose.", "Let the breath out slowly, a little longer than the breath in.", "Do it five times."]},
     "leaves|Food": {"r": "d", "min": 20, "how": ["Eat one meal sitting down, with the screen away.", "Notice the taste and texture.", "Add one fruit or vegetable to one meal."]},
     "leaves|Sleep": {"r": "d", "min": 30, "how": ["Protect eight hours: choose a bedtime that gives you that.", "Keep your bedroom for sleep: unplugged, with an early last meal.", "Start winding down thirty minutes before: lights low, screens away, something calm to read."]},
@@ -122,7 +126,8 @@ window.GG_RHYTHM = {
     "branches|Say What You Need": {"r": "w", "min": 5, "how": ["Choose one place you go this week.", "Finish this sentence: It helps me when you...", "Say it, show it, or send it."]},
     "branches|A Break for the Helper": {"r": "w", "min": 60, "how": ["Name one hour this week for a real break.", "Name one person who could cover.", "Ask them today."]},
     "branches|One True Sentence": {"r": "n", "min": 10, "how": ["Write one honest sentence about what you are carrying.", "Choose one safe person.", "Choose a calm, private time, and say it."]},
-    "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]}
+    "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]},
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "birch": {
     "roots|Prayer": {"r": "d", "min": 5, "how": ["Find two quiet minutes.", "Say or write what you're thankful for.", "Say what you're carrying, and what you need.", "Those three lines are a whole prayer."]},
@@ -193,6 +198,9 @@ window.GG_RHYTHM = {
     "bark|Slow, Low, and Long": {"r": "d", "min": 3, "how": ["Breathe in through your nose for four, and let your belly rise.", "Breathe out for six.", "Do ten breaths, then name what you feel in one word."]},
     "bark|Write It Out": {"r": "d", "min": 10, "how": ["Set a timer for ten minutes.", "Start with: Today I feel.", "Keep writing, honest and unedited.", "Close with: What I need right now is."]},
     "bark|Let the Good Sink In": {"r": "d", "min": 2, "how": ["Notice one good moment today: a clear morning, a kind word, a laugh.", "Stay with it for ten to twenty seconds.", "Feel it in your body."]},
+    "bark|Mindful Meal": {"r": "d", "min": 5, "how": ["At one meal today, set your phone aside.", "Take one easy breath before the first bite.", "Give the first few bites your full attention: color, smell, texture, taste.", "Let a little thanks rise for the food and the hands that made it."], "vid": "gg-mm-meal-now"},
+    "bark|Present Drive": {"r": "d", "min": 2, "how": ["Before you drive, while parked, take one easy breath with your eyes open.", "Choose one word for the drive, like calm or patient.", "At each stop, eyes on the road: soften your grip and take one easy breath.", "Watch the video before you go, or listen while parked."], "vid": "gg-mm-drive-now"},
+    "bark|Mindful Walk": {"r": "d", "min": 10, "how": ["Choose a safe, easy place to walk, inside or out.", "Walk a little slower than usual, and feel each step: heel, roll, toes.", "Breathe in for three steps and out for four.", "Notice one thing you see, one you hear, and one you feel."], "vid": "gg-mm-walk-now"},
     "leaves|Movement": {"r": "d", "min": 20, "how": ["Choose a way to move that fits your body today: a walk, lifting, a class, dancing, biking.", "Move for ten to twenty minutes or more.", "Notice your feet, your breath, and what you see."]},
     "leaves|Sleep": {"r": "d", "min": 30, "how": ["Count back seven to nine hours from your wake time. That's your bedtime tonight.", "Start winding down thirty minutes before: lights low, screens away.", "Charge the phone away from the bed."]},
     "leaves|Food": {"r": "d", "min": 20, "how": ["Eat something within a couple of hours of waking: toast with peanut butter, yogurt, fruit, eggs.", "Eat regular, nourishing meals through the day.", "Eat enough to fuel your day."]},
@@ -241,7 +249,8 @@ window.GG_RHYTHM = {
     "branches|Say What You Need": {"r": "w", "min": 5, "how": ["Choose one place you go this week.", "Finish this sentence: It helps me when you...", "Say it, show it, or send it."]},
     "branches|A Break for the Helper": {"r": "w", "min": 60, "how": ["Name one hour this week for a real break.", "Name one person who could cover.", "Ask them today."]},
     "branches|One True Sentence": {"r": "n", "min": 10, "how": ["Write one honest sentence about what you are carrying.", "Choose one safe person.", "Choose a calm, private time, and say it."]},
-    "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]}
+    "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]},
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "sequoia": {
     "roots|Prayer": {"r": "d", "min": 5, "how": ["Find two quiet minutes.", "Say or write what you're thankful for.", "Say what you're carrying, and what you need.", "Those three lines are a whole prayer."]},
@@ -314,6 +323,9 @@ window.GG_RHYTHM = {
     "bark|Slow, Low, and Long": {"r": "d", "min": 3, "how": ["Breathe in through your nose for four, and let your belly rise.", "Breathe out for six.", "Do ten breaths, then name what you feel in one word."]},
     "bark|Write It Out": {"r": "d", "min": 10, "how": ["Set a timer for ten minutes.", "Start with: Today I feel.", "Keep writing, honest and unedited.", "Close with: What I need right now is."]},
     "bark|Let the Good Sink In": {"r": "d", "min": 2, "how": ["Notice one good moment today: a clear morning, a kind word, a laugh.", "Stay with it for ten to twenty seconds.", "Feel it in your body."]},
+    "bark|Mindful Meal": {"r": "d", "min": 5, "how": ["At one meal today, set your phone aside.", "Take one easy breath before the first bite.", "Give the first few bites your full attention: color, smell, texture, taste.", "Let a little thanks rise for the food and the hands that made it."], "vid": "gg-mm-meal-now"},
+    "bark|Present Drive": {"r": "d", "min": 2, "how": ["Before you drive, while parked, take one easy breath with your eyes open.", "Choose one word for the drive, like calm or patient.", "At each stop, eyes on the road: soften your grip and take one easy breath.", "Watch the video before you go, or listen while parked."], "vid": "gg-mm-drive-now"},
+    "bark|Mindful Walk": {"r": "d", "min": 10, "how": ["Choose a safe, easy place to walk, inside or out.", "Walk a little slower than usual, and feel each step: heel, roll, toes.", "Breathe in for three steps and out for four.", "Notice one thing you see, one you hear, and one you feel."], "vid": "gg-mm-walk-now"},
     "leaves|Breathe": {"r": "d", "min": 2, "how": ["Sit comfortably.", "Breathe in gently through your nose.", "Let the breath out slowly, a little longer than the breath in.", "Do it five times."]},
     "leaves|Food": {"r": "d", "min": 20, "how": ["Eat three meals today.", "Give each one something from at least three food groups.", "Drink water with each meal."]},
     "leaves|Sleep": {"r": "d", "min": 30, "how": ["Count back seven to nine hours from your wake time. That's your bedtime tonight.", "Start winding down thirty minutes before: lights low, screens away.", "Charge the phone away from the bed."]},
@@ -383,7 +395,8 @@ window.GG_RHYTHM = {
     "branches|Make Your Wishes Known": {"r": "n", "min": 30, "how": ["Ask yourself: what matters most to me if I become seriously ill?", "Write one sentence.", "Share it with someone you trust."]},
     "branches|Say What You Need": {"r": "w", "min": 5, "how": ["Choose one place you go this week.", "Finish this sentence: It helps me when you...", "Say it, show it, or send it."]},
     "branches|One True Sentence": {"r": "n", "min": 10, "how": ["Write one honest sentence about what you are carrying.", "Choose one safe person.", "Choose a calm, private time, and say it."]},
-    "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]}
+    "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]},
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "pine": {
     "roots|Prayer": {"r": "d", "min": 5, "how": ["Find two quiet minutes.", "Say or write what you're thankful for.", "Say what you're carrying, and what you need.", "Those three lines are a whole prayer."]},
@@ -446,6 +459,9 @@ window.GG_RHYTHM = {
     "bark|Celebrate a Win": {"r": "w", "min": 5, "how": ["Name one thing you did well this week: a hard conversation, a bill paid, getting up when it was hard.", "Mark it: tell someone, or write it down."]},
     "bark|Feel It, Name It, Move It": {"r": "d", "min": 5, "how": ["When a big feeling comes, find where it sits in your body.", "Name it in one word.", "Help it move: a walk, three slow breaths, a few lines in your notes, or a talk with someone you trust."]},
     "bark|Ride the Wave": {"r": "d", "min": 5, "how": ["When an urge hits, say: an urge is here.", "Find where you feel it.", "Breathe slowly into that spot and watch it rise and fall.", "Then move, text a friend, or change the place you are in."]},
+    "bark|Mindful Meal": {"r": "d", "min": 5, "how": ["At one meal today, set your phone aside.", "Take one easy breath before the first bite.", "Give the first few bites your full attention: color, smell, texture, taste.", "Let a little thanks rise for the food and the hands that made it."], "vid": "gg-mm-meal-now"},
+    "bark|Present Drive": {"r": "d", "min": 2, "how": ["Before you drive, while parked, take one easy breath with your eyes open.", "Choose one word for the drive, like calm or patient.", "At each stop, eyes on the road: soften your grip and take one easy breath.", "Watch the video before you go, or listen while parked."], "vid": "gg-mm-drive-now"},
+    "bark|Mindful Walk": {"r": "d", "min": 10, "how": ["Choose a safe, easy place to walk, inside or out.", "Walk a little slower than usual, and feel each step: heel, roll, toes.", "Breathe in for three steps and out for four.", "Notice one thing you see, one you hear, and one you feel."], "vid": "gg-mm-walk-now"},
     "leaves|Movement": {"r": "d", "min": 20, "how": ["Choose a way to move you enjoy: a sport, a walk, lifting, dance, biking.", "Move for twenty minutes today.", "Notice how you feel after."]},
     "leaves|Sleep": {"r": "d", "min": 30, "how": ["Count back eight to ten hours from your wake time. That's your bedtime tonight.", "Start winding down thirty minutes before: lights low, screens away.", "Charge your phone outside your room."]},
     "leaves|Food": {"r": "d", "min": 20, "how": ["Eat breakfast, even something small: toast with peanut butter, yogurt, fruit, eggs.", "Eat regular meals through the day.", "Eat enough to fuel your day."]},
@@ -485,7 +501,8 @@ window.GG_RHYTHM = {
     "branches|Pay It Forward": {"r": "d", "min": 5, "how": ["Do one small kindness today: a note, a compliment, help carrying something, a call to someone who lives alone.", "Give it as a gift, just because."]},
     "branches|Be Generous": {"r": "w", "min": 15, "how": ["Choose one thing to give: your time, a listening ear, a skill, or something you made.", "Give it to someone who needs it.", "Give before you feel ready."]},
     "branches|Inspire Hope": {"r": "w", "min": 15, "how": ["Think of one hard time you got through.", "Write what helped.", "Tell someone younger what helped."]},
-    "branches|Tell a Safe Adult": {"r": "n", "min": 10, "how": ["Choose one safe adult: a parent, a school counselor, a nurse, a coach, or a doctor.", "Say: I need to talk to you about something important.", "Then say one true sentence."]}
+    "branches|Tell a Safe Adult": {"r": "n", "min": 10, "how": ["Choose one safe adult: a parent, a school counselor, a nurse, a coach, or a doctor.", "Say: I need to talk to you about something important.", "Then say one true sentence."]},
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "willow": {
     "roots|Your Prayer, Your Way": {"r": "d", "min": 5, "how": ["Choose a prayer you've always known, or have someone read one.", "Pray it slowly, in your own way.", "Silence counts too."]},

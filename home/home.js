@@ -48,9 +48,9 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b911b', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b915', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b913';
+  var GGN_SRC = '/shared/ggn.js?v=b914b';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -382,7 +382,7 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b907', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b907', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b907', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b907', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=b914a', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b914a', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b914a', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b914a', 'PINE_PRACTICES'] };
   var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
@@ -1125,7 +1125,8 @@
       var steps = arr(ri.how).filter(function (z) { return typeof z === 'string' && z.trim(); });
       var dToday = practiceDone(t, it.pid), dw = r === 'w' || r === 'f' ? doneThisWeek(t, it.pid) : '', cnt = r === 'f' ? weekCount(t, it.pid) : 0, full = r === 'w' ? !!dw : r === 'f' ? cnt >= rf.x : dToday;
       return { key: 'p:' + it.pid, pid: it.pid, part: lp, mpart: it.part, src: 'plan', hour: sl[0], when: sl[1] + ' · ' + plabel(lp, plain), title: title, sub: sub, btn: 'How', tint: it.part, done: full, pressed: full || dToday, x: rf.x, cnt: cnt, image: practiceArt(it.part, it.name),
-        r: r, steps: steps, howTxt: steps.length ? '' : (plain && pi.pl ? pi.pl : pi.today || line), min: num(ri.min) || pi.min || null, doneToday: dToday, doneWeek: dw, last: lastDone(t, it.pid), kid: !!kid };
+        r: r, steps: steps, howTxt: steps.length ? '' : (plain && pi.pl ? pi.pl : pi.today || line), min: num(ri.min) || pi.min || null, doneToday: dToday, doneWeek: dw, last: lastDone(t, it.pid), kid: !!kid,
+        vid: typeof ri.vid === 'string' && /^gg-[a-z0-9-]+$/.test(ri.vid) ? ri.vid : '' };
     });
     // BLD 908: Start keeps one practice a day for each of the four; Membership opens the full plan.
     return tierPlan(items, kid);
@@ -1296,12 +1297,14 @@
     var lb = x.r === 'w' ? (x.done ? 'Done this week' : 'Done for this week') : x.r === 'f' ? (x.done ? 'Done this week' : x.doneToday ? 'Done today' : 'Done') : 'Done';
     return '<button class="hm-ck" type="button" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" data-hm-hdone="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(lb) + '</span></button>';
   }
-  /* How, right on the card: the steps (or the practice's own words), about how long, and Done. */
+  /* How, right on the card: the steps (or the practice's own words), about how long, and Done. BLD 914: a practice with its
+     own Get Grounded Now video (practice-rhythm.js vid, the Mindful Moments) adds Watch the Video, played in Home's own window. */
+  function howVid(x) { return x.vid ? '<button type="button" class="hm-btn sm hm-pill" data-hm-play="' + esc(x.vid) + '" aria-label="Watch the video: ' + esc(x.title) + '">' + I('play') + 'Watch the Video</button>' : ''; }
   function howPanel(x) {
     var body = x.steps && x.steps.length ? '<ol class="hm-howl">' + x.steps.map(function (z) { return '<li>' + esc(z) + '</li>'; }).join('') + '</ol>'
       : '<p class="hm-howp">' + esc(x.howTxt || (x.kid ? 'Try it with your grown-up, your own way. Tap the circle when you do it.' : x.sub || 'Do it your own way, a few quiet minutes at a time.')) + '</p>';
     return '<div class="hm-how" id="' + hid(x.key) + '" role="region" aria-label="How to do ' + esc(x.title) + '"><div class="hm-how-in"><div class="hm-how-box">' +
-      '<div class="hm-how-hd"><span class="hm-how-k">' + (x.kid ? 'How to do it' : 'How') + '</span>' + minsLine(x.min) + '</div>' + body + '<div class="hm-how-ft">' + hDoneBtn(x) + '</div></div></div></div>';
+      '<div class="hm-how-hd"><span class="hm-how-k">' + (x.kid ? 'How to do it' : 'How') + '</span>' + minsLine(x.min) + '</div>' + body + '<div class="hm-how-ft"' + (x.vid ? ' style="gap:10px;flex-wrap:wrap"' : '') + '>' + howVid(x) + hDoneBtn(x) + '</div></div></div></div>';
   }
   function howBtn(x, cls) { var open = !!S.how[x.key]; return '<button type="button" class="' + (cls || 'hm-btn sm hm-pill hm-howbtn') + '" data-hm-how="' + esc(x.key) + '" aria-expanded="' + open + '" aria-controls="' + hid(x.key) + '">' + I('book') + 'How</button>'; }
   function rchipHtml(x) { var L = x.kid ? KRH : RH, open = S.rmenu === x.key; return '<button type="button" class="hm-rchip" data-hm-rchip="' + esc(x.key) + '" aria-expanded="' + open + '" aria-controls="' + hid(x.key) + '-r" aria-label="' + esc(L[x.r]) + '. Change how often">' + esc(L[x.r]) + I('down') + '</button>'; }
@@ -2368,8 +2371,11 @@
         var name = Array.isArray(r) ? r[0] : r && (r.name || r.n), pid = part + '|' + name;
         if (!name || seen[name] || WP_SKIP.test(name) || PRAC_SKIP.test(name) || arr(obj(obj(P.FLAGS)[pid]).life).indexOf('sober') >= 0) return; seen[name] = 1;
         var f = wpFill(pid, d, ses), r0 = wpRhythm(pid, tree);
-        list.push({ pid: pid, part: part, n: name, fill: f ? f.label : '', why: plabel(part) + ' ' + (ed.edges.indexOf(part) >= 0 ? 'Growing Edge' : 'Steady') + (r0 !== 'd' ? ' · ' + RW[r0] : ''), i: i, rank: (f ? 0 : 2) + (r0 === 'n' ? 1 : 0) });
+        var vd = obj(rhythmInfo(tree, pid)).vid;
+        list.push({ pid: pid, part: part, n: name, fill: f ? f.label : '', vid: typeof vd === 'string' ? vd : '', why: plabel(part) + ' ' + (ed.edges.indexOf(part) >= 0 ? 'Growing Edge' : 'Steady') + (r0 !== 'd' ? ' · ' + RW[r0] : ''), i: i, rank: (f ? 0 : 2) + (r0 === 'n' ? 1 : 0) });
       });
+      // BLD 914: one Mindful Moment for the part (a practice with its own guided video) joins the first few offered.
+      var mm = list.filter(function (x) { return x.vid && !x.fill; })[0]; if (mm) mm.rank = 1;
       // A mix: up to two the plan already fills, then ones with a card of their own (daily and weekly before now and then).
       var n = parts.length > 1 ? 3 : 6, filled = list.filter(function (x) { return x.fill; }).slice(0, Math.min(2, n - 1)), own = list.filter(function (x) { return !x.fill; }).sort(function (a, b) { return a.rank - b.rank || a.i - b.i; });
       out = out.concat(filled.concat(own).slice(0, n).concat(list.filter(function (x) { return x.fill && filled.indexOf(x) < 0; })).slice(0, n));
@@ -2523,7 +2529,7 @@
       b = wpK('Practices · for your Growing Edges', 'leaves') + wpH('A few to tend');
       if (!sug.length) b += '<p class="hm-wp-lead">' + (lastCheckin(S.id, d.lead) ? 'Your ' + esc(t.n) + ' practices are a tap away in your growth plan, anytime.' : 'Your first check-in brings suggestions for your Growing Edges. Every practice in your ' + esc(t.n) + ' stays a tap away in your growth plan.') + '</p>';
       else b += '<p class="hm-wp-lead">Pick up to three. Some are already part of your plan, so they count without adding a thing.</p><div class="hm-wp-list">' + sug.map(function (x) {
-        return '<button type="button" class="hm-wp-tile" data-hm-wp="pr:' + esc(x.pid) + '" aria-pressed="' + !!d.prac[x.pid] + '" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)"><b>' + esc(x.n) + '</b><small>' + esc(x.why) + '</small>' + (x.fill ? '<span class="covered">' + esc(x.fill) + '</span>' : '') + (inPlan[x.pid] ? '<span class="inplan">In your growth plan</span>' : '') + '</button>';
+        return '<button type="button" class="hm-wp-tile" data-hm-wp="pr:' + esc(x.pid) + '" aria-pressed="' + !!d.prac[x.pid] + '" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)"><b>' + esc(x.n) + '</b><small>' + esc(x.why) + '</small>' + (x.fill ? '<span class="covered">' + esc(x.fill) + '</span>' : '') + (x.vid && !x.fill ? '<span class="covered">With a guided video</span>' : '') + (inPlan[x.pid] ? '<span class="inplan">In your growth plan</span>' : '') + '</button>';
       }).join('') + '</div><p class="hm-wp-lead sm">' + picks + ' of 3 chosen. Every practice in your tree stays a tap away.</p>';
       f = wpBtn('next', 'Next');
     } else if (i === 7) {
@@ -3107,7 +3113,7 @@
   var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
-  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b912', sequoia: '/shared/checkin/sequoia.js?v=b912', birch: '/shared/checkin/birch.js?v=b912', pine: '/shared/checkin/pine.js?v=b912', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
+  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b914a', sequoia: '/shared/checkin/sequoia.js?v=b914a', birch: '/shared/checkin/birch.js?v=b914a', pine: '/shared/checkin/pine.js?v=b914a', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
   var NOPLAN = {};
   var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
   var CK_WAIT = 0;   // when a check-in was asked for and is still loading (the tour waits for it)
@@ -3331,7 +3337,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b912', helper: '/shared/home/helper.js?v=b912' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b914a', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
