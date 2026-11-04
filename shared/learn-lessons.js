@@ -6997,7 +6997,7 @@ window.GG_LEARN = {
          "Guides for the hard talks"
         ]
        ],
-       "say": "Further down the Grown-ups tab, Why each part matters shares the research behind each part, with links to read more. Stories from Grounded has real stories from Chris, the hospice chaplain behind Grow With Grounded. And When Life Changes opens guides for talking with a middle schooler about hard things."
+       "say": "Further down the Grown-ups tab, Why each part matters shares the research behind each part, with links to read more. Stories from Grounded has real stories from Chris, the chaplain behind Grow With Grounded. And When Life Changes opens guides for talking with a middle schooler about hard things."
       },
       {
        "k": "big",

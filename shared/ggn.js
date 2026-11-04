@@ -14,8 +14,8 @@
 (function () {
   'use strict';
   if (window.GGNow) return;
-  var V = 'b911r';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b911r', DATA = '/shared/ggn-videos.js?v=b911r', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var V = 'b913';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b913', DATA = '/shared/ggn-videos.js?v=b911r', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
