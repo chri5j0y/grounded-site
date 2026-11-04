@@ -3768,15 +3768,15 @@
 
   /* Grow: the tree's own tools as painted cards (Week, Season and Rings, and each tree's special book), all in this app. */
   var SPECIAL = { pine: ['next', 'Next Steps', 'After high school: college, work, service, and the life you are growing toward.', HERO + 'page-growth-narrow.webp'], birch: ['ground', 'Groundwork', 'Money, home, work, and the everyday skills of a grown-up life.', IMG + 'balance-lawn.webp'], sequoia: ['legacy', 'Legacy Book', 'Your stories, your wisdom, and the words you want to pass on.', IMG + 'library-learn.webp'] };
-  function gtool(cls, img, ey, title, line, attr, btn) {
-    return '<article class="hm-card edge lift ' + cls + ' hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + img + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3><p class="hm-sub">' + esc(line) + '</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" ' + attr + '>' + btn + '</button></div></div></div></article>';
+  function gtool(cls, img, ey, title, line, attr, btn, more) {
+    return '<article class="hm-card edge lift ' + cls + ' hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + img + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3><p class="hm-sub">' + esc(line) + '</p><div class="hm-acts tight' + (more ? ' hm-wkjump' : '') + '"><button type="button" class="hm-btn sm hm-pill" ' + attr + '>' + btn + '</button>' + (more || '') + '</div></div></div></article>';
   }
   function growToolsHtml() {
     var t = TREES[S.tree] || TREES.oak, sp = SPECIAL[S.tree];
     return gtool('hm-p-leaves', treeArt(S.tree), 'My ' + t.n, 'Your ' + t.n + ' Grows With You', 'Your check-ins, practices, lessons, and guides are chosen for your ' + t.n + ', ' + String(t.who).toLowerCase() + '.', 'data-hm-tab="checkin"', I('check') + 'Check-in') +
-      gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day, with the Shopping List, Sunday Together Prep, and the month.', 'data-hm-tab="week"', I('clock') + 'Open') +
-      // Chris (November 3, 2026): "where is our shopping list? The month and week stuff.. I need the Sunday prep": one tap to each.
-      '<div class="hm-acts tight hm-wkjump"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="week=shop">' + I('cart') + 'Shopping List</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=prep">' + I('sprout') + 'Sunday Prep</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week">' + I('calendar') + 'Week and Month</button></div>' +
+      // Chris (November 3, 2026): "where is our shopping list? The month and week stuff.. I need the Sunday prep", then "maybe they sit inside the Your Week card".
+      gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day, with the Shopping List, Sunday Together Prep, and the month.', 'data-hm-tab="week"', I('grid') + 'Week and Month',
+        '<button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=shop">' + I('cart') + 'Shopping List</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=prep">' + I('sprout') + 'Sunday Prep</button>') +
       seasonCardHtml() +
       (sp ? gtool('hm-p-fruit', sp[3], 'My ' + t.n, sp[1], sp[2], 'data-hm-tool="' + sp[0] + '"', I('book') + 'Open') : '') +
       '<div class="hm-acts tight hm-tset"><button type="button" class="hm-btn sm line hm-pill" data-hm-tool="settings">' + I('gear') + 'Tree Settings</button></div>';
