@@ -1604,7 +1604,7 @@ const W_SHARE = [
   [/swing/i, .14, 1], [/squat to press|thruster/i, .07, 2], [/push press/i, .09, 2], [/goblet/i, .17, 1],
   [/(lateral|front|y.?t|rear|delt|scaption)\b.*raise|reverse fly|\bfly\b/i, .03, 2, 1],
   [/one.?arm.*press|half.?kneeling.*press|single.?arm.*press/i, .1, 1], [/incline.*press/i, .12, 2], [/(bench|floor|chest) press/i, .13, 2],
-  [/(shoulder|overhead|arnold|seated) press|\bpress\b/i, .08, 2], [/triceps|skull/i, .1, 1], [/curl/i, .08, 2],
+  [/(shoulder|overhead|arnold|seated) press|\bpress\b/i, .08, 2], [/triceps|skull/i, .1, 1], [/curl/i, .1, 2],
   [/chest.?supported|bent.?over|renegade|reverse grip row|two.?arm row/i, .1, 2], [/row/i, .15, 1],
   [/single.?leg.*deadlift|one.?leg.*deadlift/i, .12, 1], [/deadlift|\brdl\b/i, .13, 2], [/hip thrust|glute bridge/i, .2, 1],
   [/farmer|front rack/i, .17, 2], [/suitcase|carry|march/i, .2, 1], [/split squat|lunge|step.?up/i, .08, 2], [/calf|heel raise/i, .1, 2],
@@ -1614,7 +1614,7 @@ const snapDB = v => DB_STEPS.reduce((b, x) => Math.abs(x - v) < Math.abs(b - v) 
 function bodyW(){ const h = H(); if (!h || TEEN()) return 0; const b = +h.set.bw; if (b > 0) return b;
   const m = marks().filter(x => +x.weight > 0); return m.length ? +m[m.length - 1].weight : 0; }
 const wAdj = () => { const a = +((H() || {}).set || {}).wadj || 0; return W_ADJ.includes(a) ? a : 0; };
-const recOK = st => loaded(st) && !/^\s*(your )?body ?weight/i.test(st.load || '');
+const recOK = st => !!st && st.t === 'ex' && st.kind !== 'time' && (loaded(st) || /\b(a|light|heavier|one) pair\b/i.test(st.load || '')) && !/^\s*(your )?body ?weight/i.test(st.load || '');
 // {lb, each, line} or null: the recommended weight for a move, with the adjustment applied.
 function recW(st, bw, adj){ if (!st || st.t !== 'ex' || !recOK(st)) return null; bw = bw == null ? bodyW() : bw; if (!(bw > 0)) return null;
   const nm = st.name + ' ' + (st.how || ''), row = W_SHARE.find(r => r[0].test(st.name)) || W_SHARE.find(r => r[0].test(nm)) || [null, .07, 2];
@@ -1729,13 +1729,13 @@ function vAuto(o, top){
   if (pl && br && fex && fex.breath) phases = pl.phases;
   else if (ringNow && (st.t === 'ex' || (o.rep && +st.tempo > 0))){ const t = tempoOf(st); if (pl && t >= 2) phases = pl.phases; else if (pl) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = repBreath(st); }
   if (pl && (!o.clk || (o.clk.key !== clkKey(o) && !o.clk.beat))) clkOn(o);
-  const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
+  const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
   const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
   const sop = Object.assign({fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep && cntOf ? (st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : '') : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? (st.arm ? ' · Left arm' : ' · Left side') : o.side === 'R' ? (st.arm ? ' · Right arm' : ' · Right side') : '';
-  const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
+  const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (st.fin && st.sets === 1 ? 'Finish strong' : o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
   let detail;
   if (o.between) detail = `${arr(st.tips).length ? `<ul class="hj-tips">${st.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : `<p class="hj-how">${esc(st.how || '')}</p>`}${weightBox(st)}`;
   else if (o.rest) detail = `${o.mcoach ? modsBlock(st, ['easier', 'harder']) : `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>`}${weightBox(st)}`;
