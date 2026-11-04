@@ -9,7 +9,7 @@
    videos already in the apps. For Kids (the #kids address, used by Maple and Aspen) shows the kids' versions.
    Videos play in shared/gg-learn.js with recorded Brian or Jenny clips (the viewer's choice, shown as Male Voice and Female Voice).
    Mindful Moments (BLD 914): a wide door under the four that opens its own list: Mindful Meal, Present Drive, Mindful Walk,
-   and Deep Listening (kids: Mindful Snack and Mindful Walk), each one short video that opens with a timed breath to arrive.
+   and Listening Well (kids: Mindful Snack and Mindful Walk), each one short video that opens with a timed breath to arrive.
    Crisis lines are never spoken (BLD 808); this page carries one quiet line of type at the bottom.
    Data: shared/ggn-videos.js (window.GG_NOW), generated from patches/bld809 in grounded-workshop.
    ===================================================================== */
@@ -17,7 +17,7 @@
   'use strict';
   if (window.GGNow) return;
   var V = 'b913';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b913', DATA = '/shared/ggn-videos.js?v=b914', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b913', DATA = '/shared/ggn-videos.js?v=b914a', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },

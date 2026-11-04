@@ -127,7 +127,7 @@ window.GG_RHYTHM = {
     "branches|A Break for the Helper": {"r": "w", "min": 60, "how": ["Name one hour this week for a real break.", "Name one person who could cover.", "Ask them today."]},
     "branches|One True Sentence": {"r": "n", "min": 10, "how": ["Write one honest sentence about what you are carrying.", "Choose one safe person.", "Choose a calm, private time, and say it."]},
     "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]},
-    "branches|Deep Listening": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "birch": {
     "roots|Prayer": {"r": "d", "min": 5, "how": ["Find two quiet minutes.", "Say or write what you're thankful for.", "Say what you're carrying, and what you need.", "Those three lines are a whole prayer."]},
@@ -250,7 +250,7 @@ window.GG_RHYTHM = {
     "branches|A Break for the Helper": {"r": "w", "min": 60, "how": ["Name one hour this week for a real break.", "Name one person who could cover.", "Ask them today."]},
     "branches|One True Sentence": {"r": "n", "min": 10, "how": ["Write one honest sentence about what you are carrying.", "Choose one safe person.", "Choose a calm, private time, and say it."]},
     "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]},
-    "branches|Deep Listening": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "sequoia": {
     "roots|Prayer": {"r": "d", "min": 5, "how": ["Find two quiet minutes.", "Say or write what you're thankful for.", "Say what you're carrying, and what you need.", "Those three lines are a whole prayer."]},
@@ -396,7 +396,7 @@ window.GG_RHYTHM = {
     "branches|Say What You Need": {"r": "w", "min": 5, "how": ["Choose one place you go this week.", "Finish this sentence: It helps me when you...", "Say it, show it, or send it."]},
     "branches|One True Sentence": {"r": "n", "min": 10, "how": ["Write one honest sentence about what you are carrying.", "Choose one safe person.", "Choose a calm, private time, and say it."]},
     "branches|Celebration Plan": {"r": "n", "min": 15, "how": ["Choose the next celebration on your calendar.", "Plan something you love to sip, like sparkling water with fruit or a good tea.", "Bring a friend in your corner, and plan your own ride home.", "Have your answer ready: No thanks, I'm good."]},
-    "branches|Deep Listening": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "pine": {
     "roots|Prayer": {"r": "d", "min": 5, "how": ["Find two quiet minutes.", "Say or write what you're thankful for.", "Say what you're carrying, and what you need.", "Those three lines are a whole prayer."]},
@@ -502,7 +502,7 @@ window.GG_RHYTHM = {
     "branches|Be Generous": {"r": "w", "min": 15, "how": ["Choose one thing to give: your time, a listening ear, a skill, or something you made.", "Give it to someone who needs it.", "Give before you feel ready."]},
     "branches|Inspire Hope": {"r": "w", "min": 15, "how": ["Think of one hard time you got through.", "Write what helped.", "Tell someone younger what helped."]},
     "branches|Tell a Safe Adult": {"r": "n", "min": 10, "how": ["Choose one safe adult: a parent, a school counselor, a nurse, a coach, or a doctor.", "Say: I need to talk to you about something important.", "Then say one true sentence."]},
-    "branches|Deep Listening": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
+    "branches|Listening Well": {"r": "d", "min": 10, "how": ["In one conversation with someone you love, set your phone aside.", "Turn toward them, and let them finish every thought.", "Take one easy breath before you answer.", "Say back what you heard, and ask one gentle question."], "vid": "gg-mm-listen-now"}
   },
   "willow": {
     "roots|Your Prayer, Your Way": {"r": "d", "min": 5, "how": ["Choose a prayer you've always known, or have someone read one.", "Pray it slowly, in your own way.", "Silence counts too."]},

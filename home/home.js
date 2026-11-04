@@ -50,7 +50,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b911b', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b914';
+  var GGN_SRC = '/shared/ggn.js?v=b914a';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -382,7 +382,7 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b914', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b914', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b914', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b914', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=b914a', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b914a', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b914a', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b914a', 'PINE_PRACTICES'] };
   var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
@@ -3113,7 +3113,7 @@
   var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
-  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b914', sequoia: '/shared/checkin/sequoia.js?v=b914', birch: '/shared/checkin/birch.js?v=b914', pine: '/shared/checkin/pine.js?v=b914', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
+  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b914a', sequoia: '/shared/checkin/sequoia.js?v=b914a', birch: '/shared/checkin/birch.js?v=b914a', pine: '/shared/checkin/pine.js?v=b914a', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
   var NOPLAN = {};
   var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
   var CK_WAIT = 0;   // when a check-in was asked for and is still loading (the tour waits for it)
@@ -3337,7 +3337,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b914', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b914', helper: '/shared/home/helper.js?v=b914' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b914a', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
