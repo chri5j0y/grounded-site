@@ -50,7 +50,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b911b', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b912r';
+  var GGN_SRC = '/shared/ggn.js?v=b913';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -1812,7 +1812,7 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b911r';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b913';
   var GUIDES = { oak: ['/oak/guides.js?v=b907', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b907', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b907', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
@@ -3331,7 +3331,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b912', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b912', helper: '/shared/home/helper.js?v=b912' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b912', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b912', helper: '/shared/home/helper.js?v=b912' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -3514,7 +3514,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b911r';
+  var LEARN_JS = '/shared/gg-learn.js?v=b913';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());

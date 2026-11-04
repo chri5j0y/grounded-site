@@ -61,7 +61,7 @@ const DEF = {
       deep: "That matters, and I want to give it the time it deserves. Once we've agreed on the details, that's right where we'll begin.",
       close: "If you'd like to go ahead, the next step is a short intake where we agree on everything in writing: the services, the price, and what's included."},
     questions: ['What brings you to Grounded right now?', 'Who else is part of this with you?', 'Is there a date we should keep in mind?', 'What questions do you have for me?'],
-    how: ['Who I am: a hospice chaplain who walks with people from all faith traditions and everything in-between.',
+    how: ['Who I am: a chaplain who walks with people from all faith traditions and everything in-between.',
       "How it works: we talk through what you'd like, then agree on everything in writing: the services, the price, and what's included. No surprises.",
       'Faith shows up only as you choose it: at the center, in plain words, or a blend.',
       'Ceremonies are held with a 50% deposit, and the balance is due the day before. Sessions are paid at the time, and packages up front.',
