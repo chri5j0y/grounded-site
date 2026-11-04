@@ -320,7 +320,7 @@
     if (s.status === 'member') return 'Membership is open on this device' + (s.kind && s.kind !== 'member' ? ' with a ' + kindName(s.kind) + ' code' : '') + (s.ends ? ', through ' + nice(s.ends) : '') + '. Every profile here has the full suite.';
     if (s.status === 'ended') return 'Your Membership code has ended. Renew Membership with a new code, and everything here keeps going.';
     if (s.status === 'renew') return 'Membership has a fresh lock. Enter your code once more to keep going.';
-    return 'Membership opens soon. Have a code? Add it here.';
+    return 'Join Membership, or add your code here.';
   }
   function card(o) {
     css(); o = o || {};
@@ -331,7 +331,7 @@
   }
   function invite(o) {
     css(); o = o || {};
-    return '<div class="ggm-card ggm-inv"><span class="ggm-ey">' + esc(o.eyebrow || 'Membership') + '</span><b>' + esc(o.title || 'Grow Deeper') + '</b><small>' + esc(o.line || 'Opens with Membership.') + '</small>' +
+    return '<div class="ggm-card ggm-inv"><span class="ggm-ey">' + esc(o.eyebrow || 'Membership') + '</span><b>' + esc(o.title || 'Grow Deeper') + '</b><small>' + esc(o.line || 'Part of Membership.') + '</small>' +
       '<div class="ggm-row"><a class="ggm-b l" href="' + esc(SEE) + '">See Membership</a><button type="button" class="ggm-b" data-ggm="open">I Have a Code</button></div></div>';
   }
   function paintCards() {
@@ -364,7 +364,7 @@
     empty: 'Enter your code, then tap Open Membership.',
     nomatch: 'That code opens a different part of Grounded. Check each word and the number, and try again. Guide codes open the Field Guide.',
     ended: 'That code reached its end date. A new code renews Membership.',
-    none: 'Membership opens soon. Your code will open it here once it does.',
+    none: 'Membership is still loading on this device. Refresh the page and try again.',
     offline: 'Membership needs a connection the first time. Try again once you are online.',
     crypto: 'This browser needs a newer version to open Membership.'
   };
