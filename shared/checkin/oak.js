@@ -31,10 +31,10 @@
   var TREE = 'oak';
   var FILES = [
     '/oak/checkin.js?v=b907',
-    '/oak/practices.js?v=b907',
+    '/oak/practices.js?v=b914',
     '/shared/gg-parts.js?v=b907',
     '/shared/gg-life.js?v=b907',
-    '/shared/practice-rhythm.js?v=b907',
+    '/shared/practice-rhythm.js?v=b914',
     '/shared/gg-guided.js?v=b907',
     '/shared/guided/oak.js?v=b907'
   ];

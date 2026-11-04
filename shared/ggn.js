@@ -8,6 +8,8 @@
    (about 5 minutes) version, the prayers by tradition, the kids' versions, and the Support for Right Now
    videos already in the apps. For Kids (the #kids address, used by Maple and Aspen) shows the kids' versions.
    Videos play in shared/gg-learn.js with recorded Brian or Jenny clips (the viewer's choice, shown as Male Voice and Female Voice).
+   Mindful Moments (BLD 914): a wide door under the four that opens its own list: Mindful Meal, Present Drive, Mindful Walk,
+   and Deep Listening (kids: Mindful Snack and Mindful Walk), each one short video that opens with a timed breath to arrive.
    Crisis lines are never spoken (BLD 808); this page carries one quiet line of type at the bottom.
    Data: shared/ggn-videos.js (window.GG_NOW), generated from patches/bld809 in grounded-workshop.
    ===================================================================== */
@@ -15,13 +17,14 @@
   'use strict';
   if (window.GGNow) return;
   var V = 'b913';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b913', DATA = '/shared/ggn-videos.js?v=b911r', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b913', DATA = '/shared/ggn-videos.js?v=b914', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
     { id: 'cool', h: 'Cool Down', sub: 'Hot, angry, ready to snap', kh: 'Cool My Mad', ksub: 'Hot, stompy, ready to yell' },
     { id: 'now', h: 'Come Back to Now', sub: 'Far away, numb, foggy', kh: 'Feel Safe and Here', ksub: 'Far away, mixed up, unsure' }
   ];
+  var MINDFUL = { id: 'mindful', h: 'Mindful Moments', sub: 'Be fully here for a meal, a drive, a walk, or a talk', kh: 'Mindful Moments', ksub: 'A slow snack or a quiet fox walk', note: 'Short guided moments for everyday life, each one opening with a calm breath.', knote: 'Slow, curious moments for you and a grown-up.' };
   var TRAD = [['christian', 'Christian'], ['jewish', 'Jewish'], ['muslim', 'Muslim'], ['buddhist', 'Buddhist'], ['hindu', 'Hindu'], ['spiritual', 'Spiritual, Not Religious'], ['kids', 'For Kids']];
   var QUIET = 'Support any time: 988, call or text · 911, emergency';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -93,6 +96,10 @@
       + (aft ? '<button type="button" class="ggn-play alt" data-ggn-play="' + esc(aft.id) + '">Afterward, ' + mins(aft) + ' min</button>' : '');
     return '<li class="ggn-item"><div class="t"><b>' + esc(l.practice || l.title) + '</b><small>' + esc(l.blurb || '') + '</small></div><div class="b">' + b + '</div></li>';
   }
+  function mindList() { return data().filter(function (l) { return l.door === 'mindful' && l.audience === aud(); }); }
+  function mindItem(l) {
+    return '<li class="ggn-item"><div class="t"><b>' + esc(l.title) + '</b><small>' + esc(l.blurb || '') + '</small></div><div class="b"><button type="button" class="ggn-play" data-ggn-play="' + esc(l.id) + '">Watch, ' + mins(l) + ' min</button></div></li>';
+  }
   function prayerItem(l) {
     return '<li class="ggn-item"><div class="t"><b>' + esc(l.title) + '</b><small>' + esc(l.blurb || '') + '</small></div><div class="b"><button type="button" class="ggn-play" data-ggn-play="' + esc(l.id) + '">Pray Along, ' + mins(l) + ' min</button></div></li>';
   }
@@ -103,6 +110,8 @@
       if (!L.length) return;
       h += '<div><h3>' + esc(S.kids ? d.kh : d.h) + '</h3><ul class="ggn-list">' + L.map(itemHtml).join('') + '</ul></div>';
     });
+    var M = mindList();
+    if (M.length) h += '<div id="mindful"><h3>' + esc(S.kids ? MINDFUL.kh : MINDFUL.h) + '</h3><p class="ggn-muted" style="margin-bottom:8px">' + esc(S.kids ? MINDFUL.knote : MINDFUL.note) + '</p><ul class="ggn-list">' + M.map(mindItem).join('') + '</ul></div>';
     var P = prayerList();
     if (P.length) {
       h += '<div id="pray"><h3>Rest in Prayer</h3><p class="ggn-muted">Prayers and stillness from many faith traditions. Choose the words that help you.</p></div>';
@@ -122,6 +131,7 @@
       + '<p class="ggn-what">' + (kids ? 'Calm-down practices for you and a grown-up. Tap the circle to breathe with us, or pick how you feel. Each one is a short video, about 2 minutes.' : 'Short calming practices for a hard moment: a racing heart, spinning thoughts, a hot temper, or feeling far away. Tap the circle to breathe with us, or choose what fits right now. Each one is a short video, about 2 minutes.') + '</p>'
       + '<div class="ggn-orbwrap"><button type="button" class="ggn-orb" data-ggn-act="breathe">Breathe<br>With Me</button><p class="ggn-orbnote">About one minute, with a calm voice.</p></div>'
       + '<div class="ggn-doors">' + DOORS.map(function (d) { return '<button type="button" class="ggn-door" data-ggn-door="' + d.id + '"><b>' + esc(kids ? d.kh : d.h) + '</b><span>' + esc(kids ? d.ksub : d.sub) + '</span></button>'; }).join('')
+      + (mindList().length ? '<button type="button" class="ggn-door wide" data-ggn-door="mindful"><b>' + esc(kids ? MINDFUL.kh : MINDFUL.h) + '</b><span>' + esc(kids ? MINDFUL.ksub : MINDFUL.sub) + '</span></button>' : '')
       + '<button type="button" class="ggn-door wide" data-ggn-door="prayer"><b>Rest in Prayer</b><span>' + (kids ? 'A quiet prayer or a kind blessing' : 'Prayers and stillness from many faith traditions') + '</span></button></div>'
       + '<div class="ggn-row"><button type="button" class="ggn-pill" data-ggn-act="every">See Every Practice</button>'
       + '<button type="button" class="ggn-pill" data-ggn-act="kids" aria-pressed="' + kids + '">For Kids</button>'
@@ -150,7 +160,7 @@
       root.className = 'ggl ggl-app ggn-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
       root.style.setProperty('--ggl-acc', '#5F7D48'); root.style.setProperty('--ggl-bar', '#24301F'); root.style.setProperty('--ggl-lite', '#CFE0BF');
       root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>Get Grounded Now</b><button type="button" class="ggl-x" data-ggn-x="1">Back to Get Grounded Now</button></div>'
-        + '<div class="ggl-in"><div class="ggl-eb">' + esc(l.door === 'prayer' ? 'Rest in Prayer' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div><p class="ggn-quiet" style="margin-top:12px">' + esc(QUIET) + '</p></div>';
+        + '<div class="ggl-in"><div class="ggl-eb">' + esc(l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div><p class="ggn-quiet" style="margin-top:12px">' + esc(QUIET) + '</p></div>';
       document.body.appendChild(root);
       S.open = { root: root, from: keepFrom, overflow: S.open ? S.open.overflow : document.body.style.overflow, queue: queue || [id], id: id };
       document.body.style.overflow = 'hidden';
@@ -161,7 +171,7 @@
       if (nx && nx.id !== id) btns.push(['another', 'Try Another', 'pri']);
       if (pr && pr.length === 'after') btns.push(['longer', 'The Longer Version', btns.length ? '' : 'pri']);
       btns.push(['again', 'Again', '']);
-      btns.push(['steady', 'I Feel Steadier', 'quiet']);
+      btns.push(['steady', l.door === 'mindful' ? 'Done for Now' : 'I Feel Steadier', 'quiet']);
       var track = { id: 'ggn', kind: 'support', title: 'Get Grounded Now', lessons: [l] };
       S.open.ctl = GGLearn.player(root.querySelector('.ggn-host'), {
         app: 'site', lesson: l, track: track, tracks: [track], done: {}, at: 0, accent: '#5F7D48', mood: 'calm', voice: voice(),
@@ -179,7 +189,8 @@
     });
   }
   function door(d, from) {
-    var L = d === 'prayer' ? null : doorList(d);
+    var L = d === 'prayer' || d === 'mindful' ? null : doorList(d);
+    if (d === 'mindful') { var mel = document.getElementById('mindful'); if (mel) { mel.scrollIntoView({ behavior: 'smooth', block: 'start' }); var mb = mel.querySelector('.ggn-play'); if (mb) setTimeout(function () { try { mb.focus({ preventScroll: true }); } catch (e) {} }, 400); } return; }
     if (d === 'prayer') { var el = document.getElementById('pray'); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); var b = el.parentNode.querySelector('#pray ~ div .ggn-play'); if (b) setTimeout(function () { try { b.focus({ preventScroll: true }); } catch (e) {} }, 400); } return; }
     if (!L.length) return;
     play(L[0].id, L.map(function (l) { return l.id; }), from);
