@@ -29,13 +29,15 @@
   if (window.GGSources) return;
   var SHELF = '/library/#book=';
 
-  // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
+  // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); kind 'p' = a practice Chris made
+  // (the line reads "Practice: Chris Joy.", BLD 916); otherwise research or a book.
   var SRC = {
 /* BLD809 sources start */
     // Get Grounded Now (GWG BLD 809): credits for its practices and prayers.
     artigas: ["Lucina Artigas and Ignacio Jarero, the Butterfly Hug", "https://connect.springerpub.com/content/book/978-0-8261-2245-2/part/part1/chapter/ch01", "a"],
     balban23: ["Balban et al., Brief structured respiration practices enhance mood and reduce physiological arousal, Cell Reports Medicine (2023)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/"],
     bukhari6369: ["Sahih al-Bukhari 6369, the dua for refuge from worry and grief; English meaning in common use", "https://sunnah.com/bukhari:6369"],
+    chrisjoy4: ["Chris Joy", "", "p"],
     diamondgemmell: ["The Diamond Sutra, tr. William Gemmell (1912)", "https://archive.org/details/cu31924022914588", "a"],
     ensari15: ["Ensari, Greenlee, Motl, and Petruzzello, acute exercise and state anxiety: a meta-analysis (Depression and Anxiety, 2015)", "https://doi.org/10.1002/da.22370"],
     francis1912: ["The Prayer of Saint Francis, attributed to Saint Francis of Assisi, first printed anonymously in La Clochette (Paris, 1912); English in the form in common use", "https://growwithgrounded.com/readings.html"],
@@ -1353,7 +1355,7 @@
   function norm(t) { return String(t || '').replace(/[\u2018\u2019]/g, "'").replace(/\.$/, '').trim().toLowerCase(); }
   function item(x) {
     if (!x) return null;
-    if (typeof x === 'string') { if (x === 'unknown') return { unknown: true }; var s = SRC[x]; return s ? { label: s[0], href: s[1], a: s[2] === 'a' } : null; }
+    if (typeof x === 'string') { if (x === 'unknown') return { unknown: true }; var s = SRC[x]; return s ? { label: s[0], href: s[1], a: s[2] === 'a', p: s[2] === 'p' } : null; }
     if (Array.isArray(x)) return { label: x[0], href: x[1] || '' };
     if (x.label) return { label: x.label, href: x.href || '', a: !!x.adapted };
     return null;
@@ -1367,15 +1369,17 @@
   // list: source ids or objects. opts: {practice: true, stories: [titles], tag: 'p' or 'small'}
   function line(list, opts) {
     opts = opts || {};
-    var seen = {}, adapted = [], src = [], unknown = false;
+    var seen = {}, adapted = [], src = [], made = [], unknown = false;
     (list || []).forEach(function (x) {
       if (typeof x === 'string' && ALIAS[x]) x = ALIAS[x];
       var k = typeof x === 'string' ? x : JSON.stringify(x); if (seen[k]) return; seen[k] = 1;
       var it = item(x); if (!it) return;
       if (it.unknown) { unknown = true; return; }
-      (opts.practice && it.a ? adapted : src).push(it);
+      (it.p ? made : opts.practice && it.a ? adapted : src).push(it);
     });
     var rows = [];
+    // BLD 916: kind 'p' is a practice Chris made himself (Write It Out, Walk It Out, Talk It Out, Pray It Out): "Practice: Chris Joy."
+    if (made.length) rows.push('<span class="gg-src-k">Practice:</span> ' + made.map(link).join('; ') + '.');
     if (adapted.length) rows.push('<span class="gg-src-k">Adapted from:</span> ' + adapted.map(link).join('; ') + '.');
     if (src.length) rows.push('<span class="gg-src-k">' + (src.length > 1 ? 'Sources:' : 'Source:') + '</span> ' + src.map(link).join('; ') + '.' + (unknown ? ' Other details: source unknown.' : ''));
     else if (unknown) rows.push(adapted.length ? 'Other details: source unknown.' : 'Source unknown.');

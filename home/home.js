@@ -9,6 +9,7 @@
                                               (Oak, Birch, Sequoia, Pine), kid.checkins (Maple),
                                               student.rings (Aspen); and tend (season, week, days)
      GGP.data(id).life                        Living Sober: the card shows only when soberDate is set
+     GGP.data(id).soberPath                   BLD 916: Storm and Repair and Begin Again ({storm, runs}, see the Living Sober Path)
      GGP.data(id, 'tending')                  Tending, shaped {health: {}, deleted: {health: {}}},
                                               drawn by field-guide/health.js (GGHealth) in public mode
      GGP.data(id, 'home')                     the Home's own choices:
@@ -48,9 +49,9 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b915', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
-  var WORDS_SRC = '/shared/sober-words.js?v=b908';
-  var GGN_SRC = '/shared/ggn.js?v=b914b';
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b916', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
+  var WORDS_SRC = '/shared/sober-words.js?v=b916';
+  var GGN_SRC = '/shared/ggn.js?v=b916';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -329,6 +330,9 @@
     'gg-p-spiritual-blessing': ['A Blessing for Right Now', 2, 'A short blessing to hold you through this hour.'],
     'gg-sigh-now': ['Physiological Sigh', 1, 'Two breaths in, one long breath out. About one minute to help your body settle.'],
     'gg-paced-now': ['Paced Breathing', 2, 'Let your breath follow a slow, steady circle, about six easy breaths a minute.'],
+    // BLD 916: for Living Sober's calm and urge list (an Evening Look Back with a big wave or rough sleep).
+    'gg-ride-wave-now': ['Ride the Wave', 2, 'Meet an urge with kindness and ride it with your breath until it eases.'],
+    'gg-feet-floor-now': ['Feet on the Floor', 2, 'Feel the floor and the chair holding you up, right here.'],
     // the kids' versions, for Maple and Aspen
     'gg-k-calm-place-now': ['My Calm Place', 2, 'Close your eyes with your grown-up and picture a place where you feel calm and happy.'],
     'gg-k-name-it-now': ['Name It to Tame It', 2, 'Find the word for your feeling, say it, and breathe with it.'],
@@ -351,7 +355,9 @@
     branches: ['gg-lovingkindness-now', 'gg-p-spiritual-light'],
     trunk: ['gg-stop-now', 'gg-opposite-action-now'],
     fruit: ['gg-p-spiritual-gratitude', 'gg-p-spiritual-blessing'],
-    none: ['gg-sigh-now', 'gg-long-exhale-now', 'gg-paced-now']
+    none: ['gg-sigh-now', 'gg-long-exhale-now', 'gg-paced-now'],
+    // BLD 916: a heavy day (the latest Evening Look Back holds an urge of 7 or more, or rough sleep).
+    calm: ['gg-stop-now', 'gg-opposite-action-now', 'gg-sigh-now', 'gg-ride-wave-now', 'gg-long-exhale-now', 'gg-feet-floor-now']
   };
   var KMATCH = {
     bark: ['gg-k-calm-place-now', 'gg-k-name-it-now', 'gg-k-bubble-breath-now'],
@@ -362,7 +368,7 @@
     fruit: ['gg-k-kind-wishes-now', 'gg-k-senses-detective-now'],
     none: ['gg-k-calm-place-now', 'gg-k-balloon-belly-now', 'gg-k-tree-roots-now']
   };
-  var ART = { bark: 'tend-mind', leaves: 'tend-move', roots: 'tend-spirit', trunk: 'tend-spirit', branches: 'tend-people', fruit: 'tend-fruit', none: 'tend-mind' };
+  var ART = { bark: 'tend-mind', leaves: 'tend-move', roots: 'tend-spirit', trunk: 'tend-spirit', branches: 'tend-people', fruit: 'tend-fruit', none: 'tend-mind', calm: 'tend-mind' };
   /* BLD 912: Get Grounded Now opens in Home's own window (GGNow.mount), never as a page in a frame. */
   function openGGN() {
     mDialog('Get Grounded Now', '<div id="hm-ggn" class="ggn-root hm-ggn"><p class="hm-loading">Opening Get Grounded Now…</p></div>');
@@ -622,21 +628,33 @@
   function todayRec(h) { var d = today(); h.days[d] = obj(h.days[d]); return h.days[d]; }
   function target(x, d) { if (Array.isArray(x)) x = x[0]; var n = num(x); return n != null && n > 0 ? n : d; }
 
-  /* Living Sober */
+  /* Living Sober. BLD 916 (Chris: "the whole day leans toward a strong sober life"): the card leads Today's main column,
+     with its season (Steady, Build, Grow, or Storm and Repair), Days Grown beside a count begun again, and every tool open to
+     everyone, a gift from Grounded. */
   function soberHtml(date) {
     var c = soberCount(date); if (!c) return '';
     var ms = medallions(date), nowS = today(), prev = null, next = null;
     ms.forEach(function (m) { if (m.at <= nowS) prev = m; else if (!next) next = m; });
     var from = prev ? prev.at : date, span = Math.max(1, between(from, next.at)), into = between(from, nowS), left = between(nowS, next.at);
     var mile = c.days > 0 ? soberMile(c.days + 1, soberYearsToday(date)) : null; S.mile = mile;
-    return '<article class="hm-card hm-sober hm-a-sober o4" id="hm-sober"' + (mile ? ' data-hm-mile="' + mile.kind + '"' : '') + '><div class="row">' + ring(108, 10, into, span, '<b>' + (c.days + 1) + '</b><small>' + (c.days === 0 ? 'day' : 'days') + '</small>') +
-      '<div style="min-width:0"><div class="dn">Living Sober</div><h3 class="hm-h3" style="font-size:28px">' + (c.days === 0 ? 'Day One' : 'Day ' + (c.days + 1)) + '</h3>' + (mile ? '<p class="hm-mline">' + I('star') + '<span>' + esc(mile.line) + '</span></p>' : '') + '<div class="hm-sub">Next medallion: ' + esc(next.name) + ', in ' + left + (left === 1 ? ' day' : ' days') + '.</div></div></div>' +
+    var st = lsStorm(), ss = st ? 'Storm and Repair' : lsSeasonName(c.days + 1), grown = lsGrown(c), earned = lsEarned(date);
+    var after = lsAfter(), F = lsFour(), tb = function (k, ic, label, line) { return '<button type="button" class="hm-btn sm ' + (line ? 'line ' : '') + 'hm-a-sober" data-hm-ls="' + k + '">' + I(ic) + esc(label) + '</button>'; };
+    var mine = tb('mine', 'people', 'My Good People', !after), tools = [tb('anchor', 'shield', 'My Anchor Plan', true), tb('people', 'sprout', 'Healthy People, Healthy Places', true), tb('solo', 'sun2', 'Strong on Your Own', true)];
+    if (after) tools.unshift(mine); else tools.splice(1, 0, mine);
+    if (st) tools.splice(tools.indexOf(tools.filter(function (x) { return x.indexOf('data-hm-ls="anchor"') >= 0; })[0]), 1);
+    return '<article class="hm-card hm-sober hm-a-sober o4' + (st ? ' storm' : '') + '" id="hm-sober"' + (mile ? ' data-hm-mile="' + mile.kind + '"' : '') + '><div class="row">' + ring(108, 10, into, span, '<b>' + (c.days + 1) + '</b><small>' + (c.days === 0 ? 'day' : 'days') + '</small>') +
+      '<div style="min-width:0"><div class="dn">Living Sober' + (ss ? '<span class="hm-lsseason"> · ' + esc(ss) + '</span>' : '') + '</div><h3 class="hm-h3" style="font-size:28px">' + (c.days === 0 ? 'Day One' : 'Day ' + (c.days + 1)) + '</h3>' + (mile ? '<p class="hm-mline">' + I('star') + '<span>' + esc(mile.line) + '</span></p>' : '') + '<div class="hm-sub">Next medallion: ' + esc(next.name) + ', in ' + left + (left === 1 ? ' day' : ' days') + '.</div>' +
+      (grown ? '<div class="hm-lsgrown">' + I('sprout') + '<span>Days Grown: <b>' + grown.toLocaleString() + '</b></span></div>' : '') + '</div></div>' +
+      (st ? lsStormHtml(st) : after && !obj(lsPath().storm).look ? lsLookOfferHtml() : '') +
       '<div class="hm-sk">Today\'s Encouragement</div><p class="words" id="hm-words">Every day counts. Today is one more.</p>' +
       '<div class="hm-smantra"><span class="hm-sk">Mantra</span><b class="hm-mtext">One day at a time.</b></div>' +
       '<div class="hm-acts tight hm-shares"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="daily">' + I('open') + 'Share Today\'s Words</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="mantra">' + I('open') + 'Share the Mantra</button>' + (mile ? '<button type="button" class="hm-btn sm hm-a-sober hm-mshare" data-hm-share="mile">' + I('open') + 'Share My Milestone</button>' : '') + '</div>' +
-      '<div class="hm-acts"><a class="hm-btn sm hm-a-sober" href="/living-sober.html#today">' + I('sunrise') + 'Today\'s Intention</a><a class="hm-btn sm line hm-a-sober" href="/living-sober.html#wave">' + I('wind') + 'Ride the Wave</a></div>' +
-      // BLD 911: Living Sober's tools open right here in Home (shared/gg-sober.js), never a tree page.
-      '<div class="hm-acts tight"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-sober="anchor">' + I('shield') + 'My Anchor Plan</button>' + (member() ? '<button type="button" class="hm-btn sm line hm-a-sober" data-hm-sober="mine">' + I('people') + 'My Good People</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-sober="people">' + I('sprout') + 'Healthy People, Healthy Places</button>' : '') + '</div></article>' +
+      // BLD 916: Today's Intention and Ride the Wave open right here (shared/gg-sober.js), and the four step practice beside them.
+      // In a storm, Ride the Wave, My Anchor Plan, and the four steps sit in the storm block above, so they show once.
+      '<div class="hm-acts">' + tb('intent', 'sunrise', 'Today\'s Intention') + (st ? '' : tb('wave', 'wind', 'Ride the Wave', true) + (F ? tb('four', 'feather', 'Write, Walk, Talk, Pray', true) : '')) + '</div>' +
+      '<div class="hm-acts tight">' + tools.join('') + '</div>' +
+      (earned.length && lsPath().runs ? '<p class="hm-lsearned">' + I('medal') + '<span>Medallions earned: ' + esc(earned.join(', ')) + '</span></p>' : '') +
+      '<div class="hm-quiet hm-lsquiet">' + (st ? '' : '<button type="button" data-hm-ls="storm">I\'m in a Storm</button><span>·</span>') + '<details class="hm-lsset"><summary>Living Sober Settings</summary><p class="hm-sub">A new count can start any day you choose. Days Grown keeps every day, and every medallion stays yours.</p><button type="button" class="hm-linkbtn" data-hm-ls="again">Begin Again</button></details></div></article>' +
       (c.days >= 90 && !member() && !isKid(S.p) ? inviteHtml('sober', 'hm-a-sober') : '');
   }
   function soberInviteHtml() {
@@ -644,6 +662,179 @@
     return '<article class="hm-card hm-a-sober o4 hm-offer" id="hm-sober">' + pb(HERO + 'living-sober-card.webp') + '<div style="flex:1;min-width:0"><div class="hm-k">Living Sober</div><div class="hm-sub">Turn on Living Sober and add your sober date in My ' + esc(t.n) + ', and your day count, words for today, and medallions show here.</div>' +
       '<div class="hm-quiet" style="margin-top:8px"><a href="' + t.href + '">Open My ' + esc(t.n) + '</a><span>·</span><a href="/living-sober.html">About Living Sober</a></div></div></article>';
   }
+  /* ---------- BLD 916: the Living Sober Path ----------
+     Seasons by the day count: Steady (Day One to 30), Build (31 to 90), Grow (91 and beyond); Someone I Love keeps its own path.
+     Storm and Repair: begun only by the person ("I'm in a Storm"), never asked. For 14 days (or until My Storm Has Passed)
+     sleep, real meals, calm, Ride the Wave, and My Anchor Plan lead Today, with a kind video the first morning when Get Grounded
+     Now holds one. Then a gentle look back (what stirred it, what helped, one line added to My Anchor Plan), and My Good People
+     leads the card for a week. A storm never changes the sober date, the count, or a medallion.
+     Begin Again: a new count, chosen by the person; Days Grown keeps every day across every count, and medallions stay earned.
+     Saved in the locked vault beside My Anchor Plan (vault.soberPath), never anywhere else:
+       {storm: {start, end, look: {at, stir, help, line}}, runs: [{from, to, days, meds: [medallion names]}]} */
+  var FOUR_SRC = '/shared/sober-four.js?v=b916';
+  var QUIET_SOBER = ['gg-paced-now', 'gg-sigh-now', 'gg-long-exhale-now', 'gg-belly-now', 'gg-bodyscan-now', 'gg-feet-floor-now'];
+  var STORM_DAYS = 14;
+  function soberOn() { return !!(S.p && !isKid(S.p) && soberDate()); }
+  function soberStage() { return S.id ? obj(obj(GGP.data(S.id)).life).sober || '' : ''; }
+  function lsPath() { return S.id ? obj(obj(GGP.data(S.id)).soberPath) : {}; }
+  function lsSave(fn) { var v = GGP.data(S.id); if (!v) return Promise.resolve(); v.soberPath = obj(v.soberPath); fn(v.soberPath); return saveHome(); }
+  function lsSeasonName(n) { if (soberStage() === 'love') return ''; return n <= 30 ? 'Steady' : n <= 90 ? 'Build' : 'Grow'; }
+  function lsStorm() {
+    var st = lsPath().storm; if (!st || !st.start || st.end) return null;
+    var d = between(st.start, today()); if (d < 0 || d >= STORM_DAYS) return null;
+    return { start: st.start, day: d + 1, look: st.look || null };
+  }
+  /* The week after a storm (passed, or 14 days along): the look back is offered and My Good People leads. */
+  function lsAfter() {
+    var st = lsPath().storm; if (!st || !st.start) return false;
+    var end = st.end || addDays(st.start, STORM_DAYS); if (lsStorm()) return false;
+    var d = between(end, today()); return d >= 0 && d < 7;
+  }
+  function lsRuns() { return arr(lsPath().runs).filter(function (r) { return r && /^\d{4}-\d\d-\d\d$/.test(r.from || '') && +r.days >= 0; }); }
+  function lsGrown(c) { var r = lsRuns(); if (!r.length) return 0; return r.reduce(function (a, x) { return a + (+x.days || 0); }, 0) + c.days + 1; }
+  function lsEarned(date) {
+    var out = [];
+    lsRuns().forEach(function (r) { arr(r.meds).forEach(function (n) { if (out.indexOf(n) < 0) out.push(n); }); });
+    medallions(date).forEach(function (m) { if (m.at <= today() && out.indexOf(m.name) < 0) out.push(m.name); });
+    return out;
+  }
+  /* The latest Evening Look Back (today, else yesterday) and whether it was a heavy day: an urge of 7 or more, or rough sleep. */
+  function lsLook(d) { var lg = obj(obj(obj(GGP.data(S.id)).soberDays).log), e = lg[d]; return e && (e.u != null || e.s != null || e.m != null) ? e : null; }
+  function lsHeavy() {
+    if (!soberOn()) return false;
+    var e = lsLook(today()) || lsLook(addDays(today(), -1)); if (!e) return false;
+    return (e.u != null && +e.u >= 7) || +e.s === 1;
+  }
+  /* Get Grounded Now's own list (shared/ggn-videos.js), so a Watch button shows only for a video that is there. */
+  function lsVid(id) { var L = window.GG_NOW && window.GG_NOW.lessons; return !!(id && L && L.some(function (x) { return x && x.id === id; })); }
+  function lsFour() { var F = window.GGSoberFour; return F && Array.isArray(F.steps) && F.steps.length ? F : null; }
+  var LS_PRE = { on: false };
+  function lsPre() {
+    if (LS_PRE.on || !soberOn()) return; LS_PRE.on = true;
+    var tries = 0, ggn = load(GGN_SRC).then(function () { return new Promise(function (ok) { (function w() { if (window.GG_NOW || ++tries > 80) ok(); else setTimeout(w, 100); })(); }); });
+    Promise.all([load(FOUR_SRC), ggn]).then(function () { if (S.id && app() && !isKid(S.p) && route().tab === 'today' && !route().sub) refreshPane(); });
+  }
+  function lsStormHtml(st) {
+    var first = st.day <= 2 && lsVid('gg-storm-morning') && now().getHours() < 14, F = lsFour();
+    var b = function (k, ic, label) { return '<button type="button" class="hm-btn sm line hm-a-sober" data-hm-ls="' + k + '">' + I(ic) + esc(label) + '</button>'; };
+    return '<div class="hm-lsstorm" role="group" aria-label="Storm and Repair"><div class="hm-sk">Storm and Repair · Day ' + st.day + ' of ' + STORM_DAYS + '</div>' +
+      '<p class="hm-sub">For these days, the simple things lead: sleep, real meals, calm, Ride the Wave, and My Anchor Plan. Your count and every medallion stay just as they are.</p>' +
+      (first ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-a-sober" data-hm-ls="stormvid">' + I('play') + 'A Kind First Morning</button></div>' : '') +
+      '<div class="hm-acts tight">' + b('basics', 'moon', 'Sleep and Real Meals') + b('calm', 'lotus', 'A Calm Minute') + b('wave', 'wind', 'Ride the Wave') + b('anchor', 'shield', 'My Anchor Plan') + (F ? b('four', 'feather', 'Write, Walk, Talk, Pray') : '') + '</div>' +
+      (st.day >= 2 && !st.look ? '<div class="hm-quiet"><button type="button" data-hm-ls="repair">A Gentle Look Back</button><span>for a calmer day</span></div>' : '') +
+      '<div class="hm-quiet"><button type="button" data-hm-ls="passed">My Storm Has Passed</button></div></div>';
+  }
+  function lsLookOfferHtml() {
+    return '<div class="hm-lsstorm"><div class="hm-sk">After the Storm</div><p class="hm-sub">A gentle look back, when you are ready: what stirred it, what helped, and one line for My Anchor Plan.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-ls="repair">' + I('feather') + 'A Gentle Look Back</button></div></div>';
+  }
+  /* Living Sober's own tools (shared/gg-sober.js), ready to open from Home. */
+  function soberReady() {
+    return load(WORDS_SRC).then(function () { return load(SOBER_JS[0]); }).then(function () { return load(SOBER_JS[1]); }).then(function () {
+      if (!window.GGSober) return null;
+      if (!soberTools.on) { soberTools.on = true; try { GGSober.init(soberTree(), { open: function () {}, create: function () { return GGP.createDialog().then(function () { render(); }); }, openProfile: function () { return GGP.openDialog().then(function () { render(); }); }, helper: function () { return false; } }); } catch (e) { console.error(e); } }
+      return window.GGSober;
+    });
+  }
+  function lsAct(k) {
+    var tr = soberTree(), back = function () { if (S.id && app()) refreshPane(); };
+    if (k === 'four') { openFour(); return; }
+    if (k === 'calm') { playVideo('gg-sigh-now'); return; }
+    if (k === 'stormvid') { playVideo('gg-storm-morning'); return; }
+    if (k === 'storm') { stormDlg(); return; }
+    if (k === 'passed') { lsSave(function (p) { p.storm = obj(p.storm); p.storm.end = today(); }).then(function () { toast('Welcome back. Your season carries on.'); back(); }); return; }
+    if (k === 'repair') { repairDlg(); return; }
+    if (k === 'again') { againDlg(); return; }
+    if (/^watch:/.test(k)) { playVideo(k.slice(6)); return; }
+    soberReady().then(function (G) {
+      if (!G) return;
+      if (k === 'intent' && G.intent) G.intent(tr, back);
+      else if (k === 'look' && G.look) G.look(tr, back);
+      else if (k === 'wave' && G.wave) G.wave(tr);
+      else if (k === 'anchor') G.anchor(tr, false);
+      else G.together(tr, k);
+    });
+  }
+  /* Morning Quiet on a sober day: Today's Intention as one step, then a calm video by the day (the first morning of a storm,
+     the kind storm video when it is there). */
+  function soberQuiet() {
+    var st = lsStorm(), vid = st && st.day <= 2 && lsVid('gg-storm-morning') ? 'gg-storm-morning' : pick(QUIET_SOBER, dayIndex());
+    var lg = obj(obj(obj(GGP.data(S.id)).soberDays).log)[today()] || {};
+    if (lg.i) { playVideo(vid); return; }
+    soberReady().then(function (G) { if (G && G.intent) G.intent(soberTree(), function () { playVideo(vid); }); else playVideo(vid); });
+  }
+  function stormDlg() {
+    mDialog('Storm and Repair', '<div class="hm-a-sober hm-lsdlg"><p class="hm-sub">Some days blow in hard. For the next two weeks, Today keeps it simple: sleep, real meals, calm, Ride the Wave, and My Anchor Plan, with Write, Walk, Talk, Pray close by.</p>' +
+      '<p class="hm-sub">Your count, your sober date, and every medallion stay just as they are. Only you see this, locked on this device.</p>' +
+      '<div class="hm-acts"><button type="button" class="hm-btn hm-a-sober" data-hm-ls="stormgo">' + I('shield') + 'Begin Storm and Repair</button><button type="button" class="hm-btn line hm-a-sober" data-hm-mclose="1">Not Now</button></div></div>');
+  }
+  function stormGo() {
+    lsSave(function (p) { p.storm = { start: today() }; }).then(function () { mClose(); toast('Storm and Repair is on. One small step at a time.'); refreshPane(); });
+  }
+  function repairDlg() {
+    var lk = obj(obj(lsPath().storm).look);
+    mDialog('A Gentle Look Back', '<div class="hm-a-sober hm-lsdlg"><p class="hm-sub">On a calmer day, a few words for what you learned. It stays locked on this device.</p>' +
+      '<label class="hm-label" for="hm-ls-stir">What stirred it</label><input class="hm-in" id="hm-ls-stir" maxlength="200" value="' + esc(lk.stir || '') + '">' +
+      '<label class="hm-label" for="hm-ls-help">What helped</label><input class="hm-in" id="hm-ls-help" maxlength="200" value="' + esc(lk.help || '') + '">' +
+      '<label class="hm-label" for="hm-ls-line">One line for My Anchor Plan</label><input class="hm-in" id="hm-ls-line" maxlength="140" placeholder="Next time, I will..." value="' + esc(lk.line || '') + '">' +
+      '<div class="hm-acts"><button type="button" class="hm-btn hm-a-sober" data-hm-ls="repairsave">' + I('save') + 'Save My Look Back</button></div></div>');
+  }
+  function repairSave() {
+    var v = function (id) { var el = document.getElementById(id); return el ? el.value.trim().slice(0, 200) : ''; };
+    var look = { at: today(), stir: v('hm-ls-stir'), help: v('hm-ls-help'), line: v('hm-ls-line').slice(0, 140) };
+    lsSave(function (p) { p.storm = obj(p.storm); p.storm.look = look; }).then(function () {
+      if (!look.line) return;
+      // The one line joins My Anchor Plan's own idea (vault.soberAnchor), through Living Sober's own save.
+      return soberReady().then(function () {
+        var L = window.GGLife; if (!L || !L.anchor || !L.setAnchor) return;
+        var a = L.anchor() || { people: [], do: [], own: '', go: '', remind: '' }, own = String(a.own || '');
+        if (own.indexOf(look.line) >= 0) return;
+        return L.setAnchor(Object.assign({}, a, { own: (own ? own + '; ' : '') + look.line }));
+      });
+    }).then(function () { mClose(); toast(look.line ? 'Saved, and added to My Anchor Plan.' : 'Saved.'); refreshPane(); }, function () { mClose(); toast('Try saving once more.'); });
+  }
+  function againDlg() {
+    var sd = soberDate(); if (!sd) return;
+    mDialog('Begin Again', '<div class="hm-a-sober hm-lsdlg"><p class="hm-sub">Every day you have grown stays yours. A new count starts beside it, Days Grown keeps the whole story, and every medallion you earned stays listed as earned.</p>' +
+      '<label class="hm-label" for="hm-ls-date">My new Day One</label><input class="hm-in" type="date" id="hm-ls-date" min="' + esc(addDays(sd, 1)) + '" max="' + today() + '" value="' + today() + '">' +
+      '<p class="hm-sub" id="hm-ls-dnote" role="status" aria-live="polite"></p>' +
+      '<div class="hm-acts"><button type="button" class="hm-btn hm-a-sober" data-hm-ls="againgo">' + I('sprout') + 'Begin Again</button><button type="button" class="hm-btn line hm-a-sober" data-hm-mclose="1">Not Now</button></div></div>');
+  }
+  function againGo() {
+    var sd = soberDate(), el = document.getElementById('hm-ls-date'), nd = el ? el.value : '', note = document.getElementById('hm-ls-dnote');
+    if (!sd || !/^\d{4}-\d\d-\d\d$/.test(nd) || nd <= sd || nd > today()) { if (note) note.textContent = 'Choose a day after your last Day One, up to today.'; return; }
+    var meds = medallions(sd).filter(function (m) { return m.at < nd; }).map(function (m) { return m.name; });
+    soberReady().then(function () {
+      var L = window.GGLife; if (!L || !L.set) { if (note) note.textContent = 'Try once more in a moment.'; return; }
+      return lsSave(function (p) { p.runs = arr(p.runs).concat([{ from: sd, to: nd, days: between(sd, nd), meds: meds }]); })
+        .then(function () { return L.set({ soberDate: nd }); })
+        .then(function () { mClose(); toast('Day One. Every day you have grown stays with you.'); refreshPane(); });
+    }).catch(function () { if (note) note.textContent = 'Try saving once more.'; });
+  }
+  /* Write It Out, Walk It Out, Talk It Out, Pray It Out (shared/sober-four.js, window.GGSoberFour): one practice in four
+     steps, each one usable alone, in the tree part colors, with Watch for a step whose video Get Grounded Now holds. */
+  function openFour(key) {
+    var F = lsFour(); if (!F) return;
+    var steps = arr(F.steps).map(function (x) {
+      var part = PART[x.part] ? x.part : 'leaves';
+      return '<article class="hm-card hm-lsstep" id="hm-ls4-' + esc(x.key || '') + '" style="--c:var(--' + part + ');--cs:var(--' + part + '-s)"><div class="hm-k"><span class="hm-pt hm-p-' + part + '">' + esc(x.partName || plabel(part)) + '</span></div><h3 class="hm-h3">' + esc(x.title || '') + '</h3>' +
+        (x.line ? '<p class="hm-sub">' + esc(x.line) + '</p>' : '') + (arr(x.how).length ? '<ul class="hm-lshow">' + arr(x.how).map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('') + '</ul>' : '') +
+        (lsVid(x.video) ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm line" data-hm-ls="watch:' + esc(x.video) + '">' + I('play') + 'Watch</button></div>' : '') + '</article>';
+    }).join('');
+    mDialog(F.title || 'Write, Walk, Talk, Pray', '<div class="hm-a-sober hm-ls4">' + (F.lead ? '<p class="hm-sub">' + esc(F.lead) + '</p>' : '') +
+      (lsVid(F.video) ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-a-sober" data-hm-ls="watch:' + esc(F.video) + '">' + I('play') + 'Watch the Practice</button></div>' : '') +
+      '<div class="hm-ls4steps">' + steps + '</div><div class="hm-src" id="hm-ls4src">' + (F.credit ? esc(F.credit) + '.' : '') + '</div></div>');
+    // The Sources line (shared/gg-sources.js): Practice: Chris Joy, then the research behind the steps.
+    if (arr(F.sources).length) load('/shared/gg-sources.js?v=b916').then(function () {
+      var el = document.getElementById('hm-ls4src'); if (!el || !window.GGSources || typeof GGSources.line !== 'function') return;
+      try { var h = GGSources.line(F.sources, { practice: true }); if (h) el.innerHTML = h; } catch (e) {}
+    });
+    if (key) setTimeout(function () { var el = document.getElementById('hm-ls4-' + key); if (el) el.scrollIntoView({ block: 'start' }); }, 60);
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-ls]'); if (!t) return;
+    var k = t.getAttribute('data-hm-ls');
+    if (k === 'stormgo') stormGo(); else if (k === 'repairsave') repairSave(); else if (k === 'againgo') againGo(); else lsAct(k);
+  });
   /* BLD 882: the mantra of the day (Living Sober's mantras, by days since the sober date) in the hero and the Living Sober card. */
   function fillMantra() {
     if (!document.querySelector('#hm-mantra,.hm-mtext')) return;
@@ -668,7 +859,7 @@
     load(WORDS_SRC).then(function () {
       var G = window.GGSoberWords, el2 = document.getElementById('hm-words'); if (!G || !el2) return;
       var list = arr(G.daily), c = soberCount(soberDate()); if (!list.length || !c) return;
-      // BLD 908: GGSoberWords.all() is the 90 plus days 91 to 365 when Membership is open on this device (day n is list[n - 1]).
+      // BLD 916: GGSoberWords.all() holds every day of the first year, open to everyone (day n is list[n - 1]).
       if (typeof G.all === 'function') { try { var al = arr(G.all()); if (al.length) list = al; } catch (e) {} }
       var st = obj((GGP.data(S.id) || {}).life).sober || '';
       for (var i = 0; i < list.length; i++) { var w = list[(c.days + i) % list.length]; if (!w.stage || !st || w.stage.indexOf(st) >= 0) { el2.textContent = w.text; return; } }
@@ -677,11 +868,21 @@
 
   /* For You Today */
   function forYouHtml(ed) {
+    if (lsHeavy()) return forYouCalmHtml();
     var part = ed && ed.lead ? ed.lead : 'none', ids = MATCH[part], id = pick(ids, dayIndex()), v = GGN[id];
     var tag = part === 'none' ? '<span>A good place to begin</span>' : '<span class="hm-pt hm-p-' + part + '">' + esc(plabel(part)) + '</span><span>' + (ed.edges.indexOf(part) >= 0 ? 'Matched to your Growing Edge' : 'Leaning toward your ' + PART[part].n) + '</span>';
     return '<article class="hm-card hm-foryou ' + (part === 'none' ? 'hm-p-leaves' : 'hm-p-' + part) + ' o5"><button type="button" class="art" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + IMG + ART[part] + '.webp" alt="" loading="lazy"><span class="play">' + I('play') + '</span></button>' +
       '<div class="body"><div class="hm-k">For You Today</div><h3 class="hm-h3">' + esc(v[0]) + '</h3><div class="hm-sub">A ' + (v[1] === 1 ? 'one' : v[1] === 3 ? 'three' : 'two') + ' minute practice from Get Grounded Now. ' + esc(v[2]) + '</div>' +
       '<div class="hm-match">' + tag + '</div><div class="hm-also" id="hm-also" data-part="' + part + '"></div></div></article>';
+  }
+  /* BLD 916: after an Evening Look Back with a big wave or rough sleep, For You Today picks from the calm and urge list that
+     day and offers Write, Walk, Talk, Pray. */
+  function forYouCalmHtml() {
+    var id = pick(MATCH.calm, dayIndex()), v = GGN[id], F = lsFour();
+    return '<article class="hm-card hm-foryou hm-p-bark o5"><button type="button" class="art" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + IMG + ART.calm + '.webp" alt="" loading="lazy"><span class="play">' + I('play') + '</span></button>' +
+      '<div class="body"><div class="hm-k">For You Today</div><h3 class="hm-h3">' + esc(v[0]) + '</h3><div class="hm-sub">A ' + (v[1] === 1 ? 'one' : v[1] === 3 ? 'three' : 'two') + ' minute practice from Get Grounded Now. ' + esc(v[2]) + '</div>' +
+      '<div class="hm-match"><span class="hm-pt hm-p-bark">' + esc(plabel('bark')) + '</span><span>Picked from your Evening Look Back</span></div>' +
+      (F ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-ls="four">' + I('feather') + 'Write, Walk, Talk, Pray</button></div>' : '') + '</div></article>';
   }
   function fillAlso() {
     var el = document.getElementById('hm-also'); if (!el) return;
@@ -1427,7 +1628,15 @@
       items.push({ key: 'o:plate', hour: 12, when: 'Every meal', title: 'Today\'s Plate', sub: 'Log what you eat and watch the rings fill', btn: 'Log', tint: 'plate', done: !!(sm.plate && sm.plate.logged), src: 'old', old: 'plate' });
     }
     var hasQuiet = items.some(function (x) { return /quiet|med/i.test(x.kind + ' ' + x.hkey); });
-    if (h.parts.indexOf('still') >= 0 && !hasQuiet) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'A few minutes of breath and stillness', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
+    // BLD 916: with Living Sober on, Morning Quiet opens with Today's Intention, and an Evening Look Back closes the day.
+    var so = soberOn(), lb = so ? lsLook(today()) : null, so4 = so && lsStorm();
+    if (so) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'Today\'s Intention, then a few minutes of calm breath', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
+    else if (h.parts.indexOf('still') >= 0 && !hasQuiet) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'A few minutes of breath and stillness', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
+    if (so) items.push({ key: 'look', hour: 20, when: 'Evening', title: 'Evening Look Back', sub: 'Under a minute: the day\'s urge, mood, sleep, and what helped', btn: 'Begin', tint: 'quiet', done: !!(d.look || lb), src: 'home' });
+    if (so4) {
+      items.push({ key: 'ls:meals', hour: 8, when: 'Every meal', title: 'Three Real Meals', sub: 'And water through the day. Steady food steadies a body.', btn: 'Open', tint: 'plate', done: !!d['ls:meals'], src: 'home' });
+      items.push({ key: 'ls:rest', hour: 21, when: 'Tonight', title: 'Early to Bed', sub: 'Lights low and screens away. Rest is how a body repairs.', btn: 'Open', tint: 'quiet', done: !!d['ls:rest'], src: 'home' });
+    }
     if (h.parts.indexOf('pray') >= 0) items.push({ side: true, key: 'pray', hour: 12.5, when: 'Any time', title: 'A Sacred Pause', sub: 'Prayer, a reading, or quiet, in your own way', btn: 'Begin', tint: 'roots', done: !!d.pray, src: 'home' });
     if (h.parts.indexOf('connect') >= 0) items.push({ side: true, key: 'talk', hour: 18.5, when: 'At dinner', title: 'Tonight\'s Question', sub: pick(QUESTIONS, dayIndex() + (+d.q || 0)), btn: 'Another', tint: 'branches', done: !!d.talk, src: 'home' });
     // BLD 882: each practice in the tree's Growth Plan, its own card. BLD 885: daily ones in the day; a weekly or now and
@@ -1575,7 +1784,8 @@
   /* The rich panels beside the day (one column on a phone, after the day). */
   function sideHtml(items, ed) {
     var h = homeRec(), sd = soberDate(), d = h.days[today()] || {}, out = [];
-    if (sd) out.push(soberHtml(sd)); else if (h.parts.indexOf('sober') >= 0) out.push(soberInviteHtml());
+    // BLD 916: with a sober date the Living Sober card leads the main column (todayHtml), so the side keeps the invitation only.
+    if (sd && !soberOn()) out.push(soberHtml(sd)); else if (!sd && h.parts.indexOf('sober') >= 0) out.push(soberInviteHtml());
     out.push(forYouHtml(ed));
     items.filter(function (x) { return x.side; }).forEach(function (x) {
       if (x.key === 'pray') out.push('<article class="hm-card edge lift hm-p-roots hm-side' + (x.done ? ' done' : '') + '"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-spirit.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Any time</div><h3 class="hm-h3">A Sacred Pause</h3><div class="hm-meta"><span>' + I('flame') + 'Prayer, a reading, or quiet, in your own way</span></div>' +
@@ -1618,7 +1828,8 @@
        With no Plate card, a labeled Log a Note button stands in its place, never a bare plus. */
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + plate + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    var ls = soberOn() ? soberHtml(soberDate()) : ''; if (ls) lsPre();
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + ls + nowHtml(items) + plate + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml() + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -1638,7 +1849,9 @@
     if (x.src === 'old') { goTo('today=' + (x.old === 'plate' ? 'log' : 'tending')); if (x.old === 'move') { S.quiet = true; try { window.GGHealth.open('move'); } catch (e) {} S.quiet = false; } return; }
     if (x.src === 'plan') { openHowFromNow(key); return; }
     if (key === 'tree') { openTreeSheet(t.ck ? 'quick' : ''); return; }
-    if (key === 'quiet') { playVideo('gg-paced-now'); return; }
+    if (key === 'quiet') { if (soberOn()) soberQuiet(); else playVideo('gg-paced-now'); return; }
+    if (key === 'look') { lsAct('look'); return; }
+    if (key === 'ls:meals' || key === 'ls:rest') { lsAct('basics'); return; }
     if (key === 'pray') { openGGN(); return; }
     if (key === 'talk') { var r = todayRec(homeRec()); r.q = (+r.q || 0) + 1; saveHome(); refreshPane(); }
   }
@@ -1885,7 +2098,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=b912';
+  var RECIPES_JS = '/recipes/recipes.js?v=b917';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -2360,23 +2573,44 @@
 
   /* ---------- suggestions for the Growing Edges, from the lead tree's own practice library ---------- */
   function wpLib(tree) { var src = PRAC[tree]; return src ? window[src[1]] || null : null; }
+  /* BLD 916: the first 90 days of Living Sober (or the Early Days stage). The plan leads with Bark and Leaves; Roots and
+     Branches join on week 3 (the Start Lighter rhythm), and the tree's Living Sober practices for the stage are offered first. */
+  var WP_LATE = ['roots', 'branches'];
+  function wpSober() {
+    if (!S.id || !S.p || isKid(S.p)) return false;
+    var l = obj(obj(GGP.data(S.id)).life), st = l.sober || ''; if (arr(l.ids).indexOf('sober') < 0 || st === 'love') return false;
+    if (st === 'early') return true;
+    var sd = soberDate(), c = sd ? soberCount(sd) : null; return !!(c && c.days < 90);
+  }
+  function wpSoberFit(fl) { if (arr(fl.life).indexOf('sober') < 0) return false; var st = soberStage(), on = arr(fl.sober); return !on.length || !st || on.indexOf(st) >= 0; }
+  /* GGLife.soberSteps ideas for the stage, by part (shown with the practices; the person still picks which to keep). */
+  function wpSoberIdeas(tree) {
+    var L = window.GGLife; if (!L || typeof L.soberSteps !== 'function') return [];
+    var out = []; ['bark', 'leaves', 'roots', 'branches'].forEach(function (k) { try { arr(L.soberSteps(tree, k)).forEach(function (x) { if (x) out.push({ part: k, t: String(x) }); }); } catch (e) {} });
+    return out;
+  }
   function wpSuggest() {
-    var d = WP.d, tree = d.lead, ck = lastCheckin(S.id, tree), P = wpLib(tree); if (!ck || !P) return [];
+    var d = WP.d, tree = d.lead, ck = lastCheckin(S.id, tree), P = wpLib(tree), sob = wpSober(); if ((!ck && !sob) || !P) return [];
     var ed = edgesOf(ck), parts = ed.edges.filter(isTend).slice(0, 2); if (!parts.length && ed.lead) parts = [ed.lead];
+    if (sob) parts = ['bark', 'leaves'].concat(WP_LATE);
     var ses = wpSessions(d), out = [], RW = { d: 'daily', w: 'weekly', f: 'a few times a week', n: 'now and then' };
     parts.forEach(function (part) {
       var def = arr(P.DOMAIN_DEFS).filter(function (x) { return x.key === part; })[0]; if (!def) return;
-      var seen = {}, list = [];
+      var seen = {}, list = [], late = sob && WP_LATE.indexOf(part) >= 0;
       arr(def.restore).concat(arr(obj(P.NEW)[part])).forEach(function (r, i) {
-        var name = Array.isArray(r) ? r[0] : r && (r.name || r.n), pid = part + '|' + name;
-        if (!name || seen[name] || WP_SKIP.test(name) || PRAC_SKIP.test(name) || arr(obj(obj(P.FLAGS)[pid]).life).indexOf('sober') >= 0) return; seen[name] = 1;
+        var name = Array.isArray(r) ? r[0] : r && (r.name || r.n), pid = part + '|' + name, fl = obj(obj(P.FLAGS)[pid]), sf = arr(fl.life).indexOf('sober') >= 0;
+        if (!name || seen[name] || PRAC_SKIP.test(name)) return;
+        if (sob ? (sf ? !wpSoberFit(fl) : WP_SKIP.test(name)) : (WP_SKIP.test(name) || sf)) return; seen[name] = 1;
         var f = wpFill(pid, d, ses), r0 = wpRhythm(pid, tree);
         var vd = obj(rhythmInfo(tree, pid)).vid;
-        list.push({ pid: pid, part: part, n: name, fill: f ? f.label : '', vid: typeof vd === 'string' ? vd : '', why: plabel(part) + ' ' + (ed.edges.indexOf(part) >= 0 ? 'Growing Edge' : 'Steady') + (r0 !== 'd' ? ' · ' + RW[r0] : ''), i: i, rank: (f ? 0 : 2) + (r0 === 'n' ? 1 : 0) });
+        list.push({ pid: pid, part: part, n: name, fill: f ? f.label : '', vid: typeof vd === 'string' ? vd : '', late: late, sober: sob && sf,
+          why: plabel(part) + ' ' + (sob && sf ? '· Living Sober' : ed.edges.indexOf(part) >= 0 ? 'Growing Edge' : 'Steady') + (late ? ' · joins on week 3' : '') + (r0 !== 'd' ? ' · ' + RW[r0] : ''), i: i, rank: (sob && sf ? -3 : 0) + (f ? 0 : 2) + (r0 === 'n' ? 1 : 0) });
       });
       // BLD 914: one Mindful Moment for the part (a practice with its own guided video) joins the first few offered.
-      var mm = list.filter(function (x) { return x.vid && !x.fill; })[0]; if (mm) mm.rank = 1;
+      var mm = list.filter(function (x) { return x.vid && !x.fill && !x.sober; })[0]; if (mm) mm.rank = Math.min(mm.rank, 1);
       // A mix: up to two the plan already fills, then ones with a card of their own (daily and weekly before now and then).
+      // BLD 916: on the sober path, the Living Sober practices lead each part.
+      if (sob) { out = out.concat(list.sort(function (a, b) { return a.rank - b.rank || a.i - b.i; }).slice(0, late ? 2 : 3)); return; }
       var n = parts.length > 1 ? 3 : 6, filled = list.filter(function (x) { return x.fill; }).slice(0, Math.min(2, n - 1)), own = list.filter(function (x) { return !x.fill; }).sort(function (a, b) { return a.rank - b.rank || a.i - b.i; });
       out = out.concat(filled.concat(own).slice(0, n).concat(list.filter(function (x) { return x.fill && filled.indexOf(x) < 0; })).slice(0, n));
     });
@@ -2389,7 +2623,10 @@
     planList(S.id, d.lead).forEach(function (x) { inPlan[x.pid] = 1; });
     sug.forEach(function (x) { if (inPlan[x.pid]) picks[x.pid] = 1; });
     if (w.saved) arr(w.prac).concat(arr(w.pend)).forEach(function (pid) { if (sug.some(function (x) { return x.pid === pid; })) picks[pid] = 1; });
-    else {
+    else if (wpSober()) {
+      // BLD 916: one for Bark and one for Leaves to begin; Roots and Branches wait for the person to choose them.
+      ['bark', 'leaves'].forEach(function (k) { var x = sug.filter(function (q) { return q.part === k; })[0]; if (x) picks[x.pid] = 1; });
+    } else {
       // One filled practice for each Growing Edge first (they add nothing to Today), then a second, up to three.
       var n = Object.keys(picks).length, byPart = {};
       sug.forEach(function (x) { if (n < 3 && x.fill && !picks[x.pid] && !byPart[x.part]) { picks[x.pid] = 1; byPart[x.part] = 1; n++; } });
@@ -2428,14 +2665,14 @@
     var picks = wpPicks(), was = {}, ses = wpSessions(d);
     planList(S.id, d.lead).forEach(function (x) { was[x.pid] = 1; });
     var add = picks.filter(function (p) { return !was[p]; });
-    var wait = light ? add.filter(function (p) { return !wpFill(p, d, ses); }) : [];
+    var sob = wpSober(), wait = add.filter(function (p) { return (light && !wpFill(p, d, ses)) || (sob && WP_LATE.indexOf(p.split('|')[0]) >= 0); });
     var now0 = add.filter(function (p) { return wait.indexOf(p) < 0; });
     var drop = Object.keys(obj(d.prac0)).filter(function (p) { return d.prac0[p] && !d.prac[p] && was[p]; });
     addPicks(d.lead, now0, drop);
     var mon = addDays(today(), -((parse(today()).getDay() + 6) % 7));
     var hasLater = wait.length || WP_SPIRIT.some(function (x) { return d.spirit[x.id]; });
     h.way = { v: 1, lead: d.lead, spirit: Object.assign({}, d.spirit), prac: picks.filter(function (p) { return wait.indexOf(p) < 0; }), pend: wait,
-      light: light && hasLater ? 1 : 0, join: light && hasLater ? addDays(mon, 14) : '', joined: '', note: 0, saved: obj(WP.snap.way ? JSON.parse(WP.snap.way) : null).saved || '', draft: 1, u: Date.now() };
+      light: (light || sob) && hasLater ? 1 : 0, join: (light || sob) && hasLater ? addDays(mon, 14) : '', joined: '', note: 0, saved: obj(WP.snap.way ? JSON.parse(WP.snap.way) : null).saved || '', draft: 1, u: Date.now() };
     saveHome();
   }
   function wpSave() {
@@ -2526,8 +2763,12 @@
       wpInitPicks();
       var sug = WP.sug, picks = wpPicks().length, inPlan = {};
       planList(S.id, d.lead).forEach(function (x) { inPlan[x.pid] = 1; });
-      b = wpK('Practices · for your Growing Edges', 'leaves') + wpH('A few to tend');
-      if (!sug.length) b += '<p class="hm-wp-lead">' + (lastCheckin(S.id, d.lead) ? 'Your ' + esc(t.n) + ' practices are a tap away in your growth plan, anytime.' : 'Your first check-in brings suggestions for your Growing Edges. Every practice in your ' + esc(t.n) + ' stays a tap away in your growth plan.') + '</p>';
+      var sob6 = wpSober(), ideas = sob6 ? wpSoberIdeas(d.lead) : [];
+      b = wpK(sob6 ? 'Practices · Living Sober, your first 90 days' : 'Practices · for your Growing Edges', 'leaves') + wpH('A few to tend');
+      if (sob6 && sug.length) b += '<p class="hm-wp-lead">Bark and Leaves lead your first 90 days: a steady mind and a body that rests, eats, and moves well. Roots and Branches join on week 3. Pick up to four.</p><div class="hm-wp-list">' + sug.map(function (x) {
+        return '<button type="button" class="hm-wp-tile" data-hm-wp="pr:' + esc(x.pid) + '" aria-pressed="' + !!d.prac[x.pid] + '" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)"><b>' + esc(x.n) + '</b><small>' + esc(x.why) + '</small>' + (x.fill ? '<span class="covered">' + esc(x.fill) + '</span>' : '') + (x.vid && !x.fill ? '<span class="covered">With a guided video</span>' : '') + (inPlan[x.pid] ? '<span class="inplan">In your growth plan</span>' : '') + '</button>';
+      }).join('') + '</div>' + (ideas.length ? '<div class="hm-wp-card hm-wp-ideas">' + wpK('Ideas for this season') + '<ul>' + ideas.map(function (x) { return '<li style="--c:var(--' + x.part + ')"><b>' + esc(plabel(x.part)) + '</b> ' + esc(x.t) + '</li>'; }).join('') + '</ul></div>' : '') + '<p class="hm-wp-lead sm">' + picks + ' of 4 chosen. Every practice in your tree stays a tap away.</p>';
+      else if (!sug.length) b += '<p class="hm-wp-lead">' + (lastCheckin(S.id, d.lead) ? 'Your ' + esc(t.n) + ' practices are a tap away in your growth plan, anytime.' : 'Your first check-in brings suggestions for your Growing Edges. Every practice in your ' + esc(t.n) + ' stays a tap away in your growth plan.') + '</p>';
       else b += '<p class="hm-wp-lead">Pick up to three. Some are already part of your plan, so they count without adding a thing.</p><div class="hm-wp-list">' + sug.map(function (x) {
         return '<button type="button" class="hm-wp-tile" data-hm-wp="pr:' + esc(x.pid) + '" aria-pressed="' + !!d.prac[x.pid] + '" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)"><b>' + esc(x.n) + '</b><small>' + esc(x.why) + '</small>' + (x.fill ? '<span class="covered">' + esc(x.fill) + '</span>' : '') + (x.vid && !x.fill ? '<span class="covered">With a guided video</span>' : '') + (inPlan[x.pid] ? '<span class="inplan">In your growth plan</span>' : '') + '</button>';
       }).join('') + '</div><p class="hm-wp-lead sm">' + picks + ' of 3 chosen. Every practice in your tree stays a tap away.</p>';
@@ -2538,6 +2779,7 @@
       b = wpK('Start small') + wpH(big ? 'A full plan. Start lighter?' : 'A good size to start') +
         (big ? '<p class="hm-wp-lead">Your busiest day holds ' + m + ' items. Habits stick best a few at a time, so many people begin with the core of the plan and add the rest after two good weeks.</p><div class="hm-wp-nudge"><b>Start lighter:</b> movement, meditation, and dinner first. Spirit and practices join on week 3, and the plan reminds you.</div>'
           : '<p class="hm-wp-lead">Your busiest day holds ' + m + (m === 1 ? ' item' : ' items') + '. That is a steady, doable start.</p>') +
+        (wpSober() ? '<div class="hm-wp-nudge"><b>Living Sober:</b> Bark and Leaves lead your first two weeks. Roots and Branches, with your spirit choices, join on week 3, and the plan reminds you.</div>' : '') +
         '<div class="hm-wp-card">' + wpRow('move', d.moves.map(function (x) { return x === 'strength' ? 'Strength' : x === 'cardio' ? 'Cardio' : FLOW_NAME[WP_MSTYLE[x]]; }).join(', ') + ', ' + d.days + ' days', wpWork(d) ? (d.level === 'gentle' || wpHold(info) ? 'Gentle level' : '12-week program, ' + d.mins + ' min') + (d.flowStyles.length ? ', the rest on other days' : '') : 'About 20 minutes each, taking turns') +
         wpRow('bark', 'Meditation', d.med === 'later' ? 'Later' : WP_MED[d.med].charAt(0) + WP_MED[d.med].slice(1).toLowerCase() + ', ' + d.medTime) +
         wpRow('roots', 'Spirit', sps.length ? sps.join(', ') : 'Later') + wpRow('plate', 'Table', d.food === 'yes' ? 'Dinners for ' + d.household : 'Later') +
@@ -2616,7 +2858,7 @@
     document.documentElement.classList.add('hm-planned');
     try { history.pushState({ hmPlan: 1 }, '', location.pathname + location.hash); } catch (e) {}
     var src = PRAC[S.tree];
-    Promise.all([loadTending(), src ? load(src[0]) : Promise.resolve(), Promise.all(wpTrees().map(function (tr) { return PRAC[tr] ? load(PRAC[tr][0]) : null; }))]).then(function () {
+    Promise.all([loadTending(), src ? load(src[0]) : Promise.resolve(), wpSober() ? load(SOBER_JS[0]) : null, Promise.all(wpTrees().map(function (tr) { return PRAC[tr] ? load(PRAC[tr][0]) : null; }))]).then(function () {
       if (!WP.open) return;
       if (S.tendInit !== S.id) initTending();
       WP.d = wpDraft(); paintPlan();
@@ -2663,7 +2905,7 @@
     if (k === 'ck') { d.check[p[1]] = p[2] === '1'; if (wpHold(info)) d.level = 'gentle'; paintPlan(true); return; }
     if (k === 'cleared') { d.cleared = !d.cleared; paintPlan(true); return; }
     if (k === 'sp') { d.spirit[p[1]] = d.spirit[p[1]] ? 0 : 1; if (!d.spirit[p[1]]) delete d.spirit[p[1]]; paintPlan(true); return; }
-    if (k === 'pr') { var pid = a.slice(3); if (d.prac[pid]) d.prac[pid] = 0; else if (wpPicks().length >= 3) { toast('Up to three to start. Every practice in your tree stays a tap away.'); return; } else d.prac[pid] = 1; paintPlan(true); return; }
+    if (k === 'pr') { var pid = a.slice(3), most = wpSober() ? 4 : 3; if (d.prac[pid]) d.prac[pid] = 0; else if (wpPicks().length >= most) { toast((most === 4 ? 'Up to four' : 'Up to three') + ' to start. Every practice in your tree stays a tap away.'); return; } else d.prac[pid] = 1; paintPlan(true); return; }
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-hm-wp],[data-hm-wpopen],[data-hm-wpnote]'); if (!t) return;
@@ -3208,7 +3450,8 @@
     tend: ['Grounded Nutrition and Grounded Fitness', 'Membership opens meal plans, My Menu, one shopping list, Sunday Together Prep, Grounded Cooking in your plan, health numbers, the 12-week program, and every guided workout with a coach.'],
     library: ['Grow Deeper', 'Membership opens the Grounded Meditation library, Grounded Spirit programs, Grounded Relationships programs, Grounded Seasons, and every Grounded Story read aloud.'],
     numbers: ['Your Health Numbers', 'Membership opens Labs, the LDL Path, My Heart Risk, and PREVENT, kept on this device inside your locked profile.'],
-    sober: ['Living Sober, the Whole Year', 'Membership opens daily words for every day of the year, Living Sober Together, and My Week trends.']
+    // BLD 916: all of Living Sober is open to everyone, a gift from Grounded; day 90 invites the rest of The Grounded Way.
+    sober: ['The Rest of The Grounded Way', 'Living Sober stays open to you, a gift from Grounded. When you are ready, The Grounded Way grows with you: Tending for meals and movement, Grounded Recipes, and the full Library.']
   };
   function inviteHtml(id, cls) {
     var x = INVITE[id]; if (!x) return '';
@@ -3337,7 +3580,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b914a', next: '/shared/home/nextsteps.js?v=b912', legacy: '/shared/home/legacy.js?v=b912', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b912', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b916', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b916', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -3439,15 +3682,13 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b911r'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b916'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
-    var go = function () {
-      if (!window.GGSober) return;
-      if (!soberTools.on) { soberTools.on = true; try { GGSober.init(soberTree(), { open: function () {}, create: function () { return GGP.createDialog().then(function () { render(); }); }, openProfile: function () { return GGP.openDialog().then(function () { render(); }); }, helper: function () { return false; } }); } catch (e) { console.error(e); } }
-      if (kind === 'anchor') GGSober.anchor(soberTree(), false); else if (kind) GGSober.together(soberTree(), kind);
-    };
-    return load(WORDS_SRC).then(function () { return load(SOBER_JS[0]); }).then(function () { return load(SOBER_JS[1]); }).then(go).catch(function () {});
+    return soberReady().then(function (G) {
+      if (!G) return;
+      if (kind === 'anchor') G.anchor(soberTree(), false); else if (kind === 'wave' && G.wave) G.wave(soberTree()); else if (kind) G.together(soberTree(), kind);
+    }).catch(function () {});
   }
   function readDoor() {
     DOOR = null;
@@ -3520,7 +3761,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b913';
+  var LEARN_JS = '/shared/gg-learn.js?v=b916';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -3870,7 +4111,7 @@
       if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }
       else mDialog(T.title, html);
     };
-    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b911r')]).then(go);
+    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b916')]).then(go);
   }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;
