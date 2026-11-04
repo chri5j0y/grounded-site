@@ -15,6 +15,8 @@
      path in three chapters (Days 1 to 30 Today Is Enough, 31 to 60 Growing Strong, 61 to 90 A Life You Love), each a
      <details> of day tiles (#chapter-1 to 3, every tile keeps id day-<n>), Ride the Wave beside them (#wave), cards that
      rise in on scroll (only when motion is welcome).
+   BLD 918: Write It Out, Walk It Out, Talk It Out, Pray It Out (#four), four cards in tree part colors from shared/sober-four.js
+     (window.GGSoberFour), with the Practice: Chris Joy line from GGSources.line when shared/gg-sources.js is here.
    Links that open a video: #watch=<lesson id> (Start Here) and #day=<n> (Early Days). The video waits on its Play button.
    Nothing personal is kept here. The viewer's choices stay in the apps' locked vault.
    ===================================================================== */
@@ -266,14 +268,28 @@
   function openFromHash() { var m = /^#chapter-(\d)$/.exec(location.hash) || null; if (m) { var d = openChapter(m[1]); if (d) d.scrollIntoView({ block: 'start' }); } }
   window.addEventListener('hashchange', openFromHash);
 
+  /* ---------- BLD 918: the four step practice ---------- */
+  function four() {
+    var host = $('#ls-four'), F = window.GGSoberFour; if (!host || !F || !F.steps) return;
+    var e = function (t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var lead = $('#ls-four-lead'); if (lead && F.lead) lead.textContent = F.lead;
+    host.innerHTML = '<div class="ls-fourg">' + F.steps.map(function (st) {
+      return '<div class="ls-fourc p-' + e(st.part) + '" id="four-' + e(st.key) + '"><span class="ls-part">' + e(st.partName) + '</span><h3>' + e(st.title) + '</h3><p>' + e(st.line) + '</p>'
+        + (st.how && st.how.length ? '<ol>' + st.how.map(function (h) { return '<li>' + e(h) + '</li>'; }).join('') + '</ol>' : '') + '</div>';
+    }).join('') + '</div>';
+    var src = $('#ls-four-src'); if (!src) return;
+    var line = window.GGSources && GGSources.line ? GGSources.line(F.sources || []) : '';
+    if (line) src.innerHTML = line; else src.textContent = F.credit || '';
+  }
+
   function boot() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-ls-watch],[data-ls-share-watch]'), function (b) { b.hidden = false; });
-    words(); days(); more(); together(); fromLink();
+    words(); days(); more(); together(); four(); fromLink();
     chips(); rise();
   }
   window.GGLivingSober = { watch: watch, playDay: playDay, start: START, words: words, days: days, close: close };
   // The words and the thirty days are separate files; draw what is here now, and again as each arrives.
   function whenLoaded(test, fn) { if (test()) return fn(); var n = 0, iv = setInterval(function () { if (test() || ++n > 40) { clearInterval(iv); if (test()) fn(); } }, 150); }
-  function start() { boot(); whenLoaded(function () { return !!window.GGSoberWords; }, words); whenLoaded(function () { return !!window.GGSoberMore; }, function () { more(); together(); }); whenLoaded(function () { return !!(window.GGSober30 && GGSober30.lessons); }, function () { Array.prototype.forEach.call(document.querySelectorAll('[data-ls-wave]'), function (b) { b.hidden = !GGSober30.wave; }); days(); fromLink(); openFromHash(); }); }
+  function start() { boot(); whenLoaded(function () { return !!window.GGSoberFour; }, four); whenLoaded(function () { return !!window.GGSources; }, four); whenLoaded(function () { return !!window.GGSoberWords; }, words); whenLoaded(function () { return !!window.GGSoberMore; }, function () { more(); together(); }); whenLoaded(function () { return !!(window.GGSober30 && GGSober30.lessons); }, function () { Array.prototype.forEach.call(document.querySelectorAll('[data-ls-wave]'), function (b) { b.hidden = !GGSober30.wave; }); days(); fromLink(); openFromHash(); }); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
