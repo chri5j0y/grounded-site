@@ -56,23 +56,6 @@ const FLDH = () => { const f = FX(); if (f && f.public) return f; const h = f &&
 const PUB = () => { const f = FX(); return !!(f && f.public); };
 const PLIB = () => { const f = FX(); return f && f.public ? f : null; };
 const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
-// BLD 916, Living Sober Path: Living Sober is on when this profile holds a sober date (vault life.soberDate, read the way Home
-// reads it; Someone I Love keeps its own path) or the Field Guide's Living Sober on Today bridge is on. SOBER_DAY(): the day
-// count, Day One on the sober date, 0 when no date is known. SOBER_EARLY(): the first 90 days, or the bridge with no date.
-const SOBER_DATE = () => { if (!(PUB() || C.host === 'home')) return ''; try { const P = window.GGP, a = P && P.active && P.active(), l = a && (P.data(a.id) || {}).life;
-  return l && l.sober !== 'love' && /^\d{4}-\d{2}-\d{2}$/.test(String(l.soberDate || '')) ? l.soberDate : ''; } catch(e){ return ''; } };
-const SOBER_ON = () => { if (SOBER_DATE()) return true; const d = D(), b = d && d.health && d.health.set && d.health.set.bridges; return !!(b && b.sober); };
-const SOBER_DAY = () => { const s = SOBER_DATE(); if (!s) return 0; const a = new Date(s + 'T12:00'), n = new Date(); n.setHours(12, 0, 0, 0); return Math.max(1, Math.round((n - a) / 86400000) + 1); };
-const SOBER_EARLY = () => SOBER_ON() && (SOBER_DAY() ? SOBER_DAY() <= 90 : true);
-// The meal plan goals: Steady Energy leads while Living Sober is on, until the person chooses goals of their own (set.goalsMine,
-// marked by a tap on a goal). Worked out each time, so it eases back the moment Living Sober is off.
-const SOBER_TEXT = {
-  goals: 'For early sobriety: Steady Energy leads your meals, with regular meals and whole food for an even mood and steady energy. Choose any goals you like.',
-  level: 'For early sobriety: Root or Gentle, with a morning walk, is a strong start for deeper sleep and a brighter mood. Choose the level that fits you.',
-  work: 'For early sobriety: an easy, steady pace this morning, for deeper sleep and a brighter mood.',
-  walk: 'For early sobriety: 10 to 20 minutes outside in the morning light, at an easy pace, for deeper sleep and a brighter mood.',
-  move: 'For early sobriety: morning movement leads your day. A morning walk or an easy session helps sleep, mood, and steady energy.'};
-function goalsNow(s){ s = s || ((D() || {}).health || {}).set || {}; const g = arr(s.goals).length ? arr(s.goals) : ['well']; return SOBER_ON() && !s.goalsMine ? ['energy'].concat(g.filter(x => x !== 'energy')) : g; }
 // The painted cards (shared/heroes/way/): a host may pass C.asset(path); otherwise the site root is worked out from this script's address.
 const ROOT0 = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('../', s).href : '/'; } catch(e){ return '/'; } })();
 const asset = p => { try { if (C.asset) return C.asset(p); } catch(e){} return ROOT0 + p; };
@@ -617,11 +600,6 @@ function agenda(d){
   const track = H().set.track || 'strength', pr = practiceFor(d);
   if (flowDaily() && pr && !flowRest(d, ses && n >= 1)) out.push({key: 'prac', k: 'prac', hour: 14.5, kick: 'After work', title: pr.title || 'Flow', sub: (pr.mins ? pr.mins + ' minutes. ' : '') + (pr.focus || ''), btn: 'Start Flow', did: true});
   if (workOn() && ses && n >= 1) out.push({did: true, key: 'work:' + ses.id, k: 'work', v: ses.id, hour: 6.5, kick: 'Morning', title: ses.title || ('Session ' + ses.id), sub: (ses.mins ? ses.mins + ' minutes. ' : '') + (lightOn(d) ? 'A lighter week: ease off a little.' : (ses.lead || '')), btn: 'Start Workout'});
-  // BLD 916, Living Sober Path (Chris: "morning walk or gentle session first for sleep and mood"): in the first 90 days the
-  // morning leans gentle. A morning workout carries a short For Early Sobriety line; a day with no morning workout opens with a
-  // Morning Walk to check off (no new audio). The person's own level, place, and minutes stay exactly as they chose.
-  if (SOBER_EARLY() && !KIT()){ const w = out.find(x => x.k === 'work'); if (w) w.sub = (w.sub ? w.sub + ' ' : '') + SOBER_TEXT.work;
-    else out.push({key: 'walk', k: 'mark', hour: 6.5, kick: 'Morning', title: 'Morning Walk', sub: SOBER_TEXT.walk, btn: 'I Walked'}); }
   // Meditation for every track (Chris, October 24, 2026: "and off the meditations to her as well"): the Flow track gets it in the evening.
   if (track === 'practice' && MED() && medOn(d)){ const m1 = medFor(d); out.push({did: true, key: 'med', k: 'med', hour: 20.5, kick: 'This evening', title: 'Meditation', sub: (m1 && m1.title ? m1.title + '. ' : '') + medMins(n) + ' minutes with a candle and calm music.', btn: 'Start'}); }
   // Seven days a week (Chris, October 24, 2026: "make them 7 days a week"); weekday mornings after the shower, weekend mornings too.
@@ -981,7 +959,7 @@ function actTool(a, v){
   if (actHol(a, v)) return true;
   switch (a){
     case 'go': return openKey(v), true;
-    case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (l[v]){ if (v.startsWith('work:') || v === 'walk') checkOn('move'); if (v === 'prac' || v === 'med') checkOn('still'); } save(); rerender(true); return true; }
+    case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (l[v]){ if (v.startsWith('work:')) checkOn('move'); if (v === 'prac' || v === 'med') checkOn('still'); } save(); rerender(true); return true; }
     case 'work': return openOv(buildWork(v)), true;
     case 'cook': { const [w, id] = v.split('|'); openCook(w, id); return true; }
     case 'idea': { const [ty, ix] = v.split('|'); openIdea(ty, ix); return true; }
@@ -2439,7 +2417,7 @@ function vTodayT(lib){
   const chips = kit || plan ? (before ? `<span class="tn-chip">Starts ${esc(shortDate(s0))}</span>` : `<span class="tn-chip">Week ${n}</span>${U('food') ? `<span class="tn-chip g">${ic('leaf')}Food Week ${letter(foodWeek(d))}</span>` : ''}`) : '';
   const hero = `<div class="tn-hero"><svg class="tn-sky" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">${outdoors(skyAt(hr), 400, 300, {flip: true})}</svg>
     <div class="in"><div class="greet">${ic(hr < 17 ? 'sunrise' : 'moon')}<span>${esc(greet)}</span></div><h2 class="day">${esc(DOWL[d.getDay()])}</h2><div class="date">${esc(MONTHS[d.getMonth()] + ' ' + d.getDate())}</div>${chips ? `<div class="chips">${chips}</div>` : ''}</div></div>`;
-  const nowBtn = x => x.k === 'quiet' ? `data-hja="quiet" data-hjv=""` : x.key === 'walk' ? `data-hja="toggle" data-hjv="walk"` : x.k === 'supp' ? `data-hja="suppall" data-hjv="${esc(x.v)}"` : `data-hja="go" data-hjv="${esc(x.key)}"`;
+  const nowBtn = x => x.k === 'quiet' ? `data-hja="quiet" data-hjv=""` : x.k === 'supp' ? `data-hja="suppall" data-hjv="${esc(x.v)}"` : `data-hja="go" data-hjv="${esc(x.key)}"`;
   const nowCardT = cur ? `<div class="tn-card tn-now ${ACC[cur.k] || 'a-today'}"><div class="tn-k">Right Now · ${esc(cur.kick)}</div><div class="row"><div style="min-width:0;flex:1"><h3>${esc(cur.title)}</h3><div class="tn-sub">${esc(cur.sub || '')}</div></div><div class="art">${scene(SCN[cur.k] || 'work', cur.hour)}</div></div>
       <button type="button" class="tn-btn big pulse" ${nowBtn(cur)}>${ic(cur.k === 'quiet' ? 'clock' : cur.k === 'supp' ? 'check' : 'play')}<span>${esc(cur.btn)}</span></button>${cur.did ? `<button type="button" class="linkbtn tn-did" data-hja="toggle" data-hjv="${esc(cur.key)}">I Did It on My Own</button>` : ''}</div>`
     : `<div class="tn-card tn-now a-today"><div class="tn-k">Right Now</div><h3>Everything for today is tended.</h3><p class="tn-sub">Rest well. Tomorrow keeps growing.</p></div>`;
@@ -2512,7 +2490,7 @@ function vKitchen(){
 // Public: GGTendPublic.recipes. The Field Guide, a moved plan, and the Family Kitchen: every week's dinners (one of each)
 // plus the breakfasts, lunches, and snacks that carry steps. A recipe opened here uses an idea key ('idea:recipe:<id>'),
 // so finishing it marks only that recipe; tonight's dinner opens as tonight's dinner.
-const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['party', 'Party Food'], ['sauce', 'Sauces and Dressings'], ['drink', 'Sober Drinks']];
+const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['party', 'Party Food'], ['sauce', 'Sauces and Dressings'], ['drink', 'Drinks']];
 const R_GOALS = [['heart', 'Heart'], ['energy', 'Energy'], ['strength', 'Strength'], ['weight', 'Weight'], ['well', 'Well']];
 const R_FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
 const R_ICO = {
@@ -2900,11 +2878,11 @@ function act(a, v){
       toast(up ? 'Week 1 of 12 at ' + LVL_NAME[up] + '. Here we grow.' : 'Week 1 of 12. Here we grow.'); rerender(true); return; }
     case 'ptrack': { const t = ['strength', 'cardio', 'mixed'].includes(v) ? v : 'strength'; if (progTrack() !== t){ h.set.track = t; h.set.progStart = ymd(monOf(new Date())); h.set.u = Date.now(); PA = null; save(); toast('Your ' + {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'}[t] + ' track starts at Week 1.'); } rerender(true); return; }
     case 'pcdays': h.set.cardioDays = +v === 2 ? 2 : 1; h.set.u = Date.now(); PA = null; save(); rerender(true); return;
-    case 'goal': { const s = S.set; if (!s) return; s.goals = arr(s.goals); s.goalsMine = true; s.goals = s.goals.includes(v) ? s.goals.filter(x => x !== v) : s.goals.concat(v); rerender(true); return; }
+    case 'goal': { const s = S.set; if (!s) return; s.goals = arr(s.goals); s.goals = s.goals.includes(v) ? s.goals.filter(x => x !== v) : s.goals.concat(v); rerender(true); return; }
     case 'setup-save': { const s = S.set || {}, hh = num(s.household);
       // BLD 892: the track (Strength, Cardio, Mixed, Flow only), Flow on the days, and the cardio days; a new track starts at Week 1.
       const sd = parseD(s.start), was = h.set.u, tr0 = progTrack(), track = s.track || 'strength', tr1 = track === 'cardio' || track === 'mixed' ? track : 'strength';
-      h.set = Object.assign({}, h.set, {who: s.who || '', track, flow: track !== 'practice' && (Array.isArray(s.flowStyles) ? s.flowStyles.length > 0 : !!s.flow), flowStyles: Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowStyles.includes(x)) : h.set.flowStyles, cardioDays: +s.cardioDays === 2 ? 2 : 1, start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalsMine: !!s.goalsMine, goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()}); delete h.set.needSetup;
+      h.set = Object.assign({}, h.set, {who: s.who || '', track, flow: track !== 'practice' && (Array.isArray(s.flowStyles) ? s.flowStyles.length > 0 : !!s.flow), flowStyles: Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowStyles.includes(x)) : h.set.flowStyles, cardioDays: +s.cardioDays === 2 ? 2 : 1, start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()}); delete h.set.needSetup;
       if (Array.isArray(s.moves) && s.moves.length) setMoves(h.set, s.moves);
       if (was && tr1 !== tr0 && PROG()) h.set.progStart = ymd(monOf(new Date())); if (!was) markNew();
       save(); S.setup = false; S.set = null; if (S.sec !== 'numbers') S.sec = 'today'; S.ov = null; toast('Saved. Welcome to Tending.'); rerender(false); return; }
@@ -2923,8 +2901,6 @@ function act(a, v){
 // =====================================================================
 function startToday(d){
   const sp = startPicks(d), out = [];
-  // BLD 916: Living Sober is open to everyone, so its Morning Walk shows on Start as well (first 90 days, when Move is in use).
-  if (SOBER_EARLY() && U('move')) out.push({key: 'walk', when: 'Morning', hour: 6.5, title: 'Morning Walk', sub: SOBER_TEXT.walk, btn: 'I Walked', done: isDone(d, 'walk'), tint: TINT.move, kind: 'walk', image: WAY(MOVE_ART.walk)});
   if (sp.flow) out.push({key: 'pracid:' + sp.flow.id, when: 'Today', hour: 7, title: sp.flow.title || 'Flow', sub: (sp.flow.mins ? sp.flow.mins + ' minutes. ' : '') + (sp.flow.focus || ''), btn: 'Begin', done: isDone(d, 'prac'), tint: TINT.move, kind: 'practice', image: WAY(flowArtName(sp.flow))});
   if (sp.med) out.push({key: 'medid:' + sp.med.id, when: 'Today', hour: 7.5, title: sp.med.title || 'Meditation', sub: sp.med.focus || '', btn: 'Begin', done: isDone(d, 'med'), tint: TINT.quiet, kind: 'meditation', image: WAY(medArtFor(d))});
   return out;
@@ -2968,7 +2944,7 @@ const pubHH = () => { const s = (H() || {}).set || {}, n = (+((s.house || {}).ad
 const tableOf = () => { const hh = pubHH(); return hh ? Math.max(2, hh) : 0; };
 const sizeUp = r => { const hh = PUB() ? tableOf() : 0; return r && hh && window.GGScale && arr(r.ingredients).length ? GGScale.recipe(r, hh) : r; };
 const hhNote = serves => { const hh = tableOf(); return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
-function planSet(){ const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: goalsNow(s), kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
+function planSet(){ const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: arr(s.goals).length ? s.goals : ['well'], kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
 // The saved plan: ids only, so a library update keeps working; a change of needs, allergies, goals, or household builds it again.
 function ensurePlan(force){
   const h = H(), L = PLIB(), P = TP(); if (!h || !L || !P) return null;
@@ -3017,11 +2993,11 @@ function gentleWo(L, wk){
 function pubApp(){
   const L = PLIB(), h = H(), P = TP(); if (!L || !h) return null;
   const s = h.set, wk = Math.max(1, weekNo(new Date())), plan = P ? ensurePlan() : null;
-  const sig = JSON.stringify([s.level, s.place, s.mins, s.days, goalsNow(s), s.weightLb, s.teen, TEEN(), plan && plan.u, plan && plan.n, wk, s.house, s.gear, s.track, s.cardioDays, s.progStart, progOn() ? phaseId(Math.max(1, progWeek(new Date()))) : '']);
+  const sig = JSON.stringify([s.level, s.place, s.mins, s.days, s.goals, s.weightLb, s.teen, TEEN(), plan && plan.u, plan && plan.n, wk, s.house, s.gear, s.track, s.cardioDays, s.progStart, progOn() ? phaseId(Math.max(1, progWeek(new Date()))) : '']);
   if (PA && PA.L === L && PA.sig === sig) return PA.app;
   const app = Object.assign({}, L.app || {}), lvl = s.level || 'root';
   // Targets: the strictest of each across the chosen goals; protein by body weight when it is known (never for anyone under 18).
-  const tg = P ? P.targets(goalsNow(s), L.goals, {weightKg: TEEN() ? 0 : (+s.weightLb || 0) / 2.2046, teen: TEEN()}) : null;
+  const tg = P ? P.targets(arr(s.goals).length ? s.goals : ['well'], L.goals, {weightKg: TEEN() ? 0 : (+s.weightLb || 0) / 2.2046, teen: TEEN()}) : null;
   if (tg) app.targets = {sf: tg.sf, pro: tg.pro, fib: tg.fib, sol: tg.sol, sug: tg.sug, cal: null, na: tg.na, est: tg.est};
   // Workouts.
   const wo = {meditation: Object.assign({start: 5, end: 12}, (L.app && L.app.workouts && L.app.workouts.meditation) || {}), motivation: arr(L.motivation)};
@@ -3048,7 +3024,7 @@ function pubApp(){
   PA = {L, sig, app}; return app;
 }
 // The Daily Aims in public: the person's own targets, from their goals, with the Standards.
-function pubAims(){ const T = targets(), L = PLIB() || {}, gs = arr(L.goals).filter(g => goalsNow().includes(g.id)), f = v => Array.isArray(v) ? fmt(v[0]) + ' to ' + fmt(v[v.length - 1]) : fmt(v);
+function pubAims(){ const T = targets(), L = PLIB() || {}, gs = arr(L.goals).filter(g => arr(H().set.goals).includes(g.id)), f = v => Array.isArray(v) ? fmt(v[0]) + ' to ' + fmt(v[v.length - 1]) : fmt(v);
   return `<details class="hj-doc"${S.open['aims'] ? ' open' : ''} data-hjd="aims"><summary><span>My Daily Aims</span></summary><div class="hj-body"><ul class="hj-ing">
     <li><b>Saturated fat:</b> ${f(T.sf)} g a day or less.</li><li><b>Added sugar:</b> ${f(T.sug)} g a day or less.</li><li><b>Sodium:</b> ${Array.isArray(T.na) ? 'aim for ' + fmt(T.na[0]) + ' mg, up to ' + fmt(T.na[1]) + ' mg' : fmt(T.na) + ' mg or less'} a day.</li>
     <li><b>Fiber:</b> ${f(T.fib)} g a day or more${T.sol ? `, with about ${fmt(T.sol)} g soluble` : ''}.</li><li><b>Protein:</b> about ${f(T.pro)} g a day${TEEN() ? '' : T.est ? ' (add your weight in the start-up check for your own aim)' : ', from your weight and goals'}.</li></ul>
@@ -3058,10 +3034,9 @@ function pubAims(){ const T = targets(), L = PLIB() || {}, gs = arr(L.goals).fil
 // ---------- the start-up check ----------
 function ckDraft(){
   if (S.ck) return S.ck; const s = H().set;
-  const d = {who: s.who === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: SOBER_ON() && !s.goalsMine ? goalsNow(s) : arr(s.goals).slice(), needs: arr(s.needs).slice(),
-    goalsMine: !!s.goalsMine, autoEnergy: SOBER_ON() && !s.goalsMine && !arr(s.goals).includes('energy'),
+  const d = {who: s.who === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: arr(s.goals).slice(), needs: arr(s.needs).slice(),
     allergies: s.allergies || '', house: JSON.parse(JSON.stringify(s.house || {adults: 1, kids: []})), check: Object.assign({}, s.check || {}), cleared: !!s.cleared,
-    level: s.level || (SOBER_EARLY() ? 'root' : ''), place: s.place || 'home', mins: +s.mins || 20, gear: (Array.isArray(s.gear) ? s.gear : PLACE_GEAR[s.place] || []).slice(), gearSet: Array.isArray(s.gear),
+    level: s.level || '', place: s.place || 'home', mins: +s.mins || 20, gear: (Array.isArray(s.gear) ? s.gear : PLACE_GEAR[s.place] || []).slice(), gearSet: Array.isArray(s.gear),
     track: s.track === 'cardio' || s.track === 'mixed' ? s.track : 'strength', moves: movesOf(s), cardioDays: +s.cardioDays === 2 ? 2 : 1, days: +s.days || 3, weightLb: s.weightLb || '', sex: s.sex || '', goalLdl: s.goalLdl || '',
     lab: {date: today()}};
   return S.ck = {i: 0, d};
@@ -3083,7 +3058,7 @@ function vCheck(){
     ${C.age ? '' : `<p class="hj-sub" style="margin-top:14px">Tending keeps the focus on food and energy for anyone under 18, with no weight and no calories.</p>${chips('teen', [['false', '18 or Older'], ['true', 'Under 18']])}`}`;
   else if (step === 'use') body = `<h3>${esc(t.intro.chooseH)}</h3><p class="hj-sub">${esc(t.intro.choose)}</p>${chips('use', t.choose.map(c => [c.id, c.name]), true)}`;
   else if (step === 'goals') body = `<h3>What are you growing toward?</h3><p class="hj-sub">Choose one or more. When goals differ, Tending keeps the strictest aim of each.</p>
-    <div class="tn-ckg">${arr(L.goals).map(g => { const on = arr(d.goals).includes(g.id); return `<button type="button" class="tn-ckcard${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckset" data-hjv="goals|${esc(g.id)}|1"><b>${esc(g.name)}</b><small>${esc(g.line || '')}</small></button>`; }).join('')}</div>${SOBER_ON() ? `<p class="hj-note">${esc(SOBER_TEXT.goals)}</p>` : ''}`;
+    <div class="tn-ckg">${arr(L.goals).map(g => { const on = arr(d.goals).includes(g.id); return `<button type="button" class="tn-ckcard${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckset" data-hjv="goals|${esc(g.id)}|1"><b>${esc(g.name)}</b><small>${esc(g.line || '')}</small></button>`; }).join('')}</div>`;
   else if (step === 'food') body = `<h3>Food needs</h3><p class="hj-sub">Every recipe in your plan fits each need you choose.</p>${chips('needs', arr(L.needs).map(n => [n.id, n.name]), true)}
     ${arr(L.needs).filter(n => arr(d.needs).includes(n.id) && n.line).map(n => `<p class="hj-sub"><b>${esc(n.name)}:</b> ${esc(n.line)}</p>`).join('')}
     <label class="hj-fld" style="margin-top:12px"><span>Allergies (optional)</span><input type="text" data-hjck="allergies" value="${esc(d.allergies)}" placeholder="sesame, shellfish" autocomplete="off"></label><p class="hj-sub">${esc(L.allergyLine || '')}</p>${holPick()}`;
@@ -3099,7 +3074,7 @@ function vCheck(){
     ${K.fullScreen ? `<p class="hj-sub">${esc(K.fullScreen.t)} <a href="${esc(K.fullScreen.url)}" target="_blank" rel="noopener">Open the PAR-Q+</a></p>` : ''}`;
   else if (step === 'level'){ const T = L.templates || {}, yesHold = anyYes && !d.cleared;
     body = `<h3>Your movement path</h3>${yesHold ? `<p class="hj-note">${esc(K.yes || '')} ${esc(K.yesMore || '')}</p>` : ''}
-    <p class="hj-sub" style="margin:6px 0"><b>Level</b></p>${chips('level', LVL.filter(([v]) => !yesHold || v === 'gentle').map(([v, l]) => [v, l]))}${SOBER_EARLY() ? `<p class="hj-note">${esc(SOBER_TEXT.level)}</p>` : ''}
+    <p class="hj-sub" style="margin:6px 0"><b>Level</b></p>${chips('level', LVL.filter(([v]) => !yesHold || v === 'gentle').map(([v, l]) => [v, l]))}
     ${d.level ? `<p class="hj-sub">${esc(d.level === 'gentle' ? (L.gentle || {}).lead || '' : (T.levelLines || {})[d.level] || '')}</p>` : ''}
     ${d.level && d.level !== 'gentle' ? `${L.program && L.program.gear ? `<p class="hj-sub" style="margin:10px 0 6px"><b>My equipment</b></p><p class="hj-sub">Check what you have. Every workout uses just that.</p>
       <div class="hj-chips tn-gear" role="group" aria-label="My equipment">${arr(L.program.gear).map(g => { const on = arr(d.gear).includes(g.id); return `<button type="button" class="chip tn-ckc${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckgear" data-hjv="${esc(g.id)}">${esc(g.name)}<small>${esc(g.line || '')}</small></button>`; }).join('')}</div>
@@ -3128,7 +3103,7 @@ function ckSave(){
   const h = H(), d = S.ck.d, L = PLIB() || {}, anyYes = arr((L.check || {}).questions).some(q => d.check[q.id] === true);
   const kids = arr(d.house.kids).filter(k => k && k.band).map(k => ({id: k.id || uid(), name: String(k.name || '').trim().slice(0, 40), band: k.band, sex: k.sex || ''}));
   const was = h.set.pubDone, tr0 = progTrack(), w0 = workOn();
-  h.set = Object.assign({}, h.set, {who: d.who, teen: !C.age && d.teen === true, use: PART_IDS.filter(x => arr(d.use).includes(x)), goals: (g => g.length ? g : ['well'])(arr(d.goals).filter(x => d.goalsMine || !d.autoEnergy || x !== 'energy')), goalsMine: !!d.goalsMine, needs: arr(d.needs),
+  h.set = Object.assign({}, h.set, {who: d.who, teen: !C.age && d.teen === true, use: PART_IDS.filter(x => arr(d.use).includes(x)), goals: arr(d.goals).length ? d.goals : ['well'], needs: arr(d.needs),
     allergies: String(d.allergies || '').slice(0, 200), house: {adults: Math.max(1, Math.min(12, Math.round(+((d.house || {}).adults) || 1))), kids: d.who === 'family' ? kids : []},
     check: d.check, checkYes: anyYes, cleared: !!d.cleared, level: d.level || (anyYes && !d.cleared ? 'gentle' : 'root'), place: d.place || 'home', mins: +d.mins || 20, days: +d.days || 3,
     gear: L.program && (d.gearSet || !was) ? arr(d.gear).slice() : h.set.gear, track: d.track || 'strength', cardioDays: +d.cardioDays === 2 ? 2 : 1,
@@ -3179,7 +3154,7 @@ function pubMoveHead(){
   const tchip = (v, l, on, act) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="${act || 'ptrack'}" data-hjv="${v}">${esc(l)}</button>`;
   return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(!work ? movesLine(movesOf(s)) : lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}${prog && ph.note ? ' ' + esc(ph.note) : ''}</p>
     ${prog ? `<p class="tn-sub">${esc(gl)}</p>` : ''}<p class="tn-sub" style="margin-top:8px"><b>My movement:</b> choose any, or all.</p><div class="hj-chips" role="group" aria-label="My movement">${moveChips(movesOf(s), 'pmove')}</div>${movesOf(s).includes('strength') && movesOf(s).includes('cardio') ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}
-    ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${SOBER_EARLY() ? `<p class="hj-note">${esc(SOBER_TEXT.move)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
+    ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div>
     ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}</div>`;
 }
@@ -3373,7 +3348,7 @@ function actPub(a, v){
     case 'setup': S.setup = true; S.ck = null; ckDraft(); if (v){ const i = ckSteps(S.ck.d).indexOf(v); if (i >= 0) S.ck.i = i; } if (bareOn()){ toSetup(); return true; } rerender(false); window.scrollTo(0, 0); return true;
     case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
       if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
-      if (f === 'goals') d.goalsMine = true; rerender(true); return true; }
+      rerender(true); return true; }
     case 'ckmove': { const d = ckDraft().d, nx = moveToggle(arr(d.moves), v); if (!nx.length){ toast('Choose at least one.'); return true; } d.moves = nx; d.track = nx.includes('strength') && nx.includes('cardio') ? 'mixed' : nx.includes('cardio') ? 'cardio' : 'strength'; rerender(true); return true; }
     case 'ckgear': { const d = ckDraft().d; d.gear = arr(d.gear); d.gear = d.gear.includes(v) ? d.gear.filter(x => x !== v) : d.gear.concat(v); d.gearSet = true; rerender(true); return true; }
     case 'ckq': { const [q, val] = v.split('|'), d = ckDraft().d; d.check[q] = val === 'true'; rerender(true); return true; }
@@ -3978,7 +3953,6 @@ function apiToday(date){
   agenda(d).forEach(x => { const p = partOf(x); if (!p || !U(p)) return; const base = {key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: x.btn, done: isDone(d, x.key)};
     if (x.k === 'work' || x.k === 'prac') push(Object.assign(base, {tint: TINT.move, kind: x.k === 'work' ? 'workout' : 'practice'}));
     else if (x.k === 'med') push(Object.assign(base, {btn: 'Begin', tint: TINT.quiet, kind: 'meditation'}));
-    else if (x.k === 'mark' && x.key === 'walk') push(Object.assign(base, {tint: TINT.move, kind: 'walk', image: WAY(MOVE_ART.walk)}));
     else if (x.k === 'mark') push(Object.assign(base, {tint: TINT.move, kind: 'mark'}));
     else if (x.k === 'cook'){ const dn = dinnerFor(d); push(Object.assign(base, {when: 'Tonight', btn: dn && dn.leftover ? 'Open' : 'Cook It', tint: TINT.cook, kind: 'cook'})); }
     else if (x.k === 'shop') push(Object.assign(base, {tint: TINT.cook, kind: 'shop'}));
@@ -4007,10 +3981,10 @@ function apiToggle(key){
   if (key === 'quiet'){ const d = day(); on = d.checks.quiet = !d.checks.quiet; d.u = Date.now(); save(); }
   else if (/^supp:/.test(key)){ const d = day(), w = key.slice(5), L = supps().filter(s => (s.when === 'evening') === (w === 'evening')); on = !L.every(s => d.checks[suppId(s)]); L.forEach(s => { d.checks[suppId(s)] = on; }); d.u = Date.now(); save(); }
   else { const l = logOf(new Date()); if (l[key]) delete l[key]; else l[key] = Date.now(); on = !!l[key]; l.u = Date.now();
-    if (on && (/^(work|wl):/.test(key) || key === 'walk')) checkOn('move'); if (on && (key === 'prac' || key === 'med' || /^(pracid|medid):/.test(key))) checkOn('still'); save(); }
+    if (on && /^(work|wl):/.test(key)) checkOn('move'); if (on && (key === 'prac' || key === 'med' || /^(pracid|medid):/.test(key))) checkOn('still'); save(); }
   rerender(true); return {done: !!on};
 }
-const ITEM_RE = /^(menu|own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|walk|hol|holset|holrec)(:|$)/;
+const ITEM_RE = /^(menu|own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|hol|holset|holrec)(:|$)/;
 function apiAct(key){
   key = String(key || ''); const [k, a, b] = key.split(':'); if (!H() || !FLDH()) return null;
   if (key === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); if (bareOn()){ toSetup(); return {section: 'setup'}; } return want('setup'); }
@@ -4019,7 +3993,7 @@ function apiAct(key){
   // BLD 896: 'own' opens My Own Items, 'own:<id>' checks one off today, 'ownedit:<id>' opens it to edit.
   if (k === 'own'){ if (a) return apiToggle(key); S.ownF = null; S.ownEd = null; return want('own'); }
   if (k === 'ownedit'){ const x = OWN().items.find(i => i.id === a); S.ownF = x ? JSON.parse(JSON.stringify(x)) : null; S.ownEd = x ? x.id : null; return want('own'); }
-  if (k === 'supp' || k === 'out' || k === 'y' || k === 'rem' || k === 'walk') return apiToggle(key);
+  if (k === 'supp' || k === 'out' || k === 'y' || k === 'rem') return apiToggle(key);
   if (k === 'idea' && !ideaOv(a, b)) return apiToggle(key);
   if (/^hol(set|rec)?$/.test(k)){ const r = holAct(key); if (r) return r; }
   const o = ovFor(key); if (o){ openOv(o); return {overlay: o.k, key: o.key}; }
