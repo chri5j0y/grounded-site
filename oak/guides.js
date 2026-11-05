@@ -22,7 +22,7 @@ const LC_RINGS = [
   { key: "world", name: "Community, Country, and World", color: "#3F6E7A", blurb: "When the news comes close to home." },
   { key: "safety", name: "Safety", color: "#9C2F2F", blurb: "When someone is in danger. Start here." }
 ];
-const SAP = "https://growwithgrounded.com/maple/#talk=";
+const SAP = "https://growwithgrounded.com/home/?tree=maple&guide=";
 const L = {
   lifeline: ["988 Suicide and Crisis Lifeline", "https://988lifeline.org"],
   afsp: ["American Foundation for Suicide Prevention", "https://afsp.org"],
@@ -62,7 +62,7 @@ const L = {
   mdva: ["Minnesota Department of Veterans Affairs", "https://mn.gov/mdva/"],
   // Grow With Grounded tools named in Learn more (GWG BLD 793)
   willow: ["Willow by Grow With Grounded, for hospice", "https://growwithgrounded.com/willow/"],
-  sequoia: ["Sequoia by Grow With Grounded, for 60 and up", "https://growwithgrounded.com/sequoia/"],
+  sequoia: ["Sequoia by Grow With Grounded, for 60 and up", "https://growwithgrounded.com/home/?tree=sequoia"],
   farewell: ["Planning a Farewell by Grow With Grounded", "https://growwithgrounded.com/planning-a-farewell.html"],
   obit: ["Obituary Helper by Grow With Grounded", "https://growwithgrounded.com/obituary-helper.html"],
   eulogy: ["Eulogy Helper by Grow With Grounded", "https://growwithgrounded.com/eulogy-helper.html"]

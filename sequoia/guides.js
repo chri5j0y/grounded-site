@@ -2923,7 +2923,7 @@ const LC_TOPICS = [
    ],
    [
     "Sequoia's Legacy Book",
-    "/sequoia/#legacy"
+    "/home/?tree=sequoia#legacy"
    ]
   ]
  },
@@ -3410,7 +3410,7 @@ const LC_TOPICS = [
    ],
    [
     "Sequoia: When Your Adult Child Drinks or Uses (Living Sober)",
-    "/sequoia/#life=sober-adult-child"
+    "/home/?guide=sober-adult-child&tree=sequoia"
    ]
   ]
  },
@@ -4471,7 +4471,7 @@ const LC_TOPICS = [
   "more": [
    [
     "Sequoia Legacy Book: look back at your life, chapter by chapter",
-    "/sequoia/#legacy"
+    "/home/?tree=sequoia#legacy"
    ],
    [
     "Wrosch and colleagues, regret and quality of life (research)",
@@ -4564,7 +4564,7 @@ const LC_TOPICS = [
   "more": [
    [
     "Sequoia's Legacy Book",
-    "/sequoia/#legacy"
+    "/home/?tree=sequoia#legacy"
    ],
    [
     "Dignity in Care: dignity therapy at the end of life",
@@ -5509,7 +5509,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    ],
    [
     "Sequoia: Worry About Adult Children",
-    "/sequoia/#life=worry-adult-children"
+    "/home/?guide=worry-adult-children&tree=sequoia"
    ]
   ],
   "sources": [

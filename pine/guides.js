@@ -1716,7 +1716,7 @@ const LC_TOPICS = [
    ],
    [
     "Pine: A Parent's Drinking or Using (Living Sober)",
-    "/pine/#life=sober-parent"
+    "/home/?guide=sober-parent&tree=pine"
    ]
   ]
  },
@@ -3070,7 +3070,7 @@ const LC_TOPICS = [
    ],
    [
     "Pine: Pills, Fentanyl, and Staying Alive (Living Sober)",
-    "/pine/#life=sober-pills"
+    "/home/?guide=sober-pills&tree=pine"
    ],
    [
     "NACoA: Just for Teens",
@@ -5785,7 +5785,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "more": [
    [
     "Pine: Vaping, Drinking, and Drugs",
-    "/pine/#life=substances"
+    "/home/?guide=substances&tree=pine"
    ],
    [
     "SAMHSA National Helpline",
@@ -5999,7 +5999,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "more": [
    [
     "Pine: Vaping, Drinking, and Drugs",
-    "/pine/#life=substances"
+    "/home/?guide=substances&tree=pine"
    ],
    [
     "SAMHSA National Helpline",
@@ -6108,7 +6108,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "more": [
    [
     "Pine: A Family Member's Drinking or Drug Use",
-    "/pine/#life=family-substance"
+    "/home/?guide=family-substance&tree=pine"
    ],
    [
     "NACoA: the Seven Cs",
@@ -6311,7 +6311,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "more": [
    [
     "Pine: Vaping, Drinking, and Drugs",
-    "/pine/#life=substances"
+    "/home/?guide=substances&tree=pine"
    ],
    [
     "DEA: One Pill Can Kill",

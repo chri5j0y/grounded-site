@@ -982,7 +982,7 @@ function lcHelpHtml(t) {
 }
 // Health and Ability lines (shared/gg-life.js): information and support, always below the crisis lines.
 function lifeLinesHtml() { return window.GGLifeKit ? GGLifeKit.linesHtml('birch', x => lineHtml(x)) : ''; }
-const LC_OAK = '<p class="lc-oak no-print"><a class="text-link" href="/oak/#life">More guides in Oak</a></p>';
+const LC_OAK = '<p class="lc-oak no-print"><a class="text-link" href="/home/?tree=oak#life">More guides in Oak</a></p>';
 function renderLC(mode) {
   mode = 'client';
   const st = LCS[mode], el = document.getElementById(mode + '-life');
@@ -1228,7 +1228,7 @@ function lcSuggestHtml(scores, unsure) {
   return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
     <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps.</p>
     ${crisis}<div class="lc-links">${picks.map(t => `<button type="button" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" onclick="lcOpen('client',null)">Browse all guides</button></div>
-    <p class="lc-oak"><a class="text-link" href="/oak/#life">More guides in Oak</a></p></div>`;
+    <p class="lc-oak"><a class="text-link" href="/home/?tree=oak#life">More guides in Oak</a></p></div>`;
 }
 
 // =====================================================================
@@ -1731,7 +1731,7 @@ async function profPersist() {
   await GGP.save(PROF.id);
 }
 function profLock() { if (window.GGP) GGP.lock().then(() => showToast('Locked. Your profile is safe on this device.')); }
-const OTHER_TREE = { maple: '<a href="/maple/">Maple</a> is made for kids.', aspen: '<a href="/aspen/">Aspen</a> is made for middle schoolers.', pine: '<a href="/pine/">Pine</a> is made for high schoolers.' };
+const OTHER_TREE = { maple: '<a href="/home/?tree=maple">Maple</a> is made for kids.', aspen: '<a href="/home/?tree=aspen">Aspen</a> is made for middle schoolers.', pine: '<a href="/home/?tree=pine">Pine</a> is made for high schoolers.' };
 const TREE_NAME = { birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia' };
 function treeNow(id) { return window.GGP && GGP.tree ? GGP.tree(id) : 'birch'; }
 function renderProfileBar() {
@@ -1761,7 +1761,7 @@ function birchWho() { return window.GGP ? GGP.list().filter(p => p.age === 'adul
 function birchOthers() { return window.GGP ? GGP.list().filter(p => !(p.age === 'adult' && p.tree === 'birch')) : []; }
 function birchWhoHtml() {
   const mine = birchWho(), others = birchOthers(), adults = others.filter(p => p.age === 'adult').length;
-  const otherLine = others.length ? `<p class="pbar-kids">Other trees on this device: kids, middle schoolers, and high schoolers tend theirs in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, and <a href="/pine/">Pine</a>; adults in <a href="/oak/">Oak</a> (built for 26 to 60) and <a href="/sequoia/">Sequoia</a> (60 and up).${adults ? ' <button type="button" class="text-btn" onclick="GGP.openDialog()">Open another profile here</button>' : ''}</p>` : '';
+  const otherLine = others.length ? `<p class="pbar-kids">Other trees on this device: kids, middle schoolers, and high schoolers tend theirs in <a href="/home/?tree=maple">Maple</a>, <a href="/home/?tree=aspen">Aspen</a>, and <a href="/home/?tree=pine">Pine</a>; adults in <a href="/home/?tree=oak">Oak</a> (built for 26 to 60) and <a href="/home/?tree=sequoia">Sequoia</a> (60 and up).${adults ? ' <button type="button" class="text-btn" onclick="GGP.openDialog()">Open another profile here</button>' : ''}</p>` : '';
   if (!mine.length) return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create your own private profile, locked with a passcode only you know. Only your passcode opens it.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${otherLine}`;
   if (mine.length === 1) { const a = mine[0];
@@ -1915,7 +1915,7 @@ function moveToOak() {
     oak.history.sort((a, b) => String(a.date).localeCompare(String(b.date)));
   }
   r.movedToOak = todayKey();
-  GGP.save(PROF.id).then(() => { if (GGP.setTree) GGP.setTree(PROF.id, 'oak'); showToast('Your tree is Oak now. Birch keeps everything.'); setTimeout(() => { location.href = '/oak/'; }, 900); });
+  GGP.save(PROF.id).then(() => { if (GGP.setTree) GGP.setTree(PROF.id, 'oak'); showToast('Your tree is Oak now. Birch keeps everything.'); setTimeout(() => { location.href = '/home/?tree=oak'; }, 900); });
 }
 
 // =====================================================================
@@ -2083,7 +2083,7 @@ function gwSkillHtml(x, L) {
   if (prac) { const [part, name] = String(prac).split('|'), g = guideHtml(part, name); if (g) more += `<button type="button" class="text-btn" aria-expanded="${GX.how === x.id}" onclick="GX.how=GX.how==='${x.id}'?null:'${x.id}';renderGround()">A practice for this: ${escapeHtml(shownName(part, name))}</button>${GX.how === x.id ? `<div class="guide open bc-skill-guide">${g}</div>` : ''}`; }
   const bg = GW_BIRCH_GUIDE[x.id];
   if (bg && lcHas(bg)) more += `<button type="button" class="text-btn" onclick="lcOpen('client','${bg}')">A guide for this: ${escapeHtml(LC_TOPICS.find(t => t.id === bg).title)}</button> `;
-  else if (ln.guide && /^oak:/.test(ln.guide)) more += `<a class="text-link" href="/oak/#life=${encodeURIComponent(ln.guide.slice(4))}">A guide for this, in Oak</a> `;
+  else if (ln.guide && /^oak:/.test(ln.guide)) more += `<a class="text-link" href="/home/?guide=${encodeURIComponent(ln.guide.slice(4))}&amp;tree=oak">A guide for this, in Oak</a> `;
   if (Array.isArray(x.site) && x.site[1]) more += ` <a class="text-link" href="${escapeHtml(x.site[1])}" target="_blank" rel="noopener">${escapeHtml(x.site[0] || 'Start here')}</a>`;
   return `<li class="bc-skill${on ? ' done' : ''}"><label class="bc-skill-row"><input type="checkbox"${on ? ' checked' : ''} onchange="gwSkill('${x.id}',this.checked)"> <span><b>${escapeHtml(x.t)}</b>${x.help ? `<small>${escapeHtml(x.help)}</small>` : ''}${on && s.done ? `<small class="bc-skill-when">Marked ${escapeHtml(formatDate(s.done))}</small>` : ''}</span></label>${more ? `<div class="bc-skill-more">${more}</div>` : ''}</li>`;
 }

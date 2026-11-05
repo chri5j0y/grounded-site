@@ -370,7 +370,7 @@
   function vcode(v) { var c = vclean(v); return c ? 'v1.' + enc64(JSON.stringify(c)) : ''; }
   function vunpack(s) { try { if (!/^v1\./.test(s)) return null; return vclean(JSON.parse(dec64(s.slice(3)))); } catch (e) { return null; } }
   // tree: which tree app the card opens in, so each Guide sends a card into the person's own tree. Aspen is the default.
-  var VTREES = { maple: '/maple/', aspen: '/aspen/', pine: '/pine/', birch: '/birch/', oak: '/oak/', sequoia: '/sequoia/' };
+  var VTREES = { maple: '/home/?tree=maple', aspen: '/home/?tree=aspen', pine: '/home/?tree=pine', birch: '/home/?tree=birch', oak: '/home/?tree=oak', sequoia: '/home/?tree=sequoia' };
   function vurl(v, tree) { var c = vcode(v); return c ? SITE + (VTREES[tree] || VTREES.aspen) + '#gg-visit=' + c : ''; }
   function takeVisit(h) {
     var m = /[#&]gg-visit=([A-Za-z0-9._-]+)/.exec(h || ''); if (!m) return false;

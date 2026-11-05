@@ -1687,7 +1687,7 @@ async function profPersist() {
   await GGP.save(PROF.id);
 }
 function profLock() { if (window.GGP) GGP.lock().then(() => showToast('Locked. Your profile is safe on this device.')); }
-const OTHER_TREE = { maple: '<a href="/maple/">Maple</a> is made for kids.', aspen: '<a href="/aspen/">Aspen</a> is made for middle schoolers.', adult: '<a href="/birch/">Birch</a> is made for young adults, 18 to 26, <a href="/oak/">Oak</a> for adults, 26 to 60, and <a href="/sequoia/">Sequoia</a> for older adults, 60 and up.' };
+const OTHER_TREE = { maple: '<a href="/home/?tree=maple">Maple</a> is made for kids.', aspen: '<a href="/home/?tree=aspen">Aspen</a> is made for middle schoolers.', adult: '<a href="/home/?tree=birch">Birch</a> is made for young adults, 18 to 26, <a href="/home/?tree=oak">Oak</a> for adults, 26 to 60, and <a href="/home/?tree=sequoia">Sequoia</a> for older adults, 60 and up.' };
 function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();
@@ -1710,7 +1710,7 @@ function pineWho() { return window.GGP ? GGP.list().filter(p => p.age === 'pine'
 function pineOthers() { return window.GGP ? GGP.list().filter(p => p.age !== 'pine') : []; }
 function pineWhoHtml() {
   const teens = pineWho(), others = pineOthers();
-  const otherLine = others.length ? `<p class="pbar-kids">Kids, middle schoolers, young adults, and adults tend their trees in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, <a href="/birch/">Birch</a>, <a href="/oak/">Oak</a>, and <a href="/sequoia/">Sequoia</a>.</p>` : '';
+  const otherLine = others.length ? `<p class="pbar-kids">Kids, middle schoolers, young adults, and adults tend their trees in <a href="/home/?tree=maple">Maple</a>, <a href="/home/?tree=aspen">Aspen</a>, <a href="/home/?tree=birch">Birch</a>, <a href="/home/?tree=oak">Oak</a>, and <a href="/home/?tree=sequoia">Sequoia</a>.</p>` : '';
   if (!teens.length) return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create your own private profile, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${otherLine}`;
   if (teens.length === 1) { const a = teens[0];
@@ -1860,7 +1860,7 @@ function startMyBirch() {
   if (c.ns) birch.groundwork = { answers: {}, opened: {}, skills: {}, fromPine: { answers: c.ns.answers || {}, opened: c.ns.opened || {}, from: 'pine', copied: todayKey() } };
   const birth = GGP.moveOn && GGP.moveOn.birthday(PROF.id);   // GWG BLD 758: the birthday comes along
   GGP.createDialog({ age: 'adult', tree: 'birch', name: '', carry: Object.assign({ birch }, birth ? { birth } : {}), reason: 'Your new adult profile, ' + name + '. Pick a name that is different from your Pine profile, like your name with a last initial. Your Pine check-ins, Next Steps notebook, and wording come along into Birch.',
-    onCreated: id => { try { if (id && GGP.setTree && GGP.tree(id) !== 'birch') GGP.setTree(id, 'birch'); } catch (e) {} setTimeout(() => { location.href = '/birch/'; }, 600); } });
+    onCreated: id => { try { if (id && GGP.setTree && GGP.tree(id) !== 'birch') GGP.setTree(id, 'birch'); } catch (e) {} setTimeout(() => { location.href = '/home/?tree=birch'; }, 600); } });
 }
 function startMyOak() {
   if (!PROF || !window.GGP) return;
@@ -1868,7 +1868,7 @@ function startMyOak() {
   const name = PROF.name, c = pineCarry();
   const oak = { history: c.rings }; if (c.ns) oak.nextsteps = Object.assign(c.ns, { from: 'pine', copied: todayKey() });
   const birth = GGP.moveOn && GGP.moveOn.birthday(PROF.id);   // GWG BLD 758: the birthday comes along
-  GGP.createDialog({ age: 'adult', name: '', carry: Object.assign({ oak }, birth ? { birth } : {}), reason: 'Your new adult profile, ' + name + '. Pick a name that is different from your Pine profile, like your name with a last initial. Your Pine check-ins and Next Steps notebook come along.', onCreated: () => { setTimeout(() => { location.href = '/oak/'; }, 600); } });
+  GGP.createDialog({ age: 'adult', name: '', carry: Object.assign({ oak }, birth ? { birth } : {}), reason: 'Your new adult profile, ' + name + '. Pick a name that is different from your Pine profile, like your name with a last initial. Your Pine check-ins and Next Steps notebook come along.', onCreated: () => { setTimeout(() => { location.href = '/home/?tree=oak'; }, 600); } });
 }
 
 // =====================================================================

@@ -220,12 +220,12 @@
   var PROMISE_LINE = 'The Grounded Way works when you tend all four parts.';
   function promise() { var G = gparts(); return G && G.PROMISE ? G.PROMISE : PROMISE_LINE; }
   var TREES = {
-    maple: { n: 'Maple', href: '/maple/', who: 'Grades K to 5', age: 'maple' },
-    aspen: { n: 'Aspen', href: '/aspen/', who: 'Grades 6 to 8', age: 'aspen' },
-    pine: { n: 'Pine', href: '/pine/', who: 'Grades 9 to 12', age: 'pine', ck: true },
-    birch: { n: 'Birch', href: '/birch/', who: 'Ages 18 to 26', age: 'adult', ck: true },
-    oak: { n: 'Oak', href: '/oak/', who: 'Ages 26 to 60', age: 'adult', ck: true },
-    sequoia: { n: 'Sequoia', href: '/sequoia/', who: '60 and up', age: 'adult', ck: true },
+    maple: { n: 'Maple', href: '/home/?tree=maple', who: 'Grades K to 5', age: 'maple' },
+    aspen: { n: 'Aspen', href: '/home/?tree=aspen', who: 'Grades 6 to 8', age: 'aspen' },
+    pine: { n: 'Pine', href: '/home/?tree=pine', who: 'Grades 9 to 12', age: 'pine', ck: true },
+    birch: { n: 'Birch', href: '/home/?tree=birch', who: 'Ages 18 to 26', age: 'adult', ck: true },
+    oak: { n: 'Oak', href: '/home/?tree=oak', who: 'Ages 26 to 60', age: 'adult', ck: true },
+    sequoia: { n: 'Sequoia', href: '/home/?tree=sequoia', who: '60 and up', age: 'adult', ck: true },
     willow: { n: 'Willow', href: '/willow/', who: 'Hospice and the people who love them', season: true },
     grove: { n: 'The Grove', href: '/grove/', who: 'Families and groups', season: true },
     heartwood: { n: 'Heartwood', href: '/heartwood/', who: 'Couples', season: true }
@@ -2087,18 +2087,20 @@
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b913';
-  var GUIDES = { oak: ['/oak/guides.js?v=b907', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b907', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b907', 'PINE_GUIDES'] };
+  var WELCOME_SRC = '/shared/learn-welcome.js?v=b924'; // BLD 924: Welcome to The Grounded Way, one series per age group
+  var GUIDES = { oak: ['/oak/guides.js?v=b924', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
+  // BLD 924: the count and search walk the same tracks Learn shows (tracksOf), with Welcome to The Grounded Way first.
   function learnOf(tree) {
-    var L = window.GG_LEARN && window.GG_LEARN[tree]; if (!L) return null;
-    var out = []; arr(L.tracks).forEach(function (t) { if (!t || t.unlisted || t.kind === 'forguides') return; arr(t.lessons).forEach(function (l) { if (l && l.id) out.push({ id: l.id, title: l.title || '', track: t.title || '' }); }); });
+    var T = tracksOf(tree); if (!T) return null;
+    var out = []; T.forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id) out.push({ id: l.id, title: l.title || '', track: t.title || '' }); }); });
     return out;
   }
   function loadLib() {
     if (LIB.load && LIB.tree === S.tree) return LIB.load;
     LIB.tree = S.tree;
-    var g = GUIDES[S.tree], jobs = [load(LEARN_SRC)];
+    var g = GUIDES[S.tree], jobs = [load(LEARN_SRC), load(WELCOME_SRC)];
     // The guides files declare their words at the top level, so only one tree's file loads in a visit.
     if (g && (!LIB.guidesFor || LIB.guidesFor === S.tree)) { LIB.guidesFor = S.tree; jobs.push(load(g[0])); }
     jobs.push(loadTending());
@@ -3259,7 +3261,7 @@
         '<p class="hm-su-lead">' + esc(cap(pmeaning(k, plain))) + '.</p>' + prom +
         suFeats(k).map(function (ft) { return suFeatHtml(k, ft, d); }).join('') +
         (k === 'leaves' && !kid ? '<label class="hm-su-meets hm-su-labs" for="hm-su-labs"><input type="checkbox" id="hm-su-labs" data-hm-su="labs"' + (d.labs ? ' checked' : '') + '><span><b>Add Labs and Numbers</b> · your own lab numbers and LDL Path, to bring to your doctor</span></label>' : '') +
-        '<p class="hm-su-keep" aria-live="polite">' + I('check') + '<span>' + esc(A.start && A.names.length === 1 ? 'A gentle starter keeps your ' + PART[k].n + ' tended: ' + A.start + '.' : 'Your ' + PART[k].n + ' stay tended with ' + wpList(A.names) + '.') + '</span></p>';
+        '<p class="hm-su-keep" aria-live="polite">' + I('check') + '<span>' + esc(A.start && A.names.length === 1 ? 'A gentle starter keeps your ' + PART[k].n + ' tended: ' + A.start + '.' : 'Your ' + PART[k].n + (/s$/.test(PART[k].n) ? ' stay' : ' stays') + ' tended with ' + wpList(A.names) + '.') + '</span></p>';
       f = '<button type="button" class="hm-btn line hm-p-leaves" data-hm-su="back">' + I('back') + 'Back</button><button type="button" class="hm-btn hm-p-leaves" data-hm-su="next">' + I('arrow') + (i < 4 ? 'Next: ' + esc(PART[TEND4[i]].n) : 'Next: Check In') + '</button>';
     } else {
       var rs = suResult(d);
@@ -3404,7 +3406,8 @@
     if (!a || !a.getAttribute) return null;
     var href = a.getAttribute('href'); if (!href || href.charAt(0) === '#' || a.target || a.hasAttribute('download')) return null;
     var u; try { u = new URL(href, location.href); } catch (e) { return null; }
-    if (u.origin !== location.origin || /^\/home\//.test(u.pathname) || /^(mailto|tel):/.test(href)) return null;
+    // BLD 924: a Home address that names a tree, guide, or lesson (/home/?tree=oak#plan) opens right here too.
+    if (u.origin !== location.origin || (/^\/home\//.test(u.pathname) && !/[?&](tree|guide|lesson)=/.test(u.search)) || /^(mailto|tel):/.test(href)) return null;
     if (!/(\/|\.html)$/.test(u.pathname)) return null;
     if (a.closest('#hm-bnav, .site-footer, .topbar, .site-menu')) return null;
     return u;
@@ -3413,6 +3416,15 @@
      opens that screen right here (roomGo); any other page of the site opens whole, as itself. */
   function openFrame(u) {
     var seg = u.pathname.split('/').filter(Boolean)[0] || '';
+    // BLD 924: every link inside the site names Home itself (/home/?tree=<tree>, ?guide=<id>&tree=<tree>, ?lesson=<id>),
+    // never a tree page that forwards; inside Home each opens its place right here.
+    if (seg === 'home') {
+      var sp = new URLSearchParams(u.search), tr = sp.get('tree'), gd = sp.get('guide'), ls = sp.get('lesson');
+      tr = ROOM_TREES.test(tr || '') ? tr : '';
+      if (gd) { playGuide(gd, '', tr); return; }
+      if (ls) { if (!isKid(S.p)) goTo('learn'); playTreeLesson(ls); return; }
+      if (tr) { sp.delete('tree'); if (tr === S.tree && !u.hash && !sp.toString()) { goTo(isKid(S.p) ? 'tree' : 'today'); return; } roomGo(tr, sp.toString(), u.hash); return; }
+    }
     if (ROOM_TREES.test(seg)) { roomGo(seg, u.search.replace(/^\?/, ''), u.hash); return; }
     location.assign(u.pathname + u.search + u.hash);
   }
@@ -3494,7 +3506,7 @@
     if (/^\/recipes\/?$/.test(u.pathname)) { openRecipe(decodeURIComponent(u.hash.slice(1))); return; }
     if (u.pathname === '/living-sober.html') { goTo('today'); setTimeout(function () { var c = document.getElementById('hm-sober'); if (c) c.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 120); return; }
     var own = (TREES[S.tree] || TREES.oak).href;
-    if (u.pathname === own && !u.hash) { goTo('tree'); return; }
+    if (u.pathname + u.search === own && !u.hash) { goTo('tree'); return; }
     openFrame(u);
   });
   /* =====================================================================
@@ -3745,7 +3757,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b916', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b913', talk: '/shared/home/talk.js?v=b916', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b912', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b916', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b924', talk: '/shared/home/talk.js?v=b916', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4145,9 +4157,14 @@
     return null;
   }
   function guideArt(tree, id) { var p = GPFX[tree]; return (p && (planArt(tree + ':' + p + '-g-' + id + '-you') || planArt(tree + ':' + p + '-g-' + id + '-helper'))) || treeArt(tree); }
+  // BLD 924 (Chris: "make an excellent guide walk thru that is built for the grounded way"): the age group's Welcome to
+  // The Grounded Way series leads Learn (grown-ups on Birch, Oak, Sequoia; teens on Pine; kids with a grown-up on Maple and
+  // Aspen), and the old Start Here and Using <Tree> tracks, which walked the retired tree apps, are left out (Willow and The Grove keep their own).
   function tracksOf(tree) {
-    var L = window.GG_LEARN && window.GG_LEARN[tree]; if (!L) return null;
-    return arr(L.tracks).filter(function (t) { return t && !t.unlisted && t.kind !== 'forguides' && arr(t.lessons).length; });
+    var L = window.GG_LEARN && window.GG_LEARN[tree], W = window.GG_LEARN_WELCOME, wk = W && W.trees && W.trees[tree], wt = wk && W.tracks ? W.tracks[wk] : null;
+    if (!L) return null;
+    var list = arr(L.tracks).filter(function (t) { return t && !(wt && /-(start|using)$/.test(t.id || '')) && !t.unlisted && t.kind !== 'forguides' && arr(t.lessons).length; });
+    return wt && arr(wt.lessons).length ? [wt].concat(list) : list;
   }
   function findLesson(tree, id) { var out = null; arr(tracksOf(tree)).forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id === id) out = { l: l, t: t }; }); }); return out; }
   function lessonCard(tree, l, i) {
@@ -4337,7 +4354,7 @@
      this or I'm helping someone, faith, practices, when to reach out, learn more, and the sources line. */
   var GREAD = { tree: '', id: '', self: true };
   var FAITH_H = { oak: 'Faith and the holy', sequoia: 'Faith and the holy', birch: 'Faith and meaning', pine: 'Faith and meaning' };
-  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=b907', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b907', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b907', 'PINE_GUIDES'] };
+  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=b924', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
   function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
   function guideRead(id, tree) {
