@@ -3126,6 +3126,12 @@ function sdRow(kind, label, d, sub, can){
     ${can && !ed ? `<button type="button" class="tn-btn sm line" data-hja="sdedit" data-hjv="${esc(kind)}">Change</button>` : ''}</div>`;
 }
 function kitCard(){
+  // BLD 921b: a grown-up Member always sees the Family Kitchen card here; when Food is off in Tending or no meal plan is
+  // made yet, the card says the one step that opens it (Chris could not find it on November 5, 2026).
+  if (PUB() && !START() && !KIT() && !KJ() && (!U('food') || !ensurePlan())){
+    const off = !U('food');
+    return `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">${off ? 'Turn on Food in Tending to share your menu with your family. Everyone who joins sees the same dinners and the same shopping list each week.' : 'Make your weekly meal plan in Tending, then share it here with your family.'}</div></div></div>${off ? `<div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hja="use" data-hjv="food">Turn On Food</button></div>` : ''}</div>`;
+  }
   if (!PUB() || START() || KIT() || !U('food') || !ensurePlan()) return KJ() && START() ? `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">You are in a Family Kitchen for a table of ${kitTable()}.</div></div></div><button type="button" class="linkbtn" data-hja="kleave">Leave the Family Kitchen</button></div>` : '';
   if (S.kshareGo){ S.kshareGo = 0; if (!S.kshare) setTimeout(() => act('kshare'), 0); }
   const k = KJ(), sh = S.kshare, ks = kitStart(), w = Math.floor((day0(new Date()) - ks) / (7 * DAYMS)) + 1;
