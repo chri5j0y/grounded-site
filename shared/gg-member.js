@@ -46,12 +46,20 @@
      GGMember.invite(o)             HTML for a quiet invitation card {title, line, eyebrow}; See Membership and I Have a Code
      GGMember.normCode(code)        how a typed code is read (spaces, dashes, and capitals do not matter)
      GGMember.lib()                 the whole decrypted library or null
+     GGMember.carry()               Promise of {k, kind, ends, c, hand} for Move to Another Device, or null (GWG BLD 922)
+     GGMember.adopt(o)              Promise<{ok, why?}>: opens Membership from a carried record when this device has none
+   Move to Another Device (GWG BLD 922): when a code (or the Field Guide handoff) opens Membership, the lock key is also
+   kept sealed for moving: AES-GCM 256 under a second non-extractable device key (IndexedDB, 'dev'), stored as 'carry'.
+   carry() opens it only when someone asks to move a profile, and gg-profiles.js puts it inside that profile's locked move
+   file (the profile's own key, behind the passcode). It never sits anywhere in clear text, never in a link or a QR code.
+   On the other device adopt() checks it against lib-member.js (wrap tag, end date, the lock) and keeps it the same way.
+   Membership opened before BLD 922 moves once the code is typed again on this device.
    Words: forward and plain. No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMember && window.GGMember.__v) return;
-  var V = 'b908', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
+  var V = 'b922', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
   var me = document.currentScript;
   var LIB = (me && me.getAttribute('data-lib')) || '/field-guide/lib-member.js';
   var SEE = (me && me.getAttribute('data-see')) || '/the-grounded-way.html#ways';
@@ -100,8 +108,59 @@
     return Promise.all([idb('readonly', function (s) { return s.get('key'); }), idb('readonly', function (s) { return s.get('rec'); })])
       .then(function (r) { return { key: r[0] || MEM.key, rec: r[1] || MEM.rec }; }, function () { return { key: MEM.key, rec: MEM.rec }; });
   }
-  function keepRec(rec) { MEM.rec = rec; return idb('readwrite', function (s) { s.put(rec, 'rec'); s.delete('key'); }); }
-  function wipe() { MEM.key = null; MEM.rec = null; return idb('readwrite', function (s) { s.delete('key'); s.delete('rec'); }); }
+  function keepRec(rec) { MEM.rec = rec; MEM.carry = null; return idb('readwrite', function (s) { s.put(rec, 'rec'); s.delete('key'); s.delete('carry'); }); }
+  function wipe() { MEM.key = null; MEM.rec = null; MEM.carry = null; return idb('readwrite', function (s) { s.delete('key'); s.delete('rec'); s.delete('carry'); }); }
+
+  /* ---------- the sealed copy for Move to Another Device (GWG BLD 922) ---------- */
+  function devKey() {
+    return idb('readonly', function (s) { return s.get('dev'); }).then(function (k) {
+      if (k) return k;
+      if (MEM.dev) return MEM.dev;
+      return subtle.generateKey({ name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']).then(function (nk) {
+        MEM.dev = nk; return idb('readwrite', function (s) { s.put(nk, 'dev'); }).then(function () { return nk; });
+      });
+    });
+  }
+  function keepCarry(raw, rec) {
+    if (!subtle || typeof raw !== 'string' || !raw) return Promise.resolve(false);
+    var o = { k: raw, kind: rec.kind || 'member', ends: rec.ends || '', c: rec.c || '', hand: rec.hand ? 1 : 0 };
+    return devKey().then(function (dk) {
+      var iv = crypto.getRandomValues(new Uint8Array(12));
+      return subtle.encrypt({ name: 'AES-GCM', iv: iv }, dk, enc.encode(JSON.stringify(o))).then(function (ct) {
+        var box = { iv: b64(iv), ct: b64(ct) }; MEM.carry = box;
+        return idb('readwrite', function (s) { s.put(box, 'carry'); });
+      });
+    }).then(function () { return true; }, function () { return false; });
+  }
+  function carry() {
+    if (!subtle || ST.status !== 'member' || !LIBR) return Promise.resolve(null);
+    return idb('readonly', function (s) { return s.get('carry'); }).then(function (box) {
+      box = box || MEM.carry; if (!box || !box.ct) return null;
+      return devKey().then(function (dk) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(box.iv) }, dk, unb64(box.ct)); })
+        .then(function (pt) { var o = JSON.parse(dec.decode(pt)); return o && typeof o.k === 'string' && o.k ? o : null; });
+    }).catch(function () { return null; });
+  }
+  function adopt(o) {
+    if (!subtle) return Promise.resolve({ ok: false, why: 'crypto' });
+    if (!o || typeof o.k !== 'string' || !o.k) return Promise.resolve({ ok: false, why: 'empty' });
+    return ready.then(function () {
+      if (ST.status === 'member' && LIBR) return { ok: true, already: true, kind: ST.kind };
+      return loadLib(true).then(function (got) {
+        var g = box();
+        if (!g) return { ok: false, why: got === 'offline' ? 'offline' : 'none' };
+        var rec = { c: String(o.c || ''), kind: KINDS[o.kind] ? o.kind : 'member', ends: String(o.ends || ''), at: Date.now() };
+        if (o.hand) rec.hand = 1;
+        if (ended(rec)) return { ok: false, why: 'ended' };
+        if (!rec.hand && rec.c && !(g.wraps || []).some(function (w) { return w && w.c === rec.c; })) return { ok: false, why: 'ended' };
+        return lockKey(o.k).then(function (key) {
+          return openLock(key).then(function (lib) {
+            KEYC = key; setOpen(lib, rec);
+            return keep(key, rec).then(function () { return keepCarry(o.k, rec); }).then(function () { emit(); return { ok: true, kind: rec.kind }; });
+          });
+        }, function () { return { ok: false, why: 'nomatch' }; });
+      });
+    }).catch(function () { return { ok: false, why: 'renew' }; });
+  }
 
   /* ---------- the Member library file ---------- */
   var libP = null;
@@ -163,7 +222,7 @@
           return lockKey(hand.raw).then(function (key) {
             return openLock(key).then(function (lib) {
               var rec = { c: '', kind: hand.kind, ends: '', at: Date.now(), hand: 1 };
-              KEYC = key; setOpen(lib, rec); return keep(key, rec);
+              KEYC = key; setOpen(lib, rec); return keep(key, rec).then(function () { return keepCarry(hand.raw, rec); });
             });
           });
         }).catch(function () { return settle(k); });
@@ -207,7 +266,7 @@
         return lockKey(hit.o.k).then(function (key) {
           return openLock(key).then(function (lib) {
             KEYC = key; setOpen(lib, rec);
-            return keep(key, rec).then(function (saved) { emit(); return { ok: true, kind: rec.kind, kept: saved }; });
+            return keep(key, rec).then(function (saved) { return keepCarry(hit.o.k, rec).then(function () { emit(); return { ok: true, kind: rec.kind, kept: saved }; }); });
           });
         });
       });
@@ -414,6 +473,8 @@
     invite: invite,
     normCode: normCode,
     lib: function () { return LIBR; },
+    carry: carry,
+    adopt: adopt,
     sections: SECTIONS.slice()
   };
 })();

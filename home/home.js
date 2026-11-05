@@ -50,10 +50,58 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b921c', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b922', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b916';
   var IMG = '/shared/heroes/way/';
+
+  /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
+     A Founder or Staff profile can see The Grounded Way exactly as a person new to Grounded sees it, before Membership. The
+     preview lives in sessionStorage (this browser tab only, never in the profile). While it is on, Membership reads as Start
+     (GGMember.has() is false), Tending runs on the public Start file in a scratch record kept in memory, and every save to the
+     profile is held (GGP.save and GGP.setShared do nothing), so the real Tending, plan, and days stay just as they were. A slim
+     banner at the top reads "Previewing as a new person"; Done ends the preview and reloads. */
+  var PV_KEY = 'gg-preview-new';
+  var PREVIEW = (function () { try { return sessionStorage.getItem(PV_KEY) === '1'; } catch (e) { return false; } })();
+  var REAL_M = window.GGMember || null, PV_TEND = {};
+  if (PREVIEW) {
+    if (REAL_M) {
+      window.GGMember = Object.assign({}, REAL_M, {
+        has: function () { return false; },
+        get: function () { return null; },
+        lib: function () { return null; },
+        audio: function () { return null; },
+        tend: function (base) { return base || null; },
+        sealedClip: function () { return Promise.resolve(null); },
+        state: function () { return { status: 'start', kind: '', ends: '', rev: 0 }; },
+        card: function () { return REAL_M.invite ? REAL_M.invite({ eyebrow: 'Grounded', title: 'Membership', line: 'Join Membership, or add your code here.' }) : ''; },
+        open: function () { pvNote(); },
+        __preview: true
+      });
+    }
+    if (window.GGP) {
+      window.GGP.save = function () { return Promise.resolve(); };
+      if (typeof window.GGP.setShared === 'function') window.GGP.setShared = function () { return Promise.resolve(); };
+    }
+  }
+  function pvNote() { try { toast('This is a preview as a new person. Tap Done at the top to return to your own Grounded Way.'); } catch (e) {} }
+  function pvEnd() { try { sessionStorage.removeItem(PV_KEY); } catch (e) {} location.reload(); }
+  function pvStart() { try { sessionStorage.setItem(PV_KEY, '1'); } catch (e) { return; } try { history.replaceState(null, '', location.pathname + location.search + '#today'); } catch (e) {} location.reload(); }
+  /* Founders and Staff: Membership opened with a Staff or Founder code, or a plan moved from the Field Guide at that level. */
+  function pvCan() {
+    if (PREVIEW || !S.id || (S.p && isKid(S.p))) return false;
+    try { var st = REAL_M && typeof REAL_M.state === 'function' ? REAL_M.state() : null; if (st && st.status === 'member' && /^(staff|founder)$/.test(st.kind || '')) return true; } catch (e) {}
+    var w = window.GGP ? GGP.data(S.id, 'tending') : null; return !!(w && w.lib && /^(staff|founder)$/.test(String(w.tier || '')));
+  }
+  function pvBanner() {
+    if (!PREVIEW || document.getElementById('hm-pv')) return;
+    var st = document.createElement('style'); st.textContent = '#hm-pv{position:sticky;top:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:8px 16px;background:#2C1810;color:#FFFCF6;font:600 14px/1.3 system-ui,sans-serif}#hm-pv button{font:inherit;border:0;border-radius:999px;padding:6px 16px;background:#E8B04A;color:#1A130D;cursor:pointer}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #hm-pv{background:#F3EDE3;color:#1C1712}}:root[data-theme="dark"] #hm-pv{background:#F3EDE3;color:#1C1712}';
+    document.head.appendChild(st);
+    var b = document.createElement('div'); b.id = 'hm-pv'; b.setAttribute('role', 'status');
+    b.innerHTML = '<span>Previewing as a new person</span><button type="button" data-hm-pv="done">Done</button>';
+    document.body.insertBefore(b, document.body.firstChild);
+    b.addEventListener('click', function (e) { if (e.target.closest('[data-hm-pv="done"]')) pvEnd(); });
+  }
 
   /* ---------- small helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -403,14 +451,16 @@
   function saveHome() { if (S.id && window.GGP) return GGP.save(S.id); return Promise.resolve(); }
   var TEND_PARTS = ['move', 'food', 'still', 'connect', 'labs', 'pray'];
   var HEALTH_PARTS = ['move', 'food', 'labs'];
+  /* BLD 921d: while previewing as a new person, Tending reads and writes a scratch record in memory, never the profile's own. */
+  function tdata(id) { if (PREVIEW) { id = id || S.id; if (!id) return null; return PV_TEND[id] || (PV_TEND[id] = { health: {}, deleted: { health: {} } }); } return GGP.data(id, 'tending'); }
   function tendWrap(id) {
-    var w = GGP.data(id || S.id, 'tending'); if (!w) return null;
+    var w = tdata(id || S.id); if (!w) return null;
     if (!w.health || typeof w.health !== 'object') w.health = {};
     if (!w.deleted || typeof w.deleted !== 'object') w.deleted = {};
     if (!w.deleted.health || typeof w.deleted.health !== 'object') w.deleted.health = {};
     return w;
   }
-  function tendStarted() { var w = GGP.data(S.id, 'tending'); return !!(w && (w.lib || (w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)))); }
+  function tendStarted() { var w = tdata(S.id); return !!(w && (w.lib || (w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)))); }
   function tendOn(h) { return h.parts.some(function (k) { return HEALTH_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
   function anyTend(h) { return h.parts.some(function (k) { return TEND_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
 
@@ -446,7 +496,7 @@
     S.tendInit = S.id;
     return true;
   }
-  function tendReady() { var w = S.id && window.GGP ? GGP.data(S.id, 'tending') : null; return !!(window.GGHealth && (window.GGTendPublic || (w && w.lib))); }
+  function tendReady() { var w = S.id && window.GGP ? tdata(S.id) : null; return !!(window.GGHealth && (window.GGTendPublic || (w && w.lib))); }
   function summary() {
     if (!tendReady() || typeof window.GGHealth.summary !== 'function') return null;
     if (S.tendInit !== S.id) initTending();
@@ -1775,7 +1825,7 @@
   var LINES = ['One small practice at a time grows a whole tree.', 'Tend what is in front of you today. It is enough.', 'Roots first. Slow and steady is how a tree grows.', 'Today is a good day to grow.', 'Breathe in. Begin where you are.', 'Small steps, tended daily, change a life.', 'You are growing, even on the quiet days.'];
   function heroLine() {
     var sd = soberDate(); if (sd) return { k: 'Today\'s Mantra', id: 'hm-mantra', text: 'One day at a time.' };
-    var w = GGP.data(S.id, 'tending'), why = obj(obj(w && w.health).set).why;
+    var w = tdata(S.id), why = obj(obj(w && w.health).set).why;
     if (why) return { k: 'My Why', text: why };
     return { k: 'For Today', text: pick(LINES, dayIndex()) };
   }
@@ -1977,7 +2027,7 @@
     return '<article class="hm-card hm-p-fruit o6" id="hm-progress"><div class="hm-hd">' + pb(IMG + 'progress-sq.webp') + '<div><div class="hm-k">Your Progress</div><div class="hm-sub">What you have grown, counted with joy</div></div></div><div class="hm-mile">' + rows.join('') + '</div>' + ldl + '</article>';
   }
   function ldlHtml() {
-    var w = GGP.data(S.id, 'tending'), hh = obj(w && w.health);
+    var w = tdata(S.id), hh = obj(w && w.health);
     var pts = arr(hh.labs).filter(function (l) { return l && num(l.ldl) != null && /^\d{4}-\d{2}-\d{2}/.test(l.date || ''); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(-6);
     if (!pts.length) return '';
     var goal = num(obj(hh.set).goalLdl), last = pts[pts.length - 1], first = pts[0], vals = pts.map(function (p) { return +p.ldl; });
@@ -2188,6 +2238,7 @@
         '<h4 class="hm-label">Also</h4>' + extrasHtml(on, 'data-hm-setpart') +
         (h.hidden.tend ? '<div class="hm-quiet" style="margin-top:12px"><button type="button" data-hm="showtend">Show the Start Tending card again</button></div>' : '') + '</article>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tab="today=tending">' + I('sprout') + 'Tending Setup</button></div>' +
+        (pvCan() ? '<article class="hm-card hm-p-roots" id="hm-pvcard"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">For Founders and Staff</div><h3 class="hm-h3">See It as a New Person</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">See The Grounded Way just as a person new to Grounded sees it, before Membership, in this browser tab only. Your own plan and days stay just as they are.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm="pvon">' + I('open') + 'Start the Preview</button></div></article>' : '') +
         '<h3 class="hm-label">Tending Settings</h3><div id="hm-tend" class="hm-sec" data-sec="settings"><p class="hm-loading">Opening…</p></div>';
       var box = document.getElementById('hm-tend');
       loadTending().then(function () { if (!box.isConnected) return; if (!tendReady()) { box.innerHTML = tendSoonHtml(); return; } if (hasFn('render')) paintSection(box, 'settings'); else box.innerHTML = '<p class="hm-sub">Voice, music, and your Tending plan live in Tending Setup.</p>'; });
@@ -2257,6 +2308,7 @@
     else if (act === 'addtend') goTo('today=tending');
     else if (act === 'hidetend') { homeRec().hidden.tend = true; saveHome(); toast('Hidden. Start Tending waits in Settings whenever you like.'); refreshPane(); }
     else if (act === 'showtend') { homeRec().hidden.tend = false; saveHome(); toast('Start Tending is back on Today.'); fillSheet('settings'); refreshPane(); }
+    else if (act === 'pvon') pvStart();
     else if (act === 'backup') GGP.saveBackup();
     else if (act === 'restore') GGP.restore(function () { render(); });
     else if (act === 'rootwords') GGP.rootWords(S.id);
@@ -3302,6 +3354,11 @@
   /* ---------- start ---------- */
   function boot() {
     mountIcons();
+    if (PREVIEW) {
+      pvBanner();
+      /* In the preview, I Have a Code stays a preview line, so the device's real Membership sheet stays closed. */
+      document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-ggm="open"],[data-hm-mcode]'); if (!t) return; e.preventDefault(); e.stopImmediatePropagation(); pvNote(); }, true);
+    }
     if (!window.GGP) { var r = app(); if (r) r.innerHTML = welcomeHtml(); return; }
     GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
     // BLD 908: the door and Membership are read once this whole file has run (its later parts set their names).
@@ -3754,6 +3811,9 @@
       if (S.tendInit !== S.id) initTending();
       var r = window.GGHealth && GGHealth.kitchenInfo ? GGHealth.kitchenInfo(code) : null;
       if (!r) { kitDone(); toast('This Family Kitchen link needs a fresh copy. Ask for a new one.'); return; }
+      /* BLD 921d: a kitchen whose recipes this phone does not hold (a plan moved from the Field Guide and a public plan, or two
+         libraries with different dinners) says so plainly, and this phone keeps its own menu. */
+      if (r.missing) { kitDone(); mDialog('Family Kitchen', '<div class="hm-kitdlg"><p class="hm-sub">This Family Kitchen uses recipes this phone does not have, so this phone keeps its own menu. A family member whose Tending matches yours can share theirs.</p><div class="hm-acts"><button type="button" class="hm-btn" data-hm-kit="not">OK</button></div></div>'); return; }
       var title = r.update ? 'Update Our Kitchen?' : 'Join the Family Kitchen for a table of ' + r.table + '?';
       var line = r.update ? 'Your menu will match theirs again, with their newest swaps and start date. Your own health and check-ins stay yours.' : 'Your menu will match theirs. Your own health and check-ins stay yours.';
       mDialog(title, '<div class="hm-kitdlg"><p class="hm-sub">' + esc(line) + '</p>' +
@@ -3768,7 +3828,7 @@
     else toast('This Family Kitchen link needs a fresh copy. Ask for a new one.');
   }
   function kidKitchenHtml() {
-    var w = S.id && window.GGP ? GGP.data(S.id, 'tending') : null, k = w && w.health && w.health.kitchen;
+    var w = S.id && window.GGP ? tdata(S.id) : null, k = w && w.health && w.health.kitchen;
     if (!k || !k.joined) return '';
     if (!tendReady() || S.tendInit !== S.id) { if (!S.kidKitLoad) { S.kidKitLoad = 1; loadTending().then(function () { S.kidKitLoad = 0; if (S.id && isKid(S.p)) render(); }); } return ''; }
     var t = hCall('kitchenTonight'); if (!t) return '';

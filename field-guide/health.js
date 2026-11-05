@@ -431,7 +431,17 @@ function vJourney(){
 // FLD.healthJourney.app = {workouts, dinners: {weeks, breakfasts, lunches, snacks}, shop: {weeks: {A: {shop, sunday, wednesday, batch}}, staples}}
 // FDR.healthMine.addons = [shop items added to Week A lists]; FDR.healthMine.checks = [extra daily checks].
 // DATA.health adds: log {'YYYY-MM-DD': {key: time}}, shop {'<week no>': {items: [...], u}}, lifts {exerciseId: lb}, wlog [{id, date, s, sets, note, u}].
-const APP = () => { if (PUB() && !START()) return pubApp(); const l = FLDH(); return l && l.app && typeof l.app === 'object' ? l.app : null; };
+const APP = () => { if (PUB() && !START()) return pubApp(); const l = FLDH(), a = l && l.app && typeof l.app === 'object' ? l.app : null; return a ? libApp(a) : null; };
+// BLD 921d: a plan moved from the Field Guide into The Grounded Way (BLD 867) plays the library's four food weeks. In a Family
+// Kitchen its weeks turn to the kitchen's start (kitOff), dinners and shopping lists together, the way a public plan's ids turn.
+let LAPP = null;
+function libApp(a){
+  const off = KMOVED() ? kitOff() : 0; if (!kitIdx(off) || !a.dinners || !a.dinners.weeks) return a;
+  if (LAPP && LAPP.a === a && LAPP.off === off) return LAPP.out;
+  const rot = W => { if (!W || typeof W !== 'object') return W; const o = Object.assign({}, W); for (let i = 0; i < 4; i++) o['ABCD'[i]] = W['ABCD'[kitIdx(i + off)]]; return o; };
+  const out = Object.assign({}, a, {dinners: Object.assign({}, a.dinners, {weeks: rot(a.dinners.weeks)})}); if (a.shop && a.shop.weeks) out.shop = Object.assign({}, a.shop, {weeks: rot(a.shop.weeks)});
+  LAPP = {a, off, out}; return out;
+}
 const WK = () => (APP() || {}).workouts || {};
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
@@ -640,9 +650,9 @@ function agenda(d){
   // Seven days a week (Chris, October 24, 2026: "make them 7 days a week"); weekday mornings after the shower, weekend mornings too.
   const mf = medFor(d);
   if (track !== 'practice' && MED() && medOn(d)) out.push({did: true, key: 'med', k: 'med', hour: medAt().hour || 8, kick: medAt().kick || (dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning'), title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
-  if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + letter(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
+  if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + fwl(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
   if (dow === 6 && !KIT() && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
-  if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + letter(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
+  if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + fwl(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
     const pk = prepFor('pack', fw); if (pk) out.push({key: 'prep:pack:' + fw, k: 'prep', v: 'pack|' + fw, hour: 18, kick: 'Sunday evening', title: pk.title || 'Pack Lunches', sub: (pk.mins || 20) + ' minutes for the week ahead.', btn: 'Start'});
     // BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (the key stays prep:batch:<week>, so old saved days still read).
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 14, kick: 'After Sunday prep', title: b.title || 'Weekly Batch', sub: batchSub(b), btn: 'Start'}); }
@@ -689,7 +699,7 @@ function remindersFor(d, opt){
   const wk = tw[letter(fw)] || {};
   if (dow === 6 && arr(wk.freeze).length) push('freeze:' + fw, 12, 'After shopping', 'After shopping: freeze ' + arr(wk.freeze).map(lc).join(', and '), 'These are for later in the week, so the freezer keeps them fresh. The thaw reminder comes a night or two before.', '', 4, 'freeze:' + letter(fw));
   if (dow === 4) push('thu:' + n, 19, 'Tonight', 'Tonight: check the fridge and pantry, and add what is low to Saturday\'s list', 'Use-it-up night is a good time to see what is left. Tap Open to add to the list.', 'shop:' + (n + 1), 1, 'thu');
-  if (dow === 5) push('fri:' + n, 19, 'Tonight', 'Tonight: look over tomorrow\'s shopping list', 'Week ' + letter(n + 1) + '\'s list is ready. Copy it for a text if someone else is shopping.', 'shop:' + (n + 1), 1, 'fri');
+  if (dow === 5) push('fri:' + n, 19, 'Tonight', 'Tonight: look over tomorrow\'s shopping list', 'Week ' + fwl(n + 1) + '\'s list is ready. Copy it for a text if someone else is shopping.', 'shop:' + (n + 1), 1, 'fri');
   if (dow === 6){ const p = prepFor('sunday', fw); if (p) push('sunprep:' + fw, 20, 'Tonight', 'Tonight: get ready for Sunday prep (about ' + (p.mins || 90) + ' min)', 'Clear a fridge shelf and the counter, and set out the slow cooker, Instant Pot, and containers.', 'prep:sunday:' + fw, 1, 'sunprep'); }
   if (dow === 2 && n >= 1){ const p = prepFor('wednesday', n); if (p) push('wedprep:' + n, 20, 'Tonight', 'Tomorrow after work: Wednesday mini prep (about ' + (p.mins || 20) + ' min)', 'A short prep for Thursday and Friday dinners, guided step by step.', 'prep:wednesday:' + n, 1, 'wedprep'); }
   if (dow >= 1 && dow <= 4 && (BAT() || {}).pack) push('gg:' + ymd(d), 20.5, 'Tonight', 'Tonight: pack tomorrow\'s lunches and snacks', 'Set out the lunch bags, put the ice packs in the freezer, and move tomorrow\'s frozen breakfast from the Weekly Batch (burritos, muffins, or pancakes) to the fridge.', '', 1, 'gg:' + dow);
@@ -764,7 +774,7 @@ function vWeek(){
       ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id)}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) && !KIT() ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
       ${ses ? `<button type="button" class="hj-pill move" data-hja="work" data-hjv="${esc(ses.id)}">${esc(sesLabel(ses.id, ses))}</button>` : ''}
       ${d.getDay() === 3 && prepFor('wednesday', n) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="wednesday|${n}">Mini Prep</button>` : ''}
-      ${d.getDay() === 6 ? `<button type="button" class="hj-pill prep" data-hja="shopwk" data-hjv="${n + 1}">Shop for Week ${letter(n + 1)}</button>` : ''}
+      ${d.getDay() === 6 ? `<button type="button" class="hj-pill prep" data-hja="shopwk" data-hjv="${n + 1}">Shop for Week ${fwl(n + 1)}</button>` : ''}
       ${d.getDay() === 0 && prepFor('sunday', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="sunday|${n + 1}">Sunday Together Prep</button>` : ''}
       ${d.getDay() === 0 && prepFor('batch', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="batch|${n + 1}">${esc(prepFor('batch', n + 1).title || 'Weekly Batch')}</button>` : ''}
       ${mf ? `<button type="button" class="hj-pill calm" data-hja="go" data-hjv="medid:${esc(mf.id)}">${esc(mf.title)} <small>${esc(medMins(n))} min meditation${track === 'practice' ? ', evening' : ''}</small></button>` : ''}
@@ -789,7 +799,7 @@ function vPrep(){
   const card = (kind, title, sub) => { const p = prepFor(kind, n); if (!p) return ''; const key = 'prep:' + kind + ':' + n, done = !!(h.log[ymd(addD(startMon(), (n - 1) * 7 + (kind === 'wednesday' ? 2 : -1)))] || {})[key];
     return `<div class="hj-pc"><div style="min-width:0"><b>${esc(title || p.title)}</b><small>${esc(sub)}${p.mins ? ' · about ' + esc(p.mins) + ' min' : ''}${done ? ' · done' : ''}</small></div><button type="button" class="btn btn-gold btn-sm" data-hja="prep" data-hjv="${kind}|${n}">Start</button></div>`; };
   const weeks = ['A', 'B', 'C', 'D'], inWk = (b, w) => b.weeks === 'every' || arr(b.weeks).includes(w) || b.every === 'weekly';
-  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="prepwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Prep for Week ${letter(n)}</b><small>Week ${n}, starting ${esc(shortDate(addD(startMon(), (n - 1) * 7)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="prepwk" data-hjv="${n + 1}">Next</button></div>
+  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="prepwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Prep for Week ${fwl(n)}</b><small>Week ${n}, starting ${esc(shortDate(addD(startMon(), (n - 1) * 7)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="prepwk" data-hjv="${n + 1}">Next</button></div>
   <div class="hj-blk">${kick('This Week')}${card('sunday', 'Sunday Together Prep', 'Sunday')}${card('batch', '', 'Sunday, after prep')}${card('pack', 'Pack Lunches', 'Sunday evening')}${card('wednesday', 'Wednesday Mini Prep', 'Wednesday')}</div>
   ${bs.length ? `<div class="hj-blk">${kick('Batch Calendar')}<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Make</th>${weeks.map(w => `<th>${w === L ? '<b>' + w + '</b>' : w}</th>`).join('')}<th>Keeps</th></tr></thead><tbody>${bs.map(b => `<tr><td><b>${esc(b.name)}</b><small>${esc(b.makes || '')}</small></td>${weeks.map(w => `<td>${inWk(b, w) ? '&#9679;' : ''}</td>`).join('')}<td><small>${esc(b.keeps || '')}</small></td></tr>`).join('')}</tbody></table></div><p class="hj-sub">Food Week ${L} is this list's week. A dot means make it that week.</p></div>
   <div class="hj-blk">${kick('Bulk Basics and Freezer Stock')}${bs.map(b => { const c = +((h.stock || {})[b.id] || 0); return `<div class="hj-pc"><div style="min-width:0"><b>${esc(b.name)}</b><small>${esc(b.uses || '')}${b.mins ? ' · ' + esc(b.mins) + ' min' : ''}</small></div>
@@ -822,13 +832,13 @@ function wbMerge(L, n){ if (!L || L.wb889 || PUB()) return L; const sp = (APP() 
   L.wb889 = 1; return L; }
 function keepShop(n, L){ const h = H(); delete L.seed; L.u = Date.now(); h.shop[String(Math.max(1, n))] = L; save(); }
 function vShop(){
-  const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = num(h.set.household);
+  const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = KJ() && !PUB() ? kitTable() : num(h.set.household);
   if (!L) return `<p class="hj-note">The shopping lists arrive with the next library update.</p>`;
   const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st || x.own || x.mm), left = vis.filter(x => !x.done);
   const tot = vis.reduce((a, x) => a + (+x.price || 0), 0), cart = vis.filter(x => x.done).reduce((a, x) => a + (+x.price || 0), 0);
   const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
   const ed = S.shopEd;
-  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${letter(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
+  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${fwl(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
   ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${fwl(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
   <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${(PUB() ? [] : ['costco', 'grocer', 'all']).map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
     <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span>${PUB() && !tot ? '' : `<span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span>`}</div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
@@ -982,7 +992,7 @@ function openIdea(type, i){ openOv(ideaOv(type, i)); }
 function prepOv(kind, n, forN){ const p0 = prepFor(kind, n); if (!p0) return null;
   const t = {sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: p0.title || 'Weekly Batch', pack: p0.title || 'Pack Lunches'}[kind] || p0.title || p0.name;
   const N = p0.serves ? (forN || batchFor()) : 0, p = N ? sizeBatch(p0, N) : p0;
-  return {k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + letter(n) + (N ? ' · for ' + N : '') + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p, base: N ? {kind, n, N} : null}; }
+  return {k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + fwl(n) + (N ? ' · for ' + N : '') + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p, base: N ? {kind, n, N} : null}; }
 function openPrep(kind, n){ openOv(prepOv(kind, n)); }
 // The head start for tomorrow (BLD 881): tomorrow's dinner, to look over tonight; finishing it marks tonight's head start.
 function headOv(k){ const d = parseD(k) || day0(new Date()), dn = dinnerFor(addD(d, 1)), o = dn ? cookOv(dn.wk, dn.id) : null; if (!o) return null;
@@ -1011,7 +1021,7 @@ function actTool(a, v){
     case 'stock': { const [id, d] = v.split('|'); h.stock = h.stock || {}; h.stock[id] = Math.max(0, (+h.stock[id] || 0) + (+d)); h.stockU = Date.now(); save(); rerender(true); return true; }
     case 'ggadd': { const [k, i] = v.split('|'), x = arr(((APP() || {}).dinners || {})[k])[+i]; if (!x) return true; const n = foodWeek(new Date()), L = shopList(n); if (!L) return true; let added = 0;
       arr(x.shop).forEach(g => { if (L.items.some(y => String(y.name).toLowerCase() === String(g.name).toLowerCase())) return; L.items.push({id: 'g' + uid(), store: g.store === 'grocer' ? 'grocer' : 'costco', sec: 'Grab and Go', name: g.name, amt: g.amt || '', price: +g.price || 0, for: x.name, nut: nOk(g.nut) ? g.nut : undefined, done: false, n: 500 + L.items.length}); added++; });
-      keepShop(n, L); toast(added ? 'Added to Week ' + letter(n) + '\'s list.' : 'Already on the list.'); return true; }
+      keepShop(n, L); toast(added ? 'Added to Week ' + fwl(n) + '\'s list.' : 'Already on the list.'); return true; }
     case 'store': S.store = v; S.shopEd = null; rerender(true); return true;
     case 'hide': S.hideDone = !S.hideDone; rerender(true); return true;
     case 'ewlvl': S.ewLvl = v; S.ewOpen = 'strength'; rerender(true); return true;
@@ -2791,7 +2801,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b911b'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b922'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
@@ -2831,6 +2841,7 @@ const FIELDS = {lab: ['date', 'ldl', 'total', 'hdl', 'trig', 'apob', 'note'], ma
 function act(a, v){
   const h = H(); if (!h) return;
   if (actOwn(a, v)) return;   // BLD 896: My Own Items and the Month
+  if (KON() && actKit(a, v)) return;
   if (PUB() && actPub(a, v)) return;
   if (actTool(a, v)) return;
   if (actPlate(a, v)) return;
@@ -3042,12 +3053,20 @@ function ensurePlan(force){
 // Live sync waits for The Grove's shared storage; until then a change travels by sharing again.
 // =====================================================================
 const KIT_URL = 'https://growwithgrounded.com/home/#kitchen=';
-const KJ = () => { if (!PUB()) return null; const h = H(), k = h && h.kitchen; return k && typeof k === 'object' && k.joined && isFinite(+k.seed) ? k : null; };
-const KOWN = () => { if (!PUB()) return null; const h = H(), k = h && h.kitchen; return k && typeof k === 'object' && !k.joined ? k : null; };
+// BLD 921d: KMOVED(), a plan moved from the Field Guide (its library's four food weeks, in The Grounded Way); KON(), a plan
+// that can hold a Family Kitchen. A moved plan's kitchen (lib: 'g') carries the start week, the table, a fingerprint of the
+// library's dinner ids (f), and its swaps (x, from My Menu); phones in it match when their libraries hold the same dinners.
+const libWeeks = () => { const l = FLDH(), w = l && l.app && l.app.dinners && l.app.dinners.weeks; return w && 'ABCD'.split('').every(x => w[x] && Array.isArray(w[x].dinners)) ? w : null; };
+const KMOVED = () => !PUB() && C.host === 'home' && !KIT() && !!libWeeks();
+const KON = () => PUB() || KMOVED();
+function libSig(){ const w = libWeeks(); if (!w) return ''; let x = 5381; const t = 'ABCD'.split('').map(l => arr(w[l].dinners).map(d => (d && d.day) + '=' + (d && d.id)).join(',')).join('|');
+  for (let i = 0; i < t.length; i++) x = ((x * 33) ^ t.charCodeAt(i)) >>> 0; return x.toString(36); }
+const KJ = () => { if (!KON()) return null; const h = H(), k = h && h.kitchen; return k && typeof k === 'object' && k.joined && (PUB() ? isFinite(+k.seed) && !k.lib : k.lib === 'g') ? k : null; };
+const KOWN = () => { if (!KON()) return null; const h = H(), k = h && h.kitchen; return k && typeof k === 'object' && !k.joined ? k : null; };
 function kitSet(k){ const s = k.set || {}; return {needs: arr(s.n).map(String), allergies: String(s.a || ''), goals: arr(s.g).length ? arr(s.g).map(String) : ['well'], kids: arr(s.h).length > 1, leftovers: s.l !== 0}; }
 // The kitchen's start Monday: the joined kitchen's, the own kitchen's once set, else this plan's own start (nothing turns).
-function kitStart(){ const h = H(), k = h && h.kitchen; return (PUB() && k && parseD(k.start)) || startMon(); }
-function kitOff(){ if (!PUB()) return 0; const h = H(), k = h && h.kitchen, ks = k && parseD(k.start); if (!ks) return 0; return Math.round((startMon() - ks) / (7 * DAYMS)); }
+function kitStart(){ const h = H(), k = h && h.kitchen; return (KON() && k && parseD(k.start)) || startMon(); }
+function kitOff(){ if (!KON()) return 0; const h = H(), k = h && h.kitchen, ks = k && parseD(k.start); if (!ks) return 0; return Math.round((startMon() - ks) / (7 * DAYMS)); }
 // ids in one week order to another: out[week i] = ids[week i + off] (the kitchen's weeks to this plan's weeks).
 const kitIdx = n => ((n % 4) + 4) % 4;
 function kitRot(ids, off){ off = Math.round(+off || 0); if (!ids || !kitIdx(off)) return ids; const W = 'ABCD', out = {}; for (let i = 0; i < 4; i++) out[W[i]] = arr(ids[W[kitIdx(i + off)]]).slice(); return out; }
@@ -3059,12 +3078,28 @@ function kitApplyD(ids, d, known){ const out = {}; 'ABCD'.split('').forEach(w =>
 const KIT_M = {b: 'breakfasts', l: 'lunches', s: 'snacks'};
 function kitApplyM(meals, m, known){ const out = {}; Object.keys(meals || {}).forEach(t => { out[t] = arr(meals[t]).slice(); }); Object.entries(m && typeof m === 'object' ? m : {}).forEach(([key, id]) => { const x = /^([bls])(\d{1,2})$/.exec(key), t = x && KIT_M[x[1]]; if (t && out[t] && +x[2] < out[t].length && typeof id === 'string' && (!known || known.has(id))) out[t][+x[2]] = id; }); return out; }
 // The table: the kitchen's household when joined, else this profile's own.
-const kitHouse = () => { const k = KJ(); if (k){ const hh = arr((k.set || {}).h); return {adults: Math.max(1, Math.min(12, +hh[0] || 1)), kids: hh.slice(1, 13).map(b => ({band: BAND_PORTION[b] ? b : ''}))}; } const s = H().set; return {adults: +((s.house || {}).adults) || 0, kids: KIDS()}; };
+const kitHouse = () => { const k = KJ(); if (k){ const hh = arr((k.set || {}).h); return {adults: Math.max(1, Math.min(12, +hh[0] || 1)), kids: hh.slice(1, 13).map(b => ({band: BAND_PORTION[b] ? b : ''}))}; } const s = H().set;
+  if (!PUB()){ const n = num(s.household); return {adults: n > 0 && n < 13 ? Math.round(n) : 1, kids: []}; } return {adults: +((s.house || {}).adults) || 0, kids: KIDS()}; };
 const ymd8 = s => String(s || '').replace(/-/g, ''), ymdOf8 = n => { const m = /^(\d{4})(\d{2})(\d{2})$/.exec(String(n || '')); return m ? m[1] + '-' + m[2] + '-' + m[3] : ''; };
 const b64e = s => btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 const b64d = s => decodeURIComponent(escape(atob(String(s).replace(/-/g, '+').replace(/_/g, '/'))));
 // The kitchen as it travels: this plan's seed, settings, start, and swaps (the plan against the seed's own plan, in kitchen weeks).
+// A moved plan's swaps: My Menu's swapped dinners and lunches from this week on, as [day from the kitchen start, d or l, recipe ref].
+const KREF = /^[gir]:[A-Za-z0-9_-]{1,60}(?::\d{1,2})?$/;
+function kitSwapsOut(){
+  const ks = kitStart(), mon = ymd(monOf(new Date())), out = [];
+  MENU().items.filter(e => e.swap && e.date >= mon && KREF.test(String(e.ref || ''))).sort((a, b) => a.date < b.date ? -1 : 1).forEach(e => {
+    const sl = /^cook:/.test(e.swap) ? 'd' : /^idea:lunches:/.test(e.swap) ? 'l' : ''; if (!sl || out.length >= 40) return;
+    out.push([Math.round((day0(parseD(e.date)) - day0(ks)) / DAYMS), sl, e.ref]); });
+  return out;
+}
+function kitPackLib(){
+  const h = H(); if (!h || !KMOVED() || !U('food')) return null; const k = KJ(), hs = kitHouse(), x = kitSwapsOut();
+  const o = {v: 1, k: k ? k.id : (KOWN() || {}).id, b: 'g', f: libSig(), t: +ymd8(ymd(kitStart())), h: [Math.max(1, +hs.adults || 1)].concat(arr(hs.kids).map(y => (y && y.band) || 0))};
+  if (x.length) o.x = x; return o;
+}
 function kitPack(){
+  if (KMOVED()) return kitPackLib();
   const h = H(), L = PLIB(), P = TP(); if (!h || !L || !P || !PUB()) return null; const plan = ensurePlan(); if (!plan) return null;
   const k = KJ(), set = planSet(), b = kitBase(plan.seed, set), K = kitRot(plan.ids, -(+plan.off || 0)), d = {}, m = {};
   'ABCD'.split('').forEach(w => arr(K[w]).forEach((id, i) => { if (id && id !== arr(b.ids[w])[i]) d[w + i] = id; }));
@@ -3077,7 +3112,13 @@ function kitPack(){
 }
 function kitRead(code){
   let o; try { o = JSON.parse(b64d(String(code || '').trim())); } catch(e){ return null; }
-  if (!o || o.v !== 1 || !isFinite(+o.s) || +o.s < 1 || !parseD(ymdOf8(o.t))) return null;
+  if (o && o.v === 1 && o.b === 'g' && parseD(ymdOf8(o.t))){
+    const hh = arr(o.h).slice(0, 13), adults = Math.max(1, Math.min(12, Math.round(+hh[0] || 1)));
+    const x = arr(o.x).slice(0, 40).filter(y => Array.isArray(y) && isFinite(+y[0]) && Math.abs(+y[0]) < 4000 && (y[1] === 'd' || y[1] === 'l') && typeof y[2] === 'string' && KREF.test(y[2])).map(y => [Math.round(+y[0]), y[1], y[2]]);
+    return {id: /^[a-z0-9]{4,16}$/.test(String(o.k || '')) ? String(o.k) : 'k' + String(o.f || 'g').replace(/[^a-z0-9]/g, '').slice(0, 10), lib: 'g', f: String(o.f || '').replace(/[^a-z0-9]/g, '').slice(0, 16), start: ymd(monOf(parseD(ymdOf8(o.t)))),
+      set: {h: [adults].concat(hh.slice(1).map(b => BAND_PORTION[b] ? b : 0))}, sw: {x}};
+  }
+  if (!o || o.v !== 1 || o.b || !isFinite(+o.s) || +o.s < 1 || !parseD(ymdOf8(o.t))) return null;
   const strs = x => arr(x).filter(y => typeof y === 'string' && y.length < 40).slice(0, 12);
   const hh = arr(o.h).slice(0, 13), adults = Math.max(1, Math.min(12, Math.round(+hh[0] || 1)));
   const swaps = x => { const out = {}; Object.entries(x && typeof x === 'object' ? x : {}).slice(0, 60).forEach(([a, b]) => { if (/^[A-Za-z]\d{1,2}$/.test(a) && typeof b === 'string' && /^[a-z0-9-]{1,60}$/.test(b)) out[a] = b; }); return out; };
@@ -3093,23 +3134,44 @@ function kitShare(){
   return KIT_URL + b64e(JSON.stringify(o));
 }
 // What a kitchen link holds, for the join prompt: {table, update} (update: this profile is already in that kitchen).
-function kitInfo(code){ const x = kitRead(code); if (!x) return null; const k = KJ(); return {table: Math.max(2, x.set.h.length - 1 + x.set.h[0]), update: !!(k && k.id === x.id), same: false}; }
+// missing: the kitchen's recipes are ones this phone does not hold (a moved plan's library and a public plan, or two libraries
+// whose dinners differ), so this phone keeps its own menu.
+function kitFits(x){ if (x.lib) return KMOVED() && !!x.f && x.f === libSig(); return PUB(); }
+function kitInfo(code){ const x = kitRead(code); if (!x) return null; const k = KJ(); return {table: Math.max(2, x.set.h.length - 1 + x.set.h[0]), update: !!(k && k.id === x.id), same: false, missing: !kitFits(x)}; }
 function kitJoin(code){
-  const h = H(), x = kitRead(code); if (!h || !x) return false; const k0 = KJ();
+  const h = H(), x = kitRead(code); if (!h || !x || !kitFits(x)) return false; const k0 = KJ();
   const own = k0 ? k0.own : {plan: h.plan ? JSON.parse(JSON.stringify(h.plan)) : null, kitchen: h.kitchen && !h.kitchen.joined ? JSON.parse(JSON.stringify(h.kitchen)) : null};
   h.kitchen = Object.assign(x, {joined: 1, u: Math.max(Date.now(), (k0 ? +k0.u || 0 : 0) + 1), own});
+  if (x.lib){ const s = h.set; if (Array.isArray(s.use) && !s.use.includes('food')) s.use = PART_IDS.filter(p => s.use.includes(p) || p === 'food');
+    if (!parseD(s.start)){ const ks = parseD(x.start), t = monOf(new Date()); s.start = ymd(ks && ks <= t ? ks : t); }
+    s.u = Date.now(); kitMenuIn(h.kitchen); clearShop(); save(); return true; }
   // A profile new to Tending starts with the food part, its weeks from the kitchen's start.
   const s = h.set; if (!s.pubDone){ s.pubDone = 1; s.use = arr(s.use).length ? s.use : ['food']; s.who = s.who || 'family'; s.remOff = true; }
   if (!parseD(s.start) || weekNo(new Date()) < 1){ const ks = parseD(x.start), t = monOf(new Date()); s.start = ymd(ks && ks <= t ? ks : t); if (!s.progStart && PROG()) s.progStart = s.start; }
   s.u = Date.now(); PA = null; ensurePlan(); clearShop(); save(); return true;
 }
+// A moved plan's kitchen swaps join My Menu, marked kit; a swap of this phone's own on the same meal steps aside (kept in
+// own.mm) and comes back with Leave the Family Kitchen.
+function kitMenuIn(k){
+  const M = MENU(), own = k.own = k.own || {}; own.mm = arr(own.mm); M.items = M.items.filter(e => !e.kit);
+  const ks = parseD(k.start), mon = ymd(monOf(new Date())); if (!ks) return;
+  arr((k.sw || {}).x).forEach(([dd, sl, ref]) => { const d = addD(ks, dd), date = ymd(d); if (date < mon) return;
+    const p = mmPlanned(d).find(q => q.meal === (sl === 'd' ? 'dinner' : 'lunch')), R = mmRecipe(ref); if (!p || !R || p.ref === ref) return;
+    M.items.filter(e => e.swap === p.key && e.date === date).forEach(e => { own.mm.push(e); M.items.splice(M.items.indexOf(e), 1); });
+    M.items.push({id: 'm' + uid(), date, meal: p.meal, ref, name: R.name, mins: R.mins || null, serves: mmTable(), wk: mmListWeek(date), swap: p.key, u: Date.now(), kit: 1}); });
+  M.u = Date.now();
+}
 function kitLeave(){
   const h = H(), k = KJ(); if (!k) return false; const own = k.own || {};
+  if (k.lib){ const M = MENU(); M.items = M.items.filter(e => !e.kit).concat(arr(own.mm).filter(e => e && e.id && !M.items.some(y => y.id === e.id))); M.u = Date.now(); }
   h.kitchen = own.kitchen || null; if (!h.kitchen) delete h.kitchen; h.plan = own.plan || null; if (!h.plan) delete h.plan;
   h.set.u = Date.now(); PA = null; ensurePlan(); clearShop(); save(); return true;
 }
 // Tonight's dinner from the kitchen alone (a kid's Today shows it): Sunday belongs to the coming week, as in the plan.
 function kitTonight(date){
+  if (KMOVED()){ if (!KJ()) return null; const d = date ? (parseD(date) || new Date(date)) : new Date(), dn = dinnerFor(d);
+    const e = MENU().items.find(x => x.date === ymd(d) && x.swap && /^cook:/.test(x.swap)); if (e) return {id: e.ref, name: e.name, mins: e.mins || null, week: fwl(foodWeek(d))};
+    return dn ? {id: dn.id, name: dn.name, mins: dn.mins || null, week: fwlOf(dn.wk)} : null; }
   const h = H(), k = KJ(), L = PLIB(), P = TP(); if (!h || !k || !L || !P) return null;
   const d = date ? (parseD(date) || new Date(date)) : new Date(), ks = parseD(k.start); if (!ks) return null;
   const dd = d.getDay() === 0 ? addD(d, 1) : d, n = Math.floor((day0(dd) - ks) / (7 * DAYMS)) + 1;
@@ -3131,11 +3193,12 @@ function kitCard(){
   if (PUB() && START() && !KIT() && !KJ() && !TEEN()){
     return `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">Family Kitchen shares your weekly meal plan with your family, and meal plans open with Membership. If you have a code, add it here on this phone.</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hm-mcode="1">I Have a Code</button><a class="tn-btn sm line" href="${MEM_URL}">See Membership</a></div></div>`;
   }
-  if (PUB() && !START() && !KIT() && !KJ() && (!U('food') || !ensurePlan())){
+  const mv = KMOVED(), ready = () => mv ? !!libWeeks() : !!ensurePlan();
+  if ((mv || (PUB() && !START())) && !KIT() && !KJ() && (!U('food') || !ready())){
     const off = !U('food');
     return `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">${off ? 'Turn on Food in Tending to share your menu with your family. Everyone who joins sees the same dinners and the same shopping list each week.' : 'Make your weekly meal plan in Tending, then share it here with your family.'}</div></div></div>${off ? `<div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hja="use" data-hjv="food">Turn On Food</button></div>` : ''}</div>`;
   }
-  if (!PUB() || START() || KIT() || !U('food') || !ensurePlan()) return KJ() && START() ? `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">You are in a Family Kitchen for a table of ${kitTable()}.</div></div></div><button type="button" class="linkbtn" data-hja="kleave">Leave the Family Kitchen</button></div>` : '';
+  if (!(PUB() || mv) || START() || KIT() || !U('food') || !ready()) return KJ() && START() ? `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">You are in a Family Kitchen for a table of ${kitTable()}.</div></div></div><button type="button" class="linkbtn" data-hja="kleave">Leave the Family Kitchen</button></div>` : '';
   if (S.kshareGo){ S.kshareGo = 0; if (!S.kshare) setTimeout(() => act('kshare'), 0); }
   const k = KJ(), sh = S.kshare, ks = kitStart(), w = Math.floor((day0(new Date()) - ks) / (7 * DAYMS)) + 1;
   const sub = k ? `You are in a Family Kitchen for a table of ${kitTable()}. Your menu and shopping list match theirs each week. Your own health and check-ins stay yours.` : 'Share your menu with your family. Everyone who joins sees the same dinners and the same shopping list each week, on their own phone.';
@@ -3164,7 +3227,7 @@ function qrSvg(text){
     const px = N * (N * 4 > 300 ? 3 : 4); return `<svg viewBox="0 0 ${N} ${N}" width="${px}" height="${px}" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect width="${N}" height="${N}" fill="#fff"/><path d="${p}" fill="#111"/></svg>`; } catch(e){ return ''; }
 }
 function apiSetStart(kind, v){
-  const h = H(), d = parseD(v); if (!h || !d || !PUB()) return false; const mon = ymd(monOf(d));
+  const h = H(), d = parseD(v); if (!h || !d || !KON()) return false; const mon = ymd(monOf(d)); if (kind === 'prog' && !PUB()) return false;
   if (kind === 'food'){ if (KJ()){ toast('Your Family Kitchen sets this start date.'); return false; }
     const k = h.kitchen = h.kitchen && typeof h.kitchen === 'object' ? h.kitchen : {}; if (!k.id) k.id = uid().replace(/[^a-z0-9]/g, '').slice(-8);
     k.start = mon; k.u = Date.now(); PA = null; ensurePlan(); clearShop(); save();
@@ -3565,8 +3628,7 @@ function pubSettingsCard(){
     <div class="tn-acts"><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Start-Up Check</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">My Plan from My Team</button>${kids.length || s.who === 'family' ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="kids">Family Food</button>` : ''}</div></div>`;
 }
 
-function actPub(a, v){
-  const h = H();
+function actKit(a, v){
   switch (a){
     // BLD 921: the Family Kitchen and start dates.
     case 'kopen': S.open['planed'] = true; if (C.section && C.host === 'home'){ S.kshareGo = 1; C.section('settings'); return true; } S.sec = 'settings'; S.kshareGo = 1; rerender(false); window.scrollTo(0, 0); return true;
@@ -3580,6 +3642,12 @@ function actPub(a, v){
     case 'sdedit': S.sdEd = v; rerender(true); setTimeout(() => { const el = document.getElementById('hj-sd-' + v); if (el) el.focus(); }, 30); return true;
     case 'sdcancel': S.sdEd = null; rerender(true); return true;
     case 'sdsave': { const el = document.getElementById('hj-sd-' + v), d = parseD(el && el.value); if (!d){ toast('Choose a date.'); return true; } S.sdEd = null; apiSetStart(v, ymd(d)); rerender(true); return true; }
+  }
+  return false;
+}
+function actPub(a, v){
+  const h = H();
+  switch (a){
     case 'setup': S.setup = true; S.ck = null; ckDraft(); if (v){ const i = ckSteps(S.ck.d).indexOf(v); if (i >= 0) S.ck.i = i; } if (bareOn()){ toSetup(); return true; } rerender(false); window.scrollTo(0, 0); return true;
     case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
       if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
@@ -3803,7 +3871,7 @@ function monthDay(d, hols){
       if (U('food')){ const dn = mmDinner(d); if (dn) out.dinner = {title: dn.name, key: 'cook:' + dn.wk + ':' + dn.id, done: isDone(d, 'cook:' + dn.wk + ':' + dn.id)};
         if (dow === 0){ const p = prepFor('sunday', fw), b = prepFor('batch', fw); if (p) out.prep.push({title: 'Sunday Together Prep', key: 'prep:sunday:' + fw}); if (b) out.prep.push({title: b.title || 'Weekly Batch', key: 'prep:batch:' + fw}); }
         if (dow === 3 && wn >= 1){ const p = prepFor('wednesday', wn); if (p) out.prep.push({title: 'Wednesday Mini Prep', key: 'prep:wednesday:' + wn}); }
-        if (dow === 6){ const L = shopList(fw); if (L){ const own = arr(L.items).filter(x => x.own).length; out.shop = {title: 'Shop for Week ' + letter(fw), key: 'shop:' + fw, n: arr(L.items).length, own}; } } }
+        if (dow === 6){ const L = shopList(fw); if (L){ const own = arr(L.items).filter(x => x.own).length; out.shop = {title: 'Shop for Week ' + fwl(fw), key: 'shop:' + fw, n: arr(L.items).length, own}; } } }
     } catch(e){}
   }
   hols.forEach(x => {
@@ -5280,7 +5348,7 @@ function actHol(a, v){
       if (!parseD(ed.date) || ed.date < today()){ toast('Choose the day first.'); return true; }
       const st = holSt(), pk0 = s.choose ? ed.pick || (holPlan(id) || {}).pick || s.menu[0].id : null; st.plans[id] = {date: ed.date, guests: Math.max(1, +ed.guests || +s.serves || 6), u: Date.now()}; if (pk0) st.plans[id].pick = pk0; if (!st.on.includes(id)) st.on.push(id); delete st.skip[id];
       S.holEd = null; S.holSure = null; holKeep(); const G = holUse(), wk = holWeek(G.buyDate(id, ed.date));
-      toast(s.name + ' is set: the shopping is on the list for Week ' + letter(wk) + ', and the prep is on your calendar.'); rerender(true); return true; }
+      toast(s.name + ' is set: the shopping is on the list for Week ' + fwl(wk) + ', and the prep is on your calendar.'); rerender(true); return true; }
     case 'holclear': if (S.holSure !== v){ S.holSure = v; rerender(true); return true; } delete holSt().plans[v]; S.holSure = null; S.holEd = null; holKeep(); toast('Taken off your calendar. The set stays here whenever you want it.'); rerender(true); return true;
   }
   return false;
@@ -5341,7 +5409,7 @@ function MENU(){ const h = H(); if (!h) return {items: []}; const m = h.menu = h
   m.items = arr(m.items).filter(x => x && x.id && parseD(x.date)); return m; }
 const mmSave = () => { MENU().u = Date.now(); save(); };
 const mmReady = () => !!(H() && FLDH() && !setupNeeded() && (U('food') || KIT()));
-const mmTable = () => { const n = PUB() ? tableOf() : num((H() || {set: {}}).set.household); return n > 0 && n < 30 ? Math.round(n) : 6; };
+const mmTable = () => { const n = PUB() ? tableOf() : KJ() ? kitTable() : num((H() || {set: {}}).set.household); return n > 0 && n < 30 ? Math.round(n) : 6; };
 const mmCap = t => String(t || '').replace(/^./, c => c.toUpperCase());
 // ---- the recipe behind a ref ----
 function mmRecipe(ref){
@@ -5527,7 +5595,7 @@ function mmUndo(){ if (MM.undo == null) return false; try { MENU().items = JSON.
 const mmDayName = s => { const d = parseD(s); if (!d) return ''; const t = today(), n = Math.round((day0(d) - day0(new Date())) / DAYMS); return s === t ? 'Today' : n === 1 ? 'Tomorrow' : DOW[d.getDay()] + ', ' + MONTHS[d.getMonth()].slice(0, 3) + ' ' + d.getDate(); };
 const mmLong = s => { const d = parseD(s); return d ? (s === today() ? 'Today, ' : '') + DOWL[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() : ''; };
 function mmListLine(date){ const n = mmListWeek(date), sd = ymd(shopDate(n)), t = today();
-  return sd === t ? `The ingredients join today's Shopping List, Shop for Week ${letter(n)}.` : sd < t ? `The ingredients join this week's Shopping List, Shop for Week ${letter(n)}, for a quick trip.` : `The ingredients join Shop for Week ${letter(n)}, the list for ${mmLong(sd)}.`; }
+  return sd === t ? `The ingredients join today's Shopping List, Shop for Week ${fwl(n)}.` : sd < t ? `The ingredients join this week's Shopping List, Shop for Week ${fwl(n)}, for a quick trip.` : `The ingredients join Shop for Week ${fwl(n)}, the list for ${mmLong(sd)}.`; }
 function mmOpenAdd(ref, o){ const R = mmRecipe(ref); if (!R) return false; o = o || {};
   MM.sheet = {kind: 'add', ref, name: R.name, date: o.date && parseD(o.date) && o.date >= today() ? o.date : today(), meal: MM_NAME[o.meal] ? o.meal : MM_NAME[R.meal] ? R.meal : R.meal === 'party' ? 'snack' : 'extra', serves: Math.max(1, Math.min(40, Math.round(+o.serves || mmTable()))), other: false};
   mmPaint(); return true; }
@@ -5586,7 +5654,7 @@ function mmAct(a, v){
       const r = mmAdd(s.ref, s.date, s.meal, s.serves); if (!r){ toast('That recipe is on its way. Open it again in a moment.'); return; }
       const n = r.e.wk, came = r.d.came;
       mmDone('Added to My Menu', r.e.name, [mmLong(r.e.date) + ', ' + (MM_NAME[r.e.meal] || 'Extra') + ', for ' + r.e.serves + '. It waits on Today with Grounded Cooking.',
-        (came ? mmCount(came, 'ingredient joins', 'ingredients join') + ' Shop for Week ' + letter(n) : 'Its ingredients are on Shop for Week ' + letter(n)) + ', marked ' + r.e.name + '.'], true); return; }
+        (came ? mmCount(came, 'ingredient joins', 'ingredients join') + ' Shop for Week ' + fwl(n) : 'Its ingredients are on Shop for Week ' + fwl(n)) + ', marked ' + r.e.name + '.'], true); return; }
     case 'swap': if (!mmOpenSwap(v)) toast('That meal is on its way. Open it again in a moment.'); return;
     case 'mgoal': case 'mfit': if (s){ const k = a === 'mgoal' ? 'goals' : 'fits', i = s[k].indexOf(v); if (i < 0) s[k].push(v); else s[k].splice(i, 1); mmPaint(); } return;
     case 'pick': { if (!s || s.kind !== 'swap') return; const r = mmSwap(s.target, v); if (!r){ toast('That recipe is on its way. Open it again in a moment.'); return; }
