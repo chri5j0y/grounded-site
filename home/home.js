@@ -50,7 +50,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b920', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b911b', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b926', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b916';
   var IMG = '/shared/heroes/way/';
@@ -812,9 +812,13 @@
      the kind storm video when it is there). */
   function soberQuiet() {
     var st = lsStorm(), vid = st && st.day <= 2 && lsVid('gg-storm-morning') ? 'gg-storm-morning' : pick(QUIET_SOBER, dayIndex());
+    soberIntent(function () { playVideo(vid); });
+  }
+  /* BLD 926: Today's Intention first (once a day), then what comes next: the calm video, or Tending's own Morning Quiet. */
+  function soberIntent(next) {
     var lg = obj(obj(obj(GGP.data(S.id)).soberDays).log)[today()] || {};
-    if (lg.i) { playVideo(vid); return; }
-    soberReady().then(function (G) { if (G && G.intent) G.intent(soberTree(), function () { playVideo(vid); }); else playVideo(vid); });
+    if (lg.i) { next(); return; }
+    soberReady().then(function (G) { if (G && G.intent) G.intent(soberTree(), next); else next(); });
   }
   function stormDlg() {
     mDialog('Storm and Repair', '<div class="hm-a-sober hm-lsdlg"><p class="hm-sub">Some days blow in hard. For the next two weeks, Today keeps it simple: sleep, real meals, calm, Ride the Wave, and My Anchor Plan, with Write, Walk, Talk, Pray close by.</p>' +
@@ -1511,7 +1515,7 @@
     return '<article class="hm-titem hm-card edge lift hm-fill ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + '" data-hm-card="' + esc(x.key) + '">' +
       '<div class="hm-pc"><div class="scene"><img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
       '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(t) + '</b>' +
-      '<span class="hm-fillfor">' + I('tree') + esc(x.forLine) + '</span>' + (sub ? '<small class="hm-meta">' + esc(sub) + '</small>' : '') +
+      '<span class="hm-fillfor">' + I('tree') + esc(x.forLine) + '</span>' + (sub ? '<small class="hm-meta">' + esc(sub) + '</small>' : '') + thenHtml(x) +
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-go="' + esc(x.key) + '">' + I('play') + 'Play</button>' + doneBtn(x) + dtBtn(x) + '</div></div></div></article>';
   }
   document.addEventListener('click', function (e) {
@@ -1688,7 +1692,10 @@
     var hasQuiet = items.some(function (x) { return /quiet|med/i.test(x.kind + ' ' + x.hkey); });
     // BLD 916: with Living Sober on, Morning Quiet opens with Today's Intention, and an Evening Look Back closes the day.
     var so = soberOn(), lb = so ? lsLook(today()) : null, so4 = so && lsStorm();
-    if (so) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'Today\'s Intention, then a few minutes of calm breath', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
+    // BLD 926: one Morning Quiet. Tending's own Morning Quiet, when the day has it, opens with Today's Intention on a sober day.
+    var tq = items.filter(function (x) { return x.src === 'tend' && x.hkey === 'quiet'; })[0];
+    if (so && tq) { tq.sober = true; tq.sub = 'Today\'s Intention first. ' + tq.sub; }
+    else if (so) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'Today\'s Intention, then a few minutes of calm breath', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
     else if (h.parts.indexOf('still') >= 0 && !hasQuiet) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'A few minutes of breath and stillness', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
     if (so) items.push({ key: 'look', hour: 20, when: 'Evening', title: 'Evening Look Back', sub: 'Under a minute: the day\'s urge, mood, sleep, and what helped', btn: 'Begin', tint: 'quiet', done: !!(d.look || lb), src: 'home' });
     if (so4) {
@@ -1710,9 +1717,63 @@
     var later = obj(h.later), td = today(), moved = [];
     items = items.filter(function (x) { var k = dtKey(x); if (k && !x.done && later[k] && later[k] > td) { moved.push(x); return false; } return true; });
     items.push(treeItem(h, d));
+    var rest = [];
+    if (!isKid(S.p)) items = calmDay(items, rest);
     items.forEach(function (x, i) { x.i = i; });
     items.sort(function (a, b) { return a.hour - b.hour || a.i - b.i; });
-    return { items: items, plan: plan, extra: extra, moved: moved, ready: ready, loading: !tendReady() && !S.tendLoadDone };
+    return { items: items, resting: rest, plan: plan, extra: extra, moved: moved, ready: ready, loading: !tendReady() && !S.tendLoadDone };
+  }
+  /* ---------- BLD 926: a calmer day ----------
+     Chris (November 5, 2026), after resetting his growth plan and finding 20 things on Today, some twice. Today keeps every
+     pick and every Tending meal, workout, and kitchen item, and folds what does the same job at the same time of day:
+       Evening      the Living Sober Evening Look Back is the first step of the tree check-in: one item, Evening Check-in and
+                    Look Back. Quiet Reflection rests on Today while the evening check-in is there (it stays in the plan).
+       One a part   at most one growth plan practice for each of the four each day. A practice a Tending session fills (one
+                    card, two credits) is that part's one; otherwise the daily picks for the part take turns, one a day, in
+                    the plan's own order. One done today, or moved here with Do Tomorrow, keeps its place; every practice
+                    done today stays on Today with its Done mark.
+       Morning      with Morning Quiet on Today, a morning Roots practice (Prayer) and Tending's morning meditation (Gathering
+                    Gratitude) ride inside the Morning Quiet card as its Then steps: one card, and Done marks every step.
+     The resting practices come back on their turn; nothing is erased, and the tree's day marks stay as they were. */
+  function calmPrac(x) { return (x.src === 'plan' || x.src === 'spirit') && x.r === 'd' && !x.side; }
+  function calmDay(items, rest) {
+    var td = today(), later = obj(homeRec().later), drop = [];
+    var out = function (x) { if (drop.indexOf(x) < 0) { drop.push(x); if (x.src === 'plan' || x.src === 'spirit') rest.push(x); } };
+    var tree = items.filter(function (x) { return x.key === 'tree'; })[0], look = items.filter(function (x) { return x.key === 'look'; })[0];
+    if (tree && look) {
+      tree.look = true; tree.ckDone = tree.done; tree.lookDone = look.done; tree.done = tree.done && look.done; tree.hour = Math.min(tree.hour, look.hour);
+      var tn = (TREES[S.tree] || TREES.oak).n;
+      tree.title = 'Evening Check-in and Look Back'; tree.sub = look.done ? 'Your Look Back is saved. Now a short ' + tn + ' check-in to close the day' : 'The day\'s urge, mood, sleep, and what helped, then a short ' + tn + ' check-in to close the day';
+      tree.btn = 'Begin'; drop.push(look);
+    }
+    if (tree) items.forEach(function (x) { if (calmPrac(x) && x.pid === 'bark|Quiet Reflection' && !x.doneToday) out(x); });
+    var filled = {};
+    items.forEach(function (x) { arr(x.pairs).forEach(function (p) { if (p && p.part) filled[p.part] = 1; }); });
+    TEND4.forEach(function (k) {
+      var pool = items.filter(function (x) { return calmPrac(x) && drop.indexOf(x) < 0 && x.part === k; }); if (!pool.length) return;
+      var dn = pool.filter(function (x) { return x.doneToday; });
+      var keep = dn.length ? dn : filled[k] ? [] : [pool.filter(function (x) { return later[x.pid] === td; })[0] || pick(pool, dayIndex())];
+      pool.forEach(function (x) { if (keep.indexOf(x) < 0) out(x); });
+    });
+    var host = items.filter(function (x) { return drop.indexOf(x) < 0 && (x.key === 'quiet' || (x.src === 'tend' && x.hkey === 'quiet')); })[0];
+    if (host) {
+      var steps = items.filter(function (x) { return x !== host && drop.indexOf(x) < 0 && !x.side && x.hour < 12 && ((calmPrac(x) && x.part === 'roots') || (x.src === 'tend' && x.kind === 'meditation')); });
+      if (steps.length) {
+        host.then = steps; host.selfDone = host.done; host.done = host.done && steps.every(function (x) { return x.done; });
+        steps.forEach(function (x) { drop.push(x); });
+      }
+    }
+    return items.filter(function (x) { return drop.indexOf(x) < 0; });
+  }
+  /* A Then step's own Done, and an item's own Done (its Then steps aside). */
+  function ownDone(x) { return x.then ? !!x.selfDone : x.look ? !!x.ckDone : !!x.done; }
+  function thenHtml(x) {
+    if (!x.then || !x.then.length) return '';
+    return '<ol class="hm-then" aria-label="' + esc('After ' + (x.ftitle || x.title)) + '">' + x.then.map(function (s) {
+      var t = s.ftitle || s.title, line = s.pairs ? s.forLine : s.src === 'tend' ? s.sub : fillLine([]);
+      return '<li class="' + (s.done ? 'done' : '') + '"><span class="k">' + (s.done ? I('check') : '') + 'Then</span><span class="tx"><b>' + esc(t) + '</b>' + (line ? '<small>' + esc(line) + '</small>' : '') + '</span>' +
+        (s.src === 'tend' ? '<button type="button" class="hm-linkbtn" data-hm-go="' + esc(s.key) + '" aria-label="' + esc((s.pairs ? 'Play' : s.btn) + ': ' + t) + '">' + esc(s.pairs ? 'Play' : s.btn) + '</button>' : '') + '</li>';
+    }).join('') + '</ol>';
   }
   var DONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.4 4.4L19 7.4"/></svg>';
 
@@ -1774,6 +1835,7 @@
   function partOfItem(x) {
     if (!x) return '';
     if (x.part && PART[x.part]) return isTend(x.part) ? x.part : 'bark';
+    if (x.pairs && x.pairs[0] && isTend(x.pairs[0].part)) return x.pairs[0].part;   // BLD 926: a session that fills a practice tends that practice's part
     if (x.key === 'quiet') return 'bark'; if (x.key === 'pray') return 'roots'; if (x.key === 'talk') return 'branches';
     if (x.opart && isTend(x.opart)) return x.opart;
     var k = String(x.kind || '') + ' ' + String(x.hkey || '');
@@ -1784,7 +1846,8 @@
   }
   function readyLine(k, kid) { return 'Your ' + PART[k].n + (k === 'bark' ? ' is' : ' are') + ' ready for tending.'; }
   function fourHtml(T) {
-    var ck = lastCheckin(S.id, S.tree), lv = ck ? levelsOf(ck) : {}, day = T.items.filter(function (x) { return x.key !== 'tree'; });
+    var ck = lastCheckin(S.id, S.tree), lv = ck ? levelsOf(ck) : {}, day = [];
+    T.items.forEach(function (x) { if (x.key === 'tree') return; day.push(x); arr(x.then).forEach(function (y) { day.push(y); }); });   // BLD 926: Then steps count for their part
     var rows = TEND4.map(function (k) {
       var L = day.filter(function (x) { return partOfItem(x) === k; }), W = arr(T.plan).filter(function (x) { return x.part === k && x.r !== 'd'; }), M = arr(T.moved).filter(function (x) { return partOfItem(x) === k; }), lb = plabel(k);
       if (!L.length && !W.length && !M.length) return '<li class="hm-four-r ready" style="--c:var(--' + k + ');--cs:var(--' + k + '-s)"><span class="dot" aria-hidden="true"></span><div class="tx"><b>' + esc(lb) + '</b><small>' + esc(readyLine(k)) + '</small></div><button type="button" class="hm-pill hm-four-go" data-hm-setup="' + k + '" aria-label="Choose a practice for ' + esc(lb) + '">Choose</button></li>';
@@ -1811,7 +1874,7 @@
     if (x.pairs) return fillCardHtml(x);
     return '<article class="hm-titem hm-card edge lift ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
       '<div class="hm-pc"><div class="scene">' + '<img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
-      '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') +
+      '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') + thenHtml(x) +
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-go="' + esc(x.key) + '">' + I(GO_ICON[x.btn] || 'arrow') + esc(x.btn) + '</button>' + doneBtn(x) + dtBtn(x) + '</div></div></div></article>';
   }
   /* Right Now: the next thing that is due, in a bold color block with a big button (Tending's own Right Now card, BLD 857). */
@@ -1891,7 +1954,7 @@
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml() + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
-  function findItem(key) { var T = todayItems(); return T.items.filter(function (x) { return x.key === key; })[0] || null; }
+  function findItem(key) { var T = todayItems(), all = []; T.items.forEach(function (x) { all.push(x); arr(x.then).forEach(function (y) { all.push(y); }); }); return all.filter(function (x) { return x.key === key; })[0] || null; }
   /* BLD 885: Right Now's How opens that practice's How on its card in the day, in place. */
   function openHowFromNow(key) {
     setHow(key, true);
@@ -1903,9 +1966,12 @@
     if (/^[ps]:/.test(key)) { openHowFromNow(key); return; }
     var x = findItem(key), t = TREES[S.tree] || TREES.oak; if (!x) return;
     if (x.src === 'tend' && x.kind === 'own') { itemDone(key); return; }   // BLD 896: My Own Items check off (and credit their part)
+    if (x.src === 'tend' && x.sober && soberOn()) { soberIntent(function () { if (hasFn('act')) hCall('act', x.hkey); }); return; }   // BLD 926
     if (x.src === 'tend') { if (hasFn('act')) hCall('act', x.hkey); return; }
     if (x.src === 'old') { goTo('today=' + (x.old === 'plate' ? 'log' : 'tending')); if (x.old === 'move') { S.quiet = true; try { window.GGHealth.open('move'); } catch (e) {} S.quiet = false; } return; }
     if (x.src === 'plan') { openHowFromNow(key); return; }
+    // BLD 926: Evening Check-in and Look Back: the Look Back first, then the check-in.
+    if (key === 'tree' && x.look && !x.lookDone) { soberReady().then(function (G) { var ck = function () { refreshPane(); if (lsLook(today())) openTreeSheet(t.ck ? 'quick' : ''); }; if (G && G.look) G.look(soberTree(), ck); else ck(); }); return; }
     if (key === 'tree') { openTreeSheet(t.ck ? 'quick' : ''); return; }
     if (key === 'quiet') { if (soberOn()) soberQuiet(); else playVideo('gg-paced-now'); return; }
     if (key === 'look') { lsAct('look'); return; }
@@ -1916,17 +1982,26 @@
   function itemDone(key, btn) {
     var x = /^p:/.test(key) ? { src: 'plan', pid: key.slice(2), done: btn ? btn.getAttribute('aria-pressed') === 'true' : false } : findItem(key); if (!x) return;
     var on = !x.done;
-    if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return; }
+    // BLD 926: a card with Then steps marks each step (and itself) together; each one only when it differs.
+    if (x.then) { x.then.forEach(function (y) { if (!!y.done !== on) doneOne(y, on); }); if (ownDone(x) !== on) doneOne(x, on); }
+    else if (x.look) { var hl = homeRec(), rl = todayRec(hl); rl.tree = on ? 1 : 0; rl.look = on ? 1 : 0; pruneDays(hl); saveHome(); }
+    else if (doneOne(x, on) === false) return;
+    if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item,.hm-card,.hm-kp'); if (card) { card.classList.toggle('done', on); card.querySelectorAll('[data-hm-done],[data-hm-hdone]').forEach(function (b2) { if (b2 !== btn) b2.setAttribute('aria-pressed', String(on)); }); } }
+    if (on && btn && !matchMedia('(prefers-reduced-motion: reduce)').matches) { var burst = document.createElement('span'); burst.className = 'hm-burst'; for (var j = 0; j < 8; j++) { var a = j / 8 * Math.PI * 2, dd = 22 + (j % 2) * 8, dot = document.createElement('i'); dot.style.setProperty('--x', Math.cos(a) * dd + 'px'); dot.style.setProperty('--y', Math.sin(a) * dd + 'px'); burst.appendChild(dot); } btn.appendChild(burst); setTimeout(function () { burst.remove(); }, 800); }
+    setTimeout(function () { if (isKid(S.p)) render(); else refreshPane(); }, on ? 650 : 0);
+  }
+  /* One item's own Done (false when it cannot be marked). */
+  function doneOne(x, on) {
+    var key = x.key;
+    if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return false; }
     else if (x.src === 'tend' && x.pairs) fillDone(x, on);
     else if (x.src === 'tend') { tendMark(x, on); if (x.opart && PART[x.opart] && !isKid(S.p)) togglePractice(x.opart + '|' + x.title, on); }   // BLD 896: an own item credits the tree part it tends
-    else if (x.src === 'old') { itemGo(key); return; }
+    else if (x.src === 'old') { itemGo(key); return false; }
     else if (x.src === 'spirit') spiritMark(x.pid, on);
     else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome();
       // BLD 893: a Sacred Pause chosen in My Grounded Way Plan grows Roots too.
       if (key === 'pray' && planOK() && obj(wayRec().spirit).pause && waySaved()) spiritMark(spiritPid('pause', S.tree), on); }
-    if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item,.hm-card,.hm-kp'); if (card) { card.classList.toggle('done', on); card.querySelectorAll('[data-hm-done],[data-hm-hdone]').forEach(function (b2) { if (b2 !== btn) b2.setAttribute('aria-pressed', String(on)); }); } }
-    if (on && btn && !matchMedia('(prefers-reduced-motion: reduce)').matches) { var burst = document.createElement('span'); burst.className = 'hm-burst'; for (var j = 0; j < 8; j++) { var a = j / 8 * Math.PI * 2, dd = 22 + (j % 2) * 8, dot = document.createElement('i'); dot.style.setProperty('--x', Math.cos(a) * dd + 'px'); dot.style.setProperty('--y', Math.sin(a) * dd + 'px'); burst.appendChild(dot); } btn.appendChild(burst); setTimeout(function () { burst.remove(); }, 800); }
-    setTimeout(function () { if (isKid(S.p)) render(); else refreshPane(); }, on ? 650 : 0);
+    return true;
   }
 
   /* ---------- Week: Shop, Sunday Together Prep, then the seven days ---------- */

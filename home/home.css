@@ -1434,3 +1434,13 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-mlist a{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--card-2);color:var(--ink);font:inherit;text-decoration:none;box-sizing:border-box;}
 .hm-mlist a small{display:block;color:var(--ink-soft);}
 .hm-mlist a b,.hm-mlist a small{overflow-wrap:anywhere;}
+/* BLD 926: Then steps inside one card (Morning Quiet, then a morning Roots practice or Tending's meditation). */
+.hm-then{list-style:none;margin:8px 0 2px;padding:0;display:grid;gap:6px;min-width:0;}
+.hm-then li{display:flex;align-items:center;gap:10px;min-width:0;padding:7px 10px;border-radius:10px;background:color-mix(in srgb,currentColor 6%,transparent);}
+.hm-then .k{flex:none;display:inline-flex;align-items:center;gap:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.75;}
+.hm-then .k .i{width:14px;height:14px;}
+.hm-then .tx{flex:1;min-width:0;display:grid;}
+.hm-then b{font-size:15.5px;overflow-wrap:anywhere;}
+.hm-then small{font-size:13.5px;opacity:.8;overflow-wrap:anywhere;}
+.hm-then li.done b{text-decoration:line-through;text-decoration-thickness:1px;opacity:.75;}
+.hm-then .hm-linkbtn{flex:none;}

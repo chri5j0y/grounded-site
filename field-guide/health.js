@@ -1910,12 +1910,16 @@ const lever = s => /psyllium/i.test(s.name || '') ? 'psyllium' : /sterol/i.test(
 const suppId = s => 'sp:' + s.id;
 function seedSupps(){
   const m = MINE(), mk = (name, when, note) => ({id: slug(name) + '-' + when, name, when, note: note || ''});
-  if (m && arr(m.supplements).length) return m.supplements.filter(s => s && s.name).map(s => mk(s.name, s.when === 'evening' ? 'evening' : 'morning', s.note));
+  // BLD 926: one entry for each name at each time of day (two doses of the same one join, notes together).
+  if (m && arr(m.supplements).length) return m.supplements.filter(s => s && s.name).map(s => mk(s.name, s.when === 'evening' ? 'evening' : 'morning', s.note))
+    .reduce((L, s) => { const o = L.find(x => x.id === s.id); if (!o) L.push(s); else if (s.note && o.note !== s.note) o.note = o.note ? o.note + '; ' + s.note : s.note; return L; }, []);
   const out = []; arr(m && m.addons).forEach(a => { const l = lever(a); if (l === 'psyllium') out.push(mk('Psyllium', 'morning', 'Before breakfast'), mk('Psyllium', 'evening', 'Before dinner'));
     if (l === 'sterols') out.push(mk('Plant sterols', 'morning', 'With breakfast'), mk('Plant sterols', 'evening', 'With dinner')); });
   return out;
 }
 function supps(){ const h = H(); return h.supps && Array.isArray(h.supps.list) ? h.supps.list : seedSupps(); }
+// BLD 926: Today names each supplement once (case aside), even when a list holds it twice.
+const suppLine = L => { const seen = {}; return L.filter(s => { const k = String(s && s.name || '').trim().toLowerCase(); if (!k || seen[k]) return false; seen[k] = 1; return true; }).map(s => s.name).join(', ') + '.'; };
 function keepSupps(list){ H().supps = {list, u: Date.now()}; save(); }
 const PSY = () => FOODS().find(f => f.id === 'psyllium');
 function totals(k){
@@ -2460,7 +2464,7 @@ function vTodayT(lib){
   const sp = U('supps') && !kit ? supps() : [], spOf = w => sp.filter(s => (s.when === 'evening') === (w === 'evening')), allOn = L => L.length && L.every(s => c[suppId(s)]);
   const nowList = ag.slice();
   if (U('spirit') && !kit) nowList.push({key: 'quiet', k: 'quiet', hour: 6, kick: 'Morning', title: t.spirit.h, sub: t.spirit.invite, btn: 'Quiet Timer', done: !!c.quiet});
-  ['morning', 'evening'].forEach(w => { const L = spOf(w); if (L.length) nowList.push({key: 'supp:' + w, k: 'supp', v: w, hour: w === 'morning' ? 6.2 : 20.5, kick: w === 'morning' ? 'This morning' : 'This evening', title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', done: allOn(L)}); });
+  ['morning', 'evening'].forEach(w => { const L = spOf(w); if (L.length) nowList.push({key: 'supp:' + w, k: 'supp', v: w, hour: w === 'morning' ? 6.2 : 20.5, kick: w === 'morning' ? 'This morning' : 'This evening', title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: suppLine(L), btn: 'All Taken', done: allOn(L)}); });
   if (!kit) ownNow(d).forEach(x => nowList.push(x));   // BLD 896: My Own Items
   nowList.sort((a, b) => a.hour - b.hour);
   const open = nowList.filter(x => !x.done), due = open.filter(x => x.hour <= hr + 0.25), cur = due.length ? due[due.length - 1] : open[0];
@@ -4303,7 +4307,7 @@ function apiToday(date){
       push({key, when: 'Tonight', hour: 20, title: 'Head Start for Tomorrow', sub: th ? 'Move ' + th + ' from the freezer to the fridge for ' + dn.name + '.' : 'Tomorrow is ' + dn.name + '. A quick look tonight makes dinner easy.', btn: 'Look Ahead', tint: TINT.cook, done: isDone(d, key), kind: 'headstart'}); }
   }
   if (U('supps')){ const sp = supps(); ['morning', 'evening'].forEach(w => { const L = sp.filter(s => (s.when === 'evening') === (w === 'evening')); if (!L.length) return;
-    push({key: 'supp:' + w, when: w === 'morning' ? 'This morning' : 'This evening', hour: w === 'morning' ? 6.2 : 20.5, title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', tint: TINT.meals, done: L.every(s => c[suppId(s)]), kind: 'supplements'}); }); }
+    push({key: 'supp:' + w, when: w === 'morning' ? 'This morning' : 'This evening', hour: w === 'morning' ? 6.2 : 20.5, title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: suppLine(L), btn: 'All Taken', tint: TINT.meals, done: L.every(s => c[suppId(s)]), kind: 'supplements'}); }); }
   out.forEach(x => { x.image = x.kind === 'workout' ? (x.art ? WAY(x.art) : moveArt(x.key)) : x.kind === 'practice' ? WAY(flowArtName(practiceFor(d))) : x.kind === 'meditation' ? WAY(medArtFor(d))
     : x.kind === 'prep' && /^prep:batch:/.test(x.key) ? WAY(ITEM_ART.batch) : x.kind === 'cook' && dinnerArtName(dinnerFor(d)) ? WAY(dinnerArtName(dinnerFor(d)))
     : WAY(ITEM_ART[x.kind] || 'tend-body'); });
