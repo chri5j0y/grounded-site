@@ -2694,6 +2694,32 @@ function view(){
     ${KIT() ? '' : askWho + offer}
     ${body}${nav ? navHtml('bottom') : ''}${S.ovHome === 'host' ? '' : vOv()}</div>`;
 }
+// =====================================================================
+// BLD 920 SEEDS (Chris, November 4, 2026: "everyone should be able to tend their tree and see the benefits of free app and
+// greater potential of paid app"; he named them Seeds). On Start, for grown-ups: My Heart Risk (PREVENT) is open, and a sample
+// week of meals with its shopping list (public recipes only, the same week for everyone with the same food needs, kept for
+// good). Labs, the LDL Path, and score history stay with Membership. Each carries a small Seed chip and one quiet line after it
+// (home/home.js draws the same line for its own Seeds). Never on a kid's or teen's screen.
+// =====================================================================
+const SEED_URL = '/the-grounded-way.html#ways', SEED_SEED = 920;
+const SEEDS_ON = () => START() && !TEEN() && !KIT();
+const seedChipH = () => '<span class="hm-seedchip">Seed</span>';
+const seedLineH = () => `<div class="hm-seedline" data-hm-seedline="1"><p>This was a seed. Membership grows the whole tree.</p><div class="hm-acts tight"><a class="hm-btn sm hm-pill" href="${SEED_URL}" data-hm-mlink="1">See Membership</a><button type="button" class="hm-btn sm line hm-pill" data-hm-mcode="1">I Have a Code</button></div></div>`;
+function vSampleWeek(){
+  const L = PLIB(), P = TP(); if (!SEEDS_ON() || !L || !P) return '';
+  const set = Object.assign(planSet(), {seed: SEED_SEED}), pw = P.planWeeks(arr(L.recipes), set), wk = (pw.weeks || {}).A || {dinners: []};
+  const dn = arr(wk.dinners).map(d => d && !d.leftover ? sizeUp(d) : d).filter(Boolean), hh = tableOf();
+  const shop = P.shopList({dinners: dn}, 'A', []), secs = arr(P.SECTIONS).concat(['Other']);
+  const DAYN = {Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday'};
+  const rows = dn.map(d => `<li class="hj-sw-day"><b>${esc(DAYN[d.day] || d.day || '')}</b>${d.leftover ? `<span>${esc(d.name || 'Leftovers Night')}</span>` : `<a href="/recipes/#${encodeURIComponent(d.id)}">${esc(d.name)}</a>`}${d.mins ? `<small>${esc(d.mins)} min</small>` : ''}</li>`).join('');
+  const groups = secs.map(sec => [sec, shop.filter(x => (secs.includes(x.sec) ? x.sec : 'Other') === sec)]).filter(g => g[1].length);
+  return `<div class="hj-blk hj-sample" id="hj-sample">${kick('A Sample Week of Meals')}<p class="hj-sub">${seedChipH()}Seven dinners from Grounded Recipes${hh ? ', sized for your table of ' + hh : ''}, with Saturday for leftovers, and the shopping list for the week. Tap a dinner to cook it with a calm voice guiding you.</p>
+    <ul class="hj-sw">${rows}</ul>
+    <h4 class="hj-sec">Shopping List<small>${shop.length} items</small></h4>
+    ${groups.map(([sec, g]) => `<h5 class="hj-sw-sec">${esc(sec)}</h5><ul class="hj-sw-shop">${g.map(x => `<li>${esc(x.name)}${x.amt ? ` <small>${esc(x.amt)}</small>` : ''}</li>`).join('')}</ul>`).join('')}
+    <p class="hj-note">Membership plans a new week of meals for your household every week, with My Menu, swaps, and one shopping list.</p></div>${seedLineH()}`;
+}
+function vRiskSeed(){ return SEEDS_ON() ? `<div class="hj-seedk">${seedChipH()}My Heart Risk is open to you. Labs, the LDL Path, and the history of your scores open with Membership.</div>${vRisk()}${seedLineH()}` : ''; }
 // ---------- BLD 871: Heart Risk (PREVENT scores from the person's doctor) ----------
 // Shows an example for a healthy adult until the person adds their own 10-year and 30-year scores; then theirs, with history.
 // Tending never computes PREVENT itself: the scores come from the doctor (Chris, October 27, 2026).
@@ -2758,7 +2784,7 @@ function vRisk(){
   const scale = d.r10 != null ? `<div class="hj-rk-scale"><div class="hj-rk-mk" style="left:${mk}%">${ex ? 'Example' : 'Me'}: ${pct(d.r10)}</div><div class="hj-rk-bands">${RISK_BANDS.map(x => `<span title="${esc(x[2])}" style="flex:${x[1] - x[0]};background:${x[3]}"></span>`).join('')}</div>
     <div class="hj-rk-ticks"><span style="left:0">0%</span><span style="left:20%">5%</span><span style="left:30%">7.5%</span><span style="left:80%">20%</span><span style="left:100%">25%+</span></div>
     <div class="hj-rk-key">${RISK_BANDS.map(x => `<span><i style="background:${x[3]}"></i>${esc(x[2])}</span>`).join('')}</div></div>` : '';
-  const hist = R.length > 1 ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>10-year</th><th>30-year</th><th></th></tr></thead><tbody>${R.slice().reverse().map(x => `<tr><td>${esc(short(x.date))}${x.src === 'calc' ? ' <small>(calculated)</small>' : ''}</td><td>${pct(x.r10)}</td><td>${pct(x.r30)}</td><td><button type="button" class="linkbtn" data-hja="riskdel" data-hjv="${esc(x.id)}">Remove</button></td></tr>`).join('')}</tbody></table></div>` : '';
+  const hist = R.length > 1 && !START() ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>10-year</th><th>30-year</th><th></th></tr></thead><tbody>${R.slice().reverse().map(x => `<tr><td>${esc(short(x.date))}${x.src === 'calc' ? ' <small>(calculated)</small>' : ''}</td><td>${pct(x.r10)}</td><td>${pct(x.r30)}</td><td><button type="button" class="linkbtn" data-hja="riskdel" data-hjv="${esc(x.id)}">Remove</button></td></tr>`).join('')}</tbody></table></div>` : '';
   return `<div class="hj-blk hj-rk" id="hj-risk">${kick('My Heart Risk')}
     ${ex ? `<p class="hj-sub"><b>Example: a healthy adult.</b> Add the PREVENT scores from your doctor and this card becomes yours.</p>` : `<p class="hj-sub">${cur.src === 'calc' ? 'Your PREVENT estimate, calculated' : 'Your PREVENT scores from your doctor'}, ${esc(short(cur.date))}: the chance of a heart attack or stroke (ASCVD).</p>`}
     <div class="hj-rk-tiles${ex ? ' ex' : ''}">
@@ -2982,9 +3008,9 @@ function startInvite(title, line){
 function startGentle(page){
   if (!GENTLE_START()) return '';
   const G = PLIB().gentle || {}, ses = Object.entries(gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}); if (!ses.length) return '';
-  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}
+  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}${page && SEEDS_ON() ? `<p class="hj-sub">${seedChipH()}Eight Gentle sessions, yours to keep.</p>` : ''}
     <div class="tn-kgrid">${ses.map(([id, x], i) => artCard(i, 'wl:gentle:' + id, (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Gentle', x.lead || '', 'a-move', moveArtName(id, x, 'gentle'))).join('')}</div>
-    ${G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}</div>`;
+    ${G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${page ? seedLineH() : ''}</div>`;
 }
 // Named vStartHome so it never replaces vStart(o, top), the workout, Flow, and meditation start screen (BLD 908 TRI).
 function vStartHome(){
@@ -4063,7 +4089,8 @@ function bareBody(b){
   switch (base){
     case 'shop': return box('a-kitchen', vShop());
     case 'prep': return box('a-kitchen', vPrep());
-    case 'numbers': return box('a-numbers', (PUB() ? vLabsP() : vNumbers()) + vRisk());
+    case 'numbers': return START() ? box('a-numbers', vRiskSeed()) : box('a-numbers', (PUB() ? vLabsP() : vNumbers()) + vRisk());
+    case 'sample': return box('a-kitchen', vSampleWeek()); // BLD 920 Seeds: the sample week of meals (home/home.js)
     case 'journey': return box('a-numbers', vJourney());
     case 'settings': return vSettings(true);
     case 'log': return vLog((b.opts || {}).mode);

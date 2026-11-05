@@ -1272,7 +1272,7 @@ function renderQuotes() {
 // =====================================================================
 const LC_RINGS = (window.SEQUOIA_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.SEQUOIA_GUIDES || {}).topics || [];
-const SAP = 'https://growwithgrounded.com/maple/#talk=';
+const SAP = 'https://growwithgrounded.com/home/?tree=maple#talk=';
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
 const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || (k === 'sober' && window.GGLife ? GGLife.ring('sequoia') : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' }; // 'life': Health and Ability (BLD 757)
 const lcPart = k => DOMAIN_BY_KEY[k];
@@ -1478,7 +1478,7 @@ function lcDetail(mode, t) {
     ${view}
     ${t.faith ? `<h3>Faith and the holy</h3><p>${lcEsc(t.faith)}</p>` : ''}
     <h3>Using Sequoia</h3><p>Parts of the tree this often touches: <b>${lcEsc(lcPartsText(t))}</b>. Practices that can help (tap one to see how):</p>${lcPracHtml(t)}<p>A check-in in a few weeks can show how ${self ? 'you are' : 'they are'} doing.</p>
-    ${t.kids ? `<h3>If children are involved</h3><p>Maple has a guide for talking with kids about this. <a class="text-link" href="${SAP + t.kids}" target="_blank" rel="noopener">Open the Maple guide</a></p><p>For middle and high schoolers, <a class="text-link" href="/aspen/#life" target="_blank" rel="noopener">Aspen</a> and <a class="text-link" href="/pine/#life" target="_blank" rel="noopener">Pine</a> have guides of their own.</p>` : ''}
+    ${t.kids ? `<h3>If children are involved</h3><p>Maple has a guide for talking with kids about this. <a class="text-link" href="${SAP + t.kids}" target="_blank" rel="noopener">Open the Maple guide</a></p><p>For middle and high schoolers, <a class="text-link" href="/home/?tree=aspen#life" target="_blank" rel="noopener">Aspen</a> and <a class="text-link" href="/home/?tree=pine#life" target="_blank" rel="noopener">Pine</a> have guides of their own.</p>` : ''}
     <h3>When to reach out for more help</h3><div class="lc-reach">${lcList(t.reach)}</div>
     ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}"${/^\/sequoia\/#/.test(u) ? '' : ' target="_blank" rel="noopener"'}>${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
     ${window.GGShelf ? GGShelf.html('sequoia', t.id) : ''}
@@ -1793,7 +1793,7 @@ function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();
   if (a && a.age !== 'adult') {
-    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Sequoia is written for older adults. ${a.age === 'maple' ? '<a href="/maple/">Maple</a> is made for kids.' : a.age === 'aspen' ? '<a href="/aspen/">Aspen</a> is made for middle schoolers.' : '<a href="/pine/">Pine</a> is made for high schoolers.'}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="oakSwitch()">Switch person</button></div></div>`;
+    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Sequoia is written for older adults. ${a.age === 'maple' ? '<a href="/home/?tree=maple">Maple</a> is made for kids.' : a.age === 'aspen' ? '<a href="/home/?tree=aspen">Aspen</a> is made for middle schoolers.' : '<a href="/home/?tree=pine">Pine</a> is made for high schoolers.'}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="oakSwitch()">Switch person</button></div></div>`;
     return;
   }
   if (PROF) {
@@ -1819,7 +1819,7 @@ function oakAdults() {
 function oakYoung() { return window.GGP ? GGP.list().filter(p => p.age !== 'adult') : []; }
 function oakWhoHtml(where) {
   const adults = oakAdults(), young = oakYoung();
-  const kidsLine = young.length ? `<p class="pbar-kids">Kids, middle schoolers, and high schoolers tend their trees in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, and <a href="/oak/">Oak</a>.</p>` : '';
+  const kidsLine = young.length ? `<p class="pbar-kids">Kids, middle schoolers, and high schoolers tend their trees in <a href="/home/?tree=maple">Maple</a>, <a href="/home/?tree=aspen">Aspen</a>, and <a href="/home/?tree=oak">Oak</a>.</p>` : '';
   if (!adults.length) {
     return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create a private Grounded profile, locked with your own passcode. It works across every Grounded tool, and everyone on this device can have their own.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create a profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${kidsLine}`;

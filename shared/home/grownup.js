@@ -132,7 +132,7 @@
       '<li>Friel, C. P., et al. (2020). U.S. children meeting physical activity, screen time, and sleep guidelines. <i>American Journal of Preventive Medicine.</i></li></ul>' +
 
       '<div class="made-by"><p class="serif">Your tree matters too.</p>\n' +
-      '<p>Maple grew out of <a class="text-link" href="https://growwithgrounded.com/oak/">Oak</a>, a check-in for grown-ups from root to fruit. Every age has its own tree, and <a class="text-link" href="https://growwithgrounded.com/grove/">The Grove</a> holds the whole family\'s trees side by side.</p>\n' +
+      '<p>Maple grew out of <a class="text-link" href="https://growwithgrounded.com/home/?tree=oak">Oak</a>, a check-in for grown-ups from root to fruit. Every age has its own tree, and <a class="text-link" href="https://growwithgrounded.com/grove/">The Grove</a> holds the whole family\'s trees side by side.</p>\n' +
       '<p><a class="text-link" href="https://growwithgrounded.com/stories.html">Grounded Stories</a>, real stories from the edge of life.</p>\n' +
       '<p>Have a fix or an idea to make Maple better? <a class="text-link" href="mailto:hello@growwithgrounded.com?subject=Maple%20feedback">Send feedback</a></p>\n' +
       '<p style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;letter-spacing:2px;color:var(--gold);margin-top:16px">MADE BY GROUNDED.</p>\n' +
