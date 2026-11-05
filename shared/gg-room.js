@@ -54,7 +54,7 @@
 
   // The room inside Home: one quiet line over the growth plan for a Start person (never inside a check-in, never on a kid tree).
   var KID = tree === 'maple' || tree === 'aspen';
-  var LINE = 'Your Start plan brings one practice a day for each of the four to Today, taking turns through the ones you choose. Membership opens the full growth plan: every practice each day, custom practices, trends, and reminders.';
+  var LINE = 'Your growth plan brings one practice a day for each of the four to Today, taking turns through the ones you choose. Membership adds your own custom practices, trends, practice history, and reminders.';
   function mark() {
     if (KID || api.member()) { var o = document.getElementById('gg-room-plan'); if (o) o.remove(); return; }
     var v = document.getElementById('client-growthplan'); if (!v || document.getElementById('gg-room-plan')) return;

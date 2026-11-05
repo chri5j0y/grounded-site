@@ -489,7 +489,7 @@
         : '');
     var what = age === 'pine'
       ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended. Answers and journal entries stay private to the teen, locked with the teen\'s own passcode.</div>'
-      : '<div class="ggp-note">Grown-ups who agree can open ' + esc(kidName || 'this') + ' profile with their own passcode, so every child has someone beside them when something is hard.</div>';
+      : '<div class="ggp-note">Grown-ups who agree can open ' + (kidName ? esc(kidName) + (/s$/i.test(kidName) ? '\'' : '\'s') : 'this') + ' profile with their own passcode, so every child has someone beside them when something is hard.</div>';
     return '<hr class="ggp-sep"><p><b>A grown-up needs to agree.</b></p>' + what + who +
       '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am ' + esc(kidName || 'this child') + '\'s parent, guardian, or another responsible grown-up. I have read and agree to the ' + TERMS_LINKS + ' on their behalf.</span></label>';
   }
@@ -604,7 +604,7 @@
       var lifeFrom = (function () { var v = opt.carry && lifeSrc && open[lifeSrc] && open[lifeSrc].data, l = v && v.life; return l && ((l.ids || []).length || l.none || l.rather || l.gentle) ? l : null; })();
       function step3(d) {
         var minor = isMinor(st.age);
-        d.show('<h2 id="ggp-title">One last step</h2>' +
+        d.show('<h2 id="ggp-title">Almost There</h2>' +
           '<p>Grounded tools are for reflection and growth. For therapy, medical care, or crisis support, reach a licensed professional or a crisis line. If you or someone you love is in crisis, call or text 988 any time.</p>' +
           '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + '. It stays with you.</p>' +
           (minor ? grownBlock(st.name, st.age)
@@ -1000,6 +1000,8 @@
     clearTimeout(ksT);
     ksT = setTimeout(function () {
       var p = cur && getP(cur.id), o = p && open[p.id]; if (!o || !rootOk(p) || document.querySelector('.ggr-remind,.ggr-back')) return;
+      // BLD 927: one note at a time. A page that has a window or a check-in open says so (GGRemindWait), and the note waits.
+      try { if (typeof window.GGRemindWait === 'function' && window.GGRemindWait()) { keepSafeCheck(); return; } } catch (e) {}
       var v = o.data, ks = v.keepSafe || {}, moment = null, lead = '';
       var ft = firstTended(v);
       if (!ks.first && firstCheckin(v)) { moment = 'first'; lead = 'Your first check-in is saved.'; }

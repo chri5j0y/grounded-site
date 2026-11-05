@@ -2831,7 +2831,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b922'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b927'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
@@ -3347,9 +3347,12 @@ function pubAims(){ const T = targets(), L = PLIB() || {}, gs = arr(L.goals).fil
     ${L.standards && L.standards.html ? `<details class="hj-doc"><summary><span>The Grounded Nutritional Standards</span></summary><div class="hj-body">${L.standards.html}</div></details>` : ''}</div></details>`; }
 
 // ---------- the start-up check ----------
+const START_HOLDS = 'Tending on Start: Grounded Recipes for your table and food needs, A Sample Week of Meals, Today\'s Meditation, one Flow session each day, and the eight Gentle sessions. Membership adds meal plans, goals, workouts for your level, and your labs.';
 function ckDraft(){
   if (S.ck) return S.ck; const s = H().set;
-  const d = {who: s.who === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: SOBER_ON() && !s.goalsMine ? goalsNow(s) : arr(s.goals).slice(), needs: arr(s.needs).slice(),
+  // BLD 927: a first start-up check begins from the person's own answer in Home (Me, or My Family), never a guess.
+  const who0 = s.pubDone || s.who ? s.who : (C.who && C.who()) || 'me';
+  const d = {who: who0 === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: SOBER_ON() && !s.goalsMine ? goalsNow(s) : arr(s.goals).slice(), needs: arr(s.needs).slice(),
     goalsMine: !!s.goalsMine, autoEnergy: SOBER_ON() && !s.goalsMine && !arr(s.goals).includes('energy'),
     allergies: s.allergies || '', house: JSON.parse(JSON.stringify(s.house || {adults: 1, kids: []})), check: Object.assign({}, s.check || {}), cleared: !!s.cleared,
     level: s.level || (SOBER_EARLY() ? 'root' : ''), place: s.place || 'home', mins: +s.mins || 20, gear: (Array.isArray(s.gear) ? s.gear : PLACE_GEAR[s.place] || []).slice(), gearSet: Array.isArray(s.gear),
@@ -3357,10 +3360,14 @@ function ckDraft(){
     lab: {date: today()}};
   return S.ck = {i: 0, d};
 }
+// BLD 927: a step shows only when its library carries it. Start (the open file, no Membership) asks who is at the table and
+// any food needs, then says plainly what Start holds; goals, the health check, levels, protein, and labs come with Membership.
 function ckSteps(d){
-  const u = id => arr(d.use).includes(id), out = ['who', 'use', 'goals'];
-  if (u('food')) out.push('food'); if (d.who === 'family') out.push('house');
-  if (u('move')) out.push('check', 'level'); if (!TEEN() && !d.teen) out.push('body'); if (u('labs')) out.push('labs');
+  const u = id => arr(d.use).includes(id), L = PLIB() || {}, st = START(), out = ['who'];
+  if (!st) out.push('use'); if (arr(L.goals).length) out.push('goals');
+  if (st || u('food')) out.push('food'); if (d.who === 'family') out.push('house');
+  if (!st && u('move')){ if (L.check && arr(L.check.questions).length) out.push('check'); out.push('level'); }
+  if (!st && !TEEN() && !d.teen) out.push('body'); if (!st && u('labs')) out.push('labs');
   return out.concat('done');
 }
 function vCheck(){
@@ -3407,7 +3414,7 @@ function vCheck(){
     body = `<h3>Your labs (optional)</h3><p class="hj-sub">${esc((L.labs || {}).lead || '')} Skip this anytime, and add numbers later in Numbers.</p>
     <div class="hj-g3">${inp('lab.date', 'Lab date', 'date')}${inp('lab.ldl', 'LDL')}${inp('lab.hdl', 'HDL')}${inp('lab.total', 'Total cholesterol')}${inp('lab.trig', 'Triglycerides')}</div>
     <p class="hj-sub" style="margin:10px 0 6px"><b>Your LDL goal, set with your doctor</b></p>${chips('goalLdl', lg.map(g => [g.v, 'Under ' + g.v]))}${inp('goalLdl', 'Or your own goal')}`; }
-  else body = `<h3>Ready to tend</h3><p class="hj-sub">${esc(t.intro.private)} ${esc(t.intro.quiet)}</p>${L.disclaimers && L.disclaimers.welcome ? `<p class="hj-note">${esc(L.disclaimers.welcome)}</p>` : ''}`;
+  else body = `<h3>Ready to tend</h3><p class="hj-sub">${esc(t.intro.private)} ${esc(t.intro.quiet)}</p>${START() ? `<p class="hj-note">${esc(START_HOLDS)}</p>` : ''}${L.disclaimers && L.disclaimers.welcome ? `<p class="hj-note">${esc(L.disclaimers.welcome)}</p>` : ''}`;
   const last = i === steps.length - 1, canCancel = !!H().set.pubDone;
   return `<section class="tn-sec a-numbers tn-check" id="hj-form" data-tn="check">${secHead('sprout', 'a-numbers', H().set.pubDone ? 'My Start-Up Check' : 'Welcome to Tending', esc(L.tagline || ''))}
     <div class="tn-ckbar" aria-hidden="true"><span style="width:${Math.round(100 * (i + 1) / steps.length)}%"></span></div><p class="hj-sub tn-ckn">Step ${i + 1} of ${steps.length}</p>

@@ -277,6 +277,8 @@
     function levelsHtml() {   // gg-tend.js 489 and 501, the levels of this tree's journey (mergeJourney 83)
       var J = window.GGJourney || {}, A = J.AGES || {}, key = tree === 'maple' ? 'maple_' + (/^(k2|K|1|2)$/.test(String(kid().grade || '')) ? 'k2' : '35') : tree;
       var L = ((A[key] && A[key].LEVELS) || J.LEVELS || []), s = tend();
+      // BLD 927 (one set of level names): a grown-up's movement level lives in Tending (Gentle, Root, Rise, Thrive), set once.
+      if (tree === 'oak' || tree === 'birch' || tree === 'sequoia') return sec('gss-level', 'Movement Level', '<p class="gt-small">Your movement level lives in Tending, with one set of names everywhere: Gentle, Root, Rise, and Thrive. Change it any time in Settings, Tending Settings.</p>');
       return sec('gss-level', 'Movement Level', '<p class="gt-small">Shapes the movement shown with your Leaves practices. Change it anytime.</p>'
         + L.map(function (x) { return radio('gss-level', 'level', x.id, !!(s && s.level === x.id), x.name, esc(x.desc), !s); }).join(''));
     }
