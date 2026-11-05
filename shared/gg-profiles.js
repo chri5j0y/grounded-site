@@ -237,6 +237,7 @@
       }).then(function () {
         if (!silent) { try { localStorage.setItem(PING_OPEN, String(Date.now())); } catch (e) {} }
         emit('change');
+        if (data.moveCarry) carryIn(id);
       });
     });
   }
@@ -383,6 +384,11 @@
     '.ggp-check input{margin-top:4px;width:18px;height:18px;flex:none;accent-color:#8B5E1A;}' +
     '.ggp-dlg a{color:var(--ggp-gold);}' +
     '.ggp-picrow{display:flex;gap:14px;align-items:center;margin-top:10px;}' +
+    '.ggp-step{font:700 13px "Barlow Condensed",Barlow,sans-serif;letter-spacing:1.3px;text-transform:uppercase;color:var(--ggp-gold);margin:14px 0 4px !important;}' +
+    '.ggp-steps{margin:12px 0 0;padding-left:22px;}.ggp-steps li{margin:0 0 6px;}' +
+    '.ggp-qrrow{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:8px;}.ggp-qrtext{flex:1 1 180px;min-width:0;}.ggp-qrtext p{margin:0 0 6px;}' +
+    '.ggp-qr{flex:none;width:156px;height:156px;background:#FFFFFF;border-radius:12px;padding:6px;}.ggp-qr svg{display:block;width:100%;height:100%;}' +
+    '.ggp-bring{overflow-wrap:anywhere;word-break:break-word;}' +
     '.ggp-sep{border:0;border-top:1px solid var(--ggp-line);margin:18px 0 6px;}' +
     '.ggp-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10001;background:#2C1810;color:#FAF7F2;padding:11px 18px;border-radius:999px;font:15px Barlow,system-ui,sans-serif;box-shadow:0 10px 26px rgba(0,0,0,.25);max-width:calc(100vw - 30px);text-align:center;}' +
     /* page features */
@@ -852,6 +858,7 @@
         (grownOpens(p.age) ? '<hr class="ggp-sep"><p><b>Grown-ups who can open this profile</b></p><p class="ggp-small">' + (grown.length ? grown.map(function (g) { return esc(g.name); }).join(', ') : 'None yet') + '</p><button type="button" class="ggp-link" data-addgrown>Add another grown-up</button>' : '') +
         '<hr class="ggp-sep"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">' +
         '<button type="button" class="ggp-link" data-code>Change ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '</button>' +
+        '<button type="button" class="ggp-b ggp-go" data-move>Move to Another Device</button>' +
         '<button type="button" class="ggp-link" data-backup>Download a locked backup</button>' +
         '<button type="button" class="ggp-link" data-rm style="color:var(--ggp-warn)">Remove this profile from this device</button></div>' +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Done</button></div>');
@@ -884,6 +891,7 @@
       d.el.querySelectorAll('[data-rmhelper]').forEach(function (b) { b.onclick = function () { var h = getP(b.dataset.rmhelper); if (!h || !confirm('Remove ' + h.name + ' as a helper? They will no longer open ' + p.name + '\'s profile.')) return; removeHelper(id, h.id); toast(h.name + ' is no longer a helper.'); view(d); }; });
       $(d, '[data-code]').onclick = function () { changeCode(d); };
       $(d, '[data-backup]').onclick = function () { backup(id); };
+      $(d, '[data-move]').onclick = function () { moveDialog(id); };
       var rwb = $(d, '[data-rw]'); if (rwb) rwb.onclick = function () { rootPass(d, false); };
       var rwn = $(d, '[data-rwnew]'); if (rwn) rwn.onclick = function () { if (confirm('Make a new set of Root Words? The old set will no longer open this profile. Backups saved before keep the old set.')) rootPass(d, true); };
       var bka = $(d, '[data-bkall]'); if (bka) bka.onclick = function () { d.close(true); backupGo('make'); };
@@ -1037,6 +1045,138 @@
     inp.click();
   }
 
+  /* ---------- Move to Another Device (GWG BLD 922) ----------
+     One locked file for this profile, made the same way as Download a locked backup. This browser's Membership
+     (GGMember.carry: the Member lock key, kind, and end date) rides inside the profile's own sealed vault box as
+     vault.moveCarry, so only this profile's passcode or Root Words open it; it never sits in clear text, in a link, or in
+     the QR code. Picture code profiles move without Membership, since three pictures make a short lock.
+     Where the browser shares files (Safari on a Mac, iPhone, iPad), Send My Profile opens the share sheet, so AirDrop
+     works; elsewhere it downloads. The QR code and link open /home/#bring-in on the other device: Bring In My Profile,
+     open the file, then the passcode. When that profile opens there and the browser has no Membership open,
+     GGMember.adopt opens it from the file, and moveCarry leaves the vault. */
+  var BRING_URL = 'https://growwithgrounded.com/home/#bring-in', BRING_SHOW = 'growwithgrounded.com/home/#bring-in';
+  var BRING = false;
+  try { if (location.hash === '#bring-in') { BRING = true; history.replaceState(history.state, '', location.pathname + location.search); } } catch (e) {}
+  function moveFile(id) {
+    var p = getP(id); if (!p || !open[id]) return Promise.reject(new Error('Open this profile first.'));
+    var M = window.GGMember, wantM = p.code !== 'pics' && M && M.carry && M.has && M.has();
+    return save(id).then(function () { return wantM ? M.carry() : null; }).then(function (mc) {
+      var data = Object.assign({}, open[id].data); delete data.moveCarry;
+      if (mc) data.moveCarry = { member: mc, at: Date.now() };
+      return rawKey(open[id].raw).then(function (k) { return seal(k, enc.encode(JSON.stringify(data))); }).then(function (box) {
+        var file = { app: 'grounded-profile', v: 1, move: 1, saved: new Date().toISOString(), profile: getP(id), box: box };
+        var name = 'grounded-profile-' + slug(p.name) + '-' + todayStr() + '.json';
+        var blob = new Blob([JSON.stringify(file)], { type: 'application/json' }), f = null;
+        try { f = new File([blob], name, { type: 'application/json' }); } catch (e) {}
+        return { blob: blob, file: f, name: name, member: !!mc };
+      });
+    });
+  }
+  function shareOk(f) { try { return !!(f && navigator.share && navigator.canShare && navigator.canShare({ files: [f] })); } catch (e) { return false; } }
+  function nativeApp() { try { var C = window.Capacitor; return !!(C && C.isNativePlatform && C.isNativePlatform() && window.GGApp && GGApp.share); } catch (e) { return false; } }
+  var QRP = null;
+  function needQR() {
+    if (window.qrcode) return Promise.resolve(true);
+    if (!QRP) QRP = new Promise(function (ok) { var s = document.createElement('script'); s.src = HOME + '/shared/vendor/qrcode.js?v=b921'; s.onload = function () { ok(!!window.qrcode); }; s.onerror = function () { QRP = null; s.remove(); ok(false); }; document.head.appendChild(s); });
+    return QRP;
+  }
+  function qrSvg(text) { var q = window.qrcode(0, 'M'); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 4, margin: 2, scalable: true, alt: 'QR code for Bring In My Profile' }); }
+  function moveDialog(id) {
+    id = id || (cur && cur.id); var p = getP(id);
+    if (!p || !open[id]) return openDialog();
+    var M = window.GGMember, member = !!(M && M.has && M.has()), pics = p.code === 'pics', made = null;
+    dialog(function (d) {
+      d.show('<h2 id="ggp-title">Move to Another Device</h2>' +
+        '<p>' + (cur && cur.id === id ? 'Your profile' : esc(p.name) + '\'s profile') + ' goes as one locked file. On the other device it opens with ' + (pics ? 'the same picture code' : 'the same passcode' + (p.rw ? ' or Root Words' : '')) + '.</p>' +
+        '<p class="ggp-step">1. Send the file</p>' +
+        '<div class="ggp-row" style="justify-content:flex-start;margin-top:6px"><button type="button" class="ggp-b ggp-go" data-send disabled>Send My Profile</button></div>' +
+        '<p class="ggp-small" id="ggp-how" style="margin-top:8px">Getting the file ready...</p>' +
+        (member ? '<p class="ggp-note" id="ggp-mline">' + (pics ? 'Membership opens on the other device with your Membership code.' : 'Getting your Membership ready to come along...') + '</p>' : '') +
+        '<hr class="ggp-sep"><p class="ggp-step">2. On the other device</p>' +
+        '<div class="ggp-qrrow"><div class="ggp-qr" id="ggp-qr" role="img" aria-label="QR code that opens Bring In My Profile"></div>' +
+        '<div class="ggp-qrtext"><p class="ggp-small">Scan this with the camera, or open this link in the browser there:</p><p class="ggp-small"><a href="' + BRING_URL + '" class="ggp-bring" data-bringlink>' + BRING_SHOW + '</a></p><p class="ggp-small"><button type="button" class="ggp-link" data-copy>Copy Link</button></p></div></div>' +
+        '<ol class="ggp-steps"><li>The link opens Bring In My Profile.</li><li>Open the file you sent.</li><li>Enter your ' + (pics ? 'picture code' : 'passcode') + ', and everything is there.</li></ol>' +
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Done</button></div>');
+      $(d, '[data-x]').onclick = function () { d.close(true); };
+      $(d, '[data-copy]').onclick = function () {
+        var b = this; Promise.resolve().then(function () { return navigator.clipboard.writeText(BRING_URL); }).then(function () { b.textContent = 'Link Copied'; }, function () { b.textContent = BRING_URL; });
+      };
+      needQR().then(function (ok) { var q = $(d, '#ggp-qr'); if (!q) return; if (ok) { try { q.innerHTML = qrSvg(BRING_URL); } catch (e) { q.hidden = true; } } else q.hidden = true; });
+      moveFile(id).then(function (m) {
+        made = m; var send = $(d, '[data-send]'), how = $(d, '#ggp-how'), ml = $(d, '#ggp-mline'); if (!send) return;
+        var sheet = nativeApp() || shareOk(m.file);
+        how.textContent = sheet ? 'Choose AirDrop to send it to your nearby iPhone, iPad, or Mac. Messages, Mail, and Save to Files work too.'
+          : 'It saves to your Downloads. Then send it to your other device by email, iCloud Drive, or a USB drive.';
+        if (ml && !pics) ml.textContent = m.member ? 'Your Membership comes along, locked inside the file.' : 'Membership opens on the other device with your Membership code.';
+        send.disabled = false;
+        send.onclick = function () {
+          var done = function () { if (how) how.textContent = sheet ? 'Sent. Now open Bring In My Profile on the other device.' : 'Saved to your Downloads as ' + m.name + '. Now send it to your other device and open Bring In My Profile there.'; };
+          if (nativeApp()) { Promise.resolve(GGApp.share(m.blob, m.name, 'My Grounded Profile')).then(done, function () {}); return; }
+          if (sheet) {
+            navigator.share({ files: [m.file], title: 'My Grounded Profile' }).then(done, function (e) { if (e && e.name !== 'AbortError') { download(m); done(); } });
+            return;
+          }
+          download(m); done();
+        };
+      }, function (e) { var how = $(d, '#ggp-how'); if (how) how.textContent = e && e.message ? e.message : 'Something went wrong. Try again.'; });
+    });
+    function download(m) {
+      var a = document.createElement('a'); a.href = URL.createObjectURL(m.blob); a.download = m.name;
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+    }
+  }
+  function bringIn() {
+    dialog(function (d) { first(d); });
+    function first(d) {
+      d.show('<h2 id="ggp-title">Bring In My Profile</h2><p>Bring your profile here from your other device. It stays locked with its own passcode the whole way.</p>' +
+        '<ol class="ggp-steps"><li>Open the file you sent. On an iPhone or iPad it is in Files, usually in Downloads. On a computer, look in Downloads or your email.</li><li>Enter your passcode, and your profile opens here.</li></ol>' +
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-file>Open the File</button></div>');
+      $(d, '[data-x]').onclick = function () { d.close(false); };
+      $(d, '[data-file]').onclick = function () {
+        var inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+        inp.onchange = function () { var f = inp.files && inp.files[0]; if (f) read(d, f); };
+        inp.click();
+      };
+    }
+    function read(d, f) {
+      var r = new FileReader();
+      r.onload = function () {
+        var j = null; try { j = JSON.parse(r.result); } catch (e) {}
+        if (j && j.app === 'grounded-profile' && j.profile && j.profile.id && j.profile.wrap && j.box) return place(d, j);
+        if (j && j.app === 'grow-with-grounded-backup') { d.close(false); return backupGo('load', f); }
+        d.msg('Choose the Grounded profile file you sent from your other device. Its name starts with grounded-profile.');
+      };
+      r.onerror = function () { d.msg('That file could not be read. Try again.'); };
+      r.readAsText(f);
+    }
+    function place(d, j) {
+      var id = j.profile.id, ex = getP(id);
+      if (!ex) return put(d, j);
+      var when = j.saved ? new Date(j.saved).toLocaleDateString() : 'your other device';
+      d.show('<h2 id="ggp-title">' + esc(ex.name) + ' Is Already Here</h2><p>Replace this device\'s copy with the one you brought?</p>' +
+        '<p class="ggp-small">The one you brought is from ' + esc(when) + '. Keeping this device\'s copy leaves everything here just as it is.</p>' +
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-keep>Keep This Device\'s Copy</button><button type="button" class="ggp-b ggp-go" data-swap>Replace With the One I Brought</button></div>');
+      $(d, '[data-keep]').onclick = function () { d.close(false); toast('Everything on this device stays as it is.'); };
+      $(d, '[data-swap]').onclick = function () { put(d, j); };
+    }
+    function put(d, j) {
+      var id = j.profile.id;
+      try { putP(j.profile); localStorage.setItem(BOX + id, JSON.stringify(j.box)); } catch (e) { return d.msg('This device is out of space. Free some room and try again.'); }
+      var step = cur && cur.id === id ? lock(true) : Promise.resolve(emit('change'));
+      step.then(function () { d.close(true); toast(j.profile.name + '\'s profile is here. Enter the ' + (j.profile.code === 'pics' ? 'picture code' : 'passcode') + ' to open it.'); setTimeout(function () { openDialog({ id: id }); }, 250); });
+    }
+  }
+  // When a moved profile opens here, its Membership opens too (only when this browser has none open).
+  function carryIn(id) {
+    var o = open[id], mc = o && o.data && o.data.moveCarry, M = window.GGMember;
+    if (!mc || !M || !M.adopt) return;
+    M.adopt(mc.member).then(function (r) {
+      if (!r || r.why === 'offline' || r.why === 'none' || r.why === 'renew') return; // tries again the next time it opens
+      if (open[id] && open[id].data.moveCarry) { delete open[id].data.moveCarry; writeVault(id, open[id].raw, open[id].data); }
+      if (r.ok && !r.already) setTimeout(function () { toast('Membership is open on this device too.'); }, 3500);
+    });
+  }
+
   /* One Grow With Grounded Backup (shared/gg-backup.js), loaded only when someone asks for it. */
   function backupGo(act, opts) {
     var run = function () { if (window.GGBackup) GGBackup[act](opts); };
@@ -1103,13 +1243,13 @@
       html += item('manage', 'Manage My Profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
-      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('bk', 'Back up everything') + item('ld', 'Load a backup') + item('lock', 'Lock');
+      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('move', 'Move to Another Device') + item('bk', 'Back up everything') + item('ld', 'Load a backup') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
       html += link('/home/', 'Open The Grounded Way');
       if (n) html += item('open', 'Open a profile');
-      html += item('create', 'Create a profile') + item('ld', 'Load a backup') + item('bk', 'Back up everything') + link('/privacy.html#profiles', 'How profiles work');
+      html += item('create', 'Create a profile') + item('bring', 'Bring In My Profile') + item('ld', 'Load a backup') + item('bk', 'Back up everything') + link('/privacy.html#profiles', 'How profiles work');
     }
     pop.innerHTML = html;
     pop.querySelectorAll('[data-a]').forEach(function (b) {
@@ -1119,6 +1259,8 @@
         else if (act === 'switch' || act === 'open') openDialog();
         else if (act === 'create') createDialog();
         else if (act === 'restore') restore(function () { openDialog(); });
+        else if (act === 'move') moveDialog();
+        else if (act === 'bring') bringIn();
         else if (act === 'bk') backupGo('make');
         else if (act === 'ld') backupGo('pick');
         else if (act === 'lock') lock().then(function () { toast('Locked. Everything is safe on this device.'); });
@@ -1340,6 +1482,7 @@
     setShared: function (id, obj) { var p = getP(id); if (!p || !open[id]) return false; p.shared = Object.assign(p.shared || {}, obj); putP(p); return true; },
     on: function (fn) { subs.push(fn); }, off: function (fn) { subs = subs.filter(function (x) { return x !== fn; }); },
     moveOn: MOVE,
+    move: moveDialog, bringIn: bringIn,
     lock: lock, openDialog: openDialog, createDialog: createDialog, manage: manage, backup: backup, restore: restore, toast: toast,
     rootWords: rootWords, rootState: rootState, saveBackup: function () { backupGo('make'); },
     require: function (opt) {
@@ -1353,6 +1496,6 @@
   readyP = (subtle ? resume() : Promise.resolve()).then(function () { emit('ready'); if (cur) keepSafeCheck(); });
   window.GGP.ready = readyP;
 
-  function boot() { addCSS(); loadAvatars(); mountNav(); paintAll(); }
+  function boot() { addCSS(); loadAvatars(); mountNav(); paintAll(); if (BRING) { BRING = false; readyP.then(function () { setTimeout(bringIn, 200); }); } }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
