@@ -671,17 +671,17 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-sources.js?v=b916"></script>
 <script src="../shared/gg-learn.js?v=b928"></script>
 <script src="../shared/gg-parts.js?v=b929"></script>
-<script src="../shared/gg-print.js?v=b929"></script>
+<script src="../shared/gg-print.js?v=b930"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
-<script src="share.js?v=b929"></script>
+<script src="share.js?v=b930"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b862"></script>
 <script src="ceremonies.js?v=b890"></script>
 <script src="sessions.js?v=b887"></script>
-<script src="farewell.js?v=b913"></script>
-<script src="wedding.js?v=b890"></script>
+<script src="farewell.js?v=b930"></script>
+<script src="wedding.js?v=b930"></script>
 <script src="premarital.js?v=b890"></script>
 <script src="clients.js?v=b913"></script>
 <script src="books.js?v=b788"></script>
@@ -945,9 +945,9 @@ function lockScreen(mode, msg){
       <form id="lf"><label for="l1">Access code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Continue</button></form>
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
-      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who walk with people using Grounded's tools: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion, on the way to becoming a Certified Grounded Guide, including Walking with Someone Growing Sober and Walking Someone Through The Grounded Way; the Grounded Response Plan; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Your own Tending lives in The Grounded Way. Anything you write stays encrypted on your own device.</p>
-      <div class="lock-ask"><div><b>For Certified Grounded Guides</b><span>Chaplains, doulas, and every Guide on their own: $240 a year. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
-      <div><b>For organizations</b><span>Churches, schools, hospices, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">Reach Out for Pricing</a></div></div></div>`,
+      <p>The private workspace for Grounded's own team of Guides, Staff, and Founders: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion, on the way to becoming a Certified Grounded Guide, including Walking with Someone Growing Sober and Walking Someone Through The Grounded Way; the Grounded Response Plan; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Your own Tending lives in The Grounded Way. Anything you write stays encrypted on your own device.</p>
+      <div class="lock-ask"><div><b>For the Grounded team</b><span>Guides, Staff, and Founders ask for access here.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
+      <div><b>For organizations</b><span>Membership packs for churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">See For Organizations</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
       <form id="lf"><label for="l1">Founder code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Add Founder Access</button></form>
@@ -2969,7 +2969,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b929'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b930'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -10039,7 +10039,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b924', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b907'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b930', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b930'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

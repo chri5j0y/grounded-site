@@ -2387,8 +2387,8 @@ const LC_TOPICS = [
   ],
   "more": [
    [
-    "The Grounded Marriage",
-    "https://growwithgrounded.com/the-grounded-marriage.html"
+    "Heartwood, the Couples App",
+    "https://growwithgrounded.com/heartwood/"
    ],
    [
     "Preview Heartwood, the Couples App",

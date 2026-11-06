@@ -613,7 +613,7 @@ const LC_TOPICS = [
   faith: "Many traditions see marriage as a covenant that includes hard seasons, forgiveness, and renewal. Safety always comes first.",
   practices: ["branches|Family", "branches|Make Peace", "bark|Talk With a Therapist"],
   reach: ["Any abuse, threats, or fear: see the guide on when home isn't safe."],
-  more: [L.apa, L.gg, ["The Grounded Marriage", "https://growwithgrounded.com/the-grounded-marriage.html"]], kids: "home-conflict" },
+  more: [L.apa, L.gg, ["Heartwood, the Couples App", "https://growwithgrounded.com/heartwood/"]], kids: "home-conflict" },
 
 { id: "betrayal", ring: "family", title: "Betrayal", keys: "affair cheating betrayal lied trust broken infidelity lying lies liar stealing stole from me", parts: ["branches", "roots", "bark"],
   quick: ["Betrayal can feel like trauma: shock, obsession, and a shaken sense of reality.", "You don't have to decide right away whether to stay or go.", "Take care of your body. Sleep and eat even when you can't think straight.", "Forgiveness, if it comes, takes time and isn't the same as trust."],

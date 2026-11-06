@@ -36,7 +36,7 @@ const FB = {
     {id: 'sequoia', name: 'Sequoia', color: '#7A2E1C', tagline: 'A long life, still growing.', line: 'Built for older adults, 60 and up.'},
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
     {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, faith communities, small groups, and teams.'},
-    {id: 'marriage', name: 'Heartwood', mark: 'heartwood/mark.svg', color: '#3F5F86', tagline: 'Your private app for the two of you, with Before the Vows and After the Vows: a place to talk, grow, and keep growing.', line: 'For couples in The Grounded Marriage. Everything stays on your device.', url: 'growwithgrounded.com/heartwood', always: true},
+    {id: 'marriage', name: 'Heartwood', mark: 'heartwood/mark.svg', color: '#3F5F86', tagline: 'Your private app for the two of you, with Before the Vows and After the Vows: a place to talk, grow, and keep growing.', line: 'For every couple Chris and Kayti marry. Everything stays on your device.', url: 'growwithgrounded.com/heartwood', always: true},
     {id: 'field', name: 'Grounded Field Guide', mark: 'shared/marks/fieldguide.svg', color: '#2E2118', tagline: 'Every Grounded tool and guide, in one place.', line: 'For chaplains, pastors, teachers, school counselors, and parents.', url: 'growwithgrounded.com/field-guide'}
   ],
   messages: [],
@@ -66,30 +66,20 @@ const PSIZES = [
 const ORIENTS = [['tall', 'Tall'], ['wide', 'Wide']];
 // The Services as subjects: each family on the Services page and each service page, with its own painting.
 const SVC_FAM = [
-  {id: 'fam-marriage', name: 'Marriage', hero: 'page-marriage', tagline: 'Your vows, your way.', line: 'Weddings, elopements, vow renewals, and The Grounded Marriage\u2122.', url: 'growwithgrounded.com/services-marriage'},
-  {id: 'fam-celebrations', name: 'Celebrations', hero: 'page-celebrations', tagline: 'Days to remember.', line: 'Child blessings, house blessings, and milestone celebrations.', url: 'growwithgrounded.com/services-celebrations'},
-  {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, and pregnancy and infant loss.', url: 'growwithgrounded.com/services-farewells'},
-  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'We\'re with you.', line: 'Hard season support, and grief and caregiver support.', url: 'growwithgrounded.com/services-hard-seasons'},
-  {id: 'fam-growth', name: 'Growth', hero: 'page-growth', tagline: 'Grow deeper. Rest well.', line: 'Spiritual guidance, and meditation, sound, and movement.', url: 'growwithgrounded.com/services-growth'},
-  {id: 'fam-teams', name: 'For Teams', hero: 'page-teams', tagline: 'Talks, conferences, and trainings for the people who do this work.', line: 'Speaking, training, and the Grounded Field Guide\u2122 for organizations.', url: 'growwithgrounded.com/services-for-teams'}
+  {id: 'fam-ceremonies', name: 'Ceremonies', hero: 'page-services-gate', tagline: 'Ceremonies for life\'s biggest moments.', line: 'Weddings, blessings, milestones and new beginnings, and celebrations of life.', url: 'growwithgrounded.com/services'},
+  {id: 'fam-talks', name: 'Talks and Training', hero: 'page-speaking', tagline: 'Talks and trainings for whole, healthy living.', line: 'Talks, trainings, and Membership packs for organizations.', url: 'growwithgrounded.com/speaking-training'}
 ];
 const SVC_PAGES = [
-  ['weddings', 'Weddings', 'page-marriage', 'Your story, your vows, and a ceremony that sounds like the two of you.', 'Marriage'],
-  ['elopements', 'Elopements', 'page-marriage', 'Just the two of you, or a handful of people you love, anywhere that matters to you.', 'Marriage'],
-  ['vow-renewals', 'Vow Renewals', 'page-marriage', 'For couples who would say it all again, and want the people they love to hear it.', 'Marriage'],
-  ['the-grounded-marriage', 'The Grounded Marriage', 'svc-premarital', 'A wedding is one day. A marriage is every day after. Twelve hours with Chris and Kayti, and Heartwood.', 'Marriage'],
-  ['child-blessings', 'Child Blessings', 'page-celebrations', 'Welcoming a new life into a family and a circle of people who will love them.', 'Celebrations'],
-  ['house-blessings', 'House Blessings', 'page-celebrations', 'A new home, or a new beginning in an old one.', 'Celebrations'],
-  ['milestones', 'Milestone Celebrations', 'page-celebrations', 'Graduations, retirements, recovery anniversaries, and other thresholds worth honoring.', 'Celebrations'],
-  ['funerals-memorials', 'Funerals and Memorials', 'page-farewells', 'Honest, personal services that sound like the person you love.', 'Farewells'],
-  ['celebrations-of-life', 'Celebrations of Life', 'page-farewells', 'Stories, music, laughter, and room for tears.', 'Farewells'],
-  ['pregnancy-infant-loss', 'Pregnancy and Infant Loss', 'page-farewells', 'Gentle support and ceremony for parents and families after miscarriage, stillbirth, or the death of a baby.', 'Farewells'],
-  ['hard-season-support', 'Hard Season Support', 'page-hard-seasons', 'One-on-one support for the seasons that change everything.', 'Hard Seasons'],
-  ['grief-caregiver-support', 'Grief and Caregiver Support', 'page-hard-seasons', 'For the ones carrying more than they can say.', 'Hard Seasons'],
-  ['spiritual-guidance', 'Spiritual Guidance', 'page-growth', 'One-on-one guidance for your inner life, whatever shape it is in.', 'Growth'],
-  ['meditation-sound-movement', 'Meditation, Sound, and Movement', 'page-growth', 'A quiet place for your body to settle and breathe again.', 'Growth'],
-  ['speaking-training', 'Speaking and Training', 'page-speaking', 'Real stories and practical tools for the people who do this work.', 'For Teams'],
-  ['organizations', 'For Organizations', 'page-teams', 'For churches, schools, and hospices: trained Guides, the Grounded Response Plan, and support for your people.', 'For Teams']
+  ['weddings', 'Weddings', 'page-marriage', 'Your story, your vows, and a ceremony that sounds like the two of you, with Heartwood for every couple.', 'Ceremonies'],
+  ['elopements', 'Elopements', 'page-marriage', 'Just the two of you, or a handful of people you love, anywhere that matters to you.', 'Ceremonies'],
+  ['vow-renewals', 'Vow Renewals', 'page-marriage', 'For couples who would say it all again, and want the people they love to hear it.', 'Ceremonies'],
+  ['child-blessings', 'Child Blessings', 'page-celebrations', 'Welcoming a new life into a family and a circle of people who will love them.', 'Ceremonies'],
+  ['house-blessings', 'House Blessings', 'page-celebrations', 'A new home, or a new beginning in an old one.', 'Ceremonies'],
+  ['milestones', 'Milestones and New Beginnings', 'page-celebrations', 'Graduations, retirements, sober anniversaries, a fresh start, a new home, and other thresholds worth honoring.', 'Ceremonies'],
+  ['celebrations-of-life', 'Celebrations of Life', 'page-farewells', 'Stories, music, laughter, and room for tears.', 'Ceremonies'],
+  ['funerals-memorials', 'Funerals and Memorials', 'page-farewells', 'Honest, personal services that sound like the person you love.', 'Ceremonies'],
+  ['speaking-training', 'Talks and Training', 'page-speaking', 'Talks and trainings for whole, healthy living, for churches, schools, and teams.', 'Talks and Training'],
+  ['organizations', 'For Organizations', 'page-teams', 'Membership packs for your people, with talks and trainings.', 'Talks and Training']
 ];
 const SERVICES = SVC_FAM.map(f => Object.assign({svc: 'family', mark: 'favicon.svg', color: GOLD, focus: .5}, f, {hero: 'shared/heroes/' + f.hero + '-wide.webp'})).concat(
   SVC_PAGES.map(([pg, name, hero, tagline, fam]) => ({id: 'svc-' + pg, svc: 'page', name, mark: 'favicon.svg', color: GOLD, hero: 'shared/heroes/' + hero + '-wide.webp', focus: .5, tagline, line: fam + ', with Grow With Grounded\u2122.', url: 'growwithgrounded.com/' + pg + '.html'})));

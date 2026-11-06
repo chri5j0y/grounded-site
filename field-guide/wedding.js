@@ -420,7 +420,7 @@ function dueSoon(){
   plans().forEach(p => { if (!wDate(p)) return; touches(p).forEach(t => { const st = p.fu[t.id] || {}; if (!st.done && t.date && t.date <= until) out.push({p, t}); }); });
   return out.sort((a, b) => a.t.date.localeCompare(b.t.date));
 }
-const gmURL = () => SITE + 'the-grounded-marriage.html';
+const gmURL = () => SITE + 'weddings.html';  // BLD 930: The Grounded Marriage retired; its sealed gmInvite words wait in patches/pending/bld930-gm-invite.md
 
 // ---------- small builders ----------
 const fk = k => ` data-fk="${esc(k)}"`;

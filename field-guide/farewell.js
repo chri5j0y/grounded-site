@@ -1236,7 +1236,7 @@ const PCSS = `<style>.fw-pt{border-collapse:collapse;width:100%;font-size:9pt;}.
 .fw-2c{columns:2;column-gap:7mm;}.fw-ps{break-inside:avoid;margin:0 0 2.5mm;}.fw-ps h3{margin:0 0 .8mm !important;}.fw-ps p,.fw-ps li{margin:0 0 .6mm !important;}.fw-ps ol,.fw-ps ul{margin:0;padding-left:5mm;}</style>`;
 // The Family Copy's close (GWG BLD 805): how to reach the officiant (from Your Contact for Send-Back), the Grow With
 // Grounded name, and, when switched on for this family, Support for the Days Ahead.
-const DAYS = 'Grief moves at its own pace, and every way through it is welcome. When you would like company along the way, [Chris] offers spiritual guidance and emotional support in the months ahead. Grief guides and practices are also waiting at growwithgrounded.com/grief-caregiver-support.html. On a hard night, call or text 988, any hour.';
+const DAYS = 'Grief moves at its own pace, and every way through it is welcome. When you would like company along the way, [Chris] is glad to stay in touch in the months ahead. Grief guides and practices are also waiting in When Life Changes, at growwithgrounded.com/tools.html. On a hard night, call or text 988, any hour.';
 function famClose(p){ const m = store().me;
   return (p.daysAhead ? `<div class="fw-ps fw-days"><h3>Support for the Days Ahead</h3><p>${H(W(DAYS, p))}</p></div>` : '') +
     `<div class="fw-me"><p>With you,</p><p class="fw-me-n">${H(me())}</p>${m.ph ? `<p>Cell: ${H(m.ph)}</p>` : ''}${m.em ? `<p>Email: ${H(m.em)}</p>` : ''}</div>`; }

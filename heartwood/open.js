@@ -1,5 +1,5 @@
 /* Heartwood: opening the app (heartwood/open.js), GWG BLD 772.
-   Heartwood is the private app for the two of you that comes with The Grounded Marriage. Its content (the questions,
+   Heartwood is the private app for the two of you that every couple Chris and Kayti marry receives (BLD 930). Its content (the questions,
    The Couple Workbook, The Money Map, the results words, Practices for Two, After the Vows, the faith backgrounds,
    Your Tree, Then Your Grove, and the Learn videos) is sealed in heartwood/lib-heartwood.js:
      window.GFG_HEARTWOOD = {v: 1, made, iv, ct}  AES-GCM (256) of {_gfg: 'heartwood', v: 1, data: {BTV_Q, GM_FAITH, ...}}
@@ -32,7 +32,7 @@
   'use strict';
   var ROUNDS = 250000, INV = 'gg_hw_inv', DBN = 'gg-hw', STORE = 'k', SLOT = 'key';
   var GLOBALS = ['BTV_Q', 'GM_FAITH', 'GM_RESULTS', 'GM_WB', 'GM_MONEY', 'GM_PR', 'GM_AFTER', 'GG_LEARN_GM', 'GM_TOGETHER'];
-  var ASK = '/contact.html#plan=Premarital%20Sessions', PROGRAM = '/the-grounded-marriage.html';
+  var ASK = '/contact.html#plan=Wedding%20or%20vow%20renewal', PROGRAM = '/weddings.html';
   var me = document.currentScript, APP = (me && me.getAttribute('data-app')) || '/heartwood/app.js', SAMPLE = (me && me.getAttribute('data-sample')) || '/heartwood/sample.js';
   var LIB = (me && me.getAttribute('data-lib')) || '/heartwood/lib-heartwood.js';
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
@@ -157,12 +157,12 @@
   var LIBNOW = null, WHY = '';
   function sampleNote() {
     var inv = savedInvite(), ready = sealed(LIBNOW);
-    return '<div class="ff-card gold hw-note"><div class="eyebrow">A Sample of Heartwood</div><h2>Heartwood opens with the code from your first session</h2>' +
+    return '<div class="ff-card gold hw-note"><div class="eyebrow">A Sample of Heartwood</div><h2>Heartwood opens with the code Chris and Kayti send you</h2>' +
       (WHY ? '<p class="hw-why">' + esc(WHY) + '</p>' : '') +
-      '<p>The Grounded Marriage comes with Heartwood, your private app for the two of you. Here you can try ten of its questions, one of its Practices for Two, and two of its videos. Anything you write here stays on this device.</p>' +
+      '<p>Every couple Chris and Kayti marry receives Heartwood, your private app for the two of you. Here you can try ten of its questions, one of its Practices for Two, and two of its videos. Anything you write here stays on this device.</p>' +
       (inv && ready ? '' : '<p class="btv-small">Have your invite? Open the link Chris and Kayti sent you on each of your phones, then type your code.</p>') +
-      '<div class="ff-row"><a class="btn btn-primary" href="' + ASK + '">Ask About The Grounded Marriage</a>' +
-      (inv && ready ? '<button type="button" class="btn btn-secondary" data-hw="gate">I Have My Code</button>' : '<a class="btn btn-secondary" href="' + PROGRAM + '">About The Grounded Marriage</a>') + '</div></div>';
+      '<div class="ff-row"><a class="btn btn-primary" href="' + ASK + '">Ask About Your Wedding</a>' +
+      (inv && ready ? '<button type="button" class="btn btn-secondary" data-hw="gate">I Have My Code</button>' : '<a class="btn btn-secondary" href="' + PROGRAM + '">About Weddings</a>') + '</div></div>';
   }
   function gate(err) {
     note('');
@@ -215,7 +215,7 @@
     var tabs = $('gm-tabs');
     if (tabs) { tabs.setAttribute('aria-label', title); var bv = tabs.querySelector('[data-tab="before"]'); if (bv) bv.hidden = true; }
     var app = $('gm-app'); if (app) app.setAttribute('aria-label', title);
-    var more = $('hw-more'); if (more) more.innerHTML = 'Chris and Kayti offer ceremonies and The Grounded Marriage for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello to Chris and Kayti</a>.';
+    var more = $('hw-more'); if (more) more.innerHTML = 'Chris and Kayti lead weddings and ceremonies for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello to Chris and Kayti</a>.';
     var cl = $('hw-clear-p'); if (cl) cl.textContent = 'Done, or using a shared device? Clear Everything removes both partners’ check-ins, any card, and the key to Heartwood from this device.';
   };
 
