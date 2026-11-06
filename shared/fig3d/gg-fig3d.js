@@ -1,14 +1,14 @@
 // =====================================================================
 // GROUNDED FIELD GUIDE (TM): the 3D stage in every player (GWG BLD 897). (c) 2026 Grow With Grounded LLC.
 // Chris, October 31, 2026: the 3D figure (MakeHuman CC0, three.js MIT, an ink and warm paint study), stage direction "A"
-// (the figure stands inside the painting's own room: its floor and its light), the tree breath guide, gold form guides
+// (the figure stands inside the painting's own room: its floor and its light), the breathing rings (BLD 928), gold form guides
 // on the body at the key moment, and one clock for the figure, the breath, and Ava's count.
 //
 // How it rides along with the player (field-guide/health.js and stage.js, BLD 898):
 //   The player still draws its SVG figure (GGMoves) on the stage, laid on the shared plan (data-dur, data-ph) and held to
 //   the one clock by clkSync. That SVG stays in place, unseen, as the master timeline: each frame the 3D figure reads its
 //   time, finds the breath phase it is in (from the plan), and shows the 3D move at the same point of the same phase. So the
-//   3D body, the tree, and the count turn together, pause together, and restart together on each count, with no new clock.
+//   3D body, the breathing rings, and the count turn together, pause together, and restart together on each count, with no new clock.
 //   A screen whose figure has no 3D move yet, a phone without WebGL, Save Data, or the Simple Figure setting keeps the SVG.
 //
 //   GGFig3D.sync(ctx): after every player draw. ctx: {art, kind, category, workout} for the painting (art-map.json), and
@@ -235,8 +235,8 @@ function drawForms(){
   if (!list.length && !L.gDrawn) return false;
   if (!L.gr || L.gn-- <= 0 || L.gr.box !== L.box){
     const r = c.getBoundingClientRect(), avoid = [];
-    // The words keep clear of the tree, the count and its chips, the side chip, and the progress line.
-    if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
+    // The words keep clear of the breathing rings, the count and its chips, the side chip, the weight chip, the Break sign, and the progress line.
+    if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-wt, .ggs-break, .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
     L.gr = {w: r.width, h: r.height, avoid, box: L.box}; L.gn = 30;
   }
   const R = L.gr, w = Math.round(R.w * d), h = Math.round(R.h * d);

@@ -190,6 +190,9 @@
   // brw names the words under the circle (kids: ['Sniff', 'One more sniff', 'Whoosh']).
   // BLD 911 Round 2: breath holds. breath: [in, hold, out, rest] (Box Breathing) or [in, hold, out] with bh: true (4-7-8);
   // the circle stays still through each hold, and the hold has its own word (default Hold, and Rest for the fourth part).
+  // The chime switch (BLD 928), remembered on this device (shared/gg-breath-ring.js reads the same key).
+  function chimeIs() { try { return localStorage.getItem('gg-breath-chime') !== 'off'; } catch (e) { return true; } }
+  function chimeBtn() { var on = chimeIs(); return '<button class="ggl-btn quiet" data-g="chime" aria-pressed="' + on + '">' + (on ? 'Chime On' : 'Chime Off') + '</button>'; }
   function brHolds(sc) { var b = sc && sc.breath; return Array.isArray(b) && (b.length >= 4 || (b.length === 3 && !!sc.bh)); }
   function brWords(sc) {
     var n = Array.isArray(sc.breath) ? sc.breath.length : 2, three = n >= 3, four = n >= 4, hd = brHolds(sc);
@@ -199,6 +202,24 @@
   // BLD 911 Round 2: a candle scene that carries a breath (a Grounded Meditation breathe scene with the candle look) keeps the
   // breath clock too: its lines start on their own parts, and the flame's glow brightens on the breath in and softens on the out.
   function isBr(sc) { return !!sc && (sc.k === 'breathe' || ((sc.k === 'figure' || sc.k === 'candle') && Array.isArray(sc.breath))); }
+  // BLD 928 (Chris, November 6, 2026): the breathing rings (shared/gg-breath-ring.js) take the circle's place in every breath
+  // scene. The circle stays, unseen, as the breath clock the narration already follows (brEl), and the ring reads that same
+  // clock (data-anim), so the ring, the words, and the voice turn together. Counts go up in a breathe scene; a breathing
+  // exercise (sc._brx) also gets a soft chime at each turn of the breath, with Chime On or Off under the player.
+  function brParts(sc) {
+    var b = Array.isArray(sc.breath) && sc.breath.length >= 2 ? sc.breath : [4, 6], four = b.length >= 4, a = +b[0] > 0 ? +b[0] : 4, o = +b[four ? 2 : b.length - 1] > 0 ? +b[four ? 2 : b.length - 1] : 6;
+    var s3 = b.length >= 3 && +b[1] > 0 ? +b[1] : 0, r4 = four && +b[3] > 0 ? +b[3] : 0, hd = sc.k === 'breathe' && brHolds(sc);
+    return 'in:' + a + (s3 ? (hd ? ' hold:' : ' sip:') + s3 : '') + ' out:' + o + (r4 ? ' rest:' + r4 : '');
+  }
+  function brRing(sc, opt, tone) { ringNeed(); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"></svg>'; }
+  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=b928'); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  // A breathing exercise: a lesson whose own name is a breath (Box Breathing, Long Exhale Breathing, Physiological Sigh, Slow Bubble
+  // Breath), never a prayer. A lesson can say so itself with breathEx.
+  function breathEx(l) {
+    if (!l) return false; if (l.breathEx != null) return !!l.breathEx; if (l.door === 'prayer') return false;
+    var t = String(l.practice || '') + ' ' + String(l.title || '');
+    return /\b(breath|breathing|sigh)\b/i.test(t) && !/prayer|verse|blessing/i.test(t) && (l.scenes || []).some(function (x) { return x && x.k === 'breathe'; });
+  }
 
   // The demo camera (GWG BLD 824): z = [x, y, zoom] in the phone screen's own pixels (390 by 844) is placed in the
   // middle of the part of the screen that shows (280 by 494 in the stage), and the screen never slides past its edges.
@@ -260,7 +281,7 @@
           + '<div class="ln-tl">' + (sc.paras || []).map(function (p) { return p.map(function (x) { return '<span' + A(.4, 'ln-tl-s') + '>' + h(x) + '</span>'; }).join(' '); }).join('<b class="ln-tl-br"></b>') + '</div></div>';
       }
       case 'story': return '<div class="ln-story" style="--k:' + acc + '"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow || 'From the Bedside') + '</div><h3' + A(.5) + '>' + h(sc.title) + '</h3><div class="ln-st-b">' + (sc.lines || []).map(function (x, j) { return '<p' + A(1.1 + j * (sc.gap || 1.6)) + '>' + h(x) + '</p>'; }).join('') + '</div>' + (sc.lesson ? '<div' + A(1.4 + (sc.lines || []).length * (sc.gap || 1.6), 'ln-st-l') + '>' + h(sc.lesson) + '</div>' : '') + (sc.note ? '<small' + A(2, 'ln-st-n') + '>' + h(sc.note) + '</small>' : '') + '</div>';
-      case 'breathe': return '<div class="ln-br" style="--k:' + acc + '"><h3' + A(.2) + '>' + h(sc.h || 'Breathe with me') + '</h3><div class="ln-brw"><div class="ln-brc"></div><div class="ln-brt">' + brWords(sc) + '</div></div>' + (sc.sub ? '<small' + A(.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
+      case 'breathe': return '<div class="ln-br" style="--k:' + acc + '"><h3' + A(.2) + '>' + h(sc.h || 'Breathe with me') + '</h3><div class="ln-brw"><div class="ln-brc"></div>' + brRing(sc, 'c' + (sc._brx ? ' h' : ''), sc._bd ? 'dark' : 'light') + '</div><div class="ln-brt">' + brWords(sc) + '</div>' + (sc.sub ? '<small' + A(.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'words': return '<div class="ln-wd"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (x, j) { return '<p' + A(.9 + j * (sc.gap || 1.2), '', 'border-color:' + acc) + '>' + h(x) + '</p>'; }).join('') + (sc.sub ? '<small' + A(1.2 + (sc.items || []).length * (sc.gap || 1.2)) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'demo': {
         // A product demo (GWG BLD 824): a real screen from the app in a phone, over the page's painting, with the words beside it.
@@ -297,7 +318,7 @@
         var fs = sc.side === 'r' ? 'r' : 'l';
         return '<div class="ln-bd ln-bd-clear ln-bd-slow" data-d="' + (sc._d || 0) + '"><img src="' + ART(sc.img, sc._app) + '" alt=""></div>'
           + '<div class="ln-ps ln-ps-' + fs + '"></div>'
-          + '<div class="ln-fg3 ln-fg3-' + (fs === 'l' ? 'r' : 'l') + '" style="--k:' + acc + '"><div class="ln-fgb"><div class="ln-brc"></div></div></div>'
+          + '<div class="ln-fg3 ln-fg3-' + (fs === 'l' ? 'r' : 'l') + '" style="--k:' + acc + '"><div class="ln-fgb"><div class="ln-brc"></div>' + brRing(sc, '', 'dark') + '</div></div>'
           + '<div class="ln-pn ln-pn-' + fs + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '') + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '')
           + (Array.isArray(sc.breath) ? '<div class="ln-brt ln-fg-brt"><i>Breathe in</i><i>Breathe out</i></div>' : '') + '</div>';
       }
@@ -403,7 +424,8 @@
       '.ln-st-n{position:absolute;right:30px;bottom:16px;font-size:16px;color:#6B5A4D;}',
       '.ln-br{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:40px;text-align:center;}',
       '.ln-br h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:44px;margin:0;}.ln-br small{font-size:22px;color:#6B5A4D;margin-top:14px;max-width:700px;}',
-      '.ln-brw{position:relative;width:300px;height:300px;margin-top:22px;display:grid;place-items:center;}',
+      '.ln-brw{position:relative;width:270px;height:270px;margin-top:18px;display:grid;place-items:center;}',
+      '.ln-brw .ln-brc,.ln-fgb .ln-brc{opacity:0 !important;}.ln-brw svg.ggbr,.ln-fgb svg.ggbr{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;}.ln-3d .ln-fgb svg.ggbr{opacity:.8;}.ln-br .ln-brt{margin-top:10px;}',
       '.ln-brc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,var(--k) 0%,rgba(255,252,246,0) 72%);opacity:.55;transform:scale(.45);}',
       '.go .ln-brc{animation:lnBr 10s ease-in-out infinite;}',
       '.ln-brt{position:relative;font-family:\'Cormorant Garamond\',serif;font-size:36px;font-weight:600;height:44px;width:300px;}',
@@ -835,13 +857,14 @@
     css(); needSources();
     if (CUR) CUR.stop();
     var l = cfg.lesson, acc = cfg.accent || '#8B5E1A', hasQuiz = (l.scenes || []).some(function (s) { return s.k === 'quiz'; });
-    var answered = false, P = { i: -1, playing: false, tok: 0, hl: 0, tick: 0, nx: 0 };
+    var answered = false, P = { i: -1, playing: false, tok: 0, hl: 0, tick: 0, nx: 0 }, BRX = breathEx(l);
+    if (BRX) ringNeed();
     var N = (l.scenes || []).length + 1; // the closing scene is the last one
     host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div>' + wmark(cfg) + '<div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
       + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Support any time:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
       + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
-      + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><button class="ggl-btn quiet" data-g="read" aria-expanded="false">Read Instead</button><span class="ggl-cn"></span></div>'
+      + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><button class="ggl-btn quiet" data-g="read" aria-expanded="false">Read Instead</button>' + (BRX ? chimeBtn() : '') + '<span class="ggl-cn"></span></div>'
       + '<section class="ln-read" hidden tabindex="-1" aria-label="Read Instead"></section>'
       + '<div class="ln-vs"></div></div>';
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
@@ -898,7 +921,7 @@
       stopTimers(); t = P.tok; hush();
       if (cfg.onAt) cfg.onAt(last ? 0 : P.i);
       if (last) { var e = endScene(); sc = { k: 'end', ok: e.ok, eyebrow: e.eyebrow, h: e.h, sub: e.sub, count: e.count, say: e.say }; sc._e = e; }
-      else sc = stdScene(l.scenes[P.i], P.i, l, cfg.app);
+      else { sc = stdScene(l.scenes[P.i], P.i, l, cfg.app); sc._brx = BRX && sc.k === 'breathe'; }
       st.classList.remove('go');
       // BLD 911 Round 2: a breath scene that follows one on the same pace, as it plays, keeps the same breath clock, so the
       // breath carries on across the change of scene (a hold or a rest is never cut short).
@@ -1306,7 +1329,7 @@
     function onClick(ev) {
       var b = ev.target.closest('[data-g]'); if (!b || !host.contains(b)) return;
       var g = b.getAttribute('data-g');
-      unlock();
+      unlock(); if (BRX && window.GGBreathRing) GGBreathRing.unlock();
       if (g === 'play') {
         if (P.playing) setPlay(false);
         else {
@@ -1315,6 +1338,7 @@
         }
       }
       else if (g === 'read') readToggle($('.ln-read', host).hidden);
+      else if (g === 'chime') { var on = !chimeIs(); if (window.GGBreathRing) GGBreathRing.setChime(on); else { try { localStorage.setItem('gg-breath-chime', on ? 'on' : 'off'); } catch (e) {} } b.outerHTML = chimeBtn(); }
       else if (g === 'rans') readAnswer(b);
       else if (g === 'back') show(P.i - 1);
       else if (g === 'next') show(P.i + 1);
@@ -1548,7 +1572,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b916'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b928'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
