@@ -1655,7 +1655,8 @@ function trans(o, state){ const st = o && o.steps ? o.steps[o.i] : null, c = stC
 // share of body weight by its pattern (per dumbbell, or one dumbbell), the public level scales it, it lands on a real
 // dumbbell, and the personal adjustment (-5 to +15 lb) goes on top for every move (half of it for the small shoulder
 // raises, which start at a few pounds). A teen sees no weights (TEEN). Body weight: set.bw, else the newest marker weight.
-const DB_STEPS = [3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100];
+// Dumbbells come in 5 lb steps only (Chris, BLD 915 and November 6, 2026: no 3, 8, or 12 lb recommendations).
+const DB_STEPS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
 const W_ADJ = [-5, 0, 5, 10, 15];
 const W_SHARE = [
   [/swing/i, .14, 1], [/squat to press|thruster/i, .07, 2], [/push press/i, .09, 2], [/goblet/i, .17, 1],
