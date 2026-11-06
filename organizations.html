@@ -47,6 +47,19 @@
 .access-ic svg{width:30px;height:30px;}
 @media(max-width:560px){ .access-card{flex-direction:column;align-items:flex-start;} }
 .org-price.org-packs{grid-template-columns:repeat(3,1fr)}@media(max-width:900px){.org-price.org-packs{grid-template-columns:1fr}}
+/* BLD 932: the embedded training video */
+.org-vid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:center;margin-top:40px;padding:22px;border-radius:22px;background:var(--bg-deep);border:1px solid var(--line)}
+.org-vid-play{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;border-radius:16px;overflow:hidden;cursor:pointer;background:#2A1C10;box-shadow:0 10px 30px rgba(40,24,8,.25)}
+.org-vid-play[hidden]{display:none}
+.org-vid-pic{position:absolute;inset:0;background:#2A1C10 center/cover no-repeat;transition:transform .4s ease}
+.org-vid-play:hover .org-vid-pic,.org-vid-play:focus-visible .org-vid-pic{transform:scale(1.03)}
+.org-vid-ic{position:absolute;left:50%;top:50%;width:84px;height:84px;transform:translate(-50%,-50%)}.org-vid-ic svg{width:100%;height:100%;display:block}
+.org-vid-cap{font-family:Barlow,sans-serif;position:absolute;left:0;right:0;bottom:0;padding:26px 16px 12px;background:linear-gradient(transparent,rgba(16,10,4,.78));color:#FFF8EC;font-weight:600;font-size:15px;text-align:left}
+.org-vid-play:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.org-vid-tx h2{margin:4px 0 10px;font-size:clamp(26px,3vw,36px)}
+.org-vid-tx p{margin:0;color:var(--ink-soft);font-size:18px;line-height:1.55}
+.org-vid-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.org-vid-acts .btn{min-height:44px}
+@media (max-width:860px){.org-vid{grid-template-columns:1fr;padding:16px;gap:18px}}
 </style>
 <style>
 /* ===================== ROUND: a fuller home page ===================== */
@@ -322,7 +335,18 @@ body.bro-open{overflow:hidden;}
       <div class="card"><h3>Full Membership for Each Person</h3><p>Grounded Nutrition and Fitness, Meditation, Spirit, Relationships with The Grove, the full growth plan, Grounded Seasons, and Grounded Stories. Each person tends four parts, Roots: Spirit, Bark: Mind, Leaves: Body, and Branches: Relationships, and meaning and hope grow from that tending.</p></div>
       <div class="card"><h3>A Tree for Every Age</h3><p>Maple and Aspen for kids, Pine for teens, Birch for young adults, Oak for adults, and Sequoia for older adults, with Living Sober, Heartwood, and Willow inside it for a season of life.</p></div>
       <div class="card"><h3>Private on Every Device</h3><p>Everything each person writes stays on their own device, locked with their own passcode. Your organization never sees anyone's answers.</p></div>
-      <div class="card"><h3>A Talk or Training to Begin</h3><p>Start together with a talk or training on The Grounded Way, Living Sober, ritual for life's milestones, or compassion that lasts. <a class="text-link" href="speaking-training.html">See Talks and Training</a></p></div>
+      <div class="card"><h3>A Talk or Training to Begin</h3><p>Start together with a talk or training on <a class="text-link" href="talk-grounded-way.html">The Grounded Way</a>, <a class="text-link" href="talk-living-sober.html">Living Sober</a>, <a class="text-link" href="talk-ritual.html">ritual for life's milestones</a>, or <a class="text-link" href="talk-compassion.html">compassion that lasts</a>. <a class="text-link" href="#training-video">Watch what a training gives your team</a></p></div>
+    </div>
+
+    <!-- BLD 932 (Chris, November 6, 2026: "the orgs page that says a talk or training to begin.. needs to embed a strong video of what the training for this would provide") -->
+    <div class="org-vid" id="training-video">
+      <button type="button" class="org-vid-play" data-gg-watch="org-training" hidden><span class="org-vid-pic" style="background-image:url(/shared/heroes/page-teams-wide.webp)"></span><span class="org-vid-ic"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="rgba(20,14,6,.55)" stroke="#FFF8EC" stroke-width="1.4"/><path d="M10 7.8v8.4l6.6-4.2z" fill="#FFF8EC"/></svg></span><span class="org-vid-cap">A Talk or Training to Begin &middot; About 2 minutes</span></button>
+      <div class="org-vid-tx">
+        <div class="eyebrow">Watch</div>
+        <h2>What a talk or training gives your team.</h2>
+        <p>A taste of a Grounded training: the four parts of a whole, healthy life, a practice to try together, and the plan every person takes home on Monday.</p>
+        <div class="org-vid-acts"><button type="button" class="btn btn-primary gg-watch" data-gg-watch="org-training" hidden>Watch the Video</button><a class="btn btn-secondary" href="trainings.html">See Trainings for Your Team</a></div>
+      </div>
     </div>
 
     <h2 id="packs" style="margin-top:46px">Membership packs</h2>
@@ -384,7 +408,7 @@ body.bro-open{overflow:hidden;}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b779n"></script>
-<script src="nav.js?v=b931" defer></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b931" defer></script><!-- /PAGE VIDEO -->
+<script src="nav.js?v=b932" defer></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b932" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

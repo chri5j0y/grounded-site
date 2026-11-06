@@ -99,6 +99,7 @@
     '.gn-panel{position:fixed;z-index:9999;max-height:calc(100vh - 90px);overflow-y:auto;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
     '.gn-panel.gn-show{display:block;}' +
     '.gn-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;}' +
+    '.gn-group .gn-h .gn-h-a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(139,94,26,.45);}.gn-group .gn-h .gn-h-a:hover{border-bottom-color:currentColor;}' +
     '.gn-group .gn-h{line-height:1.3;font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8B5E1A;margin:0 0 6px;}' +
     'a.gn-tool{display:flex;gap:12px;align-items:center;padding:8px !important;border-radius:12px !important;white-space:normal !important;font-size:15px !important;text-decoration:none !important;color:#2A2A2A !important;border:none !important;text-transform:none !important;letter-spacing:0 !important;font-family:Barlow,system-ui,sans-serif !important;}' +
     'a.gn-tool:hover,a.gn-tool:focus-visible,a.gn-tool.gn-here{background:#F6EEDB;}' +
@@ -151,7 +152,7 @@
     return '@media (prefers-color-scheme: dark){' + scope(':root:not([data-theme="light"])') + '}' + scope(':root[data-theme="dark"]');
   }
 
-  /* The Services menu (BLD 931, Chris, firm: one plain name, "Services"; BLD 930 called it Ceremonies and Talks; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
+  /* The Services menu (BLD 932: Speaking and Training lists each talk and training page; BLD 931, Chris, firm: one plain name, "Services"; BLD 930 called it Ceremonies and Talks; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
      life ceremonies first, then honoring a life, then Talks and Training and For Organizations. Each row opens its own page;
      See all ceremonies stays at the foot. It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_GROUPS = [
@@ -162,12 +163,17 @@
       ['Milestones and New Beginnings', 'Sober years, a fresh start, a new chapter', 'milestones'],
       ['Celebrations of Life', 'A day that sounds like the one you love', 'celebrations-of-life'],
       ['Funerals and Memorials', 'Honest, personal services for the one you love', 'funerals-memorials']] },
-    { name: 'Speaking and Training', items: [
-      ['Talks and Training', 'Talks and trainings for whole, healthy living', 'speaking-training'],
+    { name: 'Speaking and Training', href: 'speaking-training', items: [
+      ['The Grounded Way', 'A talk on whole person health', 'talk-grounded-way'],
+      ['Living Sober', 'A talk on a clear mind and a healthy body', 'talk-living-sober'],
+      ["Ritual for Life's Milestones", 'Why people need ceremony', 'talk-ritual'],
+      ['Compassion That Lasts', 'Keep caring, and keep your cup full', 'talk-compassion'],
+      ['Trainings for Your Team', 'Half day, full day, keynote, or virtual', 'trainings'],
       ['For Organizations', 'Membership packs for your people', 'organizations']] }
   ];
   var SVC_PIC = { weddings: '/shared/cards/weddings.webp', elopements: '/shared/cards/elopements.webp', 'child-blessings': '/shared/cards/child-blessings.webp', milestones: '/shared/cards/milestones.webp',
-    'celebrations-of-life': '/shared/cards/celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/cards/sq-speaking.webp', organizations: '/shared/heroes/page-organizations-narrow.webp' };
+    'celebrations-of-life': '/shared/cards/celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/cards/sq-speaking.webp', 'talk-grounded-way': '/shared/cards/talk-grounded-way.webp', 'talk-living-sober': '/shared/cards/talk-living-sober.webp',
+    'talk-ritual': '/shared/cards/talk-ritual.webp', 'talk-compassion': '/shared/cards/talk-compassion.webp', trainings: '/shared/cards/trainings.webp', organizations: '/shared/heroes/page-organizations-narrow.webp' };
   function onPage(href) {
     var a = (href.replace(HOME, '') || '/').replace(/\.html$/, ''), b = location.pathname.replace(/\.html$/, '');
     return a === b;
@@ -206,7 +212,9 @@
   }
   function svcBody() {
     return SVC_GROUPS.map(function (g) {
-      return '<div class="gn-group"><div class="gn-h">' + g.name + '</div>' + g.items.map(function (x) {
+      // BLD 932: a group with href opens its own page from its heading (Speaking and Training opens Talks and Training).
+      var gh = g.href ? '<a class="gn-h-a" href="' + HOME + '/' + g.href + '.html">' + g.name + '</a>' : g.name;
+      return '<div class="gn-group"><div class="gn-h">' + gh + '</div>' + g.items.map(function (x) {
         var href = HOME + '/' + x[2] + '.html', h = onPage(href);
         return '<a class="gn-tool' + (h ? ' gn-here' : '') + '" href="' + href + '"' + (h ? ' aria-current="page"' : '') + '><span class="gn-ic"><img class="gn-mark" src="' + HOME + SVC_PIC[x[2]] + '" alt="" width="42" height="42"></span>' +
           '<span><b>' + x[0] + (h ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + x[1] + '</small></span></a>';
@@ -464,7 +472,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b931';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b932';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

@@ -515,7 +515,7 @@
      The same engine and figure data as the workout player (shared/fig3d, BLD 897), loaded only when a figure scene
      shows, and the same rules for when it draws: WebGL, not Save Data, not Simple Figure (gg-fig3d 'off'), and a real
      graphics chip unless the person turned 3D Figure on (gg-fig3d 'on'). */
-  var FIGV = 'b907', F3 = { p: null, bad: false, ok: null };
+  var FIGV = 'b931', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files
   function fig3Dark() { var t = document.documentElement.getAttribute('data-theme'); if (t) return t === 'dark'; try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; } }
   function fig3Able() {
     if (F3.bad) return false;
@@ -1572,7 +1572,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b928'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b932'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
