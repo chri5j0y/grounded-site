@@ -212,7 +212,7 @@ window.GG_LEARN_WELCOME = {
         },
         {
          "b": "Oak",
-         "s": "Ages 26 to 60",
+         "s": "Ages 26 to 59",
          "m": [
           141,
           362,

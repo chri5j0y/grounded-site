@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b927'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b929'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -114,6 +114,9 @@
     '.gn-tag-soon{background:#6B2E22;}' +
     '.gn-lock{display:inline-flex;color:#8B5E1A;}' +
     '.gn-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #EADFC6;margin-top:12px;padding-top:10px;}' +
+    // BLD 929 (M19): See All Tools stays in sight at the panel's foot while the panel scrolls, and the columns sit a little tighter.
+    '.gn-panel:not(.gn-sub-mode) .gn-foot{position:sticky;bottom:-16px;background:#fff;margin-bottom:-16px;padding-bottom:12px;z-index:1;}' +
+    '@media (min-width:601px){.gn-panel:not(.gn-sub-mode) .gn-grid{gap:10px 16px;}.gn-panel:not(.gn-sub-mode) a.gn-tool{padding:6px 8px !important;}}' +
     'a.gn-all{font-family:Barlow,system-ui,sans-serif !important;font-weight:600 !important;font-size:14px !important;color:#8B5E1A !important;text-transform:none !important;letter-spacing:0 !important;padding:0 !important;border:none !important;border-bottom:1px solid currentColor !important;border-radius:0 !important;text-decoration:none !important;}' +
     '.gn-back{display:none;font-family:Barlow,system-ui,sans-serif;font-size:15px;font-weight:600;color:#8B5E1A;background:none;border:none;padding:6px 0 12px;cursor:pointer;text-align:left;}' +
     '.gn-sub-mode .gn-back{display:block;}' +
@@ -133,6 +136,7 @@
       '.gn-tool small{color:#C2B6A4;}' +
       '.gn-group .gn-h,a.gn-all,.gn-back,.gn-lock{color:#D9A847 !important;}' +
       '.gn-foot{border-color:#3A322A;}' +
+      '.gn-panel:not(.gn-sub-mode) .gn-foot{background:#241F19;}' +
       '.gn-sub-mode.gn-panel{background:transparent;}';
 
   /* Scope dark-only rules so they follow the phone setting unless the visitor picks a theme */
@@ -459,7 +463,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b924';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b929';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
@@ -537,6 +541,8 @@
       + '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gg-now{color:#9DB883 !important;border-color:rgba(157,184,131,.55);}}'
       + '@media (max-width:900px){.gg-now{padding:0;width:42px;}.gg-now-l{display:none;}}'
       + '@media (max-width:440px){.gg-now{width:36px;height:36px;min-width:36px;}.topbar-inner{gap:8px !important;}}'
+      // BLD 929 (L3): on a phone the header keeps a 16 px gutter on both sides, with the round buttons a little tighter.
+      + '@media (max-width:440px){.topbar-inner{gap:6px !important;padding-left:16px !important;padding-right:16px !important;}.topbar-inner > .ggs-btn{min-width:36px;height:36px;padding:0 8px;}.topbar-inner > .menu-btn{width:38px;height:38px;flex:none;}.gg-now{margin:0;}}'
       + '@media (min-width:961px) and (max-width:1240px){.site-menu a{padding:10px 7px;letter-spacing:.5px;font-size:14px;}.ggs-btn{padding:8px 10px;}.ggs-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}}'
       + '.gg-now.gg-now-ic{padding:0;width:42px;}.gg-now.gg-now-ic .gg-now-l{display:none;}'
       + '.site-menu .gg-now.gg-now-mi{width:auto;height:auto;min-width:0;padding:inherit;margin:0;border:0;border-radius:0;justify-content:flex-start;font:inherit;letter-spacing:inherit;text-transform:inherit;}'
@@ -664,4 +670,19 @@
   window.addEventListener('load', fitSoon); window.addEventListener('resize', fitSoon);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSoon);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add();
+  /* BLD 929 (M13): with a profile open on this device, the gold pill and the footer read Open The Grounded Way (the same
+     words the profile bar uses); with none, Begin The Grounded Way. */
+  function words() {
+    var on = false; try { on = !!(window.GGP && GGP.active && GGP.active()); } catch (e) {}
+    var t = on ? 'Open The Grounded Way' : 'Begin The Grounded Way';
+    document.querySelectorAll('.site-menu a.gg-way-link, footer a, .footer a, .site-footer a').forEach(function (a) {
+      if (/^(Begin|Open) The Grounded Way$/.test(a.textContent.trim()) && a.textContent !== t) a.textContent = t;
+    });
+    fitSoon();
+  }
+  function hook(n) {
+    if (window.GGP && GGP.ready && GGP.ready.then) { GGP.ready.then(words); if (GGP.on) GGP.on(function (t) { if (t === 'change') words(); }); return; }
+    if (n < 40) setTimeout(function () { hook(n + 1); }, 150);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { hook(0); }); else hook(0);
 })();

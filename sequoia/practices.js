@@ -548,7 +548,7 @@
       today: "Name one specific thing you need help with, and ask one person.",
       build: "Keep a list of things others can do, so when people offer, you have an answer.",
       hard: "Think how good it feels to help someone you love; asking gives them that chance. If you often feel like a burden, tell someone you trust how you feel." } },
-  { p: 'branches', n: 'Active Listening', d: 'Listen to understand, not to fix, and reflect back what you heard.',
+  { p: 'branches', n: 'Active Listening', d: 'Listen to understand, and reflect back what you heard.',
     m: ['R', '10 min', 'E', ''], f: { seated: 1, bed: 1 },
     g: { why: "Feeling truly heard is one of the deepest human needs.",
       today: "In one conversation today, listen without planning your reply. Reflect back what you heard.",

@@ -52,12 +52,12 @@
   if (window.GGCheckin.pine) return;
   var TREE = 'pine';
   var FILES = [
-    '/shared/gg-parts.js?v=b907',
+    '/shared/gg-parts.js?v=b929',
     '/pine/checkin.js?v=b907',
-    '/pine/practices.js?v=b914a',
+    '/pine/practices.js?v=b929',
     '/shared/gg-life.js?v=b907',
     '/pine/life.js?v=b907',
-    '/shared/practice-rhythm.js?v=b914a',
+    '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
     '/shared/guided/pine.js?v=b907'
   ];
@@ -329,7 +329,7 @@
     function rhythm(then) {   // gdRhythm 674
       if (window.GG_RHYTHM) { then(); return; }
       var done = false, go = function () { if (!done) { done = true; then(); } };
-      var s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b914a'; s.onload = go; s.onerror = go; document.head.appendChild(s);
+      var s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b929'; s.onload = go; s.onerror = go; document.head.appendChild(s);
     }
     function planRun() {
       if (ended) return;

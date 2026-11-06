@@ -1440,3 +1440,37 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 .hm-then small{font-size:13.5px;opacity:.8;overflow-wrap:anywhere;}
 .hm-then li.done b{text-decoration:line-through;text-decoration-thickness:1px;opacity:.75;}
 .hm-then .hm-linkbtn{flex:none;}
+/* BLD 929 (M5): Strength and Cardio as Seeds of Membership on Start, shown, never chosen. */
+.hm-wp-seedmv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.hm-wp-seedmv .hm-wp-seedchip{display:inline-flex;align-items:center;gap:6px;cursor:default;opacity:.75;}
+.hm-wp-seedtile{cursor:default;opacity:.75;border-style:dashed;}
+.hm-seedtag{font-style:normal;font-family:Barlow,system-ui,sans-serif;font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#4F6B2C;border:1px solid #7A9A4E;border-radius:999px;padding:0 7px;margin-left:4px;vertical-align:1px;white-space:nowrap;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hm-seedtag{color:#B9D38F;border-color:#8FB05E;}}
+:root[data-theme="dark"] .hm-seedtag{color:#B9D38F;border-color:#8FB05E;}
+@media (max-width:359px){.hm-wp-seedmv{grid-template-columns:1fr;}}
+/* BLD 929 (M7): Or your Morning Walk, inside the Gentle card. */
+.hm-alt{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:6px 0 2px;font-size:14px;color:var(--ink-soft);}
+.hm-alt span{min-width:0;overflow-wrap:anywhere;}
+/* BLD 929 (M8): Resting for Storm and Repair, on Grow. */
+.hm-srest{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px;}
+.hm-srest li{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.hm-srest li span{min-width:0;overflow-wrap:anywhere;font-weight:600;}
+/* BLD 929 (M12): Settings in short folded sections. */
+.hm-fold{border:1px solid var(--line);border-radius:18px;background:var(--card);margin:0 0 12px;min-width:0;}
+.hm-fold > summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;padding:14px 16px;min-height:44px;}
+.hm-fold > summary::-webkit-details-marker{display:none;}
+.hm-fold > summary span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;letter-spacing:.4px;text-transform:uppercase;}
+.hm-fold > summary small{flex:1;min-width:0;color:var(--ink-soft);font-size:14px;}
+.hm-fold > summary::after{content:'+';color:var(--gold);font-weight:700;margin-left:auto;}
+.hm-fold[open] > summary::after{content:'\2212';}
+.hm-fold > :not(summary){margin:0 12px 12px;}
+/* BLD 929 (L4): the hero's settings gear. */
+.hm-me.hm-megear svg{width:22px;height:22px;}
+/* BLD 929 (L11): the check-in tab, balanced on a wide screen. */
+@media (min-width:900px){
+  .hm-grow.hm-cktab{grid-template-columns:minmax(0,1fr);}
+  .hm-cktab .hm-ckside{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start;}
+  .hm-cktab .hm-ckside .hm-cknote{grid-column:1 / -1;}
+}
+/* BLD 929 (L13): while the tour is open, a note sits at the top, clear of the tour's Next. */
+html.hm-toured .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !important;bottom:auto !important;}

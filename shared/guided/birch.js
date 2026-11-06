@@ -1,4 +1,4 @@
-/* Grow With Grounded: Guided Check-in script for Birch, ages 18 to 26 (BLD 886).
+/* Grow With Grounded: Guided Check-in script for Birch, ages 18 to 25 (BLD 886).
    Read by shared/gg-guided.js. The questions are read live from birch/checkin.js
    (BIRCH_CHECKIN.getBank, weeklyList, optionalList), never copied here.
    GG_GUIDED.birch = {voice, tipSkip, kinds: {start, full, quick, together, plan}}
@@ -39,7 +39,7 @@ const ENTER = {
   fruit: ['Last part, Fruit: hope, and what you look forward to.', 'Fruit to finish: what you believe is possible.']
 };
 Object.defineProperty(ENTER, 'roots', rootsLive(
-  ['First, Roots: Spirit, your connection with God and the sacred.', 'We\'ll start with Roots: Spirit, the peace and values you\'re making your own.'],
+  ['We\'ll start with Roots: Spirit, the peace and values you\'re making your own.'],
   ['First, Roots: what grounds you.', 'We\'ll start with Roots, the peace and values you\'re making your own.']));
 const TIPS = {
   roots: [

@@ -914,7 +914,7 @@ const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
 const GV_SRC = '/grove/guide-videos.js?v=b908';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
 // BLD 911: a guide of one of the six age trees plays in The Grounded Way (/home/?guide=<id>&tree=<tree>); Willow keeps its own page.
-const TREE_LINK = { maple: ['The Grounded Way', '', 'for grown-ups of kids, K to 5'], aspen: ['The Grounded Way', '', 'for grown-ups of middle schoolers'], pine: ['The Grounded Way', '', 'for grades 9 to 12'], birch: ['The Grounded Way', '', 'for ages 18 to 26'], oak: ['The Grounded Way', '', 'for grown-ups'], sequoia: ['The Grounded Way', '', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
+const TREE_LINK = { maple: ['The Grounded Way', '', 'for grown-ups of kids, K to 5'], aspen: ['The Grounded Way', '', 'for grown-ups of middle schoolers'], pine: ['The Grounded Way', '', 'for grades 9 to 12'], birch: ['The Grounded Way', '', 'for ages 18 to 25'], oak: ['The Grounded Way', '', 'for grown-ups'], sequoia: ['The Grounded Way', '', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
 const treeGuideHref = (tr, id) => TREE_LINK[tr][1] ? TREE_LINK[tr][1] + encodeURIComponent(id) : '/home/?guide=' + encodeURIComponent(id) + '&tree=' + tr;
 const treeGuideSite = tr => tr === 'willow' ? 'growwithgrounded.com/willow/' : 'growwithgrounded.com/home/';
 const HOSPICE_FIRST = ['hospice', 'hard-death'];
@@ -1519,7 +1519,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b911b').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b929').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */

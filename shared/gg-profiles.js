@@ -49,7 +49,7 @@
    Sequoia, the tree for older adults (GWG BLD 733)
    - A grown-up's profile keeps the age "adult". Anyone who says they are
      55 or older may choose their tree: Oak, or Sequoia (built for 60 and
-     up). The choice sits beside the name and picture (p.tree), changeable
+     up; Chris, November 5, 2026, BLD 929: 55 or older may still choose it). The choice sits beside the name and picture (p.tree), changeable
      any time in Manage my profile, and sets where "My tree" goes.
    - Helpers work in Sequoia the Willow way, only when the person turns on
      Add a Helper in their own Sequoia settings.
@@ -58,8 +58,8 @@
 
    Birch, the tree for young adults (GWG BLD 742)
    - The same pattern as Sequoia: the age stays "adult" and p.tree is
-     'birch'. Anyone who says they are 26 or younger may choose Birch
-     (built for 18 to 26) or Oak (built for 26 to 60), and switch any
+     'birch'. Anyone who says they are 25 or younger may choose Birch
+     (built for 18 to 25) or Oak (built for 26 to 59, BLD 929), and switch any
      time. Saying yes opens the tree pick with Birch chosen.
    - Helpers work in Birch the Sequoia way, only when the person turns on
      Add a Helper in their own Birch settings (birch.helpersOn).
@@ -112,8 +112,8 @@
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
   // A grown-up's own tree (Sequoia, GWG BLD 733). The age stays "adult" either way.
   // Birch (GWG BLD 742) joins the same way: p.tree 'birch', the age still "adult".
-  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/home/', who: 'Built for adults, 26 to 60' }, birch: { id: 'birch', tool: 'Birch', href: '/home/', who: 'Built for young adults, 18 to 26' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/home/', who: 'Built for older adults, 60 and up' } };
-  // Which trees each age question offers: 26 or younger (Birch first), 55 or older.
+  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/home/', who: 'Built for adults, 26 to 59' }, birch: { id: 'birch', tool: 'Birch', href: '/home/', who: 'Built for young adults, 18 to 25' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/home/', who: 'Built for older adults, 60 and up' } };
+  // Which trees each age question offers: 25 or younger (Birch first), 55 or older.
   var BAND = { young: ['birch', 'oak'], older: ['oak', 'sequoia'] };
   function treeOf(p) { return p && p.age === 'adult' && (p.tree === 'sequoia' || p.tree === 'birch') ? p.tree : 'oak'; }
   function toolOf(p) { var a = AGE[(p && p.age)] || AGE.adult, t = treeOf(p); if (p && p.age === 'adult' && t !== 'oak') return { id: a.id, name: a.name, who: a.who, tool: TREE[t].tool, href: TREE[t].href }; return a; }
@@ -505,14 +505,14 @@
      CREATE
      ===================================================================== */
   /* Sequoia (GWG BLD 733): anyone who says they are 55 or older may choose their tree.
-     Birch (GWG BLD 742): anyone who says they are 26 or younger may choose Birch or Oak; a yes picks Birch. */
+     Birch (GWG BLD 742): anyone who says they are 25 or younger may choose Birch or Oak; a yes picks Birch. */
   function treeBtns(st) {
     var list = BAND[st.band] || [];
     return list.map(function (t) { return '<button type="button" class="ggp-age" data-tree="' + t + '" aria-pressed="' + (st.tree === t) + '"><b>' + TREE[t].tool + '</b><span>' + TREE[t].who + '</span></button>'; }).join('');
   }
   function treeBlock(st, other) {
     return '<div id="ggp-treebox"' + (st.age === 'adult' ? '' : ' hidden') + '>' +
-      '<label class="ggp-check"><input type="checkbox" id="ggp-young"' + (st.band === 'young' ? ' checked' : '') + '> <span>' + (other ? 'They are' : 'I am') + ' 26 or younger</span></label>' +
+      '<label class="ggp-check"><input type="checkbox" id="ggp-young"' + (st.band === 'young' ? ' checked' : '') + '> <span>' + (other ? 'They are' : 'I am') + ' 25 or younger</span></label>' +
       '<label class="ggp-check"><input type="checkbox" id="ggp-older"' + (st.band === 'older' ? ' checked' : '') + '> <span>' + (other ? 'They are' : 'I am') + ' 55 or older</span></label>' +
       '<div id="ggp-treepick"' + (st.band ? '' : ' hidden') + '><label class="ggp-l">' + (other ? 'Their tree' : 'My tree') + '</label><div class="ggp-ages" id="ggp-trees">' + treeBtns(st) + '</div>' +
       '<span class="ggp-small">Change it any time in Manage My Profile.</span></div></div>';
@@ -537,13 +537,21 @@
       if (!st.age) { var a = cur && getP(cur.id); st.age = a && a.age === 'adult' ? '' : 'adult'; }
       // A new adult or teen profile shows its Root Words before the dialog's promise resolves (GWG BLD 780).
       var after = null;
+      /* BLD 929 (M3): when Home already knows the stage of life (opt.fixed), the age question and the tree check boxes step
+         aside for one quiet line naming the tree. */
+      var fixAge = !!(opt.fixed && st.age), fixTree = fixAge && st.age === 'adult' && !!opt.tree;
       dialog(function (d) { step1(d); }, function (r) { if (after) after.then(function () { resolve(true); }); else resolve(!!r); });
+      function treeLine() {
+        var w = st.age === 'adult' ? TREE[st.tree] || TREE.oak : AGE[st.age], who = String(w.who || '').replace(/^Built for /, '');
+        who = who.charAt(0).toLowerCase() + who.slice(1);
+        return '<p class="ggp-small ggp-treeline">' + (other || st.age !== 'adult' ? 'Their tree: ' : 'Your tree: ') + esc(w.tool) + ', built for ' + esc(who) + '.' + (st.age === 'adult' ? ' Change it any time in Manage My Profile.' : '') + '</p>';
+      }
       function step1(d) {
         d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : 'Create a Grounded profile') + '</h2>' +
           (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode, on this device only.</p>') +
           '<label class="ggp-l" for="ggp-name">' + (other ? 'Their first name, or what you call them' : 'First name or a nickname') + '</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
-          (other ? '' : '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
-          treeBlock(st, other) +
+          (other || fixAge ? '' : '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
+          (fixTree || (fixAge && st.age !== 'adult') ? treeLine() : treeBlock(st, other)) +
           '<div class="ggp-picrow"><span id="ggp-av">' + av(st.avatar, st.name || '?', 56) + '</span><button type="button" class="ggp-link" id="ggp-pick">Choose a picture</button></div>' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-next>Next</button></div>');
         $(d, '[data-x]').onclick = function () { d.close(false); };
@@ -843,7 +851,7 @@
         '<label class="ggp-l" for="ggp-name">Name</label><input type="text" id="ggp-name" maxlength="30" value="' + esc(p.name) + '">' +
         '<label class="ggp-l">Age</label><select id="ggp-age">' + AGES.map(function (a) { return '<option value="' + a.id + '"' + (a.id === p.age ? ' selected' : '') + '>' + a.name + ' (' + a.who + ')</option>'; }).join('') + '</select>' +
         (isAdult ? (function () { var t = treeOf(p), band = t === 'birch' ? 'young' : t === 'sequoia' ? 'older' : '', me = cur.id === id ? 'I am' : 'They are';
-          return '<label class="ggp-check"><input type="checkbox" id="ggp-young"' + (band === 'young' ? ' checked' : '') + '> <span>' + me + ' 26 or younger</span></label>' +
+          return '<label class="ggp-check"><input type="checkbox" id="ggp-young"' + (band === 'young' ? ' checked' : '') + '> <span>' + me + ' 25 or younger</span></label>' +
             '<label class="ggp-check"><input type="checkbox" id="ggp-older"' + (band === 'older' ? ' checked' : '') + '> <span>' + me + ' 55 or older</span></label>' +
             '<div id="ggp-treepick"' + (band ? '' : ' hidden') + '><label class="ggp-l" for="ggp-tree">Tree</label><select id="ggp-tree">' + (BAND[band] || []).map(function (x) { return '<option value="' + x + '"' + (t === x ? ' selected' : '') + '>' + TREE[x].tool + ' (' + TREE[x].who + ')</option>'; }).join('') + '</select><span class="ggp-small">Sets where My tree opens. Check-ins already saved stay where they are.</span></div>'; })() : '') +
         (isAdult ? '<label class="ggp-l" for="ggp-email">Email, optional</label><input type="email" id="ggp-email" value="' + esc(v.email || '') + '" placeholder="Fills in contact forms on this site"><span class="ggp-small">It stays in your locked profile and is only sent if you send a form.</span>' : '') +
@@ -1132,8 +1140,10 @@
     function first(d) {
       d.show('<h2 id="ggp-title">Bring In My Profile</h2><p>Bring your profile here from your other device. It stays locked with its own passcode the whole way.</p>' +
         '<ol class="ggp-steps"><li>Open the file you sent. On an iPhone or iPad it is in Files, usually in Downloads. On a computer, look in Downloads or your email.</li><li>Enter your passcode, and your profile opens here.</li></ol>' +
+        '<p class="ggp-small">A backup saved on this device? <button type="button" class="ggp-link" data-ldbk>Load a Backup</button></p>' +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-file>Open the File</button></div>');
       $(d, '[data-x]').onclick = function () { d.close(false); };
+      $(d, '[data-ldbk]').onclick = function () { d.close(false); backupGo('pick'); };
       $(d, '[data-file]').onclick = function () {
         var inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
         inp.onchange = function () { var f = inp.files && inp.files[0]; if (f) read(d, f); };
@@ -1245,13 +1255,15 @@
       html += item('manage', 'Manage My Profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
-      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch person') + item('move', 'Move to Another Device') + item('bk', 'Back up everything') + item('ld', 'Load a backup') + item('lock', 'Lock');
+      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch Person') + item('move', 'Move to Another Device') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
-      html += link('/home/', 'Open The Grounded Way');
-      if (n) html += item('open', 'Open a profile');
-      html += item('create', 'Create a profile') + item('bring', 'Bring In My Profile') + item('ld', 'Load a backup') + item('bk', 'Back up everything') + link('/privacy.html#profiles', 'How profiles work');
+      // BLD 929 (M14): one way to start. With no profile here: Begin The Grounded Way (the one setup) and Bring In My Profile
+      // (Load a Backup waits inside it). Once a profile is on this device, Open a Profile and the backup items join.
+      if (n) html += link('/home/', 'Open The Grounded Way') + item('open', 'Open a Profile') + item('bring', 'Bring In My Profile') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup');
+      else html += link('/home/', 'Begin The Grounded Way') + item('bring', 'Bring In My Profile');
+      html += link('/privacy.html#profiles', 'How Profiles Work');
     }
     pop.innerHTML = html;
     pop.querySelectorAll('[data-a]').forEach(function (b) {

@@ -635,7 +635,7 @@ window.GGJourney.AGES.pine = {
  }
 };
 
-/* ---------- Birch (young adults, 18 to 26), GWG BLD 742 ----------
+/* ---------- Birch (young adults, 18 to 25), GWG BLD 742 ----------
    The same twelve themes, so a family can be on the same week together,
    with intros and reflection questions written for young adults: direct,
    warm, practical, never assuming school, a job, a partner, money, or

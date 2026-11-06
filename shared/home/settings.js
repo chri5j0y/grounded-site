@@ -52,9 +52,9 @@
   function dayKey(t) { var d = new Date(t); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }   // aspen 1905
 
   function files(tree) {
-    var f = ['/shared/gg-journey.js?v=b782', '/shared/gg-avatars.js?v=b782', '/shared/gg-ease.js?v=ez1'];
+    var f = ['/shared/gg-journey.js?v=b929', '/shared/gg-avatars.js?v=b782', '/shared/gg-ease.js?v=ez1'];
     f.push('/shared/gg-life.js?v=b907');                                  // Health and Ability (Aspen reads it for Steady or Hardy)
-    if (tree === 'birch') f.push('/birch/checkin.js?v=b907');              // My Season (BIRCH_CHECKIN.mySeason)
+    if (tree === 'birch') f.push('/birch/checkin.js?v=b929');              // My Season (BIRCH_CHECKIN.mySeason)
     if (tree === 'pine') f.push('/pine/checkin.js?v=b907');                // the grades (PINE_CHECKIN.grades)
     if (tree === 'aspen') f.push('/aspen/checkin.js?v=b907');              // the ring standard (ASPEN_CHECKIN.version), for Start My Pine
     return f;
@@ -346,7 +346,8 @@
     function oakExtras() {
       var p = prof(); if (!p || p.age !== 'adult') return '';
       var r = rec();
-      return lifeHtml('gss-life') + gameHtml() + helpersHtml()
+      // BLD 929 (M6): Oak and Sequoia get the same Faith or Plain choice as Birch and Pine.
+      return lifeHtml('gss-life') + wordingHtml('gss-wording', r.wording === 'plain', false, 'Prayer, worship, quiet, nature, and traditions.', 'Peace, values, quiet, nature, and traditions.', WORD_LEAD) + gameHtml() + helpersHtml()
         + birthdayHtml('Only used to offer the step into Sequoia, built for 60 and up, on your 60th birthday.')
         + seeHtml('gss-see', 'What Stays Private', OK_SEE)
         + (gwHas() ? sec('gss-gw', 'Groundwork From Birch', '<p class="gt-small">Your Groundwork notebook stays in Birch. Read it or print it here any time.</p><div class="gss-row">' + btn('ground', 'Open My Groundwork') + '</div>') : '')
@@ -365,7 +366,7 @@
         + sec('gss-sens', 'Optional Question', '<p class="gt-small">One extra question about betting and gambling, on sports, online games, or anything else for money. It never counts toward a score, is never shared, and is never shown to a helper. Only you can turn it on.</p>'
           + check('sens', !!r.askOpt, 'Ask me the optional question', null))
         + gameHtml() + helpersHtml()
-        + birthdayHtml('Only used to offer the step into Oak, built for adults 26 to 60, on your 26th birthday.')
+        + birthdayHtml('Only used to offer the step into Oak, built for adults 26 to 59, on your 26th birthday.')
         + seeHtml('gss-see', 'What Stays Private', BC_SEE)
         + sec('gss-moving', 'Ready for Oak?', '<p class="gt-small">You choose when. Stay in Birch as long as it fits, or move your tree to Oak. Move My Tree to Oak keeps this same profile: Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can print your whole Groundwork notebook first, and come back to it here any time.</p>'
           + '<div class="gss-row">' + btn('moveOak', 'Move My Tree to Oak') + btn('ground', 'Print My Groundwork') + '</div>' + (r.stayBirch ? stayNote(r.stayBirch, 'Birch', 'Move My Tree to Oak') : ''));
@@ -379,10 +380,10 @@
           + check('sens', !!r.askSens, 'Ask me the optional questions', null))
         + lifeHtml('gss-life', 'Health and Ability') + gameHtml()
         + seeHtml('gss-see', 'What Your Grown-up Can See', PN_SEE)
-        + birthdayHtml('Only used to offer the step into Birch, built for 18 to 26, on your 18th birthday. Without it, Pine offers the step in grade 12.')
-        + sec('gss-moving', 'Turning 18, or Finishing High School?', '<p class="gt-small">' + lead + 'You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Birch, built for ages 18 to 26. Start My Birch makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine), your Next Steps notebook, and your Faith or Plain choice with you. Pine keeps its own copy.</p>'
+        + birthdayHtml('Only used to offer the step into Birch, built for 18 to 25, on your 18th birthday. Without it, Pine offers the step in grade 12.')
+        + sec('gss-moving', 'Turning 18, or Finishing High School?', '<p class="gt-small">' + lead + 'You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Birch, built for ages 18 to 25. Start My Birch makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine), your Next Steps notebook, and your Faith or Plain choice with you. Pine keeps its own copy.</p>'
           + '<div class="gss-row">' + btn('startBirch', 'Start My Birch', { main: true }) + '</div>'
-          + '<p class="gt-small">Prefer Oak, built for adults 26 to 60? ' + linkBtn('startOak', 'Start My Oak instead') + '</p>' + (r.stayPine ? stayNote(r.stayPine, 'Pine', 'Start My Birch') : ''));
+          + '<p class="gt-small">Prefer Oak, built for adults 26 to 59? ' + linkBtn('startOak', 'Start My Oak instead') + '</p>' + (r.stayPine ? stayNote(r.stayPine, 'Pine', 'Start My Birch') : ''));
     }
     /* Maple: mpExtraSettings 2434 */
     function mpMoveDue(k) { var M = P().moveOn; return !!(M && M.gradeDue && M.gradeDue('5', k.checkins || [], k.done5)); }   // 2673
@@ -426,7 +427,7 @@
       if (tree === 'oak') return oakExtras();
       if (tree === 'birch') return birchExtras();
       if (tree === 'pine') return pineExtras();
-      if (tree === 'sequoia') return lifeHtml('gss-life') + helpersHtml();   // sequoia/app.js 1677
+      if (tree === 'sequoia') return lifeHtml('gss-life') + wordingHtml('gss-wording', rec().wording === 'plain', false, 'Prayer, worship, quiet, nature, and traditions.', 'Peace, values, quiet, nature, and traditions.', WORD_LEAD) + helpersHtml();   // sequoia/app.js 1677
       if (tree === 'maple') return mapleExtras();
       return aspenExtras();
     }
@@ -640,7 +641,7 @@
         onCreated: function (nid) { try { if (nid && P().setTree && P().tree(nid) !== 'birch') P().setTree(nid, 'birch'); } catch (e) {} afterCreate(); } });
     }
     function startMyOak() {   // pine startMyOak 1846
-      if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults 26 to 60. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
+      if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults 26 to 59. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
       var name = (prof() || {}).name, c = pineCarry();
       var oak = { history: c.rings }; if (c.ns) oak.nextsteps = Object.assign(c.ns, { from: 'pine', copied: todayKey() });
       var birth = P().moveOn && P().moveOn.birthday(id);

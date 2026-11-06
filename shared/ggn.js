@@ -17,7 +17,7 @@
   'use strict';
   if (window.GGNow) return;
   var V = 'b913';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b916', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b929', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
@@ -149,8 +149,12 @@
     if (o.from && o.from.focus) try { o.from.focus(); } catch (e) {}
   }
   function onKey(e) { if (S.open && e.key === 'Escape') { e.preventDefault(); close(); } }
-  function play(id, queue, from) {
-    var l = byId(id); if (!l) return;
+  /* BLD 929 (M9): o (optional) lets a caller name the player: o.title (top bar and eyebrow), o.back (the back button), and
+     o.onDone(), called once when the video reaches its closing scene. Home's Morning Quiet passes Morning Quiet and Back to
+     Today, and marks Morning Quiet done. */
+  function play(id, queue, from, o) {
+    var l = byId(id); if (!l) return; o = o || {};
+    var tName = o.title || 'Get Grounded Now', bName = o.back || 'Back to Get Grounded Now', told = false;
     Promise.resolve().then(function () { return need(READ, function () { return !!window.GGRead; }); }).then(function () { return need(LEARN, function () { return !!window.GGLearn; }); }).then(function () {
       if (!window.GGLearn) return;
       var keepFrom = S.open ? S.open.from : (from || document.activeElement);
@@ -159,8 +163,8 @@
       var root = document.createElement('div');
       root.className = 'ggl ggl-app ggn-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
       root.style.setProperty('--ggl-acc', '#5F7D48'); root.style.setProperty('--ggl-bar', '#24301F'); root.style.setProperty('--ggl-lite', '#CFE0BF');
-      root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>Get Grounded Now</b><button type="button" class="ggl-x" data-ggn-x="1">Back to Get Grounded Now</button></div>'
-        + '<div class="ggl-in"><div class="ggl-eb">' + esc(l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div><p class="ggn-quiet" style="margin-top:12px">' + esc(QUIET) + '</p></div>';
+      root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>' + esc(tName) + '</b><button type="button" class="ggl-x" data-ggn-x="1">' + esc(bName) + '</button></div>'
+        + '<div class="ggl-in"><div class="ggl-eb">' + esc(o.title ? o.title : l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div><p class="ggn-quiet" style="margin-top:12px">' + esc(QUIET) + '</p></div>';
       document.body.appendChild(root);
       S.open = { root: root, from: keepFrom, overflow: S.open ? S.open.overflow : document.body.style.overflow, queue: queue || [id], id: id };
       document.body.style.overflow = 'hidden';
@@ -176,11 +180,12 @@
       S.open.ctl = GGLearn.player(root.querySelector('.ggn-host'), {
         app: 'site', lesson: l, track: track, tracks: [track], done: {}, at: 0, accent: '#5F7D48', mood: 'calm', voice: voice(),
         mark: { name: 'Get Grounded Now' },
-        ending: { eyebrow: 'Get Grounded Now', h: 'How do you feel now?', sub: nx && nx.id !== id ? 'Another, if it helps: ' + nx.title : 'Come back any time.', say: 'Take all the time you need.', ok: true, buttons: btns },
+        onDone: function () { if (told || typeof o.onDone !== 'function') return; told = true; try { o.onDone(id); } catch (e) {} },
+        ending: { eyebrow: tName, h: 'How do you feel now?', sub: nx && nx.id !== id ? 'Another, if it helps: ' + nx.title : 'Come back any time.', say: 'Take all the time you need.', ok: true, buttons: btns },
         onEnd: function (b) {
-          if (b === 'another' && nx) play(nx.id, q);
-          else if (b === 'longer' && pr) play(pr.id, [pr.id]);
-          else if (b === 'again') play(id, q);
+          if (b === 'another' && nx) play(nx.id, q, null, o);
+          else if (b === 'longer' && pr) play(pr.id, [pr.id], null, o);
+          else if (b === 'again') play(id, q, null, o);
           else if (b === 'steady') close();
         },
         open: function () {}, home: close

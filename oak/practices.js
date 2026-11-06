@@ -474,7 +474,7 @@
       ['One Reach-Out a Day', 'A short text, call, or note to someone each day.'],
       ['Shared Meal', 'Eat with someone once a week, with phones away.'],
       ['Ask for Help', 'Ask one person for one specific kind of help.'],
-      ['Active Listening', 'Listen to understand, not to fix, and reflect back what you heard.'],
+      ['Active Listening', 'Listen to understand, and reflect back what you heard.'],
       ['Forgiveness Reflection', 'Loosen resentment\'s grip on you, without excusing harm or reopening a door.'],
       ['Repair a Rupture', 'Take one honest step toward mending a strained relationship, if it\'s safe.'],
       ['Support Group', 'Join a group of people walking through something similar.'],

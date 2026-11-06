@@ -27,7 +27,8 @@
    check-in asks question 1 of every part plus each tagged strand.
 
    Each question: { t, tip, why } plus r: 1 for reverse questions
-   ("Often" is the hard answer).
+   ("Often" is the hard answer), and plain: { t, tip } for Plain wording where the
+   Faith question names faith (BLD 929).
    Question 1 of every part is the quick check-in question, so it is never
    a reverse question.
 
@@ -62,13 +63,13 @@ const STEMS = {
 
 const Q = {
   roots: [
-    { t: 'Felt connected to something larger than yourself, like God, the Holy, nature, or love?',
+    { t: 'Felt connected to something larger than yourself, like God, the Holy, nature, or love?', plain: { t: 'Felt connected to something bigger than yourself, like nature, music, a cause, or the people you love?' },
       tip: 'Let them name it in their own words. Use their word for the sacred, not yours.',
       why: 'Feeling part of something larger is one of the strongest roots a person can have.' },
     { t: 'Had a spiritual practice, of any kind, that fed you?',
       tip: 'Prayer, walking, music, silence, worship, and time in nature all count. Ask what it gives them.',
       why: 'Practices are how roots get water. Small, regular ones count most.' },
-    { t: 'Found comfort or strength in your faith or spirit during a hard moment?',
+    { t: 'Found comfort or strength in your faith or spirit during a hard moment?', plain: { t: 'Found comfort or strength in what grounds you during a hard moment?' },
       tip: 'If yes, ask what helped. If no, listen for whether faith has gone quiet or become a weight.',
       why: 'This shows whether the sacred is a resource for you right now, or not.' },
     { t: 'Felt free to bring your honest questions and doubts?',
@@ -77,10 +78,10 @@ const Q = {
     { t: 'Felt a deep inner peace, even for a moment?',
       tip: 'Ask where they were and what was happening. Help them find their way back there.',
       why: 'Moments of peace show where your spirit rests. They are worth finding again.' },
-    { t: 'Felt far from God or the sacred, or felt let down by it?', r: 1,
+    { t: 'Felt far from God or the sacred, or felt let down by it?', r: 1, plain: { t: 'Felt far from what grounds you, or let down by it?', tip: 'Listen, and let it be named without fixing. Feeling far from what grounds you is real.' },
       tip: 'Listen. Do not defend God or correct them. Spiritual struggle is real and can be named without fixing.',
       why: 'Feeling far from the sacred can weigh on everything else. Naming it is a first step.' },
-    { t: 'Felt hurt by a church, a religious community, or people of faith?', r: 1,
+    { t: 'Felt hurt by a church, a religious community, or people of faith?', r: 1, plain: { t: 'Felt hurt by a community or group you belonged to?', tip: 'Take the wound seriously and leave room for the whole story. If a person or group is still causing harm, help them get safe.' },
       tip: 'Take the wound seriously and do not explain it away. If a person or group is still causing harm, help them get safe.',
       why: 'Religious hurt is common and painful. It matters here, whatever you believe now.' },
     { t: 'Carried guilt or shame that felt heavy on your spirit?', r: 1,

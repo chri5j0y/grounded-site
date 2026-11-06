@@ -30,13 +30,13 @@
   'use strict';
   var TREE = 'oak';
   var FILES = [
-    '/oak/checkin.js?v=b907',
-    '/oak/practices.js?v=b914a',
-    '/shared/gg-parts.js?v=b907',
+    '/oak/checkin.js?v=b929',
+    '/oak/practices.js?v=b929',
+    '/shared/gg-parts.js?v=b929',
     '/shared/gg-life.js?v=b907',
-    '/shared/practice-rhythm.js?v=b914a',
+    '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
-    '/shared/guided/oak.js?v=b907'
+    '/shared/guided/oak.js?v=b929'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // oak/index.html:1337
   // oak/index.html:1746
@@ -116,12 +116,13 @@
   /* ---------- the questions (oak/index.html:1754 to 1766) ---------- */
   function gdOpts() { return OPTS().map(function (o) { return { v: o[0], label: o[1] }; }); }
   function isEdge(q, v) { var o = OPTS().filter(function (x) { return x[0] === v; })[0]; if (!o || o[2] === null) return false; return (q.rev ? 3 - o[2] : o[2]) <= 1; }
-  function gdQuestions(quick) {
+  // BLD 929 (M6): Plain wording reads each question's plain version where the Faith question names faith.
+  function gdQuestions(quick, plain) {
     var out = [], stem = CKB().stems.standard, Q = QS();
     PART_ORDER.forEach(function (k) {
       (quick ? [Q[k][0]] : Q[k]).forEach(function (q, i) {
-        var key = quick ? 'quick_' + k : k, lead = quick ? !out.length : i === 0;
-        out.push({ id: key + '.' + i, key: key, i: i, part: k, stem: stem, text: q.t, say: lead ? stem + ' ' + q.t : q.t, type: 'choice', options: gdOpts(), rev: !!q.r });
+        var key = quick ? 'quick_' + k : k, lead = quick ? !out.length : i === 0, t = plain && q.plain && q.plain.t ? q.plain.t : q.t;
+        out.push({ id: key + '.' + i, key: key, i: i, part: k, stem: stem, text: t, say: lead ? stem + ' ' + t : t, type: 'choice', options: gdOpts(), rev: !!q.r });
       });
     });
     return out;
@@ -262,7 +263,7 @@
     var sig = [id, kind, 'self', '', quick ? 'q' : 'f'].join('|');
     var ans = LEFT && LEFT.sig === sig ? LEFT.ans : {};
     LEFT = { sig: sig, ans: ans };
-    var qs = gdQuestions(quick), byId = {}, H = handle(), saved = null;
+    var qs = gdQuestions(quick, !!ctx.plain), byId = {}, H = handle(), saved = null;
     qs.forEach(function (q) { byId[q.id] = q; });
     var have = {}; qs.forEach(function (q) { var v = (ans[q.key] || {})[q.i]; if (v) have[q.id] = v; });
     function answerQ(key, i, v) { ans[key] = ans[key] || {}; ans[key][i] = v; }   // oak/index.html:1544

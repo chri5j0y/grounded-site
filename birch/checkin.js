@@ -4,8 +4,8 @@
    Guide, so both always ask the same thing. Edit questions here, not in
    index.html or app.js.
 
-   Birch is the tree for young adults, 18 to 26 (GWG BLD 742). It sits
-   between Pine (grades 9 to 12) and Oak (adults, 26 to 60). It follows
+   Birch is the tree for young adults, 18 to 25 (GWG BLD 742). It sits
+   between Pine (grades 9 to 12) and Oak (adults, 26 to 59). It follows
    the Grounded tree standard, version 1, the same as Pine, Oak, and
    Sequoia:
    - Six parts in one order, each label pairing the tree word with the
@@ -155,7 +155,7 @@ const PARTS = [
 
 // One bank. bandOf() and BANDS stay for apps built from Pine's code.
 const BAND = 'birch';
-const BANDS = [[BAND, 'Birch, 18 to 26', []]];
+const BANDS = [[BAND, 'Birch, 18 to 25', []]];
 
 // My Season (decision 6). Pick any, or none. id, name (Title Case, as
 // shown in settings), line (what it covers), lines (topic help lines
