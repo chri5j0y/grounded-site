@@ -669,13 +669,13 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b916"></script>
-<script src="../shared/gg-learn.js?v=b916"></script>
-<script src="../shared/gg-parts.js?v=b907"></script>
-<script src="../shared/gg-print.js?v=b911b"></script>
-<script src="../shared/grove-scene.js?v=b907"></script>
+<script src="../shared/gg-learn.js?v=b929"></script>
+<script src="../shared/gg-parts.js?v=b929"></script>
+<script src="../shared/gg-print.js?v=b929"></script>
+<script src="../shared/grove-scene.js?v=b929"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
-<script src="share.js?v=b887"></script>
+<script src="share.js?v=b929"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b862"></script>
 <script src="ceremonies.js?v=b890"></script>
@@ -694,7 +694,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="coach.js?v=b898"></script>
 <script src="../shared/gg-scale.js?v=b889"></script>
 <script src="../shared/gg-holidays.js?v=b919b"></script>
-<script src="health.js?v=b927"></script>
+<script src="health.js?v=b929"></script>
 <script src="vault.js?v=b911b"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1160,7 +1160,7 @@ function drawTabs(tabs, pathSub){
   sub.innerHTML = sub.hidden ? '' : mem.map(([id, l, ic]) => btn(id, l, ic, V.tab === id, id === 'safety' ? ' safety' : '')).join('');
 }
 // Trees (GWG BLD 822): the trees open to this person, as picture cards.
-const TREE_LINE = {maple: 'For grades K to 5', aspen: 'For grades 6 to 8', pine: 'For grades 9 to 12', birch: 'For ages 18 to 26', oak: 'For ages 26 to 60', sequoia: 'For 60 and up', willow: 'For hospice, and the people who love them', grove: 'For families, faith communities, and groups'};
+const TREE_LINE = {maple: 'For grades K to 5', aspen: 'For grades 6 to 8', pine: 'For grades 9 to 12', birch: 'For ages 18 to 25', oak: 'For ages 26 to 59', sequoia: 'For 60 and up', willow: 'For hospice, and the people who love them', grove: 'For families, faith communities, and groups'};
 function vTrees(){
   const t = tabsFor().filter(x => TREE_IDS.includes(x[0]));
   return `<h2>Trees</h2><p class="sub">Choose a tree to guide a visit, see its guides, and open its For Guides training.</p><div class="tree-grid">${t.map(([id, l]) => `<button class="card tree-card" data-tab="${id}"><img src="../shared/marks/${id}.svg" alt="" width="64" height="64"><span><b>${esc(l)}</b><span>${esc(TREE_LINE[id] || '')}</span></span></button>`).join('')}</div>`;
@@ -1303,7 +1303,7 @@ function vHome(){
   ${fgStoriesCard()}${fgMemberCard()}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
-  <div class="quick">${quick.filter(([id]) => G(id)).map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.filter(([id]) => G(id)).map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 25</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-Ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -2695,7 +2695,7 @@ const CERT_TREE_NOTE = {
   maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
   aspen: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 6 to 8 through Aspen.',
   pine: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 9 to 12 through Pine.',
-  birch: 'Lessons, practice scenarios, and a signed agreement for walking with young adults, 18 to 26, through Birch.',
+  birch: 'Lessons, practice scenarios, and a signed agreement for walking with young adults, 18 to 25, through Birch.',
   oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
   sequoia: 'Lessons, practice scenarios, and a signed agreement for walking with older adults and their families through Sequoia.',
   willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'};
@@ -2969,7 +2969,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b911b'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b929'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -7670,7 +7670,7 @@ async function pnSetField(on){
 function pnPersonCard(c){ return c.pn && pnOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Pine Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="pn-open" data-v="${c.id}">${icon('pine')} Open</button></div></div>` : ''; }
 
 // ---------------- BIRCH GUIDE ----------------
-// GWG BLD 744 (Birch 3). Guided Birch visits with young adults, 18 to 26, for anyone trained who walks with them: campus
+// GWG BLD 744 (Birch 3). Guided Birch visits with young adults, 18 to 25, for anyone trained who walks with them: campus
 // ministers and college chaplains, young adult and youth pastors, residence life staff, military chaplains and mentors,
 // coaches, apprenticeship and work mentors, and hospital chaplains (plan Decision 20).
 // Built from Sequoia Guide (and Oak Guide) for the adult relationship and the newest structures: the person's own consent

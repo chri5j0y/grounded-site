@@ -941,7 +941,7 @@
     }).join('') + '</ol>';
     // the invites: each partner onto their own Tree (Birch or Oak, by age), and the two of them into a Grove
     var person = function (w, name) {
-      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 26, and Oak for ages 26 to 60. In The Grounded Way, the profile chooses the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
+      return '<div class="btv-person"><h3>' + esc(name ? name + '’s Tree' : (w === 'a' ? 'The First Tree' : 'The Second Tree')) + '</h3><p>Birch is for ages 18 to 25, and Oak for ages 26 to 59. In The Grounded Way, the profile chooses the one that fits' + (name ? ' ' + esc(name) : '') + '.</p>' +
         '<div class="ff-links"><a href="/home/">Begin The Grounded Way</a></div>' +
         '<div class="ff-row">' + btn('invite', 'Copy ' + (name ? esc(name) + '’s' : 'an') + ' Invite', { to: w, cls: 'btn-secondary ff-sm' }) + '</div></div>';
     };
@@ -964,7 +964,7 @@
   function copyInvite(to) {
     var base = siteBase(), name = to === 'a' || to === 'b' ? nm(to) : '', t;
     if (to === 'grove') t = 'Let’s grow a Grove together, where our two trees stand side by side: ' + base + '/grove/';
-    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded, in The Grounded Way: ' + base + '/home/ Your profile chooses the tree that fits your age: Birch for ages 18 to 26, Oak for ages 26 to 60. Everything stays on your own device.';
+    else t = (name ? name + ', here' : 'Here') + ' is a Tree of your own from Grow With Grounded, in The Grounded Way: ' + base + '/home/ Your profile chooses the tree that fits your age: Birch for ages 18 to 25, Oak for ages 26 to 59. Everything stays on your own device.';
     copyText(t, function (ok) { var el = $('gm-invst'); if (el) el.textContent = ok ? 'Invite copied. Paste it in a message.' : 'Copy did not work here. ' + t; });
   }
 
@@ -1327,7 +1327,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b916', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b929', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

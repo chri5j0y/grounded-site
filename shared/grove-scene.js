@@ -17,7 +17,7 @@ const TONE = { trunk:'#6B4A2E', bark:'#B9A8F2', barkDim:'#4F3620', branch:'#C9B7
 const STAGE_H = { maple:.34, aspen:.6, pine:.8, birch:.9, adult:1, sequoia:1.06, willow:1 };      // side by side in a family grove
 const STAGE_SOLO = { maple:.62, aspen:.82, pine:.92, birch:.96, adult:1, sequoia:1, willow:1 };  // your own tree, filling the scene
 // A grown-up whose tree is Sequoia (GWG BLD 733) stands as a sequoia: stageOf(age, tree).
-// Birch (young adults, 18 to 26, GWG BLD 742): a grown-up whose tree is Birch stands in the grove as the Birch logo's tree.
+// Birch (young adults, 18 to 25, GWG BLD 742): a grown-up whose tree is Birch stands in the grove as the Birch logo's tree.
 const stageOf = (age, tree) => age === 'maple' || age === 'aspen' || age === 'pine' || age === 'birch' ? age : tree === 'sequoia' ? 'sequoia' : tree === 'birch' ? 'birch' : 'adult';
 // Half the crown's width, as a share of the tree's height, for spacing trees in a row.
 const HALF_W = { maple:.47, aspen:.32, pine:.34, birch:.34, adult:.57, kind:.4, sequoia:.2, willow:.47 };
@@ -89,7 +89,7 @@ function markTree(which, t, H, tend, brC, fruitC){
   }
   return { top: `<g transform="translate(${f1(-50*k)} ${f1(-90*k)}) scale(${(k).toFixed(4)})">${g}</g>`, perch: oak ? { x: H*.3, y: -H*.8 } : wil ? { x: H*.28, y: -H*.78 } : { x: H*.24, y: -H*.42 } };
 }
-// Birch (young adults, 18 to 26): the Birch logo's tree (MARK_ART.birch, the approved Two Trunks mark),
+// Birch (young adults, 18 to 25): the Birch logo's tree (MARK_ART.birch, the approved Two Trunks mark),
 // two slender white trunks with dark marks, a crown of leafy clusters with sunlit leaves and
 // slender hanging twigs (Leafy Clusters), and gold catkins.
 // In the marks' units (base at 50, 90). Tended parts show the way they do on the other trees.

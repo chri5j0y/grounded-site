@@ -96,7 +96,6 @@
   };
   var ENTER = {
     "roots": [
-      "First, Roots: Spirit, your connection with God and the sacred.",
       "We will begin gently with Roots: Spirit, what holds you steady."
     ],
     "trunk": [

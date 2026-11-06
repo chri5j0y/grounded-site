@@ -235,7 +235,7 @@
       case 'big': return (sc.bg ? '<img class="ln-dm-bg" src="' + HERO(sc.bg) + '" alt=""><div class="ln-dm-shade ln-big-sh"></div>' : '') + '<div class="ln-big' + (sc.bg ? ' ln-big-on' : '') + '"><p' + A(.3) + '>' + h(sc.h) + '</p>' + (sc.sub ? '<small' + A(1.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'points': return '<div class="ln-pts' + ((sc.items || []).length >= 5 ? ' ln-pts5' : '') + '"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (it, j) { var a = Array.isArray(it) ? it : [it]; return '<div' + A(.9 + j * (sc.gap || 1.1), 'ln-pt') + '><span class="ln-dot" style="background:' + (a[2] || acc) + '"></span><span><b>' + h(a[0]) + '</b>' + (a[1] ? '<small>' + h(a[1]) + '</small>' : '') + '</span></div>'; }).join('') + '</div>';
       case 'trees': {
-        var T = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 26'], ['oak', 'Oak', '26 to 60'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice']].concat(sc.grove ? [['grove', 'The Grove', 'Every age, together']] : []);
+        var T = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 25'], ['oak', 'Oak', '26 to 59'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice']].concat(sc.grove ? [['grove', 'The Grove', 'Every age, together']] : []);
         return '<div class="ln-trees"><h3' + A(.2) + '>' + h(sc.h || 'Every tree. Tend four, grow two.') + '</h3><div class="ln-trow' + (T.length > 7 ? ' ln-t8' : '') + '">' + T.map(function (x, j) { return '<div' + A(.6 + j * .4, 'ln-tr') + '><img src="' + MARK(x[0] + '-tab') + '" alt=""><b style="color:' + COL[x[0]] + '">' + x[1] + '</b><small>' + x[2] + '</small></div>'; }).join('') + '</div></div>';
       }
       case 'levels': return '<div class="ln-lv">' + (sc.levels || [['Strong', '8 to 10', '#5F7D48'], ['Steady', '5 to 7', '#8B5E1A'], ['Growing Edge', '1 to 4', '#B8612F']]).map(function (c, j) { return '<div' + A(.8 + j, 'ln-lc', '--k:' + c[2]) + '><b>' + h(c[0]) + '</b><small>' + h(c[1]) + '</small></div>'; }).join('') + '</div>';
@@ -356,6 +356,7 @@
       '.ggl-endbar.over{position:absolute;left:0;right:0;bottom:6%;margin:0;padding:0 16px;}',
       '.ggl-endbar.over .ggl-btn.quiet{background:#FFFCF6;border-color:#DDD0B8;color:#6B5A4D;}.ggl-endbar.over .ggl-btn:not(.pri){background:#FFFCF6;}',
       '.ggl-endbar .ggl-btn{min-width:150px;}',
+      '.ln-ctl.ln-ctl-end [data-g="play"],.ln-ctl.ln-ctl-end [data-g="next"]{display:none;}',
       '.ln-end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:58px 70px 0;text-align:center;}',
       '.ln-endck{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;color:#fff;}.ln-endck svg{width:46px;height:46px;}',
       '.ln-end .ln-eb{margin-top:18px;}.ln-end h2{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:50px;line-height:1.08;margin:8px 0 0;max-width:780px;text-wrap:balance;}',
@@ -909,6 +910,7 @@
       st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
+      var ctl = $('.ln-ctl', host); if (ctl) ctl.classList.toggle('ln-ctl-end', last);   // BLD 929 (L5): no Play or Next on the closing screen
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
       if (last) bgStop(2500);
       else if (P.playing) bgPlay(cfg);
@@ -1425,7 +1427,7 @@
     });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
-  function needPrint() { return script(url('/shared/gg-print.js?v=b911b'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=b929'), function () { return !!window.GGPrint; }); }
   // Written pages (GWG BLD 787): shared/learn-pages.js, loaded the first time a page or a track with pages shows.
   function needPages() { return script(url('/shared/learn-pages.js?v=' + V), function () { return !!window.GG_LEARN_PAGES; }); }
   function pageOf(app, id) { var P = ((window.GG_LEARN_PAGES || {})[app]) || []; for (var i = 0; i < P.length; i++) if (P[i] && P[i].id === id) return P[i]; return null; }

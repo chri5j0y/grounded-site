@@ -520,7 +520,9 @@ const NEW_KEY = 'gg-health-new';
 const newSeen = () => { try { return localStorage.getItem(NEW_KEY) || ''; } catch(e){ return ''; } };
 const markNew = () => { const x = newestNew(); if (!x) return; try { localStorage.setItem(NEW_KEY, x.v); } catch(e){} };
 function newestNew(){ const p = PROG(), L = arr(p && p.whatsNew); return L.length ? L[L.length - 1] : null; }
-function whatsNew(){ const x = newestNew(); if (!x || !x.v || newSeen() === x.v || setupNeeded()) return null; return x; }
+// BLD 929 (M20): a device that has never seen a note (a brand new Member) takes the newest as seen, so only a returning
+// Member, who saw an older note on this device, reads what changed.
+function whatsNew(){ const x = newestNew(); if (!x || !x.v || newSeen() === x.v || setupNeeded()) return null; if (!newSeen()){ markNew(); return null; } return x; }
 function newCard(){ const x = whatsNew(); if (!x) return ''; const pl = progLabel(new Date());
   return `<div class="tn-card a-move tn-new" id="tn-new"><div class="tn-hd">${badge('star', 'a-move', 'this-season-narrow')}<div style="min-width:0;flex:1"><div class="tn-k a-move">${esc(x.title || 'What\'s New in Your Plan')}</div>${pl ? `<div class="tn-sub">You are in ${esc(pl)}.</div>` : ''}</div></div>
     <ul class="tn-newl">${arr(x.lines).map(l => `<li>${esc(l)}</li>`).join('')}</ul><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="newok">${ic('check')}Got It</button></div></div>`; }
@@ -648,8 +650,9 @@ function agenda(d){
   // Meditation for every track (Chris, October 24, 2026: "and off the meditations to her as well"): the Flow track gets it in the evening.
   if (track === 'practice' && MED() && medOn(d)){ const m1 = medFor(d); out.push({did: true, key: 'med', k: 'med', hour: 20.5, kick: 'This evening', title: 'Meditation', sub: (m1 && m1.title ? m1.title + '. ' : '') + medMins(n) + ' minutes with a candle and calm music.', btn: 'Start'}); }
   // Seven days a week (Chris, October 24, 2026: "make them 7 days a week"); weekday mornings after the shower, weekend mornings too.
+  // BLD 929 (L8): After the shower is Chris's own plan's label (a Field Guide plan); The Grounded Way's own Tending reads Morning.
   const mf = medFor(d);
-  if (track !== 'practice' && MED() && medOn(d)) out.push({did: true, key: 'med', k: 'med', hour: medAt().hour || 8, kick: medAt().kick || (dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning'), title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
+  if (track !== 'practice' && MED() && medOn(d)) out.push({did: true, key: 'med', k: 'med', hour: medAt().hour || 8, kick: medAt().kick || (!PUB() && dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning'), title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
   if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + fwl(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
   if (dow === 6 && !KIT() && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
   if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + fwl(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
@@ -2369,7 +2372,7 @@ function vSettings(bare){
   const h = H(), t = TD(), br = h.set.bridges || {}, kit = KIT(), on = remOn();
   const row = (cls, icn, title, sub, sw) => `<div class="tn-row ${cls}">${icn ? `<span class="ic2">${ic(icn)}</span>` : ''}<div class="tx"><b>${esc(title)}</b><small>${esc(sub)}</small></div>${sw}</div>`;
   const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves', 'tending-sq') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
-    <div class="tn-set">${t.choose.map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
+    <div class="tn-set">${t.choose.filter(c => !(c.id === 'supps' && PUB() && !h.set.pubDone && !U('supps'))).map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
   const why = kit ? '' : `<div class="tn-card p-trunk"><div class="tn-hd">${badge('compass', '', 'growth-plan-sq')}<div><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${h.set.why ? esc(h.set.why) : esc(t.why.prompt)}</div></div></div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${h.set.why ? 'Change My Why' : esc(t.why.write)}</button>${h.set.whyHide && !h.set.why ? `<button type="button" class="linkbtn" data-hja="whyshow">Show the My Why Card on Today</button>` : ''}</div></div>`;
   const bridges = kit ? '' : `<div class="tn-card"><div class="tn-hd">${badge('link', 'p-trunk')}<div><div class="tn-k p-trunk">Bridges</div><div class="tn-sub">How Tending and your other Grounded tools connect. Your choices are saved now, and the bridges open in a coming update.</div></div></div>
@@ -2382,7 +2385,10 @@ function vSettings(bare){
     <div class="tn-row a-today"><span class="ic2">${ic('clock')}</span><div class="tx"><b>My Phone Calendar</b><small>Steady reminders in your phone's own calendar, with an alert at each time.</small></div><button type="button" class="tn-btn sm line" data-hja="remics"${on ? '' : ' disabled'}>Add</button></div></div>
     ${kit ? '' : row('p-fruit', 'star', 'Celebrate Milestones', 'A small note when you reach one. Days you skip stay quiet.', tsw('celebrate', '', h.set.celebrate !== false, 'Celebrate Milestones'))}</div></div>`;
   const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">${MINE_ANY() && MINE_ANY().who ? 'Whose phone, your training' : 'Your training'}, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
-  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${weightCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${kitCard()}${startCard()}${holSetCard()}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
+  // BLD 929 (M12): in Home's Settings, the holidays fold into one short line until opened.
+  const hol = holSetCard(), holN = arr((holUse() || {}).sets).length;
+  const holFold = hol ? `<details class="hj-doc tn-fold"${S.open['holfold'] ? ' open' : ''} data-hjd="holfold"><summary><span>Holidays</span><small>${holN ? holN + ' holidays, choose yours' : 'Choose yours'}</small></summary>${hol}</details>` : '';
+  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${weightCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${kitCard()}${startCard()}${holFold}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
     <div class="tn-two"><div class="tn-col">${weightCard()}${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}${kitCard()}${startCard()}${holSetCard()}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
 }
@@ -2471,7 +2477,7 @@ function vTodayT(lib){
   const nm = PUB() ? (() => { try { return C.name ? String(C.name() || '').trim().split(/\s+/)[0] : ''; } catch(e){ return ''; } })() : '';
   const greet = (hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening') + (['Chris', 'Kayti'].includes(h.set.who) ? ', ' + h.set.who : nm ? ', ' + nm : '');
   const plan = U('food') || U('move');
-  const chips = kit || plan ? (before ? `<span class="tn-chip">Starts ${esc(shortDate(s0))}</span>` : `<span class="tn-chip">Week ${n}</span>${U('food') ? `<span class="tn-chip g">${ic('leaf')}Food Week ${fwl(foodWeek(d))}</span>` : ''}`) : '';
+  const chips = kit || plan ? (before ? `<span class="tn-chip">Starts ${esc(shortDate(s0))}</span>` : `<span class="tn-chip">${U('move') && workOn() && progOn() && progWeek(d) >= 1 ? 'Fitness: ' + esc(progLabel(d).split(' · ')[0]) : 'Week ' + n}</span>${U('food') ? `<span class="tn-chip g">${ic('leaf')}Meals: Food Week ${fwl(foodWeek(d))}</span>` : ''}`) : '';
   const hero = `<div class="tn-hero"><svg class="tn-sky" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">${outdoors(skyAt(hr), 400, 300, {flip: true})}</svg>
     <div class="in"><div class="greet">${ic(hr < 17 ? 'sunrise' : 'moon')}<span>${esc(greet)}</span></div><h2 class="day">${esc(DOWL[d.getDay()])}</h2><div class="date">${esc(MONTHS[d.getMonth()] + ' ' + d.getDate())}</div>${chips ? `<div class="chips">${chips}</div>` : ''}</div></div>`;
   const nowBtn = x => x.k === 'quiet' ? `data-hja="quiet" data-hjv=""` : x.key === 'walk' ? `data-hja="toggle" data-hjv="walk"` : x.k === 'supp' ? `data-hja="suppall" data-hjv="${esc(x.v)}"` : `data-hja="go" data-hjv="${esc(x.key)}"`;
@@ -2831,7 +2837,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b927'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b929'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
@@ -3662,7 +3668,8 @@ function vKidView(){
 function pubSettingsCard(){
   const s = H().set, kids = KIDS();
   return `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Goals, food needs, household, the health check, and your movement path.</div></div></div>
-    <div class="tn-acts"><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Start-Up Check</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">My Plan from My Team</button>${kids.length || s.who === 'family' ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="kids">Family Food</button>` : ''}</div></div>`;
+    <div class="tn-acts"><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Start-Up Check</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">My Plan from My Team</button>${kids.length || s.who === 'family' ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="kids">Family Food</button>` : ''}</div>
+    ${START() ? '<p class="tn-sub" style="margin-top:8px">My Plan from My Team: exercises from your doctor or therapist, added by you.</p>' : ''}</div>`;
 }
 
 function actKit(a, v){
@@ -4361,8 +4368,8 @@ function apiWeek(n){
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
   // BLD 894: the Week tab's Shopping List card reads the real list ("Week B · 42 items").
   const SL = U('food') ? shopList(fw) : null, sItems = SL ? arr(SL.items) : [];
-  return {hol: holCards(), ownWeek: ownWeekList(mon), shopWeek: fwl(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
-    food: U('food') ? 'Food Week ' + fwl(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + fwl(fw),
+  return {hol: holCards(), ownWeek: ownWeekList(mon), shopWeek: fwl(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() && progLabel(mon) ? 'Fitness: ' + progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
+    food: U('food') ? 'Meals: Food Week ' + fwl(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + fwl(fw),
     shopImage: WAY('shop-wide'), prepImage: sp ? WAY('prep-together') : null, bulkImage: bt ? WAY(ITEM_ART.batch) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
     bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, bulkLabel: bt ? bt.title || 'Weekly Batch' : null, bulkSub: bt ? batchSub(bt) : null, days};
@@ -4542,6 +4549,7 @@ const CSS = `
 .hj-chart .p{fill:var(--card);stroke:var(--hj);stroke-width:2.5;}.hj-chart .g{stroke:var(--gold);stroke-width:1.5;stroke-dasharray:5 5;}.hj-chart .t{fill:var(--ink-soft);font-size:11px;font-family:'Barlow',sans-serif;}
 .hj-tw{overflow-x:auto;max-width:100%;}.hj-tbl{width:100%;border-collapse:collapse;font-size:15px;}.hj-tbl th,.hj-tbl td{border-top:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top;}.hj-tbl th{font-size:13px;color:var(--ink-soft);white-space:nowrap;}.hj-tbl small{display:block;color:var(--ink-soft);font-size:13px;}
 .hj-doc{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:0 0 10px;min-width:0;}
+.tn-fold summary{align-items:baseline;flex-wrap:wrap;}.tn-fold summary small{flex:1;font-family:'Barlow',sans-serif;font-weight:400;font-size:14px;color:var(--ink-soft);}.tn-fold > .tn-card{margin:0 10px 10px;}
 .hj-doc summary{cursor:pointer;padding:14px 16px;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:22px;list-style:none;display:flex;justify-content:space-between;gap:10px;}
 .hj-doc summary::after{content:'+';color:var(--gold);font-family:'Barlow',sans-serif;}.hj-doc[open] summary::after{content:'\\2212';}
 .hj-doc summary::-webkit-details-marker{display:none;}

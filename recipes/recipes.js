@@ -182,13 +182,13 @@
     return '<div class="rc-mview"><div id="rc-list">' +
       '<div class="rc-intro"><p>Whole food, sized for your table, for every meal, every party, the big days, and the harvest.</p>' +
       '<p>Every recipe meets the Grounded Nutritional Standards: a Mediterranean base with plenty of vegetables, fiber, and protein. Open one and tap <b>Grounded Cooking</b>, and a calm voice reads each step aloud, with timers, right here.</p></div>' +
-      '<p class="rc-doc" data-rc-doctor>Tending offers research-informed guidance for healthy living. Talk it over with your doctor, who knows your body and your story best.</p>' +
-      '<span class="rc-lab rc-cats-lab" id="rc-l-cats" hidden>Browse by Meal</span>' +
-      '<div class="rc-cats" id="rc-cats" role="group" aria-labelledby="rc-l-cats" hidden></div>' +
+      '<p class="rc-doc" data-rc-doctor>Grounded offers research-informed guidance for healthy living. Talk it over with your doctor, who knows your body and your story best.</p>' +
       '<div class="rc-tools" id="rc-tools" hidden><div class="rc-find">' +
       '<label for="rc-q"><span class="sr-only">Search recipes by name or ingredient</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg><input type="search" id="rc-q" placeholder="Search by name or ingredient" autocomplete="off" spellcheck="false"></label>' +
       '<p class="rc-count" id="rc-count" aria-live="polite"></p><button type="button" class="rc-clear" id="rc-clear" hidden>Show All Recipes</button></div>' +
       '<div class="rc-gf" role="group" aria-labelledby="rc-l-gf"><span class="rc-lab" id="rc-l-gf">Goals and Fits</span><span id="rc-goal" style="display:contents"></span><span class="rc-sep" aria-hidden="true"></span><span id="rc-fit" style="display:contents"></span></div></div>' +
+      '<span class="rc-lab rc-cats-lab" id="rc-l-cats" hidden>Browse by Meal</span>' +
+      '<div class="rc-cats" id="rc-cats" role="group" aria-labelledby="rc-l-cats" hidden></div>' +
       '<div class="rc-results" id="rc-grid"></div>' +
       '<p class="rc-empty" id="rc-empty" hidden>Try a different word or fewer choices, and more recipes appear.</p>' +
       '<div class="rc-drsec rc-k-drink" id="rc-drinks" hidden></div><div class="rc-holsec rc-k-holidays" id="rc-hol" hidden></div><div class="rc-bksec rc-k-bulk" id="rc-bulk" hidden></div>' +
@@ -498,8 +498,8 @@
       if (!all.length) return '';
       var secs = D && (D.sections || []).length ? D.sections : [{ id: 'all', name: 'Drinks', ids: all.map(function (r) { return r.id; }) }];
       var sp = PARTY && PARTY.sparkler, stn = PARTY && PARTY.station;
-      return '<div class="rc-sh"><img src="' + W + 'drinks-sq.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-drinks">' + esc((D && D.title) || 'Celebration Drinks') + '</h2><span class="rc-shn">' + all.length + ' recipes</span></div>' +
-        '<p class="rc-hl"><b>Sober Drinks.</b> Every drink here is sober: whole fruit, fresh herbs, sparkle, and warmth, made to share and to raise a glass.</p>' +
+      return '<div class="rc-sh"><img src="' + W + 'drinks-sq.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-drinks">Sober Drinks</h2><span class="rc-shn">' + all.length + ' recipes</span></div>' +
+        '<p class="rc-hl">Every drink here is sober: whole fruit, fresh herbs, sparkle, and warmth, made to share and to raise a glass.</p>' +   // BLD 929 (L7): one name, the tile's
         (D && D.lead ? '<p class="rc-hl">' + esc(D.lead) + '</p>' : '') +
         '<nav class="rc-drnav" aria-label="Drink menu">' + secs.map(function (x) { return '<a href="#drinks-' + esc(x.id) + '" data-drjump="' + esc(x.id) + '">' + esc(x.name) + '</a>'; }).join('') +
         (sp ? '<a href="#drinks-sparkler" data-drjump="sparkler">' + esc(sp.title) + '</a>' : '') + (stn ? '<a href="#drinks-station" data-drjump="station">' + esc(stn.title) + '</a>' : '') + '</nav>' +
@@ -865,7 +865,7 @@
       toShelf(id, true);
     }
     function init() {
-      var d = q1('[data-rc-doctor]'); if (d && T.doctor) d.textContent = T.doctor;
+      var d = q1('[data-rc-doctor]'); if (d && T.doctor) d.textContent = String(T.doctor).replace(/^Tending offers/, 'Grounded offers');   // BLD 929 (L15)
       if (!ALL.length) { $('rc-empty').hidden = false; $('rc-empty').textContent = 'The recipes are on their way. Refresh the page in a moment.'; return false; }
       $('rc-tools').hidden = false; $('rc-cats').hidden = false; $('rc-l-cats').hidden = false;
       drawChips(); drawList();
@@ -885,7 +885,7 @@
         st.meal = st.meal === k ? 'all' : k;
         drawChips(); drawList();
         var again = q1('.rc-cat[data-cat="' + k + '"]'); if (again) again.focus({ preventScroll: true });
-        var tl = $('rc-tools');
+        var tl = $('rc-grid');   // BLD 929 (M23): Browse by Meal sits under the search, so a meal tap brings its recipes into view
         if (st.meal !== 'all' && relTop(tl) > 160) aim(tl, true, MNT ? OFF : 80);
       });
       $('rc-tools').addEventListener('click', function (e) {

@@ -51,7 +51,7 @@
   var TREES = ['oak', 'birch', 'sequoia', 'pine', 'maple', 'aspen'];
   var ADULT = { oak: 1, birch: 1, sequoia: 1, pine: 1 };
   var NAME = { oak: 'Oak', birch: 'Birch', sequoia: 'Sequoia', pine: 'Pine', maple: 'Maple', aspen: 'Aspen' };
-  var PRAC = { oak: ['/oak/practices.js?v=b914a', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b914a', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b914a', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b914a', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=b929', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b929', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b929', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b929', 'PINE_PRACTICES'] };
   var KEYS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
   var WORD = { roots: 'What grounds you', trunk: 'Purpose', bark: 'Mind and feelings', branches: 'Relationships', leaves: 'Body', fruit: 'Hope' };   // DOMAIN_DEFS name in each practices.js
   var MP_HEX = { roots: '#FF6B6B', trunk: '#FF9F1C', bark: '#9B5DE5', branches: '#00B4D8', leaves: '#6CCB3A', fruit: '#D62839' };   // maple/index.html PARTS 983

@@ -1,6 +1,6 @@
 /* =====================================================================
    BIRCH PRACTICES . the growth plan library for young adults (GWG BLD 742)
-   Built for young adults, 18 to 26.
+   Built for young adults, 18 to 25.
 
    Same shapes as Pine's practices.js (and Sequoia's, and Oak's inline
    library), so an app built from Pine's app.js swaps PINE_PRACTICES for these:
@@ -488,7 +488,7 @@
       today: "Think of someone who helped you and never heard a real thank you: a teacher, coach, boss, relative, or friend. Write them a letter: what they did, and how it changed things for you.",
       build: "Read it to them in person, or by video. If that's too much, send it.",
       hard: "Feeling awkward is normal. It's usually one of the best moments of their week." } },
-  { p: 'branches', b: 1, n: 'Active Listening', d: "Listen to understand, not to fix, and say back what you heard.",
+  { p: 'branches', b: 1, n: 'Active Listening', d: "Listen to understand, and say back what you heard.",
     m: ['R', '10 min', 'S', ''], k: ['sk-hardtalk'],
     g: { why: "People feel close to someone who really listens. It's one of the most useful skills you'll ever learn, with friends, family, roommates, partners, and at work.",
       today: "In your next real conversation, put your phone away. When they finish, say back what you heard: \"So you're saying...\" Then ask one question.",

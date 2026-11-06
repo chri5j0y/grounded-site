@@ -199,7 +199,7 @@
   GGScreen.helper = {
     trees: TREES.slice(),
     title: function (tree, extra) { var p = extra && extra.forId && window.GGP && GGP.get ? GGP.get(extra.forId) : null; return p && p.name ? 'Helping ' + p.name : 'Helping'; },
-    files: function (tree) { return tree === 'birch' ? ['/birch/practices.js?v=b914a'] : tree === 'sequoia' ? ['/sequoia/checkin.js?v=b907', '/sequoia/legacy.js?v=b787'] : []; },
+    files: function (tree) { return tree === 'birch' ? ['/birch/practices.js?v=b929'] : tree === 'sequoia' ? ['/sequoia/checkin.js?v=b929', '/sequoia/legacy.js?v=b787'] : []; },
     treesFor: treesFor, can: can, shareOf: shareOf,
     open: open
   };

@@ -24,7 +24,8 @@
      has(key)             true for one of the six keys
      tree(key)            'Roots'
      word(key, o)         'Spirit' ('what grounds you' for Roots with o.plain)
-     meaning(key, o)      'your connection with God and the sacred' ('what grounds you' with o.plain)
+     meaning(key, o)      'what grounds you: faith, the sacred, or quiet meaning, in your own way' (BLD 929, one open
+                          line for every grown-up; 'what grounds you' with o.plain)
      label(key, o)        'Roots: Spirit' ('Roots: what grounds you' with o.plain)
      color(key, dark)     the part's color (light, or dark with dark true)
      soft(key, dark)      the part's soft background color
@@ -47,7 +48,7 @@
   var GROWS = 'grows from your tending';
   // Colors are the Home's part colors (home/home.css), light and dark.
   var P = {
-    roots: { tree: 'Roots', word: 'Spirit', meaning: 'your connection with God and the sacred', plainWord: 'what grounds you', plainMeaning: 'what grounds you', color: '#7A4E2D', colorDark: '#D9A982', soft: '#EFE2D6', softDark: '#3E2D20' },
+    roots: { tree: 'Roots', word: 'Spirit', meaning: 'what grounds you: faith, the sacred, or quiet meaning, in your own way', plainWord: 'what grounds you', plainMeaning: 'what grounds you', color: '#7A4E2D', colorDark: '#D9A982', soft: '#EFE2D6', softDark: '#3E2D20' },
     trunk: { tree: 'Trunk', word: 'Meaning', meaning: 'your meaning and purpose', color: '#8B5E1A', colorDark: '#E3B25A', soft: '#F3E6CC', softDark: '#43341B' },
     bark: { tree: 'Bark', word: 'Mind', meaning: 'your thoughts, feelings, and focus', color: '#7A3FA8', colorDark: '#CBA6F2', soft: '#EEE3F6', softDark: '#372747' },
     branches: { tree: 'Branches', word: 'Relationships', meaning: 'the people you love, face to face', color: '#3F6F94', colorDark: '#94BAD8', soft: '#DDE8F0', softDark: '#223446' },

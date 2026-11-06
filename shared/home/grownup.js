@@ -343,8 +343,8 @@
     trees: ['maple', 'aspen'],
     title: function (tree) { return tree === 'maple' ? 'The Grown-up Guide' : 'For Grown-ups'; },
     files: function (tree) {
-      var f = ['/shared/gg-parts.js?v=b907', '/shared/gg-life.js?v=b907', '/shared/gg-pdf.js?v=b803', '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
-      if (tree === 'aspen') f.splice(3, 0, '/aspen/checkin.js?v=b907', '/shared/gg-journey.js?v=b782', '/shared/gg-filelock.js?v=b766');
+      var f = ['/shared/gg-parts.js?v=b929', '/shared/gg-life.js?v=b907', '/shared/gg-pdf.js?v=b803', '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
+      if (tree === 'aspen') f.splice(3, 0, '/aspen/checkin.js?v=b907', '/shared/gg-journey.js?v=b929', '/shared/gg-filelock.js?v=b766');
       return f;
     },
     open: function (ctx) {

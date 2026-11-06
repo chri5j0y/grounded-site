@@ -480,7 +480,7 @@
       today: "Think of someone who helped you and never heard a real thank you. Write them a letter: what they did, and how it changed things for you.",
       build: "Read it to them in person, or by video. If that's too much, give it to them.",
       hard: "Feeling awkward is normal. It's usually one of the best moments of their week." } },
-  { p: 'branches', b: 1, n: 'Active Listening', d: "Listen to understand, not to fix, and say back what you heard.",
+  { p: 'branches', b: 1, n: 'Active Listening', d: "Listen to understand, and say back what you heard.",
     m: ['R', '10 min', 'S', ''],
     g: { why: "People feel close to someone who really listens. It's one of the most useful skills you'll ever learn, in friendships, family, and work.",
       today: "In your next real conversation, put your phone away. When they finish, say back what you heard: \"So you're saying...\" Then ask one question.",

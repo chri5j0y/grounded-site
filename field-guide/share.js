@@ -31,8 +31,8 @@ const FB = {
     {id: 'maple', name: 'Maple', color: '#C4501E', tagline: 'Bright leaves, strong roots.', line: 'Built for grades K to 5, their families, and their teachers.'},
     {id: 'aspen', name: 'Aspen', color: '#1F6F74', tagline: 'Rooted together.', line: 'Built for grades 6 to 8, their families, and their teachers.'},
     {id: 'pine', name: 'Pine', color: '#3A6B35', tagline: 'Stand tall through every season.', line: 'Built for grades 9 to 12.'},
-    {id: 'birch', name: 'Birch', color: '#7F6610', tagline: 'New ground, deep roots.', line: 'Built for young adults, 18 to 26.'},
-    {id: 'oak', name: 'Oak', color: '#3D5A73', tagline: 'Shelter for others. Strength for you.', line: 'Built for adults, 26 to 60.'},
+    {id: 'birch', name: 'Birch', color: '#7F6610', tagline: 'New ground, deep roots.', line: 'Built for young adults, 18 to 25.'},
+    {id: 'oak', name: 'Oak', color: '#3D5A73', tagline: 'Shelter for others. Strength for you.', line: 'Built for adults, 26 to 59.'},
     {id: 'sequoia', name: 'Sequoia', color: '#7A2E1C', tagline: 'A long life, still growing.', line: 'Built for older adults, 60 and up.'},
     {id: 'willow', name: 'Willow', color: '#5D5A6E', tagline: 'Held gently, all the way home.', line: 'For the person in hospice and the people who love them.'},
     {id: 'grove', name: 'The Grove', color: '#223829', tagline: 'All ages. All stages. Growing together.', line: 'Built for families, faith communities, small groups, and teams.'},
@@ -116,7 +116,7 @@ const ORG_AUD = [
     lines: ['Pacing and flare days, in plain words', 'Gentler ways of every practice', 'A Rest Week whenever it\'s needed', 'Guides for living with several conditions at once', 'Kept private on each person\'s own device']},
   {id: 'org-parish-nurses', name: 'Parish Nurses', hero: 'sequoia', focus: .22,
     headline: 'Ready for every visit.', tagline: 'Sequoia™ Guide and Oak™ Guide for home visits and congregation visits.',
-    lines: ['Sequoia™ Guide for anyone who serves older adults', 'Oak™ Guide for walking with adults 26 to 60', 'Guides for living with several conditions at once', 'The Grounded Response Plan in every visit', 'A Certificate of Completion for each person']}
+    lines: ['Sequoia™ Guide for anyone who serves older adults', 'Oak™ Guide for walking with adults 26 to 59', 'Guides for living with several conditions at once', 'The Grounded Response Plan in every visit', 'A Certificate of Completion for each person']}
 ];
 const ORGS = ORG_AUD.map(a => Object.assign({svc: 'org', mark: 'favicon.svg', color: GOLD, line: ORG_LINE, url: ORG_URL, eyebrow: 'For ' + a.name}, a, {hero: 'shared/heroes/' + a.hero + '-wide.webp'}));
 // THE GROVE BY KIND (GWG BLD 776): flyers for congregations, teams, and classrooms, drawn like the audience flyers (a line

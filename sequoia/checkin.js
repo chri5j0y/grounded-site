@@ -28,8 +28,9 @@
    check-in asks question 1 of every part plus each tagged strand.
 
    Each question: { t, tip, why } plus r: 1 for reverse questions
-   ("Often" is the hard answer), and
-   src: ['id'] where the "why" line rests on a study or measure.
+   ("Often" is the hard answer), src: ['id'] where the "why" line rests on a
+   study or measure, and plain: { t, tip } for Plain wording where the Faith
+   question names faith (BLD 929).
    Question 1 of every part is the quick check-in question, so it is never
    a reverse question.
 
@@ -95,13 +96,13 @@ const ANSWERED_BY = [
 
 const Q = {
   roots: [
-    { t: 'Felt connected to something larger than yourself, like God, the Holy, nature, or love?',
+    { t: 'Felt connected to something larger than yourself, like God, the Holy, nature, or love?', plain: { t: 'Felt connected to something bigger than yourself, like nature, music, a cause, or the people you love?' },
       tip: 'Let them name it in their own words. Use their word for the sacred, not yours.',
       why: 'Feeling part of something larger is one of the strongest roots a person can have.' },
     { t: 'Kept a spiritual practice, of any kind, that still feeds you, even if it looks different than it used to?',
       tip: 'Prayer, music, quiet, worship by phone or TV, a walk, or sitting by a window all count. Ask what has changed, and what would help them keep it.',
       why: 'Practices are how roots get water. They can change shape as life changes and still feed you.' },
-    { t: 'Found comfort or strength in your faith or spirit during a hard moment?',
+    { t: 'Found comfort or strength in your faith or spirit during a hard moment?', plain: { t: 'Found comfort or strength in what grounds you during a hard moment?' },
       tip: 'If yes, ask what helped. If no, listen for whether faith has gone quiet or become a weight.',
       why: 'This shows whether the sacred is a resource for you right now, or a weight.',
       src: ['rcope'] },
@@ -116,11 +117,11 @@ const Q = {
       tip: 'Many people find solitude grows richer with age. If quiet time feels lonely, listen, and come back to it in Branches.',
       why: 'Some people find later life brings a wider view and more ease with quiet. That ease can feed the spirit.',
       src: ['tornstam'] },
-    { t: 'Felt far from God or the sacred, or felt let down by it?', r: 1,
+    { t: 'Felt far from God or the sacred, or felt let down by it?', r: 1, plain: { t: 'Felt far from what grounds you, or let down by it?', tip: 'Listen, and let it be named without fixing. Feeling far from what grounds you is real.' },
       tip: 'Listen. Do not defend God or correct them. Spiritual struggle is real, and it weighs more during illness, so name it without fixing.',
       why: 'Feeling far from the sacred can weigh on everything else. Naming it is a first step.',
       src: ['rcope'] },
-    { t: 'Felt hurt by a faith community, a religious leader, or people of faith?', r: 1,
+    { t: 'Felt hurt by a faith community, a religious leader, or people of faith?', r: 1, plain: { t: 'Felt hurt by a community or group you belonged to?', tip: 'Take the wound seriously and leave room for the whole story. If a person or group is still causing harm, help them get safe.' },
       tip: 'Take the wound seriously and do not explain it away. Old hurts can surface again late in life. If a person or group is still causing harm, help them get safe.',
       why: 'Religious hurt is common and painful. It matters here, whatever you hold now.',
       src: ['rcope'] }

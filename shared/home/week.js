@@ -38,7 +38,7 @@
   if (window.GGScreen.week) return;
   var TREES = ['oak', 'sequoia', 'birch', 'pine', 'maple', 'aspen'];
   var GUIDED = { oak: 1, sequoia: 1 };
-  var CK_JS = { oak: '/oak/checkin.js?v=b907', sequoia: '/sequoia/checkin.js?v=b907', birch: '/birch/checkin.js?v=b907', pine: '/pine/checkin.js?v=b907', maple: '/maple/checkin.js?v=b907', aspen: '/aspen/checkin.js?v=b907' };
+  var CK_JS = { oak: '/oak/checkin.js?v=b929', sequoia: '/sequoia/checkin.js?v=b929', birch: '/birch/checkin.js?v=b929', pine: '/pine/checkin.js?v=b907', maple: '/maple/checkin.js?v=b907', aspen: '/aspen/checkin.js?v=b907' };
   var CK_NAME = { oak: 'OAK_CHECKIN', sequoia: 'SEQUOIA_CHECKIN', birch: 'BIRCH_CHECKIN', pine: 'PINE_CHECKIN', maple: 'MAPLE_CHECKIN', aspen: 'ASPEN_CHECKIN' };
   var Q_OPTS0 = [['rarely', 'Rarely', 0], ['sometimes', 'Sometimes', 1], ['often', 'Often', 2], ['always', 'Almost always', 3], ['unsure', 'Not sure', null]];   // birch/app.js 352, pine/app.js 372
   var STEM = 'This past week, how often have you...';
@@ -337,7 +337,7 @@
 
   window.GGScreen.week = {
     files: function (tree) {
-      var f = ['/shared/gg-journey.js?v=b782', '/shared/gg-parts.js?v=b907', CK_JS[tree] || CK_JS.oak];
+      var f = ['/shared/gg-journey.js?v=b929', '/shared/gg-parts.js?v=b929', CK_JS[tree] || CK_JS.oak];
       if (GUIDED[tree]) f.push('/shared/gg-guided.js?v=b907', '/shared/guided/' + tree + '.js?v=b907');
       return f;
     },

@@ -7267,7 +7267,7 @@ window.GG_LEARN = {
        "eyebrow": "Tend Four, Grow Two, Lesson 1",
        "h": "Roots: Spirit",
        "sub": "What keeps you steady.",
-       "say": "This is Tend Four, Grow Two. Your tree has four parts you tend, and two that grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred. It is what keeps you steady when life gets loud."
+       "say": "This is Tend Four, Grow Two. Your tree has four parts you tend, and two that grow from that tending. This first lesson is about Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. It is what keeps you steady when life gets loud."
       },
       {
        "k": "big",
@@ -10840,7 +10840,7 @@ window.GG_LEARN = {
           },
           {
            "k": "parts",
-           "say": "You tend four parts of you. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body. And Branches: Relationships. Then two grow from that tending. Trunk: Meaning, and Fruit: Hope."
+           "say": "You tend four parts of you. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. Bark: Mind, your thoughts and feelings. Leaves: Body. And Branches: Relationships. Then two grow from that tending. Trunk: Meaning, and Fruit: Hope."
           },
           {
            "k": "big",
@@ -11932,8 +11932,8 @@ window.GG_LEARN = {
            "hero": "oak",
            "eyebrow": "Tend Four, Grow Two, Lesson 1",
            "h": "Roots: Spirit",
-           "sub": "Your connection with God and the sacred.",
-           "say": "This is Tend Four, Grow Two. You tend four parts of you each day, and meaning and hope grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred, the part of you that holds you up when life gets heavy."
+           "sub": "What grounds you: faith, the sacred, or quiet meaning, in your own way.",
+           "say": "This is Tend Four, Grow Two. You tend four parts of you each day, and meaning and hope grow from that tending. This first lesson is about Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way, the part of you that holds you up when life gets heavy."
           },
           {
            "k": "big",
@@ -18456,7 +18456,7 @@ window.GG_LEARN = {
       "eyebrow": "Tend Four, Grow Two, Lesson 1",
       "h": "Roots: Spirit",
       "sub": "Your spirit, and what grounds you.",
-      "say": "This lesson is about Roots: Spirit, the first part of the willow. Roots are your connection with God and the sacred, or whatever grounds you. They are the first of the four parts Willow tends gently."
+      "say": "This lesson is about Roots: Spirit, the first part of the willow. Roots are what grounds you, whether faith, the sacred, or quiet meaning, in your own way. They are the first of the four parts Willow tends gently."
      },
      {
       "k": "big",
@@ -22563,7 +22563,7 @@ window.GG_LEARN = {
       {
        "k": "points",
        "h": "Tend four. Grow two.",
-       "say": "Sequoia sees your life as a tree. You tend four parts. Roots: Spirit, your connection with God and the sacred, the things you are anchored in. Bark: Mind, how you calm down, carry worry, and heal. Leaves: Body, in the ways your body allows. And Branches: Relationships, who shows up for you, and who you show up for. Then two grow from that tending. Trunk: Meaning, knowing your life matters, now and still. And Fruit: Hope, something still worth looking forward to.",
+       "say": "Sequoia sees your life as a tree. You tend four parts. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way, the things you are anchored in. Bark: Mind, how you calm down, carry worry, and heal. Leaves: Body, in the ways your body allows. And Branches: Relationships, who shows up for you, and who you show up for. Then two grow from that tending. Trunk: Meaning, knowing your life matters, now and still. And Fruit: Hope, something still worth looking forward to.",
        "items": [
         [
          "Tend four",
@@ -24099,12 +24099,12 @@ window.GG_LEARN = {
        "eyebrow": "Tend Four, Grow Two, Lesson 1",
        "h": "Roots: Spirit",
        "sub": "What grounds you.",
-       "say": "Welcome to Tend Four, Grow Two. Sequoia sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred."
+       "say": "Welcome to Tend Four, Grow Two. Sequoia sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way."
       },
       {
        "k": "points",
        "h": "Tend four. Grow two.",
-       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body, in the ways your body allows. And Branches: Relationships. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows how it can keep growing at any age.",
+       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. Bark: Mind, your thoughts and feelings. Leaves: Body, in the ways your body allows. And Branches: Relationships. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows how it can keep growing at any age.",
        "items": [
         [
          "Tend four",
@@ -29838,7 +29838,7 @@ window.GG_LEARN = {
       {
        "k": "points",
        "h": "Tend four. Grow two.",
-       "say": "Pine sees your life as a tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending. Trunk: Meaning, what you care about and where you are headed. And Fruit: Hope, what you look forward to and believe is possible. Pine helps you learn to tend all four.",
+       "say": "Pine sees your life as a tree. You tend four parts. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending. Trunk: Meaning, what you care about and where you are headed. And Fruit: Hope, what you look forward to and believe is possible. Pine helps you learn to tend all four.",
        "items": [
         [
          "Tend four",
@@ -31078,12 +31078,12 @@ window.GG_LEARN = {
        "eyebrow": "Tend Four, Grow Two, Lesson 1",
        "h": "Roots: Spirit",
        "sub": "What holds you steady.",
-       "say": "Welcome to Tend Four, Grow Two. Pine sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred, and what holds you steady."
+       "say": "Welcome to Tend Four, Grow Two. Pine sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way, and what holds you steady."
       },
       {
        "k": "points",
        "h": "Tend four. Grow two.",
-       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending: Trunk: Meaning, what you care about and where you are headed, and Fruit: Hope. Each lesson takes one part, and shows what it looks like in the high school years.",
+       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. Bark: Mind, how you handle stress, mistakes, and big feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your friends, your family, and the adults in your corner. Then two grow from that tending: Trunk: Meaning, what you care about and where you are headed, and Fruit: Hope. Each lesson takes one part, and shows what it looks like in the high school years.",
        "items": [
         [
          "Tend four",
@@ -33204,7 +33204,7 @@ window.GG_LEARN = {
         ],
         [
          "Your own tree",
-         "Oak, for adults 26 to 60"
+         "Oak, for adults 26 to 59"
         ]
        ],
        "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same tree as Pine."
@@ -35413,7 +35413,7 @@ window.GG_LEARN = {
   {
    "id": "birch-start",
    "title": "Start Here",
-   "who": "For young adults, 18 to 26, and the people who walk with them",
+   "who": "For young adults, 18 to 25, and the people who walk with them",
    "lessons": [
     {
      "id": "br-welcome",
@@ -35453,7 +35453,7 @@ window.GG_LEARN = {
       {
        "k": "points",
        "h": "Tend four. Grow two.",
-       "say": "Birch sees your life as a tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending. Trunk: Meaning, your direction. And Fruit: Hope, for what is ahead. The Grounded Way works when you tend all four parts.",
+       "say": "Birch sees your life as a tree. You tend four parts. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending. Trunk: Meaning, your direction. And Fruit: Hope, for what is ahead. The Grounded Way works when you tend all four parts.",
        "items": [
         [
          "Tend four",
@@ -36709,12 +36709,12 @@ window.GG_LEARN = {
        "eyebrow": "Tend Four, Grow Two, Lesson 1",
        "h": "Roots: Spirit",
        "sub": "What grounds you.",
-       "say": "Welcome to Tend Four, Grow Two. Birch sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, your connection with God and the sacred."
+       "say": "Welcome to Tend Four, Grow Two. Birch sees your life as a tree. You tend four parts, and two grow from that tending. This first lesson is about Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way."
       },
       {
        "k": "points",
        "h": "Tend four. Grow two.",
-       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, your connection with God and the sacred. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows what it looks like from eighteen to twenty six.",
+       "say": "Here is the whole tree. You tend four parts. Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. Bark: Mind, your thoughts and feelings. Leaves: Body, how you move, rest, and eat. And Branches: Relationships, your people. Then two grow from that tending: Trunk: Meaning, and Fruit: Hope. Each lesson takes one part, and shows what it looks like from eighteen to twenty six.",
        "items": [
         [
          "Tend four",
@@ -45726,7 +45726,7 @@ window.GG_LEARN = {
        "eyebrow": "Tend Four, Grow Two, Together, Lesson 1",
        "h": "Roots: Spirit",
        "sub": "What grounds you.",
-       "say": "This lesson is about Roots: Spirit, your connection with God and the sacred. For a family, roots are what hold everyone up, together. Roots are the first of the four parts a family tends."
+       "say": "This lesson is about Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning, in your own way. For a family, roots are what hold everyone up, together. Roots are the first of the four parts a family tends."
       },
       {
        "k": "big",
@@ -51129,7 +51129,7 @@ window.GG_LEARN = {
 
 /* ---------- BLD 907 Roots: Spirit, Faith or Plain ----------
    Tend Four, Grow Two (GWG BLD 907): a lesson with faithScenes and plainScenes (Maple, Aspen, Pine, Birch, Oak, Sequoia) plays
-   Roots: Spirit, your connection with God and the sacred, in Faith wording, and Roots: what grounds you in Plain wording, with
+   Roots: Spirit, what grounds you, whether faith, the sacred, or quiet meaning (BLD 929), in Faith wording, and Roots: what grounds you in Plain wording, with
    no God language (a school lock, or a person or family who chose Plain). plainTitle names the lesson in Plain wording.
    Which wording: window.GG_LEARN_PLAIN (true, false, or a function) when a page sets it; else the tree page's own choice
    (gwPlainOn in Oak, Sequoia, Pine, and Birch; curWording in Maple; isPlain in Aspen); else Faith, each tree's default.

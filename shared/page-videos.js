@@ -64,7 +64,7 @@ window.PAGE_VIDEOS = {
   // On a tap, read.js and the shared player (shared/gg-learn.js) load, then the video plays in the player's own
   // overlay styles (ggl ggl-app), with GGLearn.player doing all the playing, the closing scene, and Sources.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b916';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b929';
   var PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
@@ -74,6 +74,7 @@ window.PAGE_VIDEOS = {
     s.textContent = '.gg-watch{display:inline-flex !important;align-items:center;justify-content:center;gap:8px;min-height:44px;}.gg-watch[hidden]{display:none !important;}.gg-watch svg{flex:none;}'
       + '.gg-watch:focus-visible{outline:3px solid #FFE7BD;outline-offset:3px;}.btn-secondary.gg-watch:focus-visible{outline-color:var(--gold,#8B5E1A);}'
       + '.gg-watch-row{margin:18px 0 0;display:flex;justify-content:center;}.gg-watch-sm{padding:9px 18px;font-size:14px;}'
+      + '.gg-pv-ts{display:none;}@media (max-width:560px){.gg-pv .gg-pv-tl{display:none;}.gg-pv .gg-pv-ts{display:inline;}.gg-pv .ggl-top b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}}'
       + '.gg-watch-fam{margin:12px 0 20px;}'
       + '.ggl-app.gg-pv .ggl-top img{background:#FFF8EC;}'
       // Hero Watch buttons (GWG BLD 780): gold and first on service, About, family tool, and tree app heroes; full width on phones.
@@ -152,7 +153,7 @@ window.PAGE_VIDEOS = {
       var root = document.createElement('div');
       root.className = 'ggl ggl-app gg-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + v.title);
       root.style.setProperty('--ggl-acc', acc); root.style.setProperty('--ggl-bar', P.bar || '#2E2118'); root.style.setProperty('--ggl-lite', '#E8C98E');
-      root.innerHTML = '<div class="ggl-top"><img src="' + ROOT + (P.mark && P.mark.tree ? '/shared/marks/' + P.mark.tree + '-tab.svg' : '/favicon.svg') + '" alt=""><b>' + esc(v.title) + '</b><button type="button" class="ggl-x" data-pv="close">Back to the Page</button></div>'
+      root.innerHTML = '<div class="ggl-top"><img src="' + ROOT + (P.mark && P.mark.tree ? '/shared/marks/' + P.mark.tree + '-tab.svg' : '/favicon.svg') + '" alt=""><b><span class="gg-pv-tl">' + esc(v.title) + '</span><span class="gg-pv-ts">' + esc(String(v.title).replace(/: A Look Inside$/, '')) + '</span></b><button type="button" class="ggl-x" data-pv="close">Back to the Page</button></div>'
         + '<div class="ggl-in"><div class="ggl-eb">Watch</div><h1 tabindex="-1">' + esc(v.title) + '</h1><p class="ggl-muted">' + esc(v.blurb || '') + ' About ' + esc(String(v.mins || 2)) + ' minutes.</p><div class="gg-pv-host"></div></div>';
       document.body.appendChild(root);
       OPEN = { key: key, root: root, from: from || document.activeElement, overflow: document.body.style.overflow, hist: true };
@@ -183,6 +184,8 @@ window.PAGE_VIDEOS = {
       });
       OPEN.mo.observe(host, { childList: true, subtree: true });
       var h = root.querySelector('h1'); if (h) h.focus({ preventScroll: true });
+      // BLD 929 (L6): the video starts on the tap that opened it (while that tap still counts as the person's own).
+      try { var ua = navigator.userActivation; if (!ua || ua.isActive) { var pb = host.querySelector('[data-g="play"]'); if (pb && /Play/.test(pb.textContent)) pb.click(); } } catch (e) {}
     });
   }
   function wire() {

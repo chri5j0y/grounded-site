@@ -16,8 +16,8 @@
      Health offer     GGLife.offerCard (shared/gg-life.js:658), the vault.lifeOffer date
      growth plan      sqGuidedPlan (sequoia/app.js:654), oakPrefillPlan (1528), oakRotApply (1161),
                       collectGrowthPlan (1703), oakSavePlan (1549), GGTend.setPlan (gg-tend.js:733), savePersonalFile (2096)
-   Wording: Sequoia is always Faith (gwPlainOn is false, sequoia/app.js:211, and no plain goes to the player), whatever
-   ctx.plain says.
+   Wording (BLD 929, M6): Sequoia follows ctx.plain like Oak: the Roots enter line, the part labels, and the Roots
+   questions that name faith read their Plain versions.
    Left out on purpose (Round 1): taken together ('tapped'), What I See ('observed'), a helper's own check-in
    ('helper'), the helper view, the weekly check-in, Read It All (the classic screens live on the tree page;
    ctx.onReadAll is passed through when Home gives one).
@@ -36,13 +36,13 @@
   'use strict';
   var TREE = 'sequoia';
   var FILES = [
-    '/sequoia/checkin.js?v=b907',
-    '/sequoia/practices.js?v=b914a',
-    '/shared/gg-parts.js?v=b907',
+    '/sequoia/checkin.js?v=b929',
+    '/sequoia/practices.js?v=b929',
+    '/shared/gg-parts.js?v=b929',
     '/shared/gg-life.js?v=b907',
-    '/shared/practice-rhythm.js?v=b914a',
+    '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
-    '/shared/guided/sequoia.js?v=b907'
+    '/shared/guided/sequoia.js?v=b929'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // sequoia/app.js:195
   // sequoia/app.js:566
@@ -138,13 +138,14 @@
   // The person's own check-in: the stem is the standard one (stemNow, sequoia/app.js:378), and a {name} in a question
   // reads "them" and "their" (sqSayName, sequoia/app.js:568), as the page does when no one else is named.
   function sayName(t) { return String(t).replace(/\{name\}'s/g, 'their').replace(/\{name\}/g, 'them'); }
-  function gdQuestions(quick) {
+  // BLD 929 (M6): Plain wording reads each question's plain version where the Faith question names faith.
+  function gdQuestions(quick, plain) {
     var out = [], stem = (CKB().stems || {}).standard || 'In the past two weeks, how often have you...', sayStem = stem, nm = 'them', Q = QS();
     PART_ORDER.forEach(function (k) {
       var list = Q[k] || [];
       (quick ? list.slice(0, 1) : list).forEach(function (q, i) {
-        var key = quick ? 'quick_' + k : k, lead = quick ? !out.length : i === 0, said = sayName(q.t);
-        out.push({ id: key + '.' + i, key: key, i: i, part: k, stem: stem, text: q.t.replace(/\{name\}/g, nm), say: lead ? sayStem + ' ' + said : said, type: 'choice', options: gdOpts(), rev: !!q.r });
+        var qt = plain && q.plain && q.plain.t ? q.plain.t : q.t, key = quick ? 'quick_' + k : k, lead = quick ? !out.length : i === 0, said = sayName(qt);
+        out.push({ id: key + '.' + i, key: key, i: i, part: k, stem: stem, text: qt.replace(/\{name\}/g, nm), say: lead ? sayStem + ' ' + said : said, type: 'choice', options: gdOpts(), rev: !!q.r });
       });
     });
     return out;
@@ -288,13 +289,13 @@
     var sig = [id, kind, 'self', '', quick ? 'q' : 'f'].join('|');
     var ans = LEFT && LEFT.sig === sig ? LEFT.ans : {};
     LEFT = { sig: sig, ans: ans };
-    var qs = gdQuestions(quick), byId = {}, H = handle(), saved = null;
+    var qs = gdQuestions(quick, !!ctx.plain), byId = {}, H = handle(), saved = null;
     qs.forEach(function (q) { byId[q.id] = q; });
     var have = {}; qs.forEach(function (q) { var v = (ans[q.key] || {})[q.i]; if (v) have[q.id] = v; });
     function answerQ(key, i, v) { ans[key] = ans[key] || {}; ans[key][i] = v; }   // sqGdSet (sequoia/app.js:593)
-    var undo = usePlain(false);
+    var undo = usePlain(ctx.plain), plainFn = function () { return !!ctx.plain; };
     var o = {
-      tree: TREE, kind: kind, voice: 'brian',
+      tree: TREE, kind: kind, voice: 'brian', plain: plainFn,
       title: TITLE[kind] || 'Check-in',
       questions: qs, answers: have, quiet: (CKB().help || {}).quiet || undefined, isEdge: isEdge,
       onAnswer: function (qid, v) { var q = byId[qid]; if (q) answerQ(q.key, q.i, v); },
