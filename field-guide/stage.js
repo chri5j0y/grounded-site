@@ -11,9 +11,11 @@
 //       hour: 0 to 23 (decimals welcome; default the clock now),
 //       pct: 0 to 1, the rest left: a ring that drains (shown in 'rest', or in any state when given),
 //       secs: whole seconds left, shown in the ring (60 and up shows as m:ss),
-//       inhale, exhale: seconds; the breath guide, a small tree whose canopy fills with golden light on the inhale and
-//         lets it flow down to glowing roots on the exhale (BLD 897; shown in 'breathe', or in any state when inhale is
-//         given), with Breathe In and Breathe Out; phases: the same timed by the figure's plan (BLD 898),
+//       inhale, exhale: seconds; the breath guide, the breathing rings (BLD 928, shared/gg-breath-ring.js: Sage grows on
+//         the in breath, Honey eases on the out breath; shown in 'breathe', or in any state when inhale is given), with
+//         Breathe In and Breathe Out; phases: the same timed by the figure's plan (BLD 898); breathCount: counts go up,
+//       weight: {cap, line} (BLD 928): the weight chip, bottom right ("Recommended" over "15 lb each hand"),
+//       brk: {sub} (BLD 928): the Break banner, top center, with sub ("Set 2 Next") under the rest ring,
 //       fig: an HTML string placed center on the deck (a GGMoves svg, the candle, or nothing),
 //       side: 'L' or 'R', a clear side badge in the top corner,
 //       label: a short word or two shown in a chip in the top corner (with the count, under it),
@@ -178,43 +180,34 @@ function ringHTML(o, show){
     `<circle cx="50" cy="50" r="44" class="ggs-rp" data-ggsarc stroke-dasharray="${r1(C)}" stroke-dashoffset="${r1(C * (1 - pct))}" transform="rotate(-90 50 50)"/></svg>` +
     (o.secs != null ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
 }
-// BLD 897 (Chris, October 31, 2026, the breath guide "1": the tree): the breath guide is a small tree. On the in breath its canopy
-// fills with golden light and rises; on the out breath the light flows down the trunk to glowing roots; on a hold it rests.
-// The lettering under it says Breathe In, Breathe Out, or Hold. o.phases ([{k: 'in' | 'out' | 'hold', d: seconds}], from
-// GGMoves.plan, BLD 898) times it to the figure's own moves; its loop is the figure's loop (data-dur), so the player's one clock
-// holds both together. The canopy's light (a circle whose radius grows on in) carries the timing the tests read.
+// BLD 928 (Chris, November 6, 2026, option 2): the breathing rings take the tree's place everywhere a breath guide shows.
+// The ring itself is drawn by shared/gg-breath-ring.js (one module for every player, loaded by this file when the page has not
+// loaded it): Sage on the in breath, Honey on the out breath, a slow ease in and out, and a soft trailing glow. o.phases
+// ([{k: 'in' | 'out' | 'hold', d: seconds}], from GGMoves.plan, BLD 898) times it to the figure's own moves; its loop is the
+// figure's loop (data-dur), so the player's one clock (health.js clkSync) holds the ring, the figure, and Ava's count together.
+// Words only on workout moves (Breathe In, Breathe Out, Hold); o.breathCount adds counts that go up (a breathing step).
 // With a figure it sits top left on a frosted chip; without one (a breathing step) it stands larger in the middle.
-// Reduced motion shows the tree still with the word only.
-function treeHTML(o, red, P, mark){
+// Reduced motion: the ring moves only a little and the color and the word lead (in the module).
+function ringsHTML(o, red, P, mark){
   P = P.filter(p => p && +p.d > 0);
-  const T = P.reduce((a, p) => a + +p.d, 0), w = r1(T * 1000) / 1000, id = 'ggt' + (++N);
-  // The breath level at each turn (0 empty, 1 full): in fills, out empties, hold keeps.
-  let lv = P[0].k === 'out' ? 1 : P[0].k === 'in' ? 0 : 1, t = 0; const L = [lv], kt = [0], st = [];
-  P.forEach(p => { st.push(t / T); t += +p.d; lv = p.k === 'in' ? 1 : p.k === 'out' ? 0 : lv; L.push(lv); kt.push(Math.min(1, t / T)); });
-  const k4 = x => Math.round(x * 10000) / 10000, sp = kt.slice(1).map(() => '.45 0 .55 1').join(';'), KT = kt.map(k4).join(';');
-  const an = (attr, f, extra) => red ? '' : `<animate attributeName="${attr}" dur="${w}s" repeatCount="indefinite" values="${L.map(f).join(';')}" keyTimes="${KT}" calcMode="spline" keySplines="${sp}"${extra || ''}/>`;
-  const L0 = red ? 1 : L[0], R = l => r1(24 + 16 * l), RISE = l => '0 ' + r1(-4 * l), ROOT = l => r1(.18 + .82 * (1 - l) * (1 - l)), FLOW = l => r1(1 - l);
-  const has = k => P.some(p => p.k === k), first = P[0].k, label = !(o.secs != null && !o.fig);
-  const word = (txt, k) => !has(k) ? '' : `<g class="ggs-bwg" data-ggsbw="${k}"${red && k !== first ? ' opacity="0"' : ''}>${red ? '' : `<animate attributeName="opacity" dur="${w}s" repeatCount="indefinite" values="${P.map(p => p.k === k ? 1 : 0).join(';')}" keyTimes="${st.map(k4).join(';')}" calcMode="discrete"/>`}` +
-    `<text x="60" y="141" text-anchor="middle" class="ggs-bw">${txt}</text></g>`;
-  return `<div class="ggs-breath ggs-tree${o.fig ? ' wf' : ''}"><svg viewBox="0 0 120 ${label ? 148 : 112}" aria-hidden="true" class="ggs-brs"${mark ? ` data-ggsbr data-dur="${w}" data-ph="${P.map(p => p.k + ':' + r1(+p.d * 100) / 100).join(' ')}"` : ''}>` +
-    `<defs><radialGradient id="${id}c" cx="50%" cy="46%" r="58%"><stop offset="0" stop-color="#FFEBB0"/><stop offset=".62" stop-color="#F3C867"/><stop offset="1" stop-color="#D9A441" stop-opacity="0"/></radialGradient>` +
-    `<linearGradient id="${id}t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="ggs-tink"/><stop offset="${FLOW(L0)}" stop-color="#F6C96A">${an('offset', FLOW)}</stop><stop offset="1" class="ggs-tink"/></linearGradient></defs>` +
-    `<g class="ggs-troots"><path d="M60 92c-6 6-14 9-24 10M60 92c5 7 13 10 22 11M60 92c-1 8-4 13-8 17M60 92c2 7 5 12 10 15"/></g>` +
-    `<g class="ggs-trootg" opacity="${ROOT(L0)}">${an('opacity', ROOT)}<path d="M60 92c-6 6-14 9-24 10M60 92c5 7 13 10 22 11M60 92c-1 8-4 13-8 17M60 92c2 7 5 12 10 15"/></g>` +
-    `<path class="ggs-ttrunk" d="M56 94c2-12 1-24-2-34M64 94c-2-12-1-24 2-34" stroke="url(#${id}t)"/>` +
-    `<g class="ggs-tcan">${red ? '' : `<animateTransform attributeName="transform" type="translate" dur="${w}s" repeatCount="indefinite" values="${L.map(RISE).join(';')}" keyTimes="${KT}" calcMode="spline" keySplines="${sp}"/>`}` +
-    `<circle cx="60" cy="45" r="${R(L0)}" fill="url(#${id}c)" class="ggs-bf">${an('r', R)}</circle>` +
-    `<path class="ggs-tcrown" d="M24 52c-6-16 8-28 20-26 2-12 22-18 32-8 12-4 26 6 22 20 10 6 6 24-8 24-6 10-22 10-30 4-10 6-26 2-30-8-8 0-10-4-6-6z"/></g>` +
-    `<path class="ggs-tground" d="M18 95c18-3 66-3 84 0"/>` +
-    (label ? word('Breathe In', 'in') + word('Hold', 'hold') + word('Breathe Out', 'out') : '') + '</svg>' +
-    (label ? '' : `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>`) + '</div>';
+  const T = P.reduce((a, p) => a + +p.d, 0), w = r1(T * 1000) / 1000, ph = P.map(p => p.k + ':' + r1(+p.d * 100) / 100).join(' ');
+  const secs = o.secs != null && !o.fig, opt = 'w' + (o.breathCount ? ' c' : '');
+  ringLoad();
+  return `<div class="ggs-breath ggs-rings${o.fig ? ' wf' : ''}"><svg class="ggbr ggs-brs" viewBox="0 0 240 290" aria-hidden="true" data-opt="${opt}" data-ph="${ph}"${mark ? ` data-ggsbr data-dur="${w}"` : ` data-loop="${w}"`}>` +
+    `<animate attributeName="opacity" values="1;1" dur="${w}s" repeatCount="indefinite"/></svg>` +
+    (secs ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
 }
-function phaseHTML(o, red){ return treeHTML(o, red, o.phases, true); }
+// The ring module, once, next to this file (../shared/gg-breath-ring.js), with this file's own version.
+function ringLoad(){
+  if (window.GGBreathRing || ringLoad.on) return; ringLoad.on = 1;
+  try { const u = new URL('../shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=b928';
+    const el = document.createElement('script'); el.src = u.href; el.async = true; (document.head || document.documentElement).appendChild(el); } catch (e) {}
+}
+function phaseHTML(o, red){ return ringsHTML(o, red, o.phases, true); }
 function breathHTML(o, red){
   if (Array.isArray(o.phases) && o.phases.some(p => p && +p.d > 0)) return phaseHTML(o, red);
   const i = Math.max(1, +o.inhale || 4), e = Math.max(1, +o.exhale || +o.inhale || 6);
-  return treeHTML(o, red, [{k: 'in', d: i}, {k: 'out', d: e}], false);
+  return ringsHTML(o, red, [{k: 'in', d: i}, {k: 'out', d: e}], false);
 }
 
 function scene(state, opts){
@@ -234,14 +227,17 @@ function scene(state, opts){
   const count = cn ? `<div class="ggs-count"><b data-hjrep data-ggsrep>${cr || ''}</b><span>of ${+cn.of}</span></div>` : '';
   const prog = cn ? `<div class="ggs-prog" data-ggsprog data-of="${+cn.of}"><i style="width:${r1(cr / cn.of * 100)}%"></i>${Array.from({length: Math.max(0, cn.of - 1)}, (x, k) => `<b style="left:${r1((k + 1) / cn.of * 100)}%"></b>`).join('')}</div>` : '';
   const label = o.label || cn ? `<div class="ggs-hud">${count}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
+  // BLD 928 (Chris's workout notes): the recommended weight, bottom right (reps stay top right), and a clear Break sign.
+  const wt = o.weight && o.weight.line ? `<div class="ggs-wt" data-ggswt>${o.weight.cap ? `<b>${esc(o.weight.cap)}</b>` : ''}<span>${esc(o.weight.line)}</span></div>` : '';
+  const brk = o.brk ? `<div class="ggs-break" data-ggsbreak>Break</div>` : '', bsub = o.brk && o.brk.sub ? `<div class="ggs-rsub" data-ggsbsub>${esc(o.brk.sub)}</div>` : '';
   const fig = o.fig ? `<div class="ggs-fig${showRing && s === 'rest' ? ' small' : ''}">${o.fig}</div>` : '';
   const mid = (showBreath ? breathHTML(o, red) : '') + (s === 'done' && !o.fig && !ml ? MEDAL : '');
-  const ring = showRing ? ringHTML(o, true) : '';
+  const ring = showRing ? ringHTML(o, true).replace(/<\/div>$/, bsub + '</div>') : '';
   const scrimOp = s === 'med' ? 0.15 : tod === 'night' ? 0.2 : 0.42;
-  return `<div class="ggs ggs-${s} ggs-${tod} ggs-on-${deck}${o.fill ? ' ggs-fill' : ''}${red ? ' ggs-still' : ''}${ml ? ' ggs-hasml' : ''}" data-ggstage="${s}" style="--ggs-a:${lightA};--ggs-ad:${ST[s][1]};--ggs-scrim:${scrimOp};--ggs-bgl:${bgOf(s, h, false)};--ggs-bgd:${bgOf(s, h, true)}" aria-hidden="true">` +
+  return `<div class="ggs ggs-${s} ggs-${tod} ggs-on-${deck}${o.fill ? ' ggs-fill' : ''}${red ? ' ggs-still' : ''}${ml ? ' ggs-hasml' : ''}${showRing && fig && s !== 'rest' ? ' ggs-hasring' : ''}${o.brk ? ' ggs-brk' : ''}" data-ggstage="${s}" style="--ggs-a:${lightA};--ggs-ad:${ST[s][1]};--ggs-scrim:${scrimOp};--ggs-bgl:${bgOf(s, h, false)};--ggs-bgd:${bgOf(s, h, true)}" aria-hidden="true">` +
     `<svg class="ggs-sky" viewBox="0 0 400 200" preserveAspectRatio="xMidYMax slice">${set}</svg>` +
     `<div class="ggs-deck"></div>${ml}<div class="ggs-tint"></div><div class="ggs-scrim"></div>` +
-    `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}${prog}</div>`;
+    `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}${brk}${wt}${prog}</div>`;
 }
 
 function update(el, opts){
@@ -280,7 +276,7 @@ const nb = v => Math.max(0, Math.min(1, +v || 0));
 const phOf = o => Array.isArray(o.phases) && o.phases.some(p => p && +p.d > 0) ? o.phases.filter(p => p && +p.d > 0).map(p => ({k: p.k, d: +p.d}))
   : o.inhale != null ? [{k: 'in', d: Math.max(1, +o.inhale || 4)}, {k: 'out', d: Math.max(1, +o.exhale || +o.inhale || 6)}] : null;
 // The glow: brighter and a little wider on the in breath, settling on the out breath. With breath timing its loop carries data-dur,
-// so the player's one clock (health.js clkSync) holds it with the tree and the figure; with none, one easy breath each 5.5 seconds.
+// so the player's one clock (health.js clkSync) holds it with the breathing rings and the figure; with none, one easy breath each 5.5 seconds.
 function haloSVG(P, red, id, cls){
   let an = '', dur = '', r0 = 34;
   if (!red){
@@ -421,12 +417,15 @@ const CSS = `
 .ggs-breath{position:absolute;left:50%;top:50%;width:min(172px,46vw,calc(var(--H) * .62));transform:translate(-50%,-52%);z-index:3;padding:8px 8px 4px;border-radius:20px;background:rgba(255,248,232,.84);box-shadow:0 4px 14px rgba(60,35,10,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
 .ggs-breath.wf{left:10px;top:10px;width:min(112px,28vw,calc(var(--H) * .38));transform:none;padding:6px 5px 2px;border-radius:16px;}
 .ggs-breath svg{width:100%;height:auto;display:block;overflow:visible;}
-.ggs-tcrown,.ggs-ttrunk,.ggs-tground,.ggs-troots path,.ggs-trootg path{fill:none;stroke:#3A2414;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
-.ggs-ttrunk{stroke-width:3.4;}.ggs-tground{stroke-width:1.4;opacity:.6;}.ggs-troots{opacity:.5;}
-.ggs-trootg path{stroke:#E7B04E;stroke-width:2.8;}
-.ggs-tink{stop-color:#3A2414;}
-.ggs-bw{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;font-size:21px;fill:#3A2414;}
-.ggs-bwg[data-ggsbw="out"] .ggs-bw{fill:#8A5A12;}
+.ggs-rings svg.ggbr{max-width:100%;}
+.ggs-breath.wf.ggs-rings{width:min(104px,26vw,calc(var(--H) * .36));padding:6px 4px 2px;}
+.ggs-wt{position:absolute;right:12px;bottom:22px;z-index:4;display:grid;justify-items:end;gap:2px;max-width:46%;padding:7px 12px 8px;border-radius:14px;background:rgba(255,248,232,.9);color:#2F2216;box-shadow:0 4px 14px rgba(60,35,10,.14);text-align:right;}
+.ggs-wt b{font:700 11px/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6D5640;}
+.ggs-wt span{font:600 clamp(17px,4.6vw,22px)/1.1 'Cormorant Garamond',Georgia,serif;color:#3A2414;}
+.ggs-hasring .ggs-wt{right:calc(min(96px,26vw) + 26px);}
+.ggs-break{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:5;padding:6px 26px 7px;border-radius:999px;background:var(--ggs-a);color:#FFFFFF;font:700 clamp(22px,6.4vw,30px)/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 18px rgba(0,0,0,.2);}
+.ggs-rsub{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;max-width:min(340px,86vw);overflow:hidden;text-overflow:ellipsis;padding:5px 14px;border-radius:999px;background:rgba(255,248,232,.92);color:#2F2216;font:700 14px/1.1 'Barlow',sans-serif;letter-spacing:.04em;box-shadow:0 2px 8px rgba(60,35,10,.14);}
+.ggs-brk .ggs-mid .ggs-ring,.ggs-brk.ggs-rest .ggs-mid.hasfig .ggs-ring{width:min(170px,46vw,calc(var(--H) * .56));transform:translate(-50%,-48%);}
 .ggs-breath .ggs-secs{position:static;display:block;text-align:center;color:#3A2414;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(26px,8vw,40px);padding-bottom:4px;}
 .ggs-side{position:absolute;bottom:22px;left:12px;display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:#E7B04E;color:#2A1A08;font:700 14px/1 'Barlow',sans-serif;letter-spacing:.04em;z-index:4;box-shadow:0 2px 8px rgba(60,35,10,.18);}
 .ggs-side[hidden]{display:none;}
@@ -488,8 +487,8 @@ ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DE
 & .ggs-rp{stroke:#E7B04E;}
 & .ggs-secs,& .ggs-breath .ggs-secs{color:#F4E8D4;}
 & .ggs-breath{background:rgba(36,27,20,.84);box-shadow:0 4px 14px rgba(0,0,0,.35);}
-& .ggs-tcrown,& .ggs-ttrunk,& .ggs-tground,& .ggs-troots path{stroke:#F2DCB4;}& .ggs-tink{stop-color:#F2DCB4;}
-& .ggs-bw{fill:#F4E8D4;}& .ggs-bwg[data-ggsbw="out"] .ggs-bw{fill:#F0B850;}
+& .ggs-wt,& .ggs-rsub{background:rgba(36,27,20,.88);color:#F4E8D4;}& .ggs-wt b{color:#CCB593;}& .ggs-wt span{color:#F2DCB4;}
+& .ggs-break{background:var(--ggs-ad);color:#10201E;}
 & .ggs-side{background:#E7B04E;color:#1E140A;}
 & .ggs-side b{background:rgba(36,27,20,.9);color:#F2DCB4;}
 & .ggs-lab,& .ggs-count{background:rgba(36,27,20,.84);color:#F4E8D4;border-color:rgba(242,220,180,.2);}
@@ -501,5 +500,6 @@ ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DE
 `;
 (function(){ try { if (document.getElementById('ggstage-css')) return; const s = document.createElement('style'); s.id = 'ggstage-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();
 
-window.GGStage = {scene, update, colors, css: CSS, states: Object.keys(ST), med: true};
+ringLoad();
+window.GGStage = {scene, update, colors, css: CSS, states: Object.keys(ST), med: true, rings: true};
 })();

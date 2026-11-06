@@ -898,15 +898,15 @@ function vOv(){
       <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save Workout</button></div>`; }
     else {
       const pct = Math.round(100 * o.i / o.steps.length), lb = H().lifts[st.id], state = stState(o), ring = o.run && (o.rest || o.between) ? {pct: Math.max(0, o.end - Date.now()) / (o.tot || 1), secs: Math.ceil(Math.max(0, o.end - Date.now()) / 1000)} : {};
-      const t = trans(o, state), wrap = x => `${stagePanel(state, Object.assign({fig: moveFig(st, false, o.rest || o.between)}, ring))}<div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}">${x}</div>`;
+      const t = trans(o, state), wrap = x => `${stagePanel(state, Object.assign({fig: moveFig(st, false, o.rest || o.between), weight: wChip(st) || undefined, brk: o.rest || o.between ? {sub: o.between ? 'Next Up: ' + st.name : (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next')} : undefined}, ring))}<div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}">${x}</div>`;
       if (st.t === 'time'){ const ms = o.run ? o.end - Date.now() : (o.left || st.secs * 1000);
         body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<h2 class="hj-exn">${esc(st.name)}</h2>${howBlock(st)}${modsBlock(st)}
           <div class="hj-clock" data-hjclock>${clock(ms)}</div>
           <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="${o.run ? 'pause' : 'tstart'}">${o.run ? 'Pause' : (o.left && o.left < st.secs * 1000 ? 'Keep Going' : 'Start Timer')}</button><button type="button" class="btn btn-gold" data-hja="next">Next</button></div>`)}`; }
-      else if (o.between){ body = `${top(o.title, 'Rest', pct)}${wrap(`<div class="hj-kick hj-stk">Rest, then next up</div><h2 class="hj-exn">${esc(st.name)}</h2><div class="hj-clock" data-hjclock>${clock(Math.max(0, o.end - Date.now()))}</div>
+      else if (o.between){ body = `${top(o.title, 'Rest', pct)}${wrap(`<div class="hj-kick hj-stk">Break, then next move</div><h2 class="hj-exn">${esc(st.name)}</h2><div class="hj-clock" data-hjclock>${clock(Math.max(0, o.end - Date.now()))}</div>
           ${arr(st.tips).length ? `<ul class="hj-tips">${st.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}${weightBox(st)}
           <div class="hj-ovbtns"><button type="button" class="btn btn-gold" data-hja="skiprest">Ready Now</button></div>`)}`; }
-      else if (o.rest){ body = `${top(o.title, 'Rest', pct)}${wrap(`<div class="hj-kick hj-stk">Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}</div><h2 class="hj-exn">${esc(st.name)}</h2>${dots(o.set + 1, st.sets)}<div class="hj-clock" data-hjclock>${clock(o.end - Date.now())}</div><p class="hj-mot">${esc((MOT()[(o.i + o.set) % Math.max(1, MOT().length)]) || 'Breathe slow. Sip water.')}</p>
+      else if (o.rest){ body = `${top(o.title, 'Rest', pct)}${wrap(`<div class="hj-kick hj-stk">Break, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}</div><h2 class="hj-exn">${esc(st.name)}</h2>${dots(o.set + 1, st.sets)}<div class="hj-clock" data-hjclock>${clock(o.end - Date.now())}</div><p class="hj-mot">${esc((MOT()[(o.i + o.set) % Math.max(1, MOT().length)]) || 'Breathe slow. Sip water.')}</p>
           <div class="hj-ovbtns"><button type="button" class="btn btn-gold" data-hja="skiprest">Ready Now</button></div>`)}`; }
       else { body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<div class="hj-kick hj-stk">${o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`}</div><h2 class="hj-exn">${esc(o.swap ? (st.swap || st.name) : st.name)}</h2>${dots(o.set, st.sets)}
           <div class="hj-reps">${esc(repLine(st))}</div>${recLine(st)}
@@ -1128,7 +1128,12 @@ const workSecs = st => secsOf(st) * (st.alt && st.per ? 2 : 1);
 const tempoOf = st => Math.max(1, +st.tempo || REP_SECS), WORD_REPS = 8;
 const handsOn = () => { try { return localStorage.getItem('gg-health-hands') !== '0'; } catch(e){ return true; } };
 // A move that uses a weight gets Ava's weight advice now and then (a body weight move never does).
-const loaded = st => !!st && st.t === 'ex' && st.kind !== 'time' && /dumbbell|kettlebell|barbell|machine|cable|plate|weight/i.test([st.name, st.load, st.equip].join(' ').replace(/your body ?weight\.?/ig, ''));
+// BLD 928 (Chris's workout notes): a weight is read from the name, the load line ("The lightest pair you have."), the equipment,
+// and the how and steps ("a light dumbbell in each hand"), and a timed move with a weight (Suitcase Carry) counts too.
+const BODY_LOAD = /^\s*(your |just )?(body ?weight|you\b)/i;
+const wtMove = st => !!st && st.t === 'ex' && !BODY_LOAD.test(st.load || '') && (/dumbbell|kettlebell|barbell|machine|cable|plate|weight/i.test([st.name, st.load, st.equip].join(' ').replace(/your body ?weight\.?/ig, ''))
+  || /\b(a|light|lightest|heavier|one) pair\b/i.test(st.load || '') || /\bdumbbells?\b|\bkettlebells?\b/i.test([st.how || ''].concat(arr(st.steps)).join(' ')));
+const loaded = wtMove;
 // The coaching behind these lines, credited on the workout's start screen (and in shared/gg-sources.js).
 const COACH_SRC = [
   {t: 'Progression Models in Resistance Training for Healthy Adults (Position Stand, 2009)', who: 'American College of Sports Medicine', url: 'https://pubmed.ncbi.nlm.nih.gov/19204579/'},
@@ -1394,7 +1399,7 @@ async function hfSet(o, st, lastSide, lead){
 }
 // BLD 896 (note 6): the breath ring on the first three reps of set 1, timed from the tempo: breathe in on the lowering (about
 // six tenths of the rep), out on the push. A quick move (under 2 seconds a rep) takes one breath over two reps.
-// BLD 897 (breath first, Grounded's niche): the tree breath guide shows on every rep of every set, so RING_REPS no longer ends it.
+// BLD 897 (breath first, Grounded's niche): the breath guide (the breathing rings since BLD 928) shows on every rep of every set, so RING_REPS no longer ends it.
 const RING_REPS = Infinity;
 function repBreath(st){ const t = tempoOf(st), per = t < 2 ? t * 2 : t; if (per <= 2) return [1, 1]; const i = Math.round(per * 6) / 10; return [i, Math.round((per - i) * 10) / 10]; }
 const repShow = r => { const els = document.querySelectorAll('[data-hjrep]'); if (!els.length) return rerender(true); els.forEach(e => e.textContent = r);
@@ -1470,7 +1475,7 @@ function motLine(o){ const m = MOT(); if (!m.length) return ''; if (o.mi == null
 let MOVE_OK = null;
 async function moveMusic(){ if (MOVE_OK == null){ try { const c = new AbortController(), t = setTimeout(() => c.abort(), 2500); const r = await fetch('/audio/music/move-1.mp3', {method: 'HEAD', signal: c.signal}); clearTimeout(t); MOVE_OK = !!r.ok; } catch(e){ MOVE_OK = false; } } return MOVE_OK; }
 async function runSession(o){
-  const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = [];
+  const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = []; o.tips = tipPlan(o);
   if (V) V.unlock();
   // BLD 898: Ava's counts download and decode now, so every count is ready for its beat.
   if (V && V.prime && !o.prac) V.prime(o.voice || AVA, Array.from({length: 20}, (x, k) => LN.count(k + 1)));
@@ -1553,7 +1558,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b915';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b928';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
@@ -1632,7 +1637,7 @@ function stState(o){
   if (o.fin) return 'done';
   if (o.stage === 'start') return o.prac ? 'practice' : 'next';
   const st = o.steps && o.steps[o.i]; if (!st) return 'done';
-  if (o.between) return 'next';
+  if (o.between) return o.run ? 'rest' : 'next';   // BLD 928: a timed Break between moves keeps the calm rest color
   if (o.rest || o.sw) return 'rest';
   // BLD 896: most Flow steps now carry a breath key for the ring; the breathe color stays for steps whose main work is breathing.
   if (o.prac) return st.breath && /breath|breathing|pranayama/i.test(st.name || '') ? 'breathe' : 'practice';
@@ -1666,7 +1671,7 @@ const snapDB = v => DB_STEPS.reduce((b, x) => Math.abs(x - v) < Math.abs(b - v) 
 function bodyW(){ const h = H(); if (!h || TEEN()) return 0; const b = +h.set.bw; if (b > 0) return b;
   const m = marks().filter(x => +x.weight > 0); return m.length ? +m[m.length - 1].weight : 0; }
 const wAdj = () => { const a = +((H() || {}).set || {}).wadj || 0; return W_ADJ.includes(a) ? a : 0; };
-const recOK = st => !!st && st.t === 'ex' && st.kind !== 'time' && (loaded(st) || /\b(a|light|heavier|one) pair\b/i.test(st.load || '')) && !/^\s*(your )?body ?weight/i.test(st.load || '');
+const recOK = st => wtMove(st);
 // {lb, each, line} or null: the recommended weight for a move, with the adjustment applied.
 function recW(st, bw, adj){ if (!st || st.t !== 'ex' || !recOK(st)) return null; bw = bw == null ? bodyW() : bw; if (!(bw > 0)) return null;
   const nm = st.name + ' ' + (st.how || ''), row = W_SHARE.find(r => r[0].test(st.name)) || W_SHARE.find(r => r[0].test(nm)) || [null, .07, 2];
@@ -1683,7 +1688,41 @@ const weightRule = () => { const m = MINE(); return (m && m.weightsRule) || ''; 
 function recLine(st){ const r = recW(st); if (r) return `<p class="hj-recw" data-hjrec="${r.lb}"><span>Recommended Weight</span><b>${esc(r.line)}</b></p>`;
   const t = st && st.t === 'ex' ? weightTip(st) : ''; return t ? `<p class="hj-wtl"><b>Weight:</b> ${esc(t)}</p>` : ''; }
 // Between moves and in a rest: the same, with no question to answer (BLD 915: hands free).
-const weightBox = st => st && st.t === 'ex' && st.kind !== 'time' ? recLine(st) : '';
+const weightBox = st => st && st.t === 'ex' ? recLine(st) : '';
+// BLD 928 (Chris's workout notes, 1): the weight chip on the stage, bottom right, on every move with a weight (each set, each rest,
+// and the Break before the move): the recommendation; with no body weight, the Founder's starting suggestion, else Your Choice.
+// A teen sees no weights; a body weight move shows no chip.
+const sugShort = w => { const t = String(w).replace(/^\s*start\s+(at\s+)?/i, '').replace(/\.\s*$/, '').trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
+function wChip(st){ if (!st || st.t !== 'ex' || TEEN() || !wtMove(st)) return null;
+  const r = recW(st); if (r) return {cap: 'Recommended', line: r.line};
+  const m = MINE(), w = m && m.weights && (m.weights[st.name] || m.weights[st.id]);
+  if (w && !/body ?weight|^\s*just you/i.test(w)) return {cap: 'Suggested', line: sugShort(w)};
+  return {cap: 'Weight', line: 'Your Choice'}; }
+// BLD 928 (note 6): Grounded Tips, type only, on the card during a Break between moves (never during a set). 2 a workout under 30
+// minutes, 3 for longer, turning by day; a workout with dumbbells always gets a dumbbell safety tip, and its last Break shows the
+// clear-the-floor tip. A library may give its own list (workouts.tips); then those turn by day with no dumbbell rule.
+const TIPS = ['Take a sip of water before the next move.', 'Stand tall: ears over shoulders, shoulders over hips.', 'Smooth and steady builds more strength than fast and heavy.',
+  'Move in a range that feels good to your joints.', 'Knees travel in line with your toes.', 'Keep your wrists straight and your grip firm.', 'Brace gently before each lift, then breathe out on the effort.',
+  'A lighter weight with great form is a strong choice.', 'Lift a dumbbell from the floor with a squat: back long, weight close.', 'Carry dumbbells close at your sides, shoulders level.',
+  'Lower dumbbells to the floor with control.', 'Set your dumbbells beside the mat, out of the walkway.', 'Clear the floor of dumbbells when you finish, so everyone walks safely.',
+  'Wear shoes, or use a mat with a good grip.', 'Keep a towel close for dry hands and a sure grip.'];
+const TIP_DB = [8, 9, 10, 11], TIP_CLEAR = 12, TIP_GEN = [0, 1, 2, 3, 4, 5, 6, 7, 13, 14];
+const dbMove = st => wtMove(st) && /dumbbell|kettlebell|\bpair\b/i.test([st.name, st.load, st.equip, st.how].concat(arr(st.steps)).join(' '));
+function tipPlan(o, day){
+  if (!o || o.prac || o.med || !Array.isArray(o.steps)) return {};
+  const at = [];   // the moves a timed Break comes before (the Break after the warm-up, and each rest between moves)
+  o.steps.forEach((st, i) => { const pv = o.steps[i - 1]; if (st.t !== 'ex' || !pv) return; const secs = pv.t === 'time' ? GET_READY : +pv.restAfter || 0; if (secs > 0) at.push(i); });
+  if (!at.length) return {};
+  const mins = +o.mins || Math.round(estLeft(o) / 60000), n = Math.min(at.length, mins < 30 ? 2 : 3);
+  const d = day != null ? day : Math.floor((new Date().setHours(12, 0, 0, 0) - new Date(2026, 0, 4, 12).getTime()) / 864e5);
+  const own = arr(WK().tips).filter(x => typeof x === 'string' && x.trim()), db = !own.length && o.steps.some(st => st.t === 'ex' && dbMove(st));
+  let pick;
+  if (own.length) pick = Array.from({length: n}, (x, k) => own[((d * n + k) % own.length + own.length) % own.length]);
+  else { const g = k => TIPS[TIP_GEN[((d * 3 + k) % TIP_GEN.length + TIP_GEN.length) % TIP_GEN.length]];
+    pick = db ? [g(0), TIPS[TIP_DB[(d % 4 + 4) % 4]], TIPS[TIP_CLEAR]].slice(3 - n) : Array.from({length: n}, (x, k) => g(k)); }
+  const out = {}; pick.forEach((t, k) => { const j = Math.round((k + 1) * at.length / n) - 1; out[at[Math.max(0, Math.min(at.length - 1, j))]] = t; });
+  return out; }
+const tipLine = (o, st) => { if (!o.between || !o.run) return ''; if (!o.tips) o.tips = tipPlan(o); const t = o.tips[o.i]; return t ? `<p class="hj-gtip" data-hjtip><span>Grounded Tip</span>${esc(t)}</p>` : ''; };
 // Asked once, on the start screen of the first workout that has a weight in it, before Play.
 const bwAsk = o => !!o && !o.prac && !o.med && !TEEN() && !bodyW() && !(H().set || {}).bwAsked && arr(o.steps).some(recOK);
 const adjChips = (cur, a) => `<div class="hj-adj" role="group" aria-label="Personal adjustment">${W_ADJ.map(x => `<button type="button" class="chip${x === cur ? ' on' : ''}" aria-pressed="${x === cur}" data-hja="${a}" data-hjv="${x}">${x > 0 ? '+' : ''}${x} lb</button>`).join('')}</div>`;
@@ -1783,17 +1822,23 @@ function vAuto(o, top){
   const fex = br && !still && !st.candle ? (st.breath === 'fire' ? {pose: 1} : {breath: br}) : null, pl = st.candle ? null : figPlan(st, fex);
   let phases = null;
   if (pl && br && fex && fex.breath) phases = pl.phases;
+  else if (ringNow && st.t === 'ex' && st.kind === 'time' && !(+st.tempo > 0)) br = BREATH.slow;   // BLD 928: a steady 4 in, 6 out on a hold
   else if (ringNow && (st.t === 'ex' || (o.rep && +st.tempo > 0))){ const t = tempoOf(st); if (pl && t >= 2) phases = pl.phases; else if (pl) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = repBreath(st); }
+  // BLD 928: a timed warm-up or cooldown item breathes too (its figure's own plan, or a slow breath on a hold).
+  else if (!br && st.t === 'time' && o.run && !still && !o.sw && !o.prac && !st.candle && !st.lines){ const t = +st.tempo; if (pl && t >= 2) phases = pl.phases; else if (pl && t > 0) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = BREATH.slow; }
   if (pl && (!o.clk || (o.clk.key !== clkKey(o) && !o.clk.beat))) clkOn(o);
-  const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
+  // BLD 928 (note 3): a timed rest between sets or moves shows the Break banner, with what comes next under its ring.
+  const brkOn = !!(o.run && (o.rest || o.between) && !o.sw), nextSub = st.t === 'ex' ? (o.between ? 'Next Up: ' + (o.swap && st.swap ? st.swap : st.name) : o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : '';
+  const flip = o.side === 'L', pill = brkOn ? '' : st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
   const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
-  const sop = Object.assign({fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined}, ring);
+  const sop = Object.assign({fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
+    breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep && cntOf ? (st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : '') : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? (st.arm ? ' · Left arm' : ' · Left side') : o.side === 'R' ? (st.arm ? ' · Right arm' : ' · Right side') : '';
-  const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (st.fin && st.sets === 1 ? 'Finish strong' : o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
+  const label = o.between ? 'Break, then next move' : o.sw ? 'Switch sides' : o.rest ? `Break, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (st.fin && st.sets === 1 ? 'Finish strong' : o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
   let detail;
-  if (o.between) detail = `${arr(st.tips).length ? `<ul class="hj-tips">${st.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : `<p class="hj-how">${esc(st.how || '')}</p>`}${weightBox(st)}`;
+  if (o.between) detail = `${tipLine(o, st)}${arr(st.tips).length ? `<ul class="hj-tips">${st.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : `<p class="hj-how">${esc(st.how || '')}</p>`}${weightBox(st)}`;
   else if (o.rest) detail = `${o.mcoach ? modsBlock(st, ['easier', 'harder']) : `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>`}${weightBox(st)}`;
   else if (o.sw) detail = `<p class="hj-how">Switch to your ${st.first === 'R' ? 'left' : 'right'} ${st.arm ? 'arm' : 'side'}.</p>`;
   else if (st.lines) detail = `<p class="hj-how hj-mline">${esc(o.line || (o.run ? 'Rest in the quiet.' : ''))}</p>`;
@@ -5150,6 +5195,8 @@ const CSS = `
 .tn-ew[open]{padding-bottom:4px;}
 .hj-repsof{font-size:16px;opacity:.75;margin-top:-4px;}
 /* BLD 897: the form line, the Move Well card, and the start list in the warm ink and paper of the new player */
+.hj-gtip{max-width:44ch;margin:8px auto 10px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);border-left:4px solid #8DB38A;text-align:left;font-size:15.5px;line-height:1.45;}
+.hj-gtip span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:13px;color:var(--ink-soft);margin-bottom:2px;}
 .hj-form{margin:10px 0;padding:10px 12px;border-left:3px solid #C98A2C;background:rgba(243,200,103,.14);border-radius:0 12px 12px 0;text-align:left;line-height:1.45;overflow-wrap:anywhere;}
 .hj-form span{display:block;font:700 11px/1 'Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8A5A12;margin-bottom:4px;}
 :root[data-theme="dark"] .hj-form span{color:#F0B850;}
@@ -5213,7 +5260,8 @@ window.GGHealth = {
   applyPlan: o => apiPlan(o), planInfo: () => apiPlanInfo(),
   state: S, allLines, LN,
   // BLD 915: the recommended weight (tests and other views): rec(step, bodyWeight?, adjustment?) gives {lb, each, line} or null.
-  weights: {rec: (st, bw, adj) => recW(st, bw, adj), body: () => bodyW(), adj: () => wAdj()},
+  weights: {rec: (st, bw, adj) => recW(st, bw, adj), body: () => bodyW(), adj: () => wAdj(), chip: st => wChip(st), ok: st => recOK(st)},
+  tips: {list: TIPS, plan: (o, day) => tipPlan(o, day)},
   // BLD 857: the honest estimate, for tests and for setting each session's minutes: seconds for a session id, phase '1' to '3', light week.
   // BLD 921, the Family Kitchen: kitchenLink() shares (the link, also drawn as a QR code), kitchenInfo(code) {table, update} for
   // the join prompt, kitchenJoin(code), kitchenLeave(), kitchen() what this profile holds, kitchenTonight(date) a kid's dinner line,
