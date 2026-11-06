@@ -2284,7 +2284,7 @@
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b929';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=b929'; // BLD 924: Welcome to The Grounded Way, one series per age group
-  var GUIDES = { oak: ['/oak/guides.js?v=b924', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
+  var GUIDES = { oak: ['/oak/guides.js?v=b930', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b930', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
   // BLD 924: the count and search walk the same tracks Learn shows (tracksOf), with Welcome to The Grounded Way first.
@@ -2326,7 +2326,7 @@
   }
   function libraryHtml() {
     var more = [['/get-grounded-now.html', HERO + 'page-get-grounded-now-narrow.webp', 'Get Grounded Now', 'Calm in a minute or two'], ['/readings.html', HERO + 'page-readings-narrow.webp', 'Readings Library', 'Prayers, poems, and blessings'], ['/stories.html', IMG + 'tend-fruit.webp', 'Grounded Stories', member() ? 'Every story, read aloud' : 'Stories from the bedside and the road'], ['/library/', HERO + 'library-phone.webp', 'Book Library', 'Books and studies we draw from'],
-      ['/grove/', treeArt('grove'), 'The Grove', 'Families and groups, growing together'], ['/willow/', treeArt('willow'), 'Willow', 'Hospice and the people who love them'], ['/heartwood/', treeArt('heartwood'), 'Heartwood', 'Couples, with The Grounded Marriage']];
+      ['/grove/', treeArt('grove'), 'The Grove', 'Families and groups, growing together'], ['/willow/', treeArt('willow'), 'Willow', 'Hospice and the people who love them'], ['/heartwood/', treeArt('heartwood'), 'Heartwood', 'Couples, for the first years together']];
     if (soberDate() || homeRec().parts.indexOf('sober') >= 0) more.unshift(['/living-sober.html', HERO + 'living-sober-card.webp', 'Living Sober', 'Today, Ride the Wave, milestones']);
     var h = homeRec(); if (h.season && TREES[h.season]) more.unshift([TREES[h.season].href, treeArt(h.season), TREES[h.season].n, TREES[h.season].who]);
     return '<label class="hm-search"><span>Search everything</span><input type="search" id="hm-q" placeholder="Grief, salmon, sleep, a Morning Quiet" autocomplete="off" enterkeyhint="search"></label>' +
@@ -4011,7 +4011,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b916', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b924', talk: '/shared/home/talk.js?v=b928', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b930', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b924', talk: '/shared/home/talk.js?v=b928', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4621,7 +4621,7 @@
      this or I'm helping someone, faith, practices, when to reach out, learn more, and the sources line. */
   var GREAD = { tree: '', id: '', self: true };
   var FAITH_H = { oak: 'Faith and the holy', sequoia: 'Faith and the holy', birch: 'Faith and meaning', pine: 'Faith and meaning' };
-  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=b924', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
+  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=b930', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b930', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
   function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
   function guideRead(id, tree) {
