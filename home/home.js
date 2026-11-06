@@ -1235,6 +1235,9 @@
     if (k === 'week') return { tab: 'week', sub: SUBS.week[sub] ? sub : '' };
     if (k === 'grow' || k === 'tree') return { tab: 'grow', sub: '' };
     if (k === 'checkin' || k === 'season') return { tab: 'checkin', sub: '' };
+    // BLD 931 (Chris: "from menu i chose When Life Changes and it takes me to another link.. sloppy"): #learn=life (or #library=life)
+    // opens Learn on the When Life Changes shelf in one step, then the address settles to #learn so Back and reload behave.
+    if ((k === 'learn' || k === 'watch' || k === 'library') && sub === 'life') { LT.f = 'life'; LT.q = ''; try { history.replaceState(null, '', location.pathname + location.search + '#learn'); } catch (e) {} return { tab: 'learn', sub: '' }; }
     if (k === 'learn' || k === 'watch') return { tab: 'learn', sub: '' };
     if (k === 'library') return { tab: 'library', sub: SUBS.library[sub] ? sub : '' };
     if (k === 'me' || k === 'more') return { tab: 'me', sub: SUBS.me[sub] ? sub : '' };

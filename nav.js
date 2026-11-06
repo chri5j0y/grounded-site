@@ -44,7 +44,7 @@
       { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: pic('/shared/cards/way-sober.webp'), bg: '#DCE8E1' },
       { id: 'heartwood', title: 'Heartwood', desc: 'For marriage: the couples app every couple Chris and Kayti marry receives. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: pic('/shared/heroes/heartwood-card.webp'), bg: '#E3EAF2' },
       { id: 'willow', title: 'Willow', desc: 'For the last season of life, and the people who love them', href: HOME + '/willow/', icon: pic('/shared/heroes/willow-phone.webp'), bg: '#E8ECDD' },
-      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/tools.html#when-life-changes', icon: pic('/shared/heroes/page-hard-seasons-narrow.webp'), bg: '#F1E6CC', color: '#6E4A14' }
+      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/home/#learn=life', icon: pic('/shared/heroes/page-hard-seasons-narrow.webp'), bg: '#F1E6CC', color: '#6E4A14' }
     ] },
     { name: 'Growing Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: pic('/shared/heroes/grove-phone.webp'), bg: '#E3EFD6' }
@@ -464,7 +464,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b930';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b931';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

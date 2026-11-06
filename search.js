@@ -480,7 +480,7 @@
     }
     if (!n) {
       html += '<div class="ss-empty"><p><b>Let&rsquo;s look another way for &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
-        '<a class="text-link" href="/home/#learn">in The Grounded Way</a>, <a class="text-link" href="/willow/#guides">at the end of life</a>, or <a class="text-link" href="/grove/#life">for families and groups</a>.</p></div>';
+        '<a class="text-link" href="/home/#learn=life">in The Grounded Way</a>, <a class="text-link" href="/willow/#guides">at the end of life</a>, or <a class="text-link" href="/grove/#life">for families and groups</a>.</p></div>';
     }
     panel.innerHTML = html;
     if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'Try another word';
