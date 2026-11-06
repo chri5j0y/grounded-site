@@ -108,6 +108,14 @@ const V = window.GGVoice = {
   // A line still on its way is left out (a late count would pull the rep off the beat); a line with no recording is
   // spoken by the device voice at the beat. Returns how it went: 'clip', 'device', 'drop', or 'off'.
   prime(voice, texts){ if (!V.on()) return; (texts || []).forEach(t => { if (t) decoded(voice, t); }); },
+  // BLD 931 (Chris's workout notes, November 6, 2026: the Break counts down, then instructions play before the clock): how long
+  // a line plays, in seconds (its decoded recording, start to end), so the player can start the next move's instructions that
+  // many seconds before a Break ends. Resolves null when the line has no recording or the voice is off.
+  len(voice, text){
+    if (!text || !V.on()) return Promise.resolve(null);
+    const e = decoded(voice, text), t0 = Date.now();
+    return new Promise(res => { const look = () => { if (e.done || Date.now() - t0 > 6000) return res(e.v ? e.v.buf.duration : null); setTimeout(look, 40); }; look(); });
+  },
   at(voice, text, when){
     if (!text || !V.on()) return 'off';
     const k = voice + '|' + text, b = BUF.get(k), self = this && this.say ? this : V, wait = Math.max(0, (+when || Date.now()) - Date.now());

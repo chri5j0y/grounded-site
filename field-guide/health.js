@@ -869,7 +869,7 @@ function buildWork(s){
 // BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
 function keyVoice(){ if (VO()) VO().setKey(((FX()) || {}).audio); }
 function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } keyVoice(); S.ov = o; wake(true); tick(); rerender(true); }
-function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
+function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } if (FS.on) fsSet(false); const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
 let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL) navigator.wakeLock.request('screen').then(l => { WL = l; }).catch(() => {}); if (!on && WL){ WL.release(); WL = null; } } catch(e){} }
 // BLD 857 (note 2, "says 3 sets, only does 2 sets"): this tick also ended Play Session's rests, so when it fired between the end
 // of a rest and the engine's own check, the set count went up twice and a set was lost. Play Session keeps its own timers now.
@@ -1098,6 +1098,8 @@ const secsOf = st => parseInt(String(st.reps), 10) || 30;
 const amtTxt = st => { const n = +repTxt(st); if (st.kind === 'time' && !repWords(st) && n >= 180 && n % 60 === 0){ const m = n / 60; return m + ' minute' + (m === 1 ? '' : 's'); } return repTxt(st) + unitOf(st); };
 const LN = {
   ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.',
+  // BLD 931 (Chris, November 6, 2026, option 1): said once at the start of every workout.
+  focus: 'Grounded Fitness: breathe and form first, weight and speed come second.',
   time: st => (st.name + '. ' + (st.how || '')).trim(),
   ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + amtTxt(st) + (st.side || st.per ? ' each side' : '') + '.',
   set: (n, m) => n === m ? 'Last set.' : 'Set ' + n + ' of ' + m + '.',
@@ -1257,7 +1259,7 @@ function allLines(){
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); }
     }); })); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
@@ -1298,7 +1300,7 @@ function allLinesPub(){
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
     sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); }); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
@@ -1329,7 +1331,7 @@ function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return p
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function estLeft(o){ let s = planSecs(o.steps, o.i, o.between ? 1 : o.set, o); const left = o.run && o.end ? Math.max(0, o.end - Date.now()) / 1000 : 0;
   if (o.between) s += left; else if (o.run) s -= Math.max(0, (o.tot || 0) / 1000 - left); return Math.max(0, s) * 1000; }
-async function speak(o, text){ const V = VO(); if (!V || !text || o.dead) return; const nx = o.steps[o.i + 1]; o.spk = (o.spk || 0) + 1;
+async function speak(o, text, pre){ const V = VO(); if (!V || !text || o.dead) return; if (!pre && preBusy(o)) return; const nx = o.steps[o.i + 1]; o.spk = (o.spk || 0) + 1;
   try { await V.say(o.voice || AVA, text); } finally { o.spk--; }
   if (nx && V.prefetch) V.prefetch(o.voice || AVA, nx.t === 'time' ? tLine(o, nx) : LN.ex(nx)); }
 // BLD 915 (Chris's workout notes: "less wordy instructions before all exercises"): a warm-up or cooldown item with a form
@@ -1338,7 +1340,7 @@ const tShort = (o, st) => !o.prac && !st.lines && !!st.form;
 const tLine = (o, st) => tShort(o, st) ? LN.tname(st) : LN.time(st);
 async function snooze(o, ms){ const end = Date.now() + ms; while (Date.now() < end && !o.skip && !o.dead) await sleep(80); }
 async function hold(o){ while (o.paused && !o.dead && !o.skip) await sleep(120); }
-const lg = (o, e) => { (o.log = o.log || []).push(Object.assign({i: o.i, set: o.set, side: o.side || ''}, e)); };
+const lg = (o, e) => { (o.log = o.log || []).push(Object.assign({i: o.i, set: o.set, side: o.side || '', at: Date.now()}, e)); };
 // A timer that honors Pause, Skip, and +15 seconds; ticks the last 3 seconds; says Ten seconds on longer rests; drains the ring.
 // kind: '' for work, 'rest' between sets, 'between' between moves, 'switch' between sides.
 async function runTimer(o, ms, kind, half, onTick){
@@ -1348,37 +1350,104 @@ async function runTimer(o, ms, kind, half, onTick){
   while (!o.dead && !o.skip){
     if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
     const left = o.end - Date.now(); if (left <= 0) break;
+    if (kind && preTick(o, left)) continue;   // BLD 931: the next move's instructions in the Break's last seconds
     const s = Math.ceil(left / 1000);
-    if ((kind === 'rest' || kind === 'between') && s === 10 && !said10 && ms > 15000){ said10 = true; if (!o.spk) speak(o, LN.ten); }
+    if ((kind === 'rest' || kind === 'between') && s === 10 && !said10 && ms > 15000){ said10 = true; if (!o.spk && !preNear(o, left)) speak(o, LN.ten); }
     if (half && !saidHalf && left <= o.tot / 2){ saidHalf = true; o.side = 'R'; speak(o, LN.sw); rerender(true); }
     if (onTick) onTick(left);
-    if (s <= 3 && s !== last){ last = s; VO() && VO().tick(); }
+    if (s <= 3 && s !== last){ last = s; if (!preBusy(o)) VO() && VO().tick(); }   // BLD 931: Ava's instructions carry the last seconds
     document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
     stageUpd(Math.max(0, Math.min(1, left / (o.tot || ms))), s);
-    await sleep(100);
+    await sleep(Math.max(10, Math.min(100, o.end - Date.now())));
   }
+  if (kind && !o.dead) lg(o, {e: 'zero', kind, skip: !!o.skip});
   o.run = false; o.rest = false; o.sw = false; if (half) o.side = '';
 }
 async function waitTap(o){ o.wait = true; rerender(true); while (o.wait && !o.dead && !o.skip) await sleep(120); o.wait = false; }
+// ---------- BLD 931: the next move's instructions play in the Break's last seconds ----------
+// (Chris's workout notes, November 6, 2026, option 1: "the Break counts down 3, 2, 1, then the exercise does not start;
+// instructions play instead, and a few seconds later the clock starts".) Before a Break (between moves, between sets, the get
+// ready after the warm-up, and Switch sides) the player lists every line it would say before the next move's clock (the move's
+// name and sets, its side, form and breath lines, Go) and measures each recording (GGVoice.len). They start that many seconds,
+// plus a small margin, before the Break ends, so Go lands as the countdown reaches zero and the move and its clock start
+// together. A Break shorter than its instructions (with its opening line) grows just enough; if a line runs long, the
+// countdown waits for it. Voice Off, I Tap Done, and a Break skipped before the lines begin keep the usual order.
+const PRE_PER = 0.12, PRE_MARGIN = 0.3, PRE_GAP = 0.6, PRE_LEAD = 60;
+function preLines(o, st, set, k){
+  if (!st || st.t !== 'ex') return null;
+  const path = st.kind === 'time' ? 'time' : o.count && repN(st) ? 'count' : o.hands !== false ? 'hf' : '';
+  if (!path) return null;
+  const L = [], lead = set === 1 && !k, sides = st.side ? (st.first === 'R' ? ['R', 'L'] : ['L', 'R']) : [''];
+  if (!k){ if (set === 1){ if (st.fin) L.push(LN.fin); L.push(LN.ex(st)); if (st.alt) L.push(LN.alt); if (st.cue && !st.form && !st.breathLine) L.push(st.cue); } else L.push(LN.set(set, st.sets)); }
+  const sd = sides[k || 0]; if (sd) L.push(sd === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
+  if (lead && st.form) L.push(st.form);
+  if (lead && st.breathLine && path !== 'time') L.push(st.breathLine);
+  L.push(LN.go);
+  return L.filter(Boolean);
+}
+const preBusy = o => !!(o && o.pre && o.pre.started && !o.pre.fin);
+const preNear = (o, left) => !!(o && o.pre && (o.pre.started || (o.pre.dur != null && left < (o.pre.dur + 3) * 1000)));
+function preArm(o, lines, open){
+  o.pre = null; o.preOn = false; const V = VO();
+  if (!lines || !lines.length || !V || !V.on()) return;
+  const p = o.pre = {lines, durs: null, dur: null, open: 0, started: false, fin: false, gen: 0, ext: false, p: null}, vo = o.voice || AVA;
+  const len = t => { const est = lineSecs(t); if (typeof V.len !== 'function') return Promise.resolve(est);
+    return Promise.race([V.len(vo, t).then(x => x > 0 ? x : est, () => est), sleep(2500).then(() => est)]); };
+  Promise.all(lines.map(len).concat(open ? [len(open)] : [])).then(a => { if (o.pre !== p) return;
+    p.durs = a.slice(0, lines.length).map(x => x + PRE_PER); p.dur = p.durs.reduce((s, x) => s + x, 0); p.open = open ? a[lines.length] : 0;
+    lg(o, {e: 'pmeasure', dur: Math.round(p.dur * 1000) / 1000, open: Math.round(p.open * 1000) / 1000, n: lines.length}); });
+}
+// Each tick of the Break's timer: once the lengths are known, grow a Break too short for them, then start the lines on time.
+// Returns true when it moved the Break's end (the timer reads the clock again).
+function preTick(o, left){
+  const p = o.pre; if (!p || p.started || p.dur == null || !o.run) return false; let moved = false;
+  if (!p.ext){ p.ext = true; const need = (p.open + (p.open ? PRE_GAP : 0) + p.dur + PRE_MARGIN) * 1000;
+    if ((o.tot || 0) < need){ const add = need - o.tot; o.end += add; o.tot += add; moved = true; lg(o, {e: 'extend', ms: Math.round(add)}); } }
+  const want = (p.dur + PRE_MARGIN) * 1000, l2 = o.end - Date.now();
+  if (l2 <= want){ if (l2 < want - 150){ const add = want - l2; o.end += add; o.tot += add; moved = true; lg(o, {e: 'extend', ms: Math.round(add), late: 1}); } preGo(o); }
+  return moved;
+}
+function preGo(o){
+  const p = o.pre, g = p.gen; p.started = true; lg(o, {e: 'pre', n: p.lines.length, dur: Math.round(p.dur * 1000) / 1000, left: Math.round(o.end - Date.now())});
+  p.p = (async () => {
+    for (let k = 0; k < p.lines.length; k++){
+      if (o.dead || p.gen !== g) return; await hold(o); if (o.dead || p.gen !== g) return;
+      // a line running long: the countdown waits, so it still reaches zero as Go ends
+      const rest = p.durs.slice(k).reduce((s, x) => s + x, 0) * 1000, l2 = o.end - Date.now();
+      if (o.run && l2 < rest + 60){ const add = rest + 60 - l2; o.end += add; o.tot += add; }
+      await speak(o, p.lines[k], true);
+    }
+    if (p.gen === g){ p.fin = true; lg(o, {e: 'preEnd', left: Math.round(o.end - Date.now())}); }
+  })();
+}
+// After the Break: the lines that played are not said again, and the clock starts at once.
+async function preDone(o){
+  const p = o.pre; if (!p){ o.preOn = false; return; }
+  if (p.started && !p.fin && p.p) await p.p;
+  o.preOn = !!(p.started && p.fin); o.preGo = o.preOn; o.pre = null;
+}
+// Skip or +15 seconds while the lines play: they stop; after +15 they start again on time, after Skip the move begins as usual.
+function preCut(o){ const p = o.pre; if (!p || !p.started || p.fin) return; p.gen++; p.started = false; const V = VO(); if (V) V.stop(); }
+const ins = (o, t) => o.preOn ? Promise.resolve() : speak(o, t);
 // One set: each side in turn (Left side, the work, Switch sides, Right side, the work). Skip ends the stage it is on:
 // during the left side it moves to the right side; otherwise it ends this set, and the rest and the next sets still run.
 async function doSet(o, st){
   const sides = st.side ? (st.first === 'R' ? ['R', 'L'] : ['L', 'R']) : [''];
   for (let k = 0; k < sides.length && !o.dead; k++){
-    if (k){ o.side = ''; await speak(o, st.arm ? LN.swarm : LN.sw); await runTimer(o, SWITCH * 1000, 'switch'); if (o.dead) break; if (o.skip){ o.skip = false; if (o.skipMove) break; } }
+    if (k){ o.side = ''; await speak(o, st.arm ? LN.swarm : LN.sw); preArm(o, preLines(o, st, o.set, k)); await runTimer(o, SWITCH * 1000, 'switch'); await preDone(o); if (o.dead) break; if (o.skip){ o.skip = false; if (o.skipMove) break; } }
     o.side = sides[k]; rerender(true);
-    if (o.side) await speak(o, o.side === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
+    if (o.side) await ins(o, o.side === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
     const lead = o.set === 1 && k === 0;
-    if (st.kind === 'time'){ if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } await speak(o, LN.go); lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
+    if (st.kind === 'time'){ if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); } await ins(o, LN.go); o.preOn = false; lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
     else if (o.count && repN(st)){ // Chris (November 1, 2026): every instruction first, then Go, then the count.
-      if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); }
-      if (lead && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
-      await speak(o, LN.go);
+      if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); }
+      if (lead && st.breathLine){ lg(o, {e: 'breath'}); await ins(o, st.breathLine); }
+      await ins(o, LN.go); o.preOn = false;
       o.rep = 0; o.ring = true; await beats(o, repN(st), tempoOf(st));
       o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
     else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1, lead);
-    else { if (lead && st.form) await speak(o, st.form); await speak(o, LN.go); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
+    else { o.preOn = false; if (lead && st.form) await speak(o, st.form); await speak(o, LN.go); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
     if (o.skip && k < sides.length - 1 && !o.skipMove) o.skip = false;
   }
   o.side = ''; o.rep = 0;
@@ -1388,9 +1457,9 @@ async function doSet(o, st){
 async function hfSet(o, st, lastSide, lead){
   const n = repN(st) || WORD_REPS, t = tempoOf(st), secs = Math.max(8, n * t), lastAt = Math.min(3, Math.floor(n / 3)) * t;
   let saidHalf = false, saidLast = false; o.hf = true;
-  if (lead && st.form && !o.dead){ lg(o, {e: 'form'}); await speak(o, st.form); }
-  if (lead && st.breathLine && !o.dead){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
-  await speak(o, LN.go); lg(o, {e: 'hf', secs}); o.ring = true;
+  if (lead && st.form && !o.dead){ lg(o, {e: 'form'}); await ins(o, st.form); }
+  if (lead && st.breathLine && !o.dead){ lg(o, {e: 'breath'}); await ins(o, st.breathLine); }
+  await ins(o, LN.go); o.preOn = false; o.preGo = false; lg(o, {e: 'hf', secs}); o.ring = true;
   await runTimer(o, secs * 1000, '', false, left => { const s2 = left / 1000;
     if (o.ring && secs - s2 >= RING_REPS * t){ o.ring = false; rerender(true); }
     if (!saidHalf && secs >= 16 && s2 <= secs / 2 && s2 > lastAt + 2){ saidHalf = true; if (!o.spk) speak(o, LN.half[(o.hi = (o.hi || 0) + 1) % LN.half.length]); }
@@ -1431,7 +1500,7 @@ const BEAT_LEAD = 400;
 async function beats(o, n, t, keep){
   const V = VO(), vo = o.voice || AVA; o.bk = (o.bk || 0) + 1; o.rep = 0;
   if (V && V.prime) V.prime(vo, Array.from({length: n}, (x, k) => LN.count(k + 1)));
-  const c = clkOn(o, Date.now() + BEAT_LEAD); c.beat = true; rerender(true); lg(o, {e: 'beats', n, t, t0: c.t0});
+  const c = clkOn(o, Date.now() + (o.preGo ? PRE_LEAD : BEAT_LEAD)); o.preGo = false; c.beat = true; rerender(true); lg(o, {e: 'beats', n, t, t0: c.t0});
   const at = r => c.t0 + (r - 1) * t * 1000, wake = async (ms, early) => { while (!o.dead && !o.skip){ await hold(o); clkSync(o); const left = ms() - Date.now() - early; if (left <= 0) return true; await sleep(Math.min(100, left)); } return false; };
   for (let r = 1; r <= n; r++){
     if (!(await wake(() => at(r), 150))) break;
@@ -1467,7 +1536,8 @@ async function between(o, nx, secs){
   if (!secs){ await speak(o, LN.next(nx.name)); return; }
   o.between = true; lg(o, {e: 'between', secs});
   speak(o, LN.nextRest(secs, nx.name));
-  await runTimer(o, secs * 1000, 'between');
+  preArm(o, preLines(o, nx, 1, 0), LN.nextRest(secs, nx.name));
+  await runTimer(o, secs * 1000, 'between'); await preDone(o);
   o.between = false; o.skip = false;
 }
 function motLine(o){ const m = MOT(); if (!m.length) return ''; if (o.mi == null){ const d = new Date(); o.mi = (d.getDate() * 7 + d.getMonth() * 3) % m.length; } return m[o.mi++ % m.length]; }
@@ -1482,12 +1552,13 @@ async function runSession(o){
   if (!o.music && !o.prac) o.music = (await moveMusic()) ? '/audio/music/move-' + (1 + (new Date().getDay() + o.title.length) % 7) + '.mp3' : '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3';
   if (V) V.music(o.music);
   rerender(true);
+  if (!o.med && !o.prac) await speak(o, LN.focus);   // BLD 931: breathe and form first, once at the start of every workout
   await speak(o, o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
   if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
   while (!o.dead && o.i < o.steps.length){
     const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; rerender(true);
-    if (st.t === 'time'){
+    if (st.t === 'time'){ o.preOn = false;
       if (!o.prac && st.part === 'Cooldown' && o.steps[o.i - 1] && o.steps[o.i - 1].part !== 'Cooldown') await speak(o, LN.cool);
       if (st.lines){ for (const ln of st.lines){ if (o.dead || o.skip) break; o.line = ln; rerender(true); await hold(o); await speak(o, ln); if (!(VO() && VO().on())) await snooze(o, Math.min(4000, lineSecs(ln) * 1000)); await snooze(o, 800); } o.line = ''; }
       else await speak(o, tLine(o, st));
@@ -1500,15 +1571,16 @@ async function runSession(o){
     // BLD 915: the move's name and sets, then (in doSet) its form line and its breath line, then Go: two short lines of
     // instruction. The cue is spoken only for a move with neither (it stays on the screen); tips and the weight line stay
     // on the screen between moves, with the recommended weight.
-    if (o.set === 1){ if (st.fin) await speak(o, LN.fin); await speak(o, LN.ex(st)); if (st.alt) await speak(o, LN.alt); if (st.cue && !st.form && !st.breathLine) await speak(o, st.cue); } else await speak(o, LN.set(o.set, st.sets));
+    if (o.set === 1){ if (st.fin) await ins(o, LN.fin); await ins(o, LN.ex(st)); if (st.alt) await ins(o, LN.alt); if (st.cue && !st.form && !st.breathLine) await ins(o, st.cue); } else await ins(o, LN.set(o.set, st.sets));
     await hold(o); if (o.dead) break;
     await doSet(o, st);
     if (o.dead) break;
     lg(o, {e: 'set'});
     const skipMove = o.skipMove; o.skip = false; o.skipMove = false;
     if (!skipMove && o.set < st.sets){ const r = st.rest, rl = restLines(o, st); lg(o, {e: 'rest', secs: r}); o.mline = rl.join(' '); o.mcoach = /^Too (hard|easy)\?/.test(rl[0] || '');
-      (async () => { await speak(o, LN.rest(r)); for (const l of rl){ if (!o.rest || o.dead) break; await speak(o, l); } })();
-      await runTimer(o, r * 1000, 'rest'); if (o.dead) break; o.skip = false; o.set++; continue; }
+      (async () => { await speak(o, LN.rest(r)); for (const l of rl){ if (!o.rest || o.dead || o.pre && o.pre.started) break; await speak(o, l); } })();
+      preArm(o, preLines(o, st, o.set + 1, 0), LN.rest(r));
+      await runTimer(o, r * 1000, 'rest'); await preDone(o); if (o.dead) break; o.skip = false; o.set++; continue; }
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
     const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, st.restAfter);
   }
@@ -1558,7 +1630,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b928';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b931';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
@@ -1707,7 +1779,7 @@ const TIPS = ['Take a sip of water before the next move.', 'Stand tall: ears ove
   'A lighter weight with great form is a strong choice.', 'Lift a dumbbell from the floor with a squat: back long, weight close.', 'Carry dumbbells close at your sides, shoulders level.',
   'Lower dumbbells to the floor with control.', 'Set your dumbbells beside the mat, out of the walkway.', 'Clear the floor of dumbbells when you finish, so everyone walks safely.',
   'Wear shoes, or use a mat with a good grip.', 'Keep a towel close for dry hands and a sure grip.'];
-const TIP_DB = [8, 9, 10, 11], TIP_CLEAR = 12, TIP_GEN = [0, 1, 2, 3, 4, 5, 6, 7, 13, 14];
+const TIP_DB = [8, 9, 10, 11], TIP_CLEAR = 12, TIP_GEN = [1, 2, 3, 4, 5, 6, 7, 13, 14];   // BLD 931: water (tip 0) has its own rhythm (WATER)
 const dbMove = st => wtMove(st) && /dumbbell|kettlebell|\bpair\b/i.test([st.name, st.load, st.equip, st.how].concat(arr(st.steps)).join(' '));
 function tipPlan(o, day){
   if (!o || o.prac || o.med || !Array.isArray(o.steps)) return {};
@@ -1724,6 +1796,34 @@ function tipPlan(o, day){
   const out = {}; pick.forEach((t, k) => { const j = Math.round((k + 1) * at.length / n) - 1; out[at[Math.max(0, Math.min(at.length - 1, j))]] = t; });
   return out; }
 const tipLine = (o, st) => { if (!o.between || !o.run) return ''; if (!o.tips) o.tips = tipPlan(o); const t = o.tips[o.i]; return t ? `<p class="hj-gtip" data-hjtip><span>Grounded Tip</span>${esc(t)}</p>` : ''; };
+// BLD 931 (Chris's workout notes, November 6, 2026): a water tip at a Break about every 5 to 10 minutes of workout time (the first
+// Break 6 minutes or more after the start, then the first Break 6 minutes or more after the last one, on the player's own clock
+// model); the Suitcase Carry's safety tip on lifting and switching a heavy dumbbell (the Break before it and its Switch sides);
+// push-up stands on push-ups. All type only.
+const WATER = 'Take a few sips of water.', WATER_EVERY = 6 * 60;
+const SWITCH_DB = 'To switch hands with a heavy dumbbell, bend your knees, set it down, switch, and stand up with your legs, back long, to protect your lower back.';
+const STANDS = 'Use push-up stands if you have them; they protect your wrists.';
+const suitcase = st => !!st && st.t === 'ex' && /\bsuitcase\b/i.test(st.name || '');
+const pushUp = st => !!st && st.t === 'ex' && /\bpush.?ups?\b/i.test(st.name || '') && !/\b(wall|counter|table|incline|bench|chair|doorway)\b/i.test(st.name || '');
+function waterPlan(o){
+  if (!o || o.prac || o.med || !Array.isArray(o.steps)) return {};
+  const out = {}; let t = 0, last = 0; const mark = (k, at) => { if (at - last >= WATER_EVERY){ out[k] = 1; last = at; } };
+  o.steps.forEach((st, i) => { const d = planSecs([st], 0, 1, o);
+    if (st.t === 'ex' && st.rest > 0) for (let k = 1; k < (st.sets || 1); k++) mark(i + '|r' + k, t + d * k / st.sets);
+    t += d; const nx = o.steps[i + 1]; if (nx && nx.t === 'ex'){ const b = st.t === 'time' ? GET_READY : +st.restAfter || 0; if (b > 0){ mark((i + 1) + '|b', t); t += b; } } });
+  return out; }
+const brkKey = o => o.between ? o.i + '|b' : o.rest ? o.i + '|r' + o.set : '';
+const waterLine = o => { if (!o.run || !(o.between || o.rest)) return ''; if (!o.water) o.water = waterPlan(o); return o.water[brkKey(o)] ? `<p class="hj-xtip hj-wtip" data-hjwater><span>Water</span>${esc(WATER)}</p>` : ''; };
+const safeLine = st => suitcase(st) ? `<p class="hj-xtip hj-stip" data-hjsafe><span>Protect Your Back</span>${esc(SWITCH_DB)}</p>` : '';
+// BLD 931 (Chris, November 6, 2026: breathe and form first): one short form tip on the stage beside the breathing ring, from the
+// move's own form line (else its first tip, or how), cut at a natural pause to about 44 letters.
+function shortTip(t){
+  let s = String(t || '').replace(/\s+/g, ' ').trim(); const m = s.match(/^(.*?[.!?])(\s|$)/); if (m) s = m[1]; s = s.replace(/[.!?]+$/, '');
+  if (s.length <= 44) return s;
+  const ps = s.split(/,\s+/); let out = ps[0];
+  for (let k = 1; k < ps.length; k++){ const n = out + ', ' + ps[k]; if (n.length <= 44 || (out.length < 16 && n.length <= 60)) out = n; else break; }
+  return out.length > 60 ? out.slice(0, 58).replace(/\s+\S*$/, '') : out; }
+const ftipOf = st => st ? shortTip(sayLine(st.form) || arr(st.tips)[0] || st.how || '') : '';
 // Asked once, on the start screen of the first workout that has a weight in it, before Play.
 const bwAsk = o => !!o && !o.prac && !o.med && !TEEN() && !bodyW() && !(H().set || {}).bwAsked && arr(o.steps).some(recOK);
 const adjChips = (cur, a) => `<div class="hj-adj" role="group" aria-label="Personal adjustment">${W_ADJ.map(x => `<button type="button" class="chip${x === cur ? ' on' : ''}" aria-pressed="${x === cur}" data-hja="${a}" data-hjv="${x}">${x > 0 ? '+' : ''}${x} lb</button>`).join('')}</div>`;
@@ -1772,7 +1872,7 @@ function vStart(o, top){
   return `${top(o.title, o.med ? 'Daily Meditation' : o.prac ? 'Flow' : 'Today\'s Session', null)}${stagePanel(stState(o), o.med ? medOp(o) : {fig: moveFig(st0)})}<div class="hj-ovb">
     ${pl ? `<p class="hj-prog">${esc(pl)}</p>` : ''}${o.prac && o.from ? `<p class="hj-from">${esc(o.from)}</p>` : ''}<div class="hj-big2" style="margin-top:6px">${esc(String(mins))} minutes</div>
     <p class="hj-sub">${o.prac ? esc(o.lead || '') : `${moves.length} moves, with a warm-up and a cooldown, and a rest between moves.`}${kit.length ? ' Have ready: ' + esc(kit.join(', ')) + '.' : ''}</p>
-    ${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
+    ${!o.prac && !o.med ? `<p class="hj-focus" data-hjfocus>${esc(LN.focus)}</p>` : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
     ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
     ${o.gentle && ((PLIB() || {}).gentle || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PLIB().gentle.safety)}</p>` : ''}
     ${toggles(o)}
@@ -1812,9 +1912,25 @@ function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.pr
 // BLD 919 (Chris): after a Gentle session on Start, one quiet line with a link, never a pop-up.
 const MEM_URL = '/the-grounded-way.html#ways';
 const memMore = () => `<p class="hj-sub hj-memmore" style="margin-top:14px">There's more of this in Membership: the 12-week program and every guided workout. <a href="${MEM_URL}">See Membership</a></p>`;
+// BLD 931 (Chris's workout notes: "a Full Screen feature?"): the workout player's stage fills the screen. The Fullscreen API on the
+// page (the player redraws its stage on every step, so the page itself goes full screen and the player shows only the stage and
+// a small bar: Pause or Resume, and Exit Full Screen); where the API is missing (iPhone Safari) the same view fills the window
+// and the page around it hides. Escape, the Exit button, closing the player, and the end of the workout all leave it.
+const FS = {on: false, api: false, t: 0};
+function fsSet(on){
+  const d = document, el = d.documentElement, req = el.requestFullscreen || el.webkitRequestFullscreen, ex = d.exitFullscreen || d.webkitExitFullscreen, cur = () => d.fullscreenElement || d.webkitFullscreenElement;
+  if (on){ if (FS.on) return; FS.on = true; el.classList.add('gg-fs'); FS.api = false;
+    if (req){ try { const r = req.call(el, {navigationUI: 'hide'}); FS.api = true; if (r && r.catch) r.catch(() => { FS.api = false; }); } catch(e){ FS.api = false; } }
+    rerender(true); return; }
+  if (!FS.on) return; FS.on = false; FS.t = Date.now(); el.classList.remove('gg-fs');
+  if (cur() && ex){ try { const r = ex.call(d); if (r && r.catch) r.catch(() => {}); } catch(e){} }
+  FS.api = false; if (S.ov) rerender(true); }
+const fsBar = o => `<div class="hj-fsbar" role="group" aria-label="Full screen controls"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="fsx">Exit Full Screen</button></div>`;
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { if (!(document.fullscreenElement || document.webkitFullscreenElement) && FS.on && FS.api) fsSet(false); }));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && (FS.on || Date.now() - FS.t < 500)){ e.stopImmediatePropagation(); e.preventDefault(); fsSet(false); } }, true);
 function vAuto(o, top){
   const st = o.steps[o.i], pct = Math.round(100 * o.i / o.steps.length);
-  if (o.fin || !st) return `${top(o.title, o.prac ? (o.med ? 'Meditation complete' : 'Flow complete') : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
+  if (o.fin || !st){ if (FS.on) setTimeout(() => fsSet(false), 0); return `${top(o.title, o.prac ? (o.med ? 'Meditation complete' : 'Flow complete') : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`; }
   const state = stState(o), left = o.run ? Math.max(0, o.end - Date.now()) : 0, ring = o.run && (o.rest || o.between || o.sw) ? {pct: left / (o.tot || 1), secs: Math.ceil(left / 1000)} : {};
   // BLD 898: one timeline. The figure's moves set the breath ring's phases (GGMoves.plan): a Flow step's breath key paces the
   // figure, a counted or timed rep paces both, and the clock (clkSync) starts them together on each count.
@@ -1834,25 +1950,27 @@ function vAuto(o, top){
   // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
   const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
   const sop = Object.assign({fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
-    breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined}, ring);
+    breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined,
+    ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep && cntOf ? (st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : '') : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? (st.arm ? ' · Left arm' : ' · Left side') : o.side === 'R' ? (st.arm ? ' · Right arm' : ' · Right side') : '';
   const label = o.between ? 'Break, then next move' : o.sw ? 'Switch sides' : o.rest ? `Break, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (st.fin && st.sets === 1 ? 'Finish strong' : o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
   let detail;
-  if (o.between) detail = `${tipLine(o, st)}${arr(st.tips).length ? `<ul class="hj-tips">${st.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : `<p class="hj-how">${esc(st.how || '')}</p>`}${weightBox(st)}`;
-  else if (o.rest) detail = `${o.mcoach ? modsBlock(st, ['easier', 'harder']) : `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>`}${weightBox(st)}`;
-  else if (o.sw) detail = `<p class="hj-how">Switch to your ${st.first === 'R' ? 'left' : 'right'} ${st.arm ? 'arm' : 'side'}.</p>`;
+  if (o.between){ const tl = (pushUp(st) ? [STANDS] : []).concat(arr(st.tips));
+    detail = `${tipLine(o, st)}${waterLine(o)}${safeLine(st)}${tl.length ? `<ul class="hj-tips">${tl.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : `<p class="hj-how">${esc(st.how || '')}</p>`}${weightBox(st)}`; }
+  else if (o.rest) detail = `${o.mcoach ? modsBlock(st, ['easier', 'harder']) : `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>`}${waterLine(o)}${weightBox(st)}`;
+  else if (o.sw) detail = `<p class="hj-how">Switch to your ${st.first === 'R' ? 'left' : 'right'} ${st.arm ? 'arm' : 'side'}.</p>${safeLine(st)}`;
   else if (st.lines) detail = `<p class="hj-how hj-mline">${esc(o.line || (o.run ? 'Rest in the quiet.' : ''))}</p>`;
-  else detail = `${o.mline && o.i === 0 ? `<p class="hj-light">${esc(o.mline)}</p>` : ''}${formLine(st)}${howBlock(st)}${st.alt && st.t === 'ex' ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}${st.t === 'time' ? modsBlock(st, ['feel', 'easier']) : ''}`;
+  else detail = `${o.mline && o.i === 0 ? `<p class="hj-light">${esc(o.mline)}</p>` : ''}${formLine(st)}${howBlock(st)}${st.alt && st.t === 'ex' ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${pushUp(st) ? `<p class="hj-cue hj-stands" data-hjstands>${esc(STANDS)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}${st.t === 'time' ? modsBlock(st, ['feel', 'easier']) : ''}`;
   const t = trans(o, state);
   return `${top(o.title, (o.i + 1) + ' of ' + o.steps.length, pct)}
   <div class="hj-sess"><span data-hjsess>${esc(clock(o.active || 0))}</span><span data-hjleft>about ${Math.max(1, Math.round(estLeft(o) / 60000))} min left</span></div>
-  ${stagePanel(state, sop)}
+  ${stagePanel(state, sop)}${fsBar(o)}
   <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}"><div class="hj-kick hj-stk">${esc(label)}</div><h2 class="hj-exn">${esc(o.swap && st.swap ? st.swap : st.name)}</h2>${st.t === 'ex' && !o.between ? dots(o.rest ? o.set + 1 : o.set, st.sets) : ''}${big}${st.t === 'ex' && !o.between && !o.rest && !o.sw ? recLine(st) : ''}
     ${detail}
     ${o.wait ? `<button type="button" class="btn btn-gold hj-go" data-hja="tapdone">${o.side && o.side !== (st.first === 'R' ? 'L' : 'R') ? (o.side === 'L' ? 'Left' : 'Right') + (st.arm ? ' Arm Done' : ' Side Done') : 'Set Done'}</button>` : ''}
     <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">${o.between ? 'Start Now' : o.rest || o.sw ? 'Ready Now' : o.hf ? 'Set Done' : 'Skip'}</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest && !o.between ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>
-    ${st.t === 'ex' && !o.between ? `<button type="button" class="linkbtn hj-skip" data-hja="askipmove">Skip This Move</button>` : ''}
+    <div class="hj-links">${st.t === 'ex' && !o.between ? `<button type="button" class="linkbtn hj-skip" data-hja="askipmove">Skip This Move</button>` : ''}<button type="button" class="linkbtn hj-fsb" data-hja="fs">Full Screen</button></div>
     ${toggles(o)}</div>`;
 }
 // ---------- the kitchen guide (Andrew) ----------
@@ -1901,10 +2019,12 @@ function actCoach(a, v){
     case 'manual': if (o){ o.stage = 'run'; o.mode = 'manual'; if (V) V.unlock(); } rerender(true); return true;
     case 'didit': if (o){ markDone(o.key || ('work:' + o.s)); checkOn(o.prac ? 'still' : 'move'); toast('Marked done. Well done.'); closeOv(); } return true;
     case 'apause': if (o){ o.paused = !o.paused; if (V){ o.paused ? V.pause() : V.resume(); } clkSync(o); } rerender(true); return true;
-    case 'askip': if (o){ o.skip = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
-    case 'askipmove': if (o){ o.skip = true; o.skipMove = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
-    case 'amore': if (o && o.run){ o.end += 15000; o.tot = (o.tot || 0) + 15000; } return true;
+    case 'askip': if (o){ preCut(o); o.skip = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
+    case 'askipmove': if (o){ preCut(o); o.skip = true; o.skipMove = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
+    case 'amore': if (o && o.run){ preCut(o); o.end += 15000; o.tot = (o.tot || 0) + 15000; } return true;
     case 'tapdone': if (o) o.wait = false; return true;
+    case 'fs': fsSet(true); return true;
+    case 'fsx': fsSet(false); return true;
     case 'guide': if (o){ o.guide = true; o.gi = 0; o.timers = []; if (V){ V.unlock(); V.music(null); } kSay(o, o.intro || (o.k === 'cook' ? LN.cIntro(o.title) : LN.prepIntro(o.title))).then(() => { if (S.ov === o && o.guide && o.gi === 0) kEnter(o); }); } rerender(true); return true;
     case 'knext': if (o){ const n = kSteps(o).length; if (V) V.stop(); o.dn = o.dn || {}; o.dn[o.gi] = true; o.gi = Math.min(n, o.gi + 1); rerender(true); if (o.gi < n) kEnter(o); else kSay(o, o.outro || (o.k === 'cook' ? LN.cOut : LN.prepOut)); } return true;
     case 'kback': if (o && o.gi > 0){ if (V) V.stop(); o.gi--; rerender(true); kEnter(o); } return true;
@@ -5198,6 +5318,24 @@ const CSS = `
 /* BLD 897: the form line, the Move Well card, and the start list in the warm ink and paper of the new player */
 .hj-gtip{max-width:44ch;margin:8px auto 10px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);border-left:4px solid #8DB38A;text-align:left;font-size:15.5px;line-height:1.45;}
 .hj-gtip span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:13px;color:var(--ink-soft);margin-bottom:2px;}
+/* BLD 931: the water and back safety tips in a Break, push-up stands, the start screen's focus line, and Full Screen */
+.hj-xtip{max-width:44ch;margin:8px auto 10px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);border-left:4px solid #8DB38A;text-align:left;font-size:15.5px;line-height:1.45;}
+.hj-xtip span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:13px;color:var(--ink-soft);margin-bottom:2px;}
+.hj-xtip.hj-wtip{border-left-color:#5B9BD5;}.hj-xtip.hj-stip{border-left-color:#C98A2C;}
+.hj-stands{font-weight:600;}
+.hj-focus{max-width:44ch;margin:10px auto 8px;font:600 15.5px/1.4 'Barlow',sans-serif;text-align:center;}
+.hj-links{display:flex;gap:6px 22px;justify-content:center;flex-wrap:wrap;}.hj-links .linkbtn{margin-top:14px;}
+.hj-fsbar{display:none;}
+html.gg-fs,html.gg-fs body{overflow:hidden!important;}
+html.gg-fs body>:not(:has(.hj-ov)):not(.hj-ov){visibility:hidden;}
+html.gg-fs .hj-ov{position:fixed;inset:0;z-index:2147483000;padding:0;overflow:hidden;}
+html.gg-fs .hj-ovin{max-width:none;margin:0;padding:0;height:100vh;height:100dvh;display:flex;flex-direction:column;}
+html.gg-fs .hj-ovin>:not(.hj-stagebox):not(.hj-fsbar){display:none!important;}
+html.gg-fs .hj-stagebox{flex:1 1 auto;margin:0;min-height:0;}
+html.gg-fs .hj-stagebox .ggs,html.gg-fs .hj-stagebox.g3-wait .ggs{--H:calc(100vh - 72px);--H:calc(100dvh - 72px - env(safe-area-inset-bottom,0px));--fs:min(340px,62vw,calc(var(--H) * .8));border-radius:0;}
+html.gg-fs .hj-hasart .hj-stagebox{border-radius:0;box-shadow:none;}
+html.gg-fs .hj-fsbar{display:flex;gap:12px;justify-content:center;align-items:center;flex:0 0 auto;height:72px;padding:0 16px env(safe-area-inset-bottom,0px);}
+html.gg-fs .hj-fsbar .btn{min-height:48px;min-width:140px;justify-content:center;}
 .hj-form{margin:10px 0;padding:10px 12px;border-left:3px solid #C98A2C;background:rgba(243,200,103,.14);border-radius:0 12px 12px 0;text-align:left;line-height:1.45;overflow-wrap:anywhere;}
 .hj-form span{display:block;font:700 11px/1 'Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8A5A12;margin-bottom:4px;}
 :root[data-theme="dark"] .hj-form span{color:#F0B850;}

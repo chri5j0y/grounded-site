@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'b915';
+const V = 'b931';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -236,7 +236,7 @@ function drawForms(){
   if (!L.gr || L.gn-- <= 0 || L.gr.box !== L.box){
     const r = c.getBoundingClientRect(), avoid = [];
     // The words keep clear of the breathing rings, the count and its chips, the side chip, the weight chip, the Break sign, and the progress line.
-    if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-wt, .ggs-break, .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
+    if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-wt, .ggs-break, .ggs-prog, .ggs-ftip').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
     L.gr = {w: r.width, h: r.height, avoid, box: L.box}; L.gn = 30;
   }
   const R = L.gr, w = Math.round(R.w * d), h = Math.round(R.h * d);

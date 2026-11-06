@@ -3980,6 +3980,12 @@ var GG3D = window.GG3D = window.GG3D || {q: [], define: function(i, d){ this.q.p
 (function(G){
 // A planted foot: x out from the middle (mirrored per side), z forward, f the foot's angle (72 rests flat).
 function foot(x, z, more){ var o = {x: x, y: .072, z: z, f: 72}; for (var k in more) o[k] = more[k]; return o; }
+// BLD 931 (Chris's workout notes, November 6, 2026: "Dumbbell Reverse Lunge: where are the dumbbells?"): a move done with
+// a pair of dumbbells held at the sides gets its own copy of the body weight move, with a dumbbell in each hand, palms in,
+// the arms long beside the body (arms: the arm angles to hold, when the body weight move swings them).
+function withPair(d, name, arms){ var o = JSON.parse(JSON.stringify(d)); o.name = name; o.props = ['dumbbells'].concat(o.props || []);
+  o.k = o.k.map(function(k){ k.hR = 'grip'; k.hL = 'grip'; k.pnR = 'in'; k.pnL = 'in'; if (k.ao == null) k.ao = 10; if (arms){ k.ra = arms.slice(); k.la = arms.slice(); } return k; });
+  return o; }
 // Knees track out over the toes.
 var KNEE = [.35, 0, 1];
 
@@ -4014,22 +4020,26 @@ G.define('bench-squat', {name: 'Squat to Bench', tempo: 3, base: 'stand', glow: 
 
 // ---- Lunges ----------------------------------------------------------
 // Split squat: right foot forward, left foot back on its toes. The hips drop straight down, the chest stays tall.
-G.define('lunge', {name: 'Split Squat', tempo: 3, base: 'stand', glow: {quads: [.55, 1], glutes: [.5, 1], hams: [.2, .4]}, cam: {yaw: 12, el: 6, zoom: 1},
+var D_LUNGE = {name: 'Split Squat', tempo: 3, base: 'stand', glow: {quads: [.55, 1], glutes: [.5, 1], hams: [.2, .4]}, cam: {yaw: 12, el: 6, zoom: 1},
   form: [{when: [.3, .7], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'front knee over ankle', at: 'lowerleg01.R', side: -1},
     {when: [.3, .7], plumb: ['neck01', 'root'], say: 'tall and steady', at: 'spine01', side: -1}],
   k: [
     {br: 'in', p: [.8, -.15], t: [178, 180], n: 181, ra: [4, 6], la: [4, 6], rl: foot(.11, .32), ll: {x: .11, y: .13, z: -.5, f: 38, toe: 90}, e: .25, lo: 3},
     {br: 'out', p: [.52, -.15], t: [176, 179], n: 180, ra: [6, 8], la: [6, 8], rl: foot(.11, .32, {pole: [.15, 0, 1]}), ll: {x: .11, y: .13, z: -.5, f: 38, toe: 90}, e: 1, lo: 3}
-  ]});
+  ]};
+G.define('db-split-squat', withPair(D_LUNGE, 'Split Squat with Dumbbells'));
+G.define('lunge', D_LUNGE);
 
 // Reverse lunge: step back with the left foot, lower the back knee toward the floor, step forward to stand.
-G.define('reverse-lunge', {name: 'Reverse Lunge', tempo: 3.4, base: 'stand', glow: {quads: [.5, 1], glutes: [.5, 1], hams: [.2, .4]}, cam: {yaw: 14, el: 6, zoom: 1},
+var D_RLUNGE = {name: 'Reverse Lunge', tempo: 3.4, base: 'stand', glow: {quads: [.5, 1], glutes: [.5, 1], hams: [.2, .4]}, cam: {yaw: 14, el: 6, zoom: 1},
   form: [{when: [.42, .58], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'front knee over ankle', at: 'lowerleg01.R', side: -1},
     {when: [.42, .58], line: ['root', 'neck01'], say: 'chest tall', at: 'spine01', side: -1}],
   k: [
     {br: 'in', on: 'fR', p: [.925, -.062], t: [181, 180], n: 182, ra: [4, 8], la: [4, 8], rl: foot(.11, .02), ll: foot(.11, .02, {toe: 88}), lift: .08, e: .2},
     {br: 'out', on: 'fR', p: [.52, -.46], t: [172, 175], n: 178, ra: [8, 10], la: [8, 10], rl: foot(.11, .02, {pole: [.15, 0, 1]}), ll: {x: .11, y: .15, z: -.84, f: 42, toe: 92}, lift: .08, e: 1}
-  ]});
+  ]};
+G.define('db-reverse-lunge', withPair(D_RLUNGE, 'Dumbbell Reverse Lunge'));
+G.define('reverse-lunge', D_RLUNGE);
 
 // BLD 903 (Chris, November 1, 2026: "Step Back and Reach Up.. he does not reach up"): the right foot steps back into a
 // lunge as both arms sweep up overhead (in breath), then the arms come down as the foot steps forward to stand (out
@@ -4137,14 +4147,16 @@ G.define('step-calf-raise', {name: 'Calf Raises on a Step', tempo: 3, base: 'sta
 
 // Step-up: the whole right foot on a low step, press through that heel to stand tall on the step, then step down
 // slowly with the left foot. Out on the way up.
-G.define('step-up', {name: 'Step-Up', tempo: 3.4, base: 'stand', glow: {quads: [.4, 1], glutes: [.4, 1]}, cam: {yaw: 10, el: 6, zoom: 1},
+var D_STEPUP = {name: 'Step-Up', tempo: 3.4, base: 'stand', glow: {quads: [.4, 1], glutes: [.4, 1]}, cam: {yaw: 10, el: 6, zoom: 1},
   props: ['step'],
   form: [{when: [.02, .2], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'press through the whole foot', at: 'lowerleg01.R', side: 1},
     {when: [.45, .6], plumb: ['head', 'foot.R'], say: 'stand tall', at: 'neck01', side: -1}],
   k: [
     {br: 'out', on: 'fR', p: [.88, .12], t: [172, 175], n: 178, ra: [10, 14], la: [-6, 4], rl: {x: .11, y: .272, z: .33, f: 72, pole: [.2, 0, 1]}, ll: foot(.11, -.02), lift: .12, e: .5},
     {br: 'in', on: 'fR', p: [1.125, .25], t: [181, 181], n: 182, ra: [4, 8], la: [4, 8], rl: {x: .11, y: .272, z: .33, f: 72}, ll: {x: .11, y: .272, z: .33, f: 72}, lift: .12, e: 1}
-  ]});
+  ]};
+G.define('db-step-up', withPair(D_STEPUP, 'Step-Up with Dumbbells', [2, 4]));
+G.define('step-up', D_STEPUP);
 
 // BLD 915 (Chris's workout notes: "add an arm swing up as the knee drives up, to blast off, with one leg up"): the
 // Step-Up Drive. The whole right foot on a low step, arms back; drive up through that heel and blast off: the left knee
@@ -4274,14 +4286,16 @@ G.define('heel-toe', {name: 'Heel-to-Toe Walk', own: true, steps: 2, tempo: 3, g
 // against the lifted knee. One rep each side, on the count.
 var MUP = {x: .12, y: .36, z: .32, f: 62, pole: [.1, 0, 1]};
 // BLD 903: one breath a step (one count): in as the knee lifts, out as it lowers.
-G.define('march', {name: 'March in Place', tempo: 1.2, alt: true, rest: 0, base: 'stand', glow: {flexors: [.8, .8], quads: [.3, .3], calves: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
+var D_MARCH = {name: 'March in Place', tempo: 1.2, alt: true, rest: 0, base: 'stand', glow: {flexors: [.8, .8], quads: [.3, .3], calves: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
   form: [{when: 'always', plumb: ['head', 'root'], say: 'tall chest', at: 'neck01', side: 1}],
   k: [
     {br: 'in', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
     {br: 'out', via: true, on: 'fL', p: [.93, -.062], px: .028, tw: -5, hy: 2, rl: MUP, ra: [-20, 18], la: [30, 78], ao: 6, e: 1, gl: [0, 1], lift: 0},
     {br: 'in', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
     {br: 'out', via: true, on: 'fR', p: [.93, -.062], px: -.028, tw: 5, hy: -2, ll: MUP, la: [-20, 18], ra: [30, 78], ao: 6, e: 1, gl: [1, 0], lift: 0}
-  ], sideGlow: 'flexors'});
+  ], sideGlow: 'flexors'};
+G.define('farmer-march', withPair(D_MARCH, 'Farmer March', [1, 1, 1]));
+G.define('march', D_MARCH);
 
 // Knee drive: reach both arms up tall, then drive one knee up as the arms pull down to meet it. Out on the drive.
 G.define('knee-drive', {name: 'Knee Drives', tempo: 1.4, alt: true, rest: 0, base: 'stand', glow: {flexors: [.8, .8], abs: [.6, .6], lats: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
@@ -4757,17 +4771,21 @@ G.define('shoulder-tap', {name: 'Plank Shoulder Tap', tempo: 2.4, mirror: true, 
 // Plank pull-through: a high plank with the feet wide. The dumbbell sits just outside the right hand; the left hand
 // reaches under the chest and drags it across to the left, the right hand comes under to take it, the left hand
 // returns to the floor, and the right hand drags it back. Each drag is one rep; hips stay square the whole time.
+// BLD 931 (Chris, November 6, 2026: "show setting the dumbbell down far left, switching arms, then far right, and so on"):
+// the dumbbell rests on the floor at each far side, the camera looks from the front and side so left and right read across
+// the screen, and the hold changes hands only once both hands are on the dumbbell (a quick regrip, no flying weight).
 var PT = {reach: null, t: [108, 108], n: 104, ra: PH, la: PH, rl: [-72, -72, 22, 64], ll: [-72, -72, 22, 64], lo: 10, hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down'};
 function bell(x, y, z){ return {x: x, y: y, z: z, pole: [.3, -.3, -1], f: 4}; }
 var PT_FIT_R = {r: .95, by: 't', span: 10, side: 'R'}, PT_FIT_L = {r: .95, by: 't', span: 10, side: 'L'};
-G.define('pull-through', {name: 'Plank Pull-Through', tempo: 3, mirror: true, dur: [.9, .9, 2, 2], base: 'plank', props: ['mat', {id: 'dumbbell', at: 'key'}],
-  glow: {abs: [1, 1], obliques: [1, 1], delts: [.6, .6], lats: [.4, .4]}, cam: {yaw: 30, el: 22, zoom: 1.04},
+G.define('pull-through', {name: 'Plank Pull-Through', tempo: 3, mirror: true, dur: [1.2, 1.2, 1.1, .3, 1], base: 'plank', props: ['mat', {id: 'dumbbell', at: 'key'}],
+  glow: {abs: [1, 1], obliques: [1, 1], delts: [.6, .6], lats: [.4, .4]}, cam: {yaw: 62, el: 26, zoom: 1},
   form: [{when: 'out', level: ['upperleg01.R', 'upperleg01.L'], say: 'hips square', at: 'root', side: -1}],
   k: [
-    ext(PT, {br: 'out', hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(-.36, .15, .38), hL: 'grip', pnL: 'in', e: .7}),
-    ext(PT, {br: 'out', via: true, hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(.0, .2, .32), hL: 'grip', pnL: 'in', e: 1}),
-    ext(PT, {br: 'in', hold: 'L', on: 'hL tR tL', fitArm: PT_FIT_R, la: bell(.36, .15, .38), hL: 'grip', pnL: 'in', e: .6}),
-    ext(PT, {br: 'in', hold: 'R', on: 'hR tR tL', fitArm: PT_FIT_L, la: bell(.36, .15, .42), ra: bell(-.36, .15, .32), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5})
+    ext(PT, {br: 'out', hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(-.44, .06, .36), hL: 'grip', pnL: 'in', e: .7}),
+    ext(PT, {br: 'out', via: true, hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(.0, .14, .32), hL: 'grip', pnL: 'in', e: 1}),
+    ext(PT, {br: 'in', hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(.46, .06, .4), hL: 'grip', pnL: 'in', e: .6}),
+    ext(PT, {br: 'in', hold: 'L', on: 'hL tR tL', fitArm: PT_FIT_L, la: bell(.46, .06, .42), ra: bell(-.42, .06, .36), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5}),
+    ext(PT, {br: 'in', hold: 'R', on: 'hL tR tL', fitArm: PT_FIT_L, la: bell(.46, .06, .42), ra: bell(-.42, .06, .36), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5})
   ]});
 
 // Bird dog: the round 4 reference (p0), with the injury line of the move as its form guide.
@@ -5759,6 +5777,12 @@ function byWords(name, words, id){ var r = new RegExp(name.source, name.flags);
   r.test = function(s){ return name.test(s) && words.test(GG3D.stepWords()); }; return [r, id]; }
 GG3D.names = [
   [/^step back and reach up\b|^reverse lunge and reach\b/i, 'step-back-reach'],   // BLD 903: its own pattern, arms overhead
+  // BLD 931: a dumbbell in each hand at the sides (Chris: "where are the dumbbells?"); the body weight moves keep their own.
+  [/\bdumbbell reverse lunges?\b/i, 'db-reverse-lunge'],
+  byWords(/^reverse lunges?$/i, /\bdumbbells? in each hand\b|\bdumbbells at your sides\b/i, 'db-reverse-lunge'),
+  byWords(/^split squats?$/i, /\bdumbbells at your sides\b|\bdumbbells? in each hand\b/i, 'db-split-squat'),
+  byWords(/^step.?ups?$/i, /\bdumbbells at your sides\b|\bdumbbells? in each hand\b/i, 'db-step-up'),
+  [/\bfarmer march(es)?\b/i, 'farmer-march'],
   byWords(/^seated hamstring stretch$/i, /\bchair\b/i, 'chair-hamstring'),
   byWords(/^seated hamstring stretch$/i, /\bknee bent\b|\bfloor\b/i, 'floor-hamstring'),
   [/\bcounter (heel|calf) raises?\b/i, 'counter-calf-raise'],

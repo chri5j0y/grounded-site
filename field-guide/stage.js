@@ -16,6 +16,7 @@
 //         Breathe In and Breathe Out; phases: the same timed by the figure's plan (BLD 898); breathCount: counts go up,
 //       weight: {cap, line} (BLD 928): the weight chip, bottom right ("Recommended" over "15 lb each hand"),
 //       brk: {sub} (BLD 928): the Break banner, top center, with sub ("Set 2 Next") under the rest ring,
+//       ftip: a short form line (BLD 931), on a small chip beside the breathing rings, top left (or in the corner with no rings),
 //       fig: an HTML string placed center on the deck (a GGMoves svg, the candle, or nothing),
 //       side: 'L' or 'R', a clear side badge in the top corner,
 //       label: a short word or two shown in a chip in the top corner (with the count, under it),
@@ -229,6 +230,8 @@ function scene(state, opts){
   const label = o.label || cn ? `<div class="ggs-hud">${count}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
   // BLD 928 (Chris's workout notes): the recommended weight, bottom right (reps stay top right), and a clear Break sign.
   const wt = o.weight && o.weight.line ? `<div class="ggs-wt" data-ggswt>${o.weight.cap ? `<b>${esc(o.weight.cap)}</b>` : ''}<span>${esc(o.weight.line)}</span></div>` : '';
+  // BLD 931 (Chris, November 6, 2026: breathe and form first): one short form tip beside the breathing ring.
+  const ftip = o.ftip ? `<div class="ggs-ftip${showBreath && o.fig ? ' br' : ''}" data-ggsftip><b>Form</b><span>${esc(o.ftip)}</span></div>` : '';
   const brk = o.brk ? `<div class="ggs-break" data-ggsbreak>Break</div>` : '', bsub = o.brk && o.brk.sub ? `<div class="ggs-rsub" data-ggsbsub>${esc(o.brk.sub)}</div>` : '';
   const fig = o.fig ? `<div class="ggs-fig${showRing && s === 'rest' ? ' small' : ''}">${o.fig}</div>` : '';
   const mid = (showBreath ? breathHTML(o, red) : '') + (s === 'done' && !o.fig && !ml ? MEDAL : '');
@@ -237,7 +240,7 @@ function scene(state, opts){
   return `<div class="ggs ggs-${s} ggs-${tod} ggs-on-${deck}${o.fill ? ' ggs-fill' : ''}${red ? ' ggs-still' : ''}${ml ? ' ggs-hasml' : ''}${showRing && fig && s !== 'rest' ? ' ggs-hasring' : ''}${o.brk ? ' ggs-brk' : ''}" data-ggstage="${s}" style="--ggs-a:${lightA};--ggs-ad:${ST[s][1]};--ggs-scrim:${scrimOp};--ggs-bgl:${bgOf(s, h, false)};--ggs-bgd:${bgOf(s, h, true)}" aria-hidden="true">` +
     `<svg class="ggs-sky" viewBox="0 0 400 200" preserveAspectRatio="xMidYMax slice">${set}</svg>` +
     `<div class="ggs-deck"></div>${ml}<div class="ggs-tint"></div><div class="ggs-scrim"></div>` +
-    `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}${brk}${wt}${prog}</div>`;
+    `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}${ftip}${brk}${wt}${prog}</div>`;
 }
 
 function update(el, opts){
@@ -423,6 +426,10 @@ const CSS = `
 .ggs-wt b{font:700 11px/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6D5640;}
 .ggs-wt span{font:600 clamp(17px,4.6vw,22px)/1.1 'Cormorant Garamond',Georgia,serif;color:#3A2414;}
 .ggs-hasring .ggs-wt{right:calc(min(96px,26vw) + 26px);}
+.ggs-ftip{position:absolute;top:10px;left:12px;z-index:4;max-width:min(250px,calc(100% - 170px));padding:6px 10px 7px;border-radius:12px;background:rgba(255,248,232,.9);color:#2F2216;box-shadow:0 4px 14px rgba(60,35,10,.14);overflow-wrap:anywhere;}
+.ggs-ftip.br{left:calc(min(104px,26vw,calc(var(--H) * .36)) + 20px);max-width:min(250px,calc(100% - min(104px,26vw,calc(var(--H) * .36)) - 150px));}
+.ggs-ftip b{display:block;font:700 10px/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6D5640;margin-bottom:3px;}
+.ggs-ftip span{display:block;font:600 12.5px/1.25 'Barlow',sans-serif;}
 .ggs-break{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:5;padding:6px 26px 7px;border-radius:999px;background:var(--ggs-a);color:#FFFFFF;font:700 clamp(22px,6.4vw,30px)/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 18px rgba(0,0,0,.2);}
 .ggs-rsub{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;max-width:min(340px,86vw);overflow:hidden;text-overflow:ellipsis;padding:5px 14px;border-radius:999px;background:rgba(255,248,232,.92);color:#2F2216;font:700 14px/1.1 'Barlow',sans-serif;letter-spacing:.04em;box-shadow:0 2px 8px rgba(60,35,10,.14);}
 .ggs-brk .ggs-mid .ggs-ring,.ggs-brk.ggs-rest .ggs-mid.hasfig .ggs-ring{width:min(170px,46vw,calc(var(--H) * .56));transform:translate(-50%,-48%);}
@@ -487,7 +494,7 @@ ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DE
 & .ggs-rp{stroke:#E7B04E;}
 & .ggs-secs,& .ggs-breath .ggs-secs{color:#F4E8D4;}
 & .ggs-breath{background:rgba(36,27,20,.84);box-shadow:0 4px 14px rgba(0,0,0,.35);}
-& .ggs-wt,& .ggs-rsub{background:rgba(36,27,20,.88);color:#F4E8D4;}& .ggs-wt b{color:#CCB593;}& .ggs-wt span{color:#F2DCB4;}
+& .ggs-wt,& .ggs-rsub,& .ggs-ftip{background:rgba(36,27,20,.88);color:#F4E8D4;}& .ggs-ftip b{color:#CCB593;}& .ggs-wt b{color:#CCB593;}& .ggs-wt span{color:#F2DCB4;}
 & .ggs-break{background:var(--ggs-ad);color:#10201E;}
 & .ggs-side{background:#E7B04E;color:#1E140A;}
 & .ggs-side b{background:rgba(36,27,20,.9);color:#F2DCB4;}
