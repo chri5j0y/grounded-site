@@ -44,7 +44,7 @@
       { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: pic('/shared/cards/way-sober.webp'), bg: '#DCE8E1' },
       { id: 'heartwood', title: 'Heartwood', desc: 'For marriage: the couples app every couple Chris and Kayti marry receives. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: pic('/shared/heroes/heartwood-card.webp'), bg: '#E3EAF2' },
       { id: 'willow', title: 'Willow', desc: 'For the last season of life, and the people who love them', href: HOME + '/willow/', icon: pic('/shared/heroes/willow-phone.webp'), bg: '#E8ECDD' },
-      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/tools.html#when-life-changes', icon: pic('/shared/heroes/page-hard-seasons-narrow.webp'), bg: '#F1E6CC', color: '#6E4A14' }
+      { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/home/#learn=life', icon: pic('/shared/heroes/page-hard-seasons-narrow.webp'), bg: '#F1E6CC', color: '#6E4A14' }
     ] },
     { name: 'Growing Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: pic('/shared/heroes/grove-phone.webp'), bg: '#E3EFD6' }
@@ -151,23 +151,23 @@
     return '@media (prefers-color-scheme: dark){' + scope(':root:not([data-theme="light"])') + '}' + scope(':root[data-theme="dark"]');
   }
 
-  /* The Ceremonies and Talks menu (BLD 930 Services Rework; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
+  /* The Services menu (BLD 931, Chris, firm: one plain name, "Services"; BLD 930 called it Ceremonies and Talks; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
      life ceremonies first, then honoring a life, then Talks and Training and For Organizations. Each row opens its own page;
      See all ceremonies stays at the foot. It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_GROUPS = [
-    { name: 'Life Ceremonies', items: [
+    { name: 'Ceremonies', items: [
       ['Weddings', 'Your vows, with Heartwood for every couple', 'weddings'],
       ['Elopements and Vow Renewals', 'Just the two of you, or saying it all again', 'elopements'],
       ['Child and House Blessings', 'A new life, a new home', 'child-blessings'],
-      ['Milestones and New Beginnings', 'Sober years, a fresh start, a new chapter', 'milestones']] },
-    { name: 'Honoring a Life', items: [
-      ['Celebrations of Life', 'Celebrations of life, funerals, and memorials', 'celebrations-of-life']] },
-    { name: 'Talks and Training', items: [
+      ['Milestones and New Beginnings', 'Sober years, a fresh start, a new chapter', 'milestones'],
+      ['Celebrations of Life', 'A day that sounds like the one you love', 'celebrations-of-life'],
+      ['Funerals and Memorials', 'Honest, personal services for the one you love', 'funerals-memorials']] },
+    { name: 'Speaking and Training', items: [
       ['Talks and Training', 'Talks and trainings for whole, healthy living', 'speaking-training'],
       ['For Organizations', 'Membership packs for your people', 'organizations']] }
   ];
   var SVC_PIC = { weddings: '/shared/cards/weddings.webp', elopements: '/shared/cards/elopements.webp', 'child-blessings': '/shared/cards/child-blessings.webp', milestones: '/shared/cards/milestones.webp',
-    'celebrations-of-life': '/shared/cards/celebrations-of-life.webp', 'speaking-training': '/shared/cards/sq-speaking.webp', organizations: '/shared/heroes/page-organizations-narrow.webp' };
+    'celebrations-of-life': '/shared/cards/celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/cards/sq-speaking.webp', organizations: '/shared/heroes/page-organizations-narrow.webp' };
   function onPage(href) {
     var a = (href.replace(HOME, '') || '/').replace(/\.html$/, ''), b = location.pathname.replace(/\.html$/, '');
     return a === b;
@@ -355,7 +355,7 @@
     }
     if (way) dropdown(menu, way, { id: 'gn-way-panel', label: 'The Grounded Way', aria: 'The Grounded Way', body: wayBody, all: ['What Is The Grounded Way?', HOME + '/the-grounded-way.html'], width: 640, cls: 'gn-svc' });
     if (link) dropdown(menu, link, { id: 'gn-panel', label: 'Tools', aria: 'Grounded tools', body: toolsBody, all: ['See all tools', HOME + '/tools.html'] });
-    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Ceremonies and Talks', aria: 'Ceremonies and Talks', body: svcBody, all: ['See All Ceremonies', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
+    if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Services', aria: 'Services', body: svcBody, all: ['See All Ceremonies', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
     if (about && contact) dropdown(menu, about, { id: 'gn-about-panel', label: 'About', aria: 'About Grow With Grounded', body: aboutBody, all: ['Meet Kayti and Chris', HOME + '/about.html#your-guides'], width: 420, cls: 'gn-svc gn-one' });
     // one order on every site: The Grounded Way, Tools, Ceremonies and Support, Stories, About
     var tb = menu.querySelector('[aria-controls="gn-panel"]'), sb = menu.querySelector('[aria-controls="gn-svc-panel"]');
@@ -464,7 +464,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b930';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b931';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

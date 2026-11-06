@@ -50,7 +50,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b928', '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=b928w', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b931', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b928';
   var IMG = '/shared/heroes/way/';
@@ -1235,6 +1235,9 @@
     if (k === 'week') return { tab: 'week', sub: SUBS.week[sub] ? sub : '' };
     if (k === 'grow' || k === 'tree') return { tab: 'grow', sub: '' };
     if (k === 'checkin' || k === 'season') return { tab: 'checkin', sub: '' };
+    // BLD 931 (Chris: "from menu i chose When Life Changes and it takes me to another link.. sloppy"): #learn=life (or #library=life)
+    // opens Learn on the When Life Changes shelf in one step, then the address settles to #learn so Back and reload behave.
+    if ((k === 'learn' || k === 'watch' || k === 'library') && sub === 'life') { LT.f = 'life'; LT.q = ''; try { history.replaceState(null, '', location.pathname + location.search + '#learn'); } catch (e) {} return { tab: 'learn', sub: '' }; }
     if (k === 'learn' || k === 'watch') return { tab: 'learn', sub: '' };
     if (k === 'library') return { tab: 'library', sub: SUBS.library[sub] ? sub : '' };
     if (k === 'me' || k === 'more') return { tab: 'me', sub: SUBS.me[sub] ? sub : '' };
@@ -1681,6 +1684,19 @@
   function partName(x) { return PART[x.part] ? plabel(x.part) : ''; }
   function dayName(d) { var x = parse(d); return x ? DAYS[x.getDay()] : ''; }
   /* This Week: the weekly practices, open ones first, then the ones done this week. */
+  /* BLD 931 (Chris, November 6, 2026, on his phone: "you get a long list of your week before the daily tending even shows up"):
+     on a phone, Today shows This Week after Today's Tending, folded to one line ("This Week: 3 open"); open, it lists the open
+     practices, with the done ones under a further fold. Open or closed is remembered on this device. Wide screens keep the side column. */
+  function wkFoldOn() { try { return localStorage.getItem('gg-home-wkopen') === '1'; } catch (e) { return false; } }
+  function thisWeekFold(plan) {
+    var wk = plan.filter(function (x) { return x.r === 'w' || x.r === 'f'; }); if (!wk.length) return '';
+    var open = wk.filter(function (x) { return !x.done; }), dn = wk.filter(function (x) { return x.done; });
+    var line = !open.length ? 'Every practice for this week is tended. A fresh week begins Monday.' : open.some(function (x) { return x.r === 'f'; }) ? 'On any days that suit you, Monday to Sunday.' : 'Once this week, on any day that suits you.';
+    return '<details class="hm-tweek hm-wkfold hm-p-branches" data-hm-wkfold' + (wkFoldOn() ? ' open' : '') + '><summary class="hm-grp hm-p-branches">' + pb(IMG + 'this-season.webp') + '<h2 class="hm-h2">This Week: ' + (open.length ? open.length + ' open' : 'all tended') + '</h2><span class="sp"></span><span class="hm-time">' + dn.length + ' of ' + wk.length + ' done</span></summary>' +
+      '<p class="hm-sub hm-twline">' + line + '</p><div class="hm-list">' + open.map(function (x) { return pracCardHtml(x, { when: (x.r === 'f' ? x.cnt + ' of ' + x.x + ' this week' + (x.doneToday ? ' · Done today' : '') : 'This Week') + ' · ' + partName(x) }); }).join('') + '</div>' +
+      (dn.length ? '<details class="hm-wkdone"><summary>Done this week (' + dn.length + ')</summary><div class="hm-list">' + dn.map(function (x) { return pracCardHtml(x, { when: 'Done this week · ' + (x.doneWeek === today() ? 'Today' : dayName(x.doneWeek)), cls: 'hm-small', nosub: true }); }).join('') + '</div></details>' : '') + '</details>';
+  }
+  document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.matches && d.matches('[data-hm-wkfold]')) { try { localStorage.setItem('gg-home-wkopen', d.open ? '1' : '0'); } catch (x) {} } }, true);
   function thisWeekHtml(plan, where) {
     var wk = plan.filter(function (x) { return x.r === 'w' || x.r === 'f'; }); if (!wk.length) return '';
     var open = wk.filter(function (x) { return !x.done; }), dn = wk.filter(function (x) { return x.done; });
@@ -2055,8 +2071,8 @@
   }
   function todayHtml() {
     var T = todayItems(), h = homeRec(), items = T.items, done = items.filter(function (x) { return x.done; }).length + T.extra, n = items.length + T.extra, ed = edgesOf(lastCheckin(S.id, S.tree));
-    // BLD 885: This Week and the When You're Ready card: beside the day on a wide screen, right after Right Now on a phone.
-    var wkb = thisWeekHtml(T.plan, 'today') + nudgeHtml(T.plan), wide = wideToday();
+    // BLD 885: This Week and the When You're Ready card beside the day on a wide screen. BLD 931: on a phone, after Today's Tending and the Plate card, This Week folded to one line.
+    var wide = wideToday(), wkb = (wide ? thisWeekHtml(T.plan, 'today') : thisWeekFold(T.plan)) + nudgeHtml(T.plan);
     var lead = '';
     if (T.loading) lead = '<p class="hm-loading">Opening your Tending…</p>';
     else if (!T.ready && !h.hidden.tend && !(tendStart() && tendPubDone()) && !suTeen()) {   // BLD 929 (M10): the grown-up sets food at home
@@ -2071,7 +2087,7 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     var ls = soberOn() ? soberHtml(soberDate()) : !isKid(S.p) && h.parts.indexOf('sober') >= 0 && !soberDate() ? soberInviteHtml() : ''; if (ls && soberOn()) lsPre();
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + ls + nowHtml(items) + plate + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml() + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -2356,7 +2372,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=b928';
+  var RECIPES_JS = '/recipes/recipes.js?v=b931';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');

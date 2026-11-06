@@ -981,6 +981,13 @@ html.hm-toured,html.hm-toured body{overflow:hidden;}
 .hm-tweek .hm-list{gap:12px;}
 .hm-tmain>.hm-tweek,.hm-tmain>.hm-nudge{margin-bottom:4px;}
 .hm-tside>.hm-tweek,.hm-tside>.hm-nudge{margin-bottom:0;}
+/* BLD 931: This Week folded to one line on a phone's Today */
+.hm-wkfold>summary{list-style:none;cursor:pointer;}.hm-wkfold>summary::-webkit-details-marker{display:none;}
+.hm-wkfold>summary::after{content:'Show';font:600 13px 'Barlow',sans-serif;color:var(--gold);margin-left:8px;}.hm-wkfold[open]>summary::after{content:'Hide';}
+.hm-wkfold:not([open]){padding:10px 16px;}
+.hm-wkfold>summary{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;min-width:0;}.hm-wkfold>summary .hm-h2{font-size:clamp(20px,5.6vw,26px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}.hm-wkfold>summary .hm-time{white-space:nowrap;}
+.hm-wkfold:not([open])>summary>:first-child{width:40px;height:40px;flex:0 0 40px;}.hm-wkfold:not([open])>summary .hm-time{display:none;}
+.hm-wkdone>summary{cursor:pointer;font:600 14px 'Barlow',sans-serif;color:var(--ink-soft);padding:4px 2px;}.hm-wkdone>.hm-list{margin-top:10px;}
 .hm-small .hm-pc .scene{width:64px;height:64px;border-radius:14px;}
 .hm-small .hm-h3{font-size:21px;}
 .hm-small .hm-acts{margin-top:6px;}
