@@ -286,7 +286,19 @@
   /* ---------- one doc ---------- */
   function syncDoc(sc, d, B, remote, res, K) {
     return Promise.resolve().then(function () { return d.adapter.get(); }).then(function (local) {
-      if (local == null) return;   // closed for now (a locked profile): it syncs the next time it opens
+      if (local == null) {
+        // closed for now (a locked profile, the safer shared computer default): note each changed piece so it
+        // comes down the next time this doc opens, and never lose it when the cursor moves past.
+        var upd = [];
+        Object.keys(remote).forEach(function (n) {
+          if (n.indexOf(d.name + '#') !== 0) return;
+          var key = sc.scope + '|' + n, b = B[key], r = remote[n];
+          if (b && b.ver >= r.ver) { delete remote[n]; return; }
+          upd.push(r.gone ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, gone: true, seen: false } : carries(n) ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, data: r.data, at: r.at, seen: false } : { scope: sc.scope, name: n, id: r.id, ver: r.ver, stub: true, seen: false });
+          delete remote[n];
+        });
+        return saveBases(K, upd).then(function () { upd.forEach(function (u) { B[u.scope + '|' + u.name] = u; }); });
+      }
       // pieces noted while this doc was closed here: bring them down now
       var pre0 = d.name + '#', stubs = Object.keys(B).map(function (k) { return B[k]; }).filter(function (r) { return r.scope === sc.scope && r.stub && r.name.indexOf(pre0) === 0 && !remote[r.name]; });
       if (!stubs.length) return local;
@@ -307,7 +319,10 @@
         var th = r || (b && !b.gone ? b : null);
         if (!th) { if (l !== undefined) { ops.push({ name: n, path: path, data: l, ver: 0, l: l }); out[path] = l; } return; }
         var bseen = b && b.seen && !b.gone ? b.data : undefined;
-        var mine = b && b.seen && !b.gone ? !eq(l, b.data) : l !== undefined;
+        // With a seen base, "mine" is a real difference from it. With only a stub (a profile reopened on a shared
+        // computer), the local copy is last synced unless an edit marked the doc dirty, so a clean doc yields to the
+        // newer server version instead of asserting itself.
+        var mine = b && b.seen && !b.gone ? !eq(l, b.data) : (d.dirtyAt ? l !== undefined : false);
         var theirs = !!r || unseen;
         if (!mine && !theirs) { if (l !== undefined) out[path] = l; return; }
         if (!mine) { if (th.data !== undefined) out[path] = clone(th.data); upd.push({ scope: sc.scope, name: n, id: th.id, ver: th.ver, data: th.data, at: th.at, seen: true }); res.pulled++; return; }
