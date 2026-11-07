@@ -1481,3 +1481,12 @@ html.hm-planned,html.hm-planned body{overflow:hidden;}
 }
 /* BLD 929 (L13): while the tour is open, a note sits at the top, clear of the tour's Next. */
 html.hm-toured .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !important;bottom:auto !important;}
+/* BLD 935 (audit H2): on a phone the Living Sober card (Add Your Day One, or the day count) leads Today, before Right Now. */
+.hm-tmain>#hm-sober{order:-1;}
+/* BLD 935 (audit M11): Settings in the Home window reads as one column at every screen width. */
+.hm-sheet .tn-two{grid-template-columns:minmax(0,1fr);}
+/* BLD 935 (audit L8): during setup a note shows at the top, clear of the choices. */
+html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !important;bottom:auto !important;}
+/* BLD 935: Today's Flow beside the Living Sober morning movement. */
+.hm-alt2 .hm-linkbtn{font-weight:700;}
+.hm-wp-seedmv .hm-wp-seednut{display:inline-flex;align-items:center;gap:6px;cursor:default;opacity:.75;}

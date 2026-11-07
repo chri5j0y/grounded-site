@@ -49,7 +49,7 @@
   var VER = 'b919b';
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
-    ['/shared/tending-public.js?v=b919', 'GGTendPublic'],
+    ['/shared/tending-public.js?v=b935', 'GGTendPublic'],
     ['/field-guide/stage.js?v=b931', 'GGStage'],
     ['/field-guide/coach.js?v=b931', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],

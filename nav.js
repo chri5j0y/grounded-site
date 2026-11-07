@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b929'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b935'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -685,9 +685,11 @@
      words the profile bar uses); with none, Begin The Grounded Way. */
   function words() {
     var on = false; try { on = !!(window.GGP && GGP.active && GGP.active()); } catch (e) {}
-    var t = on ? 'Open The Grounded Way' : 'Begin The Grounded Way';
+    var t = on ? 'Open The Grounded Way' : 'Begin The Grounded Way', inApp = /^\/home\//.test(location.pathname);
     document.querySelectorAll('.site-menu a.gg-way-link, footer a, .footer a, .site-footer a').forEach(function (a) {
-      if (/^(Begin|Open) The Grounded Way$/.test(a.textContent.trim()) && a.textContent !== t) a.textContent = t;
+      // BLD 935 (audit M6): inside The Grounded Way, with a profile open, the gold pill reads Today (the app is already open).
+      var want = on && inApp && a.matches('.site-menu a.gg-way-link') ? 'Today' : t;
+      if (/^((Begin|Open) The Grounded Way|Today)$/.test(a.textContent.trim()) && a.textContent !== want) { a.textContent = want; if (inApp && a.matches('.site-menu a.gg-way-link')) a.setAttribute('href', want === 'Today' ? '/home/#today' : '/home/'); }
     });
     fitSoon();
   }

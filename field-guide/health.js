@@ -1833,7 +1833,8 @@ function bwCard(o){ const v = o.bw != null ? o.bw : '', a = o.adj != null ? o.ad
     <p class="hj-bwa">Personal adjustment, added to every recommended weight</p>${adjChips(a, 'bwadj')}
     <div class="hj-ovbtns"><button type="button" class="btn btn-gold" data-hja="bwsave">Save My Weight</button><button type="button" class="btn btn-line" data-hja="bwskip">Skip</button></div></div>`; }
 // Settings (Tending and The Grounded Way): body weight and the personal adjustment, for every workout.
-function weightCard(){ const h = H(); if (!h || TEEN()) return ''; const b = +h.set.bw || '', a = wAdj(), ex = recW({t: 'ex', name: 'One-Arm Dumbbell Swing', load: 'One dumbbell', kind: 'reps'});
+// BLD 935 (audit M8): My Weights rides with Membership's workouts, so Start shows none.
+function weightCard(){ const h = H(); if (!h || TEEN() || START()) return ''; const b = +h.set.bw || '', a = wAdj(), ex = recW({t: 'ex', name: 'One-Arm Dumbbell Swing', load: 'One dumbbell', kind: 'reps'});
   return `<div class="tn-card" id="tn-wts"><div class="tn-hd">${badge('dumbbell', 'p-leaves', 'move-strength-sq')}<div><div class="tn-k p-leaves">My Weights</div><div class="tn-sub">Your body weight sets a recommended weight for every move with a weight, in every workout. Private to this device.</div></div></div>
     <div class="tn-set"><label class="hj-fld" style="max-width:260px"><span>Body weight (lb)</span><input id="tn-bw" inputmode="decimal" autocomplete="off" value="${esc(b)}" placeholder="${esc(bodyW() || 150)}"></label>
     <p class="tn-sub" style="margin:10px 0 4px">Personal adjustment, added to every recommended weight</p>${adjChips(a, 'wadj')}
@@ -2534,11 +2535,13 @@ function vChoose(){
 }
 
 // ---------- Settings: What I Use, Bridges (stored for a later build), Reminders ----------
+// BLD 935 (audit M8): What I Use on Start says what Start holds.
+const START_USE = {food: 'Grounded Recipes for your table and food needs, and A Sample Week of Meals.', move: 'One Flow session each day and the eight Gentle sessions, with a calm voice coaching.'};
 function vSettings(bare){
   const h = H(), t = TD(), br = h.set.bridges || {}, kit = KIT(), on = remOn();
   const row = (cls, icn, title, sub, sw) => `<div class="tn-row ${cls}">${icn ? `<span class="ic2">${ic(icn)}</span>` : ''}<div class="tx"><b>${esc(title)}</b><small>${esc(sub)}</small></div>${sw}</div>`;
   const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves', 'tending-sq') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
-    <div class="tn-set">${t.choose.filter(c => !(c.id === 'supps' && PUB() && !h.set.pubDone && !U('supps'))).map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
+    <div class="tn-set">${t.choose.filter(c => !(c.id === 'supps' && PUB() && !h.set.pubDone && !U('supps')) && !(START() && c.id === 'labs')).map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, (START() && START_USE[c.id]) || c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
   const why = kit ? '' : `<div class="tn-card p-trunk"><div class="tn-hd">${badge('compass', '', 'growth-plan-sq')}<div><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${h.set.why ? esc(h.set.why) : esc(t.why.prompt)}</div></div></div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${h.set.why ? 'Change My Why' : esc(t.why.write)}</button>${h.set.whyHide && !h.set.why ? `<button type="button" class="linkbtn" data-hja="whyshow">Show the My Why Card on Today</button>` : ''}</div></div>`;
   const bridges = kit ? '' : `<div class="tn-card"><div class="tn-hd">${badge('link', 'p-trunk')}<div><div class="tn-k p-trunk">Bridges</div><div class="tn-sub">How Tending and your other Grounded tools connect. Your choices are saved now, and the bridges open in a coming update.</div></div></div>
@@ -2554,7 +2557,8 @@ function vSettings(bare){
   // BLD 929 (M12): in Home's Settings, the holidays fold into one short line until opened.
   const hol = holSetCard(), holN = arr((holUse() || {}).sets).length;
   const holFold = hol ? `<details class="hj-doc tn-fold"${S.open['holfold'] ? ' open' : ''} data-hjd="holfold"><summary><span>Holidays</span><small>${holN ? holN + ' holidays, choose yours' : 'Choose yours'}</small></summary>${hol}</details>` : '';
-  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${weightCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${kitCard()}${startCard()}${holFold}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
+  // BLD 935 (audit M9): Bridges rest in Home's Settings until they work there (the Field Guide keeps its own).
+  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${weightCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${kitCard()}${startCard()}${holFold}${rem}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
     <div class="tn-two"><div class="tn-col">${weightCard()}${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}${kitCard()}${startCard()}${holSetCard()}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
 }
@@ -2604,16 +2608,16 @@ function fruitCards(){
   if (U('labs') && PUB()) out.push(pubLdlCard());
   else if (U('labs')){ const m = ldlModel();
     out.push(m ? `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers" aria-label="Open My LDL Path. Start ${r0(m.B)}, estimate now ${r0(m.now)}, the food plan path levels near ${r0(m.level)}.">
-      <div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
+      <div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
       <div class="tn-nums"><div><b>${r0(m.B)}</b><small>Start, ${esc(short(m.base.date))}</small></div><div><b>${r0(m.now)}</b><small>Estimate now</small></div><div><b class="soft">${r0(m.level)}</b><small>Food plan path</small></div></div>
       ${ldlSpark(m)}<span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`
-      : `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">Fruit · My Numbers</div><div class="tn-sub">Add your lab numbers to see your path, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`); }
+      : `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">My Numbers</div><div class="tn-sub">Add your lab numbers to see your path, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`); }
   const ms = milestonesT(), got = ms.filter(m => m.done), next = ms.filter(m => !m.done).sort((a, b) => (a.need - a.have) / a.need - (b.need - b.have) / b.need)[0];
-  out.push(`<div class="tn-card p-fruit" id="tn-ms"><div class="tn-hd">${badge('star', '', 'snack-fruit-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · Milestones</div><div class="tn-sub">${got.length ? got.length + ' reached so far. ' : ''}${esc(TD().intro.quiet)}</div></div></div>
+  out.push(`<div class="tn-card p-fruit" id="tn-ms"><div class="tn-hd">${badge('star', '', 'snack-fruit-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Milestones</div><div class="tn-sub">${got.length ? got.length + ' reached so far. ' : ''}${esc(TD().intro.quiet)}</div></div></div>
     <div class="tn-mile">${got.slice(-3).map(m => `<div><i>${ic('check')}</i><span><b>${esc(m.name)}</b><small>${esc(m.line || '')}</small></span></div>`).join('')}
     ${next ? `<div class="up"><i>${ic('star')}</i><span><b>${esc(next.name)}</b><small>${next.need > 1 ? `${Math.min(next.have, next.need)} of ${next.need}. ` : ''}${esc(next.line || '')}</small></span></div>` : ''}</div>
     ${ms.length > 4 ? `<details class="tn-more"${S.open['tnms'] ? ' open' : ''} data-hjd="tnms"><summary>See All Milestones</summary><div class="tn-mile">${ms.map(m => `<div class="${m.done ? '' : 'up'}"><i>${ic(m.done ? 'check' : 'star')}</i><span><b>${esc(m.name)}</b><small>${m.done ? 'Reached' : m.need > 1 ? Math.min(m.have, m.need) + ' of ' + m.need : 'Ahead'}</small></span></div>`).join('')}</div></details>` : ''}</div>`);
-  out.push(`<div class="tn-card p-fruit" id="tn-wk7"><div class="tn-hd">${badge('week', '', 'this-season-narrow')}<div><div class="tn-k">Fruit · My Last 7 Days</div><div class="tn-sub">Things tended each day. Every one counts.</div></div></div>${tendWeek()}
+  out.push(`<div class="tn-card p-fruit" id="tn-wk7"><div class="tn-hd">${badge('week', '', 'this-season-narrow')}<div><div class="tn-k">My Last 7 Days</div><div class="tn-sub">Things tended each day. Every one counts.</div></div></div>${tendWeek()}
     <button type="button" class="tn-btn sm line" data-hja="fruittable" aria-pressed="${!!S.fruitTable}">${S.fruitTable ? 'View as Chart' : 'View as Table'}</button></div>`);
   return out.join('');
 }
@@ -2747,7 +2751,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b919'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b935'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -3003,7 +3007,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b929'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b935'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
@@ -3184,7 +3188,9 @@ function startInvite(title, line){
 function startGentle(page){
   if (!GENTLE_START()) return '';
   const G = PLIB().gentle || {}, ses = Object.entries(gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}); if (!ses.length) return '';
-  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}${page && SEEDS_ON() ? `<p class="hj-sub">${seedChipH()}Eight Gentle sessions, yours to keep.</p>` : ''}
+  // BLD 935 (audit H1): Home's Library shelf on Start opens with Today's Flow, then the eight Gentle sessions.
+  const fl = page ? startPicks().flow : null;
+  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page && fl ? secHead('move', 'a-move', 'Flow and Gentle', 'Today\'s Flow, a new one each day of the week, and eight Gentle sessions anytime, with Ava coaching every move.') + `<h3 class="tn-h3">Today's Flow</h3><div class="tn-kgrid">${artCard(0, 'pracid:' + fl.id, 'Today\'s Flow' + (fl.mins ? ' · ' + fl.mins + ' min' : ''), fl.title || 'Flow', fl.focus || '', 'a-move', flowArtName(fl))}</div><h3 class="tn-h3" style="margin-top:18px">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>` : page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}${page && SEEDS_ON() ? `<p class="hj-sub">${seedChipH()}Eight Gentle sessions, yours to keep.</p>` : ''}
     <div class="tn-kgrid">${ses.map(([id, x], i) => artCard(i, 'wl:gentle:' + id, (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Gentle', x.lead || '', 'a-move', moveArtName(id, x, 'gentle'))).join('')}</div>
     ${G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${page ? seedLineH() : ''}</div>`;
 }
@@ -3220,8 +3226,8 @@ const srcOf = id => arr((PLIB() || {}).sources).find(x => x && x.id === id) || n
 const srcLinks = ids => arr(Array.isArray(ids) ? ids : [ids]).filter(Boolean).map(srcOf).filter(Boolean).map(x => x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}` : esc(x.t) + (x.who ? ', ' + esc(x.who) : '')).join('; ');
 // BLD 880: every public recipe is written for six, and its ingredients scale to the household (shared/gg-scale.js, GGScale).
 const pubHH = () => { if (KJ()) return kitTable(); const s = (H() || {}).set || {}, n = (+((s.house || {}).adults) || 0) + KIDS().length || num(s.household) || 0; return n > 0 && n < 30 ? Math.round(n) : 0; };
-// A table of one cooks for two (one meal now, one for tomorrow): the smallest size on the Recipes page's Serves picker.
-const tableOf = () => { const hh = pubHH(); return hh ? Math.max(2, hh) : 0; };
+// BLD 935 (audit M4): the table is the household's own size, a table of 1 included, the same number on every screen.
+const tableOf = () => pubHH();
 const sizeUp = r => { const hh = PUB() ? tableOf() : 0; return r && hh && window.GGScale && arr(r.ingredients).length ? GGScale.recipe(r, hh) : r; };
 const hhNote = serves => { const hh = tableOf(); return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
 function planSet(){ const k = KJ(); if (k) return kitSet(k); const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: goalsNow(s), kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
@@ -3520,6 +3526,8 @@ function pubAims(){ const T = targets(), L = PLIB() || {}, gs = arr(L.goals).fil
 
 // ---------- the start-up check ----------
 const START_HOLDS = 'Tending on Start: Grounded Recipes for your table and food needs, A Sample Week of Meals, Today\'s Meditation, one Flow session each day, and the eight Gentle sessions. Membership adds meal plans, goals, workouts for your level, and your labs.';
+// BLD 935 (audit H4): Step 1 on Start names only what Start holds.
+const START_LEAD = 'Tending on Start brings Grounded Recipes for your table, A Sample Week of Meals, Today\'s Meditation, Flow, and Gentle. Tell us who is at your table and any food needs. Everything stays private on your device.';
 function ckDraft(){
   if (S.ck) return S.ck; const s = H().set;
   // BLD 927: a first start-up check begins from the person's own answer in Home (Me, or My Family), never a guess.
@@ -3549,7 +3557,7 @@ function vCheck(){
   const inp = (k, label, type, extra) => `<label class="hj-fld"><span>${esc(label)}</span><input type="${type || 'number'}"${type === 'text' || type === 'date' ? '' : ' inputmode="decimal"'} data-hjck="${esc(k)}" value="${esc(k.split('.').reduce((o, x) => o == null ? '' : o[x], d) || '')}"${extra || ''}></label>`;
   const anyYes = arr(K.questions).some(q => d.check[q.id] === true);
   let body = '';
-  if (step === 'who') body = `<h3>Who is Tending for?</h3><p class="hj-sub">${esc(L.lead || t.intro.line)}</p>${chips('who', [['me', 'Me'], ['family', 'Me and My Family']])}
+  if (step === 'who') body = `<h3>Who is Tending for?</h3><p class="hj-sub">${esc(START() ? START_LEAD : L.lead || t.intro.line)}</p>${chips('who', [['me', 'Me'], ['family', 'Me and My Family']])}
     ${C.age ? '' : `<p class="hj-sub" style="margin-top:14px">Tending keeps the focus on food and energy for anyone under 18, with no weight and no calories.</p>${chips('teen', [['false', '18 or Older'], ['true', 'Under 18']])}`}`;
   else if (step === 'use') body = `<h3>${esc(t.intro.chooseH)}</h3><p class="hj-sub">${esc(t.intro.choose)}</p>${chips('use', t.choose.map(c => [c.id, c.name]), true)}`;
   else if (step === 'goals') body = `<h3>What are you growing toward?</h3><p class="hj-sub">Choose one or more. When goals differ, Tending keeps the strictest aim of each.</p>
@@ -3606,6 +3614,8 @@ function ckSave(){
   if (anyYes && !d.cleared) h.set.level = 'gentle';
   h.set.household = h.set.house.adults + h.set.house.kids.length;
   // BLD 894: the start-up check's six categories set set.moves, set.track, and set.flowStyles together.
+  // BLD 935 (audit H4): on Start the movement is Flow (Strength and Cardio are Membership), and labs wait for Membership.
+  if (START()){ const sm = arr(d.moves).filter(x => x !== 'strength' && x !== 'cardio'); d.moves = sm.length ? sm : ['flow']; h.set.use = h.set.use.filter(x => x !== 'labs'); }
   if (arr(d.moves).length) setMoves(h.set, d.moves);
   if (!h.set.start) h.set.start = ymd(monOf(new Date()));
   if (!was) h.set.remOff = true;
@@ -3647,11 +3657,14 @@ function pubMoveHead(){
   const w = Math.max(1, progWeek(new Date())), ph = arr((L.program || {}).phases).find(x => x.id === phaseId(w)) || {};
   const g = gearNow(), gl = g.length ? 'Equipment: ' + g.map(id => (arr((L.program || {}).gear).find(x => x.id === id) || {name: id}).name).join(', ') + '.' : 'Equipment: your body weight, a sturdy chair, a wall, and a mat.';
   const tchip = (v, l, on, act) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="${act || 'ptrack'}" data-hjv="${v}">${esc(l)}</button>`;
-  return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(!work ? movesLine(movesOf(s)) : lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}${prog && ph.note ? ' ' + esc(ph.note) : ''}</p>
+  // BLD 935 (audit M12): the level line and the phase note read as one, never the same sentence twice.
+  const ll = !work ? movesLine(movesOf(s)) : lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '', pn0 = prog && ph.note ? String(ph.note) : '';
+  const pn = pn0 && ll.indexOf(pn0.split(',')[0]) < 0 ? pn0 : '';
+  return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(ll)}${pn ? ' ' + esc(pn) : ''}</p>
     ${prog ? `<p class="tn-sub">${esc(gl)}</p>` : ''}<p class="tn-sub" style="margin-top:8px"><b>My movement:</b> choose any, or all.</p><div class="hj-chips" role="group" aria-label="My movement">${moveChips(movesOf(s), 'pmove')}</div>${movesOf(s).includes('strength') && movesOf(s).includes('cardio') ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}
     ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${SOBER_EARLY() ? `<p class="hj-note">${esc(SOBER_TEXT.move)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
-    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div>
-    ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}</div>`;
+    ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub tn-safe" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}
+    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div></div>`;
 }
 
 // ---------- the Kitchen: swap a meal, build a new plan ----------
@@ -3785,8 +3798,8 @@ function vLdlP(){
 }
 function pubLdlCard(){
   const e = ldlNow(), r = ldlCalc(), goal = num(H().set.goalLdl);
-  if (!e) return `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">Fruit · My Numbers</div><div class="tn-sub">Add your lab numbers to see them beside their recommended ranges, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`;
-  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
+  if (!e) return `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">My Numbers</div><div class="tn-sub">Add your lab numbers to see them beside their recommended ranges, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`;
+  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
     <div class="tn-nums"><div><b>${esc(e.ldl)}</b><small>LDL, ${esc(short(e.date))}</small></div>${goal ? `<div><b>${esc(goal)}</b><small>My goal</small></div>` : ''}${r && r.count ? `<div><b class="soft">${r.low} to ${r.high}</b><small>Where my choices may lead</small></div>` : ''}</div>
     <span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`;
 }
@@ -3833,7 +3846,7 @@ function vKidView(){
 // ---------- Settings: the start-up check, the team plan, the family ----------
 function pubSettingsCard(){
   const s = H().set, kids = KIDS();
-  return `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Goals, food needs, household, the health check, and your movement path.</div></div></div>
+  return `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">${START() ? 'Who is at your table, your food needs, and your household.' : 'Goals, food needs, household, the health check, and your movement path.'}</div></div></div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Start-Up Check</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">My Plan from My Team</button>${kids.length || s.who === 'family' ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="kids">Family Food</button>` : ''}</div>
     ${START() ? '<p class="tn-sub" style="margin-top:8px">My Plan from My Team: exercises from your doctor or therapist, added by you.</p>' : ''}</div>`;
 }
