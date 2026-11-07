@@ -1,0 +1,72 @@
+/* =====================================================================
+   GROUNDED ACCOUNT SHEETS (shared/gg-account.css), GWG BLD 938 stage 1
+   The look of Home's sheets (home/home.css), every class prefixed ga- so it sits beside any page.
+   Tokens live on .ga, with light and dark sets. No dashes in any words here.
+   ===================================================================== */
+.ga{
+  --bg:#F7F1E6; --card:#FFFCF6; --card-2:#FBF5EA; --ink:#2C1810; --ink-soft:#6B5A4D; --line:#E6DAC4;
+  --gold:#8B5E1A; --gold-deep:#6E4A14; --on:#FFFFFF; --ok:#2F5E3A; --warm:#A33D2A; --veil:rgba(44,24,16,.45);
+  color:var(--ink);font-family:'Barlow',system-ui,sans-serif;font-size:17px;line-height:1.5;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ga{
+  --bg:#1C1712; --card:#28211A; --card-2:#2F271F; --ink:#F3EDE3; --ink-soft:#C2B6A4; --line:#3D342A;
+  --gold:#E3B25A; --gold-deep:#E6BA62; --on:#1A1612; --ok:#9CCB8A; --warm:#E0806C; --veil:rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"] .ga{
+  --bg:#1C1712; --card:#28211A; --card-2:#2F271F; --ink:#F3EDE3; --ink-soft:#C2B6A4; --line:#3D342A;
+  --gold:#E3B25A; --gold-deep:#E6BA62; --on:#1A1612; --ok:#9CCB8A; --warm:#E0806C; --veil:rgba(0,0,0,.6);
+}
+html.ga-sheeted,html.ga-sheeted body{overflow:hidden;}
+.ga-wrap{position:fixed;inset:0;z-index:900;display:flex;align-items:flex-end;justify-content:center;}
+.ga-wrap *{box-sizing:border-box;}
+.ga-bg{position:absolute;inset:0;background:var(--veil);}
+.ga-sheet{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px);overflow:auto;background:var(--card);color:var(--ink);border-radius:24px 24px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.25);outline:none;}
+.ga-hd{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.ga-h2{flex:1;min-width:0;margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:28px;line-height:1.1;color:var(--ink);overflow-wrap:anywhere;}
+.ga-x{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer;}
+.ga-lead{margin:0 0 12px;color:var(--ink-soft);font-size:16px;}
+.ga-body{display:grid;gap:12px;}
+.ga-body form{display:grid;gap:12px;margin:0;}
+.ga-f{display:grid;gap:5px;}
+.ga-f span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.ga-f input,.ga-f textarea{width:100%;min-height:50px;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card-2);color:var(--ink);font:inherit;font-size:17px;}
+.ga-f textarea{min-height:92px;resize:vertical;}
+.ga-f input:focus,.ga-f textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 25%,transparent);}
+.ga-f small,.ga-card small,.ga-list small{color:var(--ink-soft);font-size:14px;}
+.ga-check{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;color:var(--ink);}
+.ga-check input{flex:none;width:22px;height:22px;margin:2px 0 0;accent-color:var(--gold);}
+.ga-check a{color:var(--gold);}
+.ga-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;border:0;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.9px;text-transform:uppercase;background:var(--gold);color:var(--on);cursor:pointer;line-height:1.1;text-align:center;}
+.ga-btn:disabled{opacity:.6;cursor:default;}
+.ga-btn.big{min-height:56px;font-size:19px;width:100%;}
+.ga-btn.sm{min-height:40px;font-size:14.5px;padding:0 14px;}
+.ga-btn.line{background:transparent;color:var(--gold);border:1.5px solid color-mix(in srgb,var(--gold) 45%,transparent);}
+.ga-btn.warm{background:var(--warm);}
+.ga-row{display:flex;flex-wrap:wrap;gap:10px;}
+.ga-row>.ga-btn{flex:1 1 180px;}
+.ga-alt{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;}
+.ga-link{background:none;border:0;padding:8px 4px;color:var(--gold);font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+.ga-msg{min-height:1.5em;margin:12px 0 0;font-size:15.5px;}
+.ga-msg.ok{color:var(--ok);}
+.ga-msg.warn{color:var(--warm);}
+.ga-note{margin:0;color:var(--ink-soft);font-size:15px;}
+.ga-card{display:grid;gap:6px;padding:14px;border-radius:18px;background:var(--card-2);border:1px solid var(--line);}
+.ga-k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);}
+.ga-big{font-size:18px;overflow-wrap:anywhere;}
+.ga-ok{color:var(--ok)!important;font-weight:600;}
+.ga-list{list-style:none;margin:0;padding:0;}
+.ga-list li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:10px 0;border-bottom:1px solid var(--line);}
+.ga-list li:last-child{border-bottom:0;}
+.ga-list li>div{display:flex;flex-direction:column;min-width:0;flex:1 1 180px;}
+.ga-list b{overflow-wrap:anywhere;}
+.ga-rows{display:grid;border-radius:18px;border:1px solid var(--line);overflow:hidden;}
+.ga-rows button{min-height:54px;padding:10px 14px;border:0;border-bottom:1px solid var(--line);background:var(--card);color:var(--ink);text-align:left;font:inherit;font-weight:600;cursor:pointer;}
+.ga-rows button:last-child{border-bottom:0;}
+.ga-bul{margin:0;padding-left:20px;}
+.ga-words{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px;margin:0;padding-left:28px;font-weight:600;font-size:18px;}
+.ga-ask{display:grid;gap:10px;padding:14px;border-radius:18px;border:1.5px solid var(--gold);}
+@media (min-width:700px){
+  .ga-wrap{align-items:center;}
+  .ga-sheet{border-radius:24px;max-height:min(860px,calc(100vh - 80px));padding:22px 24px 24px;}
+  .ga-words{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
