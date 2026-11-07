@@ -188,7 +188,7 @@
         if (!ok.length) return '<p class="gm-mini">Add a balance to see your payoff month.</p>';
         var r = debtPlan(t.list, n0(t.extra), t.method), p = r.plan, when = addMonths(new Date(), p.months);
         if (p.stuck) return '<p class="gm-note">' + U.I('leaf') + 'Raise a minimum or the extra each month so every balance comes down. The plan steadies once each payment covers its interest.</p>';
-        return '<div class="gm-tbigs">' + big('Debt Free', E(monthName(when)), p.months + ' month' + (p.months === 1 ? '' : 's'), 'ok') + (r.saved != null ? big('Interest You Keep', M(r.saved), 'compared with minimums only', 'hn') : '') + '</div>' +
+        return '<div class="gm-tbigs">' + big('All Paid Off By', E(monthName(when)), p.months + ' month' + (p.months === 1 ? '' : 's'), 'ok') + (r.saved != null ? big('Interest You Keep', M(r.saved), 'compared with minimums only', 'hn') : '') + '</div>' +
           (r.sooner > 0 ? '<p class="gm-sub">That is ' + r.sooner + ' month' + (r.sooner === 1 ? '' : 's') + ' sooner than minimums alone.</p>' : '') +
           '<ol class="gm-order">' + p.order.map(function (o) { return '<li><b>' + E(o.n) + '</b><span>' + E(monthName(addMonths(new Date(), o.month))) + '</span></li>'; }).join('') + '</ol>';
       },
