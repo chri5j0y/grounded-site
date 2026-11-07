@@ -22,6 +22,8 @@
        opts.qrSrc     where shared/vendor/qrcode.js lives (default /shared/vendor/qrcode.js?v=b921)
        opts.css       false when the host already loads gg-money.css; else it is added once from beside this file
        opts.readHash  true reads #money=<code> from the address on render (then clears it)
+       opts.art       where the paintings live (default /shared/heroes/way/)
+       opts.toolsSrc  where gg-money-tools.js lives (default beside this file); loaded the first time Grounded Money opens
      GGMoney.summary(store)  {has, income, spend, gap, after, month: {ahead, short, line}} for a Today line
      GGMoney.model, GGMoney.parse, GGMoney.share   the data layer, for tests and stage 2
 
@@ -32,6 +34,8 @@
       ideas:  {done: {key: time}, edit: {key: amount}, off: {key: 1}, mine: [{id, n, a, k: 'spend' or 'income', o, u, x}], u},
       logs:   [{id, d YYYY-MM-DD, a, c line id, n category name, u, x}],
       checks: {Monday YYYY-MM-DD: {well, steady 1 to 5, step, at}},
+      tools:  {debt, goals, pay, fund, grocery, car, side, subs, calls, date, give, kids, tips} each tool's own answers (stage 1b,
+              shared/gg-money-tools.js); they stay on this phone (a Family share carries the plan, ideas, and logs)
       own:    {lines, income, ideas, pid} this phone's own plan, kept while it follows a Family plan}
    Removing sets x and u (so a removal travels in a share); Undo clears it.
 
@@ -89,7 +93,18 @@
     heart: '<path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z"/>',
     sun: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>',
     pen: '<path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/>',
-    home: '<path d="M4 11l8-6.5 8 6.5"/><path d="M6.5 9.5V20h11V9.5"/>'
+    home: '<path d="M4 11l8-6.5 8 6.5"/><path d="M6.5 9.5V20h11V9.5"/>',
+    grid: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+    path: '<path d="M4 20c4 0 4-5 8-5s4-5 8-5"/><circle cx="20" cy="6" r="2"/><path d="M4 20h0"/>',
+    shield: '<path d="M12 3l7 3v5.5c0 4.4-3 8-7 9.5-4-1.5-7-5.1-7-9.5V6z"/><path d="M9 12l2.2 2.2L15.5 10"/>',
+    jar: '<path d="M8 3.5h8M8.5 3.5v3L6.5 9v10a1.5 1.5 0 0 0 1.5 1.5h8a1.5 1.5 0 0 0 1.5-1.5V9l-2-2.5v-3"/><path d="M9 13h6"/>',
+    plate: '<circle cx="13" cy="12.5" r="7.5"/><circle cx="13" cy="12.5" r="4"/><path d="M3 4v5.5a1.5 1.5 0 0 0 1.5 1.5v9M3 4v4M5.9 4v4"/>',
+    car: '<path d="M4 16.5V12l2-5h12l2 5v4.5"/><path d="M3.5 16.5h17M4 12h16"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/>',
+    sprout: '<path d="M12 21v-8"/><path d="M12 13c0-4.4-3-7-7.5-7 0 4.4 3 7 7.5 7z"/><path d="M12 11c0-3.6 2.6-6 6.8-6 0 3.6-2.6 6-6.8 6z"/><path d="M7.5 21h9"/>',
+    phone: '<rect x="6.5" y="2.8" width="11" height="18.4" rx="2.6"/><path d="M10.5 18h3"/>',
+    gift: '<rect x="4" y="9" width="16" height="11.5" rx="1.5"/><path d="M3 9h18M12 9v11.5M12 9c-1-3-5-5-6-2.5S9.5 9 12 9zM12 9c1-3 5-5 6-2.5S14.5 9 12 9z"/>',
+    people: '<circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 19.5c.4-3.4 2.6-5.5 5.5-5.5s5.1 2.1 5.5 5.5M14.2 14.3c.7-.3 1.4-.5 2.3-.5 2.4 0 4.1 1.8 4.5 4.7"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>'
   };
   function I(id) { return '<svg class="gm-i" aria-hidden="true" focusable="false"><use href="#gmi-' + id + '"/></svg>'; }
   function mountIcons() {
@@ -107,12 +122,12 @@
   var STATUS = { fixed: 'Fixed', varies: 'Varies', hold: 'On Hold', pretax: 'Before Taxes' };
   var STATUS_ORDER = ['fixed', 'varies', 'hold', 'pretax'];
 
-  function blank() { return { v: 1, pid: uid(), created: today(), u: Date.now(), lines: [], income: [], ideas: { done: {}, edit: {}, off: {}, mine: [], u: 0 }, logs: [], checks: {} }; }
+  function blank() { return { v: 1, pid: uid(), created: today(), u: Date.now(), lines: [], income: [], ideas: { done: {}, edit: {}, off: {}, mine: [], u: 0 }, logs: [], checks: {}, tools: {} }; }
   // Fills a money object in place (so a profile's own object stays the one saved).
   function norm(d) {
     if (!d || typeof d !== 'object') d = {};
     var b = blank(); Object.keys(b).forEach(function (k) { if (d[k] == null) d[k] = b[k]; });
-    d.lines = arr(d.lines); d.income = arr(d.income); d.logs = arr(d.logs); d.checks = obj(d.checks);
+    d.lines = arr(d.lines); d.income = arr(d.income); d.logs = arr(d.logs); d.checks = obj(d.checks); d.tools = obj(d.tools);
     d.ideas = obj(d.ideas); ['done', 'edit', 'off'].forEach(function (k) { d.ideas[k] = obj(d.ideas[k]); }); d.ideas.mine = arr(d.ideas.mine); d.ideas.u = +d.ideas.u || 0;
     d.lines.forEach(function (l) { if (!FREQ[l.f]) l.f = 'm'; if (!STATUS[l.s]) l.s = 'fixed'; l.a = +l.a || 0; });
     return d;
@@ -184,9 +199,11 @@
     if (!inc.some(function (s) { return rx(s, RE.fam); })) add('family', 'income', 'A Family Contribution', 'Grown children or family at home can add a set amount each month toward the home they share.', 150);
     arr(d.ideas.mine).forEach(function (m) { if (!m.x) out.push({ key: 'mine:' + m.id, k: m.k === 'income' ? 'income' : 'spend', t: m.n || 'My Idea', how: m.o || '', base: +m.a || 0, mine: m.id }); });
     var I2 = d.ideas;
+    out.forEach(function (x) { x.tool = IDEA_TOOL[x.key.split(':')[0]] || ''; });
     out.forEach(function (x) { var e = I2.edit[x.key]; x.save = e != null && isFinite(+e) ? r2(+e) : x.base; x.done = !!I2.done[x.key]; x.off = !!I2.off[x.key]; });
     return out;
   }
+  var IDEA_TOOL = { food: 'grocery', out: 'grocery', phone: 'calls', energy: 'calls', ins: 'calls', subs: 'subs', reach: 'side', side: 'side', family: 'date' };
   function names(list) { var n = list.map(function (l) { return l.n; }); return n.length < 3 ? n.join(' and ') : n.slice(0, -1).join(', ') + ', and ' + n[n.length - 1]; }
   function sum(list) { return list.reduce(function (s, l) { return s + monthly(l); }, 0); }
   function ideaSet(d, key, patch) {
@@ -523,9 +540,10 @@
      ===================================================================== */
   var TABS = [
     { v: 'gap', n: 'Close the Gap', i: 'gap' }, { v: 'plan', n: 'My Plan', i: 'list' }, { v: 'month', n: 'This Month', i: 'cal', m: 1 },
-    { v: 'log', n: 'Log', i: 'tap', m: 1 }, { v: 'check', n: 'Check-in', i: 'leaf', m: 1 }
+    { v: 'log', n: 'Log', i: 'tap', m: 1 }, { v: 'check', n: 'Check-in', i: 'leaf', m: 1 }, { v: 'tools', n: 'Tools', i: 'grid' }
   ];
-  var TITLE = { gap: 'Close the Gap', plan: 'My Plan', month: 'This Month', log: 'Log Spending', check: 'Weekly Money Check-in', import: 'Bring In a Spreadsheet', share: 'Share With Family' };
+  var TITLE = { gap: 'Close the Gap', plan: 'My Plan', month: 'This Month', log: 'Log Spending', check: 'Weekly Money Check-in', import: 'Bring In a Spreadsheet', share: 'Share With Family', tools: 'Tools and Calculators' };
+  var LINE = { gap: 'Tend your money, and your Branches grow.', plan: 'Every line, calm and clear.', month: 'Where this month is going.', log: 'One tap, and back to your day.', check: 'A calm look each week keeps money peaceful.', import: 'Start from the sheet you already keep.', share: 'One plan for your home, on each phone.', tools: 'Ways to save, earn, and plan, all on this device.' };
   var COMMON = [
     { n: 'Rent or Mortgage', s: 'fixed' }, { n: 'Groceries', s: 'varies' }, { n: 'Energy', s: 'varies' }, { n: 'Water and Trash', s: 'fixed' },
     { n: 'Phone Plan', s: 'fixed' }, { n: 'Car Payment', s: 'fixed' }, { n: 'Car Insurance', s: 'fixed' }, { n: 'Gas for the Car', s: 'varies' },
@@ -537,7 +555,8 @@
     if (!el) return null;
     mountIcons();
     if (opts.css !== false && !document.getElementById('gm-css')) { var lk = document.createElement('link'); lk.id = 'gm-css'; lk.rel = 'stylesheet'; lk.href = opts.cssHref || HERE + 'gg-money.css?v=' + V; document.head.appendChild(lk); }
-    var st = storeOf(opts.store), S = { view: opts.view || 'gap', pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false };
+    var st = storeOf(opts.store), S = { view: opts.view || 'gap', pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false, leaves: -1, tw: {} };
+    var ART = opts.art || '/shared/heroes/way/';
     var root = document.createElement('div'); root.className = 'gm'; el.innerHTML = ''; el.appendChild(root);
     var toastEl = null, toastT = 0;
     function member() { var m = opts.member; return typeof m === 'function' ? !!m() : !!m; }
@@ -550,30 +569,47 @@
       toastEl.onclick = function (e) { if (e.target.closest('[data-gm="undo"]')) { act('undo'); toastEl.innerHTML = ''; } };
       clearTimeout(toastT); toastT = setTimeout(function () { if (toastEl) toastEl.innerHTML = ''; }, undo ? 6000 : 3200);
     }
-    function allowed(v) { var t = TABS.filter(function (x) { return x.v === v; })[0]; if (v === 'share') return member(); return !t || !t.m || member(); }
-    function go(v) { if (!TITLE[v]) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(v); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    function allowed(v) {
+      if (/^tool:/.test(v)) { var T = TL() && TL().get(v.slice(5)); return !TL() || (!!T && (member() || !!T.start)); }
+      var t = TABS.filter(function (x) { return x.v === v; })[0]; if (v === 'share') return member(); return !t || !t.m || member();
+    }
+    /* ----- the tools (shared/gg-money-tools.js, loaded once) ----- */
+    function TL() { return window.GGMoneyTools || null; }
+    var toolsP = null;
+    function loadTools() {
+      if (TL()) { TL().use(UTIL); return Promise.resolve(true); }
+      if (toolsP) return toolsP;
+      return (toolsP = new Promise(function (ok) { var sc = document.createElement('script'); sc.src = opts.toolsSrc || HERE + 'gg-money-tools.js?v=' + V; sc.onload = function () { if (TL()) TL().use(UTIL); ok(!!TL()); }; sc.onerror = function () { toolsP = null; ok(false); }; document.head.appendChild(sc); }));
+    }
+    function tstate(d, id) { var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
+    function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate }; }
+    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(v); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
 
     /* ----- painting ----- */
     function paint() {
       var d = D();
       if (!d) { root.innerHTML = '<div class="gm-card gm-hello">' + head() + '<p class="gm-sub">Open your profile to see your money plan. It stays locked on this device with your passcode.</p>' + (window.GGP && GGP.require ? '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="unlock">Open My Profile</button></div>' : '') + '</div>'; return; }
       if (!allowed(S.view)) S.view = 'gap';
-      var body = { gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare }[S.view](d);
-      root.innerHTML = '<div class="gm-shell">' + head() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + S.view + '">' + body + '</div></div>';
+      var tid = /^tool:(.+)$/.exec(S.view), body = tid ? vTool(d, tid[1]) : { gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare, tools: vTools }[S.view](d);
+      root.innerHTML = '<div class="gm-shell">' + head() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
     }
+    // The painted header: Grounded's Branches painting (a nest in the oak), the place, and one warm line.
     function head() {
-      return '<div class="gm-top"><span class="gm-badge">' + I('coin') + '</span><div><div class="gm-k">Grounded Money</div><h2 class="gm-h2">' + esc(TITLE[S.view] || 'Grounded Money') + '</h2></div></div>';
+      var tid = /^tool:(.+)$/.exec(S.view), T = tid && TL() && TL().get(tid[1]);
+      var title = T ? T.n : TITLE[S.view] || 'Grounded Money', line = T ? T.sub : LINE[S.view] || '';
+      return '<header class="gm-hero' + (S.view === 'gap' ? ' tall' : '') + '"><img class="gm-hero-art" src="' + esc(ART) + 'tree-branches.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()">' +
+        '<div class="gm-hero-tx"><span class="gm-badge">' + I('coin') + '</span><div><div class="gm-k">Grounded Money · Branches</div><h2 class="gm-h2">' + esc(title) + '</h2>' + (line ? '<p>' + esc(line) + '</p>' : '') + '</div></div></header>';
     }
     function tabs() {
       return '<nav class="gm-tabs" aria-label="Grounded Money">' + TABS.filter(function (t) { return !t.m || member(); }).map(function (t) {
-        var on = S.view === t.v || (t.v === 'plan' && (S.view === 'import' || S.view === 'share'));
+        var on = S.view === t.v || (t.v === 'plan' && (S.view === 'import' || S.view === 'share')) || (t.v === 'tools' && /^tool:/.test(S.view));
         return '<button type="button" class="gm-tab" data-gm="go:' + t.v + '"' + (on ? ' aria-current="page"' : '') + '>' + I(t.i) + '<span>' + esc(t.n) + '</span></button>';
       }).join('') + '</nav>';
     }
     function memberLine() {
       if (member()) return '';
       var b = opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : '';
-      return '<div class="gm-card gm-mem"><p class="gm-sub">Membership adds This Month, one tap logging, a weekly money check-in, and one shared plan with your family.</p>' + b + '</div>';
+      return '<div class="gm-card gm-mem"><p class="gm-sub">Membership adds This Month, one tap logging, a weekly money check-in, one shared plan with your family, and every Grounded Money tool.</p>' + b + '</div>';
     }
     function sumRow(t) {
       var g = t.gap;
@@ -589,14 +625,14 @@
           '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' + memberLine();
       }
       var t = totals(d), short = t.gap < 0, start = Math.abs(Math.min(0, t.gap)), left = Math.max(0, -t.after), pct = start ? Math.min(100, Math.round(t.saved / start * 100)) : 100;
-      var top;
+      var top, tr = tree(pct);
       if (short) {
-        top = '<div class="gm-card gm-gap' + (left === 0 ? ' closed' : '') + '"><span class="gm-k">' + (left === 0 ? 'The Gap Is Closed' : 'Your Monthly Gap') + '</span>' +
+        top = '<div class="gm-card gm-gap' + (left === 0 ? ' closed' : '') + '">' + tr + '<span class="gm-k">' + (left === 0 ? 'The Gap Is Closed' : 'Your Monthly Gap') + '</span>' +
           '<div class="gm-big" data-gm-gap="' + left + '">' + money(left) + '</div><p class="gm-sub">' + (left === 0 ? 'Your chosen ideas close the gap, with ' + money(t.after) + ' a month to spare for savings and giving.' : t.saved ? 'a month to close, down from ' + money(start) + '.' : 'a month to close. Each idea you choose brings it closer.') + '</p>' +
           '<div class="gm-bar" role="img" aria-label="' + pct + ' percent of the gap closed"><span style="width:' + pct + '%"></span></div>' +
           (t.saved ? '<p class="gm-mini">Ideas you chose: ' + money(t.saved) + ' a month</p>' : '') + '</div>';
       } else {
-        top = '<div class="gm-card gm-gap closed"><span class="gm-k">Ahead Each Month</span><div class="gm-big" data-gm-gap="0">' + money(t.after) + '</div><p class="gm-sub">Your income covers your plan. The ideas below grow what you keep for savings and giving.</p></div>';
+        top = '<div class="gm-card gm-gap closed">' + tr + '<span class="gm-k">Ahead Each Month</span><div class="gm-big" data-gm-gap="0">' + money(t.after) + '</div><p class="gm-sub">Your income covers your plan. The ideas below grow what you keep for savings and giving.</p></div>';
       }
       var vis = t.ideas.filter(function (x) { return !x.off; }), hid = t.ideas.filter(function (x) { return x.off; });
       var cards = vis.map(ideaCard).join('');
@@ -605,7 +641,53 @@
         '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="idea:addsave">Add Idea</button><button type="button" class="gm-btn sm line" data-gm="idea:addcancel">Done</button></div></div>'
         : '<div class="gm-acts"><button type="button" class="gm-btn line sm" data-gm="idea:add">' + I('plus') + 'Add Your Own Idea</button></div>';
       var off = hid.length ? '<p class="gm-quiet"><button type="button" class="gm-linkbtn" data-gm="idea:showoff">' + (S.showOff ? 'Rest the hidden ideas' : 'Show ' + hid.length + ' hidden idea' + (hid.length > 1 ? 's' : '')) + '</button></p>' + (S.showOff ? hid.map(ideaCard).join('') : '') : '';
-      return top + '<h3 class="gm-sec">Ideas From Your Own Plan</h3><div class="gm-ideas">' + cards + '</div>' + mine + off + memberLine();
+      return top + '<p class="gm-tend">' + I('leaf') + '<span>Branches is the part of your tree for the people you love. Tending your money is tending them: each idea you choose grows a leaf, and a closed gap bears fruit.</span></p>' +
+        '<h3 class="gm-sec">Ideas From Your Own Plan</h3><div class="gm-ideas">' + cards + '</div>' + mine + off + tipCard() + memberLine();
+    }
+    function tipCard() {
+      if (!TL()) return '';
+      var T = TL(), i = T.tipOfWeek(), tip = T.tips[i];
+      return '<div class="gm-card gm-tipwk"><span class="gm-k">This Week\u2019s Money Tip</span><p>' + esc(tip[1]) + '</p><button type="button" class="gm-linkbtn" data-gm="go:tool:tips">More Tips' + I('arrow') + '</button></div>';
+    }
+    /* The Branches tree: two buds always, a leaf for each step of the gap closed, and fruit once it is closed.
+       Sage and Honey, like the breathing ring. New leaves open with a small grow (still, under reduced motion). */
+    var LEAF = [[88, 74, -30], [132, 70, 30], [70, 92, -50], [150, 88, 45], [104, 52, -10], [118, 50, 15], [58, 72, -40], [162, 68, 40], [94, 40, -20], [128, 38, 25], [78, 58, -60], [146, 54, 55], [110, 30, 0], [64, 104, -70], [156, 102, 65], [100, 64, 10]];
+    var FRUIT = [[84, 84], [136, 80], [110, 44], [70, 70], [150, 64], [118, 62]];
+    function tree(pct) {
+      var n = pct >= 100 ? LEAF.length : Math.max(2, Math.round(pct / 100 * (LEAF.length - 2))), was = S.leaves; S.leaves = n;
+      var lv = LEAF.slice(0, n).map(function (l, i) { var c = ['#8DB38A', '#6E9C6B', '#A9CBA0'][i % 3]; return '<ellipse class="gm-leaf' + (was >= 0 && i >= was ? ' new' : '') + '" cx="' + l[0] + '" cy="' + l[1] + '" rx="9" ry="5" fill="' + c + '" transform="rotate(' + l[2] + ' ' + l[0] + ' ' + l[1] + ')"/>'; }).join('');
+      var fr = pct >= 100 ? FRUIT.map(function (f, i) { return '<circle class="gm-fruit' + (was >= 0 && was < LEAF.length ? ' new' : '') + '" style="--i:' + i + '" cx="' + f[0] + '" cy="' + f[1] + '" r="5.5" fill="#DDA45A" stroke="#B9822F" stroke-width="1"/>'; }).join('') : '';
+      return '<svg class="gm-tree" viewBox="0 0 220 150" role="img" aria-label="' + (pct >= 100 ? 'Your Branches tree in full leaf, bearing fruit' : 'Your Branches tree, ' + n + ' leaves growing') + '">' +
+        '<ellipse cx="110" cy="142" rx="70" ry="6" class="gm-ground"/>' +
+        '<path class="gm-trunk" d="M104 142c2-14 2-30 0-46M116 142c-2-14-2-30 0-46M104 96c-8-8-18-14-30-18M116 96c8-8 18-14 32-20M108 98c-2-18 0-34 2-50M110 70c-10-8-24-10-36-6M112 66c10-8 24-12 38-8M110 56c-6-8-8-14-8-20M111 54c6-6 12-12 18-14"/>' + lv + fr + '</svg>';
+    }
+    // A warm moment: a few leaves drift down over the card with a kind line (only a line under reduced motion).
+    function celebrate(msg) {
+      var box = document.createElement('div'); box.className = 'gm-cele'; box.setAttribute('role', 'status');
+      var sp = ''; for (var i = 0; i < 14; i++) sp += '<span style="--x:' + (4 + (i * 37) % 92) + '%;--d:' + ((i * 0.17) % 1.4).toFixed(2) + 's;--r:' + ((i * 53) % 360) + 'deg" class="' + (i % 4 === 0 ? 'f' : '') + '"></span>';
+      box.innerHTML = sp + '<p>' + I('sun') + esc(msg) + '</p>';
+      var host = root.querySelector('.gm-shell') || root; host.appendChild(box);
+      setTimeout(function () { if (box.parentNode) box.remove(); }, 4200);
+    }
+
+    /* Tools */
+    function vTools(d) {
+      if (!TL()) { loadTools().then(function (ok) { if (ok) paint(); }); return '<p class="gm-sub">Opening the tools\u2026</p>'; }
+      var L = TL().list, open = L.filter(function (T) { return member() || T.start; }), rest = L.filter(function (T) { return !member() && !T.start; });
+      return '<div class="gm-tools">' + open.map(toolCard).join('') + '</div>' +
+        (rest.length ? '<div class="gm-card gm-mem"><span class="gm-k">With Membership</span><p class="gm-sub">' + esc(rest.map(function (T) { return T.n; }).join(', ')) + '.</p>' + (opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : '') + '</div>' : '');
+    }
+    function toolCard(T) {
+      return '<button type="button" class="gm-card gm-toolcard" data-gm="go:tool:' + T.id + '">' + (T.art ? '<span class="gm-art"><img src="' + esc(ART + T.art) + '" alt="" loading="lazy" decoding="async" onerror="this.parentNode.classList.add(\'none\');this.remove()">' + I(T.i) + '</span>' : '<span class="gm-art none">' + I(T.i) + '</span>') +
+        '<span class="gm-tx"><b>' + esc(T.n) + '</b><small>' + esc(T.sub) + '</small></span>' + I('arrow') + '</button>';
+    }
+    function vTool(d, id) {
+      if (!TL()) { loadTools().then(function (ok) { if (ok) paint(); }); return '<p class="gm-sub">Opening the tool\u2026</p>'; }
+      var T = TL().get(id); if (!T) return '<p class="gm-sub">This tool rests for now.</p>';
+      var c = tctx(d, id); if (T.init) T.init(c.t, c);
+      if (T.watch && !S.tw[id]) S.tw[id] = T.watch(c, null).state;
+      return '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:tools">' + I('back') + 'All Tools</button></div>' +
+        '<div class="gm-card gm-tform">' + T.form(c) + '</div><div class="gm-tres" aria-live="polite">' + T.out(c) + '</div>' + (T.start && !member() ? memberLine() : '');
     }
     function ideaCard(x) {
       var verb = x.k === 'income' ? 'Adds about ' : 'Saves about ';
@@ -615,6 +697,7 @@
         '<div class="gm-tx"><b>' + esc(x.t) + '</b>' + (x.how ? '<small>' + esc(x.how) + '</small>' : '') +
         (ed ? '<div class="gm-inl"><label class="gm-f"><span>' + verb + 'this much a month</span><input class="gm-in" inputmode="decimal" data-gmi="save:' + esc(x.key) + '" value="' + plain(x.save) + '"></label><button type="button" class="gm-btn sm" data-gm="idea:ed:' + esc(x.key) + '">Done</button></div>'
           : '<div class="gm-save"><span class="gm-pill">' + verb + money(x.save) + ' a month</span><button type="button" class="gm-linkbtn" data-gm="idea:ed:' + esc(x.key) + '">Change</button>' +
+            (x.tool && TL() && TL().get(x.tool) && (member() || TL().get(x.tool).start) ? '<button type="button" class="gm-linkbtn" data-gm="go:tool:' + x.tool + '">' + esc(TL().get(x.tool).n) + I('arrow') + '</button>' : '') +
             (x.mine ? '<button type="button" class="gm-linkbtn" data-gm="idea:rm:' + esc(x.mine) + '">Remove</button>' : '<button type="button" class="gm-linkbtn" data-gm="idea:off:' + esc(x.key) + '">' + (x.off ? 'Show' : 'Hide') + '</button>') + '</div>') +
         '</div></div>';
     }
@@ -763,7 +846,11 @@
       if (p[0] === 'unlock') { GGP.require({ reason: 'Open your profile to see Grounded Money.' }).then(function () { paint(); }); return; }
       if (!d) return;
       switch (p[0]) {
-        case 'go': S.sureLeave = 0; go(p[1]); return;
+        case 'go': S.sureLeave = 0; go(p.slice(1).join(':')); return;
+        case 'tool':
+          var TT = TL() && TL().get(p[1]); if (!TT || !TT.act) return;
+          var cx = tctx(d, p[1]); if (TT.act(p[2], p.slice(3).join(':'), cx)) { touch(d); save(); var y0 = window.scrollY; paint(); window.scrollTo(0, y0); watchTool(d, p[1]); }
+          return;
         case 'mem': if (opts.onMembership) opts.onMembership(p[1]); return;
         case 'common': COMMON.forEach(function (c) { addLine(d, c); }); save(); S.view = 'plan'; paint(); say('Twelve common lines are ready. Add your amounts, and rename or remove any.'); focusFirstEmpty(); return;
         case 'add':
@@ -778,7 +865,8 @@
         case 'note': S.more['n:' + p[1]] = 1; paint(); var ni = root.querySelector('[data-id="' + p[1] + '"] [data-gmf="o"]'); if (ni) ni.focus(); return;
         case 'leave': if (!S.sureLeave) { S.sureLeave = 1; paint(); return; } S.sureLeave = 0; leave(d); save(); paint(); say('Your own plan is back.'); return;
         case 'idea':
-          if (p[1] === 'tick') { var key = p.slice(2).join(':'), on = !d.ideas.done[key]; ideaSet(d, key, { done: on }); save(); paint(); var t = totals(d); if (on) say(t.after >= 0 && t.gap < 0 ? 'The gap is closed. Well done.' : 'Chosen. ' + (t.after < 0 ? money(-t.after) + ' to go.' : '')); return; }
+          if (p[1] === 'tick') { var key = p.slice(2).join(':'), on = !d.ideas.done[key], was = totals(d).after; ideaSet(d, key, { done: on }); save(); paint(); var t = totals(d);
+            if (on && was < 0 && t.after >= 0) celebrate('The gap is closed. Your Branches are bearing fruit.'); else if (on) say(t.after < 0 ? 'Chosen. ' + money(-t.after) + ' to go.' : 'Chosen. More to keep for savings and giving.'); return; }
           if (p[1] === 'ed') { var k2 = p.slice(2).join(':'), was = S.more['e:' + k2]; if (was) { var v = root.querySelector('[data-gmi="save:' + cssq(k2) + '"]'); if (v) commitSave(d, k2, v.value); } S.more['e:' + k2] = !was; paint(); if (!was) { var f = root.querySelector('[data-gmi="save:' + cssq(k2) + '"]'); if (f) { f.focus(); f.select && f.select(); } } return; }
           if (p[1] === 'off') { var k3 = p.slice(2).join(':'); ideaSet(d, k3, { off: !d.ideas.off[k3] }); save(); paint(); return; }
           if (p[1] === 'showoff') { S.showOff = !S.showOff; paint(); return; }
@@ -850,8 +938,21 @@
       var a = b.getAttribute('data-gm'); if (a === 'scanstop') { if (scanStop) scanStop(); return; }
       e.preventDefault(); act(a, b);
     }
+    function setPath(o, path, v) { var k = path.split('.'); for (var i = 0; i < k.length - 1; i++) { var nx = /^\d+$/.test(k[i + 1]); if (o[k[i]] == null || typeof o[k[i]] !== 'object') o[k[i]] = nx ? [] : {}; o = o[k[i]]; } o[k[k.length - 1]] = v; }
+    function toolInput(t) {
+      var view = t.closest('[data-tool]'), d = D(); if (!view || !d) return false; var id = view.getAttribute('data-tool'), T = TL() && TL().get(id); if (!T) return false;
+      var v = t.value; if (t.getAttribute('data-n')) { var n = num(v); v = n == null ? '' : n; } else if (t.tagName === 'SELECT' && /^\d+$/.test(v)) v = +v;
+      var c = tctx(d, id); setPath(c.t, t.getAttribute('data-gt'), v); touch(d);
+      var out = root.querySelector('.gm-tres'); if (out) out.innerHTML = T.out(c);
+      return true;
+    }
+    function watchTool(d, id) { var T = TL() && TL().get(id); if (!T || !T.watch) return; var r = T.watch(tctx(d, id), S.tw[id]); S.tw[id] = r.state; if (r.msg) celebrate(r.msg); }
     function onChange(e) {
       var t = e.target, d = D(); if (!d) return;
+      if (t.getAttribute('data-gt')) {
+        if (toolInput(t)) { save(); var id = t.closest('[data-tool]').getAttribute('data-tool'); watchTool(d, id); if (t.getAttribute('data-gtp') || t.tagName === 'SELECT' && /^(efm|list\.\d+\.f)$/.test(t.getAttribute('data-gt'))) { var key = t.getAttribute('data-gt'); paint(); var again = root.querySelector('[data-gt="' + key + '"]'); if (again) again.focus(); } }
+        return;
+      }
       var f = t.getAttribute('data-gmf');
       if (f) {
         var row = t.closest('[data-id]'), kind = row && row.getAttribute('data-kind'), item = row && find(kind === 'income' ? d.income : d.lines, row.getAttribute('data-id')); if (!item) return;
@@ -886,7 +987,7 @@
       if (row && row.getAttribute('data-kind') === 'line') { var mo = row.querySelector('.gm-mo'); if (mo) mo.textContent = item.s === 'hold' ? 'On Hold rests outside the monthly total.' + (item.f !== 'm' ? ' About ' + money(monthly(item)) + ' a month.' : '') : item.f !== 'm' ? 'About ' + money(monthly(item)) + ' a month' : ''; }
       var nm = row && row.querySelector('.gm-x'); if (nm && item.n) nm.setAttribute('aria-label', 'Remove ' + item.n);
     }
-    function onInput(e) { if (e.target.id === 'gm-log-a') S.logAmt = e.target.value; else if (e.target.id === 'gm-log-d') S.logDate = e.target.value; else if (e.target.id === 'gm-c1' || e.target.id === 'gm-c3') { S.chk = S.chk || { well: '', steady: 0, step: '' }; S.chk[e.target.id === 'gm-c1' ? 'well' : 'step'] = e.target.value; } }
+    function onInput(e) { if (e.target.getAttribute && e.target.getAttribute('data-gt')) { toolInput(e.target); return; } if (e.target.id === 'gm-log-a') S.logAmt = e.target.value; else if (e.target.id === 'gm-log-d') S.logDate = e.target.value; else if (e.target.id === 'gm-c1' || e.target.id === 'gm-c3') { S.chk = S.chk || { well: '', steady: 0, step: '' }; S.chk[e.target.id === 'gm-c1' ? 'well' : 'step'] = e.target.value; } }
     function onKey(e) {
       if (e.key !== 'Enter') return; var t = e.target;
       if (t.id === 'gm-log-a') { e.preventDefault(); var first = root.querySelector('.gm-chips .gm-chip'); if (first) first.focus(); }
@@ -898,7 +999,9 @@
     root.addEventListener('click', onClick); root.addEventListener('change', onChange); root.addEventListener('input', onInput); root.addEventListener('keydown', onKey);
     var unsub = null; if (st.kind === 'ggp' && window.GGP && GGP.on) { try { unsub = GGP.on(function (ty) { if (ty === 'change' || ty === 'ready') paint(); }); } catch (e) {} }
 
+    if (TL()) TL().use(UTIL);
     paint();
+    loadTools().then(function (ok) { if (ok && (S.view === 'gap' || S.view === 'tools' || /^tool:/.test(S.view))) paint(); });
     function readHash() { var hm = /#money=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (hm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} receive(hm[1]); } }
     if (opts.readHash) { readHash(); window.addEventListener('hashchange', readHash); }
     return {
@@ -907,8 +1010,11 @@
     };
   }
 
+  // Helpers the tools file uses (GGMoneyTools.use).
+  var UTIL = { esc: esc, money: money, plain: plain, num: num, I: I, live: live, monthly: monthly, totals: totals, month: month, find: find, edit: edit, addLine: addLine, addIncome: addIncome,
+    today: today, monthKey: monthKey, weekKey: weekKey, niceDate: niceDate };
   window.GGMoney = {
-    v: V, render: render, summary: summary,
+    v: V, render: render, summary: summary, util: UTIL,
     model: { blank: blank, norm: norm, monthly: monthly, totals: totals, ideas: ideaList, ideaSet: ideaSet, month: month, addLine: addLine, addIncome: addIncome, edit: edit, remove: remove, restore: restore, logAdd: logAdd, checkSave: checkSave, weekKey: weekKey, FREQ: FREQ, STATUS: STATUS, STEADY: STEADY },
     parse: { xlsx: readXlsx, csv: readCsv, file: readFile, guess: guessMap, rows: fromSheet, pick: pickSheet, apply: applyImport, inflate: inflate, unzip: unzip },
     share: { encode: encode, decode: decode, unpack: unpack, merge: merge, leave: leave, code: codeFrom, base: SHARE_BASE },
