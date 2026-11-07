@@ -151,7 +151,7 @@
     BLIND.forEach(function (b) { if (na[b[0]]) return; total++; if (done[b[0]]) d++; else if (!next) next = b; });
     return { done: d, total: total, left: total - d, pct: total ? Math.round(d / total * 100) : 0, next: next }; }
   function ring(pct) { var R = 26, C = 2 * Math.PI * R, p = Math.max(0, Math.min(100, n0(pct)));
-    return '<svg class="gm-ring" viewBox="0 0 64 64" role="img" aria-label="' + p + ' percent covered"><circle cx="32" cy="32" r="' + R + '" class="gm-ring-bg"/><circle cx="32" cy="32" r="' + R + '" class="gm-ring-fg" stroke-dasharray="' + (C * p / 100).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle">' + p + '%</text></svg>'; }
+    return '<svg class="gm-ring" viewBox="0 0 64 64" role="img" aria-label="' + p + ' percent covered"><circle cx="32" cy="32" r="' + R + '" class="gm-ring-bg"/>' + (p > 0 ? '<circle cx="32" cy="32" r="' + R + '" class="gm-ring-fg" stroke-dasharray="' + (C * p / 100).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 32 32)"/>' : '') + '<text x="32" y="37" text-anchor="middle">' + p + '%</text></svg>'; }
   // A small bar chart of what you put in and what growth adds, year by year (every few years on longer spans).
   function growChart(series) {
     if (!series.length) return '';
@@ -525,11 +525,11 @@
       },
       act: function (a, arg, c) { if (a !== 'k') return false; var q = String(arg).split(':'), k = q[0], v = q[1]; if (!/^(have|review|na)$/.test(v)) return false; if (c.t.k[k] === v) delete c.t.k[k]; else c.t.k[k] = v; return true; } },
 
-    { id: 'blind', part: 'protect', n: 'Blind Spot Check', i: 'eye', sub: 'The often missed pieces of a steady plan, one by one.',
+    { id: 'blind', part: 'protect', n: 'Blind Spot Check', i: 'eye', outFirst: 1, sub: 'The often missed pieces of a steady plan, one by one.',
       init: function (t) { t.done = t.done && typeof t.done === 'object' ? t.done : {}; t.na = t.na && typeof t.na === 'object' ? t.na : {}; },
       form: function (c) {
         var t = c.t;
-        return '<p class="gm-sub">A short list of what steady households have in place. Tap Covered for each one you have, and the next step shows the way for the rest.</p>' +
+        return '<p class="gm-sub">A short list of what steady households have in place. Tap the box beside each one you have, and the next step shows the way for the rest.</p>' +
           '<div class="gm-blinds">' + BLIND.map(function (b) {
             var on = !!t.done[b[0]], na = !!t.na[b[0]];
             return '<div class="gm-blind' + (on ? ' on' : '') + (na ? ' na' : '') + '" data-k="' + b[0] + '"><button type="button" class="gm-tick" data-gm="tool:blind:done:' + b[0] + '" aria-pressed="' + on + '" aria-label="' + E((on ? 'Covered: ' : 'Mark covered: ') + b[1]) + '">' + U.I('check') + '</button>' +
