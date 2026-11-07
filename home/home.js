@@ -2131,7 +2131,7 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     var ls = soberOn() ? soberHtml(soberDate()) : !isKid(S.p) && h.parts.indexOf('sober') >= 0 && !soberDate() ? soberInviteHtml() : ''; if (ls && soberOn()) lsPre();
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml(T) + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -2394,8 +2394,16 @@
     var h = homeRec(); if (h.season && TREES[h.season]) more.unshift([TREES[h.season].href, treeArt(h.season), TREES[h.season].n, TREES[h.season].who]);
     return '<label class="hm-search"><span>Search everything</span><input type="search" id="hm-q" placeholder="Grief, salmon, sleep, a Morning Quiet" autocomplete="off" enterkeyhint="search"></label>' +
       '<div class="hm-results" id="hm-results" aria-live="polite"></div>' +
-      '<div class="hm-shelves" id="hm-shelves">' + shelves().map(shelfHtml).join('') + mShelfHtml() + '</div>' + (member() || isYoung(S.p) ? '' : inviteHtml('library')) +
+      '<div class="hm-shelves" id="hm-shelves">' + withMoney(shelves().map(shelfHtml).join('') + mShelfHtml()) + '</div>' + (member() || isYoung(S.p) ? '' : inviteHtml('library')) +
       '<h2 class="hm-label">More to Explore</h2><div class="hm-more">' + more.map(function (m) { return '<a class="hm-mtool" href="' + m[0] + '">' + tile(m[1], 'sm') + '<span><b>' + esc(m[2]) + '</b><small>' + esc(m[3]) + '</small></span></a>'; }).join('') + '</div>';
+  }
+  // BLD 937: Grounded Money sits right after Grounded Relationships when that shelf shows, else at the end of the shelves.
+  function withMoney(h) {
+    var mh = moneyShelves(); if (!mh) return h;
+    var at = h.indexOf('data-hm-shelf="m-relationships"');
+    if (at < 0) return h + mh;
+    var end = h.indexOf('</button>', at) + 9;
+    return h.slice(0, end) + mh + h.slice(end);
   }
   function fillLibrary() {
     loadLib().then(function () {
@@ -2410,6 +2418,7 @@
     if (q.length < 2) { box.innerHTML = ''; return; }
     var t = TREES[S.tree] || TREES.oak, out = [], has = function (s) { return String(s || '').toLowerCase().indexOf(q) >= 0; };
     shelves().forEach(function (s) { if (has(s.name) || has(s.line)) out.push({ k: 'shelf', id: s.id, title: s.name, sub: 'Shelf' }); });
+    moneySearch(has, out);   // BLD 937
     arr(window.GGTendPublic && window.GGTendPublic.recipes).forEach(function (r) { if (has(r.name) || has(r.protein) || has(r.meal)) out.push({ k: 'recipe', id: r.id, title: r.name, sub: 'Grounded Recipes' }); });
     arr(guidesOf(S.tree)).forEach(function (g) { if (has(g.title) || has(Array.isArray(g.keys) ? g.keys.join(' ') : g.keys)) out.push({ k: 'guide', id: g.id, title: g.title, sub: 'When Life Changes' }); });
     arr(learnOf(S.tree)).forEach(function (l) { if (has(l.title) || has(l.track)) out.push({ k: 'lesson', id: l.id, title: l.title, sub: 'Learn, ' + l.track }); });
@@ -2446,6 +2455,8 @@
     else if (id === 'recipes') openRecipe('');
     else if (id === 'holidays') openRecipe('holidays');
     else if (id === 'seeds') openSeeds();
+    else if (id === 'money') goTo('library=money');
+    else if (id === 'money-date') goTo('library=money-tool:date');
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
     else if (id === 'gentle') goTo('library=gentle');
@@ -2556,6 +2567,7 @@
     if (t.hasAttribute('data-hm-shelf')) { openShelf(t.getAttribute('data-hm-shelf')); return; }
     if (t.hasAttribute('data-hm-res')) {
       var rs = t.getAttribute('data-hm-res').split('|'), k = rs[0], id = rs.slice(1).join('|'), tt = TREES[S.tree] || TREES.oak;
+      if (k === 'money') { goTo('library=money' + (id === 'gap' ? '' : '-' + id)); return; }
       if (k === 'shelf') openShelf(id); else if (k === 'recipe') openRecipe(id); else if (k === 'guide') { void tt; playGuide(id); } else if (k === 'lesson') playTreeLesson(id);
       return;
     }
@@ -2612,8 +2624,10 @@
   ];
   /* BLD 935 (audit L4): on Start and for a teen, Today's step names what their day holds (no meals). */
   function tourList() {
-    if (member() || !S.p) return TOUR;
-    return TOUR.map(function (c) { return c.k !== 'today' ? c : Object.assign({}, c, { d: 'Your whole day in order: a practice for each of your four, your movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.' }); });
+    // BLD 937: a grown-up's Library card names Grounded Money too (never a teen's or a kid's).
+    var L = S.p && !isYoung(S.p) ? TOUR.map(function (c) { return c.k !== 'library' ? c : Object.assign({}, c, { d: c.d + ' Grounded Money, under Branches, keeps your monthly plan calm and clear.' }); }) : TOUR;
+    if (member() || !S.p) return L;
+    return L.map(function (c) { return c.k !== 'today' ? c : Object.assign({}, c, { d: 'Your whole day in order: a practice for each of your four, your movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.' }); });
   }
   var KTOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
@@ -4278,6 +4292,86 @@
     else if (a === 'not') { kitDone(); mClose(); }
     else if (a === 'leave') { if (!t.hasAttribute('data-sure')) { t.setAttribute('data-sure', '1'); t.textContent = 'Tap Again to Leave'; return; } if (window.GGHealth && GGHealth.kitchenLeave) { GGHealth.kitchenLeave(); saveHome().then(function () { toast('You left the Family Kitchen.'); render(); }); } }
   });
+
+  /* ---------- BLD 937: Grounded Money (shared/gg-money.js, window.GGMoney) ----------
+     Chris (November 7, 2026): "the gap is real and exactly why im doing this.. i need to build a tool that can fill the gap".
+     A calm monthly money plan for grown-ups, in the Library under Branches: Relationships (money peace is family peace).
+     It opens at #library=money (the module's own view after it, so Back and reload land in place) and loads only then.
+     The plan lives in the open profile (GGP.data(id, 'money')), locked with it, so backups and Move to Another Device carry
+     it. Start is the taste (Close the Gap, My Plan, Bring In a Spreadsheet, and three tools); Membership opens This Month, Log,
+     the weekly check-in, Share With Family, and every tool. A teen or a kid sees no Grounded Money.
+     Today: a Member with a plan sees one quiet This Month line, only when the month needs closing.
+     The Family link (/home/#money=<code>) is read here like #kitchen= (never sent anywhere): it waits for a grown-up profile,
+     opens Grounded Money, and the module asks once, Bring It In or Later. */
+  SUBS.library.money = 'Grounded Money';
+  var MN = { ctl: null, line: false };
+  var MIN, MIN_GO = false;
+  var MONEY_TOOLS = [['debt', 'Debt Payoff Planner', 'debt payoff snowball avalanche interest loans credit card'], ['goals', 'Emergency Fund and Savings Goals', 'emergency fund savings goals save'], ['pay', 'Paycheck Planner', 'paycheck payday bills by paycheck'],
+    ['fund', 'Set-Aside Funds', 'set aside sinking funds yearly bills'], ['grocery', 'Grocery Saver', 'grocery groceries food meals at home eating out', 1], ['car', 'True Cost of a Car', 'car truck vehicle cost per mile'],
+    ['side', 'Side Income Calculator', 'side income extra income earn'], ['subs', 'Subscription Check', 'subscriptions streaming apps', 1], ['calls', 'Call Scripts', 'call scripts phone internet insurance lower a bill'],
+    ['date', 'Money Date', 'money date couple couples together weekly'], ['give', 'Giving Planner', 'giving give tithe generosity charity'], ['kids', 'Allowance Helper', 'allowance kids jars'], ['tips', 'Grounded Money Tips', 'tips ways to save', 1]];
+  function moneyFor() { return !!(S.id && S.p && !isYoung(S.p)); }
+  function moneyOff() { if (MN.ctl) { try { MN.ctl.destroy(); } catch (e) {} MN.ctl = null; } }
+  function paintMoney(box, sub) {
+    if (!box) return;
+    load(MONEY_SRC).then(function (ok) {
+      if (!box.isConnected) return;
+      if (!ok || !window.GGMoney || !GGMoney.render) { box.innerHTML = '<p class="hm-sub">Grounded Money is getting ready. Try again in a moment.</p>'; return; }
+      moneyOff();
+      MN.ctl = GGMoney.render(box, {
+        store: 'ggp',                                  // the open profile, locked with it
+        member: function () { return member(); },      // read each paint, so a code added now opens the Membership places
+        view: sub || 'gap',
+        onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money' + (v === 'gap' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
+        onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
+        toast: toast
+      });
+      if (MIN && MN.ctl) { var code = MIN; moneyDone(); MN.ctl.receive(code); }
+    });
+  }
+  /* The Family link: read it, keep it in this tab until a grown-up profile is open, then open Grounded Money with it. */
+  function readMoney() {
+    MIN = null;
+    var m = /^#money=([A-Za-z0-9_-]{8,20000})/.exec(location.hash || '');
+    if (m) {
+      MIN = m[1]; MIN_GO = false;
+      try { sessionStorage.setItem('gg-money-in', MIN); } catch (e) {}
+      try { history.replaceState(null, '', location.pathname + location.search + '#library=money'); } catch (e) {}
+    } else if (/^#money=/.test(location.hash || '')) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money'); } catch (e) {} }
+    else { try { MIN = sessionStorage.getItem('gg-money-in') || null; } catch (e) { MIN = null; } }
+  }
+  function moneyDone() { MIN = null; MIN_GO = false; try { sessionStorage.removeItem('gg-money-in'); } catch (e) {} }
+  function moneyLink() { if (!MIN) { render(); return; } if (MN.ctl && route().sub === 'money' && moneyFor()) { var code = MIN; moneyDone(); MN.ctl.receive(code); return; } render(); }
+  function moneySoon() {
+    if (!MIN || MIN_GO || !moneyFor() || (SU.open && SU.id === S.id) || suPending()) return;
+    if (route().sub === 'money') return;   // Grounded Money is drawing, and brings the link in
+    MIN_GO = true; goTo('library=money');
+  }
+  /* The Library: Grounded Money beside Grounded Relationships (Branches), and for a Member, the Money Date for couples. */
+  function moneyShelves() {
+    if (!moneyFor()) return '';
+    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your monthly plan, calm and clear. Close the Gap first.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'tree-branches.webp' }) +
+      (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'growth-plan.webp' }) : '');
+  }
+  function moneySearch(has, out) {
+    if (!moneyFor()) return;
+    if (has('Grounded Money') || has('money budget spending plan gap bills income savings save debt paycheck close the gap')) out.push({ k: 'money', id: 'gap', title: 'Grounded Money', sub: 'Branches' });
+    MONEY_TOOLS.forEach(function (t) { if ((member() || t[3]) && (has(t[1]) || has(t[2]))) out.push({ k: 'money', id: 'tool:' + t[0], title: t[1], sub: 'Grounded Money' }); });
+  }
+  /* Today: This Month, for a Member with a plan, only when the month needs closing. A quick look in the vault first, so the
+     module loads only for someone who has a plan. */
+  function moneyTodayHtml() {
+    if (!moneyFor() || !member() || !window.GGP || !GGP.isOpen || !GGP.isOpen(S.id)) return '';
+    var v = GGP.data(S.id) || {}, mo = v.money;
+    if (!mo || !arr(mo.lines).some(function (l) { return l && !l.x; })) return '';
+    if (!window.GGMoney) { if (!MN.line) { MN.line = true; load(MONEY_SRC).then(function () { var r = route(); if (window.GGMoney && S.id && r.tab === 'today' && !r.sub) refreshPane(); }); } return ''; }
+    var sm = null; try { sm = GGMoney.summary('ggp'); } catch (e) { sm = null; }
+    var short = sm && sm.has && sm.month ? +sm.month.short || 0 : 0;
+    if (!(short > 0)) return '';
+    var amt = '$' + Math.round(short).toLocaleString('en-US');
+    return '<button type="button" class="hm-moneyline" data-hm-tab="library=money-month"><span class="ic" aria-hidden="true"><img src="' + IMG + 'tree-branches.webp" alt="" loading="lazy" decoding="async"></span>' +
+      '<span class="tx"><span class="ey">This Month</span><b>' + esc(amt) + ' to bring into balance this month</b><small>Grounded Money has ideas to close it.</small></span><span class="go">See My Month' + I('arrow') + '</span></button>';
+  }
 
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
   var MSHELVES = [

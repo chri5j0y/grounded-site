@@ -584,13 +584,14 @@
     }
     function tstate(d, id) { var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
     function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate }; }
-    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(v); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
 
     /* ----- painting ----- */
     function paint() {
       var d = D();
       if (!d) { root.innerHTML = '<div class="gm-card gm-hello">' + head() + '<p class="gm-sub">Open your profile to see your money plan. It stays locked on this device with your passcode.</p>' + (window.GGP && GGP.require ? '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="unlock">Open My Profile</button></div>' : '') + '</div>'; return; }
-      if (!allowed(S.view)) S.view = 'gap';
+      // Stage 2: a view this person cannot open (a Membership place on Start) settles on Close the Gap, and the host's address follows.
+      if (!allowed(S.view)) { S.view = 'gap'; if (opts.onView) try { opts.onView('gap'); } catch (e) {} }
       var tid = /^tool:(.+)$/.exec(S.view), body = tid ? vTool(d, tid[1]) : { gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare, tools: vTools }[S.view](d);
       root.innerHTML = '<div class="gm-shell">' + head() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
     }
