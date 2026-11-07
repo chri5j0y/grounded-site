@@ -1,20 +1,20 @@
 /* =====================================================================
    THE FIELD GUIDE, THE PAGE (shared/the-field-guide.js)   GWG BLD 838, October 2026
-   The live parts of the-field-guide.html, the public page for people who are new to the Field Guide:
+   The live parts of the-field-guide.html, the team page (For Our Team, BLD 934):
      Sample videos   two public videos from Oak, played in shared/gg-learn.js with Brian's recorded clips, the way
                      shared/living-sober.js plays its Start Here videos (the loaders wait for a tap):
                        ok-s-listen               Listening Beneath the Words (Oak Learn, Shelter for Others)
                        ok-g-loneliness-helper    Loneliness: For the Helper (Oak When Life Changes)
                      The promo video and A Taste of For Guides are page videos (shared/page-videos.js, data-gg-watch).
                      Nothing sealed is used here: every sample is already public in the Oak app or was written for this page.
-     Request Access  the practitioner request opens an email with a few questions, the way the Field Guide's own sign-in
+     Request Access  a team member's request opens an email with a few questions, the way the Field Guide's own sign-in
                      screen does (the address is put together here so it is never posted as plain text).
    Links that open a sample: #watch=<id>. The video waits on its Play button. Nothing personal is kept here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGFieldGuidePage) return;
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b932', LESSONS = '/shared/learn-lessons.js?v=b929', GUIDES = '/oak/guide-videos.js?v=b907';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b934', LESSONS = '/shared/learn-lessons.js?v=b929', GUIDES = '/oak/guide-videos.js?v=b907';
   var ACC = '#6E4A14';
   var SAMPLES = [
     { id: 'ok-s-listen', kind: 'lesson', track: 'oak-shelter', eyebrow: 'From Oak Learn', title: 'Listening Beneath the Words' },
@@ -27,9 +27,8 @@
   /* ---------- Request Access: an email with a few questions ---------- */
   function mailLink(kind) {
     var to = 'hello' + '@' + 'growwithgrounded.com';
-    var m = kind === 'org'
-      ? ['Field Guide for our organization', ['Organization:', 'Your name and role:', 'What kind of organization (church, school, other):', 'About how many people would use it:', 'Anything else we should know:']]
-      : ['Field Guide access request', ['Your name:', 'Your role (chaplain, pastor, teacher, coach, other):', 'Where you serve:', 'How you would use the Field Guide:', 'Yearly ($240) or monthly ($24):']];
+    // BLD 934: the Field Guide is for Grounded's own team (Guides are Grounded staff): one request, for a team member.
+    var m = ['Field Guide access for a team member', ['Your name:', 'Your role on the Grounded team (Guide, Staff, or Founder):', 'The phone, tablet, or computer you will use:', 'Anything else we should know:']];
     return 'mailto:' + to + '?subject=' + encodeURIComponent(m[0]) + '&body=' + encodeURIComponent(m[1].join('\n\n') + '\n');
   }
   function mails() { Array.prototype.forEach.call(document.querySelectorAll('[data-fg-mail]'), function (a) { a.href = mailLink(a.getAttribute('data-fg-mail')); }); }
@@ -84,7 +83,7 @@
           app: 'site', lesson: l, track: track, tracks: [track], done: done, at: 0, accent: ACC, mood: 'calm',
           voice: GGLearn.recVoice({ app: 'oak', lesson: l, track: hit.t }, true) || 'brian',
           mark: { name: 'Field Guide' },
-          ending: { eyebrow: 'The Field Guide', h: 'Take all the time you need.', sub: nx ? 'Up next: ' + nx.title : 'The Field Guide holds a Guide, training, and videos like this for every tree.', say: 'Take all the time you need.', ok: true, buttons: btns },
+          ending: { eyebrow: 'The Field Guide', h: 'Take all the time you need.', sub: nx ? 'Up next: ' + nx.title : 'The Field Guide holds training and videos like this for the Grounded team.', say: 'Take all the time you need.', ok: true, buttons: btns },
           onDone: function (x) { done[x] = 1; },
           onEnd: function (b) {
             if (b === 'next' && nx) watch(nx.id);

@@ -114,7 +114,7 @@ window.GGSoberMore = {
     ],
     "say": [
      "I'll have a sparkling water with lime, please.",
-     "What alcohol-free drinks do you have?",
+     "What sober drinks do you have?",
      "I'm all set with this, thanks!",
      "I'm sober and loving it."
     ],
@@ -167,11 +167,11 @@ window.GGSoberMore = {
     "before": [
      "Plan your days around adventures and good food.",
      "Pack tea bags and a water bottle.",
-     "Look up local alcohol-free drinks to try.",
+     "Look up local sober drinks to try.",
      "Plan early mornings: sunrise is a vacation treasure."
     ],
     "say": [
-     "I'll try your best alcohol-free drink!",
+     "I'll try your best sober drink!",
      "I'm all set, thanks.",
      "Sparkling water with lime for me, please.",
      "I'm up early for a hike, so I'm good."
@@ -405,7 +405,7 @@ window.GGSoberMore = {
    {
     "key": "m1",
     "title": "One Month",
-    "text": "Many people who finish an alcohol-free month say they sleep better, have more energy, and see better skin. In one study, a month alcohol-free brought healthier blood sugar, lower blood pressure, and some weight loss.",
+    "text": "Many people who finish a Sober month say they sleep better, have more energy, and see better skin. In one study, a Sober month brought healthier blood sugar, lower blood pressure, and some weight loss.",
     "src": [
      "sussexdry",
      "mehta18"

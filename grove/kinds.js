@@ -4438,7 +4438,7 @@ window.GROVE_KINDS = {
   ],
   "noticeTitle": "Classroom Family Notice",
   "notice": "Dear families,\n\nOur class is using The Grove, a tool from Grow With Grounded, to talk about our life together as a class: how we learn, play, rest, and get along.\n\nOnce in a while, we gather in a circle and talk over a few questions about class life, like \"Everyone in our class gets a turn to talk.\" The class chooses one shared answer together. No student's own answer is ever written down or saved, and no names are kept. The questions are only about our class, never about home, family, faith, or anyone's own feelings or health.\n\nThen we choose a few class practices to try, like movement breaks, kindness notes, or a goodbye circle at the end of the day.\n\nEverything stays on the classroom device, locked with a passcode. If you have questions, please reach out to me anytime.\n\nWith thanks,",
-  "footer": "Grow With Grounded · growwithgrounded.com · In a crisis, call or text 988. In an emergency, call 911."
+  "footer": "Grow With Grounded · In a crisis, call or text 988. In an emergency, call 911."
  },
  "certificate": {
   "title": "Twelve Weeks Together",
@@ -4447,7 +4447,7 @@ window.GROVE_KINDS = {
  },
  "moveOn": {
   "newSeason": "Start a New Season Together: take a full check-in, see your new ring, and choose what to grow next.",
-  "takeHome": "Take The Grove Home: share a card and a QR code so members can start a Family grove of their own.",
+  "takeHome": "Take The Grove Home: share a card so members can start a Family grove of their own.",
   "closeClass": "Close Our Class Grove: hold a goodbye circle, print your certificate, and then clear the class grove for next year.",
   "ownTree": "Start Your Own Tree: anyone who wants their own check-in can start a tree app that fits their age.",
   "hardSeason": "When someone you love is very ill or has died, Willow walks with your family through it, and a remembered willow stays in your grove."

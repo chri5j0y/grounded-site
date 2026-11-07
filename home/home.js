@@ -52,7 +52,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b931', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b919', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=b932';
+  var GGN_SRC = '/shared/ggn.js?v=b934';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -228,7 +228,7 @@
     birch: { n: 'Birch', href: '/home/?tree=birch', who: 'Ages 18 to 25', age: 'adult', ck: true },
     oak: { n: 'Oak', href: '/home/?tree=oak', who: 'Ages 26 to 59', age: 'adult', ck: true },
     sequoia: { n: 'Sequoia', href: '/home/?tree=sequoia', who: '60 and up', age: 'adult', ck: true },
-    willow: { n: 'Willow', href: '/willow/', who: 'Hospice and the people who love them', season: true },
+    willow: { n: 'Willow', href: '/willow/', who: 'For the last season of life', season: true },
     grove: { n: 'The Grove', href: '/grove/', who: 'Families and groups', season: true },
     heartwood: { n: 'Heartwood', href: '/heartwood/', who: 'Couples', season: true }
   };
@@ -2342,7 +2342,7 @@
   }
   function libraryHtml() {
     var more = [['/get-grounded-now.html', HERO + 'page-get-grounded-now-narrow.webp', 'Get Grounded Now', 'Calm in a minute or two'], ['/readings.html', HERO + 'page-readings-narrow.webp', 'Readings Library', 'Prayers, poems, and blessings'], ['/stories.html', IMG + 'tend-fruit.webp', 'Grounded Stories', member() ? 'Every story, read aloud' : 'Stories from the bedside and the road'], ['/library/', HERO + 'library-phone.webp', 'Book Library', 'Books and studies we draw from'],
-      ['/grove/', treeArt('grove'), 'The Grove', 'Families and groups, growing together'], ['/willow/', treeArt('willow'), 'Willow', 'Hospice and the people who love them'], ['/heartwood/', treeArt('heartwood'), 'Heartwood', 'Couples, for the first years together']];
+      ['/grove/', treeArt('grove'), 'The Grove', 'Families and groups, growing together'], ['/willow/', treeArt('willow'), 'Willow', 'For the last season of life'], ['/heartwood/', treeArt('heartwood'), 'Heartwood', 'Couples, for the first years together']];
     if (soberDate() || homeRec().parts.indexOf('sober') >= 0) more.unshift(['/living-sober.html', HERO + 'living-sober-card.webp', 'Living Sober', 'Today, Ride the Wave, milestones']);
     var h = homeRec(); if (h.season && TREES[h.season]) more.unshift([TREES[h.season].href, treeArt(h.season), TREES[h.season].n, TREES[h.season].who]);
     return '<label class="hm-search"><span>Search everything</span><input type="search" id="hm-q" placeholder="Grief, salmon, sleep, a Morning Quiet" autocomplete="off" enterkeyhint="search"></label>' +
@@ -2372,7 +2372,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=b931';
+  var RECIPES_JS = '/recipes/recipes.js?v=b934';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -3692,7 +3692,7 @@
   var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
-  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b929', sequoia: '/shared/checkin/sequoia.js?v=b929', birch: '/shared/checkin/birch.js?v=b914a', pine: '/shared/checkin/pine.js?v=b914a', maple: '/shared/checkin/maple.js?v=b912', aspen: '/shared/checkin/aspen.js?v=b912' };
+  var CK_MOD = { oak: '/shared/checkin/oak.js?v=b929', sequoia: '/shared/checkin/sequoia.js?v=b929', birch: '/shared/checkin/birch.js?v=b934', pine: '/shared/checkin/pine.js?v=b934', maple: '/shared/checkin/maple.js?v=b934', aspen: '/shared/checkin/aspen.js?v=b934' };
   var NOPLAN = {};
   var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
   var CK_WAIT = 0;   // when a check-in was asked for and is still loading (the tour waits for it)
@@ -4027,7 +4027,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b912', ground: '/shared/home/groundwork.js?v=b930', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b924', talk: '/shared/home/talk.js?v=b932', visit: '/shared/home/visit.js?v=b914a', helper: '/shared/home/helper.js?v=b914a' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b930', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b934', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4129,7 +4129,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b916'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b934'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -4298,7 +4298,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b932';
+  var LEARN_JS = '/shared/gg-learn.js?v=b934';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -4458,7 +4458,7 @@
     if (tree === 'aspen') { var g = []; arr(obj(window.ASPEN_GUIDES).groups).forEach(function (x) { g = g.concat(arr(x.topics)); }); return g; }
     return arr(guidesOf(tree));
   }
-  var KID_GUIDES = { maple: ['/maple/guides.js?v=b907', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=b907', 'ASPEN_GUIDES'] };
+  var KID_GUIDES = { maple: ['/maple/guides.js?v=b934', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=b934', 'ASPEN_GUIDES'] };
   var LT = { f: 'all', load: null, tree: null };
   function loadLearn() {
     if (LT.load && LT.tree === S.tree) return LT.load;

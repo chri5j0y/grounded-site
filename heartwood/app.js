@@ -869,11 +869,12 @@
     if (ATV) return h + weekHub() + tgHtml() + '<div class="ff-row">' + btn('setup', 'Names and Settings', sec()) + '</div>';
     return h + tgHtml();
   }
-  // The First-Year Check-in invite: part of The Grounded Marriage, or (After the Vows) a time with Chris and Kayti.
+  // The First-Year Check-in invite: a time with Chris and Kayti around the first anniversary. BLD 934: the button opens the
+  // contact form on Wedding or vow renewal with the topic filled in (a choice the form has today).
   function fyInvite() { return ATV ? avText('invite', 'Around your first anniversary, you are welcome to sit down with Chris and Kayti for a First-Year Check-in. Bring your answers, and we will look back and ahead together.') : AF.firstYear.invite; }
   function bookBtn() {
-    var plan = ATV ? avText('bookPlan', 'Spiritual Guidance') : 'Premarital Sessions', label = ATV ? avText('book', 'Ask About a First-Year Check-in') : 'Book Your First-Year Check-in';
-    return '<a class="btn btn-primary ff-sm" href="/contact.html#plan=' + encodeURIComponent(plan) + '">' + esc(label) + '</a>';
+    var label = ATV ? avText('book', 'Ask About a First-Year Check-in') : 'Ask About a First-Year Check-in';
+    return '<a class="btn btn-primary ff-sm" href="/contact.html#plan=' + encodeURIComponent('Wedding or vow renewal') + '&about=' + encodeURIComponent('First-Year Check-in') + '">' + esc(label) + '</a>';
   }
   function vRound() {
     var w = V.who, k = V.rk, R = roundOf(k), d = dataOf(w), e = d.mo[k] || { r: {} };
@@ -1327,7 +1328,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b932', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b934', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

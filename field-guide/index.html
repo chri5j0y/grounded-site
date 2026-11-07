@@ -662,40 +662,40 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=b924"></script>
+<script src="../shared/gg-app.js?v=b934"></script>
 <script src="../shared/gg-backup.js?v=b782"></script>
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b916"></script>
-<script src="../shared/gg-learn.js?v=b932"></script>
+<script src="../shared/gg-learn.js?v=b934"></script>
 <script src="../shared/gg-parts.js?v=b929"></script>
-<script src="../shared/gg-print.js?v=b930"></script>
+<script src="../shared/gg-print.js?v=b934"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
-<script src="share.js?v=b930"></script>
+<script src="share.js?v=b934"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b862"></script>
 <script src="ceremonies.js?v=b890"></script>
 <script src="sessions.js?v=b887"></script>
 <script src="farewell.js?v=b930"></script>
-<script src="wedding.js?v=b930"></script>
+<script src="wedding.js?v=b934"></script>
 <script src="premarital.js?v=b890"></script>
 <script src="clients.js?v=b913"></script>
 <script src="books.js?v=b788"></script>
 <script src="runner.js?v=b907"></script>
 <script src="grovevisit.js?v=b907"></script>
-<script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b932"></script>
+<script src="heartwood.js?v=b934"></script>
+<script src="../shared/gg-stories.js?v=b934"></script>
 <script src="moves.js?v=b903"></script>
 <script src="stage.js?v=b931"></script>
 <script src="coach.js?v=b931"></script>
-<script src="../shared/gg-scale.js?v=b889"></script>
+<script src="../shared/gg-scale.js?v=b934"></script>
 <script src="../shared/gg-holidays.js?v=b919b"></script>
 <script src="health.js?v=b931"></script>
-<script src="vault.js?v=b911b"></script>
+<script src="vault.js?v=b934"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -808,7 +808,7 @@ function fgStoriesKey(){ try { const k = (FDR && FDR.storyVault && FDR.storyVaul
 // server; the stories page keeps the key on that browser and clears the fragment at once. The key goes into the link only
 // at the tap, and the link goes back to plain right after.
 function fgStoriesHref(){ try { const k = (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || (FLD && FLD.storiesKey && FLD.storiesKey.key); return '../stories.html' + (k ? '#k=' + String(k).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') : ''); } catch (e) { return '../stories.html'; } }
-function fgStoriesCard(){ return `<div class="card spread fg-stories" style="border-left:4px solid var(--gold)"><div><b>Grounded Stories</b> <span class="muted">Real stories from the edge of life, every one open to you in full. They open in your browser and stay open there.</span></div><a class="btn btn-gold btn-sm" href="../stories.html" target="_blank" rel="noopener" data-fgstories="1">Open Grounded Stories</a></div>`; }
+function fgStoriesCard(){ return `<div class="card spread fg-stories" style="border-left:4px solid var(--gold)"><div><b>Grounded Stories</b> <span class="muted">Every story open to you in full. They open in your browser and stay open there.</span></div><a class="btn btn-gold btn-sm" href="../stories.html" target="_blank" rel="noopener" data-fgstories="1">Open Grounded Stories</a></div>`; }
 document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[data-fgstories]'); if (!a) return; a.href = fgStoriesHref(); setTimeout(() => { a.href = '../stories.html'; }, 0); }, true);
 function codeEnded(){
   if (!CODEID || CODEID === 'legacy') return false;
@@ -945,7 +945,7 @@ function lockScreen(mode, msg){
       <form id="lf"><label for="l1">Access code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Continue</button></form>
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
-      <p>The private workspace for Grounded's own team of Guides, Staff, and Founders: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion, on the way to becoming a Certified Grounded Guide, including Walking with Someone Growing Sober and Walking Someone Through The Grounded Way; the Grounded Response Plan; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Your own Tending lives in The Grounded Way. Anything you write stays encrypted on your own device.</p>
+      <p>The private workspace for Grounded's own team of Guides, Staff, and Founders: guided visits for every age, with a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion, on the way to becoming a Certified Grounded Guide, including Walking with Someone Growing Sober and Walking Someone Through The Grounded Way; the Grounded Response Plan; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Your own Tending lives in The Grounded Way. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For the Grounded team</b><span>Guides, Staff, and Founders ask for access here.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
       <div><b>For organizations</b><span>Membership packs for churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">See For Organizations</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
@@ -978,9 +978,8 @@ function lockScreen(mode, msg){
 // Access requests go to email until the site form is ready. The address is put together here so it isn't posted as plain text.
 function mailLink(kind){
   const to = 'hello' + '@' + 'growwithgrounded.com';
-  const m = kind === 'org'
-    ? ['Field Guide for our organization', ['Organization:', 'Your name and role:', 'What kind of organization (church, school, other):', 'About how many people would use it:', 'Anything else we should know:']]
-    : ['Field Guide access request', ['Your name:', 'Your role (chaplain, pastor, teacher, counselor, parent, other):', 'Where you serve:', 'How you would use the Field Guide:']];
+  // BLD 934: the Field Guide is for Grounded's own team, so the one request asks a team member's name, role, and device.
+  const m = ['Field Guide access for a team member', ['Your name:', 'Your role on the Grounded team (Guide, Staff, or Founder):', 'The phone, tablet, or computer you will use:', 'Anything else we should know:']];
   return 'mailto:' + to + '?subject=' + encodeURIComponent(m[0]) + '&body=' + encodeURIComponent(m[1].join('\n\n') + '\n');
 }
 let pendingCode = null;
@@ -2969,7 +2968,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b930'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b934'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -10039,7 +10038,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b930', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b930'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=b930', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b930'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
