@@ -7167,6 +7167,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Vaping, Nicotine Pouches, and Being Offered Things",
 "you": {
 "id": "as-g-vaping-you",
+"crisis": ["Teens: text DITCHVAPE to 88709"],
 "guide": "vaping",
 "side": "you",
 "title": "Vaping, Nicotine Pouches, and Being Offered Things",
@@ -7248,8 +7249,8 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "card",
 "title": "If you already tried it",
-"body": "Tell a grown-up you trust. Teens can text DITCHVAPE to 88709.",
-"say": "If you've already tried something, or you're finding it hard to stop, you're still a good kid. Tell a grown-up you trust: a parent, a coach, a teacher, or your school counselor. Asking for help to quit is brave. Teens can also text DITCHVAPE to 88709 for help quitting."
+"body": "Tell a grown-up you trust. Help to quit is in the line below the video.",
+"say": "If you've already tried something, or you're finding it hard to stop, you're still a good kid. Tell a grown-up you trust: a parent, a coach, a teacher, or your school counselor. Asking for help to quit is brave. Teens can also get help quitting by text, with the number in the line below the video."
 },
 {
 "k": "big",
@@ -7261,7 +7262,8 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-vaping-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
+"crisis": ["988: call or text, any time", "911: emergency",
+ "Teens: text DITCHVAPE to 88709"],
 "guide": "vaping",
 "side": "helper",
 "title": "Vaping, Nicotine Pouches, and Being Offered Things",
@@ -7357,8 +7359,8 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "card",
 "title": "If they already use",
-"body": "Stay calm. Talk with their doctor. Teens can text DITCHVAPE to 88709.",
-"say": "If you learn they're already using, stay calm and keep the door open. Nicotine is hard to quit, and needing help is no failure. Talk with their doctor about quitting. Teens can text DITCHVAPE to 88709 for support."
+"body": "Stay calm. Talk with their doctor. Text support is in the line below the video.",
+"say": "If you learn they're already using, stay calm and keep the door open. Nicotine is hard to quit, and needing help is no failure. Talk with their doctor about quitting. Teens can get support by text too, with the number in the line below the video."
 },
 {
 "k": "card",
@@ -7479,7 +7481,8 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-gambling-helper",
-"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency"],
+"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency",
+ "Outside Minnesota: 1-800-GAMBLER (1-800-426-2537)"],
 "guide": "gambling",
 "side": "helper",
 "title": "Gambling, Betting, and Loot Boxes",
@@ -7575,7 +7578,7 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "card",
 "title": "If money is missing",
-"say": "If money is missing, or they can't stop, get help. Gambling problems are treatable. Outside Minnesota, call 1-800-GAMBLER. Help is there for families too."
+"say": "If money is missing, or they can't stop, get help. Gambling problems are treatable. The numbers are in the line below the video, and help is there for families too."
 },
 {
 "k": "card",
@@ -14417,7 +14420,8 @@ window.GG_LEARN_GUIDES.aspen = {
   },
   "helper": {
    "id": "as-g-sober-offered-helper",
-   "crisis": ["Poison Control: 1-800-222-1222", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
+   "crisis": ["Poison Control: 1-800-222-1222", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency",
+ "Teens: text DITCHVAPE to 88709"],
    "guide": "sober-offered",
    "side": "helper",
    "title": "When Someone Offers You Alcohol or a Vape",
@@ -14511,8 +14515,8 @@ window.GG_LEARN_GUIDES.aspen = {
     {
      "k": "card",
      "title": "If they already tried something",
-     "body": "Stay calm. Their doctor. DITCHVAPE to 88709.",
-     "say": "If you learn they've already tried something, stay calm and keep the door open. Talk with their doctor. Teens who want to quit vaping can text DITCHVAPE to 88709. And if anyone passes out or won't wake up, call for emergency help right away."
+     "body": "Stay calm. Their doctor. Text support, below the video.",
+     "say": "If you learn they've already tried something, stay calm and keep the door open. Talk with their doctor. Teens who want to quit vaping can get help by text, with the number in the line below the video. And if anyone passes out or won't wake up, call for emergency help right away."
     },
     {
      "k": "card",

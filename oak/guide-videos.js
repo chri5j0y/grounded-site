@@ -7359,7 +7359,8 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Gambling That's Out of Control",
 "you": {
 "id": "ok-g-gambling-you",
-"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency"],
+"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency",
+ "Outside Minnesota: 1-800-GAMBLER (1-800-426-2537)"],
 "guide": "gambling",
 "side": "you",
 "title": "Gambling That's Out of Control",
@@ -7426,7 +7427,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Help in Minnesota",
-"say": "Treatment is often at no cost for gamblers and their families. Outside Minnesota, call 1-800-GAMBLER."
+"say": "Treatment is often at no cost for gamblers and their families. The numbers are in the line below the video."
 },
 {
 "k": "words",

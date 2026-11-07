@@ -1245,17 +1245,17 @@
     if (p) {
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
-      html += link('/home/', 'Open The Grounded Way');
+      // BLD 935 (audit M6): inside The Grounded Way the menu skips Open The Grounded Way; My Growth Plan replaces the old tree app name.
+      if (!/^\/home\//.test(location.pathname)) html += link('/home/', 'Open The Grounded Way');
       html += link('/grove/', 'The Grove');
-      var ta = toolOf(p);
-      html += link('/home/#grow', 'My ' + ta.tool);
+      if (p.age !== 'maple' && p.age !== 'aspen') html += link('/home/#grow', 'My Growth Plan');
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
       helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id), oh = oakHelp(q.id); if (sq || bh || oh) html += link('/home/', 'Helping ' + esc(q.name)); if ((!sq && !bh && !oh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
-      html += link('/stories.html#saved', 'Saved stories' + (nSaved ? ' (' + nSaved + ')' : ''));
+      html += link('/stories.html#saved', 'Saved Stories' + (nSaved ? ' (' + nSaved + ')' : ''));
       html += item('manage', 'Manage My Profile');
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
-      html += '<div class="ggp-h">This device</div>' + item('switch', 'Switch Person') + item('move', 'Move to Another Device') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup') + item('lock', 'Lock');
+      html += '<div class="ggp-h">This device</div>' + item('switch', 'Who Is Tending?') + item('move', 'Move to Another Device') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';

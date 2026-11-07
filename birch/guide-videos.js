@@ -2663,7 +2663,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Ask about mood, too.",
       "body": "Gambling trouble can come with depression.",
-      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask how they're doing, not only about the money. And get support for yourself. The helplines are there for partners and families too."
+      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask how they're doing, not only about the money. And get support for yourself. The numbers in the line below the video serve partners and families too."
      },
      {
       "k": "big",
@@ -3105,7 +3105,8 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "A First Apartment: Leases, Bills, and Repairs",
    "you": {
     "id": "br-g-first-apartment-you",
-    "crisis": ["211: local help"],
+    "crisis": ["211: local help",
+ "HOME Line (Minnesota renters' questions): homelinemn.org"],
     "guide": "first-apartment",
     "side": "you",
     "title": "A First Apartment: Leases, Bills, and Repairs",
@@ -3208,7 +3209,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "When you need help",
       "body": "Lease or deposit questions: legal aid.",
-      "say": "Every state has rules for renters and landlords. If you have a problem you can't solve with your landlord, legal aid can explain your options. In Minnesota, HOME Line and the Attorney General's tenant handbook are good places to start. And if you're short on rent or utilities in Minnesota, dial two one one."
+      "say": "Every state has rules for renters and landlords. If you have a problem you can't solve with your landlord, legal aid can explain your options. In Minnesota, a renters' help line and the Attorney General's tenant handbook are good places to start. And if you're short on rent or utilities, local help is in the line below the video."
      },
      {
       "k": "big",
@@ -3220,7 +3221,8 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-apartment-helper",
-    "crisis": ["211: local help"],
+    "crisis": ["211: local help",
+ "HOME Line (Minnesota renters' questions): homelinemn.org"],
     "guide": "first-apartment",
     "side": "helper",
     "title": "A First Apartment: Leases, Bills, and Repairs",
@@ -3312,7 +3314,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Point to the right helper",
       "body": "Disputes: legal aid.",
-      "say": "If there's a real dispute about a deposit, repairs, or the lease, point them to the right helper, like legal aid. In Minnesota, HOME Line answers renters' questions, and two one one can connect them with help paying rent or utilities. If you co-sign for them, talk clearly first about what it means for both of you."
+      "say": "If there's a real dispute about a deposit, repairs, or the lease, point them to the right helper, like legal aid. In Minnesota, a renters' help line answers questions, and local help can cover rent or utilities, with both numbers in the line below the video. If you co-sign for them, talk clearly first about what it means for both of you."
      },
      {
       "k": "big",
@@ -3819,7 +3821,7 @@ window.GG_LEARN_GUIDES.birch = {
         "ID, cards, phone, medicine"
        ]
       ],
-      "say": "Here's where to start. Tonight first, meaning somewhere safe to sleep. Call or text two one one to ask about shelter, rent help, and food near you. Tell one person you trust, even if you don't have a plan yet. And keep your important things with you, like your ID, cards, phone, charger, and medicine."
+      "say": "Here's where to start. Tonight first, meaning somewhere safe to sleep. Reach out to the local help line below the video to ask about shelter, rent help, and food near you. Tell one person you trust, even if you don't have a plan yet. And keep your important things with you, like your ID, cards, phone, charger, and medicine."
      },
      {
       "k": "words",
@@ -3834,7 +3836,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Help any time",
-      "say": "Two one one connects you with local help."
+      "say": "The local help line below the video connects you with help near you."
      },
      {
       "k": "big",
@@ -3922,7 +3924,7 @@ window.GG_LEARN_GUIDES.birch = {
         "The weeks after matter"
        ]
       ],
-      "say": "Here are more ways to help. Sit with them while they call two one one, a school's student services, or legal aid, if they want company. If there's an eviction notice, help them reach legal aid right away. Ask before you call anyone for them. And keep checking in after the first crisis passes, because the weeks after can be the hardest."
+      "say": "Here are more ways to help. Sit with them while they call the local help line below the video, a school's student services, or legal aid, if they want company. If there's an eviction notice, help them reach legal aid right away. Ask before you call anyone for them. And keep checking in after the first crisis passes, because the weeks after can be the hardest."
      },
      {
       "k": "card",
@@ -6041,7 +6043,7 @@ window.GG_LEARN_GUIDES.birch = {
         ""
        ]
       ],
-      "say": "Asking for help is part of good parenting. Sleep when someone else can watch the baby. Ask for one specific thing, like a meal, a load of laundry, or two hours of babysitting. Find other young parents who get it. And for food, diapers, housing, or child care help in Minnesota, dial two one one."
+      "say": "Asking for help is part of good parenting. Sleep when someone else can watch the baby. Ask for one specific thing, like a meal, a load of laundry, or two hours of babysitting. Find other young parents who get it. And for food, diapers, housing, or child care help, local help is a call away, with the number in the line below the video."
      },
      {
       "k": "big",
@@ -7178,7 +7180,8 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "First Signs of a Serious Mental Illness",
    "you": {
     "id": "br-g-first-signs-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
     "guide": "first-signs",
     "side": "you",
     "title": "First Signs of a Serious Mental Illness",
@@ -7304,7 +7307,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it feels like too much",
-      "say": "In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
+      "say": "In Minnesota, a team can talk with you or come to you, any time, and the number is in the line below the video."
      },
      {
       "k": "big",
@@ -7316,7 +7319,9 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-signs-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone",
+ "NAMI HelpLine: 1-800-950-6264, classes and groups for families"],
     "guide": "first-signs",
     "side": "helper",
     "title": "First Signs of a Serious Mental Illness",
@@ -7419,13 +7424,13 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If anyone is in danger",
-      "say": "In Minnesota, call star star crisis from a cell phone for a mobile crisis team."
+      "say": "In Minnesota, a mobile team can come to help, and the number is in the line below the video."
      },
      {
       "k": "big",
       "h": "Get support for you too.",
       "sub": "Families and friends need it.",
-      "say": "This is one of the hardest things to watch in someone you love. Get support for yourself. NAMI offers classes and groups for families and friends. You don't have to understand it all to be a steady presence."
+      "say": "This is one of the hardest things to watch in someone you love. Get support for yourself. Classes and groups for families and friends can help, and the number is in the line below the video. You don't have to understand it all to be a steady presence."
      },
      {
       "k": "big",
@@ -9857,8 +9862,8 @@ window.GG_LEARN_GUIDES.birch = {
         "Chain of command, a chaplain"
        ],
        [
-        "Military OneSource",
-        "Any time, by phone or chat"
+        "Help any time",
+        "By phone or chat"
        ],
        [
         "Your money basics",
@@ -9869,7 +9874,7 @@ window.GG_LEARN_GUIDES.birch = {
         "A simple way to stay in touch"
        ]
       ],
-      "say": "Once you're in, learn where your support is from day one: your chain of command, and a chaplain, who serves anyone, of any faith or none. Military OneSource is there any time, by phone or chat. Learn the basics of your pay and leave, and start a small savings cushion. And set up a simple way to stay in touch with your people back home."
+      "say": "Once you're in, learn where your support is from day one: your chain of command, and a chaplain, who serves anyone, of any faith or none. Help for service members and families is there any time, by phone or chat, with the number in the line below the video. Learn the basics of your pay and leave, and start a small savings cushion. And set up a simple way to stay in touch with your people back home."
      },
      {
       "k": "card",
@@ -11678,7 +11683,8 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Living Well with a Serious Mental Illness",
    "you": {
     "id": "br-g-living-well-mi-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
     "guide": "living-well-mi",
     "side": "you",
     "title": "Living Well with a Serious Mental Illness",
@@ -11778,7 +11784,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it feels like too much",
-      "say": "In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
+      "say": "In Minnesota, a team can talk with you or come to you, any time, and the number is in the line below the video."
      },
      {
       "k": "big",
@@ -11790,7 +11796,9 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-living-well-mi-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone",
+ "NAMI HelpLine: 1-800-950-6264, classes and groups for families"],
     "guide": "living-well-mi",
     "side": "helper",
     "title": "Living Well with a Serious Mental Illness",
@@ -11863,7 +11871,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Rest and people"
        ]
       ],
-      "say": "Steady help looks ordinary. Rides to appointments, regular meals, and a calm home. Learning about the illness, through classes for families and friends, like NAMI's Family-to-Family. And your own support, rest, and people.",
+      "say": "Steady help looks ordinary. Rides to appointments, regular meals, and a calm home. Learning about the illness, through a class for families and friends, with the number in the line below the video. And your own support, rest, and people.",
       "cue": {
        "at": [
         1,
@@ -11875,7 +11883,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If anyone is in danger",
-      "say": "In Minnesota, call star star crisis from a cell phone for a mobile crisis team."
+      "say": "In Minnesota, a mobile team can come to help, and the number is in the line below the video."
      },
      {
       "k": "big",

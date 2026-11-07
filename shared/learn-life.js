@@ -95,7 +95,7 @@
          {
           "k": "points",
           "h": "What it changes",
-          "say": "It changes only what shows first, and adds a little help. Guides that fit your child show at the top of When Life Changes, under Picked for You. Activities and practices with a gentler way show first, tagged Fits You. A few check-in questions get a short example underneath. And help lines show below the crisis lines, never instead of them.",
+          "say": "It changes only what shows first, and adds a little help. Guides that fit your child show at the top of When Life Changes, under Picked for You. Activities and practices with a gentler way show first, tagged Fits You. A few check-in questions get a short example underneath. And any help it adds joins the help list, beside what is always there.",
           "items": [
            [
             "Picked for You",
@@ -795,7 +795,7 @@
          {
           "k": "points",
           "h": "What it changes",
-          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Activities and practices with a gentler way show first, tagged Fits You. A few check-in questions get a short example underneath. And help lines show below the crisis lines, never instead of them.",
+          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Activities and practices with a gentler way show first, tagged Fits You. A few check-in questions get a short example underneath. And any help it adds joins the help list, beside what is always there.",
           "items": [
            [
             "Picked for You",
@@ -1494,7 +1494,7 @@
          {
           "k": "points",
           "h": "What it changes",
-          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And help lines show below the crisis lines, never instead of them.",
+          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And any help it adds joins the help list, beside what is always there.",
           "items": [
            [
             "Picked for You",
@@ -2228,7 +2228,7 @@
          {
           "k": "points",
           "h": "What it changes",
-          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And help lines show below the crisis lines, never instead of them.",
+          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And any help it adds joins the help list, beside what is always there.",
           "items": [
            [
             "Picked for You",
@@ -2962,7 +2962,7 @@
          {
           "k": "points",
           "h": "What it changes",
-          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And help lines show below the crisis lines, never instead of them.",
+          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And any help it adds joins the help list, beside what is always there.",
           "items": [
            [
             "Picked for You",
@@ -3696,7 +3696,7 @@
          {
           "k": "points",
           "h": "What it changes",
-          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And help lines show below the crisis lines, never instead of them.",
+          "say": "It changes only what shows first, and adds a little help. Guides that fit you show at the top of When Life Changes, under Picked for You. Practices with a gentler way show first, tagged Fits You, with their seated, lying down, or shorter way. A few check-in questions get a short example underneath. And any help it adds joins the help list, beside what is always there.",
           "items": [
            [
             "Picked for You",
