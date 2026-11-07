@@ -19,6 +19,10 @@
    Offline: every change stays on this device; the next sync compares what is here with what was last sent and
    sends the difference, so changes made with no connection wait and send when it returns.
    On this device the last synced copy of each piece is kept in IndexedDB (gg-sync), locked with the account key.
+   A shared family computer stays private (BLD 938, the safer default): a doc syncs only while it is open on this
+   device (its adapter answers null while closed, as a locked profile does), and pieces of a doc that is closed here
+   are never kept here: only a small note of each one (its opaque id and version) waits, and the pieces come down the
+   next time that doc opens with its own passcode. Only the account's own docs (names starting acct:) are carried.
 
    For stage 2
      GGSync.doc(name, adapter, opts)     an account doc. adapter: {get() -> object or null (null: closed for now),
@@ -162,7 +166,8 @@
 
   /* ---------- state ---------- */
   var docs = {}, subs = [], S = { state: 'idle', waiting: 0, last: 0, error: '' }, running = null, again = false, timer = null, retry = 0, retryT = null;
-  var CFG = { debounce: 5000, every: 60000 };
+  var CFG = { debounce: 5000, every: 60000, carry: ['acct:'] };
+  function carries(name) { return CFG.carry.some(function (p) { return name.indexOf(p) === 0; }); }
   var spaceCtx = {};      // kind -> {id, kind, DK, NK, raw}
   var lastHousehold = undefined;
   function emit(type, d) { subs.slice().forEach(function (fn) { try { fn(type, d); } catch (e) { console.error(e); } }); }
@@ -180,7 +185,7 @@
       var out = {}, jobs = [];
       Object.keys(raw).forEach(function (key) {
         var r = raw[key];
-        if (r.gone || !r.sealed) { out[key] = r; return; }
+        if (r.gone || r.stub || !r.sealed) { out[key] = r; return; }
         jobs.push(X().open(K.DK, r.sealed, 'gg1|base|' + key).then(function (u8) { r.data = JSON.parse(dec.decode(u8)); out[key] = r; }, function () {}));
       });
       return Promise.all(jobs).then(function () { return out; });
@@ -190,7 +195,7 @@
     if (!list.length) return Promise.resolve();
     return Promise.all(list.map(function (r) {
       var key = r.scope + '|' + r.name, rec = { scope: r.scope, name: r.name, id: r.id, ver: r.ver, gone: !!r.gone, seen: !!r.seen, at: r.at || 0 };
-      if (r.gone) return { key: key, rec: rec };
+      if (r.gone || r.stub) { if (r.stub) rec.stub = true; return { key: key, rec: rec }; }
       return X().seal(K.DK, enc.encode(JSON.stringify(r.data === undefined ? null : r.data)), 'gg1|base|' + key).then(function (s) { rec.sealed = s; return { key: key, rec: rec }; });
     })).then(function (rows) { return tx('base', 'readwrite', function (s) { rows.forEach(function (x) { if (x.rec.drop) s.delete(x.key); else s.put(x.rec, x.key); }); }); });
   }
@@ -282,6 +287,12 @@
   function syncDoc(sc, d, B, remote, res, K) {
     return Promise.resolve().then(function () { return d.adapter.get(); }).then(function (local) {
       if (local == null) return;   // closed for now (a locked profile): it syncs the next time it opens
+      // pieces noted while this doc was closed here: bring them down now
+      var pre0 = d.name + '#', stubs = Object.keys(B).map(function (k) { return B[k]; }).filter(function (r) { return r.scope === sc.scope && r.stub && r.name.indexOf(pre0) === 0 && !remote[r.name]; });
+      if (!stubs.length) return local;
+      return getBoxes(sc, stubs.map(function (r) { return { id: r.id, ver: r.ver, size: 0 }; }), remote, res).then(function () { stubs.forEach(function (r) { delete B[r.scope + '|' + r.name]; }); return local; });
+    }).then(function (local) {
+      if (local == null) return;
       var L = d.opaque ? { '': clone(local) } : split(local, d.rules), pre = d.name + '#', names = {}, at = d.dirtyAt || Date.now();
       Object.keys(L).forEach(function (p) { names[pre + p] = 1; });
       Object.keys(B).forEach(function (k) { var r = B[k]; if (r.scope === sc.scope && r.name.indexOf(pre) === 0) names[r.name] = 1; });
@@ -367,7 +378,7 @@
           if (b && b.ver >= r.ver) return;
           var owned = mine.some(function (d) { return n.indexOf(d.name + '#') === 0; });
           if (owned) return;
-          upd.push(r.gone ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, gone: true, seen: false } : { scope: sc.scope, name: n, id: r.id, ver: r.ver, data: r.data, at: r.at, seen: false });
+          upd.push(r.gone ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, gone: true, seen: false } : carries(n) ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, data: r.data, at: r.at, seen: false } : { scope: sc.scope, name: n, id: r.id, ver: r.ver, stub: true, seen: false });
         });
         return saveBases(K, upd).then(function () { upd.forEach(function (u) { B[u.scope + '|' + u.name] = u; }); return metaPut(p.cursorKey, p.cursor); });
       });
@@ -524,7 +535,7 @@
     var x = X(), K = x.keys(); if (!K) return Promise.resolve(null);
     return loadBases(K).then(function (B) {
       var pieces = {}, any = false;
-      Object.keys(B).forEach(function (k) { var r = B[k]; if (r.scope === 'a' && !r.gone && r.name.indexOf(name + '#') === 0) { pieces[r.name.slice(name.length + 1)] = r.data; any = true; } });
+      Object.keys(B).forEach(function (k) { var r = B[k]; if (r.scope === 'a' && !r.gone && !r.stub && r.name.indexOf(name + '#') === 0) { pieces[r.name.slice(name.length + 1)] = r.data; any = true; } });
       return any ? assemble(pieces) : null;
     });
   }
