@@ -30,10 +30,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 2,
      "blurb": "What The Grounded Way is, the four parts you tend, and how you begin.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -179,10 +175,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 2,
      "blurb": "Your tree by your stage of life, a private profile, and your Root Words.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -363,10 +355,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 2,
      "blurb": "Roots, Bark, Leaves, and Branches, one part at a time, about three minutes.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -698,10 +686,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 2,
      "blurb": "Your whole day in order: Right Now, a card for each practice, and Do Tomorrow.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -863,10 +847,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Your week, your season, and one growth plan built from your check-in.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -1014,10 +994,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Short lessons and guides, one search for everything, and the shelves: Gentle, Meditation, and Seeds.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -1179,10 +1155,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 2,
      "blurb": "Today's Plate, one shopping list, Family Kitchen, and movement for every level.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -1514,10 +1486,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 2,
      "blurb": "Your initials menu, Change My Setup, your Root Words and backups, and Move to Another Device.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "home",
      "scenes": [
       {
@@ -1716,10 +1684,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Your tree for grades 9 to 12, the four parts you tend, and your own passcode.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "pine",
      "scenes": [
       {
@@ -1939,10 +1903,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Right Now, a card for each practice, Done, and Do Tomorrow.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "pine",
      "scenes": [
       {
@@ -2087,10 +2047,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Your week, your season, and a growth plan that fits your real life.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "pine",
      "scenes": [
       {
@@ -2218,10 +2174,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Short lessons, When Life Changes, and one search for everything.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "pine",
      "scenes": [
       {
@@ -2338,10 +2290,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Your passcode, your Root Words, Settings, and moving to another device.",
      "voice": "jenny",
-     "crisis": [
-      "Call or text 988, any time",
-      "In an emergency, call 911"
-     ],
      "img": "pine",
      "scenes": [
       {
@@ -2492,10 +2440,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Watch together: meet your tree and the four parts you take care of.",
      "voice": "jenny",
-     "crisis": [
-      "Tell a trusted grown-up right away",
-      "You can also call or text 988, or call 911 in an emergency"
-     ],
      "img": "maple",
      "scenes": [
       {
@@ -2607,10 +2551,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Watch together: your tree, your practices, and the circle to tap.",
      "voice": "jenny",
-     "crisis": [
-      "Tell a trusted grown-up right away",
-      "You can also call or text 988, or call 911 in an emergency"
-     ],
      "img": "maple",
      "scenes": [
       {
@@ -2855,10 +2795,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "Watch together: short videos to breathe, feel calm, and be strong.",
      "voice": "jenny",
-     "crisis": [
-      "Tell a trusted grown-up right away",
-      "You can also call or text 988, or call 911 in an emergency"
-     ],
      "img": "maple",
      "scenes": [
       {
@@ -2964,10 +2900,6 @@ window.GG_LEARN_WELCOME = {
      "mins": 1,
      "blurb": "For the grown-up: the Grown-up Guide, talking together, and keeping it private.",
      "voice": "jenny",
-     "crisis": [
-      "Tell a trusted grown-up right away",
-      "You can also call or text 988, or call 911 in an emergency"
-     ],
      "img": "maple",
      "scenes": [
       {

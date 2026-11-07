@@ -8895,7 +8895,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Empty Nest and Big Life Transitions",
 "you": {
 "id": "ok-g-empty-nest-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "empty-nest",
 "side": "you",
 "title": "Empty Nest and Big Life Transitions",
@@ -9009,7 +9008,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-empty-nest-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "empty-nest",
 "side": "helper",
 "title": "Empty Nest and Big Life Transitions",
@@ -9375,7 +9373,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Becoming a Parent",
 "you": {
 "id": "ok-g-newparent-you",
-"crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "newparent",
 "side": "you",
 "title": "Becoming a Parent",
@@ -9509,7 +9506,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-newparent-helper",
-"crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
 "guide": "newparent",
 "side": "helper",
 "title": "Becoming a Parent",
@@ -10351,7 +10347,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Retirement",
 "you": {
 "id": "ok-g-retirement-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "retirement",
 "side": "you",
 "title": "Retirement",
@@ -10466,7 +10461,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-retirement-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "retirement",
 "side": "helper",
 "title": "Retirement",
@@ -10581,7 +10575,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Career Change",
 "you": {
 "id": "ok-g-career-change-you",
-"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "career-change",
 "side": "you",
 "title": "A Career Change",
@@ -10696,7 +10689,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-career-change-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "career-change",
 "side": "helper",
 "title": "A Career Change",
@@ -10811,7 +10803,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Moving to a New Place",
 "you": {
 "id": "ok-g-moving-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "moving",
 "side": "you",
 "title": "Moving to a New Place",
@@ -10926,7 +10917,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-moving-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "moving",
 "side": "helper",
 "title": "Moving to a New Place",

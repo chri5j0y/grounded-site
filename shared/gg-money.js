@@ -14,7 +14,8 @@
                       {get() -> the money object (kept and changed in place), put() -> saves it, ok() -> true when open}
        opts.member    true, false, or a function: Membership opens This Month, Log, the weekly check-in, and Family sharing.
                       Start (false) is the taste: Close the Gap and My Plan (with Bring In a Spreadsheet).
-       opts.view      first view: gap, plan, month, log, check, import, share
+       opts.view      first view: home (Money Home, the default), give, live, protect, grow, ahead (the Plan part), gap, plan, month,
+                    log, check, import, share, tools, tool:<id>
        opts.onView    fn(view) when the view changes (the host can keep its address in step)
        opts.onMembership fn('see' or 'code') for the Membership line buttons
        opts.toast     fn(message) to use the host's toast (the module has its own)
@@ -22,7 +23,7 @@
        opts.qrSrc     where shared/vendor/qrcode.js lives (default /shared/vendor/qrcode.js?v=b921)
        opts.css       false when the host already loads gg-money.css; else it is added once from beside this file
        opts.readHash  true reads #money=<code> from the address on render (then clears it)
-       opts.art       where the paintings live (default /shared/heroes/way/), or a function(name) returning each one's address
+       opts.art       (kept for older hosts; since BLD 939 every picture is drawn in code)
        opts.toolsSrc  where gg-money-tools.js lives (default beside this file); loaded the first time Grounded Money opens
      GGMoney.summary(store)  {has, income, spend, gap, after, month: {ahead, short, line}} for a Today line
      GGMoney.model, GGMoney.parse, GGMoney.share   the data layer, for tests and stage 2

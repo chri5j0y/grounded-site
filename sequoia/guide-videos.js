@@ -55,7 +55,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Retirement: Who Am I Now?",
    "you": {
     "id": "sq-g-retirement-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "retirement",
     "side": "you",
     "title": "Retirement: Who Am I Now?",
@@ -180,7 +179,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-retirement-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "retirement",
     "side": "helper",
     "title": "Retirement: Who Am I Now?",
@@ -307,7 +305,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Finding Purpose Again",
    "you": {
     "id": "sq-g-purpose-again-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "purpose-again",
     "side": "you",
     "title": "Finding Purpose Again",
@@ -409,7 +406,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-purpose-again-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "purpose-again",
     "side": "helper",
     "title": "Finding Purpose Again",
@@ -726,7 +722,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Working Longer, or Going Back to Work",
    "you": {
     "id": "sq-g-working-longer-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "working-longer",
     "side": "you",
     "title": "Working Longer, or Going Back to Work",
@@ -828,7 +823,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-working-longer-helper",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "working-longer",
     "side": "helper",
     "title": "Working Longer, or Going Back to Work",
@@ -9397,7 +9391,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Friendship in Later Life",
    "you": {
     "id": "sq-g-friendship-you",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "friendship",
     "side": "you",
     "title": "Friendship in Later Life",

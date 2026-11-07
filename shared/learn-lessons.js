@@ -3761,10 +3761,6 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-you",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 5,
@@ -8233,11 +8229,6 @@ window.GG_LEARN = {
     },
     {
      "id": "as-6-fruit",
-     "crisis": [
-      "988: call or text, any time",
-      "Crisis Text Line: text HOME to 741741",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -9315,10 +9306,6 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-you",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 5,
@@ -10822,9 +10809,6 @@ window.GG_LEARN = {
        "lessons": [
         {
          "id": "ok-welcome",
-         "crisis": [
-          "988: call or text, any time"
-         ],
          "n": 1,
          "title": "Welcome to Oak",
          "mins": 4,
@@ -12205,9 +12189,6 @@ window.GG_LEARN = {
         },
         {
          "id": "ok-6-bark",
-         "crisis": [
-          "988: call or text, any time"
-         ],
          "n": 2,
          "title": "Bark: Mind",
          "mins": 6,
@@ -12748,10 +12729,6 @@ window.GG_LEARN = {
         },
         {
          "id": "ok-6-fruit",
-         "crisis": [
-          "988: call or text, any time",
-          "911: emergency"
-         ],
          "n": 6,
          "title": "Fruit: Hope",
          "mins": 6,
@@ -16057,7 +16034,6 @@ window.GG_LEARN = {
         },
         {
          "id": "ok-st-rain",
-         "crisis": ["988: call or text, any time"],
          "n": 4,
          "title": "RAIN for Hard Feelings",
          "mins": 3,
@@ -16375,7 +16351,6 @@ window.GG_LEARN = {
         },
         {
          "id": "ok-st-walk-through",
-         "crisis": ["988: call or text, any time"],
          "n": 7,
          "title": "Walk It Through",
          "mins": 3,
@@ -23034,9 +23009,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-u-tree",
-     "crisis": [
-      "988: call or text, any time"
-     ],
      "n": 2,
      "title": "Your Tree and Your Levels",
      "mins": 5,
@@ -23489,9 +23461,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-u-legacy",
-     "crisis": [
-      "988: call or text, any time"
-     ],
      "n": 4,
      "title": "Your Legacy Book",
      "mins": 5,
@@ -24435,9 +24404,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-bark",
-     "crisis": [
-      "988: call or text, any time"
-     ],
      "n": 2,
      "title": "Bark: Mind",
      "mins": 5,
@@ -24981,9 +24947,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-trunk",
-     "crisis": [
-      "988: call or text, any time"
-     ],
      "n": 5,
      "title": "Trunk: Meaning",
      "mins": 5,
@@ -25170,10 +25133,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-fruit",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -25519,7 +25478,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-p-dignity",
-     "crisis": ["Eldercare Locator: 1-800-677-1116"],
      "n": 2,
      "title": "Help That Honors Independence",
      "mins": 6,
@@ -26081,7 +26039,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-p-legacy",
-     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1"],
      "n": 5,
      "title": "Helping Someone Tell Their Story",
      "mins": 6,
@@ -26265,7 +26222,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-p-you",
-     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "911: emergency"],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 6,
@@ -26437,7 +26393,6 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "sq-sh-purpose",
-     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Purpose at Every Age",
      "mins": 4,
@@ -26733,7 +26688,6 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-sh-wiser",
-     "crisis": ["988: call or text, any time"],
      "n": 3,
      "title": "Growing Older, Growing Wiser",
      "mins": 4,
@@ -30910,9 +30864,6 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-u-settings",
-     "crisis": [
-      "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"
-     ],
      "n": 6,
      "title": "Make Pine Yours",
      "mins": 4,
@@ -32075,11 +32026,6 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-6-fruit",
-     "crisis": [
-      "988: call or text, any time",
-      "Crisis Text Line: text HOME to 741741",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 6,
@@ -33127,11 +33073,6 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-you",
-     "crisis": [
-      "988: call or text, any time",
-      "NAMI HelpLine: 1-800-950-6264",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Taking Care of Yourself Too",
      "mins": 6,
@@ -33278,7 +33219,6 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-sh-brain",
-     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Your Brain Grows Toward What You Practice",
      "mins": 4,
@@ -33404,7 +33344,6 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-sh-move",
-     "crisis": ["988: call or text, any time"],
      "n": 2,
      "title": "Move for Your Mood",
      "mins": 4,
@@ -35190,7 +35129,6 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-st-why",
-     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Find Your Why for Today",
      "mins": 3,
@@ -35295,7 +35233,6 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-st-rain",
-     "crisis": ["988: call or text, any time"],
      "n": 2,
      "title": "RAIN for Teens",
      "mins": 3,
@@ -37038,12 +36975,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-bark",
-     "crisis": [
-      "988: call or text, any time",
-      "Crisis Text Line: text HOME to 741741",
-      "Veterans: 988, then press 1",
-      "911: emergency"
-     ],
      "n": 2,
      "title": "Bark: Mind",
      "mins": 6,
@@ -37189,9 +37120,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-leaves",
-     "crisis": [
-      "SAMHSA National Helpline: 1-800-662-4357"
-     ],
      "n": 3,
      "title": "Leaves: Body",
      "mins": 5,
@@ -37626,11 +37554,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-fruit",
-     "crisis": [
-      "988: call or text, any time",
-      "Crisis Text Line: text HOME to 741741",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -37959,7 +37882,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-h-trust",
-     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 2,
      "title": "Respect, Privacy, and Being Invited In",
      "mins": 6,
@@ -38573,7 +38495,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-h-you",
-     "crisis": ["988: call or text, any time", "NAMI HelpLine: 1-800-950-6264", "911: emergency"],
      "n": 6,
      "title": "Taking Care of Yourself Too",
      "mins": 6,
@@ -41407,10 +41328,6 @@ window.GG_LEARN = {
      "sources": [
       "vanderkolk14"
      ],
-     "crisis": [
-      "988: call or text, any time",
-      "911: danger right now"
-     ],
      "for": "you",
      "scenes": [
       {
@@ -41663,7 +41580,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-st-walk-out",
-     "crisis": ["988: call or text, any time"],
      "n": 4,
      "title": "Walk It Out After a Hard Day",
      "mins": 2,
@@ -41756,7 +41672,6 @@ window.GG_LEARN = {
     },
     {
      "id": "br-st-mood-walk",
-     "crisis": ["988: call or text, any time"],
      "n": 5,
      "title": "A Ten Minute Mood Walk",
      "mins": 2,
@@ -41874,7 +41789,6 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "gr-welcome",
-     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Welcome to The Grove",
      "mins": 5,
@@ -43725,10 +43639,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-wall",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 9,
      "title": "The Wall",
      "mins": 5,
@@ -44149,10 +44059,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-private",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 11,
      "title": "Your Tree Is Yours, the Grove Is Ours",
      "mins": 6,
@@ -44542,7 +44448,6 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "gr-l-kids",
-     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Kids in the Circle",
      "mins": 4,
@@ -45151,7 +45056,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-l-team",
-     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 4,
      "title": "Leading a Team Grove",
      "mins": 4,
@@ -45344,7 +45248,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-l-life",
-     "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
      "n": 5,
      "title": "When Life Changes Together",
      "mins": 5,
@@ -45889,10 +45792,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-6-bark",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 2,
      "title": "Bark: Mind",
      "mins": 5,
@@ -46198,10 +46097,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-6-branches",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 4,
      "title": "Branches: Relationships",
      "mins": 5,
@@ -46510,10 +46405,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-6-fruit",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -47880,10 +47771,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-hardday",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 7,
      "title": "Hard Day Huddle",
      "mins": 3,
@@ -48019,10 +47906,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-repair",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 8,
      "title": "Making Up After a Fight",
      "mins": 3,
@@ -48131,10 +48014,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-meeting",
-     "crisis": [
-      "988: call or text, any time",
-      "911: emergency"
-     ],
      "n": 9,
      "title": "Family Meeting",
      "mins": 3,
@@ -50251,9 +50130,6 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-joys",
-     "crisis": [
-      "911: emergency"
-     ],
      "n": 5,
      "title": "Sharing Joys and Concerns",
      "mins": 4,
@@ -50665,7 +50541,6 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "gr-r-huddle",
-     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Team Huddle",
      "mins": 3,

@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b936';
+  var V = 'b939';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -1418,7 +1418,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b808', oak: '/oak/guide-videos.js?v=b936', aspen: '/aspen/guide-videos.js?v=b936', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b936', pine: '/pine/guide-videos.js?v=b936', birch: '/birch/guide-videos.js?v=b936', grove: '/grove/guide-videos.js?v=b936' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b808', oak: '/oak/guide-videos.js?v=b939', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b939', pine: '/pine/guide-videos.js?v=b939', birch: '/birch/guide-videos.js?v=b939', grove: '/grove/guide-videos.js?v=b939' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -1432,7 +1432,7 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=b936', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b939', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
@@ -1469,6 +1469,9 @@
   function pageBody(p) {
     return (p.lead ? '<p class="ggl-pg-lead">' + esc(p.lead) + '</p>' : '') + (p.sections || []).map(function (sc) { return (sc.h ? '<h2>' + esc(sc.h) + '</h2>' : '') + blocksHtml(sc.b); }).join('');
   }
+  // BLD 939: the printed page names 988 and 911 only when the page carries a crisis line or its own words name 988
+  // (a hard-season page); every other printout ends with the plain support line.
+  function pageCrisis(p) { return !!((Array.isArray(p.crisis) && p.crisis.length) || /\b988\b/.test(JSON.stringify(p.sections || []) + (p.lead || ''))); }
   // Print a page (a new tab with the page alone and a Print button; a hidden frame when pop-ups are blocked).
   function printPage(app, p) {
     var meta = APPS[app] || { name: 'Grow With Grounded', color: '#8B5E1A' }, src = window.GGSources ? GGSources.line(p.sources || []) : '';
@@ -1482,7 +1485,7 @@
       + 'a{color:inherit;}@media print{.bar{display:none;}main{padding:0;max-width:none;}@page{margin:.7in;}}</style></head><body>'
       + '<div class="bar"><b>' + esc(p.title) + '</b><button type="button" onclick="window.print()">Print or Save as PDF</button></div>'
       + '<main><div class="eb">' + esc(meta.name) + ', a page to read</div><h1>' + esc(p.title) + '</h1>' + pageBody(p) + src
-      + '<p class="foot">From ' + esc(meta.name) + ' by Grow With Grounded, growwithgrounded.com. General spiritual and emotional support. Emergency: 911. Crisis: call or text 988. &copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. Yours to print for personal use.</p></main></body></html>';
+      + '<p class="foot">From ' + esc(meta.name) + ' by Grow With Grounded, growwithgrounded.com. General spiritual and emotional support. ' + (pageCrisis(p) ? 'Emergency: 911. Crisis: call or text 988. ' : '') + '&copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. Yours to print for personal use.</p></main></body></html>';
     var w = null; try { w = window.open('', '_blank'); } catch (e) { w = null; }
     if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); try { w.focus(); } catch (e) {} return; }
     var f = document.createElement('iframe'); f.setAttribute('aria-hidden', 'true'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';

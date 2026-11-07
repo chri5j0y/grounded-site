@@ -54,7 +54,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Starting High School",
    "you": {
     "id": "pn-g-start-hs-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "start-hs",
     "side": "you",
     "title": "Starting High School",
@@ -175,7 +174,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-start-hs-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "start-hs",
     "side": "helper",
     "title": "Starting High School",
@@ -1013,7 +1011,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Choosing a Path After High School",
    "you": {
     "id": "pn-g-path-after-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "path-after",
     "side": "you",
     "title": "Choosing a Path After High School",
@@ -1269,7 +1266,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Graduation, College, and Leaving Home",
    "you": {
     "id": "pn-g-graduation-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "graduation",
     "side": "you",
     "title": "Graduation, College, and Leaving Home",
@@ -1364,7 +1360,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-graduation-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "graduation",
     "side": "helper",
     "title": "Graduation, College, and Leaving Home",
@@ -2136,7 +2131,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "First Relationships and What Healthy Looks Like",
    "you": {
     "id": "pn-g-first-relationship-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "first-relationship",
     "side": "you",
     "title": "First Relationships and What Healthy Looks Like",
@@ -5631,7 +5625,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Sleep and the Teen Body Clock",
    "you": {
     "id": "pn-g-sleep-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "sleep",
     "side": "you",
     "title": "Sleep and the Teen Body Clock",
@@ -8838,7 +8831,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Social Media, Comparison, and Phone Balance",
    "you": {
     "id": "pn-g-social-media-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "social-media",
     "side": "you",
     "title": "Social Media, Comparison, and Phone Balance",
@@ -8941,7 +8933,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-social-media-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "social-media",
     "side": "helper",
     "title": "Social Media, Comparison, and Phone Balance",
@@ -10233,7 +10224,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Money: Paychecks, Saving, and Debt",
    "you": {
     "id": "pn-g-money-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "money",
     "side": "you",
     "title": "Money: Paychecks, Saving, and Debt",
@@ -10328,7 +10318,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-money-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "money",
     "side": "helper",
     "title": "Money: Paychecks, Saving, and Debt",
@@ -10429,7 +10418,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Faith Questions and Doubt",
    "you": {
     "id": "pn-g-faith-doubt-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-doubt",
     "side": "you",
     "title": "Faith Questions and Doubt",
@@ -10561,7 +10549,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-doubt-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-doubt",
     "side": "helper",
     "title": "Faith Questions and Doubt",
@@ -10895,7 +10882,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Finding Purpose, and Serving Others",
    "you": {
     "id": "pn-g-purpose-service-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose-service",
     "side": "you",
     "title": "Finding Purpose, and Serving Others",
@@ -11010,7 +10996,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-purpose-service-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose-service",
     "side": "helper",
     "title": "Finding Purpose, and Serving Others",

@@ -54,7 +54,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "College: The First Year",
    "you": {
     "id": "br-g-first-year-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-year",
     "side": "you",
     "title": "College: The First Year",
@@ -190,7 +189,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-year-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-year",
     "side": "helper",
     "title": "College: The First Year",
@@ -303,7 +301,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
    "you": {
     "id": "br-g-not-college-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "not-college",
     "side": "you",
     "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
@@ -1217,7 +1214,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "After Graduation: The \"What Now?\" Season",
    "you": {
     "id": "br-g-what-now-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "what-now",
     "side": "you",
     "title": "After Graduation: The \"What Now?\" Season",
@@ -1335,7 +1331,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-what-now-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "what-now",
     "side": "helper",
     "title": "After Graduation: The \"What Now?\" Season",
@@ -2059,7 +2054,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Money Basics: Paychecks, Budgets, and Credit",
    "you": {
     "id": "br-g-money-basics-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "money-basics",
     "side": "you",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2160,7 +2154,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-money-basics-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "money-basics",
     "side": "helper",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2680,7 +2673,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving Out for the First Time",
    "you": {
     "id": "br-g-moving-out-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-out",
     "side": "you",
     "title": "Moving Out for the First Time",
@@ -2783,7 +2775,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-moving-out-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-out",
     "side": "helper",
     "title": "Moving Out for the First Time",
@@ -3008,7 +2999,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-roommates-helper",
-    "crisis": ["Day One (Minnesota): 1-866-223-1111", "911: emergency"],
     "guide": "roommates",
     "side": "helper",
     "title": "Roommates",
@@ -3542,7 +3532,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving to a New City",
    "you": {
     "id": "br-g-new-city-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-city",
     "side": "you",
     "title": "Moving to a New City",
@@ -3639,7 +3628,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-new-city-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-city",
     "side": "helper",
     "title": "Moving to a New City",
@@ -3946,7 +3934,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Making Friends After School",
    "you": {
     "id": "br-g-friends-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "friends",
     "side": "you",
     "title": "Making Friends After School",
@@ -4049,7 +4036,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-friends-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "friends",
     "side": "helper",
     "title": "Making Friends After School",
@@ -4391,7 +4377,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Dating and Finding Someone",
    "you": {
     "id": "br-g-dating-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating",
     "side": "you",
     "title": "Dating and Finding Someone",
@@ -5088,7 +5073,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Engaged or Newly Married",
    "you": {
     "id": "br-g-engaged-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "engaged",
     "side": "you",
     "title": "Engaged or Newly Married",
@@ -5196,7 +5180,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-engaged-helper",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "engaged",
     "side": "helper",
     "title": "Engaged or Newly Married",
@@ -5423,7 +5406,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-parents-adult-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "parents-adult",
     "side": "helper",
     "title": "You and Your Parents, as Adults",
@@ -7956,7 +7938,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Your Own Health: Insurance, Doctors, and Turning 26",
    "you": {
     "id": "br-g-health-26-you",
-    "crisis": ["911: emergency"],
     "guide": "health-26",
     "side": "you",
     "title": "Your Own Health: Insurance, Doctors, and Turning 26",
@@ -8087,7 +8068,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-health-26-helper",
-    "crisis": ["211: local help"],
     "guide": "health-26",
     "side": "helper",
     "title": "Your Own Health: Insurance, Doctors, and Turning 26",
@@ -9897,7 +9877,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-military-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647"],
     "guide": "military",
     "side": "helper",
     "title": "Joining the Military, and Military Life",
@@ -10808,7 +10787,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Finding Purpose and Calling",
    "you": {
     "id": "br-g-purpose-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose",
     "side": "you",
     "title": "Finding Purpose and Calling",
@@ -10914,7 +10892,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-purpose-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose",
     "side": "helper",
     "title": "Finding Purpose and Calling",
