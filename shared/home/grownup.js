@@ -133,7 +133,7 @@
 
       '<div class="made-by"><p class="serif">Your tree matters too.</p>\n' +
       '<p>Maple grew out of <a class="text-link" href="https://growwithgrounded.com/home/?tree=oak">Oak</a>, a check-in for grown-ups from root to fruit. Every age has its own tree, and <a class="text-link" href="https://growwithgrounded.com/grove/">The Grove</a> holds the whole family\'s trees side by side.</p>\n' +
-      '<p><a class="text-link" href="https://growwithgrounded.com/stories.html">Grounded Stories</a>, real stories from the edge of life.</p>\n' +
+      '<p><a class="text-link" href="https://growwithgrounded.com/stories.html">Grounded Stories</a>, real stories, narrated or to read.</p>\n' +
       '<p>Have a fix or an idea to make Maple better? <a class="text-link" href="mailto:hello@growwithgrounded.com?subject=Maple%20feedback">Send feedback</a></p>\n' +
       '<p style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;letter-spacing:2px;color:var(--gold);margin-top:16px">MADE BY GROUNDED.</p>\n' +
       '<p style="font-size:14px;color:var(--ink-soft);max-width:560px;margin:10px auto 0">Families and teachers may print this guide for their own children and classrooms. Please don\'t sell, republish, or adapt Grow With Grounded Maple without written permission. Grow With Grounded&trade; is a trademark of ' + K.OWNER + '. &copy; ' + new Date().getFullYear() + ' ' + K.OWNER + '.</p>' +

@@ -380,7 +380,7 @@
   }
 
   /* ---------------- SHARE TO FAMILY (BLD 732) ----------------
-     A person's tree, sent by hand from their own tree app to family on other phones.
+     A person's tree, sent by hand from The Grounded Way to family on other phones.
      No server: the tree rides after the # in a link to The Grove, and The Grove asks
      before adding it. Only these fields travel, and only in this exact shape:
        v  1 (the format)

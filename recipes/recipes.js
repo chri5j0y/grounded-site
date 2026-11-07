@@ -52,7 +52,7 @@
     ['/shared/tending-public.js?v=b919', 'GGTendPublic'],
     ['/field-guide/stage.js?v=b931', 'GGStage'],
     ['/field-guide/coach.js?v=b931', 'GGVoice'],
-    ['/shared/gg-scale.js?v=b880', 'GGScale'],
+    ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=b919b', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=b906', 'GGBulk'],
     ['/recipes/recipes.js?v=' + VER, 'GGRecipes']
@@ -563,6 +563,8 @@
        Recipes page, and never its content. */
     function shareBtn(ref) { return '<button type="button" class="btn btn-secondary rc-share-btn" data-rc-share="' + esc(ref) + '">' + SHARE_ICON + 'Share</button>'; }
     var PUB = {}; ((window.GGTendPublic || {}).recipes || []).forEach(function (r) { if (r && r.id && !r.member) PUB[r.id] = 1; });
+    // BLD 934: two Sober Drinks are Sparklers; their share pages use the new names (patches/bld917/gen-recipe-pages.py FILE_NAME).
+    var FILE_NAME = { 'dr-apple-ginger-spritz': 'dr-apple-ginger-sparkler', 'dr-cranberry-rosemary-spritz': 'dr-cranberry-rosemary-sparkler' };
     var OPENPUB = !!(window.GGTendPublic && window.GGTendPublic.public !== false && !window.GGTendPublic.member);
     function shareOf(ref) {
       var p = String(ref).split(':');
@@ -571,7 +573,7 @@
         if (m) return { title: m.name, text: m.name + ', from the ' + x.name + ' menu in Grounded Recipes: whole food for the big days, guided step by step.', url: SITE + '/recipes/r/hol-' + x.id + '-' + m.id + '.html' };
       } else {
         var r = byId(p.slice(1).join(':'));
-        if (r && OPENPUB && PUB[r.id]) return { title: r.name, text: r.name + ', a Grounded Recipe: whole food, ready in ' + r.mins + ' minutes, guided step by step.', url: SITE + '/recipes/r/' + r.id + '.html' };
+        if (r && OPENPUB && PUB[r.id]) return { title: r.name, text: r.name + ', a Grounded Recipe: whole food, ready in ' + r.mins + ' minutes, guided step by step.', url: SITE + '/recipes/r/' + (FILE_NAME[r.id] || r.id) + '.html' };
       }
       return { title: 'Grounded Recipes', text: 'Grounded Recipes: whole food, built to thrive, for every meal of the day.', url: SITE + '/recipes/' };
     }

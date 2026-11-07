@@ -185,8 +185,8 @@ const DEF = {
       call: {open: 'Hi, it is [Chris]. I wanted to say congratulations again, and see how you are doing.', questions: ['What was your favorite moment of the day?', 'How has the first week been?'], listenFor: 'Joy, tiredness, and anything that felt hard about the day.'}},
     {id: 'anniversary', title: 'First Anniversary', anchor: 'anniversary', invite: true, email: {subject: 'Happy first anniversary', body: 'Dear [Couple],\n\nA year ago today you made your promises. I hope this year has been full of good mornings, honest talks, and plenty of laughter. Happy anniversary!\n\nWith joy,\n[Chris]'},
       call: {open: 'Hi, it is [Chris]. Happy anniversary! I have been thinking of your wedding day.', questions: ['What has surprised you most about this first year?', 'What has helped the two of you most?'], listenFor: 'How they are doing together, and any wish for support.'}}],
-  gmInvite: 'If you would like a gentle way to keep growing together, The Grounded Marriage has Practices for Two and a Monthly Check-in for Two. Here is the link: [Link]',
-  shareWords: {gm: 'Here is The Grounded Marriage, an app for the two of you: a check-in for two, practices, and conversations worth having. [Link]'},
+  gmInvite: 'If you would like a gentle way to keep growing together, Heartwood has Practices for Two and a Monthly Check-in for Two. Here is the link: [Link]',
+  shareWords: {gm: 'Here is Heartwood, an app for the two of you: a check-in for two, practices, and conversations worth having. [Link]'},
   coupleCopyLead: 'Here is the plan we made together. Nothing here is set in stone: tell me anything you would like to change.',
   crisis: 'In a crisis, call or text 988 any time. In an emergency, call 911.'
 };

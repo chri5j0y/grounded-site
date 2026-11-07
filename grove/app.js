@@ -453,7 +453,7 @@ function groveDays() {
 const myDays = p => p ? treeOf(p).days : 0;
 
 /* ---------- family trees, shared by hand from other phones (Share to Family, BLD 732) ----------
-   Each person shares from their own tree app: a link with their tree after the #.
+   Each person shares from The Grounded Way: a link with their tree after the #.
    gg-app.js reads it, wipes it from the address bar, and checks it strictly.
    Saved here in G.family as {id: share id, u: when it was made, n, t, g, p, d, w, added}.
    A newer code from the same person replaces the older one, never the other way.
@@ -484,10 +484,10 @@ function famWeek(f) { const made = famDate(f.u); return weekStart(made) === week
 function famHtml() {
   const list = famList();
   let h = `<div class="card gv-fam"><h3>Family Trees</h3>`;
-  if (!list.length) return h + `<p class="muted">Family on other phones can send you their tree. In their own tree app (Oak, Birch, Sequoia, Pine, Aspen, or Maple), they tap Share to Family and send you the link or QR code.</p></div>`;
+  if (!list.length) return h + `<p class="muted">Family on other phones can send you their tree. In The Grounded Way on their own phone, they tap Share to Family and send you the link or QR code.</p></div>`;
   h += `<p class="muted">Trees shared from family's own phones. Each one shows how it looked when it was shared.</p><ul class="gv-fam-list">`;
   h += list.map(f => { const wk = famWeek(f); return `<li><span class="gv-fam-ic" aria-hidden="true">${icon(f.t === 'oak' ? 'tree' : f.t === 'sequoia' ? 'sequoia' : f.t === 'birch' ? 'birch' : f.t === 'pine' ? 'pine' : f.t === 'aspen' ? 'leaves' : 'maple')}</span><div><b>${esc(f.n)}</b> <small>${FAM_TOOL[f.t]}</small><span>${esc(famLine(f))}${wk ? ' · ' + esc(wk) : ''}</span></div><button type="button" class="btn btn-line btn-sm" data-act="famdrop" data-id="${esc(f.id)}" aria-label="Remove ${esc(f.n)}'s tree">Remove</button></li>`; }).join('');
-  return h + `</ul><p class="muted">A shared tree is a snapshot. To see it grow, ask them to share again from their tree app.</p></div>`;
+  return h + `</ul><p class="muted">A shared tree is a snapshot. To see it grow, ask them to share again from The Grounded Way.</p></div>`;
 }
 function famDrop(id) {
   const f = famList().find(x => x.id === id); if (!f) return;
@@ -583,7 +583,7 @@ function viewSetup() {
     h += `<p class="gv-err" id="gv-serr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create-grove">Plant This Grove</button>${G ? '<button class="btn btn-line btn-sm" data-act="cancel-setup">Cancel</button>' : ''}</div></div>`;
   }
   if (!G) h += `<div class="card"><h3>From Your Guide's Visit</h3><p>Did a Grove Guide visit your family and send your check-in and plan? Open them here with the link or message and the 8-letter code.</p><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>`;
-  if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in their own app: Oak, Birch, Sequoia, Pine, Aspen, Maple, or Willow. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
+  if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in The Grounded Way, at Home. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
   return h + helpCardHtml();
 }
 function switchHtml(act, on, title, sub) { return `<div class="gv-joinrow"><button type="button" class="gv-switch" role="switch" aria-checked="${!!on}" data-act="${act}"><span class="gv-track" aria-hidden="true"></span><span><b>${esc(title)}</b><small>${esc(sub)}</small></span></button></div>`; }
@@ -668,14 +668,14 @@ function viewGrove() {
     trees.push({ stage: FAM_STAGE[f.t] || 'adult', g: Math.min(1, .12 + f.g / 60), today: on ? pp : [], week: pp, tended: on, misty: !on && between(made, d0) >= 2, kind: 'grove', label: f.n }); });
   let h = '';
   if (!G.intro) h += `<div class="banner gv-intro"><h2 class="gv-h3">${esc(Wk(W('kinds.' + G.kind + '.introTitle'), G.kind) || 'Where our trees grow together')}</h2><p>${isFamily()
-    ? '<b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in their own app: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Check in together, make a plan together, and watch the grove grow.'
+    ? '<b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in The Grounded Way: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Check in together, make a plan together, and watch the grove grow.'
     : `<b>This grove belongs to ${esc(K.we)}.</b> Check in together with one shared answer for each question, make a Growth Plan together, and do a few practices side by side. Nothing about any one person is ever asked or kept.`}</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += groveTodayHtml();
   h += nextStepHtml();
   h += lcHomeHtml();
   if (hasTrees()) {
     const lead = isFamily() ? (ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'Start with your own tree.')
-      : (fam.length ? 'Trees shared by members from their own tree apps, side by side.' : 'Members can share their own tree here from their tree app, if they choose. It is never required.');
+      : (fam.length ? 'Trees shared by members from The Grounded Way, side by side.' : 'Members can share their own tree here from The Grounded Way, if they choose. It is never required.');
     h += `<div class="section-head"><h2>Our Grove</h2><p>${lead}</p></div>`;
     h += `<div class="gv-scene">${window.GGGroveRow ? GGGroveRow.html({ trees: trees.length ? trees : [{ stage: 'adult', g: .05, kind: 'grove', private: true }], sky: skyNow(), scenery: scen, visitors: vis, fresh, pick: isFamily(), label: 'Our grove' }) : ''}</div>`;
   }
@@ -845,7 +845,7 @@ function itemHtml(x) {
 }
 function viewWall() {
   const a = me(), w0 = addDays(weekStart(today()), -7 * S.wk), items = wallItems(w0), cls = G.kind === 'classroom';
-  let h = `<div class="section-head"><h2>${cls ? 'Teacher Notes' : 'The Wall'}</h2><p>${isFamily() ? "Cheer each other on. Growth from your tree apps shows here when someone's switch is on, along with short posts and the things you do together." : cls ? 'Short notes from the teacher, and the practices the class did together. Students do not post here.' : 'Short notes from the leader, and the practices done together.'}</p></div>`;
+  let h = `<div class="section-head"><h2>${cls ? 'Teacher Notes' : 'The Wall'}</h2><p>${isFamily() ? "Cheer each other on. Growth from The Grounded Way shows here when someone's switch is on, along with short posts and the things you do together." : cls ? 'Short notes from the teacher, and the practices the class did together. Students do not post here.' : 'Short notes from the leader, and the practices done together.'}</p></div>`;
   if (S.wk === 0) {
     if (!isFamily()) h += `<div class="card gv-compose"><label class="lbl" for="gv-post">${cls ? 'A note from the teacher' : 'A note from the leader'}</label><textarea id="gv-post" maxlength="280" rows="3" placeholder="${cls ? 'Our class did the Calm Corner Breath before the test. Proud of you all.' : 'Thank you for showing up for each other this week.'}"></textarea><div class="tools-row" style="justify-content:space-between"><span class="muted">Notes stay on this device. No names of students, please.</span><button class="btn btn-gold btn-sm" data-act="post">Post</button></div></div>`;
     else h += a ? `<div class="card gv-compose"><label class="lbl" for="gv-post">Post to the wall as ${esc(a.name)}</label><textarea id="gv-post" maxlength="280" rows="3" placeholder="Proud of you for the walk today."></textarea><div class="tools-row" style="justify-content:space-between"><span class="muted">Posts stay on this device, for your household. A grown-up can remove any post.</span><button class="btn btn-gold btn-sm" data-act="post">Post</button></div></div>`
@@ -911,7 +911,7 @@ function viewTogether() {
    Our Circle, and a Hard Season. Nothing is hidden. Deep links: #life, #life=<id>. */
 const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
 const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
-const GV_SRC = '/grove/guide-videos.js?v=b908';
+const GV_SRC = '/grove/guide-videos.js?v=b934';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
 // BLD 911: a guide of one of the six age trees plays in The Grounded Way (/home/?guide=<id>&tree=<tree>); Willow keeps its own page.
 const TREE_LINK = { maple: ['The Grounded Way', '', 'for grown-ups of kids, K to 5'], aspen: ['The Grounded Way', '', 'for grown-ups of middle schoolers'], pine: ['The Grounded Way', '', 'for grades 9 to 12'], birch: ['The Grounded Way', '', 'for ages 18 to 25'], oak: ['The Grounded Way', '', 'for grown-ups'], sequoia: ['The Grounded Way', '', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
@@ -1019,7 +1019,7 @@ function viewLife() {
   const filled = lcRingsShown().filter(r => LC.some(t => t.ring === r.key));
   if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   let h = `<div class="section-head"><p class="gv-kicker">When Life Changes Together</p><h2>Guides for the changes we go through together</h2>
-    <p>For a family, a class, a faith community, a group, or a team. Each guide has two views: For the Group, to read together, and For the Leader, for the grown-up, teacher, pastor, group leader, or team lead guiding the way. Each has two short videos, a few Together practices, and links to the guides in each person's own tree app.</p></div>`;
+    <p>For a family, a class, a faith community, a group, or a team. Each guide has two views: For the Group, to read together, and For the Leader, for the grown-up, teacher, pastor, group leader, or team lead guiding the way. Each has two short videos, a few Together practices, and links to the guides in each person's own tree, in The Grounded Way.</p></div>`;
   if (!LC.length) return h + `<div class="card"><p>The guides are on the way.</p></div>` + helpCardHtml(true);
   lcStyle();
   h += `<input class="gv-input gv-lc-search" id="gv-lcq" type="search" placeholder="Search: a move, a new baby, hospice, a team..." aria-label="Search the guides" value="${esc(st.q)}" enterkeyhint="search">
@@ -1114,7 +1114,7 @@ function lcPrint(id) {
   if (!window.GGApp || !window.ggPdfFromHTML) { now(); return; }
   const help = W('print.footer') ? '' : '<p>If someone needs help now: call or text 988, any time. If anyone is in danger, call 911.</p>';
   GGApp.sheet({ title: t.title, file: 'grove-' + t0.id + '.pdf', print: now,
-    blocks: () => ggPdfFromHTML(`<h1>${esc(t.title)}</h1>` + inner + help, { eyebrow: 'The Grove by Grow With Grounded', foot: 'The Grove(TM) by Grow With Grounded. growwithgrounded.com/grove' }) });
+    blocks: () => ggPdfFromHTML(`<h1>${esc(t.title)}</h1>` + inner + help, { eyebrow: 'The Grove by Grow With Grounded', foot: 'The Grove(TM) by Grow With Grounded.' }) });
 }
 // Read Aloud for a guide, in the Grounded voice (Jenny, BLD 796), with pause, stop, voice, and speed (read.js), like the
 // other trees. It takes the place of the guide's own Read Aloud button, which stays as the way in until read.js loads.
@@ -1442,7 +1442,7 @@ const moW = (k, d) => String(W('moveOn.' + k, d)).replace(/^[^:.]{3,40}:\s*/, ''
 function moveOnHtml(all) {
   const K = KW(), kind = G.kind;
   let h = `<div class="card gv-moveon"><h3>Where to Grow Next</h3>`;
-  if (kind === 'faith' || kind === 'group') h += `<p><b>Take The Grove Home.</b> ${esc(moW('takeHome', 'Members can start a Family grove of their own at home. Print a card with a QR code to hand out.'))}</p><button class="btn btn-line btn-sm" data-act="print" data-id="home">Print the Take Home Card</button>`;
+  if (kind === 'faith' || kind === 'group') h += `<p><b>Take The Grove Home.</b> ${esc(moW('takeHome', 'Members can start a Family grove of their own at home. Print a card to hand out.'))}</p><button class="btn btn-line btn-sm" data-act="print" data-id="home">Print the Take Home Card</button>`;
   if (kind === 'classroom' && all) h += `<p><b>Close Our Class Grove.</b> ${esc(moW('closeClass', 'At the end of the year: a goodbye circle, the certificate, and then the class grove is cleared from this device.'))}</p><button class="btn btn-line btn-sm" data-act="closeclass">Close Our Class Grove</button>`;
   if (isFamily() && G.hard) h += `<p><b>Willow.</b> ${esc(moW('hardSeason', 'For the person in hospice and the people who love them. A remembered willow stays in the grove.'))}</p><a class="btn btn-line btn-sm" href="/willow/">Open Willow</a>`;
   h += `<p><b>Start Your Own Tree.</b> ${esc(moW('ownTree', 'Everyone can tend their own tree, private to them, in The Grounded Way.'))}</p><div class="tools-row" style="justify-content:flex-start">${ownTreeChips()}</div>`;
@@ -1466,7 +1466,7 @@ function printDoc(title, inner, win) {
     .help{margin-top:26px;border-top:1px solid #E3D8C4;padding-top:10px;font-size:13px;color:#4A3B30}.co{margin-top:8px;font-size:12px;color:#6B5A4D;letter-spacing:2px;text-transform:uppercase;font-family:"Barlow Condensed",Arial,sans-serif}
     .qr{display:flex;gap:16px;align-items:center}.qr svg{width:1.4in;height:1.4in}
     @media print{.bar{display:none}body{background:none}.sheet{box-shadow:none;margin:0;max-width:none;padding:.5in .6in}}
-    </style></head><body><div class="bar"><b>${esc(title)}</b><button onclick="window.print()">Print or Save as PDF</button></div><div class="sheet"><h1>${esc(title)}</h1><p class="who">${esc((G && G.name) || (G ? K.name : 'The Grove'))} · ${esc(longDate(today()))}</p>${inner}${help}<div class="co">Grow With Grounded · The Grove · growwithgrounded.com/grove</div>${W('print.footer') ? `<div class="help">${esc(W('print.footer'))}</div>` : ''}</div></body></html>`;
+    </style></head><body><div class="bar"><b>${esc(title)}</b><button onclick="window.print()">Print or Save as PDF</button></div><div class="sheet"><h1>${esc(title)}</h1><p class="who">${esc((G && G.name) || (G ? K.name : 'The Grove'))} · ${esc(longDate(today()))}</p>${inner}${help}<div class="co">Grow With Grounded · The Grove</div>${W('print.footer') ? `<div class="help">${esc(W('print.footer'))}</div>` : ''}</div></body></html>`;
   const w = win || window.open('', '_blank');
   if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); return; }
   toast('Allow pop-ups for this page to print.');
@@ -1510,16 +1510,13 @@ function printWhat(id, ciId) {
     return printDoc(W('print.noticeTitle', 'Classroom Family Notice'), String(t).split(/\n\n/).map(x => `<p class="big">${esc(x)}</p>`).join(''));
   }
   if (id === 'home') {
-    const win = window.open('', '_blank');
-    loadScript('/shared/gg-qr.js').then(() => {
-      const q = window.GGQR && GGQR.svg ? GGQR.svg('https://growwithgrounded.com/grove/', { label: 'Scan to start a grove at home', border: 2 }) : '';
-      printDoc('Take The Grove Home', `<div class="qr">${q}<div><p class="big">${esc(moW('takeHome', 'Start a Family grove of your own at home. Check in together, make a plan together, and do a few practices side by side.'))}</p><p>growwithgrounded.com/grove</p></div></div>`, win);
-    });
+    // BLD 934 (Chris, firm: "i dont have printed links"): the card prints words only, no QR code and no address.
+    return printDoc('Take The Grove Home', `<p class="big">${esc(moW('takeHome', 'Start a Family grove of your own at home. Check in together, make a plan together, and do a few practices side by side.'))}</p><p>Open The Grove from The Grounded Way menu at Grow With Grounded.</p>`);
   }
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b929').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b934').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */
@@ -1527,7 +1524,7 @@ function oldDevice() { try { const o = JSON.parse(localStorage.getItem(OLD) || '
 function myOldGrove() { const a = me(); if (!a || !window.GGP || !GGP.isOpen(a.id)) return null; const d = GGP.data(a.id); const g = d && d.grove && d.grove.self; return g && (g.start || Object.keys(g.watered || {}).length) ? g : null; }
 function hasEarlier() { return !!(oldDevice() || myOldGrove()); }
 function viewEarlier() {
-  let h = `<div class="section-head"><h2>Earlier</h2><p>Personal tending used to happen in The Grove. Now your tree is yours, in your own app.</p></div>`;
+  let h = `<div class="section-head"><h2>Earlier</h2><p>Personal tending used to happen in The Grove. Now your tree is yours, in The Grounded Way.</p></div>`;
   const a = me(), mine = myOldGrove();
   if (mine) { const tool = toolOf(who(a.id) || a), n = Object.keys(mine.watered || {}).length;
     h += `<div class="card"><h3>${esc(a.name)}, your earlier tending is ready to move</h3><p>${n} ${n === 1 ? 'day' : 'days'} tended in The Grove, plus any reflections you wrote. Open your tree in ${tool.name} and it moves there on its own, private to you, under "Earlier, from The Grove."</p><a class="btn btn-gold btn-sm" href="${tool.href}">Open my tree in ${tool.name}</a></div>`; }
@@ -1535,7 +1532,7 @@ function viewEarlier() {
   if (od) { const days = Object.keys(od.watered || {}).sort(), notes = Object.keys(od.journal || {}).filter(k => String(od.journal[k] || '').trim());
     h += `<div class="card"><h3>Earlier, from this device</h3><p class="muted">Tending saved on this device before Grounded profiles. Read only.</p><dl class="gv-stats"><div><dt>Days Tended</dt><dd>${days.length}</dd></div>${notes.length ? `<div><dt>Reflections</dt><dd>${notes.length}</dd></div>` : ''}</dl>${days.length ? `<p class="muted">From ${esc(nice(days[0]))} to ${esc(nice(days[days.length - 1]))}.</p>` : ''}
       ${notes.length ? `<button class="btn btn-line btn-sm" data-act="oldnotes" aria-expanded="${S.open === 'oldnotes'}">${S.open === 'oldnotes' ? 'Hide reflections' : 'Read reflections'}</button>${S.open === 'oldnotes' ? notes.map(k => `<div class="gv-note"><b>Week ${esc(k)}</b><p>${esc(od.journal[k])}</p></div>`).join('') : ''}` : ''}
-      <p class="muted">To keep it with you, make a profile and open your tree app.</p></div>`; }
+      <p class="muted">To keep it with you, make a profile and open The Grounded Way.</p></div>`; }
   return h;
 }
 
@@ -1558,15 +1555,15 @@ function viewHow() {
     <h3>The Wall</h3>
     <p>In a Family grove: short posts and reactions, so you can cheer each other on. Reactions show who reacted, not running totals. A Classroom has Teacher Notes instead, and other groves can turn a leader's wall on in Settings.</p>
     <h3>What stays private</h3>
-    <p>The check-ins, the plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on by default. The Grove never sees anyone's own answers, levels, notes, or journal from their tree app. In a Family grove it sees names, pictures, and, only if someone's "Show my growth on The Grove" switch is on, the big picture: days tended, rings, and which parts they tended.</p>
+    <p>The check-ins, the plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on by default. The Grove never sees anyone's own answers, levels, notes, or journal from The Grounded Way. In a Family grove it sees names, pictures, and, only if someone's "Show my growth on The Grove" switch is on, the big picture: days tended, rings, and which parts they tended.</p>
     <p>Everything stays private, right here on this device.</p>
     <h3>Share to Family</h3>
-    <p>Family on other phones can still grow side by side. Each person opens their own tree app and taps Share to Family, then sends the link or QR code. Open it here, and their tree stands in your grove. In a Faith Community or Small Group grove, members may share their tree the same way, if they choose.</p>
+    <p>Family on other phones can still grow side by side. Each person opens The Grounded Way and taps Share to Family, then sends the link or QR code. Open it here, and their tree stands in your grove. In a Faith Community or Small Group grove, members may share their tree the same way, if they choose.</p>
     <h3>Keeping it safe</h3>
     <p>One backup file holds every grove, every profile on this device (each still locked), and settings. Load it on another device to bring everything back, or to combine two devices. Each grove can also be saved to its own locked file in Settings.</p>
     <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('pick')">Load a backup</button></div>
     <h3>When Life Changes Together</h3>
-    <p>Guides for the changes a family, class, faith community, group, or team goes through together: a new baby or a move, illness and hospice, a loss, scary news, a hard day at school, a leader leaving, a hard season at work. Each has a view For the Group and a view For the Leader, two short videos, Together practices, and links to the guides in each person's own tree app. Picked for Us puts first the guides that fit what your grove shared in its check-in and What's Changed Lately.</p>
+    <p>Guides for the changes a family, class, faith community, group, or team goes through together: a new baby or a move, illness and hospice, a loss, scary news, a hard day at school, a leader leaving, a hard season at work. Each has a view For the Group and a view For the Leader, two short videos, Together practices, and links to the guides in each person's own tree, in The Grounded Way. Picked for Us puts first the guides that fit what your grove shared in its check-in and What's Changed Lately.</p>
     <h3>Learn Together</h3>
     <p>Learn has short videos for every grove: Start Here, Using The Grove, Tend Four, Grow Two, Together, and Leading a Grove for the people who lead one. Finishing Using The Grove, Tend Four, Grow Two, Together, or Leading a Grove brings a Certificate of Completion. Do This Together has practices to do side by side, For Families, For Classes, For Faith Communities and Groups, and For Teams. A Faith version plays only in a grove that chose Faith words.</p>
     <h3>Coming later</h3>
@@ -1581,7 +1578,7 @@ function libItemHtml(it) {
 }
 function viewLibrary() {
   const L = window.GGLibrary, q = S.lib.q, hit = !q && S.lib.hit ? libGet(S.lib.hit) : null;
-  let h = `<div class="section-head"><h2>Practice Library</h2><p>Every Grounded practice, with how to do it. To add one to your own practices, open your tree app and tap Find more practices. Searching here also finds When Life Changes guides, books, and more.</p></div>
+  let h = `<div class="section-head"><h2>Practice Library</h2><p>Every Grounded practice, with how to do it. To add one to your own practices, open The Grounded Way and tap Find more practices. Searching here also finds When Life Changes guides, books, and more.</p></div>
     <label class="lbl" for="gv-libq">Search</label><input id="gv-libq" class="gv-input" type="search" value="${esc(q)}" placeholder="Try sleep, calm, friends, or grief" enterkeyhint="search">
     <div id="gv-libres"></div>`;
   if (!L) return h;

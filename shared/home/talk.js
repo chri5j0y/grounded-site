@@ -26,7 +26,7 @@
     '.ggt .reach-box{padding:12px 14px;border-radius:14px;background:var(--card-2);}' +
     '.ggt .talk-note{font-size:13px;color:var(--ink-soft);margin-top:16px;}.ggt .muted{color:var(--ink-soft);}.ggt .small{font-size:14px;}' +
     '.ggt a{color:var(--gold);overflow-wrap:anywhere;}.ggt .mp-life-lines,.ggt .as-life-lines{margin-top:16px;}.ggt .mp-life-lines small,.ggt .as-life-lines small{display:block;color:var(--ink-soft);}';
-  var SRC = { maple: ['/maple/guides.js?v=b907', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=b907', 'ASPEN_GUIDES'] };
+  var SRC = { maple: ['/maple/guides.js?v=b934', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=b934', 'ASPEN_GUIDES'] };
 
   function topicOf(tree, id) {
     if (tree === 'maple') { var T = (window.MAPLE_GUIDES || {}).topics || []; for (var i = 0; i < T.length; i++) if (T[i].id === id) return { t: T[i] }; return null; }
@@ -119,8 +119,8 @@
       return f ? f.t.title : 'When Life Changes';
     },
     files: function (tree) {
-      return ['/shared/gg-parts.js?v=b929', '/shared/gg-life.js?v=b907', '/shared/gg-shelf.js?v=b885', '/shared/gg-sources.js?v=b916', '/shared/gg-pdf.js?v=b803',
-        '/read.js?v=b813', '/shared/gg-learn.js?v=b932', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
+      return ['/shared/gg-parts.js?v=b929', '/shared/gg-life.js?v=b907', '/shared/gg-shelf.js?v=b934', '/shared/gg-sources.js?v=b916', '/shared/gg-pdf.js?v=b803',
+        '/read.js?v=b813', '/shared/gg-learn.js?v=b934', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
     },
     open: function (ctx) {
       var K = window.GGKidKit, tree = ctx.tree, id = ctx.talk, host = ctx.host;

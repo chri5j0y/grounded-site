@@ -71,7 +71,7 @@
     { title: 'House Blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
     { title: 'Milestones and New Beginnings', sub: 'Graduations, retirements, sober years, a fresh start, a new home, and a new chapter', href: '/milestones.html', keys: 'milestone milestones new beginning new beginnings fresh start graduation retirement recovery anniversary move new home new chapter coming of age' },
     { title: 'Sobriety Milestone Ceremony', sub: '30 days, one year, or any sober anniversary, celebrated your way', href: '/milestones.html#sobriety', keys: 'sobriety sober milestone anniversary one year 30 days 90 days celebration ceremony recovery' },
-    { title: 'Talks and Training', sub: 'Talks and trainings on whole, healthy living, from $750, with Membership packs for organizations', href: '/speaking-training.html', keys: 'speaking speaker talk talks keynote training trainings conference workplace team staff living sober ritual milestones compassion grounded way membership pack' },
+    { title: 'Speaking and Training', sub: 'Talks and trainings on whole, healthy living, from $750, with Membership packs for organizations', href: '/speaking-training.html', keys: 'speaking speaker talk talks keynote training trainings conference workplace team staff living sober ritual milestones compassion grounded way membership pack' },
     // The Grounded Way across the site (GWG BLD 874)
     { title: 'The Grounded Way: Built to Thrive', sub: 'A talk on whole person health in mind, body, spirit, and relationships, for churches, schools, and teams', href: '/talk-grounded-way.html', keys: 'the grounded way built to thrive talk speaking speaker whole person health healthy living church school team workplace' },
     // The talk and training pages (GWG BLD 932)
@@ -213,7 +213,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js?v=b888'), load('/aspen/guides.js?v=b888'), load('/pine/guides.js?v=b924'), load('/birch/guides.js?v=b930'), load('/oak/guides.js?v=b930'), load('/sequoia/guides.js?v=b924'), load('/willow/guides.js?v=b887'), load('/grove/guides.js?v=b908'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=b934'), load('/aspen/guides.js?v=b934'), load('/pine/guides.js?v=b924'), load('/birch/guides.js?v=b930'), load('/oak/guides.js?v=b930'), load('/sequoia/guides.js?v=b924'), load('/willow/guides.js?v=b887'), load('/grove/guides.js?v=b934'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -396,7 +396,7 @@
   }
 
   /* ---------- showing results ---------- */
-  var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Grounded Stories' };
+  var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Resources', story: 'Grounded Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
   var APPNAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
   var SHOW = 5, uid = 0;

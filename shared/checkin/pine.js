@@ -134,7 +134,7 @@
   /* ---------- the grade step: the first screen, in the player's own look (askGrade 584) ---------- */
   function ensureCss() {
     var has = function (re) { return Array.prototype.some.call(document.querySelectorAll('link[rel="stylesheet"]'), function (l) { return re.test(l.getAttribute('href') || ''); }); };
-    if (!has(/gg-guided\.css/)) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/shared/gg-guided.css?v=b889'; document.head.appendChild(l); }
+    if (!has(/gg-guided\.css/)) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/shared/gg-guided.css?v=b934'; document.head.appendChild(l); }
     if (!has(/fonts\/fonts\.css/)) { var f = document.createElement('link'); f.rel = 'stylesheet'; f.href = '/fonts/fonts.css?v=b788'; document.head.appendChild(f); }
   }
   function gradeScreen(o) {

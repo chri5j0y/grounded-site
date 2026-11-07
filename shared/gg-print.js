@@ -82,7 +82,7 @@
       parts: { title: 'Every Part, All the Way Home', lead: 'At the end of life, every part of a person still matters.', words: ['Faith, tradition, and what gives peace.', 'Meaning, legacy, and the story of a life.', 'Feelings, fears, and finding calm.', 'The people who love them, and saying what matters.', 'Comfort, rest, and ease in the body.', 'Hope that changes shape: for comfort, for time together, for peace.'], close: 'Held gently, all the way home.' } },
     // The Grove (GWG BLD 776): the kinds, the check-in together, the plan, and When Life Changes Together.
     grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, faith communities, small groups, and teams.',
-      points: ['A Family Check-in with one shared answer, talked over together, and results in words only.', 'Our Growth Plan: small practices tied to the times you are already together.', 'When Life Changes Together: 69 guides, each with a video for the group and one for the leader, plus Do This Together videos.', 'Everyone tends their own tree in their own app, and the trees stand side by side here.'] }
+      points: ['A Family Check-in with one shared answer, talked over together, and results in words only.', 'Our Growth Plan: small practices tied to the times you are already together.', 'When Life Changes Together: 69 guides, each with a video for the group and one for the leader, plus Do This Together videos.', 'Everyone tends their own tree in The Grounded Way, and the trees stand side by side here.'] }
   };
   // The Grove's flyers by kind (GWG BLD 776). Each one keeps The Grove's painting, mark, and QR code to /grove/, with a line
   // naming who it is for. hold: kept for later, never linked from a page (the Classroom kind waits on the attorney's PPRA answer).
@@ -103,7 +103,7 @@
   function needQR() {
     return new Promise(function (ok) {
       if (window.GGQR && GGQR.svg) return ok();
-      var s = document.createElement('script'); s.src = A('/shared/gg-qr.js'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
+      var s = document.createElement('script'); s.src = A('/shared/gg-qr.js?v=b934'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
     });
   }
   // The new tab opens right away, while the tap still counts, so pop-up blockers let it through.
@@ -379,10 +379,10 @@
       if (tr === 'overview' || !T[tr]) {
         var t = T.house;
         body = '<div class="ov-top"><img src="' + A('/favicon.svg') + '" alt=""><div><div class="ov-nm serif">Grow With Grounded<sup>&trade;</sup></div><div class="ov-tag serif">Tending the whole person, every age and stage, through every threshold.</div></div></div>'
-          + '<div class="pad"><p class="ov-lead">Every person is like a tree. Tend four parts of life (mind, body, spirit, and relationships), and meaning and hope grow from your tending, from first breath to last. The Grounded Way works when you tend all four parts.</p>'
+          + '<div class="pad"><p class="ov-lead">Every person is like a tree. Tend four parts of life (mind, body, spirit, and relationships), and meaning and hope grow from your tending, in every season of life. The Grounded Way works when you tend all four parts.</p>'
           + '<div class="ov-row">' + ROW.map(function (x) { return '<div><img src="' + A('/shared/marks/' + x[0] + '.svg') + '" alt=""><b class="serif">' + x[1] + '</b><span>' + x[2] + '</span></div>'; }).join('') + '</div>'
           + partsStrip('overview')
-          + '<ul class="ov-pts"><li><b>Guided check-ins</b> for every age, with a growth plan, daily practices, Learn videos, and Health and Ability for living with a disability, illness, or difference.</li><li><b>When Life Changes:</b> more than 500 guides for life&rsquo;s unexpected conversations, each with two short videos, written for every age.</li><li><b>The Grounded Way:</b> one private app for whole, healthy living, with a plan from your check-in, workouts, meditations, and Grounded Recipes.</li><li><b>Private by design:</b> everything stays on your device.</li><li><b>For professionals:</b> the Grounded Field Guide, with a Guide for every tree and For Guides training for chaplains, teachers, and caregivers.</li></ul></div>'
+          + '<ul class="ov-pts"><li><b>Guided check-ins</b> for every age, with a growth plan, daily practices, Learn videos, and Health and Ability for living with a disability, illness, or difference.</li><li><b>When Life Changes:</b> more than 500 guides for life&rsquo;s unexpected conversations, each with two short videos, written for every age.</li><li><b>The Grounded Way:</b> one private app for whole, healthy living, with a plan from your check-in, workouts, meditations, and Grounded Recipes.</li><li><b>Private by design:</b> everything stays on your device.</li></ul></div>'
           + '<div class="grow"></div>' + footer(t, 'Scan to see every tree', 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.', SITE + '/tools.html');
         css = SCALE + '\n.ov-top{display:flex;align-items:center;gap:0.25in;background:#8B5E1A;color:#FFF8EC;padding:0.45in 0.6in;}.ov-top img{width:0.9in;height:auto;}'
           + '.ov-nm{font-size:38pt;font-weight:600;line-height:1;}.ov-nm sup{font-size:.35em;vertical-align:top;position:relative;top:.3em;}.ov-tag{font-size:16pt;font-style:italic;margin-top:6px;color:#FBEBD0;}'

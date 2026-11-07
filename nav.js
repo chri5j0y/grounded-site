@@ -156,7 +156,7 @@
   }
 
   /* The Services menu (BLD 932: Speaking and Training lists each talk and training page; BLD 931, Chris, firm: one plain name, "Services"; BLD 930 called it Ceremonies and Talks; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
-     life ceremonies first, then honoring a life, then Talks and Training and For Organizations. Each row opens its own page;
+     life ceremonies first, then honoring a life, then Speaking and Training and For Organizations. Each row opens its own page;
      See all ceremonies stays at the foot. It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_GROUPS = [
     { name: 'Ceremonies', items: [
@@ -214,7 +214,7 @@
   }
   function svcBody() {
     return SVC_GROUPS.map(function (g) {
-      // BLD 932: a group with href opens its own page from its heading (Speaking and Training opens Talks and Training).
+      // BLD 932: a group with href opens its own page from its heading (Speaking and Training opens Speaking and Training).
       var gh = g.href ? '<a class="gn-h-a" href="' + HOME + '/' + g.href + '.html">' + g.name + '</a>' : g.name;
       return '<div class="gn-group"><div class="gn-h">' + gh + '</div>' + g.items.map(function (x) {
         var href = HOME + '/' + x[2] + '.html', h = onPage(href);
@@ -474,7 +474,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b933';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b934';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

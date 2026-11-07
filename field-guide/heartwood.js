@@ -193,7 +193,7 @@ const KIND = {
   hw: {field: 'hw', name: 'Heartwood', make: 'Make Heartwood Invite', made: 'Heartwood invite made.', qr: 'QR code for the Heartwood invite link',
     lead: "The couple's private app. An invite is a link for both of them, and a short code you give them separately.",
     subLink: 'Heartwood, your private app for the two of you', subCode: 'Your Heartwood code',
-    link: link => 'Here is Heartwood, the private app for the two of you that comes with The Grounded Marriage. Each of you, open this link on your own phone: ' + link + ' We will send your code separately. Everything you write in Heartwood stays on your own phone.',
+    link: link => 'Here is Heartwood, the private app for the two of you that comes with your wedding. Each of you, open this link on your own phone: ' + link + ' We will send your code separately. Everything you write in Heartwood stays on your own phone.',
     code: code => 'Your Heartwood code is ' + showCode(code) + '. When Heartwood asks, type it on each of your phones. Keep it just between the two of you.'},
   atv: {field: 'atv', name: 'After the Vows', make: 'Make After the Vows Invite', made: 'After the Vows invite made.', qr: 'QR code for the After the Vows invite link',
     lead: 'A lighter Heartwood for your first year together: Practices for Two, the Monthly and First-Year Check-ins, the Week Card, and short videos. A link for both of them, and a short code you give them separately.',

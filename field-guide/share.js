@@ -27,7 +27,7 @@ const CREAM = '#FAF7F2', INK = '#2C1810', GOLD = '#8B5E1A', SOFT = '#6B5A4D';
 // The built-in fallback. Colors match shared/gg-learn.js; taglines and lines match each tool's page.
 const FB = {
   subjects: [
-    {id: 'gwg', name: 'Grow With Grounded', mark: 'favicon.svg', color: GOLD, tagline: 'For every threshold, from first breath to last.', line: 'Spiritual guidance, ceremonies, and tools for every age. All faith traditions and everything in-between.', url: 'growwithgrounded.com'},
+    {id: 'gwg', name: 'Grow With Grounded', mark: 'favicon.svg', color: GOLD, tagline: 'Whole people and whole families, living well in every season of life.', line: 'Ceremonies, talks and trainings, and The Grounded Way for every age. All faith traditions and everything in-between.', url: 'growwithgrounded.com'},
     {id: 'maple', name: 'Maple', color: '#C4501E', tagline: 'Bright leaves, strong roots.', line: 'Built for grades K to 5, their families, and their teachers.'},
     {id: 'aspen', name: 'Aspen', color: '#1F6F74', tagline: 'Rooted together.', line: 'Built for grades 6 to 8, their families, and their teachers.'},
     {id: 'pine', name: 'Pine', color: '#3A6B35', tagline: 'Stand tall through every season.', line: 'Built for grades 9 to 12.'},
@@ -67,7 +67,7 @@ const ORIENTS = [['tall', 'Tall'], ['wide', 'Wide']];
 // The Services as subjects: each family on the Services page and each service page, with its own painting.
 const SVC_FAM = [
   {id: 'fam-ceremonies', name: 'Ceremonies', hero: 'page-services-gate', tagline: 'Ceremonies for life\'s biggest moments.', line: 'Weddings, blessings, milestones and new beginnings, and celebrations of life.', url: 'growwithgrounded.com/services'},
-  {id: 'fam-talks', name: 'Talks and Training', hero: 'page-speaking', tagline: 'Talks and trainings for whole, healthy living.', line: 'Talks, trainings, and Membership packs for organizations.', url: 'growwithgrounded.com/speaking-training'}
+  {id: 'fam-talks', name: 'Speaking and Training', hero: 'page-speaking', tagline: 'Talks and trainings for whole, healthy living.', line: 'Talks, trainings, and Membership packs for organizations.', url: 'growwithgrounded.com/speaking-training'}
 ];
 const SVC_PAGES = [
   ['weddings', 'Weddings', 'page-marriage', 'Your story, your vows, and a ceremony that sounds like the two of you, with Heartwood for every couple.', 'Ceremonies'],
@@ -78,8 +78,8 @@ const SVC_PAGES = [
   ['milestones', 'Milestones and New Beginnings', 'page-celebrations', 'Graduations, retirements, sober anniversaries, a fresh start, a new home, and other thresholds worth honoring.', 'Ceremonies'],
   ['celebrations-of-life', 'Celebrations of Life', 'page-farewells', 'Stories, music, laughter, and room for tears.', 'Ceremonies'],
   ['funerals-memorials', 'Funerals and Memorials', 'page-farewells', 'Honest, personal services that sound like the person you love.', 'Ceremonies'],
-  ['speaking-training', 'Talks and Training', 'page-speaking', 'Talks and trainings for whole, healthy living, for churches, schools, and teams.', 'Talks and Training'],
-  ['organizations', 'For Organizations', 'page-teams', 'Membership packs for your people, with talks and trainings.', 'Talks and Training']
+  ['speaking-training', 'Speaking and Training', 'page-speaking', 'Talks and trainings for whole, healthy living, for churches, schools, and teams.', 'Speaking and Training'],
+  ['organizations', 'For Organizations', 'page-teams', 'Membership packs for your people, with talks and trainings.', 'Speaking and Training']
 ];
 const SERVICES = SVC_FAM.map(f => Object.assign({svc: 'family', mark: 'favicon.svg', color: GOLD, focus: .5}, f, {hero: 'shared/heroes/' + f.hero + '-wide.webp'})).concat(
   SVC_PAGES.map(([pg, name, hero, tagline, fam]) => ({id: 'svc-' + pg, svc: 'page', name, mark: 'favicon.svg', color: GOLD, hero: 'shared/heroes/' + hero + '-wide.webp', focus: .5, tagline, line: fam + ', with Grow With Grounded\u2122.', url: 'growwithgrounded.com/' + pg + '.html'})));

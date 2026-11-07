@@ -778,7 +778,7 @@ function generateGrowthPlanDoc(mode) {
         <p><strong>Tend it every day.</strong> Your practices wait in the Today tab in Sequoia, ready to check off with a big checkmark. A short check-in each week and a full check-in every twelve weeks show how your tree is growing. Open Sequoia at growwithgrounded.com/sequoia</p>
       </div>
       <div class="growth-plan-footer">
-        <p class="growth-plan-footer-link">More stories from the edge of life at ${groundedShort}</p>
+        <p class="growth-plan-footer-link">More Grounded Stories at ${groundedShort}</p>
         <p>&copy; ${new Date().getFullYear()} Grow With Grounded LLC. All rights reserved. This growth plan was created with Grow With Grounded Sequoia. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Content and framework may not be copied, reproduced, or redistributed without permission.</p>
       </div>
     </div>
@@ -838,7 +838,7 @@ function buildPersonalSections(scores, includeStories) {
 }
 
 function inviteHtml() {
-  return `<p class="quiet-sub">New stories from the edge of life arrive every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
+  return `<p class="quiet-sub">New Grounded Stories arrive every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
 }
 
 
