@@ -4236,7 +4236,8 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-blowup-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
     "guide": "blowup",
     "side": "helper",
     "title": "In the Middle of a Blowup",
@@ -4328,7 +4329,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When to get more help",
-      "say": "Get help early if blowups keep happening, come with drinking or drugs, driving angry, or talk of hurting someone or themselves. Their doctor or school counselor is a good first call. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. With a weapon or danger right now, get to safety."
+      "say": "Get help early if blowups keep happening, come with drinking or drugs, driving angry, or talk of hurting someone or themselves. Their doctor or school counselor is a good first call. The numbers for more help are in the line below the video. With a weapon or danger right now, get to safety."
      },
      {
       "k": "big",
@@ -4901,7 +4902,8 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-friend-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
     "guide": "friend-death",
     "side": "helper",
     "title": "When a Friend or Classmate Dies",
@@ -4974,7 +4976,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "If they share thoughts of suicide",
       "body": "Stay with them.",
-      "say": "If they share thoughts of suicide, thank them for telling you. Stay with them. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. Your calm, open questions keep the door open."
+      "say": "If they share thoughts of suicide, thank them for telling you. Stay with them, and reach out for help together, with the numbers in the line below the video. Your calm, open questions keep the door open."
      },
      {
       "k": "big",
@@ -8251,7 +8253,8 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-counseling-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
     "guide": "counseling",
     "side": "helper",
     "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
@@ -8349,7 +8352,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it is urgent",
-      "say": "If things feel urgent while you wait for an appointment, don't wait. In Minnesota, call star star CRISIS from a cell phone for a county crisis team."
+      "say": "If things feel urgent while you wait for an appointment, reach out right away. The numbers are in the line below the video."
      },
      {
       "k": "big",
@@ -9904,7 +9907,8 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-school-threats-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
+    "crisis": ["988: call or text, any time", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
     "guide": "school-threats",
     "side": "helper",
     "title": "School Threats, Lockdowns, and Scary News",
@@ -10013,7 +10017,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When it gets heavy",
-      "say": "If your teen seems overwhelmed or hopeless, or talks about not wanting to be here, stay with them. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team."
+      "say": "If your teen seems overwhelmed or hopeless, or talks about not wanting to be here, stay with them, and reach out for help together. The numbers are in the line below the video."
      },
      {
       "k": "big",
@@ -13958,7 +13962,9 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Quitting Vaping",
   "you": {
    "id": "pn-g-sober-vaping-you",
-   "crisis": ["988: call or text, any time"],
+   "crisis": ["988: call or text, any time",
+ "Teens: text DITCHVAPE to 88709",
+ "Minnesota teens: text Start My Quit to 36072"],
    "guide": "sober-vaping",
    "side": "you",
    "title": "Quitting Vaping",
@@ -14020,14 +14026,14 @@ window.GG_LEARN_GUIDES.pine = {
       ],
       [
        "Text for support",
-       "DITCHVAPE to 88709"
+       "The numbers are below the video"
       ],
       [
        "Clear it out",
        "Every vape and pod"
       ]
      ],
-     "say": "Make a simple plan. Pick a quit day in the next week or two, and tell one person. Sign up for support by text: teens can text DITCHVAPE to 88709. In Minnesota, teens can also text Start My Quit to 36072 for a quit coach. Research finds that teens who use a texting program like this are more likely to quit. Then, on your quit day, get rid of every vape, pod, and charger.",
+     "say": "Make a simple plan. Pick a quit day in the next week or two, and tell one person. Sign up for support by text, with the numbers in the line below the video. In Minnesota, a quit coach can text with teens too. Research finds that teens who use a texting program like this are more likely to quit. Then, on your quit day, get rid of every vape, pod, and charger.",
      "cue": {
       "at": [
        1,
@@ -14104,6 +14110,7 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-vaping-helper",
+   "crisis": ["Teens: text DITCHVAPE to 88709", "Minnesota teens: text Start My Quit to 36072", "Adults: 1-800-QUIT-NOW (1-800-784-8669)"],
    "guide": "sober-vaping",
    "side": "helper",
    "title": "Quitting Vaping",
@@ -14150,7 +14157,7 @@ window.GG_LEARN_GUIDES.pine = {
      "steps": [
       [
        "Text support",
-       "DITCHVAPE to 88709"
+       "The numbers are below the video"
       ],
       [
        "Their doctor",
@@ -14161,7 +14168,7 @@ window.GG_LEARN_GUIDES.pine = {
        "For the hardest times"
       ]
      ],
-     "say": "Help with the plan. Sign up together for a texting program: DITCHVAPE to 88709, or in Minnesota, Start My Quit to 36072. Research finds these programs help teens quit. Book a visit with their doctor about a quit plan, and whether medicine fits. And plan swaps for the hardest times of day.",
+     "say": "Help with the plan. Sign up together for a texting program, with the numbers in the line below the video. Research finds these programs help teens quit. Book a visit with their doctor about a quit plan, and whether medicine fits. And plan swaps for the hardest times of day.",
      "cue": {
       "at": [
        1,
@@ -14202,7 +14209,7 @@ window.GG_LEARN_GUIDES.pine = {
        "If you use nicotine too"
       ]
      ],
-     "say": "What helps keep it going. Celebrate milestones: one day, one week, one month. Give the money they save a purpose they choose. And if you use nicotine too, consider quitting together. Adults can call one eight hundred QUIT NOW for support.",
+     "say": "What helps keep it going. Celebrate milestones: one day, one week, one month. Give the money they save a purpose they choose. And if you use nicotine too, consider quitting together. Adults can get support too, with the number in the line below the video.",
      "cue": {
       "at": [
        1,
@@ -14612,6 +14619,7 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-friend-od-helper",
+   "crisis": ["Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
    "guide": "sober-friend-od",
    "side": "helper",
    "title": "When a Friend Overdoses",
@@ -14708,7 +14716,7 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Lines to know",
-     "say": "In Minnesota, star star CRISIS from a cell phone reaches a county crisis team."
+     "say": "More numbers for help are in the line below the video."
     },
     {
      "k": "big",

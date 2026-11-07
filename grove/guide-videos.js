@@ -463,7 +463,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If the move came from a hard loss",
       "body": "Low for weeks: talk with a doctor.",
-      "say": "Some moves come from a hard place, like a lost home, a separation, or money trouble. Name that loss too. For housing or money worries, call or text two one one for local help. If sadness or loneliness lasts weeks in anyone, child or grown-up, talk with a doctor or a school counselor."
+      "say": "Some moves come from a hard place, like a lost home, a separation, or money trouble. Name that loss too. For housing or money worries, local help is a call away, with the number in the line below the video. If sadness or loneliness lasts weeks in anyone, child or grown-up, talk with a doctor or a school counselor."
      },
      {
       "k": "big",
@@ -2730,7 +2730,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Use the help.",
       "body": "Benefits, workforce centers.",
-      "say": "Apply for unemployment benefits right away. Use job help, like CareerOneStop and your local workforce center. Reach out to former coworkers and friends. And call or text two one one for local help with food, rent, and bills."
+      "say": "Apply for unemployment benefits right away. Use job help, like CareerOneStop and your local workforce center. Reach out to former coworkers and friends. And reach out for local help with food, rent, and bills, with the number in the line below the video."
      },
      {
       "k": "card",
@@ -3847,7 +3847,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If anyone is at risk",
-      "say": "If you ever worry an ill or vulnerable adult is being neglected, exploited, or harmed, call the Minnesota Adult Abuse Reporting Center, any time."
+      "say": "If you ever worry an ill or vulnerable adult is being neglected, exploited, or harmed, report it, any time, with the number in the line below the video."
      },
      {
       "k": "big",
@@ -4046,7 +4046,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Keep the helpers going.",
-      "say": "Long seasons need long-haul habits. Find respite so caregivers can rest. Protect time with brothers and sisters. If a vulnerable adult may be neglected or harmed, call the Minnesota Adult Abuse Reporting Center."
+      "say": "Long seasons need long-haul habits. Find respite so caregivers can rest. Protect time with brothers and sisters. If a vulnerable adult may be neglected or harmed, report it, with the number in the line below the video."
      },
      {
       "k": "big",
@@ -4221,11 +4221,11 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Name one help you could ask for.",
       "sub": "This week, by name.",
-      "say": "Let's take a moment. Think of one thing that would ease this week, like groceries, a bill, or a ride. Now think of where to ask, maybe two one one, the school, a food shelf, or a friend. Decide when you'll ask, and say it out loud.",
+      "say": "Let's take a moment. Think of one thing that would ease this week, like groceries, a bill, or a ride. Now think of where to ask, maybe the local help line below the video, the school, a food shelf, or a friend. Decide when you'll ask, and say it out loud.",
       "beats": [
        "Let's take a moment.",
        "Think of one thing that would ease this week, like groceries, a bill, or a ride.",
-       "Now think of where to ask, maybe two one one, the school, a food shelf, or a friend.",
+       "Now think of where to ask, maybe the local help line below the video, the school, a food shelf, or a friend.",
        {
         "t": "Decide when you'll ask, and say it out loud.",
         "w": 12
@@ -4245,7 +4245,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Help is close.",
-      "say": "Call or text two one one for local help with food, rent, heat, and bills. Ask the school about meal programs."
+      "say": "Reach out for local help with food, rent, heat, and bills, with the number in the line below the video. Ask the school about meal programs."
      },
      {
       "k": "big",
@@ -4376,7 +4376,8 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-recovery-helper",
-    "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
+    "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency",
+ "NAMI HelpLine: 1-800-950-6264, classes and groups for families"],
     "guide": "recovery",
     "side": "helper",
     "title": "Recovery in the Family",
@@ -4418,7 +4419,7 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "The grown-ups",
-        "SMART Family and Friends, NAMI, a therapist"
+        "SMART Family and Friends, a family class, a therapist"
        ],
        [
         "The children",
@@ -4429,7 +4430,7 @@ window.GG_LEARN_GUIDES.grove = {
         "Sober fun together"
        ]
       ],
-      "say": "Recovery goes better when everyone has support. The person in recovery, with their own plan and their own path. The grown-ups, through SMART Recovery Family and Friends, NAMI family programs, or a therapist. The children, through NACoA or a school counselor. And the whole family, with good, sober time together."
+      "say": "Recovery goes better when everyone has support. The person in recovery, with their own plan and their own path. The grown-ups, through SMART Recovery Family and Friends, a family class, or a therapist. The children, through NACoA or a school counselor. And the whole family, with good, sober time together."
      },
      {
       "k": "big",
@@ -8967,7 +8968,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If the leaving is painful",
       "body": "Harm or misconduct goes to the authorities.",
-      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to your faith body, not to a hallway conversation. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Then give people a safe place to grieve and to be angry."
+      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to your faith body, not to a hallway conversation. If a vulnerable adult may be at risk, report it, with the number in the line below the video. Then give people a safe place to grieve and to be angry."
      },
      {
       "k": "card",
@@ -9075,7 +9076,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If the leaving is painful",
       "body": "Harm or misconduct goes to the authorities.",
-      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to whoever oversees the group, not to a hallway conversation. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Then give people a safe place to grieve and to be angry."
+      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to whoever oversees the group, not to a hallway conversation. If a vulnerable adult may be at risk, report it, with the number in the line below the video. Then give people a safe place to grieve and to be angry."
      },
      {
       "k": "card",
@@ -9848,7 +9849,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it is more than conflict",
       "body": "Threats, harassment, or abuse: safety first.",
-      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center."
+      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, report it, with the number in the line below the video."
      },
      {
       "k": "big",
@@ -9956,7 +9957,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it is more than conflict",
       "body": "Threats, harassment, or abuse: safety first.",
-      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center."
+      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, report it, with the number in the line below the video."
      },
      {
       "k": "big",
@@ -10637,7 +10638,7 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "Ongoing help",
-        "Hospice grief groups, NAMI"
+        "Hospice grief groups, family classes"
        ],
        [
         "Staying in touch",
@@ -10739,7 +10740,7 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "Ongoing help",
-        "Hospice grief groups, NAMI"
+        "Hospice grief groups, family classes"
        ],
        [
         "Staying in touch",
@@ -10875,7 +10876,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Prayer and presence, together.",
       "body": "Hold them in prayer. Bring the casserole too.",
-      "say": "Many of us will pray for the person who is struggling, and that matters. Prayer and practical help go together, along with doctors, counselors, and crisis lines. A struggle like this is never a sign of weak faith. It's a time to hold each other close."
+      "say": "Many of us will pray for the person who is struggling, and that matters. Prayer and practical help go together, along with doctors, counselors, and the help lines below the video. A struggle like this is never a sign of weak faith. It's a time to hold each other close."
      },
      {
       "k": "words",
@@ -10968,7 +10969,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Good wishes and practical help.",
       "body": "Hold them in mind. Bring the casserole too.",
-      "say": "Many of us will hold the person who is struggling in our thoughts, and that matters. Good wishes and practical help go together, along with doctors, counselors, and crisis lines. A struggle like this is never a sign of weakness. It's a time to hold each other close."
+      "say": "Many of us will hold the person who is struggling in our thoughts, and that matters. Good wishes and practical help go together, along with doctors, counselors, and the help lines below the video. A struggle like this is never a sign of weakness. It's a time to hold each other close."
      },
      {
       "k": "words",
@@ -11029,7 +11030,7 @@ window.GG_LEARN_GUIDES.grove = {
         "A child at risk"
        ]
       ],
-      "say": "Know who to call. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
+      "say": "Know who to call. When a vulnerable adult is being abused, neglected, or exploited, the number is in the line below the video. And your county's child protection line, when a child is at risk.",
       "cue": {
        "at": [
         2
@@ -11129,7 +11130,7 @@ window.GG_LEARN_GUIDES.grove = {
         "A child at risk"
        ]
       ],
-      "say": "Know who to call. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
+      "say": "Know who to call. When a vulnerable adult is being abused, neglected, or exploited, the number is in the line below the video. And your county's child protection line, when a child is at risk.",
       "cue": {
        "at": [
         2
@@ -13975,7 +13976,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Make the call.",
       "body": "Child: child protection.",
-      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, report it, with the number in the line below the video. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
      },
      {
       "k": "card",
@@ -14083,7 +14084,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Make the call.",
       "body": "Child: child protection.",
-      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, report it, with the number in the line below the video. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
      },
      {
       "k": "card",
@@ -14776,7 +14777,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Make the call.",
       "body": "Child: child protection.",
-      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, report it, with the number in the line below the video. Many leaders are mandated reporters by law. Reporting protects people."
      },
      {
       "k": "card",
@@ -14889,7 +14890,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Make the call.",
       "body": "Child: child protection.",
-      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, report it, with the number in the line below the video. Many leaders are mandated reporters by law. Reporting protects people."
      },
      {
       "k": "card",
@@ -15765,7 +15766,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Name the supports.",
       "body": "EAP for leavers and stayers.",
-      "say": "Name the supports more than once. The employee assistance program, for those leaving and those staying. Two one one for local help with food, housing, and bills. If anyone speaks of not wanting to be alive, stay with them, listen, and get help together."
+      "say": "Name the supports more than once. The employee assistance program, for those leaving and those staying. A local help line for food, housing, and bills, with the number in the line below the video. If anyone speaks of not wanting to be alive, stay with them, listen, and get help together."
      },
      {
       "k": "big",

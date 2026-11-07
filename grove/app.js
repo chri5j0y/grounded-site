@@ -911,7 +911,7 @@ function viewTogether() {
    Our Circle, and a Hard Season. Nothing is hidden. Deep links: #life, #life=<id>. */
 const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
 const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
-const GV_SRC = '/grove/guide-videos.js?v=b934';
+const GV_SRC = '/grove/guide-videos.js?v=b936';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
 // BLD 911: a guide of one of the six age trees plays in The Grounded Way (/home/?guide=<id>&tree=<tree>); Willow keeps its own page.
 const TREE_LINK = { maple: ['The Grounded Way', '', 'for grown-ups of kids, K to 5'], aspen: ['The Grounded Way', '', 'for grown-ups of middle schoolers'], pine: ['The Grounded Way', '', 'for grades 9 to 12'], birch: ['The Grounded Way', '', 'for ages 18 to 25'], oak: ['The Grounded Way', '', 'for grown-ups'], sequoia: ['The Grounded Way', '', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };

@@ -22,7 +22,7 @@
        opts.qrSrc     where shared/vendor/qrcode.js lives (default /shared/vendor/qrcode.js?v=b921)
        opts.css       false when the host already loads gg-money.css; else it is added once from beside this file
        opts.readHash  true reads #money=<code> from the address on render (then clears it)
-       opts.art       where the paintings live (default /shared/heroes/way/)
+       opts.art       where the paintings live (default /shared/heroes/way/), or a function(name) returning each one's address
        opts.toolsSrc  where gg-money-tools.js lives (default beside this file); loaded the first time Grounded Money opens
      GGMoney.summary(store)  {has, income, spend, gap, after, month: {ahead, short, line}} for a Today line
      GGMoney.model, GGMoney.parse, GGMoney.share   the data layer, for tests and stage 2
@@ -557,6 +557,7 @@
     if (opts.css !== false && !document.getElementById('gm-css')) { var lk = document.createElement('link'); lk.id = 'gm-css'; lk.rel = 'stylesheet'; lk.href = opts.cssHref || HERE + 'gg-money.css?v=' + V; document.head.appendChild(lk); }
     var st = storeOf(opts.store), S = { view: opts.view || 'gap', pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false, leaves: -1, tw: {} };
     var ART = opts.art || '/shared/heroes/way/';
+    function art(name) { return typeof ART === 'function' ? ART(name) : ART + name; }
     var root = document.createElement('div'); root.className = 'gm'; el.innerHTML = ''; el.appendChild(root);
     var toastEl = null, toastT = 0;
     function member() { var m = opts.member; return typeof m === 'function' ? !!m() : !!m; }
@@ -597,7 +598,7 @@
     function head() {
       var tid = /^tool:(.+)$/.exec(S.view), T = tid && TL() && TL().get(tid[1]);
       var title = T ? T.n : TITLE[S.view] || 'Grounded Money', line = T ? T.sub : LINE[S.view] || '';
-      return '<header class="gm-hero' + (S.view === 'gap' ? ' tall' : '') + '"><img class="gm-hero-art" src="' + esc(ART) + 'tree-branches.webp" alt="" loading="lazy" decoding="async" onerror="this.remove()">' +
+      return '<header class="gm-hero' + (S.view === 'gap' ? ' tall' : '') + '"><img class="gm-hero-art" src="' + esc(art('tree-branches.webp')) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' +
         '<div class="gm-hero-tx"><span class="gm-badge">' + I('coin') + '</span><div><div class="gm-k">Grounded Money · Branches</div><h2 class="gm-h2">' + esc(title) + '</h2>' + (line ? '<p>' + esc(line) + '</p>' : '') + '</div></div></header>';
     }
     function tabs() {
@@ -678,7 +679,7 @@
         (rest.length ? '<div class="gm-card gm-mem"><span class="gm-k">With Membership</span><p class="gm-sub">' + esc(rest.map(function (T) { return T.n; }).join(', ')) + '.</p>' + (opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : '') + '</div>' : '');
     }
     function toolCard(T) {
-      return '<button type="button" class="gm-card gm-toolcard" data-gm="go:tool:' + T.id + '">' + (T.art ? '<span class="gm-art"><img src="' + esc(ART + T.art) + '" alt="" loading="lazy" decoding="async" onerror="this.parentNode.classList.add(\'none\');this.remove()">' + I(T.i) + '</span>' : '<span class="gm-art none">' + I(T.i) + '</span>') +
+      return '<button type="button" class="gm-card gm-toolcard" data-gm="go:tool:' + T.id + '">' + (T.art ? '<span class="gm-art"><img src="' + esc(art(T.art)) + '" alt="" decoding="async" onerror="this.parentNode.classList.add(\'none\');this.remove()">' + I(T.i) + '</span>' : '<span class="gm-art none">' + I(T.i) + '</span>') +
         '<span class="gm-tx"><b>' + esc(T.n) + '</b><small>' + esc(T.sub) + '</small></span>' + I('arrow') + '</button>';
     }
     function vTool(d, id) {

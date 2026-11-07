@@ -222,7 +222,7 @@ window.GG_LEARN_WELCOME = {
         },
         {
          "b": "For a season of life",
-         "s": "Willow, The Grove, and Heartwood",
+         "s": "The Grove, and the Willow and Heartwood companion apps",
          "m": [
           31,
           539,
@@ -231,7 +231,7 @@ window.GG_LEARN_WELCOME = {
          ]
         }
        ],
-       "say": "Each stage of life has its own tree, from Maple for young kids to Sequoia for sixty and up. Choose yours, and every check-in, practice, and lesson is made for your age. Below them sit Willow, The Grove, and Heartwood, for a season of life.",
+       "say": "Each stage of life has its own tree, from Maple for young kids to Sequoia for sixty and up. Choose yours, and every check-in, practice, and lesson is made for your age. Below them sit The Grove, for families and groups, and two companion apps for a season of life, Willow and Heartwood.",
        "cue": {
         "at": [
          0,

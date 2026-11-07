@@ -6328,8 +6328,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Your rights come with you.",
-      "sub": "Ombudsman, Minnesota.",
-      "say": "Your rights come with you to your new home. If something isn't right, tell someone you trust and the staff. In Minnesota, the Office of Ombudsman for Long-Term Care helps residents with any concern, on weekdays. And if low mood or confusion lasts past the first weeks, tell the nurse and your doctor."
+      "sub": "The number is below the video.",
+      "say": "Your rights come with you to your new home. If something isn't right, tell someone you trust and the staff. In Minnesota, an ombudsman for long-term care helps residents with any concern, on weekdays, with the number in the line below the video. And if low mood or confusion lasts past the first weeks, tell the nurse and your doctor."
      },
      {
       "k": "big",
@@ -6429,8 +6429,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Speak up, kindly.",
-      "sub": "Ombudsman, Minnesota.",
-      "say": "Your role is changing, from doing everything to visiting and advocating. If something seems wrong, speak up kindly with staff. If it isn't resolved, in Minnesota, call the Office of Ombudsman for Long-Term Care, on weekdays."
+      "sub": "The number is below the video.",
+      "say": "Your role is changing, from doing everything to visiting and advocating. If something seems wrong, speak up kindly with staff. If it stays unresolved, in Minnesota, call the ombudsman for long-term care, on weekdays, with the number in the line below the video."
      },
      {
       "k": "big",
@@ -8339,7 +8339,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you feel pushed or pressured",
-      "say": "If anyone pushes you to sign papers, hand over money, or move when you don't want to, that's different from worry. In any state, Adult Protective Services can help."
+      "say": "If anyone pushes you to sign papers, hand over money, or move when you don't want to, that's different from worry. Help is there in every state, and the Minnesota number is in the line below the video."
      },
      {
       "k": "big",
@@ -8627,7 +8627,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "They seem afraid or watched"
        ]
       ],
-      "say": "Some worries are worth raising. Money pressure, especially requests for cash, gift cards, or investments from someone they've never met. Being cut off from old friends and family. Or seeming afraid, controlled, or watched. Raise these in private, as concern, not a verdict. In any state, call Adult Protective Services."
+      "say": "Some worries are worth raising. Money pressure, especially requests for cash, gift cards, or investments from someone they've never met. Being cut off from old friends and family. Or seeming afraid, controlled, or watched. Raise these in private, as concern, not a verdict. Help is there in every state, and the Minnesota number is in the line below the video."
      },
      {
       "k": "big",
@@ -8965,14 +8965,14 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Any state",
-        "Adult Protective Services"
+        "A place to report in every state"
        ],
        [
         "Tell one safe person",
         "A doctor, friend, or faith leader"
        ]
       ],
-      "say": "Here's how to get help. In any state, Adult Protective Services can help. And tell one safe person, like your doctor, a friend, or a faith leader."
+      "say": "Here's how to get help. Help is there in every state, and the Minnesota number is in the line below the video. And tell one safe person, like your doctor, a friend, or a faith leader."
      },
      {
       "k": "big",
@@ -9114,14 +9114,14 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Any state",
-        "Adult Protective Services"
+        "A place to report in every state"
        ],
        [
         "Money taken",
         ""
        ]
       ],
-      "say": "Here's how to report. Your name is kept confidential. In any state, call Adult Protective Services. Share what you saw. Trained people look into the rest."
+      "say": "Here's how to report. Your name is kept confidential. Every state has a place to report, and the Minnesota number is in the line below the video. Share what you saw. Trained people look into the rest."
      },
      {
       "k": "big",

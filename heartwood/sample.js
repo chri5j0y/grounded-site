@@ -466,7 +466,7 @@ window.HW_SAMPLE_DATA = {
         "eyebrow": "Skills for Two, Skill 1",
         "h": "Listening Until They Feel Heard",
         "sub": "The skill under every other skill.",
-        "say": "This is a short skill video from The Grounded Marriage. It's about listening, and not only hearing the words, but listening until your partner feels heard."
+        "say": "This is a short skill video from Heartwood. It's about listening, and not only hearing the words, but listening until your partner feels heard."
        },
        {
         "k": "big",

@@ -3536,18 +3536,29 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "Two ways to check in",
+       "h": "Check in together",
        "steps": [
         [
-         "On my own",
-         "The child taps through, you stay near"
+         "Check In With My Grown-up",
+         "Right on your child's tree"
         ],
         [
-         "With a grown-up",
-         "A short tip under every question"
+         "Sit side by side",
+         "Be ready to talk"
+        ],
+        [
+         "A Grown-up tip",
+         "Under every question"
         ]
        ],
-       "say": "A check-in starts with a choice. On my own, or With a grown-up. Even on my own, stay nearby and be ready to talk. With a grown-up adds a short tip under every question, and a Why this question link, so you know what each one is listening for. Kindergarten through grade two starts with read aloud on."
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "A check-in starts right on your child's tree, with Check In With My Grown-up. Sit side by side, and be ready to talk. A short Grown-up tip sits under every question, so you know what each one is listening for."
       },
       {
        "k": "points",
@@ -9102,10 +9113,10 @@ window.GG_LEARN = {
         ],
         [
          "See the help list",
-         "Helplines a student can reach alone"
+         "Who a student can reach alone"
         ]
        ],
-       "say": "Aspen has more for you. In When Life Changes, the Safety group has two guides. Self-harm and cutting walks you through what to say and what to do. When a friend is hurting helps when your child is carrying a friend’s secret. Teach them this: telling a grown-up is being a good friend, even if the friend asked them not to, and they are never in trouble for telling. And in the Grown-ups tab, See the help list shows the helplines a student can reach on their own."
+       "say": "Aspen has more for you. In When Life Changes, the Safety group has two guides. Self-harm and cutting walks you through what to say and what to do. When a friend is hurting helps when your child is carrying a friend’s secret. Teach them this: telling a grown-up is being a good friend, even if the friend asked them not to, and they are never in trouble for telling. And in the Grown-ups tab, See the help list shows the people a student can reach on their own."
       },
       {
        "k": "big",
@@ -12915,7 +12926,7 @@ window.GG_LEARN = {
           { k: 'flow', h: 'Four steps', steps: [['Notice', 'Trust what you see'], ['Ask', 'Openly and kindly'], ['Stay', 'Listen without judging'], ['Connect', 'To help, together']], say: 'If you notice signs like these, follow four steps. Notice, and trust what you see. Ask, openly and kindly. Stay, and listen without judging. And connect them to help, together.' },
           { k: 'big', h: 'Open questions open the door.', sub: 'How are you holding up, really?', say: 'If you are worried, start with an open question. How are you holding up, really? Then stay curious, and let them lead. An open question leaves room for anything, and it often brings relief.' },
           { k: 'words', h: 'Words you can use', items: ['I’ve noticed you seem down. I care about you.', 'How are you, really?', 'Can you tell me more about that?'], cue: { w: { "4": 10 } }, say: 'Here are words you can use. I have noticed you seem down, and I care about you. How are you, really? And when they share, can you tell me more about that? Try saying them softly now, so they come easier when you need them.' },
-          { k: 'points', h: 'If they share thoughts of suicide', items: [['Stay with them', 'And thank them for telling you'], ['Call or text 988 together', 'Or call 911 in danger'], ['Make home safer for now', 'Talk it through with 988']], say: 'If they share thoughts of suicide, stay with them, and thank them for telling you. Call or text 988 together, or call 911 if they are in danger right now. Talk with 988 about making home safer for now, with medicines and anything that could cause harm put away, locked, or held by someone they trust. When Life Changes in Oak has a full guide for this, called, when someone else is thinking about suicide.' },
+          { k: 'points', h: 'If they share thoughts of suicide', items: [['Stay with them', 'And thank them for telling you'], ['Reach out together', 'The numbers are below the video'], ['Make home safer for now', 'Put away what could cause harm']], say: 'If they share thoughts of suicide, stay with them, and thank them for telling you. Reach out for help together right away, with the numbers in the line below the video. Make home safer for now, with medicines and anything that could cause harm put away, locked, or held by someone they trust. When Life Changes in Oak has a full guide for this, called, when someone else is thinking about suicide.' },
           { k: 'big', h: 'Caring enough to stay close can save a life.', sub: 'And you deserve support too.', say: 'Caring enough to stay close can save a life. And you deserve support too. After a hard conversation like this, talk with someone you trust.' },
           { k: 'quiz', q: 'Someone you love seems down and pulls away. What is a good way to start?', opts: ['Tell them to cheer up', 'Ask an open question, like how are you, really?', 'Wait until they bring it up'], right: 1, why: 'An open question opens the door, and staying close keeps it open.', say: 'Quick question. Someone you love seems down and pulls away. What is a good way to start?' }
         ] },
@@ -31396,7 +31407,8 @@ window.GG_LEARN = {
      "crisis": [
       "988: call or text, any time",
       "Crisis Text Line: text HOME to 741741",
-      "911: emergency"
+      "911: emergency",
+      "Minnesota county crisis team: **CRISIS (274747) from a cell phone"
      ],
      "n": 2,
      "title": "Bark: Mind",
@@ -31529,15 +31541,15 @@ window.GG_LEARN = {
        "title": "Need to talk now?",
        "rows": [
         [
-         "Minnesota county crisis team",
-         "**CRISIS (274747)"
+         "Help any time",
+         "The numbers below the video"
         ],
         [
          "In danger right now?",
          "Call for help"
         ]
        ],
-       "say": "In Minnesota, you can call star star CRISIS from a cell phone to reach your county crisis team."
+       "say": "Help is close any time, and the numbers are in the line below the video."
       },
       {
        "k": "quiz",
@@ -32760,7 +32772,8 @@ window.GG_LEARN = {
       "Day One (Minnesota): 1-866-223-1111",
       "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522",
       "SAMHSA National Helpline: 1-800-662-4357",
-      "911: emergency"
+      "911: emergency",
+      "Minnesota county crisis team: **CRISIS (274747) from a cell phone"
      ],
      "n": 4,
      "title": "When to Worry, and Who to Call",
@@ -32905,8 +32918,8 @@ window.GG_LEARN = {
          "Thank them for telling you"
         ],
         [
-         "In Minnesota",
-         "**CRISIS (274747) from a cell"
+         "Get help together",
+         "The help lines below the video"
         ],
         [
          "Make home safer for now",
@@ -32917,7 +32930,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "If they share thoughts of suicide, stay with them, and thank them for telling you. Get help together right away, with the help lines under this video. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. Make home safer for now: lock up guns and medicines, or keep them somewhere else. Then let their doctor know, and keep checking in."
+       "say": "If they share thoughts of suicide, stay with them, and thank them for telling you. Get help together right away, with the help lines under this video. Make home safer for now: lock up guns and medicines, or keep them somewhere else. Then let their doctor know, and keep checking in."
       },
       {
        "k": "big",
@@ -33207,7 +33220,7 @@ window.GG_LEARN = {
          "Oak, for adults 26 to 59"
         ]
        ],
-       "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, Oak is Grounded's tree app for adults, with the same tree as Pine."
+       "say": "Keep something of your own. Protect your own sleep and health, and keep your own doctor visits. Hold on to one thing that is just for you, like a walk, music, or a hobby. Stay in touch with your own people, even one friend and one call a week. And if you would like to tend your own tree, The Grounded Way has Oak for adults, with the same tree as Pine."
       },
       {
        "k": "big",
@@ -35051,7 +35064,8 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-tell",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
      "n": 10,
      "title": "When You Need to Tell Someone",
      "mins": 4,
@@ -35142,8 +35156,8 @@ window.GG_LEARN = {
        "h": "If you don't want to go on",
        "items": [
         [
-         "In Minnesota",
-         "**CRISIS (274747) from a cell"
+         "Reach out now",
+         "The numbers are below the video"
         ],
         [
          "In danger right now",
@@ -35156,7 +35170,7 @@ window.GG_LEARN = {
          2
         ]
        },
-       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. The numbers are in the line below the video, any time."
       },
       {
        "k": "big",
@@ -38279,7 +38293,8 @@ window.GG_LEARN = {
     },
     {
      "id": "br-h-worry",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "National DV Hotline: 1-800-799-7233", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "National DV Hotline: 1-800-799-7233", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
      "n": 4,
      "title": "When to Worry, and What to Do",
      "mins": 7,
@@ -38385,7 +38400,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "If they share thoughts of suicide, stay with them, and thank them for telling you. Get help together right away, with the help lines under this video. In Minnesota, star star CRISIS from a cell phone reaches the county crisis team. And to make home safer for now, if there are guns or a lot of medicine where they live, ask whether someone they trust can hold them."
+       "say": "If they share thoughts of suicide, stay with them, and thank them for telling you. Get help together right away, with the help lines under this video. And to make home safer for now, if there are guns or a lot of medicine where they live, ask whether someone they trust can hold them."
       },
       {
        "k": "big",
@@ -40908,12 +40923,12 @@ window.GG_LEARN = {
          3
         ]
        },
-       "say": "Help is out there. Calling a landlord, a lender, or a company before a due date often opens up a payment plan. In Minnesota, dial two one one, any time, for help finding housing, food, and bill support near you. And talking it through with someone you trust can make the next step clearer."
+       "say": "Help is out there. Calling a landlord, a lender, or a company before a due date often opens up a payment plan. A local help line finds housing, food, and bill support near you, any time, with the number in the line below the video. And talking it through with someone you trust can make the next step clearer."
       },
       {
        "k": "big",
        "h": "Betting to catch up? Reach out.",
-       "sub": "Call 1-800-MY-RESET, any time.",
+       "sub": "The number is below the video.",
        "say": "If betting or gambling is part of the money stress, you are not alone, and help works."
       },
       {
@@ -41271,7 +41286,8 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-tell",
-     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "National DV Hotline: 1-800-799-7233", "RAINN: 1-800-656-4673", "911: emergency"],
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "National DV Hotline: 1-800-799-7233", "RAINN: 1-800-656-4673", "911: emergency",
+ "Minnesota county crisis team: **CRISIS (274747) from a cell phone"],
      "n": 10,
      "title": "When You Need to Tell Someone",
      "mins": 4,
@@ -41364,7 +41380,7 @@ window.GG_LEARN = {
          2
         ]
        },
-       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Many people your age have had these thoughts, and talking with someone helps. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Many people your age have had these thoughts, and talking with someone helps. The numbers are in the line below the video, any time."
       },
       {
        "k": "big",
@@ -42354,7 +42370,7 @@ window.GG_LEARN = {
        "k": "trees",
        "h": "Each tree is shaped by its stage",
        "grove": true,
-       "say": "Once people are added, their trees appear in the grove, shaped by their stage of life. Each person tends their tree in their own app. Maple for kids, Aspen for middle schoolers, Pine for high schoolers, Birch for young adults, Oak for grown-ups, and Sequoia for sixty and up."
+       "say": "Once people are added, their trees appear in the grove, shaped by their stage of life. Each person tends their tree in The Grounded Way, at Home. Maple for kids, Aspen for middle schoolers, Pine for high schoolers, Birch for young adults, Oak for grown-ups, and Sequoia for sixty and up."
       },
       {
        "k": "card",
@@ -42524,7 +42540,7 @@ window.GG_LEARN = {
          "The count under the grove"
         ]
        ],
-       "say": "Two things grow the grove. Any day anyone tends their own tree, in their own tree app. And any day the family does a practice together, and taps We did this today. Under the grove, a line counts your days of growing together."
+       "say": "Two things grow the grove. Any day anyone tends their own tree, in The Grounded Way. And any day the family does a practice together, and taps We did this today. Under the grove, a line counts your days of growing together."
       },
       {
        "k": "points",
@@ -42603,7 +42619,7 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "say": "Tap anyone’s picture to see their tree. You will see their days tended, their rings, and which parts they tended this week. That is the big picture only. Never answers, levels, or notes. And there is a button to go tend your own tree in your own app."
+       "say": "Tap anyone’s picture to see their tree. You will see their days tended, their rings, and which parts they tended this week. That is the big picture only. Never answers, levels, or notes. And there is a button to go tend your own tree in The Grounded Way."
       },
       {
        "k": "points",
@@ -42645,7 +42661,7 @@ window.GG_LEARN = {
          "For everyone"
         ]
        ],
-       "say": "When you have chosen your picture, a card called Your tree in the grove appears. Days you tend in your own app unlock new kinds of trees. A birch at fifteen days, a maple at thirty five, and a pine at sixty. Days the family grows together unlock new scenery for everyone. A lake, autumn, winter, and dusk."
+       "say": "When you have chosen your picture, a card called Your tree in the grove appears. Days you tend in The Grounded Way unlock new kinds of trees. A birch at fifteen days, a maple at thirty five, and a pine at sixty. Days the family grows together unlock new scenery for everyone. A lake, autumn, winter, and dusk."
       },
       {
        "k": "words",
@@ -43672,7 +43688,7 @@ window.GG_LEARN = {
          "Days tended and parts tended"
         ]
        ],
-       "say": "What about journals? Each person’s journal lives in their own tree app, with their weekly check-in, kept in their own profile. The Grove sees only the big picture, like days tended and which parts were tended."
+       "say": "What about journals? Each person’s journal lives in The Grounded Way, with their weekly check-in, kept in their own profile. The Grove sees only the big picture, like days tended and which parts were tended."
       },
       {
        "k": "points",
@@ -43691,7 +43707,7 @@ window.GG_LEARN = {
          "It moves there on its own"
         ]
        ],
-       "say": "You might also see a tab called Earlier. It shows up only if someone tended a tree inside The Grove before each person had their own app. Open your tree app, and those days and reflections move there on their own, under Earlier, from The Grove."
+       "say": "You might also see a tab called Earlier. It shows up only if someone tended a tree inside The Grove before they began The Grounded Way. Open The Grounded Way, and those days and reflections move there on their own, under Earlier, from The Grove."
       },
       {
        "k": "quiz",
@@ -44090,7 +44106,7 @@ window.GG_LEARN = {
          "It joins your practices"
         ]
        ],
-       "say": "Found one you like? Open your own tree app. Tap Find more practices. Browse by part, or search. Then add what fits, and it joins your practices. In Maple, the steps come in words just for kids."
+       "say": "Found one you like? Open The Grounded Way. Tap Find more practices. Browse by part, or search. Then add what fits, and it joins your practices. In Maple, the steps come in words just for kids."
       },
       {
        "k": "points",
@@ -44126,7 +44142,7 @@ window.GG_LEARN = {
         "Check it off in Together"
        ],
        "right": 1,
-       "why": "Your practices live in your own tree app. Find more practices adds one there.",
+       "why": "Your practices live in The Grounded Way. Find more practices adds one there.",
        "say": "Quick question. How do you add a library practice to your own tree?"
       }
      ]
@@ -44172,7 +44188,7 @@ window.GG_LEARN = {
          "Each tree shaped by its life stage"
         ]
        ],
-       "say": "Each person tends their own tree in their own app. Check-ins, daily practices, and journals all live there, in that person’s own profile. The grove is the family’s shared ground, where every tree stands side by side, each one shaped by its life stage."
+       "say": "Each person tends their own tree in The Grounded Way. Check-ins, daily practices, and journals all live there, in that person’s own profile. The grove is the family’s shared ground, where every tree stands side by side, each one shaped by its life stage."
       },
       {
        "k": "points",
@@ -44225,7 +44241,7 @@ window.GG_LEARN = {
        "btns": [
         "Visit The Grove"
        ],
-       "say": "You choose what shows. In your tree app’s settings, find The Grove, and the switch called Show my growth on The Grove. It starts on. Anyone can turn it off, kids included. With it off, your tree still stands in the grove, and it simply says you keep your growth private."
+       "say": "You choose what shows. In The Grounded Way’s settings, find The Grove, and the switch called Show my growth on The Grove. It starts on. Anyone can turn it off, kids included. With it off, your tree still stands in the grove, and it simply says you keep your growth private."
       },
       {
        "k": "points",
@@ -44325,7 +44341,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your groves live on this device.",
        "sub": "Up to six, each with its own kind and lock.",
-       "say": "Everything in The Grove lives right here, on this device. One device can hold up to six groves, each with its own kind and its own lock, like your family grove, and a class or group grove. Family on other phones can share their tree with you from their own tree app, with Share to Family."
+       "say": "Everything in The Grove lives right here, on this device. One device can hold up to six groves, each with its own kind and its own lock, like your family grove, and a class or group grove. Family on other phones can share their tree with you from The Grounded Way on their own phone, with Share to Family."
       },
       {
        "k": "quiz",
@@ -44458,7 +44474,7 @@ window.GG_LEARN = {
          "No names at all"
         ]
        ],
-       "say": "Each kind keeps only what fits it. In a Family grove, each person’s tree shows the big picture only, and only if their switch is on. A faith community or small group keeps no member list, and members can share their own tree from their tree app, only if they choose. A class or a team grove keeps no names at all."
+       "say": "Each kind keeps only what fits it. In a Family grove, each person’s tree shows the big picture only, and only if their switch is on. A faith community or small group keeps no member list, and members can share their own tree from The Grounded Way, only if they choose. A class or a team grove keeps no names at all."
       },
       {
        "k": "words",
@@ -45073,7 +45089,7 @@ window.GG_LEARN = {
          "Off until a leader turns it on"
         ]
        ],
-       "say": "In these groves, members can share their own tree into the grove from their own tree app, with Share to Family. It is never required. A shared tree is a snapshot, and they can share again any time. The Wall is off at first, and a leader can turn it on in Settings for short notes."
+       "say": "In these groves, members can share their own tree into the grove from The Grounded Way, with Share to Family. It is never required. A shared tree is a snapshot, and they can share again any time. The Wall is off at first, and a leader can turn it on in Settings for short notes."
       },
       {
        "k": "points",
@@ -45304,7 +45320,7 @@ window.GG_LEARN = {
          "For anyone who wants one"
         ]
        ],
-       "say": "Helpers need help too. Point people to your workplace’s own support, like an employee assistance program. And anyone who wants their own check-in can start a tree app of their own."
+       "say": "Helpers need help too. Point people to your workplace’s own support, like an employee assistance program. And anyone who wants their own check-in can begin The Grounded Way on their own phone."
       },
       {
        "k": "big",
@@ -45499,7 +45515,7 @@ window.GG_LEARN = {
          "For the fridge or the room"
         ]
        ],
-       "say": "Every guide lists a few Together practices that fit, so you can do something side by side. It links the matching guides in each person’s own tree app, for anyone who wants their own. And you can print a guide, or have it read aloud to the room."
+       "say": "Every guide lists a few Together practices that fit, so you can do something side by side. It links the matching guides in The Grounded Way, for anyone who wants their own. And you can print a guide, or have it read aloud to the room."
       },
       {
        "k": "words",

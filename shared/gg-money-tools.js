@@ -76,9 +76,10 @@
     return out;
   }
   // Bills by paycheck: each bill goes to the latest payday on or before its due day; earlier bills ride last month's last check.
+  // A bill with no due day yet goes to the month's first paycheck.
   function billsByCheck(days, bills) {
     var groups = days.map(function (d) { return { day: d, bills: [], total: 0 }; }), prev = { day: 0, bills: [], total: 0 };
-    bills.forEach(function (b) { var g = null; for (var i = groups.length - 1; i >= 0; i--) if (groups[i].day <= b.due) { g = groups[i]; break; } g = g || prev; g.bills.push(b); g.total = r2(g.total + b.amt); });
+    bills.forEach(function (b) { var g = null; if (!b.due) g = groups[0] || prev; else for (var i = groups.length - 1; i >= 0; i--) if (groups[i].day <= b.due) { g = groups[i]; break; } g = g || prev; g.bills.push(b); g.total = r2(g.total + b.amt); });
     return { prev: prev, groups: groups };
   }
   function homeMeal(groceryWeek, mealsWeek) { return mealsWeek > 0 ? r2(n0(groceryWeek) / mealsWeek) : 0; }
@@ -223,12 +224,12 @@
         return '<div class="gm-f"><span>I am paid</span>' + chips('pay', 's', t.s, [['w', 'Weekly'], ['b', 'Every Two Weeks'], ['s', 'Twice a Month'], ['m', 'Monthly']]) + '</div>' +
           '<div class="gm-two">' + (t.s === 'w' || t.s === 'b' ? fld('A recent payday', 'anchor', t.anchor, { text: 1, type: 'date' }) : fld(t.s === 's' ? 'First payday of the month' : 'Payday', 'd1', t.d1, { ph: '1' })) + (t.s === 's' ? fld('Second payday', 'd2', t.d2, { ph: '15' }) : fld('Each paycheck', 'amt', t.amt, { ph: String(Math.round(U.totals(c.d).income * 12 / checksPerYear(t.s)) || '') })) + '</div>' +
           (t.s === 's' ? fld('Each paycheck', 'amt', t.amt, { ph: String(Math.round(U.totals(c.d).income * 12 / 24) || '') }) : '') +
-          (ms.length ? '<details class="gm-fold"><summary>Due days for your monthly bills</summary><div class="gm-grid3">' + ms.map(function (l) { return fld(l.n, 'due.' + l.id, t.due[l.id] || '', { ph: '1' }); }).join('') + '</div></details>' : '<p class="gm-mini">Add monthly lines to My Plan to place them on paychecks.</p>');
+          (ms.length ? '<details class="gm-fold"' + (Object.keys(t.due).some(function (k) { return n0(t.due[k]) > 0; }) ? '' : ' open') + '><summary>Due days for your monthly bills</summary><p class="gm-mini">Add the day of the month each bill is due. Until then, it sits on the first paycheck.</p><div class="gm-grid3">' + ms.map(function (l) { return fld(l.n, 'due.' + l.id, t.due[l.id] || '', { ph: '1' }); }).join('') + '</div></details>' : '<p class="gm-mini">Add monthly lines to My Plan to place them on paychecks.</p>');
       },
       out: function (c) {
         var t = c.t, now = new Date(), y = now.getFullYear(), m = now.getMonth(), days = paydays(t.s, t.anchor, y, m, n0(t.d1), n0(t.d2));
         var per = n0(t.amt) || r2(U.totals(c.d).income * 12 / checksPerYear(t.s));
-        var bills = U.live(c.d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax' && l.f === 'm' && U.monthly(l) > 0; }).map(function (l) { return { n: l.n, amt: U.monthly(l), due: Math.min(dim(y, m), Math.max(1, n0(t.due[l.id]) || 1)) }; });
+        var bills = U.live(c.d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax' && l.f === 'm' && U.monthly(l) > 0; }).map(function (l) { return { n: l.n, amt: U.monthly(l), due: n0(t.due[l.id]) > 0 ? Math.min(dim(y, m), n0(t.due[l.id])) : 0 }; });
         var g = billsByCheck(days, bills), ex = extraMonths(t.s, t.anchor, now);
         var card = function (lbl, x) { return '<div class="gm-check"><div class="gm-pt"><b>' + lbl + '</b><span>' + M(x.total) + ' of ' + M(per) + '</span></div><div class="gm-bar thin' + (x.total > per ? ' over' : '') + '"><span style="width:' + (per ? Math.min(100, Math.round(x.total / per * 100)) : 0) + '%"></span></div>' + (x.bills.length ? '<small>' + x.bills.map(function (b) { return E(b.n); }).join(', ') + '</small>' : '<small>Room for savings and goals.</small>') + '</div>'; };
         return '<h3 class="gm-h4">' + MONTHS[m] + '</h3>' + (g.prev.bills.length ? card('From last month’s last check', g.prev) : '') + g.groups.map(function (x) { return card(MONTHS[m].slice(0, 3) + ' ' + x.day, x); }).join('') +
