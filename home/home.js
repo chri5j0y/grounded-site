@@ -1811,7 +1811,7 @@
       // BLD 919: on Start, Tending's own morning movement joins the day: the Living Sober Morning Walk and, on some mornings,
       // a Gentle session beside it (open to everyone). BLD 935 (audit H1): Start's own day joins too, as every Start screen
       // promises: the day's Flow session and Tending's meditation (startTend keeps one of each and nothing from Membership).
-      else if (!ready && hasFn('start') && hasFn('today') && hCall('start')) tendItems = startTend(arr(hCall('today', today())));
+      else if (!ready && hasFn('start') && hasFn('today') && hCall('start')) tendItems = member() ? arr(hCall('today', today())).filter(function (x) { return x && (x.key === 'walk' || /^wl:gentle:/.test(x.key || '')); }) : startTend(arr(hCall('today', today())));
     }
     if (Array.isArray(tendItems)) {
       tendItems.forEach(function (x) { if (!x || !x.key) return; items.push({ key: 't:' + x.key, hkey: x.key, hour: num(x.hour) != null ? +x.hour : 12, when: x.when || '', title: x.title || '', sub: x.sub || '', btn: x.btn || 'Open', tint: x.tint || '', done: !!x.done, kind: x.kind || '', image: x.image || '', src: 'tend', opart: x.kind === 'own' ? (x.part || '') : '' }); });
