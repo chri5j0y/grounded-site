@@ -1,5 +1,5 @@
 /* =====================================================================
-   GROUNDED MONEY (shared/gg-money.js), GWG BLD 937, stage 1
+   GROUNDED MONEY (shared/gg-money.js), GWG BLD 937 (stage 1 built it; stage 2 wired it into Home)
    A calm monthly money plan for a household, built like the Joy family sheet.
    Chris (November 7, 2026): "the gap is real and exactly why im doing this.. i need to build a tool that can fill the gap".
    Plan: grounded-workshop patches/plan/budget-plan.md. Stage 2 wiring: patches/bld937/STAGE2.md.
@@ -584,13 +584,14 @@
     }
     function tstate(d, id) { var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
     function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate }; }
-    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(v); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
 
     /* ----- painting ----- */
     function paint() {
       var d = D();
       if (!d) { root.innerHTML = '<div class="gm-card gm-hello">' + head() + '<p class="gm-sub">Open your profile to see your money plan. It stays locked on this device with your passcode.</p>' + (window.GGP && GGP.require ? '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="unlock">Open My Profile</button></div>' : '') + '</div>'; return; }
-      if (!allowed(S.view)) S.view = 'gap';
+      // Stage 2: a view this person cannot open (a Membership place on Start) settles on Close the Gap, and the host's address follows.
+      if (!allowed(S.view)) { S.view = 'gap'; if (opts.onView) try { opts.onView('gap'); } catch (e) {} }
       var tid = /^tool:(.+)$/.exec(S.view), body = tid ? vTool(d, tid[1]) : { gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare, tools: vTools }[S.view](d);
       root.innerHTML = '<div class="gm-shell">' + head() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
     }
@@ -998,7 +999,8 @@
       else if (t.getAttribute('data-gmf') && t.tagName === 'INPUT') { t.blur(); }
     }
     root.addEventListener('click', onClick); root.addEventListener('change', onChange); root.addEventListener('input', onInput); root.addEventListener('keydown', onKey);
-    var unsub = null; if (st.kind === 'ggp' && window.GGP && GGP.on) { try { unsub = GGP.on(function (ty) { if (ty === 'change' || ty === 'ready') paint(); }); } catch (e) {} }
+    // Stage 2: GGP.on returns nothing, so destroy takes the listener off with GGP.off (a host like Home draws a fresh copy each visit).
+    var unsub = null; if (st.kind === 'ggp' && window.GGP && GGP.on) { try { var onG = function (ty) { if ((ty === 'change' || ty === 'ready') && root.isConnected) paint(); }, u0 = GGP.on(onG); unsub = typeof u0 === 'function' ? u0 : function () { if (window.GGP && GGP.off) GGP.off(onG); }; } catch (e) {} }
 
     if (TL()) TL().use(UTIL);
     paint();

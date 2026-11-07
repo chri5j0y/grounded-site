@@ -1490,3 +1490,21 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
 /* BLD 935: Today's Flow beside the Living Sober morning movement. */
 .hm-alt2 .hm-linkbtn{font-weight:700;}
 .hm-wp-seedmv .hm-wp-seednut{display:inline-flex;align-items:center;gap:6px;cursor:default;opacity:.75;}
+
+/* BLD 937: Grounded Money. Its Library shelf (Branches), the quiet This Month line on Today, and the room it opens in. */
+.hm-sh-money .bg{object-position:center 45%;}
+.hm-money{min-width:0;margin-top:4px;}
+.hm-moneyline{display:flex;align-items:center;gap:14px;width:100%;min-width:0;margin:12px 0;padding:12px 14px;border:1px solid var(--line);border-radius:18px;background:var(--card-2);color:var(--ink);text-align:left;font:inherit;cursor:pointer;}
+.hm-moneyline:hover{border-color:color-mix(in srgb,#6E9C6B 45%,var(--line));}
+.hm-moneyline:focus-visible{outline:3px solid #6E9C6B;outline-offset:3px;}
+.hm-moneyline .ic{flex:0 0 52px;width:52px;height:52px;border-radius:14px;overflow:hidden;background:var(--bg-deep);}
+.hm-moneyline .ic img{display:block;width:100%;height:100%;object-fit:cover;}
+.hm-moneyline .tx{display:flex;flex-direction:column;gap:2px;flex:1 1 0;min-width:0;}
+.hm-moneyline .ey{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;color:#4E7D4A;}
+.hm-moneyline b{font-size:16.5px;line-height:1.3;color:var(--ink);}
+.hm-moneyline small{font-size:14.5px;line-height:1.35;color:var(--ink-soft);}
+.hm-moneyline .go{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14.5px;color:#4E7D4A;}
+.hm-moneyline .go svg.i{width:16px;height:16px;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hm-moneyline .ey,:root:not([data-theme="light"]) .hm-moneyline .go{color:#A9CBA0;}}
+:root[data-theme="dark"] .hm-moneyline .ey,:root[data-theme="dark"] .hm-moneyline .go{color:#A9CBA0;}
+@media (max-width:519px){ .hm-moneyline{flex-wrap:wrap;} .hm-moneyline .go{flex-basis:100%;padding-left:66px;} }
