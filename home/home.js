@@ -4326,7 +4326,8 @@
         onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
         toast: toast
       });
-      if (MIN && MN.ctl) { var code = MIN; moneyDone(); MN.ctl.receive(code); }
+      // The link waits until the person answers (Bring It In or Later), so a redraw while Home starts up asks the same once.
+      if (MIN && MN.ctl) MN.ctl.receive(MIN);
     });
   }
   /* The Family link: read it, keep it in this tab until a grown-up profile is open, then open Grounded Money with it. */
@@ -4341,7 +4342,8 @@
     else { try { MIN = sessionStorage.getItem('gg-money-in') || null; } catch (e) { MIN = null; } }
   }
   function moneyDone() { MIN = null; MIN_GO = false; try { sessionStorage.removeItem('gg-money-in'); } catch (e) {} }
-  function moneyLink() { if (!MIN) { render(); return; } if (MN.ctl && route().sub === 'money' && moneyFor()) { var code = MIN; moneyDone(); MN.ctl.receive(code); return; } render(); }
+  function moneyLink() { if (!MIN) { render(); return; } if (MN.ctl && route().sub === 'money' && moneyFor()) { MN.ctl.receive(MIN); return; } render(); }
+  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('#hm-money [data-gm="inc:yes"],#hm-money [data-gm="inc:no"]'); if (t && MIN) moneyDone(); }, true);
   function moneySoon() {
     if (!MIN || MIN_GO || !moneyFor() || (SU.open && SU.id === S.id) || suPending()) return;
     if (route().sub === 'money') return;   // Grounded Money is drawing, and brings the link in
