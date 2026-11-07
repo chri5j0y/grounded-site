@@ -30,6 +30,7 @@
      GGSync.space(kind, adapter, opts)   a household shared doc: kind 'kitchen' or 'money'
      GGSync.drop(name)                   stop syncing a doc here (its pieces stay on the server)
      GGSync.changed(name)                a doc changed: sync in a few seconds
+     GGSync.poke()                       sync in a few seconds, marking nothing (stage 2)
      GGSync.sync()                       sync now: Promise of {pushed, pulled, merged, applied, bad, old}
      GGSync.status(), GGSync.on(fn)      fn(type, detail): 'status', 'applied', 'bad', 'old', 'spaces'
      GGSync.remoteDocs(), fetchDoc(name) docs the account holds that this device has not opened yet
@@ -573,6 +574,8 @@
     v: V, doc: function (name, adapter, o) { return register(name, adapter, o, null) && name; },
     space: function (kind, adapter, o) { if (['kitchen', 'money'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
     drop: function (name) { delete docs[name]; }, changed: changed, sync: sync, status: status,
+    // stage 2: a save that touches only a shared space (no doc of its own here) asks for a sync in a few seconds
+    poke: function () { clearTimeout(timer); timer = setTimeout(sync, CFG.debounce); },
     on: function (fn) { subs.push(fn); return function () { subs = subs.filter(function (f) { return f !== fn; }); }; },
     config: function (o) { Object.keys(o || {}).forEach(function (k) { CFG[k] = o[k]; }); return CFG; },
     remoteDocs: remoteDocs, fetchDoc: fetchDoc, removeDoc: removeDoc, carried: carried, forget: forget,

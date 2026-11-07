@@ -1508,3 +1508,12 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hm-moneyline .ey,:root:not([data-theme="light"]) .hm-moneyline .go{color:#A9CBA0;}}
 :root[data-theme="dark"] .hm-moneyline .ey,:root[data-theme="dark"] .hm-moneyline .go{color:#A9CBA0;}
 @media (max-width:519px){ .hm-moneyline{flex-wrap:wrap;} .hm-moneyline .go{flex-basis:100%;padding-left:66px;} }
+
+/* BLD 938: My Account (shown only once Accounts are live) */
+.hm-acdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:8px;vertical-align:middle;background:#5E9A57;}
+.hm-acdot.wait{background:#C9922E;}
+.hm-acin{display:inline-flex;align-items:center;gap:4px;flex:none;font-weight:700;font-size:13.5px;color:var(--ink-soft);white-space:nowrap;}
+.hm-acin svg{font-size:16px;color:#5E9A57;}
+.hm-acrow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;font:inherit;color:inherit;cursor:pointer;}
+.hm-acmail{overflow-wrap:anywhere;}
+.hm-acct .hm-row .tx{min-width:0;flex:1;}

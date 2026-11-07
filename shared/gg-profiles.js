@@ -1,7 +1,9 @@
 /* =====================================================================
    GROUNDED PROFILES
    One private profile per person, shared by every page on
-   growwithgrounded.com. Everything stays in this browser.
+   growwithgrounded.com. Everything stays locked in this browser, and,
+   once Accounts are live (BLD 938, below), a profile brought to a
+   Grounded Account also syncs, still locked, to the person's devices.
 
    How it is locked
    - Each profile's saved data (its "vault") is encrypted with its own
@@ -100,7 +102,11 @@
 (function () {
   if (window.GGP) return;
 
-  var TERMS_V = '2026-10-28', PRIVACY_V = '2026-10-28';
+  var TERMS_V = '2026-10-28', PRIVACY_V = '2026-10-28';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
+  /* BLD 938 Accounts and Sync: the one site setting. Accounts stay hidden, and their files never load, until this is true.
+     Turn it on only after the server is live (grounded-workshop patches/bld938/GO-LIVE.md). Tests turn it on for a page with
+     window.GG_ACCOUNTS_LIVE = true before this file runs. */
+  var ACCOUNTS_LIVE = false;
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
@@ -133,8 +139,8 @@
   function readList() { try { var j = JSON.parse(localStorage.getItem(LIST)); return (j && j.list) || []; } catch (e) { return []; } }
   function writeList(l) { localStorage.setItem(LIST, JSON.stringify({ v: 1, list: l })); }
   function getP(id) { return readList().filter(function (p) { return p.id === id; })[0] || null; }
-  function putP(p) { var l = readList(), i = -1; l.forEach(function (x, j) { if (x.id === p.id) i = j; }); if (i >= 0) l[i] = p; else l.push(p); writeList(l); }
-  function dropP(id) { writeList(readList().filter(function (p) { return p.id !== id; })); localStorage.removeItem(BOX + id); }
+  function putP(p) { var l = readList(), i = -1; l.forEach(function (x, j) { if (x.id === p.id) i = j; }); if (i >= 0) l[i] = p; else l.push(p); writeList(l); acctList(p.id); }
+  function dropP(id) { var was = acctCarried(id); writeList(readList().filter(function (p) { return p.id !== id; })); localStorage.removeItem(BOX + id); acctDropped(id, was); }
 
   /* ---------- crypto ---------- */
   var subtle = window.crypto && crypto.subtle;
@@ -171,7 +177,7 @@
     return v;
   }
   function writeVault(id, raw, data) {
-    return rawKey(raw).then(function (k) { return seal(k, enc.encode(JSON.stringify(data))); }).then(function (box) { localStorage.setItem(BOX + id, JSON.stringify(box)); });
+    return rawKey(raw).then(function (k) { return seal(k, enc.encode(JSON.stringify(data))); }).then(function (box) { localStorage.setItem(BOX + id, JSON.stringify(box)); acctSaved(id); });
   }
   function blankVault() { return { v: 1, keys: {}, email: '', stories: { saved: {}, read: {} } }; }
 
@@ -217,6 +223,7 @@
   function emit(type) { subs.slice().forEach(function (fn) { try { fn(type); } catch (e) { console.error(e); } }); paintAll(); }
 
   function openWithRaw(id, raw, until, silent) {
+    var fresh = !localStorage.getItem(BOX + id);   // BLD 938: a profile brought down by an account, opening here for the first time
     return readVault(id, raw).then(function (data) {
       open = {}; open[id] = { raw: raw, data: data };
       cur = { id: id, until: until };
@@ -232,6 +239,8 @@
       });
       return Promise.all(jobs).then(function () {
         if (dropped) return writeVault(id, raw, data);
+      }).then(function () {
+        return acctOpened(id, fresh);
       }).then(function () {
         return sessPut({ id: id, raw: raw, until: until });
       }).then(function () {
@@ -1476,9 +1485,202 @@
   /* =====================================================================
      PUBLIC
      ===================================================================== */
+
+  /* =====================================================================
+     BLD 938: ACCOUNTS AND SYNC (shared/gg-account.js and shared/gg-sync.js, grounded-workshop patches/bld938/STAGE2.md)
+     Accounts are optional (Chris, November 7, 2026, answer 3): this device stays the default home of every profile, and
+     nothing here runs until ACCOUNTS_LIVE (top of this file) is true. Then this file loads gg-account.js and gg-sync.js
+     on every page that has profiles, and keeps these docs in step with the account:
+       acct:profiles   the profile list: each carried profile's open header (name, picture, age, tree, passcode lock,
+                       Root Words lock, grown, helpers, shared, agreed). It holds no profile key.
+       p:<id>          a carried profile's vault, only while it is open here (closed, its adapter answers null, so a
+                       shared family computer keeps each profile private: the safer default built into gg-sync.js)
+       pine:<id>       a teen's Pine vault, carried whole as its sealed box, so only the teen's passcode opens it
+     A profile rides in the account once it is brought there (Bring to My Account, made only for a profile open here,
+     so its passcode was typed), and a child or teen rides with a grown-up who was brought. A profile coming down to a new
+     device opens with its own passcode, and its vault comes down on that first open. Removing a carried profile removes
+     it from the account; Erase This Device Too removes every carried profile from this browser.
+     The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
+     ===================================================================== */
+  var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
+  var ACCT_SRC = ['/shared/gg-account.js?v=b938', '/shared/gg-sync.js?v=b938'], CARRY = 'gg-acct-carry';
+  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created'];
+  var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
+  function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
+  function carryLoad() {
+    var i = window.GGAccount && GGAccount.info(), j = null;
+    AC.acct = i ? i.accountId : '';
+    try { j = JSON.parse(localStorage.getItem(CARRY)); } catch (e) {}
+    AC.ids = j && i && j.a === i.accountId && Array.isArray(j.ids) ? j.ids.filter(function (x) { return typeof x === 'string'; }) : [];
+  }
+  function carrySave() { if (!AC.acct) return; try { localStorage.setItem(CARRY, JSON.stringify({ a: AC.acct, ids: AC.ids })); } catch (e) {} }
+  // Carried: brought to the account, or a child or teen whose grown-up was.
+  function acctCarried(id) {
+    if (!AC.acct) return false;
+    if (AC.ids.indexOf(id) >= 0) return true;
+    var p = getP(id);
+    return !!(p && isMinor(p.age) && (p.grown || []).some(function (g) { return AC.ids.indexOf(g) >= 0; }));
+  }
+  function head(p) { var h = {}; HEAD.forEach(function (k) { if (p[k] !== undefined) h[k] = p[k]; }); return h; }
+  function same(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  // Replace the parts of a vault in place, so tools holding the vault keep the one that is saved.
+  function fillIn(t, d) { Object.keys(t).forEach(function (k) { if (!(k in d)) delete t[k]; }); Object.keys(d).forEach(function (k) { if (!same(t[k], d[k])) t[k] = d[k]; }); }
+
+  function listGet() {
+    if (!acIn()) return null;
+    var o = {}; readList().forEach(function (p) { if (acctCarried(p.id)) o[p.id] = head(p); });
+    return o;
+  }
+  function listPut(now) {
+    if (!now || typeof now !== 'object' || !acIn()) return;
+    var before = readList().filter(function (p) { return acctCarried(p.id); }).map(function (p) { return p.id; }), moved = false;
+    AC.q++;
+    try {
+      Object.keys(now).forEach(function (id) {
+        var h = now[id]; if (!h || typeof h !== 'object' || h.id !== id || typeof h.name !== 'string' || !AGE[h.age]) return;
+        var cur0 = getP(id), next = Object.assign({}, cur0 || {});
+        HEAD.forEach(function (k) { if (k in h) next[k] = h[k]; else delete next[k]; });
+        if (!cur0 || !same(cur0, next)) { putP(next); moved = true; }
+        if (AC.ids.indexOf(id) < 0 && !(isMinor(next.age) && (next.grown || []).some(function (g) { return AC.ids.indexOf(g) >= 0 || now[g]; }))) AC.ids.push(id);
+      });
+      // removed on another device: it leaves this device too
+      before.forEach(function (id) { if (!now[id] && getP(id)) { AC.ids = AC.ids.filter(function (x) { return x !== id; }); removeProfile(id); moved = true; } });
+    } finally { AC.q--; }
+    carrySave(); acctReg();
+    if (moved) emit('change');
+  }
+  function regVault(id) {
+    var p = getP(id); if (!p || !window.GGSync) return;
+    var name = (p.age === 'pine' ? 'pine:' : 'p:') + id;
+    if (AC.reg[name]) return;
+    AC.reg[name] = 1;
+    if (p.age === 'pine') {
+      GGSync.doc(name, {
+        get: function () { if (!acIn() || !acctCarried(id) || !getP(id)) return null; var b = null; try { b = JSON.parse(localStorage.getItem(BOX + id)); } catch (e) {} return b && b.iv && b.ct ? b : {}; },
+        put: function (box) {
+          if (!box || typeof box.iv !== 'string' || typeof box.ct !== 'string') return;
+          try { localStorage.setItem(BOX + id, JSON.stringify({ iv: box.iv, ct: box.ct })); } catch (e) { return; }
+          if (open[id]) return readVault(id, open[id].raw).then(function (d) { fillIn(open[id].data, d); emit('data'); }).catch(function () {});
+        }
+      }, { opaque: true });
+      return;
+    }
+    GGSync.doc(name, {
+      get: function () { return acIn() && open[id] && acctCarried(id) ? open[id].data : null; },
+      put: function (data) {
+        if (!open[id] || !data || typeof data !== 'object') return;
+        fillIn(open[id].data, data);
+        AC.quiet[id] = (AC.quiet[id] || 0) + 1;
+        var done = function () { AC.quiet[id]--; kidsIn(id); emit('data'); };
+        return writeVault(id, open[id].raw, open[id].data).then(done, done);
+      }
+    });
+  }
+  // A grown-up's vault that came down holds each child's key: open those children here too.
+  function kidsIn(id) {
+    var d = open[id] && open[id].data; if (!d || !d.keys || !cur || cur.id !== id) return;
+    var jobs = [];
+    Object.keys(d.keys).forEach(function (kid) {
+      var kp = getP(kid); if (open[kid] || !kp || !grownOpens(kp.age)) return;
+      var kr = unb64(d.keys[kid]);
+      jobs.push(readVault(kid, kr).then(function (kd) { open[kid] = { raw: kr, data: kd }; }).catch(function () {}));
+    });
+    if (jobs.length) Promise.all(jobs).then(function () { acctReg(); emit('change'); GGSync.sync().catch(function () {}); });
+  }
+  function acctReg() {
+    if (!acIn() || !window.GGSync) return;
+    if (!AC.reg['acct:profiles']) { AC.reg['acct:profiles'] = 1; GGSync.doc('acct:profiles', { get: listGet, put: listPut }); }
+    readList().forEach(function (p) { if (acctCarried(p.id) && (p.age === 'pine' || open[p.id])) regVault(p.id); });
+    touchedFlush();
+  }
+  // The save hooks (putP, dropP, writeVault)
+  function acctList(id) { if (!AC.q && acIn() && acctCarried(id)) GGSync.changed('acct:profiles'); }
+  function acctDropped(id, was) {
+    if (AC.q || !acIn() || !was) return;
+    AC.ids = AC.ids.filter(function (x) { return x !== id; }); carrySave();
+    ['p:', 'pine:'].forEach(function (k) { delete AC.reg[k + id]; GGSync.removeDoc(k + id).catch(function () {}); });
+    GGSync.changed('acct:profiles');
+  }
+  // Saved while signed out: noted (ids only), so the next sign in merges this copy instead of taking the server's.
+  var TOUCH = 'gg-acct-touched';
+  function touched() { try { var t = JSON.parse(localStorage.getItem(TOUCH)); return Array.isArray(t) ? t : []; } catch (e) { return []; } }
+  function touchedFlush() {
+    var t = touched(), keep = t.filter(function (id) { if (AC.reg['p:' + id] && open[id]) { GGSync.changed('p:' + id); return false; } return !!getP(id); });
+    if (keep.length !== t.length) { try { if (keep.length) localStorage.setItem(TOUCH, JSON.stringify(keep)); else localStorage.removeItem(TOUCH); } catch (e) {} }
+  }
+  function acctSaved(id) {
+    if (AC.on && !acIn()) {
+      var j = null; try { j = JSON.parse(localStorage.getItem(CARRY)); } catch (e) {}
+      var t = touched();
+      if (j && Array.isArray(j.ids) && j.ids.indexOf(id) >= 0 && t.indexOf(id) < 0) { t.push(id); try { localStorage.setItem(TOUCH, JSON.stringify(t)); } catch (e) {} }
+      return;
+    }
+    if (AC.quiet[id] || !acIn()) return;
+    var n = AC.reg['p:' + id] ? 'p:' + id : AC.reg['pine:' + id] ? 'pine:' + id : '';
+    if (n) GGSync.changed(n); else if (GGSync.spaces().length && GGSync.poke) GGSync.poke();
+  }
+  // A profile opened: its doc joins in; a profile opening on this device for the first time waits for its vault.
+  function acctOpened(id, fresh) {
+    if (!acIn()) return Promise.resolve();
+    acctReg();
+    var s = GGSync.sync().catch(function () {});
+    if (!fresh || !acctCarried(id)) return Promise.resolve();
+    return Promise.race([s, new Promise(function (ok) { setTimeout(ok, 15000); })]);
+  }
+  function acctEvent(t, d) {
+    if (t === 'state') {
+      var was = AC.acct; carryLoad();
+      if (acIn()) {
+        // signing in or making an account with a grown-up open here brings that grown-up (and their children) along
+        var p = cur && getP(cur.id);
+        if (!was && AC.booted && p && p.age === 'adult' && open[p.id] && AC.ids.indexOf(p.id) < 0) { AC.ids.push(p.id); carrySave(); }
+        acctReg();
+        if (!was) GGSync.sync().catch(function () {});
+      }
+    } else if (t === 'erase') {
+      // Erase This Device Too: every carried profile leaves this browser
+      var ids = readList().filter(function (p) { return acctCarried(p.id); }).map(function (p) { return p.id; });
+      ((d && d.docs) || []).forEach(function (n) { var m = /^(?:p|pine):(.+)$/.exec(n); if (m && ids.indexOf(m[1]) < 0 && getP(m[1])) ids.push(m[1]); });
+      AC.q++;
+      try { ids.forEach(function (id) { if (getP(id)) removeProfile(id); }); } finally { AC.q--; }
+      AC.ids = []; try { localStorage.removeItem(CARRY); } catch (e) {}
+    }
+  }
+  function acctBring(id) {
+    var p = getP(id);
+    if (!acIn()) return Promise.reject(new Error('Sign in to your Grounded Account first.'));
+    if (!p || p.age !== 'adult' || !open[id]) return Promise.reject(new Error('Open this profile with its passcode, then bring it to your account.'));
+    if (AC.ids.indexOf(id) < 0) AC.ids.push(id);
+    carrySave(); acctReg(); GGSync.changed('acct:profiles'); GGSync.changed('p:' + id);
+    return GGSync.sync();
+  }
+  function acctBoot() {
+    if (!LIVE || !subtle) return Promise.resolve(false);
+    var add = function (src, has) {
+      return new Promise(function (ok) {
+        if (has()) return ok(true);
+        var s = document.createElement('script'); s.src = HOME + src;
+        s.onload = function () { ok(true); }; s.onerror = function () { ok(false); };
+        (document.head || document.documentElement).appendChild(s);
+      });
+    };
+    return add(ACCT_SRC[0], function () { return !!window.GGAccount; }).then(function () { return add(ACCT_SRC[1], function () { return !!window.GGSync; }); }).then(function () {
+      if (!window.GGAccount || !window.GGSync) return false;
+      AC.on = true;
+      GGAccount.on(acctEvent);
+      return GGAccount.ready.then(function () { carryLoad(); AC.booted = true; acctReg(); if (acIn()) GGSync.sync().catch(function () {}); return true; });
+    }).catch(function () { return false; });
+  }
+  AC.ready = acctBoot();
+
   var readyP = null;
   window.GGP = {
     TERMS_V: TERMS_V, PRIVACY_V: PRIVACY_V, AGES: AGES, ageName: ageName,
+    // BLD 938: Accounts (hidden until ACCOUNTS_LIVE). ready: Promise of true once the account files run here.
+    account: {
+      live: LIVE, ready: AC.ready, carried: function (id) { return acctCarried(id); }, bring: acctBring,
+      profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); }
+    },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
     get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} } : null; },
     tree: function (id) { return treeOf(getP(id)); },
