@@ -3007,7 +3007,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b935'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b938'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
@@ -5420,6 +5420,8 @@ window.GGHealth = {
   // qr(text) the QR code as SVG (after qrReady()), and starts() / setStart(kind, date) for the meal plan and the 12-week program.
   kitchenLink: () => { try { return kitShare(); } catch(e){ return null; } }, kitchenInfo: c => { try { return kitInfo(c); } catch(e){ return null; } },
   kitchenJoin: c => { try { return kitJoin(c); } catch(e){ return false; } }, kitchenLeave: () => kitLeave(),
+  // BLD 938: the kitchen as it travels, with nothing marked shared (a household shared space reads it, home/home.js).
+  kitchenCode: () => { try { const o = kitPack(); return o ? b64e(JSON.stringify(o)) : null; } catch(e){ return null; } },
   kitchen: () => { const h = H(), k = h && h.kitchen; return k ? {joined: !!k.joined, id: k.id || '', start: ymd(kitStart()), table: kitTable(), shared: !!k.shared} : null; },
   kitchenTonight: d => { try { return kitTonight(d); } catch(e){ return null; } },
   kitchenOpen: () => { S.kshareGo = 1; },

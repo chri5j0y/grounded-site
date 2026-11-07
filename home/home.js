@@ -53,7 +53,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b935', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b938', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b936';
   var MONEY_SRC = '/shared/gg-money.js?v=b937';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
@@ -623,7 +623,7 @@
         '<p class="hm-promise-line">' + I('sprout') + '<span>' + esc(promise()) + '</span></p>' +
         '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Choose My Passcode</button><div class="hm-sub" style="text-align:center">Next: your passcode and 12 Root Words, then your four, one at a time.</div></div></div>' +
     '</div>';
-    return '<div class="hm-wrap">' + hero + soberNote + promiseHtml() +
+    return '<div class="hm-wrap">' + hero + acctWelcome() + soberNote + promiseHtml() +
       '<div class="hm-plink"><a class="hm-link hm-p-leaves" href="#hm-privacy">' + I('shield') + 'How your privacy works</a><span class="hm-time">' + (back ? 'New here? Three short steps' : 'Three short steps · about a minute') + '</span></div>' +
       steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div>' + helpLine() + '</div>';
   }
@@ -1267,7 +1267,7 @@
     if (location.hash !== hash) location.hash = hash; else render();
     window.scrollTo(0, 0);
   }
-  window.addEventListener('hashchange', function () { if (/^#kitchen=/.test(location.hash)) { readKitchen(); KIN_ASK = false; render(); return; } if (/^#money=/.test(location.hash)) { readMoney(); moneyLink(); return; } if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { if (acctHashRead()) { acctHashGo(); return; } if (/^#kitchen=/.test(location.hash)) { readKitchen(); KIN_ASK = false; render(); return; } if (/^#money=/.test(location.hash)) { readMoney(); moneyLink(); return; } if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
 
   /* ---------- the shell: header, the tab's own page, the tab bar ---------- */
   function headingOf(tab) {
@@ -2475,6 +2475,8 @@
     ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Check-in, Grow, Learn, and Library'],
     ['switch', 'swap', 'Who Is Tending?', 'Open another person on this device, or add one']
   ];
+  // BLD 938: My Account joins the rows after Settings, for a grown-up, once Accounts are live
+  function meRows() { var r = SHEET_ROWS.slice(), a = acctRows(); if (a.length) r.splice(3, 0, a[0]); return r; }
   function openSheet(sub) {
     var old = document.getElementById('hm-sheet'), keep = old && S.sheet === (sub || '') ? old : null;
     if (keep) return;
@@ -2486,7 +2488,7 @@
     var band = '<picture class="hm-sh-band" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + 'profile-band-narrow.webp"><img src="' + IMG + 'profile-band-wide.webp" alt="" loading="lazy"></picture>';
     var mcard = ''; if (!sub && !isKid(S.p) && window.GGMember && typeof window.GGMember.card === 'function') { try { mcard = '<div class="hm-sh-member">' + (window.GGMember.card() || '') + '</div>'; } catch (e) { mcard = ''; } }
     var body = sub ? '<div class="hm-sheet-body" id="hm-sheet-body"></div>' : mcard +
-      '<ul class="hm-sh-rows">' + SHEET_ROWS.map(function (r) { return '<li><button type="button" data-hm-me="' + r[0] + '"><span class="ic">' + I(r[1]) + '</span><span class="tx"><b>' + r[2] + '</b><small>' + r[3] + '</small></span>' + I('arrow') + '</button></li>'; }).join('') + '</ul>' +
+      '<ul class="hm-sh-rows">' + meRows().map(function (r) { return '<li><button type="button" data-hm-me="' + r[0] + '"><span class="ic">' + I(r[1]) + '</span><span class="tx"><b>' + r[2] + (r[0] === 'account' ? acctDot() : '') + '</b><small>' + esc(r[3]) + '</small></span>' + I('arrow') + '</button></li>'; }).join('') + '</ul>' +
       '<button type="button" class="hm-done" data-hm="closeme">Done</button>';
     wrap.innerHTML = '<div class="hm-sheet-bg" data-hm="closeme"></div><section class="hm-sheet' + (sub ? ' tall' : '') + '" role="dialog" aria-modal="true" aria-labelledby="hm-sheet-t" tabindex="-1">' + (sub ? '' : band) + head + body + '</section>';
     (document.querySelector('main.hm') || document.body).appendChild(wrap);
@@ -2498,6 +2500,7 @@
     var b = document.getElementById('hm-sheet-body'); if (!b) return;
     var h = homeRec();
     if (sub === 'privacy') { b.innerHTML = privacyBrief(true); return; }
+    if (sub === 'account') { acctFill(b); return; }
     if (sub === 'household') {
       var hh = tableOf(), fam = familyHtml(h);
       b.innerHTML = '<article class="hm-wcard hm-tn-p">' + tile(ART2.people) + '<div class="tx"><span class="ey">Your Table</span><b>' + (hh ? hh + (hh === 1 ? ' person at your table' : ' people at your table') : 'The people at your table') + '</b><small>Recipes and the shopping list follow this number. Change it in Tending setup.</small></div><button type="button" class="hm-pill" data-hm-me="settings">Change</button></article>' +
@@ -2510,7 +2513,7 @@
       // BLD 929 (M12): short folded sections with plain titles: My Day (Your Four), then Tending (its settings, holidays
       // folded inside). Both start open, so the Family Kitchen card is always in sight (BLD 921b); each folds with one tap.
       // Health and Ability lives in Tree Settings.
-      b.innerHTML = '<details class="hm-fold" open><summary><span>My Day</span><small>Your Four and what shows on Today</small></summary>' +
+      b.innerHTML = acctSettingsCard() + '<details class="hm-fold" open><summary><span>My Day</span><small>Your Four and what shows on Today</small></summary>' +
         '<article class="hm-card hm-p-roots hm-sufour"><div class="hm-hd">' + pb(treeArt(S.tree)) + '<div style="min-width:0"><div class="hm-k">Choose What You Use</div><h3 class="hm-h3">Your Four</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">' + esc(promise()) + ' Each part keeps at least one practice, by the Grounded Plan or your own.</p>' + suSummaryHtml() +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-setup="roots">' + I('sprout') + 'Change My Setup</button></div>' +
         '<h4 class="hm-label">Also</h4>' + extrasHtml(on, 'data-hm-setpart') +
@@ -2538,7 +2541,7 @@
   }
   // BLD 935 (audit L1): Escape closes a Home window (#hm-mdlg) first, then the sheet; a player or frame on top keeps it.
   document.addEventListener('keydown', function (e) {
-    if (e.key !== 'Escape' || document.querySelector('.hm-frame') || document.getElementById('hj-ov0') || document.querySelector('.ggp-dlg')) return;
+    if (e.key !== 'Escape' || document.querySelector('.hm-frame') || document.getElementById('hj-ov0') || document.querySelector('.ggp-dlg') || document.querySelector('.ga-wrap')) return;
     if (document.getElementById('hm-mdlg')) { if (document.fullscreenElement) return; mClose(); return; }
     if (document.getElementById('hm-sheet')) leaveSheet();
   });
@@ -3682,6 +3685,179 @@
     return ch;
   }
 
+
+  /* ---------- BLD 938: Accounts and Sync (shared/gg-account.js, gg-sync.js, gg-account-ui.js) ----------
+     Hidden until the one site setting (ACCOUNTS_LIVE in shared/gg-profiles.js) is on: GGP.account.live. Then a grown-up
+     sees My Account in the Me sheet (with a quiet sync dot) and in Settings: Create My Account and Sign In as a gentle
+     invitation (this device stays the default home), and once signed in, the account's devices, password, Root Words,
+     Household (up to 6), and Delete My Account, through GGAccountUI. The welcome screen offers Sign In for a new device.
+     #confirm=, #recover=, #keep=, and #join= links open their sheets here.
+     Two shared spaces join a Household, as equals, in place of passing links (links still work without an account):
+       kitchen  the Family Kitchen as it travels (GGHealth.kitchenCode, the same code a link carries), applied the way a link
+                joins (GGHealth.kitchenJoin), so a swap or a new start date on either phone reaches the other
+       money    Grounded Money's plan and logs ({pid, lines, income, ideas, logs}); debts, goals, and tool answers stay
+                each person's own. A phone joining keeps its own plan aside (Return to My Own Plan), and a phone that
+                returns to its own plan stops sharing it.
+     Both answer null while no grown-up profile is open here, so nothing shared moves for a closed profile. */
+  var AH = { on: false, hash: null, ui: null, dot: '' };
+  var ACCT_UI = '/shared/gg-account-ui.js?v=b938';
+  function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
+  function acctOn() { return AH.on && !!window.GGAccount; }
+  function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
+  function acctFor() { return acctOn() && !!(S.p && S.p.age === 'adult'); }
+  // An account link (#confirm=, #recover=, #keep=, #join=): read before anything else moves the address, on load and
+  // when the link opens in a tab already showing Home. The token leaves the address bar at once.
+  function acctHashRead() {
+    if (!acctLive()) return false;
+    var m = /^#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})$/.exec(location.hash || '');
+    if (!m) return false;
+    AH.hash = { kind: m[1], token: m[2] };
+    try { history.replaceState(null, '', location.pathname + location.search + (S.id ? '#today' : '')); } catch (e) {}
+    return true;
+  }
+  function acctHashGo() {
+    if (!AH.hash || !AH.on) return;
+    var h = AH.hash; AH.hash = null;
+    acctUI().then(function (U) { if (U) return U.open(h.kind, { token: h.token }).then(acctPaint); }).catch(function () {});
+  }
+  acctHashRead();
+  function acctUI() { return AH.ui || (AH.ui = load(ACCT_UI).then(function (ok) { return ok && window.GGAccountUI ? window.GGAccountUI : null; })); }
+  function acctOpen(view) { return acctUI().then(function (U) { if (!U) { toast('My Account is getting ready. Try again in a moment.'); return; } return U.open(view).then(function () { acctPaint(); }); }); }
+  function acctStatus() {
+    if (!acctIn()) return { dot: '', line: '' };
+    var st = window.GGSync ? GGSync.status() : null, net = GGAccount.state();
+    if (net === 'offline' || (st && st.state === 'waiting')) return { dot: 'wait', line: 'Changes wait on this device and send when the connection returns.' };
+    if (st && st.state === 'syncing') return { dot: 'on', line: 'Syncing now.' };
+    if (st && st.last) return { dot: 'on', line: 'Synced at ' + new Date(st.last).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + '.' };
+    return { dot: 'on', line: 'Ready to sync.' };
+  }
+  function acctDot() { var d = acctStatus().dot; return d ? '<span class="hm-acdot ' + d + '" aria-hidden="true"></span>' : ''; }
+  // Repaint what shows the account: the Me sheet row, and My Account itself
+  function acctPaint() {
+    if (!acctOn()) return;
+    var row = document.querySelector('#hm-sheet [data-hm-me="account"]');
+    if (row) { var b = row.querySelector('.tx b'), sm = row.querySelector('.tx small'); if (b) b.innerHTML = esc(acctIn() ? 'My Account' : 'Sign In') + acctDot(); if (sm) sm.textContent = acctRowLine(); }
+    if (S.sheet === 'account') fillSheet('account');
+    var sc = document.getElementById('hm-acset'); if (sc) sc.outerHTML = acctSettingsCard() || '<span id="hm-acset" hidden></span>';
+  }
+  function acctRowLine() { return acctIn() ? (acctStatus().line || 'Your tree on every device') : 'Optional: your tree on every device you sign in on'; }
+  function acctRows() { return acctFor() ? [['account', 'shield', acctIn() ? 'My Account' : 'Sign In', acctRowLine()]] : []; }
+  function acctSettingsCard() {
+    if (!acctFor()) return '';
+    return '<article class="hm-card hm-p-branches" id="hm-acset"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">My Account</div><h3 class="hm-h3">' + (acctIn() ? esc(GGAccount.info().email) : 'Your Tree on Every Device') + acctDot() + '</h3></div></div>' +
+      '<p class="hm-sub" style="margin:6px 0 12px">' + esc(acctIn() ? acctRowLine() : 'A Grounded Account is optional. It brings your tree to every device you sign in on, locked on this device first, so only you can open it.') + '</p>' +
+      '<div class="hm-acts tight">' + (acctIn() ? '<button type="button" class="hm-btn sm hm-p-branches" data-hm-me="account">' + I('shield') + 'Open My Account</button>' :
+        '<button type="button" class="hm-btn sm hm-p-branches" data-hm-acct="signup">' + I('sprout') + 'Create My Account</button><button type="button" class="hm-btn sm line hm-p-branches" data-hm-acct="signin">' + I('open') + 'Sign In</button>') + '</div></article>';
+  }
+  function acctFill(b) {
+    if (!acctFor()) { b.innerHTML = '<p class="hm-sub">My Account is for grown-ups. A child or teen rides inside their grown-up\'s account.</p>'; return; }
+    if (!acctIn()) {
+      b.innerHTML = '<article class="hm-card hm-p-branches hm-acct"><div class="hm-hd">' + pb(IMG + 'grounded-way-square.webp') + '<div style="min-width:0"><div class="hm-k">Optional</div><h3 class="hm-h3">Your Tree on Every Device</h3></div></div>' +
+        '<p class="hm-sub" style="margin:8px 0">A Grounded Account brings your profiles, Tending, check-ins, Family Kitchen, and Grounded Money to every phone, tablet, and computer you sign in on. Everything is locked on this device before it leaves, so only you can open it.</p>' +
+        '<p class="hm-sub" style="margin:0 0 12px">Grounded keeps working right here on this device either way, just as it does today.</p>' +
+        '<div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm-acct="signup">' + I('sprout') + 'Create My Account</button><button type="button" class="hm-btn line hm-p-branches" data-hm-acct="signin">' + I('open') + 'Sign In</button></div></article>';
+      return;
+    }
+    var info = GGAccount.info(), st = acctStatus(), list = GGP.account.profiles();
+    var mine = list.filter(function (p) { var q = GGP.get(p.id); return p.id === S.id || (q && (q.grown || []).indexOf(S.id) >= 0); });
+    var others = list.filter(function (p) { return mine.indexOf(p) < 0 && p.carried; });
+    var prow = function (p) {
+      var kid = p.age !== 'adult', right = p.carried ? '<small class="hm-acin">' + I('check') + 'In My Account</small>' :
+        !kid && p.open ? '<button type="button" class="hm-pill hm-p-branches" data-hm-acct="bring:' + esc(p.id) + '">Bring to My Account</button>' : '';
+      return '<div class="hm-row hm-p-branches"><span class="ic2">' + I(kid ? 'sprout' : 'user') + '</span><div class="tx"><b>' + esc(p.name) + '</b><small>' + esc(p.age === 'pine' ? 'Pine rides with you, sealed with the teen\'s own passcode.' : kid ? 'Rides with you, locked with their own key.' : p.carried ? 'Comes along on every device you sign in on.' : 'Lives on this device.') + '</small></div>' + right + '</div>';
+    };
+    b.innerHTML = '<article class="hm-card hm-p-branches hm-acct"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">My Account</div><h3 class="hm-h3 hm-acmail">' + esc(info.email) + acctDot() + '</h3></div></div>' +
+        (info.confirmed ? '' : '<p class="hm-sub" style="margin:6px 0 0">Tap the link in your email to confirm it, and your tree can grow on every device.</p>') +
+        '<p class="hm-sub" style="margin:6px 0 12px">' + esc(st.line) + '</p>' +
+        '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-branches" data-hm-acct="sync">' + I('swap') + 'Sync Now</button><button type="button" class="hm-btn sm line hm-p-branches" data-hm-acct="account">' + I('shield') + 'My Devices</button></div></article>' +
+      '<article class="hm-card hm-p-leaves"><div class="hm-k">Profiles in My Account</div><div class="hm-set" style="margin-top:6px">' + mine.concat(others).map(prow).join('') + '</div>' +
+        '<p class="hm-sub" style="margin-top:10px">Each profile still opens only with its own passcode. On a shared family computer, a signed in account brings a profile\'s data down only after that profile opens there.</p></article>' +
+      '<article class="hm-card hm-p-roots"><div class="hm-k">Household</div><p class="hm-sub" style="margin:6px 0 12px">Up to 6 people, each with their own private account. Share the Family Kitchen and Grounded Money between you; everything else stays each person\'s own.</p>' +
+        '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-roots" data-hm-acct="household">' + I('people') + 'Household</button></div></article>' +
+      '<div class="hm-set">' +
+        '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="password"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Change My Password</b><small>Your Root Words stay the same.</small></span></button>' +
+        '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="account"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Root Words and Devices</b><small>See My Root Words, New Root Words, Sign Out That Device, and Download My Account Data.</small></span></button>' +
+        '<button type="button" class="hm-row hm-p-fruit hm-acrow" data-hm-acct="out"><span class="ic2">' + I('open') + '</span><span class="tx"><b>Sign Out</b><small>This device keeps its own locked copy.</small></span></button>' +
+      '</div>' +
+      '<div class="hm-quiet" style="margin-top:14px"><button type="button" data-hm-acct="delete">Delete My Account</button></div>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-acct]'); if (!t) return;
+    var a = t.getAttribute('data-hm-acct');
+    if (/^bring:/.test(a)) { t.disabled = true; GGP.account.bring(a.slice(6)).then(function () { toast('Your profile is in your account now.'); acctPaint(); }, function (er) { t.disabled = false; toast((er && er.message) || 'Try again in a moment.'); }); return; }
+    if (a === 'sync') { t.disabled = true; GGSync.sync().then(function () { acctPaint(); }, function () { acctPaint(); }); return; }
+    if (a === 'out') { acctOpen('account'); return; }
+    acctOpen(a);
+  });
+  // The shared spaces
+  function spaceOk() { return acctIn() && !!(S.id && S.p && S.p.age === 'adult' && GGP.isOpen && GGP.isOpen(S.id)); }
+  var KIT_SPACE = {
+    get: function () {
+      if (!spaceOk() || !tendReady() || !hasFn('kitchenCode')) return null;
+      var c = hCall('kitchenCode'); if (!c) return null;
+      var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
+      return { c: c };
+    },
+    put: function (o) {
+      if (!o || typeof o.c !== 'string' || !spaceOk() || !tendReady()) return;
+      var cur = hCall('kitchenCode') || '', hh = obj(homeRec().kitHH);
+      if (o.c === cur || (hh.in === o.c && hh.out === cur)) return;
+      var ok = !!hCall('kitchenJoin', o.c), h = homeRec();
+      h.kitHH = { in: o.c, out: hCall('kitchenCode') || '' };
+      return saveHome().then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } });
+    }
+  };
+  var MKEYS = ['pid', 'lines', 'income', 'ideas', 'logs'];
+  var MON_SPACE = {
+    get: function () {
+      if (!spaceOk()) return null;
+      var m = GGP.data(S.id, 'money'), hh = obj(homeRec().monHH), o = {};
+      if (!m) return null;
+      if (hh.pid && m.pid && m.pid !== hh.pid) return null;   // Return to My Own Plan: this plan stays on this device
+      MKEYS.forEach(function (k) { if (m[k] !== undefined) o[k] = m[k]; });
+      return o;
+    },
+    put: function (o) {
+      if (!o || typeof o !== 'object' || !spaceOk()) return;
+      var m = GGP.data(S.id, 'money'), live = function (l) { return Array.isArray(l) && l.some(function (x) { return x && !x.x; }); };
+      if (o.pid && m.pid && o.pid !== m.pid && !m.own && (live(m.lines) || live(m.income))) m.own = { pid: m.pid, lines: m.lines, income: m.income, ideas: m.ideas };
+      MKEYS.forEach(function (k) { if (o[k] !== undefined) m[k] = o[k]; });
+      m.u = Date.now();
+      if (o.pid) homeRec().monHH = { pid: o.pid };
+      return saveHome().then(function () { if (MN.ctl && MN.ctl.refresh) MN.ctl.refresh(); });
+    }
+  };
+  // After a sync, a space this profile just shared or met remembers it, so a later change here travels.
+  function acctSeen() {
+    if (!spaceOk() || !window.GGSync) return;
+    var kinds = GGSync.spaces().map(function (x) { return x.kind; }), h = homeRec(), ch = false;
+    if (kinds.indexOf('money') >= 0 && !obj(h.monHH).pid) { var m = GGP.data(S.id, 'money'); if (m && m.pid) { h.monHH = { pid: m.pid }; ch = true; } }
+    if (kinds.indexOf('kitchen') >= 0 && !obj(h.kitHH).out && tendReady() && hasFn('kitchenCode')) { var c = hCall('kitchenCode'); if (c) { h.kitHH = { in: c, out: c }; ch = true; } }
+    if (kinds.indexOf('kitchen') >= 0 && !tendReady()) loadTending().then(function () { if (S.tendInit !== S.id) initTending(); GGSync.poke(); });
+    if (ch) saveHome();
+  }
+  function acctHome() {
+    if (!acctLive() || !GGP.account.ready) return;
+    GGP.account.ready.then(function (ok) {
+      if (!ok || !window.GGSync) return;
+      AH.on = true;
+      SUBS.me.account = 'My Account';
+      GGSync.space('kitchen', KIT_SPACE); GGSync.space('money', MON_SPACE);
+      GGAccount.on(function (t) { if (t === 'state' || t === 'confirmed' || t === 'household') { acctPaint(); if (t === 'state' && !S.id) render(); } });
+      GGSync.on(function (t, d) {
+        if (t === 'status') { if (d && d.state === 'idle') acctSeen(); var dot = acctStatus().dot; if (dot !== AH.dot || (d && d.state === 'idle')) { AH.dot = dot; acctPaint(); } }
+        else if (t === 'spaces') acctSeen();
+      });
+      acctHashGo();
+      if (S.view === 'welcome') render(); else acctPaint();
+    });
+  }
+  function acctWelcome() {
+    if (!acctOn()) return '';
+    if (acctIn()) return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span><b>Signed in as ' + esc(GGAccount.info().email) + '.</b> ' + (hasProfiles() ? 'Open your profile with its own passcode, and its tree comes in.' : 'Your profiles are coming in now.') + '</span></div>';
+    return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span>Already growing on another device? <button type="button" class="hm-linkbtn" data-hm-acct="signin">Sign In to My Account</button></span></div>';
+  }
+
   /* ---------- start ---------- */
   function boot() {
     mountIcons();
@@ -3694,7 +3870,7 @@
     GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
     // BLD 908: the door and Membership are read once this whole file has run (its later parts set their names).
     setTimeout(memberBoot, 0);
-    GGP.ready.then(function () { render(); walkDoor(); walkGo(); });
+    GGP.ready.then(function () { render(); walkDoor(); walkGo(); acctHome(); });
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
