@@ -1,5 +1,5 @@
 /* =====================================================================
-   GROUNDED MONEY (shared/gg-money.js), GWG BLD 937, stage 1
+   GROUNDED MONEY (shared/gg-money.js), GWG BLD 937 (stage 1 built it; stage 2 wired it into Home)
    A calm monthly money plan for a household, built like the Joy family sheet.
    Chris (November 7, 2026): "the gap is real and exactly why im doing this.. i need to build a tool that can fill the gap".
    Plan: grounded-workshop patches/plan/budget-plan.md. Stage 2 wiring: patches/bld937/STAGE2.md.
@@ -998,7 +998,8 @@
       else if (t.getAttribute('data-gmf') && t.tagName === 'INPUT') { t.blur(); }
     }
     root.addEventListener('click', onClick); root.addEventListener('change', onChange); root.addEventListener('input', onInput); root.addEventListener('keydown', onKey);
-    var unsub = null; if (st.kind === 'ggp' && window.GGP && GGP.on) { try { unsub = GGP.on(function (ty) { if (ty === 'change' || ty === 'ready') paint(); }); } catch (e) {} }
+    // Stage 2: GGP.on returns nothing, so destroy takes the listener off with GGP.off (a host like Home draws a fresh copy each visit).
+    var unsub = null; if (st.kind === 'ggp' && window.GGP && GGP.on) { try { var onG = function (ty) { if ((ty === 'change' || ty === 'ready') && root.isConnected) paint(); }, u0 = GGP.on(onG); unsub = typeof u0 === 'function' ? u0 : function () { if (window.GGP && GGP.off) GGP.off(onG); }; } catch (e) {} }
 
     if (TL()) TL().use(UTIL);
     paint();

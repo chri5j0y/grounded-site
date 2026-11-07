@@ -33,6 +33,9 @@
      #me               the profile sheet: Numbers, Household, Settings, Privacy, Switch Profile
      #<tab>=<section>  a Tending section inside a tab (#week=shop, #week=prep, #today=log, #today=tending,
                        #library=workouts, #me=numbers, #me=settings, ...)
+     #library=money    Grounded Money (BLD 937, shared/gg-money.js), with its own view after it: #library=money-plan,
+                       money-month, money-log, money-check, money-import, money-share, money-tools, money-tool:<id>
+     #money=<code>     a Family money plan shared from another phone (read here, never sent anywhere)
      Old addresses keep working: #tending opens Today, #tree opens Grow, #more and #privacy open the sheet,
      #recipe-<id> opens that recipe in the frame over Library. Kid profiles keep Today and My Tree (#tree).
 
@@ -53,6 +56,7 @@
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b935', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b936';
+  var MONEY_SRC = '/shared/gg-money.js?v=b937';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -518,7 +522,9 @@
   function render() {
     var root = app(); if (!root) return;
     if (KIN === undefined) readKitchen();
+    if (MIN === undefined) readMoney();
     if (DOOR === undefined) readDoor();
+    moneyOff();
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
     if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
@@ -548,6 +554,7 @@
     renderApp(route());
     maybeTour();
     kitSoon();
+    moneySoon();
     // BLD 893: /home/#plan opens My Grounded Way Plan; an open plan redraws with anything new (a check-in).
     if (wantPlan) openPlan(); else if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); }
   }
@@ -1237,6 +1244,8 @@
     var h = ''; try { h = decodeURIComponent(location.hash || ''); } catch (e) { h = location.hash || ''; }
     h = h.replace(/^#/, '');
     if (/^recipe-./.test(h)) return { tab: 'library', sub: '', recipe: h.slice(7) };
+    // BLD 937: Grounded Money and the view inside it (#library=money-plan, #library=money-tool:debt).
+    var mm = /^library=money(?:-([a-z]+(?::[a-z]+)?))?$/.exec(h); if (mm) return { tab: 'library', sub: 'money', money: mm[1] || '' };
     var m = /^([a-z]+)(?:=([a-z0-9-]+))?$/.exec(h) || [], k = m[1] || '', sub = m[2] || '';
     if (k === 'week') return { tab: 'week', sub: SUBS.week[sub] ? sub : '' };
     if (k === 'grow' || k === 'tree') return { tab: 'grow', sub: '' };
@@ -1252,13 +1261,13 @@
     if (k === 'tending') return { tab: 'today', sub: '' };
     return { tab: 'today', sub: '' };
   }
-  function viewOf() { var r = route(); return r.recipe ? 'recipe-' + r.recipe : r.tab + (r.sub ? '=' + r.sub : ''); }
+  function viewOf() { var r = route(); return r.recipe ? 'recipe-' + r.recipe : r.tab + (r.sub ? '=' + r.sub : '') + (r.money ? '-' + r.money : ''); }
   function goTo(v) {
     var hash = '#' + (v === 'home' ? 'today' : v);
     if (location.hash !== hash) location.hash = hash; else render();
     window.scrollTo(0, 0);
   }
-  window.addEventListener('hashchange', function () { if (/^#kitchen=/.test(location.hash)) { readKitchen(); KIN_ASK = false; render(); return; } if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { if (/^#kitchen=/.test(location.hash)) { readKitchen(); KIN_ASK = false; render(); return; } if (/^#money=/.test(location.hash)) { readMoney(); moneyLink(); return; } if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
 
   /* ---------- the shell: header, the tab's own page, the tab bar ---------- */
   function headingOf(tab) {
@@ -1307,11 +1316,15 @@
     var root = app(), tab = r.tab === 'me' ? (S.under || 'today') : r.tab;
     if (r.tab !== 'me') { S.under = tab; S.sheetDepth = 0; S.sheetPushed = 0; }
     var sub = r.tab === 'me' ? '' : r.sub, body;
-    if (sub) body = subbarHtml(tab, sub) + (sub === 'quiet' ? medTopHtml() : '') + '<div id="hm-tend" class="hm-sec" data-sec="' + sub + '"><div class="hm-loading">Opening ' + esc(SUBS[tab][sub]) + '…</div></div>';
+    // BLD 937: Grounded Money opens inside the Library, grown-ups only (a teen's or a kid's Library has none).
+    if (sub === 'money' && tab === 'library' && !moneyFor()) { try { history.replaceState(null, '', location.pathname + location.search + '#library'); } catch (e) {} S.view = 'library'; sub = ''; r = { tab: 'library', sub: '' }; }
+    if (sub === 'money' && tab === 'library') body = subbarHtml(tab, sub) + '<div id="hm-money" class="hm-money"><p class="hm-loading">Opening Grounded Money…</p></div>';
+    else if (sub) body = subbarHtml(tab, sub) + (sub === 'quiet' ? medTopHtml() : '') + '<div id="hm-tend" class="hm-sec" data-sec="' + sub + '"><div class="hm-loading">Opening ' + esc(SUBS[tab][sub]) + '…</div></div>';
     else body = tabHtml(tab);
     root.innerHTML = shellHtml(tab, body);
     paintTabbar(tab);
-    if (sub) paintSection(document.getElementById('hm-tend'), sub);
+    if (sub === 'money' && tab === 'library') paintMoney(document.getElementById('hm-money'), r.money);
+    else if (sub) paintSection(document.getElementById('hm-tend'), sub);
     else afterTab(tab);
     if (r.tab === 'me') openSheet(r.sub); else closeSheet(true);
     if (r.recipe) { try { history.replaceState(null, '', location.pathname + '#library'); } catch (e) {} S.view = 'library'; openRecipe(r.recipe); }
