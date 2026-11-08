@@ -2192,7 +2192,7 @@
     return '<button type="button" class="hm-wbig ' + cls + '" data-hm-tab="' + tab + '"><span class="pic" aria-hidden="true"><img src="' + esc(art) + '" alt="" loading="lazy" decoding="async"><span class="ic">' + I(icon) + '</span></span>' +
       '<span class="tx"><span class="ey">' + esc(ey) + '</span><b>' + esc(title) + '</b><small>' + esc(line) + '</small></span><span class="go">' + esc(go) + I('arrow') + '</span></button>';
   }
-  function weekData() { if (!tendReady() || !tendIsReady() || !hasFn('week')) return null; var w = hCall('week'); return w && Array.isArray(w.days) ? w : null; }
+  function weekData() { if (!tendReady() || !tendIsReady() || !hasFn('week')) return null; var w = hCall('week', S.wkOff || 0); return w && Array.isArray(w.days) ? w : null; }   // BLD 946: S.wkOff moves the Week tab by whole weeks
   /* BLD 885: the weekly practices lead the Week tab, beside the shopping list on a wide screen. */
   /* BLD 896: Week or Month (Chris: "we could have a monthly calendar avail"); the Month is Tending's own, drawn into the Week tab. */
   function weekHtml() { if (!member()) return startWeekHtml(); var on = tendReady() && tendIsReady() && hasFn('render'); return (on ? wkTogHtml() : '') + (on && S.wkv === 'month' ? '<div id="hm-tend" class="hm-sec hm-month" data-sec="month"><p class="hm-loading">Opening your month…</p></div>' : weekHtml0()); }
@@ -2235,7 +2235,15 @@
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
     var nw = hasFn('news') ? hCall('news') : null;
     var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-hd">' + pb(IMG + 'growth-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">' + esc(nw.title) + '</div></div></div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
-    return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div></div></div>';
+    return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div></div></div>';
+  }
+
+  /* BLD 946 (Chris, November 8, 2026: "when you are on This Week, how can i get to Next Week?"): Back and Next on the Week tab,
+     a whole week at a time, and This Week to come home. */
+  function wkNavHtml(w) {
+    var off = S.wkOff || 0, d0 = arr(w.days)[0], lab = off === 0 ? 'This Week' : off === 1 ? 'Next Week' : off === -1 ? 'Last Week' : 'Week of ' + shortDate(d0 && d0.date);
+    return '<div class="hm-wnav"><button type="button" class="hm-pill" data-hm-wkoff="-1" aria-label="Back one week">Back</button><h2 class="hm-label">' + esc(lab) + ((off === 1 || off === -1) && d0 ? ' <small>' + esc(shortDate(d0.date)) + '</small>' : '') + '</h2><button type="button" class="hm-pill" data-hm-wkoff="1" aria-label="Next week">Next</button></div>' +
+      (off !== 0 ? '<div class="hm-wnow"><button type="button" class="hm-pill" data-hm-wkoff="0">Back to This Week</button></div>' : '');
   }
 
   /* ---------- Grow: the tree (tend four, grow two), this season, the Growth Plan, history ---------- */
@@ -2552,7 +2560,7 @@
 
   /* ---------- clicks ---------- */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share],[data-hm-new]');
+    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-wkoff],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share],[data-hm-new]');
     if (!t || !t.closest('.hm')) return;
     if (t.hasAttribute('data-hm-nav')) { var nv = t.getAttribute('data-hm-nav'); e.preventDefault(); goTo(nv === 'tree' ? 'tree' : 'today'); return; }
     if (t.hasAttribute('data-hm-tab')) { e.preventDefault(); var tb = t.getAttribute('data-hm-tab'); if (document.getElementById('hm-sheet')) { S.sheetPushed = 0; closeSheet(true); } goTo(tb); return; }
@@ -2566,6 +2574,7 @@
     if (t.hasAttribute('data-hm-done')) { itemDone(t.getAttribute('data-hm-done'), t); return; }
     if (t.hasAttribute('data-hm-go')) { itemGo(t.getAttribute('data-hm-go')); return; }
     if (t.hasAttribute('data-hm-new')) { if (hasFn('newsSeen')) hCall('newsSeen'); refreshPane(); return; }
+    if (t.hasAttribute('data-hm-wkoff')) { var wo = +t.getAttribute('data-hm-wkoff'); S.wkOff = wo === 0 ? 0 : Math.max(-52, Math.min(52, (S.wkOff || 0) + wo)); refreshPane(); try { var nv = document.querySelector('#hm-pane .hm-wnav'); if (nv && nv.scrollIntoView) nv.scrollIntoView({block: 'nearest'}); } catch (e2) {} return; }
     if (t.hasAttribute('data-hm-wk')) { var wk = t.getAttribute('data-hm-wk'); if (wk && hasFn('act')) hCall('act', wk); return; }
     if (t.hasAttribute('data-hm-tree')) { var tw = t.getAttribute('data-hm-tree'); if (tw === 'history') { seasonOpen(); return; } if ((tw === 'checkin' || tw === 'quick') && openCheckin(tw === 'quick' ? 'quick' : 'full')) return; openTreeSheet(tw); return; }
     if (t.hasAttribute('data-hm-share')) { shareCard(t.getAttribute('data-hm-share')); return; }

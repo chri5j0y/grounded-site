@@ -588,6 +588,11 @@ body.hm-bn .site-footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0
 :root[data-theme="dark"] .hm-shop{color:#1A130D;}
 .hm-wcard{margin-bottom:12px;}
 .hm-wlist{display:grid;gap:8px;}
+/* BLD 946: Back and Next on the Week tab */
+.hm-wnav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 8px;}
+.hm-wnav .hm-label{margin:0;text-align:center;flex:1;min-width:0;}
+.hm-wnav .hm-label small{display:block;font-weight:600;letter-spacing:.4px;text-transform:none;}
+.hm-wnow{display:flex;justify-content:center;margin:0 0 10px;}
 /* BLD 892: the program week and What's New in Your Plan */
 .hm-wprog{margin:-4px 4px 10px;font-weight:700;}
 .hm-new{margin-bottom:14px;}.hm-newl{margin:8px 0 12px;padding-left:20px;}.hm-newl li{margin:4px 0;line-height:1.45;overflow-wrap:anywhere;}
