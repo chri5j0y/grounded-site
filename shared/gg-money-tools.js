@@ -14,6 +14,12 @@
    (givelog Giving Tracker, insure Insurance Overview, blind Blind Spot Check, grow Growth Calculator, year Year Plan) keep
    their answers in money.tools.<id> like the rest; each tip shows in its part (tipPart). The tree paintings are gone.
 
+   BLD 942: holidays (Holidays and Birthdays, Plan part) keeps its answers in money.holidays, not money.tools, because it is
+   household plan data that rides the Family share; it feeds one set-aside fund on One Page. A tool may also have lead(c)
+   (drawn above the results, kept while typing) and onSet(path, c) (after an input is written). The Standards ask for the
+   household size the first time they open, and "household of N" opens the same field in place. Set-asides count in the
+   Standards areas like lines.
+
    GGMoneyTools.math holds every calculation (pure, for tests). No dashes in any words here.
    ===================================================================== */
 (function () {
@@ -243,7 +249,11 @@
     return U.live(d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax' && U.monthly(l) > 0; }).map(function (l) {
       var a = AREA[areas[l.id]] && areas[l.id] ? areas[l.id] : stdArea(l);
       return { id: l.id, n: l.n, s: l.s, o: l.o || '', amt: U.monthly(l), area: a, auto: !areas[l.id], fixed: l.s === 'fixed' };
-    });
+    }).concat(U.live(d.funds).map(function (f) {
+      // BLD 942: each set-aside counts in its area at this month's amount (Holidays and Birthdays in family life and fun).
+      var id = 'fund:' + f.id, amt = U.fundMonth ? U.fundMonth(d, f) : 0, a = AREA[areas[id]] && areas[id] ? areas[id] : f.hol ? 'fun' : stdArea(f);
+      return { id: id, n: f.n || 'Set-Aside', s: f.kind === 'bill' ? 'fixed' : 'varies', o: '', amt: amt, area: a, auto: !areas[id], fixed: f.kind === 'bill', fund: 1 };
+    }).filter(function (l) { return l.amt > 0; }));
   }
   function pretaxSum(d) { return r2(U.live(d.lines).filter(function (l) { return l.s === 'pretax'; }).reduce(function (s, l) { return s + U.monthly(l); }, 0)); }
   // Pretax saving a month. BLD 941: the Before Taxes lines on the One Page sheet are the one source; an amount entered in the
@@ -529,8 +539,10 @@
       init: function (t) { t.bal = t.bal && typeof t.bal === 'object' ? t.bal : {}; },
       form: function (c) {
         var t = c.t, L = U.live(c.d.lines).filter(function (l) { return l.s !== 'hold' && (l.f === 'y' || l.f === 'h' || l.f === 's'); });
-        if (!L.length) return '<p class="gm-sub">Lines marked Yearly, Twice a Year, or Spread Monthly in My Plan become set-aside funds here.</p>';
-        return '<p class="gm-sub">Each yearly or twice a year line gets its own fund. Add its monthly amount each month, and the bill arrives ready.</p>' +
+        // BLD 942: Set-Asides on One Page hold each fund with its balance, due months or cap, and Pay From a Fund.
+        var sa = '<div class="gm-note" data-sa-note>' + U.I('jar') + '<span>Set-Asides live on One Page now: Known Bills, Just in Case funds with a cap, and Pay From a Fund. In a line\u2019s dots, Make This a Set-Aside moves it there. <button type="button" class="gm-linkbtn" data-gm="go:sheet">One Page' + U.I('arrow') + '</button></span></div>';
+        if (!L.length) return sa + '<p class="gm-sub">Lines marked Yearly, Twice a Year, or Spread Monthly in My Plan become set-aside funds here.</p>';
+        return sa + '<p class="gm-sub">Each yearly or twice a year line gets its own fund. Add its monthly amount each month, and the bill arrives ready.</p>' +
           L.map(function (l) { return '<div class="gm-line gm-trow"><div class="gm-pt"><b>' + E(l.n) + '</b><span>' + M(U.monthly(l)) + ' a month</span></div>' + fld('In this fund now', 'bal.' + l.id, t.bal[l.id] || '', { ph: '0' }) + '</div>'; }).join('') +
           '<div class="gm-acts">' + btn('fund', 'month', t.last === U.monthKey() ? 'Added for ' + MONTHS[new Date().getMonth()] : 'Add This Month’s Set-Aside', t.last === U.monthKey()) + '</div>';
       },
@@ -796,7 +808,8 @@
     { id: 'std', part: 'ahead', n: 'Grounded Money Standards', i: 'star', outFirst: 1, sub: 'Your plan beside suggested shares of take-home pay, sized for your household.',
       init: function (t, c) {
         t.areas = t.areas && typeof t.areas === 'object' ? t.areas : {}; t.trims = t.trims && typeof t.trims === 'object' ? t.trims : {}; t.celebrated = t.celebrated && typeof t.celebrated === 'object' ? t.celebrated : {};
-        if (t.size == null) { var kd = c.d.tools && c.d.tools.kids; t.size = 2 + arr(kd && kd.kids).filter(function (k) { return n0(k.age) > 0; }).length; }
+        // BLD 942: the first time, the household size starts from the Allowance Helper (2 plus its children) and is asked for.
+        if (t.size == null) { var kd = c.d.tools && c.d.tools.kids; t.size = 2 + arr(kd && kd.kids).filter(function (k) { return n0(k.age) > 0; }).length; t.sizeAsk = 1; }
         // BLD 941: one source for pretax saving, the sheet's Before Taxes lines (an older entered amount becomes one).
         if (n0(t.pretax) > 0 && !hasPretax(c.d)) { U.addLine(c.d, { n: 'Pretax Saving', a: pretaxMonthly(c.d, t), f: 'm', s: 'pretax' }); c.save(); }
         delete t.pretax; delete t.pretaxF;
@@ -818,7 +831,7 @@
         var G = GOALS.filter(function (g) { return g[0] === v.goal; })[0];
         var goal = '<div class="gm-stdgoal"><h3 class="gm-h4">Your Top Goal</h3>' + chips('std', 'goal', v.goal, GOALS.map(function (g) { return [g[0], g[1]]; })) + '<p class="gm-mini" data-goal-line>' + E(G[2]) + '</p></div>';
         if (!(inc > 0)) return head + goal + '<div class="gm-note">' + U.I('coin') + '<span>Add your take-home pay on One Page, and each area shows its share. <button type="button" class="gm-linkbtn" data-gm="go:sheet">One Page' + U.I('arrow') + '</button></span></div>';
-        var rows = '<h3 class="gm-h4">Side by Side</h3><p class="gm-mini">Shares of your take-home pay of ' + M(inc) + ' a month, for a household of ' + v.size + '.</p><div class="gm-stds">' + v.rows.map(function (r) { return stdRow(r, inc); }).join('') + '</div>' +
+        var rows = '<h3 class="gm-h4">Side by Side</h3><p class="gm-mini">Shares of your take-home pay of ' + M(inc) + ' a month, for a <button type="button" class="gm-linkbtn gm-hh" data-gm="tool:std:hh" aria-label="Household of ' + v.size + '. Tap to change">household of ' + v.size + '</button>.</p><div class="gm-stds">' + v.rows.map(function (r) { return stdRow(r, inc); }).join('') + '</div>' +
           '<p class="gm-mini" data-food-ref>Food for a household of ' + v.size + ': about ' + M(v.food) + ' a month on the USDA Moderate-Cost plan (approximate, ' + FOOD_AS_OF + '). Within it, a bigger share for food is fair for your family size.</p>' +
           (v.dti > 0 ? '<p class="gm-mini" data-dti>Debt payments, the home included: ' + v.dti + '% of take-home. Lenders often look for 36% or less of pay before taxes, so their number for you reads a little lower.</p>' : '');
         var nx = v.next.slice(0, 4).map(function (r) {
@@ -838,7 +851,7 @@
         var t = c.t, d = c.d; if (!U.live(d.lines).length) return '';
         var v = stdView(d, t), opts = AREAS.map(function (a) { return [a[0], a[1]]; });
         var trims = v.rows.filter(function (r) { return r.lo != null && r.id !== 'give' && r.id !== 'save' && r.flex > 0; });
-        return '<h3 class="gm-h4">Your Household and Pretax Saving</h3><div class="gm-grid3">' + fld('People in your household', 'size', t.size, { ph: '2' }) +
+        return '<h3 class="gm-h4">Your Household and Pretax Saving</h3><div class="gm-grid3">' + (t.sizeAsk || t.sizeEd ? '<div class="gm-f"><span>People in your household</span><b>' + E(String(sizeOf(t.size))) + '</b></div>' : fld('People in your household', 'size', t.size, { ph: '2' })) +
           '<div class="gm-f" data-pretax="' + v.pretax + '"><span>Pretax saving</span><b class="gm-pretaxv">' + M(v.pretax) + ' a month</b><button type="button" class="gm-linkbtn" data-gm="go:sheet">' + (v.pretax > 0 ? 'Change on One Page' : 'Add Before Taxes on One Page') + U.I('arrow') + '</button></div></div>' +
           '<p class="gm-mini">Money set aside before pay counts as saving: a workplace retirement plan with the employer’s part, and an HSA. It comes from the Before Taxes lines on One Page, and stays out of the areas.</p>' +
           (trims.length ? '<h3 class="gm-h4">Your Own Trims</h3><p class="gm-mini">Trims come from lines that vary; fixed lines stay as they are.</p><div class="gm-grid3">' + trims.map(function (r) { return fld(r.n + ' (up to ' + M(r.flex) + ')', 'trims.' + r.id, t.trims[r.id] == null ? '' : t.trims[r.id], { ph: r.suggest ? String(r.suggest) : '0' }); }).join('') + '</div>' : '') +
@@ -846,7 +859,19 @@
           stdLines(d, t).map(function (l) { return fld(l.n + ' (' + M(l.amt) + ')' + (l.fixed ? ', Fixed' : ''), 'areas.' + l.id, l.area, { sel: opts, re: 1 }); }).join('') + '</div></details>' +
           '<p class="gm-mini">These are suggested ranges, a calm guide for your own choices. For your own plan, a licensed financial planner can help.</p>' + stdSources();
       },
-      act: function (a, arg, c) { if (a === 'goal' && GOAL_SHIFT[arg]) { c.t.goal = arg; return true; } return false; } },
+      // BLD 942: the household size, asked once and changed in place (the field sits above the results, so it keeps focus while typing).
+      lead: function (c) {
+        var t = c.t; if (!(t.sizeAsk || t.sizeEd)) return '';
+        return '<div class="gm-card gm-hhask" data-hh-ask><label class="gm-f"><span>' + (t.sizeAsk ? 'How many people live in your household?' : 'People in your household') + '</span><input class="gm-in gm-w80" data-gt="size" data-n="1" data-gtp="1" inputmode="numeric" value="' + E(String(sizeOf(t.size))) + '" placeholder="2"></label>' +
+          btn('std', 'sizeok', U.I('check') + 'That\u2019s Right') + '<p class="gm-mini">Food, housing, and family life are sized for it.</p></div>';
+      },
+      onSet: function (path, c) { if (path === 'size') { delete c.t.sizeAsk; delete c.t.sizeEd; } },
+      act: function (a, arg, c) {
+        if (a === 'goal' && GOAL_SHIFT[arg]) { c.t.goal = arg; return true; }
+        if (a === 'hh') { c.t.sizeEd = 1; if (c.focus) c.focus('[data-hh-ask] input'); return true; }
+        if (a === 'sizeok') { delete c.t.sizeAsk; delete c.t.sizeEd; return true; }
+        return false;
+      } },
 
     { id: 'windfall', part: 'ahead', n: 'Windfall Planner', i: 'sun', sub: 'A tax return, a bonus, or a gift, given a plan in one calm order.',
       init: function (t) { if (t.amt == null) t.amt = ''; t.kind = t.kind || 'tax'; t.give = [0, 5, 10].indexOf(+t.give) >= 0 ? +t.give : 0; t.cards = arr(t.cards); t.past = arr(t.past); },
@@ -879,12 +904,87 @@
         if (a === 'rm') { t.cards.splice(+arg, 1); return true; }
         if (a === 'keep') { if (!(n0(t.amt) > 0)) { c.say('Add the amount first.'); return false; } t.past.push({ d: U.today(), amt: r2(n0(t.amt)), kind: t.kind, give: t.give }); if (t.past.length > 12) t.past.shift(); c.celebrate('A plan for every dollar. Well done.'); return true; }
         return false;
+      } },
+
+    /* ---------- BLD 942: Holidays and Birthdays ----------
+       Chris (November 8, 2026): "gifts at 400 is to plan for bdays and xmas.. this is prob where the shortfall lands".
+       A starting list across traditions, each off until the person checks it (any family, any tradition), with a usual month
+       and a suggested amount to change; birthdays and anniversaries by name and month; a twelve month calendar; and one
+       set-aside fund on One Page that pays each day in its month. Answers live in money.holidays (they ride the Family share). */
+    { id: 'holidays', part: 'ahead', n: 'Holidays and Birthdays', i: 'gift', start: 1, sub: 'Every celebration of the year, spread into one monthly set-aside.',
+      init: function (t) { if (!t.days || typeof t.days !== 'object') t.days = {}; t.people = arr(t.people); },
+      form: function (c) {
+        if (!c.member()) return holTaste();
+        var t = c.t, d = c.d, MO = U.MONTHS;
+        function msel(path, cur, lbl) { return '<select class="gm-in gm-hm" data-gt="' + path + '" aria-label="' + E(lbl) + '">' + MO.map(function (m, i) { return '<option value="' + i + '"' + (+cur === i ? ' selected' : '') + '>' + m.slice(0, 3) + '</option>'; }).join('') + '</select>'; }
+        function amt(path, v, lbl) { return '<span class="gm-ha"><span aria-hidden="true">$</span><input class="gm-in" data-gt="' + path + '" data-n="1" inputmode="decimal" value="' + E(v === '' || v == null ? '' : U.plain(v)) + '" placeholder="0" aria-label="' + E(lbl) + '"></span>'; }
+        var days = U.HOLS.map(function (h) {
+          var x = t.days[h[0]], on = !!(x && x.on), sug = U.holSuggest(d, h[0]);
+          var per = h[4] === 'person' ? ' (' + M(h[3]) + ' a person)' : h[4] === 'child' ? ' (' + M(h[3]) + ' a child)' : h[0] === 'grad' ? ' each' : '';
+          return '<div class="gm-hol' + (on ? ' on' : '') + '" data-hol="' + h[0] + '"><button type="button" class="gm-hck" data-gm="tool:holidays:day:' + h[0] + '" aria-pressed="' + on + '" aria-label="' + E(h[1]) + '">' + U.I('check') + '</button>' +
+            '<span class="gm-hn"><b>' + E(h[1]) + '</b>' + (on ? (h[5] ? '<small>Its date moves; choose this year\u2019s month.</small>' : '') : '<small>Suggested ' + M(sug) + per + '</small>') + '</span>' +
+            (on ? msel('days.' + h[0] + '.m', x.m, 'Month for ' + h[1]) + amt('days.' + h[0] + '.amt', x.amt, 'Amount for ' + h[1]) : '') + '</div>';
+        }).join('');
+        var ppl = arr(t.people).map(function (x, i) {
+          if (x.x) return '';
+          return '<div class="gm-hol on gm-hp" data-person="' + E(x.id) + '"><span class="gm-hpk">' + U.I(x.kind === 'anniv' ? 'heart' : 'gift') + '</span>' +
+            '<span class="gm-hn"><input class="gm-in" data-gt="people.' + i + '.n" value="' + E(x.n || '') + '" maxlength="40" placeholder="' + (x.kind === 'anniv' ? 'Whose anniversary' : 'Whose birthday') + '" aria-label="Name"><small>' + (x.kind === 'anniv' ? 'Anniversary' : 'Birthday') + '</small></span>' +
+            msel('people.' + i + '.m', x.m, 'Month') + amt('people.' + i + '.amt', x.amt, 'Amount') + rm('holidays', 'p' + i, x.n || 'this day') + '</div>';
+        }).join('');
+        return '<h3 class="gm-h4">Holidays</h3><p class="gm-mini">Check the days your family celebrates. Each amount is suggested; change it to fit your family.</p><div class="gm-hols">' + days + '</div>' +
+          '<h3 class="gm-h4">Birthdays and Anniversaries</h3><div class="gm-hols">' + (ppl || '<p class="gm-mini">Add each person by name, with the month and an amount.</p>') + '</div>' +
+          '<div class="gm-acts">' + btn('holidays', 'padd:bday', U.I('plus') + 'Add a Birthday', 1) + btn('holidays', 'padd:anniv', U.I('plus') + 'Add an Anniversary', 1) + '</div>' +
+          '<details class="gm-fold gm-htips"><summary>Ideas for Celebrating Well</summary><ul class="gm-tips">' + HOL_TIPS.map(function (x) { return '<li>' + E(x) + '</li>'; }).join('') + '</ul></details>';
+      },
+      out: function (c) {
+        if (!c.member()) return '';
+        var d = c.d, MS = U.holMonths(d), m0 = new Date().getMonth(), f = U.holFund(d), year = 0, big1 = { a: 0, m: -1 };
+        MS.forEach(function (L, m) { var s2 = L.reduce(function (s, x) { return s + x.a; }, 0); year += s2; if (s2 > big1.a) big1 = { a: s2, m: m }; });
+        year = r2(year);
+        var cells = []; for (var i = 0; i < 12; i++) { var mi = (m0 + i) % 12, L = MS[mi], tot = r2(L.reduce(function (s, x) { return s + x.a; }, 0));
+          cells.push('<div class="gm-hcell' + (i === 0 ? ' now' : '') + (tot ? ' has' : '') + '" data-mon="' + mi + '"><span class="gm-k">' + U.MONTHS[mi].slice(0, 3) + '</span><b>' + (tot ? M(tot) : '') + '</b>' + (L.length ? '<small>' + E(L.map(function (x) { return x.n; }).join(', ')) + '</small>' : '') + '</div>'); }
+        var cal = '<h3 class="gm-h4">Your Year</h3><div class="gm-hcal" data-hcal>' + cells.join('') + '</div>';
+        if (!year) return cal + '<p class="gm-mini">Check a day or add a birthday, and your year fills in here.</p>';
+        var avg = Math.ceil(year / 12 - 1e-6), mo = f ? U.fundMonth(d, f) : avg;
+        var why = mo > avg + 1 ? 'About ' + M(avg) + ' a month covers the year. A little more for now has ' + U.MONTHS[big1.m] + ' ready; it settles near ' + M(avg) + ' once the fund catches up.'
+          : mo < avg - 1 ? 'About ' + M(avg) + ' a month covers the year. Your fund is ahead, so ' + M(mo) + ' is enough this month.' : 'The year total, spread over twelve months: about ' + M(avg) + ' a month.';
+        var now = MS[m0], nowLine = now.length ? '<p class="gm-note" data-hnow>' + U.I('gift') + '<span>' + E(now.map(function (x) { return x.n; }).join(', ') + ', ' + U.MONTHS[m0] + ': ' + M(now.reduce(function (s, x) { return s + x.a; }, 0)) + ' from your fund.') + ' Log it in This Month with From a Fund.</span></p>' : '';
+        var gl = U.live(d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax' && /gift|christmas|holiday|birthday/i.test(l.n || ''); });
+        var dup = gl.map(function (l) { return '<div class="gm-note" data-hdup="' + l.id + '">' + U.I('leaf') + '<span>Your plan also has ' + E(l.n) + ' at ' + M(U.monthly(l)) + ' a month. Once this planner covers it, rest that line so it counts once. ' + btn('holidays', 'hold:' + l.id, 'Set ' + E(l.n) + ' On Hold', 1) + '</span></div>'; }).join('');
+        return '<div class="gm-tbigs">' + big('Year Total', M(year), 'every day you checked') + big('Set Aside Each Month', M(mo), f ? 'from your Holidays and Birthdays fund' : 'once the fund starts', 'hn') + '</div>' +
+          '<p class="gm-mini" data-hwhy>' + E(why) + '</p>' + nowLine + cal +
+          (f ? '<p class="gm-mini">Holidays and Birthdays fund: ' + M(f.bal) + ' set aside. <button type="button" class="gm-linkbtn" data-gm="go:sheet">See It on One Page' + U.I('arrow') + '</button></p>' : '<div class="gm-acts">' + btn('holidays', 'fund', U.I('jar') + 'Start the Set-Aside') + '</div>') + dup;
+      },
+      onSet: function (path, c) {
+        var t = c.t, m = /^days\.([a-z]+)\./.exec(path), pm = /^people\.(\d+)\./.exec(path);
+        if (m && t.days[m[1]]) t.days[m[1]].u = Date.now();
+        if (pm && t.people[+pm[1]]) t.people[+pm[1]].u = Date.now();
+        t.u = Date.now(); U.recAll(c.d);
+      },
+      act: function (a, arg, c) {
+        var t = c.t, d = c.d;
+        function fund() { if (!U.holFund(d)) U.addFund(d, { n: 'Holidays and Birthdays', kind: 'bill', hol: 1 }); }
+        if (a === 'day' && U.HOL[arg]) { var x = t.days[arg]; if (!x) x = t.days[arg] = { on: 0, m: U.HOL[arg][2], amt: U.holSuggest(d, arg) }; x.on = x.on ? 0 : 1; x.u = Date.now(); t.u = x.u; if (x.on) fund(); U.recAll(d); return true; }
+        if (a === 'padd') { var p = { id: U.uid(), n: '', kind: arg === 'anniv' ? 'anniv' : 'bday', m: new Date().getMonth(), amt: 50, u: Date.now() }; t.people.push(p); t.u = p.u; fund(); U.recAll(d); if (c.focus) c.focus('[data-person="' + p.id + '"] input'); return true; }
+        if (a === 'rm' && /^p\d+$/.test(arg)) { var q = t.people[+arg.slice(1)]; if (q) { q.x = 1; q.u = Date.now(); t.u = q.u; U.recAll(d); } return true; }
+        if (a === 'fund') { fund(); return true; }
+        if (a === 'hold') { var l = U.find(d.lines, arg); if (l) { U.edit(l, { s: 'hold' }, d); c.say(l.n + ' rests On Hold. The planner counts it now.'); } return true; }
+        return false;
       } }
   ];
+  var HOL_TIPS = ['Homemade gifts and gifts of time: a meal, a letter, a day together.', 'Experience gifts: a hike, a class, a museum day, a night of camping.',
+    'Unplugged traditions: a game night, a walk after dinner, stories told around the table.', 'Celebrate outdoors: a picnic, a birthday at the park, a sledding afternoon.',
+    'Set a gift amount for each person early, and the season stays calm.'];
+  // A short taste for Start: what the planner does, with a small sample year (made up).
+  function holTaste() {
+    var S2 = [['Feb', 'Valentine\u2019s Day', 40], ['May', 'Mother\u2019s Day', 50], ['Aug', 'Back to School', 200], ['Dec', 'Christmas', 400]];
+    return '<p class="gm-sub">Plan every holiday, birthday, and anniversary of the year, and spread the cost into one monthly set-aside, so each day arrives ready.</p>' +
+      '<div class="gm-hcal gm-htaste">' + S2.map(function (x) { return '<div class="gm-hcell has"><span class="gm-k">' + x[0] + '</span><b>' + M(x[2]) + '</b><small>' + E(x[1]) + '</small></div>'; }).join('') + '</div><p class="gm-mini">A sample year, about ' + M(58) + ' a month.</p>';
+  }
   var BY = {}; TOOLS.forEach(function (t) { BY[t.id] = t; });
 
   window.GGMoneyTools = {
-    v: 'b941', list: TOOLS, get: function (id) { return BY[id] || null; }, tips: TIPS, tipOfWeek: tipOfWeek, tipPart: tipPart, partTips: partTips,
+    v: 'b942', list: TOOLS, get: function (id) { return BY[id] || null; }, tips: TIPS, tipOfWeek: tipOfWeek, tipPart: tipPart, partTips: partTips,
     use: function (u) { U = u; },
     math: { debtSim: debtSim, debtPlan: debtPlan, goalMonthly: goalMonthly, monthsUntil: monthsUntil, efMonths: efMonths, paydays: paydays, extraMonths: extraMonths, billsByCheck: billsByCheck, checksPerYear: checksPerYear,
       homeMeal: homeMeal, grocerySave: grocerySave, carCost: carCost, sideIncome: sideIncome, subsTotals: subsTotals, givingTotal: givingTotal, allowance: allowance, setAside: setAside,
