@@ -814,6 +814,49 @@ const SECS = ['Grab and Go', 'Produce', 'Meat and Fish', 'Eggs, Dairy, and Milks
 const STORES = {costco: 'Costco', grocer: 'Coborn\'s'}; // Coborn's, the local grocer (Chris, October 24, 2026: Cub is 24 miles away)
 const SECS_P = ['Produce', 'Proteins', 'Grains and Beans', 'Dairy and Eggs', 'Frozen', 'Pantry', 'Spices', 'Grab and Go', 'Other'];
 const SECX = () => PUB() ? SECS_P : SECS;
+// BLD 943 (Chris, November 8, 2026: "organized into sections in the store so you are not moving all over the list"): the members'
+// list shows each item in its aisle, in the order Chris walks each store. Display only: every item keeps its saved sec, id, check,
+// and amount; the aisle is worked out on the fly from the saved sec and the item's name (aisleOf).
+const AISLE_COSTCO = ['Produce', 'Meat and Fish', 'Paper Goods', 'Cleaning and Household', 'Dairy and Eggs', 'Frozen', 'Coffee', 'Dry Goods', 'Canned Goods', 'Rice and Pasta', 'Bread and Tortillas', 'Other'];
+const AISLE_GROCER = ['Coffee', 'Dry Goods', 'Canned Goods', 'Rice and Pasta', 'Bread and Tortillas', 'Paper Goods', 'Cleaning and Household', 'Meat and Fish', 'Dairy and Eggs', 'Produce', 'Frozen', 'Other'];
+const AISLES = {costco: AISLE_COSTCO, grocer: AISLE_GROCER};
+const AISLE_OLD = {'Eggs, Dairy, and Milks': 'Dairy and Eggs', Proteins: 'Meat and Fish', Spices: 'Dry Goods'};
+const GG_TAG = 'Grab and Go'; // the small tag on a Grab and Go item's row
+const AK = {
+  paper: /\b(paper|towels?|toilet|tissues?|napkins?|plates|paper cups|plastic cups|foil|plastic wrap|cling wrap|wax paper|parchment|(?:trash|garbage|freezer|storage|sandwich|snack|lunch|zip\w*) bags?|ziplocs?|filters?)\b/i,
+  clean: /\b(detergent|soap|dish|dishes|dishwasher|cleaners?|cleaning|wipes|sponges?|laundry|bleach|dryer sheets|scrub\w*|mop|broom|shampoo|conditioner|toothpaste|toothbrush\w*|floss|deodorant|lotion|batter(?:y|ies)|light ?bulbs?|household)\b/i,
+  coffee: /\b(coffee|espresso)\b/i,
+  frozen: /\bfrozen\b/i,
+  canned: /\b(canned|cans?|tinned|crushed tomato(?:es)?|diced tomato(?:es)?|tomato paste|tomato sauce|broth|stock|chiles|tuna|sardines|coconut milk)\b/i,
+  beans: /\bbeans?\b/i, dry: /\b(dry|dried)\b/i,
+  pasta: /\b(rice|pasta|quinoa|barley|couscous|noodles?|spaghetti|macaroni|penne|orzo|farro)\b/i,
+  goods: /\b(oats|oatmeal|nuts|almonds|walnuts|pecans?|pistachios|cashews|peanuts|seeds|peanut butter|almond butter|nut butter|dates|raisins|flour|yeast|baking|spices?|salt|popcorn|crackers|maple syrup|syrup|honey|oils?|vinegar|cocoa|vanilla|flaxseed|chia|tahini|tamari|soy sauce|sugar|cereal|granola|bars|snacks?|lentils)\b/i,
+  bread: /\b(bread|tortillas?|buns?|pitas?|bagels?|english muffins|rolls)\b/i};
+// The Pantry, split by name: Coffee, Canned Goods (cans, tomatoes, broth, any beans that are not dry), Rice and Pasta, else Dry Goods.
+function aislePantry(name, amt){ const t = String(name || ''), a = String(amt || '');
+  if (AK.coffee.test(t)) return 'Coffee';
+  if (AK.canned.test(t) || /\bcans?\b/i.test(a) || (AK.beans.test(t) && !AK.dry.test(t))) return 'Canned Goods';
+  if (AK.pasta.test(t)) return 'Rice and Pasta';
+  return 'Dry Goods'; }
+// An item with no aisle of its own (Other, Add-ons, one typed in, an own item): placed by its name, else Other.
+function aisleGuess(name, amt){ const t = String(name || '');
+  if (AK.paper.test(t)) return 'Paper Goods'; if (AK.clean.test(t)) return 'Cleaning and Household'; if (AK.coffee.test(t)) return 'Coffee';
+  if (AK.frozen.test(t)) return 'Frozen'; if (AK.canned.test(t) || /\bcans?\b/i.test(String(amt || ''))) return 'Canned Goods';
+  if (AK.pasta.test(t)) return 'Rice and Pasta'; if (AK.bread.test(t)) return 'Bread and Tortillas'; if (AK.goods.test(t)) return 'Dry Goods';
+  const m = MM_SEC.find(([, re]) => re.test(t)); return m ? (AISLE_OLD[m[0]] || m[0]) : 'Other'; }
+// A Grab and Go item's own aisle, from the library by name (this week's list, then breakfasts, lunches, and snacks).
+function libSecOf(name, n){ const k = String(name || '').toLowerCase(), app = APP() || {}, w = ((app.shop || {}).weeks || {})[letter(n)] || {}, din = app.dinners || {};
+  const f = arr(w.shop).concat(...['breakfasts', 'lunches', 'snacks'].map(t => arr(din[t]).flatMap(i => arr(i.shop)))).find(i => i && String(i.name || '').toLowerCase() === k && i.sec);
+  return f ? f.sec : ''; }
+function aisleOf(x, n){
+  if (!x) return 'Other'; if (PUB()) return SECS_P.includes(x.sec) ? x.sec : 'Other';
+  let s = String(x.sec || ''); if (s === 'Grab and Go') s = libSecOf(x.name, n || foodWeek(new Date())) || 'Other';
+  s = AISLE_OLD[s] || s;
+  if (s === 'Pantry' || s === 'Grains and Beans') return aislePantry(x.name, x.amt);
+  if (s && s !== 'Other' && AISLE_COSTCO.includes(s)) return s;
+  return aisleGuess(x.name, x.amt);
+}
+const OWN_SECS = () => PUB() ? SECS_P : AISLE_COSTCO;
 // BLD 896: My Own Shopping Items join each week's list (ownShop).
 // BLD 896: a set up holiday's shopping joins the list for the week of its buy day (holMerge).
 // BLD 900: My Menu's added recipes join the list, and a swapped meal's items step aside (mmMerge).
@@ -839,13 +882,17 @@ function vShop(){
   if (!L) return `<p class="hj-note">The shopping lists arrive with the next library update.</p>`;
   const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st || x.own || x.mm), left = vis.filter(x => !x.done);
   const tot = vis.reduce((a, x) => a + (+x.price || 0), 0), cart = vis.filter(x => x.done).reduce((a, x) => a + (+x.price || 0), 0);
-  const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
+  // BLD 943: each store in its own walking order; Both shows Costco, then Coborn's, each in its own order.
+  const byN = (a, b) => (a.done - b.done) || (a.n - b.n);
+  const groups = PUB() ? SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort(byN)]).filter(g => g[1].length)
+    : (st === 'all' ? ['costco', 'grocer'] : [st]).flatMap(sk => { const its = vis.filter(x => st !== 'all' || x.store === sk), A = its.map(x => [x, aisleOf(x, n)]);
+      const gs = AISLES[sk].map(s => [s, A.filter(a => a[1] === s).map(a => a[0]).sort(byN)]).filter(g => g[1].length); if (st === 'all' && gs.length) gs[0].store = STORES[sk]; return gs; });
   const ed = S.shopEd;
   return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${fwl(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
   ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${fwl(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
   <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${(PUB() ? [] : ['costco', 'grocer', 'all']).map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
     <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span>${PUB() && !tot ? '' : `<span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span>`}</div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
-  ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(mmAmt(x))}${mmFor(x) ? ' · ' + esc(mmFor(x)) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
+  ${groups.map(G => { const [s, g] = G, shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return G.store ? `<h3 class="hj-store">${esc(G.store)}</h3>` : ''; return (G.store ? `<h3 class="hj-store">${esc(G.store)}</h3>` : '') + `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${x.sec === 'Grab and Go' && !PUB() ? `<span class="hj-ggt">${esc(GG_TAG)}</span>` : ''}${esc(mmAmt(x))}${mmFor(x) ? ' · ' + esc(mmFor(x)) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
       <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="shopsave" data-hjv="${esc(x.id)}">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="shopclose">Close</button><button type="button" class="linkbtn" data-hja="shopdel" data-hjv="${esc(x.id)}">Remove</button></div></div>` : '')).join(''); }).join('')}
   <div class="hj-add"><input id="hj-addname" placeholder="Add an item" autocomplete="off"><button type="button" class="btn btn-gold btn-sm" data-hja="shopadd">Add</button></div>
   ${ownShopPanel(n)}
@@ -856,7 +903,8 @@ function vShop(){
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
   (PUB() ? [''] : st === 'all' ? ['costco', 'grocer'] : [st]).forEach(s => { const g = L.items.filter(x => (!s || x.store === s) && !x.done); if (!g.length) return; if (s) out.push(STORES[s].toUpperCase());
-    SECX().forEach(sec => { const r = g.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === sec); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (mmAmt(x) ? ' (' + mmAmt(x) + ')' : ''))); }); out.push(''); });
+    const secs = s ? AISLES[s] : SECX(), sec0 = x => s ? aisleOf(x, n) : (SECX().includes(x.sec) ? x.sec : 'Other'); // BLD 943: the store's own walking order
+    secs.forEach(sec => { const r = g.filter(x => sec0(x) === sec).sort((a, b) => a.n - b.n); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (mmAmt(x) ? ' (' + mmAmt(x) + ')' : ''))); }); out.push(''); });
   return out.join('\n').trim() || 'Everything is in the cart.';
 }
 // ---------- overlays: workout, cook, prep, meditation ----------
@@ -4054,7 +4102,7 @@ const ownShopFor = x => [x.brand, x.store, x.note].map(t => String(t || '').trim
 function ownShop(L, n){
   if (!L || !Array.isArray(L.items)) return L; const due = OWN().shop.filter(x => ownShopDue(x, n)), had = {};
   L.items.forEach(x => { if (x && x.own) had[x.id] = !!x.done; });
-  L.items = L.items.filter(x => !(x && x.own)).concat(due.map((x, i) => ({id: 'own-' + x.id, own: x.id, store: /coborn|grocer/i.test(x.store || '') ? 'grocer' : 'costco', sec: SECX().includes(x.sec) ? x.sec : 'Other',
+  L.items = L.items.filter(x => !(x && x.own)).concat(due.map((x, i) => ({id: 'own-' + x.id, own: x.id, store: /coborn|grocer/i.test(x.store || '') ? 'grocer' : 'costco', sec: x.sec || 'Other', // BLD 943: the saved aisle as it is (aisleOf maps an older one forward)
     name: x.name, amt: x.amt || '', price: 0, for: ownShopFor(x), done: !!had['own-' + x.id], n: 800 + i})));
   return L;
 }
@@ -4065,7 +4113,7 @@ function ownShopForm(f, n){
   const n0 = Math.max(1, Math.min(n, foodWeek(new Date()))), opts = Array.from({length: 12}, (x, i) => n0 + i);
   return `<div class="hj-ownf" id="hj-osform"><h3>${S.ownSEd ? 'Edit a Shopping Item' : 'Add a Shopping Item'}</h3>
     <div class="hj-g2o">${fld('name', 'Item', 'Paper towels')}${fld('amt', 'Amount (optional)', '1 pack of 12')}
-    <label class="hj-fld"><span>Store or aisle</span><select data-hjos="sec">${SECX().map(s => `<option${(f.sec || 'Other') === s ? ' selected' : ''}>${esc(s)}</option>`).join('')}</select></label>
+    <label class="hj-fld"><span>Store or aisle</span><select data-hjos="sec">${(sel => OWN_SECS().map(s => `<option${sel === s ? ' selected' : ''}>${esc(s)}</option>`).join(''))(OWN_SECS().includes(f.sec || 'Other') ? (f.sec || 'Other') : aisleOf(f))}</select></label>
     ${fld('store', 'Store (optional)', 'Any store')}${fld('brand', 'Brand (optional)', 'Your favorite')}${fld('note', 'Note (optional)', 'The big rolls')}</div>
     <div class="hj-ownq" id="hj-osq1">How often</div><div class="hj-chips" role="group" aria-labelledby="hj-osq1">${OWN_SFREQ.map(([v, l]) => ch('freq', v, l, (f.freq || 'once') === v)).join('')}</div>
     <label class="hj-fld"><span>${(f.freq || 'once') === 'once' ? 'Which shopping day' : 'Starting'}</span><select data-hjos="start">${opts.map(k => `<option value="${k}"${(+f.start || n) === k ? ' selected' : ''}>${esc(DOWL[shopDate(k).getDay()] + ', ' + shortDate(shopDate(k)) + ' · Week ' + letter(k))}</option>`).join('')}</select></label>
@@ -4073,7 +4121,7 @@ function ownShopForm(f, n){
 }
 function ownShopPanel(n){
   const o = OWN(), f = S.ownSF;
-  const row = x => `<div class="hj-own${x.paused ? ' paused' : ''}"><div class="tx"><b>${esc(x.name)}</b><small>${esc([x.amt, ownShopFor(x), x.sec].filter(Boolean).join(' · '))}<br>${esc(ownSFreqLine(x))}${x.paused ? ' · Paused' : ownShopDue(x, n) ? ' · On this list' : ''}</small></div>
+  const row = x => `<div class="hj-own${x.paused ? ' paused' : ''}"><div class="tx"><b>${esc(x.name)}</b><small>${esc([x.amt, ownShopFor(x), aisleOf(x)].filter(Boolean).join(' · '))}<br>${esc(ownSFreqLine(x))}${x.paused ? ' · Paused' : ownShopDue(x, n) ? ' · On this list' : ''}</small></div>
     <div class="acts"><button type="button" class="tn-btn sm line" data-hja="osedit" data-hjv="${esc(x.id)}" aria-label="Edit ${esc(x.name)}">Edit</button>${x.freq === 'once' ? '' : `<button type="button" class="tn-btn sm line" data-hja="ospause" data-hjv="${esc(x.id)}" aria-label="${x.paused ? 'Resume' : 'Pause'} ${esc(x.name)}">${x.paused ? 'Resume' : 'Pause'}</button>`}<button type="button" class="linkbtn" data-hja="osdel" data-hjv="${esc(x.id)}" aria-label="Remove ${esc(x.name)}">${S.ownSure === x.id ? 'Tap Again to Remove' : 'Remove'}</button></div></div>`;
   return `<div class="tn-card a-kitchen hj-ownc" id="hj-osp"><div class="tn-k">My Own Shopping Items</div><p class="tn-sub">What your household buys beyond the plan, with the specifics: once for one list, or a regular item that joins the list on its weeks.</p>
     ${o.shop.length ? `<div class="hj-ownl">${o.shop.map(row).join('')}</div>` : ''}
@@ -4190,7 +4238,7 @@ function actOwn(a, v){
     case 'osclose': S.ownSF = null; S.ownSEd = null; rerender(true); return true;
     case 'ossave': { const f = S.ownSF; if (!f) return true; const name = String(f.name || '').trim().slice(0, 80); if (!name){ toast('Add a name.'); ownFocus('hj-osname'); return true; }
       const t = k => String(f[k] || '').trim().slice(0, 80);
-      const rec = {id: S.ownSEd || 's' + uid(), name, amt: t('amt'), sec: SECX().includes(f.sec) ? f.sec : 'Other', store: t('store'), brand: t('brand'), note: t('note'),
+      const rec = {id: S.ownSEd || 's' + uid(), name, amt: t('amt'), sec: OWN_SECS().includes(f.sec) ? f.sec : 'Other', store: t('store'), brand: t('brand'), note: t('note'),
         freq: ['once', 'w', '2w', 'm'].includes(f.freq) ? f.freq : 'once', start: Math.max(1, Math.round(+f.start || foodWeek(new Date()))), paused: !!f.paused, u: Date.now()};
       const i = o.shop.findIndex(x => x.id === rec.id); if (i < 0) o.shop.push(rec); else o.shop[i] = rec;
       S.ownSF = null; S.ownSEd = null; ownSave(); toast(i < 0 ? (rec.freq === 'once' ? 'Added to that list.' : 'Added. It joins the list on its weeks.') : 'Saved.'); rerender(true); return true; }
@@ -4809,6 +4857,8 @@ const CSS = `
 .hj-prog{height:6px;border-radius:4px;background:var(--bg-deep);overflow:hidden;margin-top:6px;}.hj-prog span{display:block;height:100%;background:var(--hj);transition:width .3s;}
 .hj-sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-size:14px;margin:16px 0 2px;display:flex;justify-content:space-between;}.hj-sec small{font-family:'Barlow',sans-serif;letter-spacing:0;text-transform:none;color:var(--ink-soft);font-weight:500;}
 .hj-pr{font-weight:600;white-space:nowrap;font-size:15px;}
+.hj-store{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:18px;margin:22px 0 0;padding-bottom:4px;border-bottom:2px solid var(--gold);}
+.hj-ggt{display:inline-block;font-size:12px;line-height:1.3;padding:1px 7px;margin-right:6px;border-radius:999px;border:1px solid var(--gold);color:var(--ink-soft);}
 .hj-ed{background:var(--bg-deep);border-radius:12px;padding:10px 12px;margin:0 0 8px;}
 .hj-add{display:flex;gap:8px;margin-top:12px;}.hj-add input{flex:1;min-width:0;}
 .hj-copy{width:100%;min-height:180px;margin-top:10px;font:14px/1.4 ui-monospace,monospace;}
@@ -5958,7 +6008,8 @@ Object.assign(window.GGHealth, {
   menuSwap(target){ return mmReady() ? mmOpenSwap(String(target || '')) : false; },
   menu(){ return H() ? JSON.parse(JSON.stringify(MENU().items)) : []; },
   // The Shopping List for food week n as it reads (n defaults to the list for today): [{id, name, amt, for, done, menu}].
-  shopItems(n){ if (!H() || !FLDH()) return []; const L = shopList(+n || foodWeek(new Date())); return arr(L && L.items).map(x => ({id: x.id, name: x.name, amt: mmAmt(x), for: mmFor(x), done: !!x.done, menu: !!(x.mm || x.mmx)})); },
+  shopItems(n){ if (!H() || !FLDH()) return []; const N = +n || foodWeek(new Date()), L = shopList(N); return arr(L && L.items).map(x => ({id: x.id, name: x.name, amt: mmAmt(x), for: mmFor(x), done: !!x.done, menu: !!(x.mm || x.mmx), store: x.store, sec: x.sec, aisle: aisleOf(x, N)})); },
+  shopText(n){ if (!H() || !FLDH()) return ''; return shopText(+n || foodWeek(new Date())); }, // BLD 943: the Copy for a Text words, for tests
   foodWeek(date){ const d = date ? parseD(date) : new Date(); return d ? foodWeek(d) : 0; },
   today: mmToday, week: mmWeek
 });
