@@ -63,12 +63,20 @@
    every tool, the Standards, the Windfall Planner, and tips. Every older view name still opens its place; My Plan stays
    for notes and every detail. tools.sheet {sort: 'mine' or 'big'} keeps the Expenses order choice.
 
+   BLD 942 (Chris: "a better way to plan this so it can be there if needed but not look like a short fall for the many months
+   it is not needed"): Set-Asides on One Page. money.funds holds savings funds that live in a separate savings account:
+   Known Bills (an amount on due months; the monthly amount is what has each due date ready) and Just in Case funds (a
+   monthly amount up to a cap; $0 a month when full). Each month's set-aside counts in Money Out and joins the balance when
+   the next month begins (roll(), idempotent). Pay From a Fund (a log with f, the fund's id) lowers the balance and stays out
+   of the month's plan. money.holidays holds the Holidays and Birthdays planner (tool holidays), which feeds one fund (hol: 1).
+   Both ride the Family share (f and h in the code). Older money objects load with no funds.
+
    No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMoney) return;
-  var V = 'b941';
+  var V = 'b942';
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
   var SHARE_BASE = 'https://growwithgrounded.com/home/#money=';
 
@@ -154,7 +162,7 @@
   var STATUS = { fixed: 'Fixed', varies: 'Varies', est: 'Estimate', hold: 'On Hold', pretax: 'Before Taxes' };
   var STATUS_ORDER = ['fixed', 'varies', 'est', 'hold', 'pretax'];
 
-  function blank() { return { v: 1, pid: uid(), created: today(), u: Date.now(), lines: [], income: [], ideas: { done: {}, edit: {}, off: {}, mine: [], u: 0 }, logs: [], checks: {}, tools: {} }; }
+  function blank() { return { v: 1, pid: uid(), created: today(), u: Date.now(), lines: [], income: [], ideas: { done: {}, edit: {}, off: {}, mine: [], u: 0 }, logs: [], checks: {}, tools: {}, funds: [], holidays: { days: {}, people: [], u: 0 } }; }
   // Fills a money object in place (so a profile's own object stays the one saved).
   function norm(d) {
     if (!d || typeof d !== 'object') d = {};
@@ -162,7 +170,16 @@
     d.lines = arr(d.lines); d.income = arr(d.income); d.logs = arr(d.logs); d.checks = obj(d.checks); d.tools = obj(d.tools);
     d.ideas = obj(d.ideas); ['done', 'edit', 'off'].forEach(function (k) { d.ideas[k] = obj(d.ideas[k]); }); d.ideas.mine = arr(d.ideas.mine); d.ideas.u = +d.ideas.u || 0;
     d.lines.forEach(function (l) { if (!FREQ[l.f]) l.f = 'm'; if (!STATUS[l.s]) l.s = 'fixed'; l.a = +l.a || 0; });
+    d.funds = arr(d.funds).filter(function (f) { return f && typeof f === 'object' && f.id; }); d.funds.forEach(normFund);
+    d.holidays = obj(d.holidays); d.holidays.days = obj(d.holidays.days); d.holidays.people = arr(d.holidays.people).filter(function (x) { return x && x.id; }); d.holidays.u = +d.holidays.u || 0;
     return d;
+  }
+  function normFund(f) {
+    f.kind = f.kind === 'jic' ? 'jic' : 'bill'; f.n = String(f.n == null ? '' : f.n); f.amt = +f.amt || 0; f.mon = +f.mon || 0; f.cap = +f.cap || 0; f.bal = r2(+f.bal || 0);
+    f.due = arr(f.due).map(function (m) { return +m; }).filter(function (m, i, a) { return m >= 0 && m < 12 && Math.floor(m) === m && a.indexOf(m) === i; }).sort(function (a, b) { return a - b; });
+    if (f.last != null && !/^\d{4}-\d{2}$/.test(String(f.last))) delete f.last; if (f.la != null) f.la = r2(+f.la || 0);
+    if (f.pm && (typeof f.pm !== 'object' || !/^\d{4}-\d{2}$/.test(String(f.pm.m)))) delete f.pm;
+    return f;
   }
   function freqOf(f) { return FREQ[f] || FREQ.m; }
   function monthly(l) { return r2((+l.a || 0) * freqOf(l.f).k); }
@@ -183,8 +200,10 @@
     live(d.income).forEach(function (s) { var a = +s.a || 0; inc += a; lo += s.lo != null ? +s.lo : a; hi += s.hi != null ? +s.hi : a; });
     var ideas = ideaList(d), saved = 0, savedSpend = 0, savedInc = 0;
     ideas.forEach(function (x) { if (x.done) { saved += x.save; if (x.k === 'income') savedInc += x.save; else savedSpend += x.save; } });
+    // BLD 942: Money Out includes this month's set-asides (a full fund adds $0).
+    var lineOut = r2(spend), sa = setAsideSum(d); spend += sa;
     var gap = r2(inc - spend);
-    return { spend: r2(spend), income: r2(inc), lo: r2(lo), hi: r2(hi), pretax: r2(pretax), gap: gap, saved: r2(saved), savedSpend: r2(savedSpend), savedInc: r2(savedInc), after: r2(gap + saved), ideas: ideas };
+    return { spend: r2(spend), lineOut: lineOut, setaside: sa, savings: fundSavings(d), income: r2(inc), lo: r2(lo), hi: r2(hi), pretax: r2(pretax), gap: gap, saved: r2(saved), savedSpend: r2(savedSpend), savedInc: r2(savedInc), after: r2(gap + saved), ideas: ideas };
   }
 
   /* ---------- Close the Gap: ideas from the person's own lines ----------
@@ -250,16 +269,117 @@
   function month(d, mk) {
     mk = mk || monthKey(); var t = totals(d), logs = live(d.logs).filter(function (g) { return String(g.d || '').slice(0, 7) === mk; });
     var by = {}, loose = 0, logged = 0;
-    logs.forEach(function (g) { logged += +g.a || 0; var l = find(d.lines, g.c); if (l && !l.x && counts(l)) by[l.id] = (by[l.id] || 0) + (+g.a || 0); else loose += +g.a || 0; });
+    // BLD 942: spending paid from a set-aside fund (g.f) comes from savings already set aside, so it stays out of the month.
+    var fromFund = 0;
+    logs.forEach(function (g) { if (g.f) { fromFund += +g.a || 0; return; } logged += +g.a || 0; var l = find(d.lines, g.c); if (l && !l.x && counts(l)) by[l.id] = (by[l.id] || 0) + (+g.a || 0); else loose += +g.a || 0; });
     var rows = live(d.lines).filter(counts).map(function (l) { return { id: l.id, n: l.n, s: l.s, plan: monthly(l), got: r2(by[l.id] || 0) }; });
-    var projected = rows.reduce(function (s, r) { return s + Math.max(r.plan, r.got); }, 0) + loose - t.savedSpend;
+    var projected = rows.reduce(function (s, r) { return s + Math.max(r.plan, r.got); }, 0) + loose + t.setaside - t.savedSpend;
     var income = t.income + t.savedInc, diff = r2(income - projected);
-    return { key: mk, name: MONTHS[+mk.slice(5, 7) - 1], income: r2(income), lo: t.lo, hi: t.hi, plan: r2(t.spend - t.savedSpend), logged: r2(logged), loose: r2(loose), rows: rows, projected: r2(projected), diff: diff,
+    return { key: mk, name: MONTHS[+mk.slice(5, 7) - 1], income: r2(income), lo: t.lo, hi: t.hi, plan: r2(t.spend - t.savedSpend), setaside: t.setaside, fromFund: r2(fromFund), logged: r2(logged), loose: r2(loose), rows: rows, projected: r2(projected), diff: diff,
       line: diff >= 0 ? 'Ahead ' + money(diff) + ' this month' : 'Short ' + money(-diff) + ' this month', logs: logs };
   }
   function logAdd(d, a, c, date) {
     var l = find(d.lines, c), g = { id: uid(), d: date || today(), a: r2(a), c: l ? l.id : '', n: l ? l.n : (c || 'Other'), u: Date.now() };
     d.logs.push(g); touch(d); return g;
+  }
+
+  /* ---------- BLD 942: Set-Asides (savings funds in a separate savings account) ---------- */
+  function mkAdd(mk, n) { var y = +mk.slice(0, 4), m = +mk.slice(5, 7) - 1 + n; y += Math.floor(m / 12); m = ((m % 12) + 12) % 12; return y + '-' + pad(m + 1); }
+  function mIdx(mk) { return +String(mk).slice(5, 7) - 1; }
+  // The Holidays and Birthdays planner's starting list: [key, name, usual month (0 to 11), suggested amount, per, moves].
+  // per: 'person' (times the household), 'child' (times the children), '' (one amount). Every day starts off; the person checks
+  // the ones their family celebrates. Suggested amounts are modest starting points to change.
+  var HOLS = [
+    ['christmas', 'Christmas', 11, 100, 'person'], ['thanksgiving', 'Thanksgiving', 10, 150, ''], ['easter', 'Easter', 3, 60, '', 1], ['hanukkah', 'Hanukkah', 11, 100, '', 1],
+    ['eid', 'Eid al-Fitr', 2, 100, '', 1], ['diwali', 'Diwali', 9, 100, '', 1], ['lunar', 'Lunar New Year', 1, 80, '', 1], ['valentine', 'Valentine\u2019s Day', 1, 40, ''],
+    ['mother', 'Mother\u2019s Day', 4, 50, ''], ['father', 'Father\u2019s Day', 5, 50, ''], ['halloween', 'Halloween', 9, 40, ''], ['school', 'Back to School', 7, 100, 'child'],
+    ['grad', 'Graduations', 5, 100, '']
+  ];
+  var HOL = {}; HOLS.forEach(function (h) { HOL[h[0]] = h; });
+  var PEOPLE_KIND = { bday: 'Birthday', anniv: 'Anniversary' };
+  // Household size: the Standards' answer, or 2 plus the Allowance Helper's children. Children: the Allowance Helper's, or the household less two.
+  function kidsOf(d) { var k = d.tools && d.tools.kids; return arr(k && k.kids).filter(function (x) { return (+x.age || 0) > 0; }).length; }
+  function houseOf(d) { var s = d.tools && d.tools.std, n = Math.round(+(s && s.size) || 0); return n > 0 ? Math.min(15, n) : 2 + kidsOf(d); }
+  function holSuggest(d, key) { var h = HOL[key]; if (!h) return 0; return h[4] === 'person' ? h[3] * houseOf(d) : h[4] === 'child' ? h[3] * Math.max(1, kidsOf(d) || houseOf(d) - 2) : h[3]; }
+  // The planner's days by month: [{n, a, k}] for each of the twelve months.
+  function holMonths(d) {
+    var H = d.holidays || {}, out = []; for (var i = 0; i < 12; i++) out.push([]);
+    HOLS.forEach(function (h) { var x = H.days && H.days[h[0]]; if (x && x.on) { var m = +x.m; if (!(m >= 0 && m < 12)) m = h[2]; out[m].push({ n: h[1], a: r2(+x.amt || 0), k: 'day' }); } });
+    live(H.people).forEach(function (p) { var m = +p.m; if (m >= 0 && m < 12 && (+p.amt || 0) > 0) out[m].push({ n: (p.n || 'Someone') + '\u2019s ' + (p.kind === 'anniv' ? 'Anniversary' : 'Birthday'), a: r2(+p.amt || 0), k: p.kind === 'anniv' ? 'anniv' : 'bday' }); });
+    return out;
+  }
+  // What a fund pays out in each calendar month.
+  function fundEvents(d, f) {
+    var ev = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    if (f.hol) holMonths(d).forEach(function (L, m) { ev[m] = r2(L.reduce(function (s, x) { return s + x.a; }, 0)); });
+    else if (f.kind === 'bill') arr(f.due).forEach(function (m) { if (m >= 0 && m < 12) ev[m] = r2(ev[m] + (+f.amt || 0)); });
+    return ev;
+  }
+  // A fund's set-aside for month mk, from its balance now.
+  // Known Bill (and the holiday fund): this month's unpaid due amount is held from the balance; the monthly amount is the
+  // smallest whole dollar amount that has every due date in the next twelve months ready. Just in Case: up to its cap.
+  function fundNeed(d, f, mk) {
+    mk = mk || monthKey(); var m = mIdx(mk), bal = +f.bal || 0;
+    if (f.kind === 'jic' && !f.hol) {
+      var mon = Math.max(0, +f.mon || 0), cap = Math.max(0, +f.cap || 0), a = cap > 0 ? Math.max(0, Math.min(mon, cap - bal)) : mon;
+      return { a: r2(a), full: cap > 0 && bal >= cap - 0.005, target: cap, held: 0, next: null };
+    }
+    var ev = fundEvents(d, f), paid = f.pm && f.pm.m === mk ? +f.pm.a || 0 : 0, held = Math.max(0, ev[m] - paid), avail = bal - held, A = 0, c = 0, next = null;
+    for (var j = 1; j <= 12; j++) { var e = ev[(m + j) % 12]; if (!e) continue; A += e; if (!next) next = { j: j, m: (m + j) % 12, a: e }; c = Math.max(c, (A - avail) / j); }
+    return { a: Math.max(0, Math.ceil(c - 1e-6)), held: r2(held), now: ev[m], avail: r2(avail), next: next, target: held > 0 ? ev[m] : next ? next.a : 0, full: false };
+  }
+  // The amount a fund counts this month: frozen once the month is counted (so paying from it keeps the month even).
+  function fundMonth(d, f, mk) { mk = mk || monthKey(); return f.last === mk && f.la != null ? +f.la || 0 : fundNeed(d, f, mk).a; }
+  function setAsideSum(d, mk) { return r2(live(d.funds).reduce(function (s, f) { return s + fundMonth(d, f, mk); }, 0)); }
+  function fundSavings(d) { return r2(live(d.funds).reduce(function (s, f) { return s + (+f.bal || 0); }, 0)); }
+  // Each new month: last month's set-aside joins the balance, and this month's is counted. Missed months are applied one
+  // by one (up to two years). Running it again changes nothing. It never changes u, so a newer edit from family still wins.
+  function roll(d, mk) {
+    mk = mk || monthKey(); var n = 0;
+    live(d.funds).forEach(function (f) {
+      if (!f.last) { f.last = mk; f.la = fundNeed(d, f, mk).a; return; }
+      var k = 0;
+      while (f.last < mk && k < 24) { f.bal = r2((+f.bal || 0) + (+f.la || 0)); f.last = mkAdd(f.last, 1); f.la = fundNeed(d, f, f.last).a; k++; n++; }
+      if (f.last < mk) { f.last = mk; f.la = fundNeed(d, f, mk).a; }
+    });
+    if (n) touch(d);
+    return n;
+  }
+  // After a change to a fund's amounts, due months, cap, or balance: this month's amount is counted again.
+  function rec(d, f) { var mk = monthKey(); if (!f.last || f.last <= mk) { f.last = mk; f.la = fundNeed(d, f, mk).a; } }
+  function recAll(d) { live(d.funds).forEach(function (f) { if (f.hol) rec(d, f); }); }
+  function addFund(d, o) {
+    var f = normFund(Object.assign({ id: uid(), n: '', kind: 'jic', amt: 0, due: [], mon: 0, cap: 0, bal: 0 }, o || {}, { u: Date.now() }));
+    d.funds.push(f); rec(d, f); touch(d); return f;
+  }
+  function editFund(d, f, patch) { if ('due' in patch && f.pm && f.pm.auto) delete f.pm; Object.assign(f, patch); normFund(f); f.u = Date.now(); rec(d, f); touch(d); return f; }
+  function holFund(d) { return live(d.funds).filter(function (f) { return f.hol; })[0] || null; }
+  // Pay from a fund: a log marked with the fund (stays out of the month), and the balance comes down.
+  function payFund(d, f, a, date) {
+    a = r2(Math.abs(+a || 0)); var dt = date || today(), mk = dt.slice(0, 7);
+    var g = { id: uid(), d: dt, a: a, c: '', n: f.n || 'Set-Aside', f: f.id, u: Date.now() }; d.logs.push(g);
+    f.bal = r2((+f.bal || 0) - a); if (mk === monthKey()) f.pm = { m: mk, a: r2((f.pm && f.pm.m === mk ? +f.pm.a || 0 : 0) + a) };
+    f.u = Date.now(); touch(d); return g;
+  }
+  // Undo a payment (or remove its log): the money goes back into the fund.
+  function unpay(d, g, back) {
+    var f = find(d.funds, g.f); if (!f) return; var s = back ? 1 : -1, mk = String(g.d || '').slice(0, 7);
+    f.bal = r2((+f.bal || 0) + s * (+g.a || 0)); if (f.pm && f.pm.m === mk) f.pm.a = r2(Math.max(0, (+f.pm.a || 0) + (back ? -1 : 1) * (+g.a || 0))); f.u = Date.now(); touch(d);
+  }
+  function addToFund(d, f, a) { f.bal = r2((+f.bal || 0) + Math.abs(+a || 0)); f.u = Date.now(); touch(d); return f; }
+  // Lines that read as set-asides: an Estimate, or a line that comes twice a year, yearly, or spread monthly.
+  function fundable(l) { return !!l && !l.x && l.s !== 'pretax' && l.s !== 'hold' && (l.s === 'est' || l.f === 'h' || l.f === 'y' || l.f === 's'); }
+  // Make This a Set-Aside: the line becomes a fund with the same monthly amount, and leaves Expenses (so it counts once).
+  // A monthly Estimate becomes Just in Case (a cap of a year's worth); a twice a year, yearly, or spread line becomes a
+  // Known Bill whose due months start from this month (marked paid, so the monthly amount stays the same until the
+  // person sets the real months). An older Set-Aside Funds balance for the line comes along.
+  function toFund(d, l) {
+    if (!fundable(l)) return null;
+    var mk = monthKey(), m = mIdx(mk), old = d.tools && d.tools.fund && d.tools.fund.bal, bal = old && +old[l.id] > 0 ? +old[l.id] : 0, o;
+    if (l.f === 'm' || l.f === 'b') o = { n: l.n, kind: 'jic', mon: monthly(l), cap: Math.round(monthly(l) * 12), bal: bal };
+    else { var due = l.f === 'h' ? [m, (m + 6) % 12] : [m]; o = { n: l.n, kind: 'bill', amt: +l.a || 0, due: due, bal: bal, pm: { m: mk, a: r2((+l.a || 0)), auto: 1 } }; }
+    o.from = l.id;
+    var f = addFund(d, o); remove(l, d); return f;
   }
 
   /* ---------- the weekly money check-in ---------- */
@@ -492,14 +612,18 @@
   function unb64u(s) { s = String(s).replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
   function packOf(d) {
     var since = (function () { var x = new Date(); x.setDate(1); x.setMonth(x.getMonth() - 1); return monthKey(x); })();
-    var I2 = d.ideas, all = [].concat(d.lines, d.income, d.logs, I2.mine).map(function (x) { return +x.u || 0; }).filter(Boolean), t0 = all.length ? Math.min.apply(null, all) : Date.now();
+    var I2 = d.ideas, H = d.holidays || { days: {}, people: [] }, hd = obj(H.days);
+    var all = [].concat(d.lines, d.income, d.logs, I2.mine, arr(d.funds), arr(H.people), Object.keys(hd).map(function (k) { return hd[k]; })).map(function (x) { return +(x && x.u) || 0; }).filter(Boolean), t0 = all.length ? Math.min.apply(null, all) : Date.now();
     var U = function (u) { return Math.max(0, Math.floor(((+u || t0) - t0) / 1000)).toString(36); };
     return {
       v: 1, p: d.pid, t: Date.now(), o: t0,
       l: d.lines.map(function (l) { return [l.id, l.n, l.a, l.f, l.s, l.o || '', U(l.u), l.x ? 1 : 0]; }),
       i: d.income.map(function (s) { return [s.id, s.n, s.a, s.lo, s.hi, s.o || '', U(s.u), s.x ? 1 : 0]; }),
-      g: d.logs.filter(function (g) { return String(g.d || '').slice(0, 7) >= since; }).map(function (g) { return [g.id, String(g.d).replace(/-/g, ''), g.a, g.c || '', g.c ? '' : g.n || '', U(g.u), g.x ? 1 : 0]; }),
-      k: { d: Object.keys(I2.done), e: I2.edit, o: Object.keys(I2.off), m: I2.mine.map(function (m) { return [m.id, m.n, m.a, m.k, m.o || '', U(m.u), m.x ? 1 : 0]; }), u: I2.u }
+      g: d.logs.filter(function (g) { return String(g.d || '').slice(0, 7) >= since; }).map(function (g) { var r = [g.id, String(g.d).replace(/-/g, ''), g.a, g.c || '', g.c ? '' : g.n || '', U(g.u), g.x ? 1 : 0]; if (g.f) r.push(g.f); return r; }),
+      k: { d: Object.keys(I2.done), e: I2.edit, o: Object.keys(I2.off), m: I2.mine.map(function (m) { return [m.id, m.n, m.a, m.k, m.o || '', U(m.u), m.x ? 1 : 0]; }), u: I2.u },
+      // BLD 942: set-aside funds and the Holidays and Birthdays planner (an older phone reads past them)
+      f: arr(d.funds).map(function (f) { return [f.id, f.n, f.kind, f.amt, arr(f.due).join('.'), f.mon, f.cap, f.bal, f.last || '', f.la == null ? '' : f.la, f.pm ? [f.pm.m, f.pm.a, f.pm.auto ? 1 : 0] : 0, f.hol ? 1 : 0, U(f.u), f.x ? 1 : 0]; }),
+      h: { d: Object.keys(hd).reduce(function (o, k) { var x = hd[k]; o[k] = [x.on ? 1 : 0, +x.m, +x.amt || 0, U(x.u)]; return o; }, {}), p: arr(H.people).map(function (x) { return [x.id, x.n, x.kind, +x.m, +x.amt || 0, U(x.u), x.x ? 1 : 0]; }) }
     };
   }
   function encode(d) {
@@ -522,7 +646,12 @@
       pid: String(j.p),
       lines: arr(j.l).map(function (r) { return fx({ id: String(r[0]), n: String(r[1] || ''), a: +r[2] || 0, f: FREQ[r[3]] ? r[3] : 'm', s: STATUS[r[4]] ? r[4] : 'fixed', o: String(r[5] || ''), u: U(r[6]) }, r[7]); }),
       income: arr(j.i).map(function (r) { return fx({ id: String(r[0]), n: String(r[1] || ''), a: +r[2] || 0, lo: r[3] == null ? null : +r[3], hi: r[4] == null ? null : +r[4], o: String(r[5] || ''), u: U(r[6]) }, r[7]); }),
-      logs: arr(j.g).map(function (r) { return fx({ id: String(r[0]), d: ymd8(r[1]), a: +r[2] || 0, c: String(r[3] || ''), n: String(r[4] || ''), u: U(r[5]) }, r[6]); }),
+      logs: arr(j.g).map(function (r) { var g = fx({ id: String(r[0]), d: ymd8(r[1]), a: +r[2] || 0, c: String(r[3] || ''), n: String(r[4] || ''), u: U(r[5]) }, r[6]); if (r[7]) g.f = String(r[7]); return g; }),
+      funds: Array.isArray(j.f) ? j.f.map(function (r) { var pm = Array.isArray(r[10]) ? { m: String(r[10][0]), a: +r[10][1] || 0 } : null; if (pm && Array.isArray(r[10]) && r[10][2]) pm.auto = 1;
+        var f = fx({ id: String(r[0]), n: String(r[1] || ''), kind: r[2] === 'jic' ? 'jic' : 'bill', amt: +r[3] || 0, due: String(r[4] || '').split('.').filter(Boolean).map(Number), mon: +r[5] || 0, cap: +r[6] || 0, bal: +r[7] || 0, u: U(r[12]) }, r[13]);
+        if (r[8]) f.last = String(r[8]); if (r[9] !== '' && r[9] != null) f.la = +r[9] || 0; if (pm) f.pm = pm; if (r[11]) f.hol = 1; return normFund(f); }) : null,
+      holidays: j.h && typeof j.h === 'object' ? { days: Object.keys(obj(j.h.d)).reduce(function (o, k) { var r = j.h.d[k]; if (Array.isArray(r) && HOL[k]) o[k] = { on: r[0] ? 1 : 0, m: +r[1] || 0, amt: +r[2] || 0, u: U(r[3]) }; return o; }, {}),
+        people: arr(j.h.p).map(function (r) { return fx({ id: String(r[0]), n: String(r[1] || ''), kind: r[2] === 'anniv' ? 'anniv' : 'bday', m: +r[3] || 0, amt: +r[4] || 0, u: U(r[5]) }, r[6]); }) } : null,
       ideas: { done: arr(k.d).reduce(function (o, x) { o[x] = 1; return o; }, {}), edit: obj(k.e), off: arr(k.o).reduce(function (o, x) { o[x] = 1; return o; }, {}),
         mine: arr(k.m).map(function (r) { return fx({ id: String(r[0]), n: String(r[1] || ''), a: +r[2] || 0, k: r[3] === 'income' ? 'income' : 'spend', o: String(r[4] || ''), u: U(r[5]) }, r[6]); }), u: +k.u || 0 }
     };
@@ -536,16 +665,23 @@
   function merge(d, j) {
     var t = unpack(j), joined = false;
     if (t.pid !== d.pid) {
-      if (live(d.lines).length || live(d.income).length) d.own = d.own || { pid: d.pid, lines: d.lines, income: d.income, ideas: d.ideas };
-      d.pid = t.pid; d.lines = []; d.income = []; d.ideas = { done: {}, edit: {}, off: {}, mine: [], u: 0 }; joined = true;
+      if (live(d.lines).length || live(d.income).length || live(d.funds).length) d.own = d.own || { pid: d.pid, lines: d.lines, income: d.income, ideas: d.ideas, funds: d.funds, holidays: d.holidays };
+      d.pid = t.pid; d.lines = []; d.income = []; d.ideas = { done: {}, edit: {}, off: {}, mine: [], u: 0 }; d.funds = []; d.holidays = { days: {}, people: [], u: 0 }; joined = true;
+    }
+    // BLD 942: funds by id and planner days by key, the newest edit winning; a code from an older phone leaves them as they are.
+    var fa = { added: 0, changed: 0 };
+    if (t.funds) { fa = mergeList(d.funds, t.funds); d.funds = fa.list; }
+    if (t.holidays) {
+      var hd = d.holidays.days; Object.keys(t.holidays.days).forEach(function (k) { var x = t.holidays.days[k]; if (!hd[k] || (+x.u || 0) > (+hd[k].u || 0)) hd[k] = x; });
+      d.holidays.people = mergeList(d.holidays.people, t.holidays.people).list; d.holidays.u = Date.now();
     }
     var a = mergeList(d.lines, t.lines), b = mergeList(d.income, t.income), g = mergeList(d.logs, t.logs), m = mergeList(d.ideas.mine, t.ideas.mine);
     d.lines = a.list; d.income = b.list; d.logs = g.list; d.ideas.mine = m.list;
     if (t.ideas.u > (d.ideas.u || 0)) { d.ideas.done = t.ideas.done; d.ideas.edit = t.ideas.edit; d.ideas.off = t.ideas.off; d.ideas.u = t.ideas.u; }
     touch(d);
-    return { joined: joined, lines: a.added + a.changed + b.added + b.changed, logs: g.added };
+    return { joined: joined, lines: a.added + a.changed + b.added + b.changed + fa.added + fa.changed, logs: g.added };
   }
-  function leave(d) { if (!d.own) return false; d.pid = d.own.pid; d.lines = d.own.lines; d.income = d.own.income; d.ideas = d.own.ideas; delete d.own; norm(d); touch(d); return true; }
+  function leave(d) { if (!d.own) return false; d.pid = d.own.pid; d.lines = d.own.lines; d.income = d.own.income; d.ideas = d.own.ideas; d.funds = d.own.funds || []; d.holidays = d.own.holidays || { days: {}, people: [], u: 0 }; delete d.own; norm(d); touch(d); return true; }
 
   /* ---------- the QR code (shared/vendor/qrcode.js, loaded the first time Share opens) ---------- */
   var QRP = null;
@@ -631,13 +767,17 @@
       if (toolsP) return toolsP;
       return (toolsP = new Promise(function (ok) { var sc = document.createElement('script'); sc.src = opts.toolsSrc || HERE + 'gg-money-tools.js?v=' + V; sc.onload = function () { if (TL()) TL().use(UTIL); ok(!!TL()); }; sc.onerror = function () { toolsP = null; ok(false); }; document.head.appendChild(sc); }));
     }
-    function tstate(d, id) { var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
-    function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate }; }
+    // BLD 942: the Holidays and Birthdays planner keeps its answers in money.holidays (household plan data, so it rides the Family share).
+    function tstate(d, id) { if (id === 'holidays') return d.holidays; var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
+    function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate, focus: function (sel) { setTimeout(function () { var x = root.querySelector(sel); if (x) try { x.focus(); if (x.select) x.select(); } catch (e) {} }, 0); } }; }
     function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'sheet'; S.ed = null; S.rowOpen = null; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
 
     /* ----- painting ----- */
-    function paint() {
+    var painting = false;
+    function paint() { painting = true; try { paint0(); } finally { painting = false; } }
+    function paint0() {
       var d = D();
+      if (d && roll(d)) save();   // BLD 942: a new month adds last month's set-asides to each fund, once
       if (!d) { root.innerHTML = '<div class="gm-card gm-hello">' + head() + '<p class="gm-sub">Open your profile to see your money plan. It stays locked on this device with your passcode.</p>' + (window.GGP && GGP.require ? '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="unlock">Open My Profile</button></div>' : '') + '</div>'; return; }
       // Stage 2: a view this person cannot open (a Membership place on Start) settles on Close the Gap, and the host's address follows.
       if (!TITLE[S.view] && !/^tool:[a-z]+$/.test(S.view)) S.view = 'sheet';   // BLD 941: an unknown view name settles on the sheet
@@ -985,7 +1125,7 @@
       if (big) L = L.slice().sort(function (a, b) { return (b.s === 'hold' ? -1 : monthly(b)) - (a.s === 'hold' ? -1 : monthly(a)); });
       var top = '<header class="gm-stop"><h2 class="gm-h2 gm-stitle">Grounded Money</h2><span class="gm-smonth">' + esc(MONTHS[new Date().getMonth()]) + ' Plan · tap any number to change it</span></header>';
       var empty = !all.length && !N.length ? '<div class="gm-acts gm-sstart"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div>' : '';
-      var exp = panel('out', 'Expenses', t.spend, L.map(function (l) { return sRow(l, 'line'); }).join(''),
+      var exp = panel('out', 'Expenses', t.lineOut, L.map(function (l) { return sRow(l, 'line'); }).join(''),
         '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:line">' + I('plus') + 'Add a Line</button><button type="button" class="gm-linkbtn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button></div>',
         L.length > 1 ? '<button type="button" class="gm-ssort" data-gm="ssort" aria-pressed="' + big + '" aria-label="Order: ' + (big ? 'Largest First' : 'Order Added') + '. Tap to change">' + I('sort') + (big ? 'Largest First' : 'Order Added') + '</button>' : '');
       var inc = panel('in', 'Income', t.income, N.map(function (s) { return sRow(s, 'income'); }).join(''), '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:income">' + I('plus') + 'Add Income</button></div>');
@@ -995,11 +1135,69 @@
         '<button type="button" class="gm-btn' + (member() ? ' line' : '') + '" data-gm="go:gap">' + I('gap') + 'Close the Gap</button><button type="button" class="gm-btn line" data-gm="go:tools">' + I('grid') + 'Tools and Tips</button>' +
         (member() ? '<button type="button" class="gm-btn line" data-gm="go:share">' + I('share') + 'Share With Family</button>' : '') + '</div>' +
         (d.own ? '<p class="gm-quiet">You follow a Family plan. <button type="button" class="gm-linkbtn" data-gm="leave">' + (S.sureLeave ? 'Tap Again to Return to My Own Plan' : 'Return to My Own Plan') + '</button></p>' : '');
-      return top + sheetBoxes(t) + sheetChips(d, t) + empty + '<div class="gm-scols"><div class="gm-sleft">' + exp + '</div><div class="gm-sright">' + inc + pre + '</div></div>' + acts;
+      return top + sheetBoxes(t) + sheetChips(d, t) + empty + '<div class="gm-scols"><div class="gm-sleft">' + exp + '</div><div class="gm-sright">' + inc + pre + vFunds(d, t) + '</div></div>' + acts;
+    }
+    /* BLD 942: Set-Asides. One compact row a fund: its name, the amount counted this month, a slim bar for how full it is,
+       and a small line. The dots open its amounts, due months or cap, Pay From This Fund, Add to Balance, Kind, and Remove. */
+    var MON3 = MONTHS.map(function (m) { return m.slice(0, 3); });
+    function fundLine(d, f) {
+      var mk = monthKey(), need = fundNeed(d, f, mk), bal = +f.bal || 0, a = fundMonth(d, f, mk);
+      if (f.kind === 'jic' && !f.hol) {
+        if (need.full) return { t: 'Full · ' + money(a) + ' this month', pct: 100, full: 1 };
+        return { t: f.cap > 0 ? money(bal) + ' of ' + money(f.cap) : money(bal) + ' set aside', pct: f.cap > 0 ? Math.max(0, Math.min(100, Math.round(bal / f.cap * 100))) : 0 };
+      }
+      if (need.held > 0) {
+        var what = f.hol ? holMonths(d)[mIdx(mk)].map(function (x) { return x.n; }).join(', ') + ', ' + MONTHS[mIdx(mk)] : 'Due this month';
+        return { t: what + ': ' + money(need.held) + ' from your fund', pct: need.now > 0 ? Math.max(0, Math.min(100, Math.round(bal / need.now * 100))) : 0, due: need.held, full: bal >= need.now - 0.005 };
+      }
+      if (!need.next) return { t: f.hol ? 'Plan your days in Holidays and Birthdays' : 'Choose its due months', pct: 0 };
+      var tg = need.next.a;
+      return { t: money(bal) + ' of ' + money(tg) + ' · due ' + MONTHS[need.next.m], pct: tg > 0 ? Math.max(0, Math.min(100, Math.round(bal / tg * 100))) : 0, full: bal >= tg - 0.005 };
+    }
+    function vFunds(d, t) {
+      var F = live(d.funds), y = tv(d, 'sheet');
+      var est = live(d.lines).filter(function (l) { return l.s === 'est' && fundable(l); });
+      var ask = est.length && !y.sap ? '<div class="gm-sap" data-gm-sap><b>Turn estimates into set-asides?</b><p class="gm-snote">' + esc(names(est)) + (est.length === 1 ? ' fills' : ' each fill') + ' a savings fund a little each month, ready when needed.</p>' +
+        '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="sap:yes">Make ' + (est.length === 1 ? 'It a Set-Aside' : 'Them Set-Asides') + '</button><button type="button" class="gm-btn sm line" data-gm="sap:later">Later</button></div></div>' : '';
+      var hf = holFund(d);
+      var foot = (t.setaside > 0 ? '<p class="gm-snote" data-gm-move>Move ' + money(t.setaside) + ' to your set-aside savings this month.</p>' : F.length ? '' : '<p class="gm-snote">Repairs, yearly bills, and gifts each fill their own savings fund, so the month stays even.</p>') +
+        '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:fund">' + I('plus') + 'Add a Set-Aside</button>' + (hf ? '' : '<button type="button" class="gm-linkbtn" data-gm="go:tool:holidays">' + I('gift') + 'Holidays and Birthdays</button>') + '</div>';
+      var head = '<span class="gm-pbal" data-gm-savings>Savings <b>' + money(t.savings) + '</b></span>';
+      return panel('fund', 'Set-Asides', t.setaside, ask + F.map(function (f) { return fRow(d, f); }).join(''), foot, head);
+    }
+    function fRow(d, f) {
+      var open = S.rowOpen === f.id, ln = fundLine(d, f), a = fundMonth(d, f), nm = f.n || 'A set-aside';
+      return '<div class="gm-sr gm-fr nt' + (open ? ' open' : '') + '" data-id="' + f.id + '" data-kind="fund" data-fk="' + (f.hol ? 'hol' : f.kind) + '">' +
+        '<span class="gm-scn">' + cellHtml(f, 'fund', 'n') + '</span>' +
+        '<span class="gm-sc gm-sca" data-cell="fa"><button type="button" class="gm-sv" data-gm="srow:' + f.id + '" aria-label="' + esc(nm + ': ' + money(a) + ' this month. Tap for more') + '">' + money(a) + '</button></span>' +
+        '<button type="button" class="gm-smore" data-gm="srow:' + f.id + '" aria-expanded="' + open + '" aria-label="' + esc('More for ' + nm) + '">' + I('dots') + '</button>' +
+        '<div class="gm-fbar' + (ln.full ? ' full' : '') + '" role="img" aria-label="' + esc(nm + ', ' + ln.pct + ' percent full') + '"><span style="width:' + ln.pct + '%"></span></div>' +
+        '<small class="gm-fline" data-gm-fline>' + esc(ln.t) + '</small>' +
+        (open ? fundMore(d, f, ln) : '') + '</div>';
+    }
+    function ffld(f, k, lbl, v, ph) { return '<label class="gm-f"><span>' + esc(lbl) + '</span><input class="gm-in" data-gmfd="' + k + '" data-fid="' + f.id + '" inputmode="decimal" value="' + (v ? plain(v) : '') + '" placeholder="' + esc(ph || '0') + '"></label>'; }
+    function fundMore(d, f, ln) {
+      var kind = '<div class="gm-srmg" role="group" aria-label="Kind"><span class="gm-k">Kind</span>' + [['bill', 'Known Bill'], ['jic', 'Just in Case']].map(function (k) { var on = f.kind === k[0]; return '<button type="button" class="gm-mchip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-gm="fkind:' + f.id + ':' + k[0] + '">' + k[1] + '</button>'; }).join('') + '</div>';
+      var set;
+      if (f.hol) set = '<p class="gm-snote">Its days and amounts come from the planner.</p><div class="gm-acts"><button type="button" class="gm-btn sm line" data-gm="go:tool:holidays">' + I('gift') + 'Holidays and Birthdays</button></div><div class="gm-two">' + ffld(f, 'bal', 'Set aside now', f.bal) + '</div>';
+      else if (f.kind === 'jic') set = '<div class="gm-grid3">' + ffld(f, 'mon', 'Each month', f.mon) + ffld(f, 'cap', 'Cap (full at)', f.cap) + ffld(f, 'bal', 'Set aside now', f.bal) + '</div>';
+      else set = '<div class="gm-two">' + ffld(f, 'amt', 'Amount each time', f.amt) + ffld(f, 'bal', 'Set aside now', f.bal) + '</div>' +
+        '<div class="gm-srmg gm-fdue" role="group" aria-label="Due months"><span class="gm-k">Due Months</span>' + MON3.map(function (m, i) { var on = f.due.indexOf(i) >= 0; return '<button type="button" class="gm-mchip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" aria-label="' + MONTHS[i] + '" data-gm="fdue:' + f.id + ':' + i + '">' + m + '</button>'; }).join('') + '</div>';
+      var pre = ln.due ? plain(ln.due) : '';
+      var pay = '<div class="gm-fpay"><label class="gm-f"><span>Amount</span><input class="gm-in" data-gmfp="' + f.id + '" inputmode="decimal" value="' + pre + '" placeholder="0"></label>' +
+        '<button type="button" class="gm-btn sm" data-gm="fpay:' + f.id + '">Pay From This Fund</button><button type="button" class="gm-btn sm line" data-gm="fadd:' + f.id + '">Add to Balance</button></div>';
+      return '<div class="gm-srm">' + set + (f.hol ? '' : kind) + pay +
+        '<div class="gm-acts"><button type="button" class="gm-btn sm line" data-gm="rm:fund:' + f.id + '">' + I('x') + 'Remove</button><button type="button" class="gm-linkbtn" data-gm="srow:' + f.id + '">Done</button></div></div>';
+    }
+    // A fund row's numbers, redrawn in place after a change (so the next tap lands).
+    function fundNumbers(d, f) {
+      var row = root.querySelector('.gm-fr[data-id="' + f.id + '"]'); if (!row) return;
+      var ln = fundLine(d, f), a = fundMonth(d, f), b = row.querySelector('[data-cell="fa"] .gm-sv'), bar = row.querySelector('.gm-fbar'), fl = row.querySelector('[data-gm-fline]');
+      if (b) b.textContent = money(a); if (fl) fl.textContent = ln.t; if (bar) { bar.classList.toggle('full', !!ln.full); bar.firstChild.style.width = ln.pct + '%'; }
     }
     function sheetBoxes(t) {
       var ok = t.gap >= 0;
-      return '<div class="gm-sbox" data-gm-sums><div class="gm-sb" data-k="in"><span class="gm-k">Money In</span><b>' + money(t.income) + '</b></div><div class="gm-sb" data-k="out"><span class="gm-k">Money Out</span><b>' + money(t.spend) + '</b></div>' +
+      return '<div class="gm-sbox" data-gm-sums><div class="gm-sb" data-k="in"><span class="gm-k">Money In</span><b>' + money(t.income) + '</b></div><div class="gm-sb" data-k="out"><span class="gm-k">Money Out</span><b>' + money(t.spend) + '</b>' + (t.setaside > 0 ? '<small class="gm-sbsub" data-gm-incl>includes ' + money(t.setaside) + ' set aside</small>' : '') + '</div>' +
         '<div class="gm-sb ' + (ok ? 'ok' : 'short') + '" data-k="gap" data-gm-gap="' + t.gap + '"><span class="gm-k">' + (ok ? 'Ahead Each Month' : 'Short Each Month') + '</span><b>' + money(Math.abs(t.gap)) + '</b></div></div>';
     }
     // The chips: giving and saving as shares of take-home (Before Taxes counted as saving), the season, and the Standards.
@@ -1035,25 +1233,30 @@
     // One cell: a button that shows the value, or the field while it changes.
     function cellHtml(l, k, f) {
       var e = S.ed, ed = e && e.id === l.id && e.f === f, nm = l.n || '';
-      if (f === 'n') return '<span class="gm-sc" data-cell="n">' + (ed ? '<input class="gm-sin" data-ed="n:' + l.id + '" value="' + esc(e.val != null ? e.val : nm) + '" maxlength="80" aria-label="Name" placeholder="' + (k === 'income' ? 'Name this income' : 'Name this line') + '" autocomplete="off" enterkeyhint="done">'
-        : '<button type="button" class="gm-sv' + (nm ? '' : ' ph') + '" data-gm="ed:n:' + k + ':' + l.id + '" aria-label="' + esc((nm || 'Unnamed') + '. Tap to change the name') + '">' + esc(nm || (k === 'income' ? 'Name this income' : 'Name this line')) + '</button>') + '</span>';
+      if (f === 'n') return '<span class="gm-sc" data-cell="n">' + (ed ? '<input class="gm-sin" data-ed="n:' + l.id + '" value="' + esc(e.val != null ? e.val : nm) + '" maxlength="80" aria-label="Name" placeholder="' + PH[k] + '" autocomplete="off" enterkeyhint="done">'
+        : '<button type="button" class="gm-sv' + (nm ? '' : ' ph') + '" data-gm="ed:n:' + k + ':' + l.id + '" aria-label="' + esc((nm || 'Unnamed') + '. Tap to change the name') + '">' + esc(nm || PH[k]) + '</button>') + '</span>';
       var shown = k === 'income' ? +l.a || 0 : monthly(l), how = k === 'income' || l.f === 'm' ? 'a month' : FREQ_WORD[l.f];
       return '<span class="gm-sc gm-sca" data-cell="a">' + (ed ? '<input class="gm-sin gm-sina" data-ed="a:' + l.id + '" value="' + esc(e.val != null ? e.val : l.a ? plain(l.a) : '') + '" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="0" aria-label="' + esc('Amount ' + how + (nm ? ' for ' + nm : '')) + '">'
         : '<button type="button" class="gm-sv" data-gm="ed:a:' + k + ':' + l.id + '" aria-label="' + esc((nm || 'This line') + ': ' + money(shown) + ' a month. Tap to change the amount') + '">' + money(shown) + '</button>') + '</span>';
     }
+    var PH = { income: 'Name this income', line: 'Name this line', fund: 'Name this set-aside' };
+    function listOf(d, k) { return k === 'income' ? d.income : k === 'fund' ? d.funds : d.lines; }
     function rowMore(l, kind) {
       if (kind === 'income') return '<div class="gm-srm"><div class="gm-two"><label class="gm-f"><span>Low</span><input class="gm-in" data-gmf="lo" inputmode="decimal" value="' + (l.lo != null ? plain(l.lo) : '') + '" placeholder="' + (l.a ? plain(l.a) : '0') + '"></label>' +
         '<label class="gm-f"><span>High</span><input class="gm-in" data-gmf="hi" inputmode="decimal" value="' + (l.hi != null ? plain(l.hi) : '') + '" placeholder="' + (l.a ? plain(l.a) : '0') + '"></label></div>' +
         '<div class="gm-acts"><button type="button" class="gm-btn sm line" data-gm="rm:income:' + l.id + '">' + I('x') + 'Remove</button><button type="button" class="gm-linkbtn" data-gm="srow:' + l.id + '">Done</button></div></div>';
       return '<div class="gm-srm"><div class="gm-srmg" role="group" aria-label="How Often"><span class="gm-k">How Often</span>' + FREQ_ORDER.map(function (f) { var on = l.f === f; return '<button type="button" class="gm-mchip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-gm="sfreq:' + l.id + ':' + f + '">' + esc(FREQ[f].n) + '</button>'; }).join('') + '</div>' +
         '<div class="gm-srmg" role="group" aria-label="Status"><span class="gm-k">Status</span>' + STATUS_ORDER.map(function (k) { var on = l.s === k; return '<button type="button" class="gm-mchip t-' + k + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-gm="sst:' + l.id + ':' + k + '">' + esc(STATUS[k]) + '</button>'; }).join('') + '</div>' +
+        (fundable(l) ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="tofund:' + l.id + '">' + I('jar') + 'Make This a Set-Aside</button></div>' : '') +
         '<div class="gm-acts"><button type="button" class="gm-btn sm line" data-gm="rm:line:' + l.id + '">' + I('x') + 'Remove</button><button type="button" class="gm-linkbtn" data-gm="srow:' + l.id + '">Done</button></div></div>';
     }
     // The totals, chips, and panel totals, redrawn in place after a change (the rest of the sheet stays, so the next tap lands).
     function sheetNumbers(d) {
       var t = totals(d), b = root.querySelector('[data-gm-sums]'), c = root.querySelector('[data-gm-chips]');
       if (b) b.outerHTML = sheetBoxes(t); if (c) c.outerHTML = sheetChips(d, t);
-      [['out', t.spend], ['pre', t.pretax], ['in', t.income]].forEach(function (x) { var e = root.querySelector('[data-gm-total="' + x[0] + '"]'); if (e) e.textContent = money(x[1]); });
+      [['out', t.lineOut], ['pre', t.pretax], ['in', t.income], ['fund', t.setaside]].forEach(function (x) { var e = root.querySelector('[data-gm-total="' + x[0] + '"]'); if (e) e.textContent = money(x[1]); });
+      var sv = root.querySelector('[data-gm-savings] b'); if (sv) sv.textContent = money(t.savings);
+      var mv = root.querySelector('[data-gm-move]'); if (mv) mv.textContent = 'Move ' + money(t.setaside) + ' to your set-aside savings this month.';
     }
     function edFocus() {
       if (!S.ed) return; var i = root.querySelector('[data-ed="' + S.ed.f + ':' + S.ed.id + '"]'); if (!i) { S.ed = null; return; }
@@ -1062,7 +1265,7 @@
     // Saves (keep) or leaves as it was, then shows the value again in its cell.
     function edDone(inp, keep) {
       var e = S.ed; if (!e || !inp || !inp.isConnected || inp.getAttribute('data-ed') !== e.f + ':' + e.id) return null;
-      S.ed = null; var d = D(), item = d && find(e.k === 'income' ? d.income : d.lines, e.id); if (!item) return null;
+      S.ed = null; var d = D(), item = d && find(listOf(d, e.k), e.id); if (!item) return null;
       if (keep) {
         var patch = {};
         if (e.f === 'n') { var nv = inp.value.replace(/\s+/g, ' ').trim(); if (nv !== (item.n || '')) patch.n = nv; }
@@ -1079,7 +1282,7 @@
       var y = window.scrollY, item;
       switch (p[0]) {
         case 'ed':
-          item = find(p[2] === 'income' ? d.income : d.lines, p[3]); if (!item) return;
+          item = find(listOf(d, p[2]), p[3]); if (!item) return;
           S.ed = { f: p[1], k: p[2], id: p[3] }; paint(); return;
         case 'tag':
           item = find(d.lines, p[1]); if (!item) return;
@@ -1090,8 +1293,29 @@
         case 'sst': item = find(d.lines, p[1]); if (item && STATUS[p[2]]) { edit(item, { s: p[2] }, d); save(); paint(); window.scrollTo(0, y); } return;
         case 'ssort': var st = tstate(d, 'sheet'); st.sort = st.sort === 'big' ? 'mine' : 'big'; touch(d); save(); paint(); window.scrollTo(0, y); return;
         case 'sadd':
+          if (p[1] === 'fund') { item = addFund(d, { kind: 'jic' }); save(); S.rowOpen = null; S.ed = { f: 'n', k: 'fund', id: item.id, chain: 1 }; paint(); return; }
           item = p[1] === 'income' ? addIncome(d) : addLine(d, p[1] === 'pre' ? { s: 'pretax' } : { s: 'fixed' }); save();
           S.rowOpen = null; S.ed = { f: 'n', k: p[1] === 'income' ? 'income' : 'line', id: item.id, chain: 1 }; paint(); return;
+        /* BLD 942: Set-Asides */
+        case 'fkind': item = find(d.funds, p[1]); if (item && (p[2] === 'bill' || p[2] === 'jic')) { var kp = { kind: p[2] };
+            if (p[2] === 'jic' && !item.mon) { kp.mon = fundMonth(d, item); if (!item.cap) kp.cap = Math.max(item.amt || 0, Math.round((kp.mon || 0) * 12)); }
+            if (p[2] === 'bill' && !item.amt) kp.amt = item.cap || Math.round((item.mon || 0) * 12);
+            editFund(d, item, kp); save(); paint(); window.scrollTo(0, y); } return;
+        case 'fdue': item = find(d.funds, p[1]); if (item) { var dm = +p[2], du = item.due.slice(), at = du.indexOf(dm); if (at >= 0) du.splice(at, 1); else du.push(dm); editFund(d, item, { due: du }); save(); paint(); window.scrollTo(0, y); } return;
+        case 'fpay': case 'fadd':
+          item = find(d.funds, p[1]); if (!item) return; var fi = root.querySelector('[data-gmfp="' + item.id + '"]'), fa = num(fi && fi.value);
+          if (!fa || fa <= 0) { say('Add the amount first.'); if (fi) fi.focus(); return; }
+          if (p[0] === 'fpay') { var g = payFund(d, item, fa); save(); paint(); window.scrollTo(0, y); S.undo = function () { remove(g, d); unpay(d, g, true); }; say('Paid ' + money(g.a, 1) + ' from ' + (item.n || 'your fund') + '. This month stays even.', true); }
+          else { var was0 = +item.bal || 0; addToFund(d, item, fa); save(); paint(); window.scrollTo(0, y); S.undo = function () { item.bal = was0; item.u = Date.now(); }; say('Added ' + money(fa, 1) + ' to ' + (item.n || 'your fund') + '.', true); }
+          return;
+        case 'tofund':
+          item = find(d.lines, p[1]); var nf = toFund(d, item); if (!nf) return; save(); S.rowOpen = nf.kind === 'bill' ? nf.id : null; paint(); window.scrollTo(0, y);
+          S.undo = function () { restore(item, d); remove(nf, d); }; say((item.n || 'The line') + ' is a set-aside now.' + (nf.kind === 'bill' ? ' Choose its due months.' : ''), true); return;
+        case 'sap':
+          var sy = tstate(d, 'sheet'); sy.sap = Date.now();
+          if (p[1] === 'yes') { var made = []; live(d.lines).filter(function (l) { return l.s === 'est' && fundable(l); }).forEach(function (l) { var f2 = toFund(d, l); if (f2) made.push([l, f2]); });
+            save(); paint(); window.scrollTo(0, y); S.undo = function () { made.forEach(function (x) { restore(x[0], d); remove(x[1], d); }); }; say(made.length + ' set-aside' + (made.length === 1 ? ' is' : 's are') + ' ready.', true); return; }
+          touch(d); save(); paint(); window.scrollTo(0, y); return;
       }
     }
 
@@ -1125,6 +1349,7 @@
       if (T.watch && !S.tw[id]) S.tw[id] = T.watch(c, null).state;
       var P = PART[T.part || 'live'];
       return '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:' + P.id + '">' + I('back') + 'Back to ' + esc(P.n) + '</button><button type="button" class="gm-linkbtn" data-gm="go:tools">' + I('grid') + 'All Tools</button></div>' +
+        (T.lead ? '<div class="gm-tlead">' + T.lead(c) + '</div>' : '') +
         (T.outFirst ? '<div class="gm-tres" aria-live="polite">' + T.out(c) + '</div><div class="gm-card gm-tform">' + T.form(c) + '</div>' : '<div class="gm-card gm-tform">' + T.form(c) + '</div><div class="gm-tres" aria-live="polite">' + T.out(c) + '</div>') + (T.start && !member() ? memberLine() : '');
     }
     function ideaCard(x) {
@@ -1182,7 +1407,7 @@
       var rows = m.rows.filter(function (r) { return r.got > 0 || r.s === 'varies'; }).sort(function (a, b) { return b.got - a.got; });
       return '<div class="gm-card gm-month"><span class="gm-k">' + esc(m.name) + ' at a Glance</span>' +
         '<div class="gm-mrows"><div><span>Income</span><b>' + money(m.income) + '</b>' + (m.lo !== m.hi ? '<small>' + money(m.lo) + ' to ' + money(m.hi) + '</small>' : '') + '</div>' +
-        '<div><span>Planned spending</span><b>' + money(m.plan) + '</b></div><div><span>Logged so far</span><b>' + money(m.logged, 1) + '</b></div></div>' +
+        '<div><span>Planned spending</span><b>' + money(m.plan) + '</b>' + (m.setaside ? '<small>includes ' + money(m.setaside) + ' set aside</small>' : '') + '</div><div><span>Logged so far</span><b>' + money(m.logged, 1) + '</b>' + (m.fromFund ? '<small>and ' + money(m.fromFund, 1) + ' from funds</small>' : '') + '</div></div>' +
         '<p class="gm-line1 ' + (ok ? 'ok' : 'gp') + '" data-gm-month="' + m.diff + '">' + I(ok ? 'sun' : 'leaf') + esc(m.line) + '</p></div>' +
         '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:log">' + I('tap') + 'Log Spending</button></div>' +
         (rows.length ? '<h3 class="gm-sec">Where It Goes</h3><div class="gm-card">' + rows.map(function (r) {
@@ -1200,9 +1425,10 @@
       return '<div class="gm-card gm-log"><label class="gm-f gm-amt"><span>Amount</span><div class="gm-dollar"><span aria-hidden="true">$</span><input class="gm-in" id="gm-log-a" inputmode="decimal" placeholder="0" value="' + esc(S.logAmt) + '" autocomplete="off"></div></label>' +
         '<p class="gm-mini">Then tap where it went.</p><div class="gm-chips">' + cats.map(function (l) { return '<button type="button" class="gm-chip" data-gm="log:' + l.id + '">' + esc(l.n) + '</button>'; }).join('') +
         '<button type="button" class="gm-chip" data-gm="log:">Other</button></div>' +
+        (live(d.funds).length ? '<div class="gm-logfund" data-gm-logfund><span class="gm-k">From a Fund</span><p class="gm-mini">Paid from set-aside savings, so this month stays even.</p><div class="gm-chips">' + live(d.funds).map(function (f) { return '<button type="button" class="gm-chip gm-fchip" data-gm="logf:' + f.id + '">' + I('jar') + esc(f.n || 'Set-Aside') + ' <small>' + money(f.bal) + '</small></button>'; }).join('') + '</div></div>' : '') +
         '<label class="gm-f gm-date"><span>Day</span><input class="gm-in" type="date" id="gm-log-d" value="' + esc(S.logDate || today()) + '"></label></div>' +
-        '<h3 class="gm-sec">Logged in ' + esc(m.name) + ' <small>' + money(m.logged, 1) + '</small></h3>' +
-        (recent.length ? '<div class="gm-card gm-loglist">' + recent.map(function (g) { var l = find(d.lines, g.c); return '<div class="gm-lg"><span class="gm-ld">' + esc(niceDate(g.d)) + '</span><b>' + esc(l && !l.x ? l.n : g.n || 'Other') + '</b><span class="gm-la">' + money(g.a, 1) + '</span><button type="button" class="gm-x sm" data-gm="rm:log:' + g.id + '" aria-label="Remove ' + money(g.a, 1) + ' ' + esc(g.n || '') + '">' + I('x') + '</button></div>'; }).join('') + '</div>'
+        '<h3 class="gm-sec">Logged in ' + esc(m.name) + ' <small>' + money(m.logged, 1) + (m.fromFund ? ', and ' + money(m.fromFund, 1) + ' from funds' : '') + '</small></h3>' +
+        (recent.length ? '<div class="gm-card gm-loglist">' + recent.map(function (g) { var l = find(d.lines, g.c), fu = g.f && find(d.funds, g.f); return '<div class="gm-lg' + (g.f ? ' fromfund' : '') + '"><span class="gm-ld">' + esc(niceDate(g.d)) + '</span><b>' + esc(g.f ? (fu && !fu.x ? fu.n : g.n || 'Set-Aside') + ', from the fund' : l && !l.x ? l.n : g.n || 'Other') + '</b><span class="gm-la">' + money(g.a, 1) + '</span><button type="button" class="gm-x sm" data-gm="rm:log:' + g.id + '" aria-label="Remove ' + money(g.a, 1) + ' ' + esc(g.n || '') + '">' + I('x') + '</button></div>'; }).join('') + '</div>'
           : '<p class="gm-sub">Your first logged spending shows here.</p>');
     }
 
@@ -1303,14 +1529,17 @@
           var cx = tctx(d, p[1]); if (TT.init) TT.init(cx.t, cx); if (TT.act(p[2], p.slice(3).join(':'), cx)) { touch(d); save(); var y0 = window.scrollY; paint(); window.scrollTo(0, y0); watchTool(d, p[1]); }
           return;
         case 'mem': if (opts.onMembership) opts.onMembership(p[1]); return;
-        case 'ed': case 'tag': case 'srow': case 'sfreq': case 'sst': case 'ssort': case 'sadd': sheetAct(p, d); return;
+        case 'ed': case 'tag': case 'srow': case 'sfreq': case 'sst': case 'ssort': case 'sadd': case 'fkind': case 'fdue': case 'fpay': case 'fadd': case 'tofund': case 'sap': sheetAct(p, d); return;
         case 'common': COMMON.forEach(function (c) { addLine(d, c); }); save(); if (S.view !== 'sheet') S.view = 'plan'; paint(); say('Twelve common lines are ready. Add your amounts, and rename or remove any.'); focusFirstEmpty(); return;
         case 'add':
           var it = p[1] === 'income' ? addIncome(d) : addLine(d); save(); paint();
           var inp = root.querySelector('[data-id="' + it.id + '"] .gm-name'); if (inp) { inp.focus(); try { inp.scrollIntoView({ block: 'center' }); } catch (e) {} }
           return;
         case 'rm':
-          var list = p[1] === 'income' ? d.income : p[1] === 'log' ? d.logs : d.lines, item = find(list, p[2]); if (!item) return;
+          var list = p[1] === 'log' ? d.logs : listOf(d, p[1]), item = find(list, p[2]); if (!item) return;
+          // A payment from a fund that is removed puts the money back in the fund (and Undo takes it out again).
+          if (p[1] === 'log' && item.f) { remove(item, d); unpay(d, item, true); save(); S.undo = function () { restore(item, d); unpay(d, item, false); }; paint(); say('Removed ' + money(item.a, 1) + '. It is back in ' + (item.n || 'the fund') + '.', true); return; }
+          if (p[1] === 'fund') S.rowOpen = null;
           remove(item, d); save(); S.undo = function () { restore(item, d); }; paint();
           say((p[1] === 'log' ? 'Removed ' + money(item.a, 1) + '.' : 'Removed ' + (item.n || 'the line') + '.'), true); return;
         case 'undo': if (S.undo) { S.undo(); S.undo = null; save(); paint(); } return;
@@ -1331,9 +1560,11 @@
           }
           if (p[1] === 'rm') { var mm = find(d.ideas.mine, p[2]); if (mm) { remove(mm, d); d.ideas.u = Date.now(); delete d.ideas.done['mine:' + mm.id]; S.undo = function () { restore(mm, d); d.ideas.u = Date.now(); }; save(); paint(); say('Removed ' + mm.n + '.', true); } return; }
           return;
-        case 'log':
+        case 'logf': case 'log':
           var ai = root.querySelector('#gm-log-a'), amt = num(ai && ai.value), dt = (root.querySelector('#gm-log-d') || {}).value || today();
           if (!amt || amt <= 0) { say('Add the amount first.'); if (ai) ai.focus(); return; }
+          if (p[0] === 'logf') { var lf = find(d.funds, p[1]); if (!lf) return; var gf = payFund(d, lf, amt, dt); S.logAmt = ''; S.logDate = dt === today() ? '' : dt; save(); paint();
+            S.undo = function () { remove(gf, d); unpay(d, gf, true); }; say('Paid ' + money(gf.a, 1) + ' from ' + (lf.n || 'your fund') + '. This month stays even.', true); var a3 = root.querySelector('#gm-log-a'); if (a3) a3.focus(); return; }
           var g = logAdd(d, amt, p[1] || 'Other', dt); S.logAmt = ''; S.logDate = dt === today() ? '' : dt; save(); paint();
           S.undo = function () { remove(g, d); }; say('Logged ' + money(g.a, 1) + ' to ' + (g.n || 'Other') + '.', true);
           var a2 = root.querySelector('#gm-log-a'); if (a2) a2.focus(); return;
@@ -1394,17 +1625,23 @@
     function toolInput(t) {
       var view = t.closest('[data-tool]'), d = D(); if (!view || !d) return false; var id = view.getAttribute('data-tool'), T = TL() && TL().get(id); if (!T) return false;
       var v = t.value; if (t.getAttribute('data-n')) { var n = num(v); v = n == null ? '' : n; } else if (t.tagName === 'SELECT' && /^\d+$/.test(v)) v = +v;
-      var c = tctx(d, id); setPath(c.t, t.getAttribute('data-gt'), v); touch(d);
-      var out = root.querySelector('.gm-tres'); if (out) out.innerHTML = T.out(c);
+      var c = tctx(d, id); setPath(c.t, t.getAttribute('data-gt'), v); if (T.onSet) T.onSet(t.getAttribute('data-gt'), c); touch(d);
+      // BLD 942: the results are drawn again only when they change, so a tap on a button there lands after a field is left.
+      var out = root.querySelector('.gm-tres'), oh = out && T.out(c); if (out && out._gmh !== oh) { out.innerHTML = oh; out._gmh = oh; }
       var lv = root.querySelector('[data-gm-live]'); if (lv && T.live) lv.innerHTML = T.live(c);
       return true;
     }
     function watchTool(d, id) { var T = TL() && TL().get(id); if (!T || !T.watch) return; var r = T.watch(tctx(d, id), S.tw[id]); S.tw[id] = r.state; if (r.msg) celebrate(r.msg); }
     function onChange(e) {
-      var t = e.target, d = D(); if (!d) return;
+      var t = e.target, d = D(); if (!d || painting) return;   // a field leaving while the screen is drawn again changes nothing more
       if (t.getAttribute('data-gt')) {
         if (toolInput(t)) { save(); var id = t.closest('[data-tool]').getAttribute('data-tool'); watchTool(d, id); if (t.getAttribute('data-gtp') || t.tagName === 'SELECT' && /^(efm|list\.\d+\.f)$/.test(t.getAttribute('data-gt'))) { var key = t.getAttribute('data-gt'); paint(); var again = root.querySelector('[data-gt="' + key + '"]'); if (again) again.focus(); } }
         return;
+      }
+      var fd = t.getAttribute('data-gmfd');
+      if (fd) {
+        var fu = find(d.funds, t.getAttribute('data-fid')); if (!fu) return; var fv = num(t.value), fp = {}; fp[fd] = fv == null ? 0 : (fd === 'bal' ? r2(fv) : Math.abs(r2(fv)));
+        editFund(d, fu, fp); save(); fundNumbers(d, fu); sheetNumbers(d); return;
       }
       var f = t.getAttribute('data-gmf');
       if (f) {
@@ -1449,7 +1686,9 @@
         if (e.key !== 'Enter') return;
         e.preventDefault(); var was = edDone(t, true);
         // A new line flows from its name to its amount.
-        if (was && was.chain && was.f === 'n') { S.ed = { f: 'a', k: was.k, id: was.id }; paint(); }
+        if (was && was.chain && was.f === 'n') {
+          if (was.k === 'fund') { S.rowOpen = was.id; paint(); var fm = root.querySelector('.gm-fr[data-id="' + was.id + '"] [data-gmfd]'); if (fm) try { fm.focus(); } catch (e) {} return; }
+          S.ed = { f: 'a', k: was.k, id: was.id }; paint(); }
         return;
       }
       if (e.key !== 'Enter') return;
@@ -1457,7 +1696,8 @@
       else if (t.getAttribute('data-gmi')) { e.preventDefault(); act('idea:ed:' + t.getAttribute('data-gmi').slice(5)); }
       else if (t.id === 'gm-in-n' || t.id === 'gm-in-a') { e.preventDefault(); act('idea:addsave'); }
       else if (t.id === 'gm-paste') { e.preventDefault(); act('share:paste'); }
-      else if (t.getAttribute('data-gmf') && t.tagName === 'INPUT') { t.blur(); }
+      else if ((t.getAttribute('data-gmf') || t.getAttribute('data-gmfd')) && t.tagName === 'INPUT') { t.blur(); }
+      else if (t.getAttribute('data-gmfp')) { e.preventDefault(); act('fpay:' + t.getAttribute('data-gmfp')); }
     }
     function onBlur(e) { var t = e.target; if (t.getAttribute && t.getAttribute('data-ed')) edDone(t, true); }
     root.addEventListener('click', onClick); root.addEventListener('change', onChange); root.addEventListener('input', onInput); root.addEventListener('keydown', onKey); root.addEventListener('focusout', onBlur);
@@ -1477,10 +1717,16 @@
 
   // Helpers the tools file uses (GGMoneyTools.use).
   var UTIL = { esc: esc, money: money, plain: plain, num: num, I: I, live: live, monthly: monthly, totals: totals, month: month, find: find, edit: edit, addLine: addLine, addIncome: addIncome,
-    today: today, monthKey: monthKey, weekKey: weekKey, niceDate: niceDate };
+    today: today, monthKey: monthKey, weekKey: weekKey, niceDate: niceDate, uid: uid,
+    // BLD 942
+    HOLS: HOLS, HOL: HOL, PEOPLE_KIND: PEOPLE_KIND, holMonths: holMonths, holSuggest: holSuggest, houseOf: houseOf, kidsOf: kidsOf, fundNeed: fundNeed, fundMonth: fundMonth, holFund: holFund,
+    addFund: addFund, rec: rec, recAll: recAll, setAsideSum: setAsideSum, mkAdd: mkAdd, MONTHS: MONTHS };
   window.GGMoney = {
     v: V, render: render, summary: summary, util: UTIL,
-    model: { blank: blank, norm: norm, monthly: monthly, totals: totals, ideas: ideaList, ideaSet: ideaSet, month: month, addLine: addLine, addIncome: addIncome, edit: edit, remove: remove, restore: restore, logAdd: logAdd, checkSave: checkSave, weekKey: weekKey, FREQ: FREQ, STATUS: STATUS, STEADY: STEADY },
+    model: { blank: blank, norm: norm, monthly: monthly, totals: totals, ideas: ideaList, ideaSet: ideaSet, month: month, addLine: addLine, addIncome: addIncome, edit: edit, remove: remove, restore: restore, logAdd: logAdd, checkSave: checkSave, weekKey: weekKey, FREQ: FREQ, STATUS: STATUS, STEADY: STEADY,
+      // BLD 942: Set-Asides
+      fundNeed: fundNeed, fundMonth: fundMonth, fundEvents: fundEvents, setAsideSum: setAsideSum, roll: roll, rec: rec, addFund: addFund, editFund: editFund, payFund: payFund, unpay: unpay, addToFund: addToFund,
+      toFund: toFund, fundable: fundable, holMonths: holMonths, holSuggest: holSuggest, holFund: holFund, HOLS: HOLS, mkAdd: mkAdd },
     parse: { xlsx: readXlsx, csv: readCsv, file: readFile, guess: guessMap, rows: fromSheet, pick: pickSheet, apply: applyImport, inflate: inflate, unzip: unzip },
     share: { encode: encode, decode: decode, unpack: unpack, merge: merge, leave: leave, code: codeFrom, base: SHARE_BASE },
     stores: { ggp: ggpStore, local: localStore, memory: memStore },

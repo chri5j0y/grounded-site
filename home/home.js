@@ -56,7 +56,7 @@
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b938', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b940';
-  var MONEY_SRC = '/shared/gg-money.js?v=b941';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
+  var MONEY_SRC = '/shared/gg-money.js?v=b942';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -4494,7 +4494,9 @@
     ['year', 'Year Plan', 'year plan yearly calendar seasons big dates birthdays'],
     // BLD 940: the Grounded Money Standards and the Windfall Planner (Plan part, Membership)
     ['std', 'Grounded Money Standards', 'standards money standards budget percent percentages how much should i spend rent housing food share of income building season growing season'],
-    ['windfall', 'Windfall Planner', 'windfall tax return tax refund bonus gift inheritance lump sum']];
+    ['windfall', 'Windfall Planner', 'windfall tax return tax refund bonus gift inheritance lump sum'],
+    // BLD 942: Holidays and Birthdays (Plan part; the set-asides themselves sit on One Page)
+    ['holidays', 'Holidays and Birthdays', 'holidays birthdays anniversaries christmas gifts celebrations set aside sinking fund', 1]];
   function moneyFor() { return !!(S.id && S.p && !isYoung(S.p)); }
   function moneyOff() { if (MN.ctl) { try { MN.ctl.destroy(); } catch (e) {} MN.ctl = null; } }
   function paintMoney(box, sub) {
