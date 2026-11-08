@@ -901,8 +901,16 @@ function vShop(){
   ${ownShopPanel(n)}
   <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-hja="shopcopy">Copy for a Text</button><button type="button" class="btn btn-line btn-sm" data-hja="shopreset">${S.sureReset ? 'Tap Again to Clear the Checks' : 'Start Over'}</button></div>
   <textarea id="hj-copy" class="hj-copy" readonly hidden></textarea>
-  <p class="hj-note">Prices are estimates. Tap any item to change it. This list lives on this device.</p>`;
+  <p class="hj-note">Prices are estimates. Tap any item to change it. This list lives on this device.</p>
+  ${tripCard(n)}`;
 }
+// BLD 948: Log This Trip (field-guide/trip.js, loaded the first time a list shows): store totals typed, from the list's estimate,
+// or read from a receipt photo on this device; trips live in h.trips and the shorthand memory in h.rcptMap.
+const TRIP = {H, save, shopList, keepShop, rerender: () => rerender(true), toast, esc, PUB, TEEN, STORES, aisleOf, asset, fwl: n => fwl(n), shopDate: n => shopDate(n),
+  week: () => S.shopWk || foodWeek(new Date()), age: () => { try { return C.age ? String(C.age() || '') : ''; } catch(e){ return ''; } }};
+let TRIPL = 0;
+function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('field-guide/trip.js?v=b948');
+  s.onload = () => { if (S.sec === 'shop' || document.querySelector('.hj-shopbar')) rerender(true); }; s.onerror = () => { TRIPL = 0; }; document.head.appendChild(s); } return ''; }
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
   (PUB() ? [''] : [st]).forEach(s => { const g = (s ? shopVis(L.items, s) : L.items).filter(x => !x.done); if (!g.length) return; if (s && s !== 'all') out.push(STORES[s].toUpperCase());
@@ -5438,7 +5446,7 @@ window.GGHealth = {
     out.deleted = out.deleted || {clients: {}, sessions: {}}; out.deleted.health = out.deleted.health || {};
     Object.entries((inc.deleted || {}).health || {}).forEach(([id, ts]) => { out.deleted.health[id] = Math.max(out.deleted.health[id] || 0, ts); });
     const o = out.health = out.health && typeof out.health === 'object' ? out.health : {}, i = inc.health || {}; let added = 0, updated = 0;
-    ['labs', 'marks', 'notes', 'panels', 'wlog', 'myFoods', 'risk'].forEach(k => {
+    ['labs', 'marks', 'notes', 'panels', 'wlog', 'myFoods', 'risk', 'trips'].forEach(k => {
       o[k] = arr(o[k]);
       arr(i[k]).forEach(x => { if (!x || !x.id) return; const j = o[k].findIndex(y => y.id === x.id); if (j < 0){ o[k].push(x); added++; } else if ((x.u || 0) > (o[k][j].u || 0)){ o[k][j] = x; updated++; } });
       o[k] = o[k].filter(x => !(out.deleted.health[x.id] && out.deleted.health[x.id] >= (x.u || 0)));
@@ -5453,7 +5461,7 @@ window.GGHealth = {
     if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
-    ['plan', 'team', 'kids', 'own', 'menu', 'kitchen'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
+    ['plan', 'team', 'kids', 'own', 'menu', 'kitchen', 'rcptMap'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
   // BLD 881: act(key) with one item key (from today() or week()) opens or marks that item; act(action, value) is the engine's own.
