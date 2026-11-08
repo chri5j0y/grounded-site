@@ -595,7 +595,7 @@ const logOf = d => { const h = H(), k = ymd(d); return h.log[k] = h.log[k] || {}
 const isDone = (d, key) => !!(H().log[ymd(d)] || {})[key];
 function markDone(key, d){ const l = logOf(d || new Date()); l[key] = Date.now(); l.u = Date.now(); save(); }
 // Sunday dinner belongs to the coming food week: it is cooked on Sunday prep day, the day after shopping (BLD 846).
-function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? Object.assign({wk: letter(n)}, x) : null; }
+function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? dinEff(Object.assign({wk: letter(n)}, x), n) : null; }  // BLD 947: a Dinner Head Start left for the day of rides in
 function sesFor(d){ const s = PUB() ? pubSesKey(d) : progOn() ? guideKey(d) : WMAP[d.getDay()], ss = sesById(s); return ss ? Object.assign({id: s}, ss) : null; }
 // BLD 892: a session by id, from this phase's sessions or, in public Tending, built for the phase it belongs to (a later week in Week).
 function sesById(id){ if (!id) return null; const ss = (WK().sessions || {})[id]; if (ss) return ss; return PUB() && progOn() ? pubPhaseSes(idPhase(id))[id] || null : null; }
@@ -609,6 +609,78 @@ const BAT = () => (APP() || {}).batches || null;
 function prepFor(kind, n){ if (kind === 'pack') return (BAT() || {}).pack || null; if (kind.indexOf('bulk-') === 0){ const b = arr((BAT() || {}).batches).find(x => x.id === kind.slice(5)); return b ? Object.assign({title: b.name}, b) : null; }
   return prepFor0(kind, n); }
 function prepFor0(kind, n){ const sp = (APP() || {}).shop || {}, w = (sp.weeks || {})[letter(n)]; return w && w[kind] ? w[kind] : null; }
+// ---------- BLD 947: Sunday prep you can choose (Chris, November 8, 2026: "on sunday prep can you say what the prep item is for?
+// sometimes it makes more sense to make it the day of.. kate has an hour to prep each weekday dinner") ----------
+// Library: shop.weeks.X.sunday.items and .batch.items [{id, name, for, group: start, head, grab, or end, minsSunday, sundayWait,
+// minsDayOf, dayOfWhen, choice, ready, dinnerIds, steps: [{t, min, sc, when: first or later}]}]. Every step sits under the item it
+// makes. A Dinner Head Start (group head, choice true) is done Sunday or the day of: set.prepPick lives in H().prepPick
+// {'<week>:<id>': 'day'}; the dinner that first uses it (dinners.weeks.X.dinners.i.dayOf [{item, note, mins, bg, ahead, am, save,
+// skip, swap, steps, after}], preppedOwn) carries the day-of steps until the item is checked done. An item's Done check is the
+// log key prep:<kind>:<week>:<id>, read across the prep week. A library with no items keeps today's display exactly.
+const PI_GROUPS = [['start', ''], ['head', 'Dinner Head Starts'], ['grab', 'Grab and Go'], ['end', '']];
+const PI_LEAD = {head: 'Do each one Sunday, or make it the day of. The long cooks start first and cook while you do the rest.', grab: 'Made Sunday for the week\'s breakfasts, lunches, and snacks.'};
+const prepItems = (kind, n) => { const p = prepFor0(kind, n); return p && Array.isArray(p.items) && p.items.length ? p.items : null; };
+const piSunOf = n => addD(startMon(), (n - 1) * 7 - 1);
+const piKey = (kind, n, id) => 'prep:' + kind + ':' + n + ':' + id;
+const piLabel = it => it.name + (it.for ? ', ' + it.for : '');
+const piSay = it => piLabel(it).replace(/[.!?]?$/, '.');
+const piChoice = it => it.group === 'head' && it.choice !== false && +it.minsDayOf > 0;
+const piPick = (n, it) => piChoice(it) && ((H() || {}).prepPick || {})[n + ':' + it.id] === 'day' ? 'day' : 'sun';
+function piWhere(n, key){ const h = H(); for (let i = -1; i <= 6; i++){ const k = ymd(addD(piSunOf(n), i)); if ((h.log[k] || {})[key]) return k; } return null; }
+const piSun = (kind, n, it) => kind !== 'sunday' || piPick(n, it) === 'sun';
+const piDone = (kind, n, it) => piSun(kind, n, it) && !!(piWhere(n, piKey(kind, n, it.id)) || piWhere(n, 'prep:' + kind + ':' + n));
+// The guide's order: every first step, then each item in turn, then every later step (finishing steps), so long cooks keep going.
+function piPlay(items, kind, n){ const on = items.filter(it => piSun(kind, n, it)), out = [];
+  [['first'], [undefined, null, ''], ['later']].forEach(w => on.forEach(it => arr(it.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; if (w.includes(t.when)) out.push(Object.assign({}, t, {it: it.id, kick: piLabel(it), say: piSay(it)})); })));
+  return out; }
+// The dinner card: a head start that is still open puts its day-of steps in front of the dinner's own (Kayti's weeknight hour).
+function dinEff(x, n){
+  if (!x || !Array.isArray(x.dayOf) || !x.dayOf.length || !(n >= 1) || !H()) return x;
+  const its = prepItems('sunday', n); if (!its) return x;
+  const miss = [], ready = [];
+  x.dayOf.forEach(e => { const it = e && its.find(i => i.id === e.item); if (!it || !piChoice(it)) return; (piDone('sunday', n, it) ? ready : miss).push({e, it}); });
+  if (!miss.length) return x;
+  const skip = new Set(miss.flatMap(m => arr(m.e.skip).map(Number))), sw = Object.assign({}, ...miss.map(m => m.e.swap || {})), tag = (s, k) => Object.assign({}, typeof s === 'string' ? {t: s} : s, {kick: k});
+  const morning = miss.filter(m => m.e.ahead).flatMap(m => arr(m.e.steps).map(s => tag(s, 'This Morning')));
+  const pre = miss.filter(m => !m.e.ahead).sort((a, b) => (b.e.bg ? 1 : 0) - (a.e.bg ? 1 : 0)).flatMap(m => arr(m.e.steps).map(s => tag(s, m.it.name)));
+  const aft = miss.flatMap(m => arr(m.e.after).map(s => tag(s, m.it.name)));
+  let own = arr(x.steps).map((s, i) => sw[i] ? tag(sw[i], '') : (typeof s === 'string' ? {t: s} : s)).filter((s, i) => !skip.has(i));
+  const hi = own.length && /^Head start for tomorrow/.test(own[own.length - 1].t || '') ? own.length - 1 : own.length; own = own.slice(0, hi).concat(aft, own.slice(hi));
+  const seq = miss.filter(m => !m.e.bg && !m.e.ahead).reduce((a, m) => a + (+m.e.mins || 0), 0), save = miss.reduce((a, m) => a + (+m.e.save || 0), 0);
+  const night = Math.max((+x.mins || 0) - save + seq, ...miss.filter(m => m.e.bg).map(m => +m.e.mins || 0));
+  const note = miss.map(m => m.e.note).concat(ready.map(r => r.it.ready), [x.preppedOwn]).filter(Boolean).join(' ');
+  return Object.assign({}, x, {steps: morning.concat(pre, own), mins: night, prepped: note, dayNote: note, gi0: morning.length, dayOfN: n, dayOfItems: miss.map(m => ({id: m.it.id, name: m.it.name, am: m.e.ahead ? m.e.am || '' : '', amMins: m.e.ahead ? +m.e.mins || 0 : 0}))}); }
+// This food week, then the next ones, then last week: the week a dinner card belongs to when only its letter is known.
+function dinN(wk, id){ const fw = foodWeek(new Date()); for (const k of [0, 1, 2, 3, -1, -2, -3]){ const n = fw + k; if (n >= 1 && letter(n) === wk) return n; } return Math.max(1, fw); }
+const piMins = m => 'about ' + m + ' min';
+// One item's header: name, what it is for, minutes, the Done check, and for a Dinner Head Start the Sunday or Day Of choice.
+function piHead(kind, n, it){
+  const pick = piPick(n, it), done = piDone(kind, n, it), ch = piChoice(it);
+  const when = it.group === 'head' ? (pick === 'day' ? 'The day of: ' + (it.dayOfWhen || '') + ', ' + piMins(it.minsDayOf) : 'Sunday: ' + piMins(it.minsSunday || 0) + (it.sundayWait ? ', ' + it.sundayWait : '')) : (+it.minsSunday ? piMins(it.minsSunday) : '');
+  const chk = pick === 'sun' ? `<button type="button" class="hj-agck" data-hja="pidone" data-hjv="${esc(kind + '|' + n + '|' + it.id)}" aria-pressed="${done}" aria-label="${esc(it.name)} done">${done ? '&#10003;' : ''}</button>` : '';
+  const choice = ch ? `<div class="hj-pich" role="group" aria-label="When to make the ${esc(it.name)}"><span>Do it Sunday, or make it the day of:</span><button type="button" class="chip" data-hja="pipick" data-hjv="${esc(n + '|' + it.id + '|sun')}" aria-pressed="${pick === 'sun'}">Sunday<small>${esc(piMins(it.minsSunday || 0))}</small></button><button type="button" class="chip" data-hja="pipick" data-hjv="${esc(n + '|' + it.id + '|day')}" aria-pressed="${pick === 'day'}">Day Of<small>${esc(piMins(it.minsDayOf))}</small></button></div>`
+    : it.group === 'head' && it.choice === false ? `<p class="hj-sub">Tonight's dinner, so it starts with Sunday prep.</p>` : '';
+  return `<div class="hj-pih${done ? ' on' : ''}"><div class="hj-pin"><b>${esc(it.name)}</b>${it.for ? `<small class="hj-pifor">${esc(it.for.replace(/^./, c => c.toUpperCase()))}</small>` : ''}${when ? `<small>${esc(when)}</small>` : ''}</div>${chk}</div>${choice}${pick === 'day' ? `<p class="hj-note">The ${esc(it.dayOfWhen ? String(it.dayOfWhen).split(',')[0] : 'day of')} dinner card carries these steps.</p>` : ''}`; }
+// The Prep tab: each item as one row under its group, no steps (the guide holds them).
+function piRows(kind, n){ const its = prepItems(kind, n); if (!its) return '';
+  return `<div class="hj-pis">${PI_GROUPS.map(([g, label]) => { const L = its.filter(it => (it.group || 'grab') === g); if (!L.length) return '';
+    return `${label ? `<div class="hj-pig"><b>${esc(label)}</b>${PI_LEAD[g] && (g !== 'head' || kind === 'sunday') ? `<small>${esc(PI_LEAD[g])}</small>` : ''}</div>` : ''}${L.map(it => `<div class="hj-pi" data-hjpi="${esc(it.id)}">${piHead(kind, n, it)}</div>`).join('')}`; }).join('')}</div>`; }
+// The prep guide's list: each item with its own steps under it (the step numbers count within the item).
+function piList(o, kind, n){ const its = prepItems(kind, n), x = o.data, steps = arr(x.steps), dn = o.dn || {}, tdone = o.tdone || {};
+  const stepLi = i => { const t = steps[i], on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
+    return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : ''}</button><div>${t.when === 'later' ? '<span class="hj-at">Later</span> ' : t.when === 'first' ? '<span class="hj-at">Start first</span> ' : ''}${esc(t.t || '')}
+      ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; };
+  return `<div class="hj-pis">${PI_GROUPS.map(([g, label]) => { const L = its.filter(it => (it.group || 'grab') === g); if (!L.length) return '';
+    return `${label ? `<div class="hj-pig"><b>${esc(label)}</b>${PI_LEAD[g] && (g !== 'head' || kind === 'sunday') ? `<small>${esc(PI_LEAD[g])}</small>` : ''}</div>` : ''}${L.map(it => { const ix = steps.map((s, i) => s.it === it.id ? i : -1).filter(i => i >= 0);
+      return `<section class="hj-pi" data-hjpi="${esc(it.id)}">${piHead(kind, n, it)}${ix.length ? `<ol class="hj-steps">${ix.map(stepLi).join('')}</ol>` : ''}</section>`; }).join('')}`; }).join('')}</div>`; }
+// After a Done check or a choice, an open prep guide or dinner card rebuilds from the library (its step checks start over).
+function piRefresh(o){ if (!o || o !== S.ov || o.guide || o.run) return; let x = null;
+  if (o.k === 'prep' && o.data && o.data.items947){ const [, kind, n] = String(o.key).split(':'); x = prepOv(kind, +n, o.base ? o.base.N : 0); }
+  else if (o.k === 'cook' && o.wk && !o.idea && !o.peek) x = cookOv(o.wk, o.did, o.wn);
+  if (x){ x.inline = o.inline; Object.keys(o).forEach(k => delete o[k]); Object.assign(o, x); } }
+function piToggle(kind, n, id){ const key = piKey(kind, n, id), at = piWhere(n, key);
+  if (at){ const l = H().log[at]; delete l[key]; l.u = Date.now(); save(); return; }
+  const off = Math.round((day0(new Date()) - piSunOf(n)) / DAYMS); markDone(key, off >= -1 && off <= 6 ? new Date() : piSunOf(n)); }
 // ---------- BLD 889: the Weekly Batch (Chris, October 28, 2026: "we dont have room for a month.. i think weekly is good for most things") ----------
 // Every Sunday, right after Sunday Together Prep: burritos and homemade sausage, plus the week's rotating item. Written for six
 // (serves: 6); each step lists the amounts it names (sc), and those scale to the household with shared/gg-scale.js. At six the text
@@ -661,7 +733,7 @@ function agenda(d){
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 14, kick: 'After Sunday prep', title: b.title || 'Weekly Batch', sub: batchSub(b), btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
   if ((dow === 2 || dow === 4) && !KIT() && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
-  const dn = mmDinner(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
+  const dn = mmDinner(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id + (dn.dayOfN ? '|' + dn.dayOfN : ''), hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
   holAgenda(d).forEach(x => out.push(x)); // BLD 896: a set up holiday's shopping day and prep days
   mmAgenda(d).forEach(x => out.push(x)); // BLD 900: My Menu, each added meal on its day (a swapped dinner steps aside above)
   return out.sort((a, b) => a.hour - b.hour);
@@ -699,6 +771,8 @@ function remindersFor(d, opt){
   // A morning check, only when last night's thaw is still open.
   const dn0 = dinnerFor(d); if (dn0 && dn0.thaw && dn0.thaw.item && !all){ const k = +dn0.thaw.nights || 1, night = (h.log[ymd(addD(d, -k))] || {})['rem:thaw:' + ymd(d)];
     if (!night) push('thawam:' + ymd(d), 7, 'This morning', 'This morning: check that ' + dn0.thaw.item + ' is thawing for tonight', 'Tonight is ' + dn0.name + '. ' + (dn0.thaw.quick || 'Move it to the fridge now, and it is ready by dinner.')); }
+  // BLD 947: a Dinner Head Start left for the day of that starts in the morning (the slow cooker), on that morning.
+  if (dn0 && !all) arr(dn0.dayOfItems).filter(x => x.am).forEach(x => push('am:' + ymd(d) + ':' + x.id, 7, 'This morning', 'This morning: ' + x.am + ' for tonight', 'About ' + (x.amMins || 15) + ' minutes now, and it cooks all day for ' + dn0.name + '. Tap Open for the steps.', 'cook:' + dn0.wk + ':' + dn0.id));
   const wk = tw[letter(fw)] || {};
   if (dow === 6 && arr(wk.freeze).length) push('freeze:' + fw, 12, 'After shopping', 'After shopping: freeze ' + arr(wk.freeze).map(lc).join(', and '), 'These are for later in the week, so the freezer keeps them fresh. The thaw reminder comes a night or two before.', '', 4, 'freeze:' + letter(fw));
   if (dow === 4) push('thu:' + n, 19, 'Tonight', 'Tonight: check the fridge and pantry, and add what is low to Saturday\'s list', 'Use-it-up night is a good time to see what is left. Tap Open to add to the list.', 'shop:' + (n + 1), 1, 'thu');
@@ -774,7 +848,7 @@ function vWeek(){
   const track = H().set.track || 'strength';
   const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = mmDinner(d), ses = !workOn() ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
     return `<div class="hj-day${isT ? ' t' : ''}"><div class="hj-dl"><b>${esc(DOW[d.getDay()])}</b><small>${esc(short(ymd(d)))}</small></div><div class="hj-dr">
-      ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id)}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) && !KIT() ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
+      ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id + '|' + (d.getDay() === 0 ? foodWeek(d) : weekNo(d)))}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) && !KIT() ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
       ${ses ? `<button type="button" class="hj-pill move" data-hja="work" data-hjv="${esc(ses.id)}">${esc(sesLabel(ses.id, ses))}</button>` : ''}
       ${d.getDay() === 3 && prepFor('wednesday', n) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="wednesday|${n}">Mini Prep</button>` : ''}
       ${d.getDay() === 6 ? `<button type="button" class="hj-pill prep" data-hja="shopwk" data-hjv="${n + 1}">Shop for Week ${fwl(n + 1)}</button>` : ''}
@@ -803,7 +877,7 @@ function vPrep(){
     return `<div class="hj-pc"><div style="min-width:0"><b>${esc(title || p.title)}</b><small>${esc(sub)}${p.mins ? ' · about ' + esc(p.mins) + ' min' : ''}${done ? ' · done' : ''}</small></div><button type="button" class="btn btn-gold btn-sm" data-hja="prep" data-hjv="${kind}|${n}">Start</button></div>`; };
   const weeks = ['A', 'B', 'C', 'D'], inWk = (b, w) => b.weeks === 'every' || arr(b.weeks).includes(w) || b.every === 'weekly';
   return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="prepwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Prep for Week ${fwl(n)}</b><small>Week ${n}, starting ${esc(shortDate(addD(startMon(), (n - 1) * 7)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="prepwk" data-hjv="${n + 1}">Next</button></div>
-  <div class="hj-blk">${kick('This Week')}${card('sunday', 'Sunday Together Prep', 'Sunday')}${card('batch', '', 'Sunday, after prep')}${card('pack', 'Pack Lunches', 'Sunday evening')}${card('wednesday', 'Wednesday Mini Prep', 'Wednesday')}</div>
+  <div class="hj-blk">${kick('This Week')}${card('sunday', 'Sunday Together Prep', 'Sunday')}${piRows('sunday', n)}${card('batch', '', 'Sunday, after prep')}${piRows('batch', n)}${card('pack', 'Pack Lunches', 'Sunday evening')}${card('wednesday', 'Wednesday Mini Prep', 'Wednesday')}</div>
   ${bs.length ? `<div class="hj-blk">${kick('Batch Calendar')}<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Make</th>${weeks.map(w => `<th>${w === L ? '<b>' + w + '</b>' : w}</th>`).join('')}<th>Keeps</th></tr></thead><tbody>${bs.map(b => `<tr><td><b>${esc(b.name)}</b><small>${esc(b.makes || '')}</small></td>${weeks.map(w => `<td>${inWk(b, w) ? '&#9679;' : ''}</td>`).join('')}<td><small>${esc(b.keeps || '')}</small></td></tr>`).join('')}</tbody></table></div><p class="hj-sub">Food Week ${L} is this list's week. A dot means make it that week.</p></div>
   <div class="hj-blk">${kick('Bulk Basics and Freezer Stock')}${bs.map(b => { const c = +((h.stock || {})[b.id] || 0); return `<div class="hj-pc"><div style="min-width:0"><b>${esc(b.name)}</b><small>${esc(b.uses || '')}${b.mins ? ' · ' + esc(b.mins) + ' min' : ''}</small></div>
     ${b.where === 'freezer' ? `<div class="hj-stock"><button type="button" class="chip" data-hja="stock" data-hjv="${esc(b.id)}|-1" aria-label="One less">&minus;</button><span><b>${c}</b><small>in freezer</small></span><button type="button" class="chip" data-hja="stock" data-hjv="${esc(b.id)}|1" aria-label="One more">+</button></div>` : ''}
@@ -975,12 +1049,12 @@ function vOv(){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
     body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Grounded Cooking</button>${mmOvBtns(o)}
-      ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}${o.base ? servesRow(o) : ''}
+      ${x.dayNote ? `<p class="hj-note"><b>Dinner Head Start:</b> ${esc(x.dayNote)}</p><div class="hj-pimade">${arr(x.dayOfItems).map(it => `<button type="button" class="btn btn-line btn-sm" data-hja="pidone" data-hjv="${esc('sunday|' + x.dayOfN + '|' + it.id)}">Made Sunday: ${esc(it.name)}</button>`).join('')}</div>` : x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}${o.base ? servesRow(o) : ''}
       ${o.k === 'cook' && nOk(x.nut) ? `<details class="hj-doc"><summary><span>Nutrition per Serving</span></summary><div class="hj-body">${nTable(x.nut, x.nutHeart)}</div></details>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
-      <ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
-        return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}
-          ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>
+      ${o.k === 'prep' && x.items947 ? piList(o, String(o.key).split(':')[1], +String(o.key).split(':')[2]) : `<ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
+        return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.kick ? `<span class="hj-at">${esc(t.kick)}</span> ` : t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}
+          ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>`}
       ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.swaps && typeof x.swaps === 'object' ? Object.entries(x.swaps).filter(([, t]) => t).map(([k, t]) => `<p class="hj-sub"><b>Swap for ${esc((arr((PLIB() || {}).needs).find(z => z.id === k) || {}).name || k.replace(/([A-Z])/g, ' $1').toLowerCase())}:</b> ${esc(t)}</p>`).join('') : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
       <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
@@ -1036,20 +1110,22 @@ function openKey(key){
   markDone(key); toast('Marked done. Well done.'); rerender(true);
 }
 // BLD 881: each guide is built by its own *Ov function, so GGHealth.render can play one inside a sheet as well as full screen.
-function cookOv(wk, id){ const w = ((APP() || {}).dinners || {}).weeks || {}, x = arr((w[wk] || {}).dinners).find(z => z.id === id); if (!x) return null;
-  return {k: 'cook', key: 'cook:' + wk + ':' + id, title: x.name, sub: (x.mins ? x.mins + ' minutes' : '') + (x.cost ? ' · about $' + x.cost : ''), data: x}; }
-function openCook(wk, id){ openOv(cookOv(wk, id)); }
+function cookOv(wk, id, n){ const w = ((APP() || {}).dinners || {}).weeks || {}, x0 = arr((w[wk] || {}).dinners).find(z => z.id === id); if (!x0) return null;
+  const wn = +n >= 1 ? +n : dinN(wk, id), x = dinEff(x0, wn); // BLD 947
+  return {k: 'cook', key: 'cook:' + wk + ':' + id, title: x.name, sub: (x.mins ? x.mins + ' minutes' : '') + (x.cost ? ' · about $' + x.cost : ''), data: x, wn, wk, did: id}; }
+function openCook(wk, id, n){ openOv(cookOv(wk, id, n)); }
 // Breakfasts, lunches, and snacks with steps open in Andrew's guide too (BLD 859).
 function ideaOv(type, i){ const x = arr(((APP() || {}).dinners || {})[type])[+i]; if (!x || !arr(x.steps).length) return null;
   return {k: 'cook', idea: true, key: 'idea:' + type + ':' + i, title: x.name, sub: x.mins ? x.mins + ' minutes' : '', data: x}; }
 function openIdea(type, i){ openOv(ideaOv(type, i)); }
-function prepOv(kind, n, forN){ const p0 = prepFor(kind, n); if (!p0) return null;
+function prepOv(kind, n, forN){ let p0 = prepFor(kind, n); if (!p0) return null;
+  const its = prepItems(kind, n); if (its) p0 = Object.assign({}, p0, {steps: piPlay(its, kind, n), items947: true}); // BLD 947
   const t = {sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: p0.title || 'Weekly Batch', pack: p0.title || 'Pack Lunches'}[kind] || p0.title || p0.name;
   const N = p0.serves ? (forN || batchFor()) : 0, p = N ? sizeBatch(p0, N) : p0;
   return {k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + fwl(n) + (N ? ' · for ' + N : '') + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p, base: N ? {kind, n, N} : null}; }
 function openPrep(kind, n){ openOv(prepOv(kind, n)); }
 // The head start for tomorrow (BLD 881): tomorrow's dinner, to look over tonight; finishing it marks tonight's head start.
-function headOv(k){ const d = parseD(k) || day0(new Date()), dn = dinnerFor(addD(d, 1)), o = dn ? cookOv(dn.wk, dn.id) : null; if (!o) return null;
+function headOv(k){ const d = parseD(k) || day0(new Date()), d1 = addD(d, 1), dn = dinnerFor(d1), o = dn ? cookOv(dn.wk, dn.id, d1.getDay() === 0 ? foodWeek(d1) : weekNo(d1)) : null; if (!o) return null;
   return Object.assign(o, {key: 'head:' + ymd(d), peek: true, sub: 'Tomorrow' + (o.sub ? ' · ' + o.sub : '')}); }
 function actTool(a, v){
   const h = H(), o = S.ov;
@@ -1060,7 +1136,11 @@ function actTool(a, v){
     case 'go': return openKey(v), true;
     case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (l[v]){ if (v.startsWith('work:') || v === 'walk') checkOn('move'); if (v === 'prac' || v === 'med') checkOn('still'); } save(); rerender(true); return true; }
     case 'work': return openOv(buildWork(v)), true;
-    case 'cook': { const [w, id] = v.split('|'); openCook(w, id); return true; }
+    case 'cook': { const [w, id, cn] = v.split('|'); openCook(w, id, +cn || 0); return true; }
+    // BLD 947: an item's Done check (Sunday prep, the Weekly Batch, or Made Sunday on a dinner card), and the Sunday or Day Of choice.
+    case 'pidone': { const [k, n, id] = v.split('|'); piToggle(k, +n, id); if (o && o.k === 'cook') piRefresh(o); rerender(true); return true; }
+    case 'pipick': { const [n, id, w] = v.split('|'); h.prepPick = h.prepPick && typeof h.prepPick === 'object' ? h.prepPick : {}; if (w === 'day') h.prepPick[n + ':' + id] = 'day'; else delete h.prepPick[n + ':' + id];
+      h.prepPick.u = Date.now(); save(); piRefresh(o); rerender(true); return true; }
     case 'idea': { const [ty, ix] = v.split('|'); openIdea(ty, ix); return true; }
     case 'prep': { const [k, n] = v.split('|'); openPrep(k, +n); return true; }
     case 'bserve': { if (!o || !o.base) return true; const N = Math.max(1, Math.min(12, o.base.N + (+v || 0))), x = prepOv(o.base.kind, o.base.n, N); if (x){ x.dn = o.dn; x.inline = o.inline; Object.keys(o).forEach(k => delete o[k]); Object.assign(o, x); } rerender(true); return true; }
@@ -1315,9 +1395,11 @@ function allLines(){
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
   ['breakfasts', 'lunches', 'snacks'].forEach(ty => arr((app.dinners || {})[ty]).forEach(x => { if (!arr(x.steps).length) return; add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
-  const dn = (app.dinners || {}).weeks || {}; Object.values(dn).forEach(wk => arr(wk.dinners).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
+  const dn = (app.dinners || {}).weeks || {}; Object.values(dn).forEach(wk => arr(wk.dinners).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); });
+    arr(x.dayOf).forEach(e => arr(e && e.steps).concat(arr(e && e.after), Object.values((e && e.swap) || {})).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); })); })); // BLD 947
   const sp = (app.shop || {}).weeks || {}; Object.values(sp).forEach(wk => ['sunday', 'wednesday', 'batch'].forEach(k => { const x = wk[k]; if (!x) return; add(ANDREW, LN.prepIntro({sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: x.title || 'Freezer Batch'}[k]));
-    arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
+    arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); });
+    arr(x.items).forEach(it => { add(ANDREW, piSay(it)); arr(it.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }); })); // BLD 947
   const bt = app.batches || {}; arr(bt.batches).concat(bt.pack ? [Object.assign({name: bt.pack.title || 'Pack Lunches'}, bt.pack)] : []).forEach(x => { add(ANDREW, LN.prepIntro(x.title || x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
   if (!KIT()) arr((window.GGTendPublic || {}).recipes).filter(r => r && PARTY_MEALS.includes(r.meal)).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }); // BLD 902
   [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
@@ -2028,7 +2110,10 @@ function vAuto(o, top){
 // ---------- the kitchen guide (Andrew) ----------
 function kSteps(o){ return arr(o.data.steps).map(s => typeof s === 'string' ? {t: s} : s); }
 async function kSay(o, text){ const V = VO(); if (V && !o.dead) await V.say(ANDREW, text); }
-function kEnter(o){ const s = kSteps(o)[o.gi]; if (!s) return; kSay(o, s.t); const nx = kSteps(o)[o.gi + 1]; if (nx && VO()) VO().prefetch(ANDREW, nx.t); }
+// BLD 947: in a prep guide with items, the first step of each item says what that item is and what it is for.
+function kEnter(o){ const ss = kSteps(o), gi = o.gi, s = ss[gi]; if (!s) return; const pv = ss[gi - 1], lab = s.say && (!pv || pv.it !== s.it) ? s.say : '';
+  (lab ? kSay(o, lab) : Promise.resolve()).then(() => { if (!lab || (S.ov === o && o.gi === gi && o.guide)) kSay(o, s.t); });
+  const nx = ss[gi + 1]; if (nx && VO()){ if (nx.say && nx.it !== s.it) VO().prefetch(ANDREW, nx.say); VO().prefetch(ANDREW, nx.t); } }
 function kStartTimer(o, i){ const s = kSteps(o)[i]; if (!s || !+s.min) return; o.timers = (o.timers || []).filter(t => t.i !== i); o.timers.push({i, end: Date.now() + s.min * 60000, label: s.t}); kSay(o, LN.tset(+s.min)); rerender(true); }
 setInterval(() => { const o = S.ov; if (!o || !o.guide || !o.timers || !o.timers.length) return; const now = Date.now();
   o.timers.forEach(t => { const e = document.querySelector('[data-hjkt="' + t.i + '"]'); if (e) e.textContent = clock(Math.max(0, t.end - now)); });
@@ -2046,7 +2131,7 @@ function vGuide(o, top){
   ${stagePanel('cook', Object.assign({fig: window.GGStage ? '' : POT, small: true}, ft ? {pct: Math.max(0, Math.min(1, (ft.end - Date.now()) / ftot)), secs: Math.ceil(Math.max(0, ft.end - Date.now()) / 1000)} : {}))}
   ${o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : ''}
   ${tms.length ? `<div class="hj-ktimers">${tms.map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small><button type="button" class="linkbtn" data-hja="kstop" data-hjv="${t.i}">Stop</button></div>`).join('')}</div>` : ''}
-  <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="cook">${s.at ? `<div class="hj-kick">${esc(s.at)}</div>` : ''}<p class="hj-kstep">${esc(s.t)}</p>
+  <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="cook">${s.kick || s.at ? `<div class="hj-kick">${esc(s.kick || s.at)}</div>` : ''}<p class="hj-kstep">${esc(s.t)}</p>
     ${+s.min ? (tms.some(t => t.i === o.gi) ? `<p class="hj-sub">Timer running.</p>` : `<button type="button" class="btn btn-line" data-hja="ktimer" data-hjv="${o.gi}">Start ${+s.min} min Timer</button>`) : ''}
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="kback"${o.gi ? '' : ' disabled'}>Back</button><button type="button" class="btn btn-gold" data-hja="knext">${o.gi === steps.length - 1 ? 'Finish' : 'Next Step'}</button></div>
     <button type="button" class="linkbtn hj-skip" data-hja="krepeat">Say It Again</button>
@@ -2077,7 +2162,7 @@ function actCoach(a, v){
     case 'tapdone': if (o) o.wait = false; return true;
     case 'fs': fsSet(true); return true;
     case 'fsx': fsSet(false); return true;
-    case 'guide': if (o){ o.guide = true; o.gi = 0; o.timers = []; if (V){ V.unlock(); V.music(null); } kSay(o, o.intro || (o.k === 'cook' ? LN.cIntro(o.title) : LN.prepIntro(o.title))).then(() => { if (S.ov === o && o.guide && o.gi === 0) kEnter(o); }); } rerender(true); return true;
+    case 'guide': if (o){ o.guide = true; const g0 = o.gi = +(o.data && o.data.gi0) > 0 && new Date().getHours() >= 12 ? +o.data.gi0 : 0; o.timers = []; /* BLD 947: past noon, a morning head start's steps are behind you */ if (V){ V.unlock(); V.music(null); } kSay(o, o.intro || (o.k === 'cook' ? LN.cIntro(o.title) : LN.prepIntro(o.title))).then(() => { if (S.ov === o && o.guide && o.gi === g0) kEnter(o); }); } rerender(true); return true;
     case 'knext': if (o){ const n = kSteps(o).length; if (V) V.stop(); o.dn = o.dn || {}; o.dn[o.gi] = true; o.gi = Math.min(n, o.gi + 1); rerender(true); if (o.gi < n) kEnter(o); else kSay(o, o.outro || (o.k === 'cook' ? LN.cOut : LN.prepOut)); } return true;
     case 'kback': if (o && o.gi > 0){ if (V) V.stop(); o.gi--; rerender(true); kEnter(o); } return true;
     case 'krepeat': if (o){ if (V) V.stop(); kEnter(o); } return true;
@@ -2766,7 +2851,7 @@ function vKitchen(){
       ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<p class="tn-sub">Step by step, with a voice to guide you.</p><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Grounded Cooking</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
   const rest = arr(w.dinners).filter(x => !tn || x.id !== tn.id);
   return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(fwlOf(L))}. Dinners guided step by step.`)}${kitTabs('kitchen')}
-    <div class="tn-kgrid">${feat}${rest.map((x, i) => `<button type="button" class="tn-card tn-lift tn-kc tn-art" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${artImg(i, dinnerArtName(x) || DIN_ROT)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
+    <div class="tn-kgrid">${feat}${rest.map((x, i) => `<button type="button" class="tn-card tn-lift tn-kc tn-art" data-hja="cook" data-hjv="${esc(L + '|' + x.id + '|' + fw)}"><span class="ill">${artImg(i, dinnerArtName(x) || DIN_ROT)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
     ${wbNote(w)}
     ${PUB() ? pubPlanEdit(L) + pubAims() : aims()}${ideasBlk(PUB() ? 'Lunches' : 'Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk(PUB() ? 'Breakfasts' : 'Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
 }
@@ -4903,6 +4988,15 @@ const CSS = `
 .hj-mline{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-style:italic;min-height:3em;}
 .hj-gi{display:block;font-size:14px;color:var(--ink-soft);margin-top:3px;}.hj-ggadd{margin-top:6px;}
 .hj-pc{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line);}.hj-pc:first-of-type{border-top:0;}.hj-pc>div:first-child{flex:1 1 180px;}.hj-pc small{display:block;color:var(--ink-soft);font-size:13.5px;}
+/* BLD 947: Sunday prep items, grouped (Grab and Go, Dinner Head Starts), each with its for line, minutes, Done check, and choice. */
+.hj-pis{margin:4px 0 12px;}.hj-pig{margin:14px 0 2px;}.hj-pig b{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);}.hj-pig small{display:block;color:var(--ink-soft);font-size:13.5px;}
+.hj-pi{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;background:var(--card);min-width:0;}.hj-st .hj-pi{background:color-mix(in srgb,var(--card) 82%,transparent);}
+.hj-pih{display:flex;gap:10px;align-items:flex-start;}.hj-pin{flex:1;min-width:0;}.hj-pin b{display:block;font-size:17px;}.hj-pin small{display:block;color:var(--ink-soft);font-size:13.5px;overflow-wrap:anywhere;}.hj-pin small.hj-pifor{color:var(--ink);font-size:14.5px;}
+.hj-pih.on .hj-pin b{text-decoration:line-through;text-decoration-color:var(--hj);}
+.hj-pich{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 2px;}.hj-pich>span{flex:1 1 100%;font-size:13.5px;color:var(--ink-soft);}
+.hj-pich .chip{min-height:44px;border:2px solid var(--line);display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:1.15;cursor:pointer;}.hj-pich .chip small{font-size:12px;color:var(--ink-soft);}
+.hj-pich .chip[aria-pressed="true"]{background:var(--hj);border-color:var(--hj);color:#fff;}.hj-pich .chip[aria-pressed="true"] small{color:#fff;}
+.hj-pi .hj-steps{margin:6px 0 0;}.hj-pi .hj-note{margin:8px 0 0;text-align:left;}.hj-pimade{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 10px;}
 .hj-serves{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;}.hj-serves span{flex:1 1 auto;min-width:0;}.hj-serves .chip{min-height:38px;min-width:40px;}
 .hj-stock{display:flex;align-items:center;gap:6px;}.hj-stock span{text-align:center;min-width:52px;}.hj-stock small{display:block;font-size:12px;color:var(--ink-soft);}.hj-stock .chip{min-height:38px;min-width:40px;}
 .hj-entry{border-top:1px solid var(--line);padding:10px 0;}.hj-entry:first-of-type{border-top:0;}.hj-entry p{margin:4px 0 0;}
@@ -5453,6 +5547,7 @@ window.GGHealth = {
     if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
+    if (i.prepPick && typeof i.prepPick === 'object' && (!o.prepPick || (i.prepPick.u || 0) > (o.prepPick.u || 0))) o.prepPick = i.prepPick; // BLD 947
     ['plan', 'team', 'kids', 'own', 'menu', 'kitchen'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
@@ -5464,6 +5559,8 @@ window.GGHealth = {
   // BLD 893: My Grounded Way Plan writes the same settings the start-up check and My Goals write (see apiPlan).
   applyPlan: o => apiPlan(o), planInfo: () => apiPlanInfo(),
   state: S, allLines, LN,
+  // BLD 947 (tests): a dinner card's data for a food week (day-of steps ride in while a head start is open), and a prep guide's data.
+  cookData: (wk, id, n) => { const o = cookOv(wk, id, n); return o ? o.data : null; }, prepData: (kind, n) => { const o = prepOv(kind, n); return o ? o.data : null; }, reminders: d => remindersFor(day0(d)),
   // BLD 915: the recommended weight (tests and other views): rec(step, bodyWeight?, adjustment?) gives {lb, each, line} or null.
   weights: {rec: (st, bw, adj) => recW(st, bw, adj), body: () => bodyW(), adj: () => wAdj(), chip: st => wChip(st), ok: st => recOK(st)},
   tips: {list: TIPS, plan: (o, day) => tipPlan(o, day)},
