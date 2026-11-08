@@ -48,12 +48,18 @@
    Grounded's own colors. New answers: tools.givelog, tools.insure, tools.blind, tools.grow (with grow.match), tools.year,
    and tools.generous (generosity ideas tried); a Family share still carries the plan, ideas, and logs only.
 
+   BLD 940 (Grounded Money Standards): two Membership tools in the Plan part, std (Grounded Money Standards: suggested
+   shares of take-home pay side by side with the plan, the two seasons, a top goal, What It Would Take) and windfall
+   (Windfall Planner). New answers: tools.std {goal, size, pretax, pretaxF, areas: {lineId: area}, trims, celebrated} and
+   tools.windfall {amt, kind, give, cards, past}. They stay on this phone like every tool answer (never in the Family share);
+   money object v1 is unchanged. Money Home and the Plan part carry a Standards card, and each part page a short row.
+
    No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMoney) return;
-  var V = 'b939';
+  var V = 'b940';
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
   var SHARE_BASE = 'https://growwithgrounded.com/home/#money=';
 
@@ -655,7 +661,7 @@
     function memberLine() {
       if (member()) return '';
       var b = opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : '';
-      return '<div class="gm-card gm-mem"><p class="gm-sub">Membership adds This Month, one tap logging, a weekly money check-in, one shared plan with your family, and every Grounded Money tool, with the Giving Tracker, Blind Spot Check, Growth Calculator, and Year Plan.</p>' + b + '</div>';
+      return '<div class="gm-card gm-mem"><p class="gm-sub">Membership adds This Month, one tap logging, a weekly money check-in, one shared plan with your family, and every Grounded Money tool, with the Grounded Money Standards, the Windfall Planner, the Giving Tracker, Blind Spot Check, Growth Calculator, and Year Plan.</p>' + b + '</div>';
     }
     function sumRow(t) {
       var g = t.gap;
@@ -724,7 +730,7 @@
     function fold(key, o) {
       var locked = o.need && !allowed(o.need), on = isOpen(key, o.open), id = 'gmf-' + key;
       var sum = locked ? 'With Membership' : o.sum || '';
-      var body = locked ? '<p class="gm-sub">' + esc(o.what || '') + '</p>' + memBtns() : o.body;
+      var body = locked ? (o.taste || '<p class="gm-sub">' + esc(o.what || '') + '</p>') + memBtns() : o.body;
       return '<section class="gm-fc' + (on ? ' open' : '') + (locked ? ' locked' : '') + '" data-fold="' + esc(key) + '"><h3 class="gm-fh"><button type="button" class="gm-fbtn" data-gm="fold:' + esc(key) + '" aria-expanded="' + on + '" aria-controls="' + id + '">' +
         '<span class="gm-fic">' + I(o.i || 'leaf') + '</span><span class="gm-ftx"><b>' + esc(o.t) + '</b>' + (sum ? '<small class="gm-fsum">' + sum + '</small>' : '') + '</span><span class="gm-chev">' + I('chev') + '</span></button></h3>' +
         '<div class="gm-fbody" id="' + id + '"' + (on ? '' : ' hidden') + '>' + body + '</div></section>';
@@ -781,7 +787,28 @@
       }).join('') + '</div>' + (nx ? '<div class="gm-nextstep gm-c-' + nx.p.id + '">' + I('star') + '<span><span class="gm-k">A Good Next Step</span><b>' + esc(nx.s.next[0]) + '</b></span>' + openBtn(allowed(nx.s.next[1]) ? nx.s.next[1] : nx.p.id, 'Go') + '</div>' : '<p class="gm-note">' + I('sun') + 'Every part is in motion. Look again each month, and enjoy the calm.</p>') + '</section>';
       var empty = !live(d.lines).length && !live(d.income).length ? '<div class="gm-card gm-hello gm-c-live"><h3 class="gm-h3">Start with your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then each part fills in with your own numbers. Everything stays on this device.</p>' +
         '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' : '';
-      return empty + tiles + pic + tipCard() + '<div class="gm-acts gm-center"><button type="button" class="gm-btn line sm" data-gm="go:tools">' + I('grid') + 'All Tools</button></div>' + memberLine();
+      return empty + tiles + stdCard(d) + pic + tipCard() + '<div class="gm-acts gm-center"><button type="button" class="gm-btn line sm" data-gm="go:tools">' + I('grid') + 'All Tools</button></div>' + memberLine();
+    }
+
+    /* BLD 940: the Grounded Money Standards on Money Home and as a short row on each part page. */
+    var STRIP = { give: ['give'], live: ['home', 'food', 'move', 'fun'], protect: ['health'], grow: ['save'], ahead: ['debt'] };
+    function stdReady(d) { return !!(TL() && TL().math.stdView && member() && live(d.lines).length && totals(d).income > 0); }
+    function stdOf(d) { return TL().math.stdView(d, tv(d, 'std')); }
+    function stdSum(d) { if (!stdReady(d)) return ''; var v = stdOf(d); return (v.season.building ? 'Building Season: ' + v.season.done + ' of 5 steps' : 'Growing Season') + ', goal: ' + TL().goals.filter(function (g) { return g[0] === v.goal; })[0][1]; }
+    function stdCard(d) {
+      if (!TL() || !TL().math.stdView) return '';
+      if (!member()) return '<section class="gm-card gm-stdcard gm-c-ahead"><span class="gm-k">Grounded Money Standards</span><h3 class="gm-h3">Your plan beside suggested shares of take-home pay.</h3><p class="gm-sub">Giving, saving, housing, food, and more, sized for your household, with Building Season and Growing Season steps.</p><div class="gm-acts">' + openBtn('ahead', 'See a Sample') + '</div></section>';
+      if (!stdReady(d)) return '';
+      var v = stdOf(d), on = v.rows.filter(function (r) { return r.k === 'on' || r.k === 'fair'; }).length, all = v.rows.filter(function (r) { return r.lo != null; }).length;
+      return '<section class="gm-card gm-stdcard gm-c-ahead" data-season="' + (v.season.building ? 'building' : 'growing') + '"><span class="gm-k">Grounded Money Standards</span><h3 class="gm-h3">' + (v.season.building ? 'Building Season: every step here is a win.' : 'Growing Season: your plan has room to grow.') + '</h3>' +
+        '<p class="gm-sub">' + (v.season.building ? v.season.done + ' of 5 Building Season steps done. ' : '') + on + ' of ' + all + ' areas on track or fair for your family size.</p><div class="gm-acts">' + openBtn('tool:std', 'See My Standards') + '</div></section>';
+    }
+    function stdStrip(d, part) {
+      if (!stdReady(d) || !STRIP[part]) return '';
+      var v = stdOf(d);
+      return '<div class="gm-stdstrip" data-strip="' + part + '"><span class="gm-k">Grounded Money Standards</span>' + STRIP[part].map(function (id) { var r = v.by[id];
+        return '<span class="gm-stdchip k-' + r.k + '" data-area="' + id + '"><b>' + esc(r.n) + '</b> ' + Math.round(r.pct) + '% <small>of ' + r.lo + ' to ' + r.hi + '%</small> <em>' + esc(r.word) + '</em></span>'; }).join('') +
+        '<button type="button" class="gm-linkbtn" data-gm="go:tool:std">See All' + I('arrow') + '</button></div>';
     }
 
     /* A part page: its cards, its tips, and the way on to the next part. */
@@ -794,7 +821,7 @@
       else cards = partPlan(d, s);
       cards.push(tipsFold(id));
       var nx = PARTS[P.ix + 1];
-      return '<div class="gm-partsum gm-c-' + id + '"><b>' + esc(s.line) + '</b>' + bar(s.pct) + '</div>' +
+      return '<div class="gm-partsum gm-c-' + id + '"><b>' + esc(s.line) + '</b>' + bar(s.pct) + '</div>' + stdStrip(d, id) +
         '<div class="gm-fcs">' + cards.join('') + '</div>' +
         (nx ? '<button type="button" class="gm-next gm-c-' + nx.id + '" data-gm="go:' + nx.id + '">' + draw(nx.id, 'gm-next-draw') + '<span><span class="gm-k">Next Part</span><b>' + esc(nx.n) + '</b><small>' + esc(nx.line) + '</small></span>' + I('arrow') + '</button>'
           : '<button type="button" class="gm-next gm-c-home" data-gm="go:home">' + draw('home', 'gm-next-draw') + '<span><span class="gm-k">All Five Parts</span><b>Money Home</b><small>Your whole money picture, side by side.</small></span>' + I('arrow') + '</button>') + memberLine();
@@ -873,6 +900,13 @@
       var gl = tv(d, 'goals'), goals = s.goals, py = tv(d, 'pay'), PAYN = { w: 'Weekly', b: 'Every two weeks', s: 'Twice a month', m: 'Monthly' }, setA = live(d.lines).filter(function (l) { return l.s !== 'hold' && (l.f === 'y' || l.f === 'h' || l.f === 's'); }).reduce(function (z, l) { return z + monthly(l); }, 0);
       var nextGoal = goals.filter(function (x) { return n0(x.saved) < n0(x.target); }).sort(function (a, b) { return String(a.date || '9') < String(b.date || '9') ? -1 : 1; })[0];
       return [
+        fold('plan-std', { t: 'Grounded Money Standards', i: 'star', open: 1, need: 'tool:std', taste: TL() && TL().stdTaste ? TL().stdTaste() : '',
+          what: 'Suggested shares of take-home pay, side by side with your plan, sized for your household.',
+          sum: esc(stdSum(d) || 'Your plan beside suggested shares of take-home pay'),
+          body: '<p class="gm-sub">Giving, saving, housing, food, and more, each beside a suggested share of take-home pay, with a kind word and a next step for your top goal.</p><div class="gm-acts">' + openBtn('tool:std', 'Grounded Money Standards') + '</div>' }),
+        fold('plan-wind', { t: 'Windfall Planner', i: 'sun', need: 'tool:windfall', what: 'A tax return, a bonus, or a gift, given a plan in one calm order: a starter emergency fund, the highest rate card, then your goals.',
+          sum: 'A tax return, bonus, or gift, given a plan',
+          body: '<p class="gm-sub">Money that arrives all at once finds its place in order: a starter emergency fund, the highest rate card, your goals, and the rest.</p><div class="gm-acts">' + openBtn('tool:windfall', 'Windfall Planner') + '</div>' }),
         fold('plan-goals', { t: 'Savings Goals', i: 'star', open: 1, need: 'tool:goals', what: 'Name each goal, its target, and its date, and see the monthly amount that gets you there.',
           sum: goals.length ? esc(goals.length + ' goal' + (goals.length === 1 ? '' : 's') + (nextGoal ? ', next: ' + (nextGoal.n || 'Goal') : '')) : 'Name a goal and its date',
           body: (goals.length ? goals.slice(0, 4).map(function (x) { return '<div class="gm-prog"><div class="gm-pt"><b>' + esc(x.n || 'Goal') + '</b><span>' + money(x.saved) + ' of ' + money(x.target) + '</span></div>' + bar(n0(x.saved) / n0(x.target) * 100) + '</div>'; }).join('') : '<p class="gm-sub">A family trip, a newer car, a home repair: each goal gets its own target and date.</p>') + '<div class="gm-acts">' + openBtn('tool:goals', 'Savings Goals') + '</div>' }),

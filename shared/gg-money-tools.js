@@ -181,6 +181,176 @@
   }
 
   /* =====================================================================
+     BLD 940: GROUNDED MONEY STANDARDS and the WINDFALL PLANNER (the math, pure, for tests)
+     Suggested shares of take-home pay (Chris approved, November 8, 2026). Each plan line maps to an area by its name
+     (the person can choose another), lines marked Before Taxes stay out (they come out before take-home), and the
+     person's pretax saving (a workplace plan with the employer's part, an HSA) counts as saving.
+     ===================================================================== */
+  var AREAS = [
+    ['give', 'Giving', 'gift'], ['save', 'Saving and Investing', 'chart'], ['home', 'Housing', 'home'], ['food', 'Food', 'plate'],
+    ['move', 'Transportation', 'car'], ['health', 'Insurance and Health', 'umbrella'], ['debt', 'Debt Payments', 'path'], ['fun', 'Family Life and Fun', 'people'], ['other', 'Everything Else', 'grid']
+  ];
+  var AREA = {}; AREAS.forEach(function (a) { AREA[a[0]] = { id: a[0], n: a[1], i: a[2] }; });
+  // [low, high] percent of take-home pay
+  var STD_BASE = { give: [5, 10], save: [15, 20], home: [25, 30], food: [10, 15], move: [10, 15], health: [5, 10], debt: [0, 10], fun: [5, 10] };
+  var GOALS = [
+    ['gap', 'Close the Gap', 'Bring the monthly plan into balance first.'], ['cards', 'Clear the Cards', 'Fun and extra saving lean toward the cards for a season.'],
+    ['efund', 'Build an Emergency Fund', 'Saving leans toward a cushion of a few months.'], ['home', 'Buy a Home', 'Saving for a down payment, and housing within the lender line.'],
+    ['give', 'Give More', 'Giving grows toward the high end.'], ['retire', 'Grow Toward Retirement', 'Saving and investing lean toward the high end.']
+  ];
+  // Each goal shifts a few ranges for a season.
+  var GOAL_SHIFT = {
+    gap: { fun: [3, 5], save: [10, 15] }, cards: { fun: [3, 5], save: [10, 15], debt: [0, 20] }, efund: { save: [20, 25], fun: [3, 7] },
+    home: { save: [20, 25], home: [25, 28], fun: [3, 7] }, give: { give: [10, 15] }, retire: { save: [20, 25] }
+  };
+  // The order next steps come in, by goal.
+  var GOAL_ORDER = {
+    gap: ['food', 'fun', 'move', 'home', 'health', 'debt', 'give', 'save'], cards: ['debt', 'fun', 'food', 'move', 'save', 'give', 'home', 'health'],
+    efund: ['save', 'fun', 'food', 'move', 'debt', 'give', 'home', 'health'], home: ['save', 'debt', 'fun', 'food', 'home', 'move', 'give', 'health'],
+    give: ['give', 'fun', 'food', 'save', 'move', 'debt', 'home', 'health'], retire: ['save', 'debt', 'fun', 'food', 'give', 'move', 'home', 'health']
+  };
+  // USDA Food Plans: Cost of Food, Moderate-Cost plan, about $330 a person a month (approximate, 2026; the USDA updates it monthly),
+  // with the USDA's household size factors: 1 person add 20%, 2 add 10%, 3 add 5%, 4 as is, 5 or 6 subtract 5%, 7 or more subtract 10%.
+  var FOOD_PER = 330, FOOD_AS_OF = '2026';
+  function sizeOf(n) { n = Math.round(n0(n)); return Math.max(1, Math.min(15, n || 2)); }
+  function foodFactor(n) { n = sizeOf(n); return n === 1 ? 1.2 : n === 2 ? 1.1 : n === 3 ? 1.05 : n === 4 ? 1 : n <= 6 ? 0.95 : 0.9; }
+  function foodRef(n) { n = sizeOf(n); return Math.round(FOOD_PER * n * foodFactor(n) / 10) * 10; }
+  function stdRanges(goal, size) {
+    var r = {}, n = sizeOf(size), extra = Math.max(0, n - 4);
+    Object.keys(STD_BASE).forEach(function (k) { r[k] = STD_BASE[k].slice(); });
+    // A bigger household: housing and family life stretch a little (one point a person over four).
+    r.home[1] = Math.min(35, r.home[1] + extra); r.fun[1] = Math.min(12, r.fun[1] + extra);
+    var sh = GOAL_SHIFT[goal] || {};
+    Object.keys(sh).forEach(function (k) { r[k] = [sh[k][0], k === 'fun' ? Math.min(12, sh[k][1] + extra) : sh[k][1]]; });
+    return r;
+  }
+  var AREA_RE = [
+    ['give', /giv|donat|tith|church|charit|offering|mosque|temple|synagogue/i],
+    ['save', /sav(e|ing)|\b40[13]|\bira\b|roth|\bhsa\b|invest|retire|emergency|brokerage|\b529\b/i],
+    ['move', /\bcars?\b|auto|vehicle|truck|gas for|fuel|transit|\bbus\b|parking|toll|uber|lyft|registration/i],
+    ['home', /mortgage|\brent\b|home loan|heloc/i],
+    ['debt', /card|credit|loan|debt|payoff|student|visa|mastercard|discover|amex/i],
+    ['home', /energy|electric|power|natural gas|\bgas\b|water|trash|sewer|internet|wifi|utilit|\bhoa\b|property tax|home|house|repair|upkeep|maint|heat|xcel|phone|mobile|wireless|cell/i],
+    ['food', /grocer|food|costco|aldi|market|restaurant|dining|eat(ing)? ?out|take ?out|lunch|coffee|meal/i],
+    ['health', /insur|medic|\bmeds?\b|doctor|dental|dentist|pharm|prescri|\brx\b|therap|vision|clinic|hospital|copay|chiro|gym|fitness|health/i],
+    ['fun', /fun|entertain|stream|netflix|hulu|spotify|disney|subscri|vacation|trip|travel|gift|hobby|sport|activit|lesson|movie|date night|camp|allowance|\bpets?\b|cloth|kids|outing/i]
+  ];
+  function stdArea(l) { var s = String(l.n || '') + ' ' + String(l.o || ''); for (var i = 0; i < AREA_RE.length; i++) if (AREA_RE[i][1].test(s)) return AREA_RE[i][0]; return 'other'; }
+  var HOMEDEBT = /mortgage|home loan|heloc/i, CARD = /card|credit|visa|mastercard|discover|amex/i;
+  // The person's lines that count toward take-home spending: live, not On Hold, not Before Taxes.
+  function stdLines(d, t) {
+    var areas = (t && t.areas) || {};
+    return U.live(d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax' && U.monthly(l) > 0; }).map(function (l) {
+      var a = AREA[areas[l.id]] && areas[l.id] ? areas[l.id] : stdArea(l);
+      return { id: l.id, n: l.n, s: l.s, o: l.o || '', amt: U.monthly(l), area: a, auto: !areas[l.id], fixed: l.s === 'fixed' };
+    });
+  }
+  function pretaxSum(d) { return r2(U.live(d.lines).filter(function (l) { return l.s === 'pretax'; }).reduce(function (s, l) { return s + U.monthly(l); }, 0)); }
+  // Pretax saving a month: entered a month ('m') or a paycheck ('p', on the Paycheck Planner's schedule, every two weeks by default).
+  function pretaxMonthly(d, t) { var v = n0(t && t.pretax); if (t && t.pretaxF === 'p') { var s = (d.tools && d.tools.pay && d.tools.pay.s) || 'b'; return r2(v * checksPerYear(s) / 12); } return r2(v); }
+  // Cards that carry a balance: the Debt Payoff Planner's cards (a card name, or a yearly rate of 15% or more).
+  function cardsOf(d) { var t = d.tools && d.tools.debt; return arr(t && t.list).filter(function (x) { return n0(x.bal) > 0 && (CARD.test(x.n || '') || n0(x.rate) >= 15); }).map(function (x) { return { n: x.n || 'Card', bal: n0(x.bal), rate: n0(x.rate) }; }); }
+  function cardsCarry(d, t) {
+    var c = cardsOf(d); if (c.length) return c.reduce(function (s, x) { return s + x.bal; }, 0);
+    var hasList = d.tools && d.tools.debt && arr(d.tools.debt.list).some(function (x) { return n0(x.bal) > 0 || x.n; });
+    // With no Debt Payoff Planner list yet, a card payment line in the plan shows a balance carried.
+    return hasList ? 0 : stdLines(d, t).filter(function (l) { return l.area === 'debt' && CARD.test(l.n + ' ' + l.o); }).length ? 1 : 0;
+  }
+  // The whole side by side view.
+  function stdView(d, t) {
+    t = t || {};
+    var T = U.totals(d), inc = r2(T.income), size = sizeOf(t.size), L = stdLines(d, t), P = pretaxMonthly(d, t);
+    var season = seasonOf(d, t), goal = t.goal && GOAL_SHIFT[t.goal] ? t.goal : season.building ? (T.after < 0 ? 'gap' : 'cards') : 'retire';
+    var R = stdRanges(goal, size), fref = foodRef(size), trims = t.trims || {};
+    var rows = AREAS.map(function (a) {
+      var id = a[0], ls = L.filter(function (l) { return l.area === id; }), amt = r2(ls.reduce(function (s, l) { return s + l.amt; }, 0) + (id === 'save' ? P : 0));
+      var flex = r2(ls.filter(function (l) { return !l.fixed; }).reduce(function (s, l) { return s + l.amt; }, 0)), rg = R[id] || null, pct = inc > 0 ? amt / inc * 100 : 0, word = '', k = '';
+      if (rg) {
+        if (id === 'give' || id === 'save') { if (pct >= rg[0] - 0.05) { word = 'On Track'; k = 'on'; } else { word = 'Room to Grow'; k = 'grow'; } }
+        else if (pct <= rg[1] + 0.05) { word = 'On Track'; k = 'on'; }
+        else if (id === 'food' && amt <= fref) { word = 'Fair for Your Family Size'; k = 'fair'; }
+        else { word = 'Above the Range'; k = 'above'; }
+      }
+      var over = rg && k === 'above' ? r2(amt - rg[1] * inc / 100) : 0, trim = Math.max(0, Math.min(flex, n0(trims[id])));
+      return { id: id, n: a[1], i: a[2], amt: amt, pct: Math.round(pct * 10) / 10, lo: rg ? rg[0] : null, hi: rg ? rg[1] : null, loAmt: rg ? r2(rg[0] * inc / 100) : 0, hiAmt: rg ? r2(rg[1] * inc / 100) : 0,
+        word: word, k: k, lines: ls, flex: flex, over: over, suggest: Math.round(Math.min(over, flex)), trim: r2(trim), pretax: id === 'save' ? P : 0 };
+    });
+    var by = {}; rows.forEach(function (r) { by[r.id] = r; });
+    var homeDebt = L.filter(function (l) { return l.area === 'home' && HOMEDEBT.test(l.n + ' ' + l.o); }).reduce(function (s, l) { return s + l.amt; }, 0);
+    var dti = inc > 0 ? Math.round((homeDebt + by.debt.amt) / inc * 1000) / 10 : 0;
+    var order = (GOAL_ORDER[goal] || GOAL_ORDER.gap), next = [];
+    order.forEach(function (id) { var r = by[id]; if (r && (r.k === 'above' || r.k === 'grow')) next.push(r); });
+    var O = r2(rows.filter(function (r) { return r.id !== 'give' && r.id !== 'save'; }).reduce(function (s, r) { return s + r.amt; }, 0));
+    var trimSum = r2(rows.reduce(function (s, r) { return s + r.trim; }, 0));
+    var wt = whatItTakes({ other: O, pretax: P, give: R.give[0], save: R.save[0] }), wt2 = whatItTakes({ other: O - trimSum, pretax: P, give: R.give[0], save: R.save[0] });
+    return { income: inc, size: size, goal: goal, season: season, ranges: R, rows: rows, by: by, food: fref, dti: dti, homeDebt: r2(homeDebt), next: next, other: O, pretax: P, trims: trimSum, need: wt, needTrim: wt2 };
+  }
+  // The take-home pay that meets the standards with spending as it is: (other spending minus pretax saving) / (1 minus giving% minus saving%).
+  function whatItTakes(o) { var g = n0(o.give) / 100, s = n0(o.save) / 100, k = 1 - g - s; if (!(k > 0)) return 0; return Math.max(0, Math.round((n0(o.other) - n0(o.pretax)) / k)); }
+  // The two seasons and the five Building Season steps.
+  var STEPS = [
+    ['gap', 'Close the Gap', 'Your monthly plan comes into balance.', 'gap', 'The gap is closed. Every step here is a win.'],
+    ['give', 'Give Something', 'Any amount, to the causes and people you care about.', 'tool:give', 'You are giving. Generosity grows from here.'],
+    ['match', 'Keep Any Employer Match', 'Put in enough at work to receive the full match, where there is one.', 'grow', 'Your employer match is kept: money added beside yours.'],
+    ['ef', 'Starter Emergency Fund of $1,000', 'A first cushion, so a surprise becomes an errand.', 'tool:goals', 'Your starter emergency fund is in place: $1,000 of calm.'],
+    ['cards', 'Clear the Cards', 'Every card balance cleared, highest rate first or smallest first.', 'tool:debt', 'Card balance cleared. A big step, well done.']
+  ];
+  function seasonOf(d, t) {
+    var T = U.totals(d), cards = cardsCarry(d, t), gv = d.tools || {}, gl = gv.givelog, mk = U.monthKey();
+    var gave = stdLines(d, t).some(function (l) { return l.area === 'give'; }) || arr(gl && gl.list).some(function (x) { return String(x.d || '').slice(0, 7) === mk && n0(x.a) > 0; });
+    var met = { gap: T.after >= 0, give: gave, match: !!(gv.grow && (gv.grow.match === 'full' || gv.grow.match === 'na')), ef: n0(gv.goals && gv.goals.ef) >= 1000, cards: !cards };
+    var building = T.after < 0 || !!cards;
+    return { building: building, met: met, done: STEPS.filter(function (s) { return met[s[0]]; }).length, cards: cards, short: T.after < 0 ? r2(-T.after) : 0 };
+  }
+  // A windfall, split in order: a giving share first when chosen, the starter emergency fund up to $1,000,
+  // high interest cards (highest rate first), the person's goals (soonest date first), and the rest.
+  function windfallSplit(o) {
+    var left = Math.max(0, n0(o.amt)), rows = [];
+    function take(k, n, want) { var a = Math.max(0, Math.min(left, n0(want))); a = r2(a); if (a > 0) { rows.push({ k: k, n: n, a: a }); left = r2(left - a); } }
+    if (n0(o.give) > 0) take('give', 'Giving', n0(o.amt) * n0(o.give) / 100);
+    take('ef', 'Starter Emergency Fund', 1000 - n0(o.ef));
+    arr(o.cards).slice().sort(function (a, b) { return n0(b.rate) - n0(a.rate) || n0(a.bal) - n0(b.bal); }).forEach(function (c) { take('card', c.n || 'Card', c.bal); });
+    arr(o.goals).forEach(function (g) { take('goal', g.n || 'Goal', g.left); });
+    if (left > 0) rows.push({ k: 'rest', n: 'Yours to Enjoy or Grow', a: left });
+    return { rows: rows, total: r2(n0(o.amt)) };
+  }
+  function goalsLeft(d) {
+    var gl = d.tools && d.tools.goals;
+    return arr(gl && gl.goals).filter(function (g) { return n0(g.target) > n0(g.saved); }).sort(function (a, b) { return String(a.date || '9') < String(b.date || '9') ? -1 : 1; }).map(function (g) { return { n: g.n || 'Goal', left: r2(n0(g.target) - n0(g.saved)) }; });
+  }
+  // The same credits live in shared/gg-sources.js (money-usda-food, money-fidelity15, money-cfpb-dti, money-nfcc; 'money:standards').
+  var STD_SRC = [
+    ['USDA Food Plans: Cost of Food, U.S. Department of Agriculture (the Moderate-Cost plan and household size factors)', 'https://www.fns.usda.gov/research/cnpp/usda-food-plans/cost-food-monthly-reports'],
+    ['Fidelity Investments, How much should I save for retirement? (15% of pay, employer contributions included)', 'https://www.fidelity.com/viewpoints/retirement/how-much-money-should-i-save'],
+    ['Consumer Financial Protection Bureau, Your Money, Your Goals: debt to income calculator (all debts, the home included, at 36% or less)', 'https://files.consumerfinance.gov/f/documents/cfpb_your-money-your-goals_debt_income_calc_tool_2018-11_ADA.pdf'],
+    ['National Foundation for Credit Counseling', 'https://www.nfcc.org/']
+  ];
+  function stdSources() {
+    return '<p class="gm-mini gm-srcline"><b>Sources:</b> ' + STD_SRC.map(function (s) { return '<a href="' + E(s[1]) + '" target="_blank" rel="noopener">' + E(s[0]) + '</a>'; }).join('; ') + '. Other details: source unknown.</p>';
+  }
+  // One area, side by side: theirs, the suggested range, and a kind word (no grades, no score).
+  function stdRow(r, inc) {
+    if (r.lo == null) return r.amt ? '<div class="gm-std gm-std-other" data-area="other"><div class="gm-std-h"><span class="gm-std-n">' + U.I(r.i) + E(r.n) + '</span><span class="gm-std-y"><b>' + M(r.amt) + '</b> ' + Math.round(r.pct) + '%</span></div></div>' : '';
+    var scale = Math.max(r.hi * 1.6, r.pct * 1.1, 8), band = 'left:' + (r.lo / scale * 100).toFixed(1) + '%;width:' + ((r.hi - r.lo) / scale * 100).toFixed(1) + '%', dot = 'left:' + Math.min(100, r.pct / scale * 100).toFixed(1) + '%';
+    return '<div class="gm-std k-' + r.k + '" data-area="' + r.id + '"><div class="gm-std-h"><span class="gm-std-n">' + U.I(r.i) + E(r.n) + '</span><span class="gm-std-w">' + E(r.word) + '</span></div>' +
+      '<div class="gm-std-c"><div><span class="gm-k">Yours</span><b>' + M(r.amt) + '</b><small>' + (Math.round(r.pct * 10) / 10) + '% of take-home</small></div>' +
+      '<div><span class="gm-k">Suggested</span><b>' + r.lo + ' to ' + r.hi + '%</b><small>' + (inc > 0 ? M(r.loAmt) + ' to ' + M(r.hiAmt) : '') + '</small></div></div>' +
+      '<div class="gm-std-t" role="img" aria-label="' + E(r.n + ': ' + Math.round(r.pct) + ' percent, suggested ' + r.lo + ' to ' + r.hi + ' percent') + '"><span class="gm-std-b" style="' + band + '"></span><span class="gm-std-d" style="' + dot + '"></span></div></div>';
+  }
+  function stepsHtml(met, reading) {
+    return '<ol class="gm-bsteps">' + STEPS.map(function (s, i) { var on = !reading && met && met[s[0]];
+      return '<li class="' + (on ? 'on' : '') + '" data-step="' + s[0] + '"><span class="gm-bnum">' + (on ? U.I('check') : String(i + 1)) + '</span><span class="gm-tx"><b>' + E(s[1]) + '</b><small>' + E(on ? 'Done. ' + s[2] : s[2]) + '</small></span>' +
+        (!reading && !on ? '<button type="button" class="gm-linkbtn" data-gm="go:' + (s[0] === 'match' ? 'grow' : s[3]) + '">' + (s[0] === 'gap' ? 'Close the Gap' : s[0] === 'give' ? 'Giving Planner' : s[0] === 'match' ? 'Employer Match' : s[0] === 'ef' ? 'Emergency Fund' : 'Debt Payoff') + U.I('arrow') + '</button>' : '') + '</li>'; }).join('') + '</ol>';
+  }
+  // The Start taste: the Building Season steps as reading, and one sample area with made-up numbers.
+  function stdTaste() {
+    var inc = 5000, r = { id: 'food', n: 'Food', i: 'plate', amt: 650, pct: 13, lo: 10, hi: 15, loAmt: 500, hiAmt: 750, word: 'On Track', k: 'on' };
+    return '<p class="gm-sub">Suggested shares of take-home pay for giving, saving, housing, food, and more, side by side with your own plan, sized for your household.</p>' +
+      '<h4 class="gm-h4">Building Season</h4><p class="gm-mini">When the month runs short or cards carry a balance, five steps lead the way, and each one is a win.</p>' + stepsHtml(null, true) +
+      '<h4 class="gm-h4">A Sample, Side by Side</h4><p class="gm-mini">Made-up numbers: a take-home of ' + M(inc) + ' a month.</p>' + stdRow(r, inc);
+  }
+
+  /* =====================================================================
      GROUNDED MONEY TIPS: short, forward, and doable. One is featured each week.
      ===================================================================== */
   var TIPS = [
@@ -238,10 +408,33 @@
     ['Protect', 'Build your emergency fund one small, steady amount at a time.'],
     ['Grow', 'Start with any amount: steady monthly saving and time do much of the growing.'],
     ['Grow', 'Spread your savings across many kinds of investments, so no single one carries your future.'],
-    ['Grow', 'Keep investing costs low; small yearly fees add up over many years.']
+    ['Grow', 'Keep investing costs low; small yearly fees add up over many years.'],
+    // BLD 940: tips for the Grounded Money Standards and the two seasons
+    ['Standards', 'Look at your plan beside the Grounded Money Standards once a season, and choose one area to tend.'],
+    ['Standards', 'Building Season is a real season: every step, from closing the gap to a card balance cleared, is a win.'],
+    ['Standards', 'Count money set aside before payday, like a workplace retirement plan or an HSA, as saving. It is already working for you.'],
+    ['Standards', 'When cards carry a balance, nonprofit credit counseling from a member of the National Foundation for Credit Counseling (nfcc.org) can help you build a plan. Choose a nonprofit member over a debt settlement company.'],
+    ['Standards', 'A tax return or a bonus goes furthest with a plan: a starter emergency fund first, then the highest rate card, then your goals.'],
+    ['Standards', 'Choose one top goal for this season. One clear goal makes every other choice simpler.'],
+    ['Standards', 'Keep debt payments other than your home as low as you can; each balance cleared returns money to your goals.'],
+    ['Standards', 'A $1,000 starter emergency fund turns many surprises into simple errands.'],
+    ['Standards', 'Housing near a quarter of take-home pay leaves room for the rest of life. When it runs higher, tend the other lines gently.'],
+    ['Giving', 'Give something every month, even a small amount. Generosity is a habit before it is a number.'],
+    ['Giving', 'As your plan grows, let giving grow with it: a percent rises with your income on its own.'],
+    ['Food', 'Cook whole food at home most nights. It is a kind choice for your body and for your food line.'],
+    ['Food', 'A big family eats well on a fair budget: plan the week, cook in batches, and buy staples in bulk.'],
+    ['Food', 'Water at the table, fruit for dessert, and simple home meals keep the food line steady.'],
+    ['Health', 'Once a season, take an Unplugged look at subscriptions: keep the ones you love and pause the rest.'],
+    ['Family', 'Plan outdoor family time: parks, trails, and picnics bring joy at a small cost.'],
+    ['Family', 'Choose family fun that brings you together: a game night, a bike ride, or a library afternoon.'],
+    ['Protect', 'Look at your insurance once a year; the right coverage keeps the plan steady through a hard season.'],
+    ['Grow', 'Keep any employer match, even in Building Season: it is money added beside yours.'],
+    ['Grow', 'When the cards are cleared, send what you paid on them to saving and investing. The habit keeps growing.'],
+    ['Grow', 'Fifteen percent of pay, any employer match included, is a common retirement saving guideline. Start where you are and grow toward it.']
   ];
+  var NFCC_TIP = 0; TIPS.forEach(function (x, i) { if (/nfcc\.org/.test(x[1])) NFCC_TIP = i; });
   // The part each tip belongs to (Give, Live, Protect, Grow, Plan), by its kind, with a few placed by hand.
-  var CATPART = { Food: 'live', Home: 'live', Car: 'live', Habits: 'ahead', Earn: 'grow', Family: 'live', Giving: 'give', Health: 'live', Protect: 'protect', Grow: 'grow' };
+  var CATPART = { Food: 'live', Home: 'live', Car: 'live', Habits: 'ahead', Earn: 'grow', Family: 'live', Giving: 'give', Health: 'live', Protect: 'protect', Grow: 'grow', Standards: 'ahead' };
   function tipPart(i) { var x = TIPS[i]; if (/emergency fund is steady/.test(x[1])) return 'protect'; if (/three paycheck month|tax withholding/.test(x[1])) return 'ahead'; return CATPART[x[0]] || 'live'; }
   function partTips(part) { var out = []; TIPS.forEach(function (x, i) { if (tipPart(i) === part) out.push(i); }); return out; }
   function tipOfWeek(d) { d = d || new Date(); var j = new Date(d.getFullYear(), 0, 1), w = Math.floor((d - j) / (7 * 864e5)); return (w + d.getFullYear() * 7) % TIPS.length; }
@@ -594,16 +787,104 @@
         var n = String(t.draft.n || '').trim(); if (!n) { c.say('Name it first.'); return false; }
         t.items.push({ n: n, m: Math.max(0, Math.min(11, Math.round(n0(t.draft.m)))), a: r2(n0(t.draft.a)), k: t.draft.k || 'date' }); t.draft = { m: t.draft.m, k: t.draft.k };
         c.say('Added to your year.'); return true;
+      } },
+
+    /* ---------- BLD 940: Grounded Money Standards and the Windfall Planner ---------- */
+    { id: 'std', part: 'ahead', n: 'Grounded Money Standards', i: 'star', outFirst: 1, sub: 'Your plan beside suggested shares of take-home pay, sized for your household.',
+      init: function (t, c) {
+        t.areas = t.areas && typeof t.areas === 'object' ? t.areas : {}; t.trims = t.trims && typeof t.trims === 'object' ? t.trims : {}; t.celebrated = t.celebrated && typeof t.celebrated === 'object' ? t.celebrated : {};
+        if (t.size == null) { var kd = c.d.tools && c.d.tools.kids; t.size = 2 + arr(kd && kd.kids).filter(function (k) { return n0(k.age) > 0; }).length; }
+        if (t.pretax == null) t.pretax = pretaxSum(c.d) || ''; t.pretaxF = t.pretaxF === 'p' ? 'p' : 'm';
+        if (!U.live(c.d.lines).length) return;
+        // A warm moment for each step met (and for reaching Growing Season), once each; a step that slips can be celebrated again.
+        var se = seasonOf(c.d, t), fresh = [];
+        STEPS.forEach(function (s) { if (se.met[s[0]]) { if (!t.celebrated[s[0]]) { t.celebrated[s[0]] = Date.now(); if (se.building) fresh.push(s[4]); } } else delete t.celebrated[s[0]]; });
+        if (!se.building) { if (!t.celebrated.grow) { t.celebrated.grow = Date.now(); fresh.unshift('Growing Season. Your plan has room to grow.'); } } else delete t.celebrated.grow;
+        if (fresh.length) { c.celebrate(fresh[0]); c.save(); }
+      },
+      out: function (c) {
+        var t = c.t, d = c.d;
+        if (!U.live(d.lines).length) return '<div class="gm-note">' + U.I('list') + '<span>Add your plan’s lines in My Plan, and the standards show beside them. <button type="button" class="gm-linkbtn" data-gm="go:plan">My Plan' + U.I('arrow') + '</button></span></div>';
+        var v = stdView(d, t), se = v.season, inc = v.income;
+        var head = se.building
+          ? '<div class="gm-seasoncard b" data-season="building"><span class="gm-k">Building Season</span><h3 class="gm-h3">Building Season: every step here is a win.</h3><p class="gm-sub">' + (se.short ? 'The month runs ' + M(se.short) + ' short' + (se.cards ? ' and cards carry a balance' : '') : 'Cards carry a balance') + '. Five steps lead the way: ' + se.done + ' of 5 done.</p>' + stepsHtml(se.met) +
+            '<p class="gm-mini">A tax return, a bonus, or a gift? <button type="button" class="gm-linkbtn" data-gm="go:tool:windfall">Windfall Planner' + U.I('arrow') + '</button></p></div>'
+          : '<div class="gm-seasoncard g" data-season="growing"><span class="gm-k">Growing Season</span><h3 class="gm-h3">Growing Season: your plan has room to grow.</h3><p class="gm-sub">Your month is in balance and the cards are clear. The full standards guide each area below.</p></div>';
+        var G = GOALS.filter(function (g) { return g[0] === v.goal; })[0];
+        var goal = '<div class="gm-stdgoal"><h3 class="gm-h4">Your Top Goal</h3>' + chips('std', 'goal', v.goal, GOALS.map(function (g) { return [g[0], g[1]]; })) + '<p class="gm-mini" data-goal-line>' + E(G[2]) + '</p></div>';
+        if (!(inc > 0)) return head + goal + '<div class="gm-note">' + U.I('coin') + '<span>Add your take-home pay in My Plan, and each area shows its share. <button type="button" class="gm-linkbtn" data-gm="go:plan">My Plan' + U.I('arrow') + '</button></span></div>';
+        var rows = '<h3 class="gm-h4">Side by Side</h3><p class="gm-mini">Shares of your take-home pay of ' + M(inc) + ' a month, for a household of ' + v.size + '.</p><div class="gm-stds">' + v.rows.map(function (r) { return stdRow(r, inc); }).join('') + '</div>' +
+          '<p class="gm-mini" data-food-ref>Food for a household of ' + v.size + ': about ' + M(v.food) + ' a month on the USDA Moderate-Cost plan (approximate, ' + FOOD_AS_OF + '). Within it, a bigger share for food is fair for your family size.</p>' +
+          (v.dti > 0 ? '<p class="gm-mini" data-dti>Debt payments, the home included: ' + v.dti + '% of take-home. Lenders often look for 36% or less of pay before taxes, so their number for you reads a little lower.</p>' : '');
+        var nx = v.next.slice(0, 4).map(function (r) {
+          var flex = r.lines.filter(function (l) { return !l.fixed; });
+          if (r.k === 'grow') return '<li data-next="' + r.id + '"><b>' + E(r.n) + '</b><span>About ' + M(Math.max(0, r.loAmt - r.amt)) + ' more a month reaches ' + r.lo + '%.' + (r.id === 'save' ? ' Pretax saving counts here, and any employer match comes first.' : ' Any amount is a good start.') + '</span></li>';
+          return '<li data-next="' + r.id + '"><b>' + E(r.n) + '</b><span>About ' + M(r.over) + ' a month above the range. ' + (flex.length ? 'Lines with room: ' + E(flex.map(function (l) { return l.n; }).join(', ')) + '.' : 'Every line here is fixed for now; the rest of the plan grows around it.') + '</span></li>';
+        }).join('');
+        var next = '<h3 class="gm-h4">Next Steps for Your Goal</h3>' + (nx ? '<ol class="gm-stdnext">' + nx + '</ol>' : '<p class="gm-note">' + U.I('sun') + 'Every area sits within its range. Well tended.</p>') +
+          (se.cards ? '<div class="gm-note" data-nfcc>' + U.I('leaf') + '<span>' + E(TIPS[NFCC_TIP][1]) + '</span></div>' : '');
+        var w = v.need, w2 = v.needTrim;
+        var take = '<div class="gm-card gm-in-card gm-wit" data-wit="' + w + '"><h3 class="gm-h4">What It Would Take</h3><p class="gm-mini">The take-home pay that meets the standards for giving and saving, with spending as it is.</p><div class="gm-tbigs">' +
+          big('With Spending as It Is', M(w), 'take-home a month', w <= inc ? 'ok' : 'hn') + (v.trims > 0 ? big('With Your Trims', M(w2), M(v.trims) + ' a month trimmed', w2 <= inc ? 'ok' : 'hn') : '') + '</div>' +
+          '<p class="gm-sub" data-wit-line>' + (w <= inc ? 'Your take-home of ' + M(inc) + ' already meets the standards with spending as it is.' : 'About ' + M(w - inc) + ' more take-home a month meets the standards with spending as it is.' + (v.trims > 0 ? (w2 <= inc ? ' Your trims bring it within reach today.' : ' With your trims, about ' + M(w2 - inc) + ' more.') : ' Trims below bring it closer.')) + '</p></div>';
+        return head + goal + rows + next + take;
+      },
+      form: function (c) {
+        var t = c.t, d = c.d; if (!U.live(d.lines).length) return '';
+        var v = stdView(d, t), opts = AREAS.map(function (a) { return [a[0], a[1]]; });
+        var trims = v.rows.filter(function (r) { return r.lo != null && r.id !== 'give' && r.id !== 'save' && r.flex > 0; });
+        return '<h3 class="gm-h4">Your Household and Pretax Saving</h3><div class="gm-grid3">' + fld('People in your household', 'size', t.size, { ph: '2' }) + fld('Pretax saving', 'pretax', t.pretax, { ph: '0' }) + fld('Entered', 'pretaxF', t.pretaxF, { sel: [['m', 'A Month'], ['p', 'A Paycheck']], re: 1 }) + '</div>' +
+          '<p class="gm-mini">Money set aside before pay counts as saving: a workplace retirement plan with the employer’s part, and an HSA. Lines marked Before Taxes in My Plan stay out of the areas.</p>' +
+          (trims.length ? '<h3 class="gm-h4">Your Own Trims</h3><p class="gm-mini">Trims come from lines that vary; fixed lines stay as they are.</p><div class="gm-grid3">' + trims.map(function (r) { return fld(r.n + ' (up to ' + M(r.flex) + ')', 'trims.' + r.id, t.trims[r.id] == null ? '' : t.trims[r.id], { ph: r.suggest ? String(r.suggest) : '0' }); }).join('') + '</div>' : '') +
+          '<details class="gm-fold gm-stdmap"><summary>Your Lines and Their Areas</summary><p class="gm-mini">Each line finds its area by its name. Choose another area for any line.</p><div class="gm-grid3">' +
+          stdLines(d, t).map(function (l) { return fld(l.n + ' (' + M(l.amt) + ')' + (l.fixed ? ', Fixed' : ''), 'areas.' + l.id, l.area, { sel: opts, re: 1 }); }).join('') + '</div></details>' +
+          '<p class="gm-mini">These are suggested ranges, a calm guide for your own choices. For your own plan, a licensed financial planner can help.</p>' + stdSources();
+      },
+      act: function (a, arg, c) { if (a === 'goal' && GOAL_SHIFT[arg]) { c.t.goal = arg; return true; } return false; } },
+
+    { id: 'windfall', part: 'ahead', n: 'Windfall Planner', i: 'sun', sub: 'A tax return, a bonus, or a gift, given a plan in one calm order.',
+      init: function (t) { if (t.amt == null) t.amt = ''; t.kind = t.kind || 'tax'; t.give = [0, 5, 10].indexOf(+t.give) >= 0 ? +t.give : 0; t.cards = arr(t.cards); t.past = arr(t.past); },
+      form: function (c) {
+        var t = c.t, dc = cardsOf(c.d), ef = n0(c.d.tools && c.d.tools.goals && c.d.tools.goals.ef);
+        return '<p class="gm-sub">Money that arrives all at once goes furthest with a plan. Enter the amount, and each dollar finds its place in order.</p>' +
+          fld('Amount', 'amt', t.amt, { ph: '2000' }) +
+          '<div class="gm-f"><span>It is</span>' + chips('windfall', 'kind', t.kind, [['tax', 'A Tax Return'], ['bonus', 'A Bonus'], ['gift', 'A Gift'], ['other', 'Something Else']]) + '</div>' +
+          '<div class="gm-f"><span>Give a share first</span>' + chips('windfall', 'give', t.give, [[0, 'Not This Time'], [5, '5%'], [10, '10%']]) + '</div>' +
+          '<p class="gm-mini">Emergency fund now: ' + M(ef) + ' (from Emergency Fund and Savings Goals).</p>' +
+          (dc.length ? '<p class="gm-mini" data-cards="planner">Cards from your Debt Payoff Planner: ' + E(dc.map(function (x) { return x.n + ' ' + M(x.bal) + ' at ' + x.rate + '%'; }).join(', ')) + '.</p>'
+            : '<h3 class="gm-h4">Cards With a Balance</h3>' + t.cards.map(function (x, i) { return '<div class="gm-line gm-trow"><div class="gm-lr1">' + fld('Card', 'cards.' + i + '.n', x.n, { text: 1, ph: 'Store card', max: 60, cls: 'gm-grow' }) + rm('windfall', i, x.n) + '</div><div class="gm-two">' + fld('Balance', 'cards.' + i + '.bal', x.bal, { ph: '0' }) + fld('Rate %', 'cards.' + i + '.rate', x.rate, { ph: '22' }) + '</div></div>'; }).join('') +
+              '<div class="gm-acts">' + btn('windfall', 'add', U.I('plus') + 'Add a Card', 1) + '</div>');
+      },
+      out: function (c) {
+        var t = c.t, d = c.d; if (!(n0(t.amt) > 0)) return '<p class="gm-mini">Add the amount to see where it goes.</p>';
+        var dc = cardsOf(d), cards = dc.length ? dc : arr(t.cards).filter(function (x) { return n0(x.bal) > 0; }).map(function (x) { return { n: x.n || 'Card', bal: n0(x.bal), rate: n0(x.rate) }; });
+        var sp = windfallSplit({ amt: t.amt, give: t.give, ef: n0(d.tools && d.tools.goals && d.tools.goals.ef), cards: cards, goals: goalsLeft(d) });
+        var KN = { give: 'Generosity first', ef: 'Up to $1,000, a first cushion', card: 'Highest rate first', goal: 'Your goals, soonest first', rest: 'Enjoy some, and grow the rest' };
+        return '<h3 class="gm-h4">Where It Goes</h3><ol class="gm-wsplit">' + sp.rows.map(function (r) { return '<li class="w-' + r.k + '" data-wk="' + r.k + '"><div class="gm-pt"><b>' + E(r.n) + '</b><span>' + M(r.a, 1) + '</span></div><small>' + E(KN[r.k]) + '</small>' + '<div class="gm-bar thin"><span style="width:' + Math.round(r.a / sp.total * 100) + '%"></span></div></li>'; }).join('') + '</ol>' +
+          '<div class="gm-acts">' + btn('windfall', 'keep', U.I('check') + 'Keep This Plan') + '</div>' +
+          (t.past.length ? '<p class="gm-mini">Kept plans: ' + E(t.past.slice(-3).reverse().map(function (p) { return U.niceDate(p.d) + ', ' + M(p.amt); }).join('; ')) + '.</p>' : '') +
+          '<p class="gm-mini">For your own plan, a licensed financial planner can help.</p>';
+      },
+      act: function (a, arg, c) {
+        var t = c.t;
+        if (a === 'kind') { t.kind = /^(tax|bonus|gift|other)$/.test(arg) ? arg : 'tax'; return true; }
+        if (a === 'give') { t.give = [0, 5, 10].indexOf(+arg) >= 0 ? +arg : 0; return true; }
+        if (a === 'add') { t.cards.push({ n: '', bal: '', rate: '' }); return true; }
+        if (a === 'rm') { t.cards.splice(+arg, 1); return true; }
+        if (a === 'keep') { if (!(n0(t.amt) > 0)) { c.say('Add the amount first.'); return false; } t.past.push({ d: U.today(), amt: r2(n0(t.amt)), kind: t.kind, give: t.give }); if (t.past.length > 12) t.past.shift(); c.celebrate('A plan for every dollar. Well done.'); return true; }
+        return false;
       } }
   ];
   var BY = {}; TOOLS.forEach(function (t) { BY[t.id] = t; });
 
   window.GGMoneyTools = {
-    v: 'b939', list: TOOLS, get: function (id) { return BY[id] || null; }, tips: TIPS, tipOfWeek: tipOfWeek, tipPart: tipPart, partTips: partTips,
+    v: 'b940', list: TOOLS, get: function (id) { return BY[id] || null; }, tips: TIPS, tipOfWeek: tipOfWeek, tipPart: tipPart, partTips: partTips,
     use: function (u) { U = u; },
     math: { debtSim: debtSim, debtPlan: debtPlan, goalMonthly: goalMonthly, monthsUntil: monthsUntil, efMonths: efMonths, paydays: paydays, extraMonths: extraMonths, billsByCheck: billsByCheck, checksPerYear: checksPerYear,
       homeMeal: homeMeal, grocerySave: grocerySave, carCost: carCost, sideIncome: sideIncome, subsTotals: subsTotals, givingTotal: givingTotal, allowance: allowance, setAside: setAside,
-      fv: fv, fvSeries: fvSeries, givenSums: givenSums, insureSums: insureSums, blindSums: blindSums },
+      fv: fv, fvSeries: fvSeries, givenSums: givenSums, insureSums: insureSums, blindSums: blindSums,
+      stdArea: stdArea, stdLines: stdLines, stdRanges: stdRanges, foodRef: foodRef, foodFactor: foodFactor, stdView: stdView, whatItTakes: whatItTakes, season: seasonOf, cardsOf: cardsOf, windfallSplit: windfallSplit, goalsLeft: goalsLeft, pretaxMonthly: pretaxMonthly },
+    areas: AREAS, goals: GOALS, steps: STEPS, stdTaste: stdTaste, stdRow: stdRow, stdSources: STD_SRC,
     blind: BLIND, insure: INSURE, giveGoal: function (d) { return giveGoal(d); }
   };
 })();

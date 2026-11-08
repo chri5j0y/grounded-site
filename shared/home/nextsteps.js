@@ -19,7 +19,7 @@
   'use strict';
   window.GGScreen = window.GGScreen || {};
   if (window.GGScreen.next) return;
-  var FILES = ['/pine/nextsteps.js?v=b788', '/pine/checkin.js?v=b907', '/shared/gg-sources.js?v=b916', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
+  var FILES = ['/pine/nextsteps.js?v=b788', '/pine/checkin.js?v=b907', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
 
   function open(ctx) {
     var N = window.GGScrNotebook, esc = N.esc, NS = window.PINE_NEXTSTEPS || { chapters: [], intro: [] };
