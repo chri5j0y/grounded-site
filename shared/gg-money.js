@@ -14,7 +14,7 @@
                       {get() -> the money object (kept and changed in place), put() -> saves it, ok() -> true when open}
        opts.member    true, false, or a function: Membership opens This Month, Log, the weekly check-in, and Family sharing.
                       Start (false) is the taste: Close the Gap and My Plan (with Bring In a Spreadsheet).
-       opts.view      first view: home (Money Home, the default), give, live, protect, grow, ahead (the Plan part), gap, plan, month,
+       opts.view      first view: sheet (the One Page sheet, the default since BLD 941), home (Money Home), give, live, protect, grow, ahead (the Plan part), gap, plan, month,
                     log, check, import, share, tools, tool:<id>
        opts.onView    fn(view) when the view changes (the host can keep its address in step)
        opts.onMembership fn('see' or 'code') for the Membership line buttons
@@ -30,7 +30,7 @@
 
    The money object (one per profile)
      {v: 1, pid (the plan's id, shared by every phone in one Family plan), created, u,
-      lines:  [{id, n name, a amount, f how often (m, b, h, y, s), s status (fixed, varies, hold, pretax), o note, u, x removed}],
+      lines:  [{id, n name, a amount, f how often (m, b, h, y, s), s status (fixed, varies, est, hold, pretax), o note, u, x removed}],
       income: [{id, n, a, lo, hi, o, u, x}],
       ideas:  {done: {key: time}, edit: {key: amount}, off: {key: 1}, mine: [{id, n, a, k: 'spend' or 'income', o, u, x}], u},
       logs:   [{id, d YYYY-MM-DD, a, c line id, n category name, u, x}],
@@ -54,12 +54,21 @@
    tools.windfall {amt, kind, give, cards, past}. They stay on this phone like every tool answer (never in the Family share);
    money object v1 is unchanged. Money Home and the Plan part carry a Standards card, and each part page a short row.
 
+   BLD 941 (Chris: "no clear direction, data is all over the place.. doesnt even have a place to see everything at once
+   like my simple spread sheet"): Grounded Money opens on the One Page sheet (view sheet): Money In, Money Out, and Ahead
+   or Short Each Month; a chip row (giving, saving with Before Taxes counted, the season, the Standards); and three compact
+   panels, Expenses, Income, and Before Taxes, each line edited in place (tap a name or an amount, tap the tag for its
+   status). Before Taxes lines stay out of Money Out (they leave before pay) and count as saving; they are the one source
+   for the Standards' pretax saving. A new status, est (Estimate). Tools and Tips (view tools) gathers the five parts,
+   every tool, the Standards, the Windfall Planner, and tips. Every older view name still opens its place; My Plan stays
+   for notes and every detail. tools.sheet {sort: 'mine' or 'big'} keeps the Expenses order choice.
+
    No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMoney) return;
-  var V = 'b940';
+  var V = 'b941';
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
   var SHARE_BASE = 'https://growwithgrounded.com/home/#money=';
 
@@ -125,7 +134,9 @@
     umbrella: '<path d="M3 12a9 9 0 0 1 18 0z"/><path d="M12 12v6.5a2 2 0 0 1-4 0"/><path d="M12 3v.5"/>',
     chart: '<path d="M4 20h16"/><path d="M6.5 16v-3M11 16V10M15.5 16V7.5"/><path d="M5 9.5l5-4 3.5 2.5L19 3.5"/><path d="M15.5 3.5H19V7"/>',
     chev: '<path d="M6.5 9.5l5.5 5.5 5.5-5.5"/>',
-    star: '<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/>'
+    star: '<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/>',
+    dots: '<circle cx="5.5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18.5" cy="12" r="1.4"/>',
+    sort: '<path d="M7 4v16M3.5 16.5L7 20l3.5-3.5M14 6h7M14 11h5M14 16h3"/>'
   };
   function I(id) { return '<svg class="gm-i" aria-hidden="true" focusable="false"><use href="#gmi-' + id + '"/></svg>'; }
   function mountIcons() {
@@ -140,8 +151,8 @@
      ===================================================================== */
   var FREQ = { m: { n: 'Monthly', k: 1 }, b: { n: 'Every Two Weeks', k: 26 / 12 }, h: { n: 'Twice a Year', k: 2 / 12 }, y: { n: 'Yearly', k: 1 / 12 }, s: { n: 'Spread Monthly', k: 1 / 12 } };
   var FREQ_ORDER = ['m', 'b', 'h', 'y', 's'];
-  var STATUS = { fixed: 'Fixed', varies: 'Varies', hold: 'On Hold', pretax: 'Before Taxes' };
-  var STATUS_ORDER = ['fixed', 'varies', 'hold', 'pretax'];
+  var STATUS = { fixed: 'Fixed', varies: 'Varies', est: 'Estimate', hold: 'On Hold', pretax: 'Before Taxes' };
+  var STATUS_ORDER = ['fixed', 'varies', 'est', 'hold', 'pretax'];
 
   function blank() { return { v: 1, pid: uid(), created: today(), u: Date.now(), lines: [], income: [], ideas: { done: {}, edit: {}, off: {}, mine: [], u: 0 }, logs: [], checks: {}, tools: {} }; }
   // Fills a money object in place (so a profile's own object stays the one saved).
@@ -155,7 +166,9 @@
   }
   function freqOf(f) { return FREQ[f] || FREQ.m; }
   function monthly(l) { return r2((+l.a || 0) * freqOf(l.f).k); }
-  function counts(l) { return l.s !== 'hold'; }
+  // BLD 941: Money Out counts every line except On Hold and Before Taxes (Before Taxes leaves before pay, so it never
+  // comes out of the take-home income; it counts as saving).
+  function counts(l) { return l.s !== 'hold' && l.s !== 'pretax'; }
   function addLine(d, o) { var l = Object.assign({ id: uid(), n: '', a: 0, f: 'm', s: 'fixed', o: '' }, o || {}, { u: Date.now() }); d.lines.push(l); touch(d); return l; }
   function addIncome(d, o) { var l = Object.assign({ id: uid(), n: '', a: 0, lo: null, hi: null, o: '' }, o || {}, { u: Date.now() }); d.income.push(l); touch(d); return l; }
   function edit(item, patch, d) { Object.assign(item, patch, { u: Date.now() }); if (d) touch(d); return item; }
@@ -193,8 +206,6 @@
   function ideaList(d) {
     var L = live(d.lines).filter(function (l) { return counts(l) && monthly(l) > 0; }), out = [];
     function add(key, k, t, how, save, line) { out.push({ key: key, k: k, t: t, how: how, base: r5(save), line: line || '' }); }
-    var pre = L.filter(function (l) { return l.s === 'pretax'; });
-    if (pre.length) add('pretax', 'spend', 'Count Before Taxes Lines Once', 'If your paycheck amount is already after ' + names(pre) + ' come out, these are counted twice. Counting them once shows the true gap.', sum(pre));
     // An HSA counts even at zero (often listed Before Taxes with its amount in the note).
     var hsa = live(d.lines).filter(function (l) { return rx(l, RE.hsa); });
     if (hsa.length) L.filter(function (l) { return !rx(l, RE.hsa) && rx(l, RE.health); }).forEach(function (l) {
@@ -399,7 +410,7 @@
     return [{ name: 'CSV', rows: rows.map(function (r) { return r.map(function (c) { var n = num(c); return c.trim() === '' ? null : n != null && /^\s*\$?\s*-?[\d,]*\.?\d+\s*$/.test(c) ? n : c.trim(); }); }) }];
   }
   function cellText(v) { return v == null ? '' : String(v).replace(/\s+/g, ' ').trim(); }
-  function statusOf(v) { var s = cellText(v).toLowerCase(); if (!s) return 'fixed'; if (/pre.?tax|before tax/.test(s)) return 'pretax'; if (/hold|pause/.test(s)) return 'hold'; if (/estimat|vari|flex|change/.test(s)) return 'varies'; return 'fixed'; }
+  function statusOf(v) { var s = cellText(v).toLowerCase(); if (!s) return 'fixed'; if (/pre.?tax|before tax/.test(s)) return 'pretax'; if (/hold|pause/.test(s)) return 'hold'; if (/estimat/.test(s)) return 'est'; if (/vari|flex|change/.test(s)) return 'varies'; return 'fixed'; }
   function freqText(v) { var s = cellText(v).toLowerCase(); if (!s) return 'm'; if (/spread/.test(s)) return 's'; if (/two week|bi.?week|every 2|26/.test(s)) return 'b'; if (/twice|semi|half/.test(s)) return 'h'; if (/year|annual/.test(s)) return 'y'; return 'm'; }
   function cleanName(s) {
     s = cellText(s); var note = '', i = s.indexOf('(');
@@ -561,7 +572,7 @@
      ===================================================================== */
   var TABS = [
     { v: 'gap', n: 'Close the Gap', i: 'gap' }, { v: 'plan', n: 'My Plan', i: 'list' }, { v: 'month', n: 'This Month', i: 'cal', m: 1 },
-    { v: 'log', n: 'Log', i: 'tap', m: 1 }, { v: 'check', n: 'Check-in', i: 'leaf', m: 1 }, { v: 'tools', n: 'Tools', i: 'grid' }
+    { v: 'log', n: 'Log', i: 'tap', m: 1 }, { v: 'check', n: 'Check-in', i: 'leaf', m: 1 }, { v: 'tools', n: 'Tools and Tips', i: 'grid' }
   ];
   // BLD 939: the five parts. 'ahead' is the Plan part's view name (plan stays My Plan).
   var PARTS = [
@@ -579,9 +590,9 @@
     ['visit', 'Make a Visit', 'Sit with someone who would love the company.'], ['lend', 'Lend and Share', 'Tools, books, and gear from your shelf to a neighbor.'],
     ['ride', 'Offer a Ride', 'To an appointment, the store, or a gathering.'], ['listen', 'Listen Well', 'Fifteen unhurried minutes, phone away, for someone who needs to be heard.']
   ];
-  var TITLE = { home: 'Grounded Money', give: 'Give', live: 'Live', protect: 'Protect', grow: 'Grow', ahead: 'Plan', gap: 'Close the Gap', plan: 'My Plan', month: 'This Month', log: 'Log Spending', check: 'Weekly Money Check-in', import: 'Bring In a Spreadsheet', share: 'Share With Family', tools: 'Tools and Calculators' };
+  var TITLE = { sheet: 'Grounded Money', home: 'Money Home', give: 'Give', live: 'Live', protect: 'Protect', grow: 'Grow', ahead: 'Plan', gap: 'Close the Gap', plan: 'My Plan', month: 'This Month', log: 'Log Spending', check: 'Weekly Money Check-in', import: 'Bring In a Spreadsheet', share: 'Share With Family', tools: 'Tools and Tips' };
   var LINE = { home: 'Give, live, protect, grow, and plan: your whole money picture, bright and clear.', give: PARTS[0].line, live: PARTS[1].line, protect: PARTS[2].line, grow: PARTS[3].line, ahead: PARTS[4].line,
-    gap: 'Every idea you choose brings your plan into balance.', plan: 'Every line, calm and clear.', month: 'Where this month is going.', log: 'One tap, and back to your day.', check: 'A calm look each week keeps money peaceful.', import: 'Start from the sheet you already keep.', share: 'One plan for your home, on each phone.', tools: 'Ways to save, earn, and plan, all on this device.' };
+    gap: 'Every idea you choose brings your plan into balance.', plan: 'Every line, calm and clear.', month: 'Where this month is going.', log: 'One tap, and back to your day.', check: 'A calm look each week keeps money peaceful.', import: 'Start from the sheet you already keep.', share: 'One plan for your home, on each phone.', tools: 'The five parts, every tool, the Standards, and tips.' };
   var COMMON = [
     { n: 'Rent or Mortgage', s: 'fixed' }, { n: 'Groceries', s: 'varies' }, { n: 'Energy', s: 'varies' }, { n: 'Water and Trash', s: 'fixed' },
     { n: 'Phone Plan', s: 'fixed' }, { n: 'Car Payment', s: 'fixed' }, { n: 'Car Insurance', s: 'fixed' }, { n: 'Gas for the Car', s: 'varies' },
@@ -593,7 +604,7 @@
     if (!el) return null;
     mountIcons();
     if (opts.css !== false && !document.getElementById('gm-css')) { var lk = document.createElement('link'); lk.id = 'gm-css'; lk.rel = 'stylesheet'; lk.href = opts.cssHref || HERE + 'gg-money.css?v=' + V; document.head.appendChild(lk); }
-    var st = storeOf(opts.store), S = { view: opts.view || 'home', open: readOpen(), pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false, tw: {} };
+    var st = storeOf(opts.store), S = { view: opts.view || 'sheet', ed: null, rowOpen: null, open: readOpen(), pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false, tw: {} };
     var ART = opts.art || '/shared/heroes/way/';
     function art(name) { return typeof ART === 'function' ? ART(name) : ART + name; }
     var root = document.createElement('div'); root.className = 'gm'; el.innerHTML = ''; el.appendChild(root);
@@ -622,16 +633,18 @@
     }
     function tstate(d, id) { var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
     function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate }; }
-    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'home'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'sheet'; S.ed = null; S.rowOpen = null; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
 
     /* ----- painting ----- */
     function paint() {
       var d = D();
       if (!d) { root.innerHTML = '<div class="gm-card gm-hello">' + head() + '<p class="gm-sub">Open your profile to see your money plan. It stays locked on this device with your passcode.</p>' + (window.GGP && GGP.require ? '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="unlock">Open My Profile</button></div>' : '') + '</div>'; return; }
       // Stage 2: a view this person cannot open (a Membership place on Start) settles on Close the Gap, and the host's address follows.
+      if (!TITLE[S.view] && !/^tool:[a-z]+$/.test(S.view)) S.view = 'sheet';   // BLD 941: an unknown view name settles on the sheet
       if (!allowed(S.view)) { S.view = 'gap'; if (opts.onView) try { opts.onView('gap'); } catch (e) {} }
+      if (S.view === 'sheet') { root.innerHTML = '<div class="gm-shell gm-sheet gm-c-home">' + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="sheet">' + vSheet(d) + '</div></div>'; edFocus(); return; }
       var tid = /^tool:(.+)$/.exec(S.view), body = tid ? vTool(d, tid[1]) : PART[S.view] ? vPart(d, S.view) : { home: vHome, gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare, tools: vTools }[S.view](d);
-      root.innerHTML = '<div class="gm-shell gm-c-' + (partOf(S.view) || 'home') + '">' + head() + pnav() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
+      root.innerHTML = '<div class="gm-shell gm-c-' + (partOf(S.view) || 'home') + '">' + head() + (S.view === 'tools' ? '' : pnav()) + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
     }
     // The part this view belongs to (give, live, protect, grow, ahead), or '' for Money Home and All Tools.
     function partOf(v) {
@@ -647,12 +660,14 @@
     }
     // The five parts, always in reach, each in its own color.
     function pnav() {
-      var cur = partOf(S.view) || (S.view === 'home' ? 'home' : '');
-      return '<nav class="gm-pnav" aria-label="Grounded Money parts"><button type="button" class="gm-pn gm-c-home" data-gm="go:home"' + (cur === 'home' ? ' aria-current="page"' : '') + '>' + I('coin') + '<span>Money Home</span></button>' +
-        PARTS.map(function (x) { return '<button type="button" class="gm-pn gm-c-' + x.id + '" data-gm="go:' + x.id + '"' + (cur === x.id ? ' aria-current="page"' : '') + '>' + I(x.i) + '<span>' + esc(x.n) + '</span></button>'; }).join('') + '</nav>';
+      // BLD 941: One Page leads the row, and Tools and Tips ends it (Money Home opens from Tools and Tips).
+      var cur = partOf(S.view) || (S.view === 'tools' || S.view === 'home' ? 'tools' : '');
+      return '<nav class="gm-pnav" aria-label="Grounded Money parts"><button type="button" class="gm-pn gm-c-home" data-gm="go:sheet">' + I('list') + '<span>One Page</span></button>' +
+        PARTS.map(function (x) { return '<button type="button" class="gm-pn gm-c-' + x.id + '" data-gm="go:' + x.id + '"' + (cur === x.id ? ' aria-current="page"' : '') + '>' + I(x.i) + '<span>' + esc(x.n) + '</span></button>'; }).join('') +
+        '<button type="button" class="gm-pn gm-c-home" data-gm="go:tools"' + (cur === 'tools' ? ' aria-current="page"' : '') + '>' + I('grid') + '<span>Tools and Tips</span></button></nav>';
     }
     function tabs() {
-      if (!(LIVE_VIEWS[S.view] || S.view === 'live' || S.view === 'tools')) return '';
+      if (!(LIVE_VIEWS[S.view] || S.view === 'live')) return '';
       return '<nav class="gm-tabs" aria-label="Live">' + TABS.filter(function (t) { return !t.m || member(); }).map(function (t) {
         var on = S.view === t.v || (t.v === 'plan' && (S.view === 'import' || S.view === 'share'));
         return '<button type="button" class="gm-tab" data-gm="go:' + t.v + '"' + (on ? ' aria-current="page"' : '') + '>' + I(t.i) + '<span>' + esc(t.n) + '</span></button>';
@@ -787,7 +802,7 @@
       }).join('') + '</div>' + (nx ? '<div class="gm-nextstep gm-c-' + nx.p.id + '">' + I('star') + '<span><span class="gm-k">A Good Next Step</span><b>' + esc(nx.s.next[0]) + '</b></span>' + openBtn(allowed(nx.s.next[1]) ? nx.s.next[1] : nx.p.id, 'Go') + '</div>' : '<p class="gm-note">' + I('sun') + 'Every part is in motion. Look again each month, and enjoy the calm.</p>') + '</section>';
       var empty = !live(d.lines).length && !live(d.income).length ? '<div class="gm-card gm-hello gm-c-live"><h3 class="gm-h3">Start with your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then each part fills in with your own numbers. Everything stays on this device.</p>' +
         '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' : '';
-      return empty + tiles + stdCard(d) + pic + tipCard() + '<div class="gm-acts gm-center"><button type="button" class="gm-btn line sm" data-gm="go:tools">' + I('grid') + 'All Tools</button></div>' + memberLine();
+      return empty + tiles + stdCard(d) + pic + tipCard() + '<div class="gm-acts gm-center"><button type="button" class="gm-btn line sm" data-gm="go:sheet">' + I('list') + 'One Page</button><button type="button" class="gm-btn line sm" data-gm="go:tools">' + I('grid') + 'Tools and Tips</button></div>' + memberLine();
     }
 
     /* BLD 940: the Grounded Money Standards on Money Home and as a short row on each part page. */
@@ -956,14 +971,145 @@
       return '<svg class="gm-draw ' + (cls || '') + '" viewBox="0 0 120 100" aria-hidden="true" focusable="false">' + a + '</svg>';
     }
 
-    /* Tools */
+    /* =====================================================================
+       BLD 941: the One Page sheet. Everything at once, like a simple spreadsheet: three totals, a chip row, and three
+       compact panels. Tap a name or an amount to change it in place (Enter or leaving the field saves, Escape keeps it as
+       it was), tap a tag for the next status, and the dots open How Often, every status, and Remove (with Undo).
+       ===================================================================== */
+    var TAG_CYCLE = ['fixed', 'varies', 'est', 'hold'];
+    var FREQ_WORD = { m: 'a month', b: 'every two weeks', h: 'twice a year', y: 'a year', s: 'a year, spread monthly' };
+    function sortOf(d) { var t = tv(d, 'sheet'); return t.sort === 'big' ? 'big' : 'mine'; }
+    function vSheet(d) {
+      var t = totals(d), all = live(d.lines), B = all.filter(function (l) { return l.s === 'pretax'; }), N = live(d.income);
+      var L = all.filter(function (l) { return l.s !== 'pretax'; }), big = sortOf(d) === 'big';
+      if (big) L = L.slice().sort(function (a, b) { return (b.s === 'hold' ? -1 : monthly(b)) - (a.s === 'hold' ? -1 : monthly(a)); });
+      var top = '<header class="gm-stop"><h2 class="gm-h2 gm-stitle">Grounded Money</h2><span class="gm-smonth">' + esc(MONTHS[new Date().getMonth()]) + ' Plan · tap any number to change it</span></header>';
+      var empty = !all.length && !N.length ? '<div class="gm-acts gm-sstart"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div>' : '';
+      var exp = panel('out', 'Expenses', t.spend, L.map(function (l) { return sRow(l, 'line'); }).join(''),
+        '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:line">' + I('plus') + 'Add a Line</button><button type="button" class="gm-linkbtn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button></div>',
+        L.length > 1 ? '<button type="button" class="gm-ssort" data-gm="ssort" aria-pressed="' + big + '" aria-label="Order: ' + (big ? 'Largest First' : 'Order Added') + '. Tap to change">' + I('sort') + (big ? 'Largest First' : 'Order Added') + '</button>' : '');
+      var inc = panel('in', 'Income', t.income, N.map(function (s) { return sRow(s, 'income'); }).join(''), '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:income">' + I('plus') + 'Add Income</button></div>');
+      var pre = panel('pre', 'Before Taxes', t.pretax, B.map(function (l) { return sRow(l, 'pre'); }).join(''),
+        (B.length ? '<p class="gm-snote">Counted as saving. Already out before pay.</p>' : '') + '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:pre">' + I('plus') + 'Add Before Taxes</button></div>');
+      var acts = '<div class="gm-acts gm-sacts">' + (member() ? '<button type="button" class="gm-btn" data-gm="go:month">' + I('cal') + 'This Month</button>' : '') +
+        '<button type="button" class="gm-btn' + (member() ? ' line' : '') + '" data-gm="go:gap">' + I('gap') + 'Close the Gap</button><button type="button" class="gm-btn line" data-gm="go:tools">' + I('grid') + 'Tools and Tips</button>' +
+        (member() ? '<button type="button" class="gm-btn line" data-gm="go:share">' + I('share') + 'Share With Family</button>' : '') + '</div>' +
+        (d.own ? '<p class="gm-quiet">You follow a Family plan. <button type="button" class="gm-linkbtn" data-gm="leave">' + (S.sureLeave ? 'Tap Again to Return to My Own Plan' : 'Return to My Own Plan') + '</button></p>' : '');
+      return top + sheetBoxes(t) + sheetChips(d, t) + empty + '<div class="gm-scols"><div class="gm-sleft">' + exp + '</div><div class="gm-sright">' + inc + pre + '</div></div>' + acts;
+    }
+    function sheetBoxes(t) {
+      var ok = t.gap >= 0;
+      return '<div class="gm-sbox" data-gm-sums><div class="gm-sb" data-k="in"><span class="gm-k">Money In</span><b>' + money(t.income) + '</b></div><div class="gm-sb" data-k="out"><span class="gm-k">Money Out</span><b>' + money(t.spend) + '</b></div>' +
+        '<div class="gm-sb ' + (ok ? 'ok' : 'short') + '" data-k="gap" data-gm-gap="' + t.gap + '"><span class="gm-k">' + (ok ? 'Ahead Each Month' : 'Short Each Month') + '</span><b>' + money(Math.abs(t.gap)) + '</b></div></div>';
+    }
+    // The chips: giving and saving as shares of take-home (Before Taxes counted as saving), the season, and the Standards.
+    // Each opens its tool; on Start, a Membership tool opens its part's page instead.
+    function sheetChips(d, t) {
+      var M = TL() && TL().math; if (!M || !M.stdView) return '<div class="gm-schips" data-gm-chips></div>';
+      var v = M.stdView(d, tv(d, 'std')), se = v.season, out = [];
+      function chip(k, html, view, part) { var to = allowed(view) ? view : part; return '<button type="button" class="gm-schip" data-chip="' + k + '" data-gm="go:' + to + '">' + html + '</button>'; }
+      if (t.income > 0) {
+        out.push(chip('give', 'Giving <b>' + Math.round(v.by.give.pct) + '%</b>', 'tool:give', 'give'));
+        out.push(chip('save', 'Saving <b>' + Math.round(v.by.save.pct) + '%</b>' + (v.pretax > 0 ? ' with Before Taxes' : ''), 'tool:goals', 'grow'));
+      }
+      if (live(d.lines).length) out.push(chip('season', se.building ? 'Building Season · <b>' + se.done + ' of 5</b> steps' : '<b>Growing Season</b>', 'tool:std', 'ahead'));
+      out.push(chip('std', 'Standards ›', 'tool:std', 'ahead'));
+      return '<div class="gm-schips" data-gm-chips>' + out.join('') + '</div>';
+    }
+    function panel(id, title, total, rows, foot, extra) {
+      return '<section class="gm-panel" data-panel="' + id + '"><div class="gm-ph"><h3 class="gm-h3">' + esc(title) + '</h3>' + (extra || '') + '<b class="gm-ptot" data-gm-total="' + id + '">' + money(total) + '</b></div>' +
+        '<div class="gm-srows">' + rows + '</div>' + foot + '</section>';
+    }
+    function subOf(l, k) {
+      if (k === 'income') return l.lo != null || l.hi != null ? money(l.lo != null ? l.lo : l.a) + ' to ' + money(l.hi != null ? l.hi : l.a) : '';
+      return l.f !== 'm' ? money(l.a) + ' ' + FREQ_WORD[l.f] : '';
+    }
+    function sRow(l, kind) {
+      var k = kind === 'income' ? 'income' : 'line', open = S.rowOpen === l.id, sub = subOf(l, k), nm = l.n || (k === 'income' ? 'Income' : 'A line');
+      return '<div class="gm-sr' + (kind === 'line' ? '' : ' nt') + (l.s === 'hold' ? ' hold' : '') + (open ? ' open' : '') + '" data-id="' + l.id + '" data-kind="' + k + '" data-s="' + esc(l.s || '') + '">' +
+        '<span class="gm-scn">' + cellHtml(l, k, 'n') + '<small class="gm-ssub"' + (sub ? '' : ' hidden') + '>' + esc(sub) + '</small></span>' + cellHtml(l, k, 'a') +
+        (kind === 'line' ? '<button type="button" class="gm-tag t-' + l.s + '" data-gm="tag:' + l.id + '" aria-label="' + esc(nm + ': ' + STATUS[l.s] + '. Tap for the next status') + '">' + esc(STATUS[l.s]) + '</button>' : '') +
+        '<button type="button" class="gm-smore" data-gm="srow:' + l.id + '" aria-expanded="' + open + '" aria-label="' + esc('More for ' + nm) + '">' + I('dots') + '</button>' +
+        (open ? rowMore(l, kind) : '') + '</div>';
+    }
+    // One cell: a button that shows the value, or the field while it changes.
+    function cellHtml(l, k, f) {
+      var e = S.ed, ed = e && e.id === l.id && e.f === f, nm = l.n || '';
+      if (f === 'n') return '<span class="gm-sc" data-cell="n">' + (ed ? '<input class="gm-sin" data-ed="n:' + l.id + '" value="' + esc(e.val != null ? e.val : nm) + '" maxlength="80" aria-label="Name" placeholder="' + (k === 'income' ? 'Name this income' : 'Name this line') + '" autocomplete="off" enterkeyhint="done">'
+        : '<button type="button" class="gm-sv' + (nm ? '' : ' ph') + '" data-gm="ed:n:' + k + ':' + l.id + '" aria-label="' + esc((nm || 'Unnamed') + '. Tap to change the name') + '">' + esc(nm || (k === 'income' ? 'Name this income' : 'Name this line')) + '</button>') + '</span>';
+      var shown = k === 'income' ? +l.a || 0 : monthly(l), how = k === 'income' || l.f === 'm' ? 'a month' : FREQ_WORD[l.f];
+      return '<span class="gm-sc gm-sca" data-cell="a">' + (ed ? '<input class="gm-sin gm-sina" data-ed="a:' + l.id + '" value="' + esc(e.val != null ? e.val : l.a ? plain(l.a) : '') + '" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="0" aria-label="' + esc('Amount ' + how + (nm ? ' for ' + nm : '')) + '">'
+        : '<button type="button" class="gm-sv" data-gm="ed:a:' + k + ':' + l.id + '" aria-label="' + esc((nm || 'This line') + ': ' + money(shown) + ' a month. Tap to change the amount') + '">' + money(shown) + '</button>') + '</span>';
+    }
+    function rowMore(l, kind) {
+      if (kind === 'income') return '<div class="gm-srm"><div class="gm-two"><label class="gm-f"><span>Low</span><input class="gm-in" data-gmf="lo" inputmode="decimal" value="' + (l.lo != null ? plain(l.lo) : '') + '" placeholder="' + (l.a ? plain(l.a) : '0') + '"></label>' +
+        '<label class="gm-f"><span>High</span><input class="gm-in" data-gmf="hi" inputmode="decimal" value="' + (l.hi != null ? plain(l.hi) : '') + '" placeholder="' + (l.a ? plain(l.a) : '0') + '"></label></div>' +
+        '<div class="gm-acts"><button type="button" class="gm-btn sm line" data-gm="rm:income:' + l.id + '">' + I('x') + 'Remove</button><button type="button" class="gm-linkbtn" data-gm="srow:' + l.id + '">Done</button></div></div>';
+      return '<div class="gm-srm"><div class="gm-srmg" role="group" aria-label="How Often"><span class="gm-k">How Often</span>' + FREQ_ORDER.map(function (f) { var on = l.f === f; return '<button type="button" class="gm-mchip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-gm="sfreq:' + l.id + ':' + f + '">' + esc(FREQ[f].n) + '</button>'; }).join('') + '</div>' +
+        '<div class="gm-srmg" role="group" aria-label="Status"><span class="gm-k">Status</span>' + STATUS_ORDER.map(function (k) { var on = l.s === k; return '<button type="button" class="gm-mchip t-' + k + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-gm="sst:' + l.id + ':' + k + '">' + esc(STATUS[k]) + '</button>'; }).join('') + '</div>' +
+        '<div class="gm-acts"><button type="button" class="gm-btn sm line" data-gm="rm:line:' + l.id + '">' + I('x') + 'Remove</button><button type="button" class="gm-linkbtn" data-gm="srow:' + l.id + '">Done</button></div></div>';
+    }
+    // The totals, chips, and panel totals, redrawn in place after a change (the rest of the sheet stays, so the next tap lands).
+    function sheetNumbers(d) {
+      var t = totals(d), b = root.querySelector('[data-gm-sums]'), c = root.querySelector('[data-gm-chips]');
+      if (b) b.outerHTML = sheetBoxes(t); if (c) c.outerHTML = sheetChips(d, t);
+      [['out', t.spend], ['pre', t.pretax], ['in', t.income]].forEach(function (x) { var e = root.querySelector('[data-gm-total="' + x[0] + '"]'); if (e) e.textContent = money(x[1]); });
+    }
+    function edFocus() {
+      if (!S.ed) return; var i = root.querySelector('[data-ed="' + S.ed.f + ':' + S.ed.id + '"]'); if (!i) { S.ed = null; return; }
+      try { i.focus({ preventScroll: true }); if (S.ed.val == null && i.select) i.select(); var r = i.getBoundingClientRect(); if (r.top < 60 || r.bottom > window.innerHeight - 40) i.scrollIntoView({ block: 'center' }); } catch (e) {}
+    }
+    // Saves (keep) or leaves as it was, then shows the value again in its cell.
+    function edDone(inp, keep) {
+      var e = S.ed; if (!e || !inp || !inp.isConnected || inp.getAttribute('data-ed') !== e.f + ':' + e.id) return null;
+      S.ed = null; var d = D(), item = d && find(e.k === 'income' ? d.income : d.lines, e.id); if (!item) return null;
+      if (keep) {
+        var patch = {};
+        if (e.f === 'n') { var nv = inp.value.replace(/\s+/g, ' ').trim(); if (nv !== (item.n || '')) patch.n = nv; }
+        else { var nn = num(inp.value); nn = nn == null ? 0 : r2(Math.abs(nn)); if (nn !== (+item.a || 0)) patch.a = nn; }
+        if (Object.keys(patch).length) { edit(item, patch, d); save(); }
+      }
+      var cell = inp.closest('[data-cell]'), row = inp.closest('.gm-sr');
+      if (cell) { var w = document.createElement('div'); w.innerHTML = cellHtml(item, e.k, e.f); cell.replaceWith(w.firstChild); }
+      if (row) { var sb = row.querySelector('.gm-ssub'), sx = subOf(item, e.k); if (sb) { sb.textContent = sx; sb.hidden = !sx; } }
+      sheetNumbers(d);
+      return e;
+    }
+    function sheetAct(p, d) {
+      var y = window.scrollY, item;
+      switch (p[0]) {
+        case 'ed':
+          item = find(p[2] === 'income' ? d.income : d.lines, p[3]); if (!item) return;
+          S.ed = { f: p[1], k: p[2], id: p[3] }; paint(); return;
+        case 'tag':
+          item = find(d.lines, p[1]); if (!item) return;
+          var i = TAG_CYCLE.indexOf(item.s); edit(item, { s: TAG_CYCLE[(i + 1) % TAG_CYCLE.length] }, d); save(); paint(); window.scrollTo(0, y);
+          var tg = root.querySelector('[data-id="' + item.id + '"] .gm-tag'); if (tg) tg.focus({ preventScroll: true }); return;
+        case 'srow': S.rowOpen = S.rowOpen === p[1] ? null : p[1]; paint(); window.scrollTo(0, y); return;
+        case 'sfreq': item = find(d.lines, p[1]); if (item && FREQ[p[2]]) { edit(item, { f: p[2] }, d); save(); paint(); window.scrollTo(0, y); } return;
+        case 'sst': item = find(d.lines, p[1]); if (item && STATUS[p[2]]) { edit(item, { s: p[2] }, d); save(); paint(); window.scrollTo(0, y); } return;
+        case 'ssort': var st = tstate(d, 'sheet'); st.sort = st.sort === 'big' ? 'mine' : 'big'; touch(d); save(); paint(); window.scrollTo(0, y); return;
+        case 'sadd':
+          item = p[1] === 'income' ? addIncome(d) : addLine(d, p[1] === 'pre' ? { s: 'pretax' } : { s: 'fixed' }); save();
+          S.rowOpen = null; S.ed = { f: 'n', k: p[1] === 'income' ? 'income' : 'line', id: item.id, chain: 1 }; paint(); return;
+      }
+    }
+
+    /* Tools and Tips (BLD 941): the five parts as small tiles, the Standards and the Windfall Planner, every tool by part,
+       the tip of the week, and the other places (Money Home, My Plan, Bring In a Spreadsheet). */
     function vTools(d) {
       if (!TL()) { loadTools().then(function (ok) { if (ok) paint(); }); return '<p class="gm-sub">Opening the tools…</p>'; }
-      var L = TL().list, rest = L.filter(function (T) { return !member() && !T.start; });
-      return PARTS.map(function (P) {
-        var mine = L.filter(function (T) { return (T.part || 'live') === P.id && (member() || T.start); });
+      var L = TL().list, TOP = { std: 1, windfall: 1 }, rest = L.filter(function (T) { return !member() && !T.start; });
+      var parts = '<nav class="gm-ptiles" aria-label="The five parts">' + PARTS.map(function (x) { return '<button type="button" class="gm-ptile gm-c-' + x.id + '" data-gm="go:' + x.id + '">' + draw(x.id, 'gm-ptile-draw') + '<b>' + esc(x.n) + '</b></button>'; }).join('') + '</nav>';
+      // On Start the Standards and the Windfall Planner are named once, under With Membership (no locked cards up top).
+      var top = member() ? '<h3 class="gm-sec">Standards and Windfall</h3><div class="gm-tools gm-tt-top">' + ['std', 'windfall'].map(function (id) { var T = tl(id); return T ? toolCard(T) : ''; }).join('') + '</div>' : '';
+      var groups = PARTS.map(function (P) {
+        var mine = L.filter(function (T) { return !TOP[T.id] && (T.part || 'live') === P.id && (member() || T.start); });
         return mine.length ? '<h3 class="gm-sec gm-c-' + P.id + '"><span class="gm-dot"></span>' + esc(P.n) + '</h3><div class="gm-tools">' + mine.map(toolCard).join('') + '</div>' : '';
-      }).join('') +
+      }).join('');
+      var more = '<div class="gm-acts gm-tt-more"><button type="button" class="gm-btn line sm" data-gm="go:sheet">' + I('list') + 'One Page</button><button type="button" class="gm-btn line sm" data-gm="go:home">' + I('coin') + 'Money Home</button>' +
+        '<button type="button" class="gm-btn line sm" data-gm="go:plan">' + I('pen') + 'My Plan, Every Detail</button><button type="button" class="gm-btn line sm" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button></div>';
+      return '<button type="button" class="gm-linkbtn gm-ttback" data-gm="go:sheet">' + I('back') + 'Back to One Page</button>' + parts + top + groups + tipCard() + more +
         (rest.length ? '<div class="gm-card gm-mem"><span class="gm-k">With Membership</span><p class="gm-sub">' + esc(rest.map(function (T) { return T.n; }).join(', ')) + '.</p>' + memBtns() + '</div>' : '');
     }
     // A tool card: a bright tile in its part's color with the tool's own mark.
@@ -1095,7 +1241,7 @@
       var top = '<div class="gm-card"><p class="gm-sub">Choose an Excel (.xlsx) or CSV file. It is read right here on this device; the file itself stays where it is.</p>' +
         '<label class="gm-btn gm-file">' + I('up') + '<span>Choose a File</span><input type="file" id="gm-file" accept=".xlsx,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></label>' +
         (S.pick ? '<p class="gm-mini">' + esc(S.pick) + '</p>' : '') + '</div>';
-      if (!S.sheets) return top + '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:plan">' + I('back') + 'Back to My Plan</button></div>';
+      if (!S.sheets) return top + '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:sheet">' + I('back') + 'Back to One Page</button></div>';
       var sh = S.sheets[S.sheet] || S.sheets[0], m = S.map, got = fromSheet(sh, m);
       var sel = function (k, none) { return '<select class="gm-in" data-gmm="' + k + '">' + colOpts(sh, m[k], none) + '</select>'; };
       return top + '<div class="gm-card gm-map">' +
@@ -1122,7 +1268,7 @@
       out += '</div><div class="gm-card gm-share"><h3 class="gm-h4">Bring In From Family</h3><p class="gm-sub">Scan the other phone\u2019s code with this phone\u2019s camera, or paste the link here.</p>' +
         '<label class="gm-f"><span>Family link</span><input class="gm-in" id="gm-paste" placeholder="Paste the link" autocomplete="off"></label>' +
         '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="share:paste">Bring It In</button>' + (('BarcodeDetector' in window) && navigator.mediaDevices ? '<button type="button" class="gm-btn sm line" data-gm="share:scan">' + I('cam') + 'Scan a Code</button>' : '') + '</div><div id="gm-scan"></div></div>' +
-        '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:plan">' + I('back') + 'Back to My Plan</button></div>';
+        '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:sheet">' + I('back') + 'Back to One Page</button></div>';
       return out;
     }
     function vIncoming(d) {
@@ -1157,7 +1303,8 @@
           var cx = tctx(d, p[1]); if (TT.init) TT.init(cx.t, cx); if (TT.act(p[2], p.slice(3).join(':'), cx)) { touch(d); save(); var y0 = window.scrollY; paint(); window.scrollTo(0, y0); watchTool(d, p[1]); }
           return;
         case 'mem': if (opts.onMembership) opts.onMembership(p[1]); return;
-        case 'common': COMMON.forEach(function (c) { addLine(d, c); }); save(); S.view = 'plan'; paint(); say('Twelve common lines are ready. Add your amounts, and rename or remove any.'); focusFirstEmpty(); return;
+        case 'ed': case 'tag': case 'srow': case 'sfreq': case 'sst': case 'ssort': case 'sadd': sheetAct(p, d); return;
+        case 'common': COMMON.forEach(function (c) { addLine(d, c); }); save(); if (S.view !== 'sheet') S.view = 'plan'; paint(); say('Twelve common lines are ready. Add your amounts, and rename or remove any.'); focusFirstEmpty(); return;
         case 'add':
           var it = p[1] === 'income' ? addIncome(d) : addLine(d); save(); paint();
           var inp = root.querySelector('[data-id="' + it.id + '"] .gm-name'); if (inp) { inp.focus(); try { inp.scrollIntoView({ block: 'center' }); } catch (e) {} }
@@ -1200,13 +1347,13 @@
         case 'imode': S.mode = p[1]; paint(); return;
         case 'import':
           if (p[1] === 'cancel') { S.sheets = null; S.map = null; S.pick = null; paint(); return; }
-          if (p[1] === 'go') { var sh = S.sheets[S.sheet] || S.sheets[0], got = fromSheet(sh, S.map), had = live(d.lines).length + live(d.income).length; applyImport(d, got, had ? S.mode : 'add'); S.sheets = null; S.map = null; S.pick = null; save(); S.view = 'gap'; paint(); if (opts.onView) opts.onView('gap'); say('Brought in ' + got.lines.length + ' lines and ' + got.income.length + ' income sources.'); return; }
+          if (p[1] === 'go') { var sh = S.sheets[S.sheet] || S.sheets[0], got = fromSheet(sh, S.map), had = live(d.lines).length + live(d.income).length; applyImport(d, got, had ? S.mode : 'add'); S.sheets = null; S.map = null; S.pick = null; save(); S.view = 'sheet'; paint(); if (opts.onView) opts.onView('sheet'); say('Brought in ' + got.lines.length + ' lines and ' + got.income.length + ' income sources.'); return; }
           return;
         case 'share':
           if (p[1] === 'make') { btn && (btn.disabled = true); Promise.all([encode(d), qrLoad(opts.qrSrc || '/shared/vendor/qrcode.js?v=b921')]).then(function (r) { var url = (opts.shareBase || SHARE_BASE) + r[0]; S.share = { url: url, svg: qrSvg(url) }; paint(); fitQr(); }); return; }
           if (p[1] === 'copy') { var li = root.querySelector('#gm-link'); copy(li ? li.value : ''); return; }
           if (p[1] === 'send') { try { navigator.share({ title: 'Grounded Money', text: 'Our money plan in Grounded Money', url: S.share.url }).catch(function () {}); } catch (e) {} return; }
-          if (p[1] === 'done') { S.share = null; go('plan'); return; }
+          if (p[1] === 'done') { S.share = null; go('sheet'); return; }
           if (p[1] === 'paste') { var pv = (root.querySelector('#gm-paste') || {}).value || ''; receive(pv); return; }
           if (p[1] === 'scan') { scan(); return; }
           return;
@@ -1270,6 +1417,7 @@
         else if (f === 'f' && FREQ[t.value]) patch.f = t.value;
         else if (f === 's' && STATUS[t.value]) patch.s = t.value;
         edit(item, patch, d); save();
+        if (S.view === 'sheet') { var sb = row.querySelector('.gm-ssub'), sx = subOf(item, kind === 'income' ? 'income' : 'line'); if (sb) { sb.textContent = sx; sb.hidden = !sx; } sheetNumbers(d); return; }
         if (f === 'f' || f === 's') { var y = window.scrollY; paint(); window.scrollTo(0, y); var again = root.querySelector('[data-id="' + item.id + '"] [data-gmf="' + f + '"]'); if (again) again.focus(); }
         else paintSums(d, item, row);
         return;
@@ -1293,27 +1441,37 @@
       if (row && row.getAttribute('data-kind') === 'line') { var mo = row.querySelector('.gm-mo'); if (mo) mo.textContent = item.s === 'hold' ? 'On Hold rests outside the monthly total.' + (item.f !== 'm' ? ' About ' + money(monthly(item)) + ' a month.' : '') : item.f !== 'm' ? 'About ' + money(monthly(item)) + ' a month' : ''; }
       var nm = row && row.querySelector('.gm-x'); if (nm && item.n) nm.setAttribute('aria-label', 'Remove ' + item.n);
     }
-    function onInput(e) { if (e.target.getAttribute && e.target.getAttribute('data-gt')) { toolInput(e.target); return; } if (e.target.id === 'gm-log-a') S.logAmt = e.target.value; else if (e.target.id === 'gm-log-d') S.logDate = e.target.value; else if (e.target.id === 'gm-c1' || e.target.id === 'gm-c3') { S.chk = S.chk || { well: '', steady: 0, step: '' }; S.chk[e.target.id === 'gm-c1' ? 'well' : 'step'] = e.target.value; } }
+    function onInput(e) { if (e.target.getAttribute && e.target.getAttribute('data-ed')) { if (S.ed) S.ed.val = e.target.value; return; } if (e.target.getAttribute && e.target.getAttribute('data-gt')) { toolInput(e.target); return; } if (e.target.id === 'gm-log-a') S.logAmt = e.target.value; else if (e.target.id === 'gm-log-d') S.logDate = e.target.value; else if (e.target.id === 'gm-c1' || e.target.id === 'gm-c3') { S.chk = S.chk || { well: '', steady: 0, step: '' }; S.chk[e.target.id === 'gm-c1' ? 'well' : 'step'] = e.target.value; } }
     function onKey(e) {
-      if (e.key !== 'Enter') return; var t = e.target;
+      var t = e.target;
+      if (t.getAttribute && t.getAttribute('data-ed')) {
+        if (e.key === 'Escape') { e.preventDefault(); edDone(t, false); return; }
+        if (e.key !== 'Enter') return;
+        e.preventDefault(); var was = edDone(t, true);
+        // A new line flows from its name to its amount.
+        if (was && was.chain && was.f === 'n') { S.ed = { f: 'a', k: was.k, id: was.id }; paint(); }
+        return;
+      }
+      if (e.key !== 'Enter') return;
       if (t.id === 'gm-log-a') { e.preventDefault(); var first = root.querySelector('.gm-chips .gm-chip'); if (first) first.focus(); }
       else if (t.getAttribute('data-gmi')) { e.preventDefault(); act('idea:ed:' + t.getAttribute('data-gmi').slice(5)); }
       else if (t.id === 'gm-in-n' || t.id === 'gm-in-a') { e.preventDefault(); act('idea:addsave'); }
       else if (t.id === 'gm-paste') { e.preventDefault(); act('share:paste'); }
       else if (t.getAttribute('data-gmf') && t.tagName === 'INPUT') { t.blur(); }
     }
-    root.addEventListener('click', onClick); root.addEventListener('change', onChange); root.addEventListener('input', onInput); root.addEventListener('keydown', onKey);
+    function onBlur(e) { var t = e.target; if (t.getAttribute && t.getAttribute('data-ed')) edDone(t, true); }
+    root.addEventListener('click', onClick); root.addEventListener('change', onChange); root.addEventListener('input', onInput); root.addEventListener('keydown', onKey); root.addEventListener('focusout', onBlur);
     // Stage 2: GGP.on returns nothing, so destroy takes the listener off with GGP.off (a host like Home draws a fresh copy each visit).
     var unsub = null; if (st.kind === 'ggp' && window.GGP && GGP.on) { try { var onG = function (ty) { if ((ty === 'change' || ty === 'ready') && root.isConnected) paint(); }, u0 = GGP.on(onG); unsub = typeof u0 === 'function' ? u0 : function () { if (window.GGP && GGP.off) GGP.off(onG); }; } catch (e) {} }
 
     if (TL()) TL().use(UTIL);
     paint();
-    loadTools().then(function (ok) { if (ok && (S.view === 'gap' || S.view === 'home' || PART[S.view] || S.view === 'tools' || /^tool:/.test(S.view))) paint(); });
+    loadTools().then(function (ok) { if (ok && (S.view === 'sheet' || S.view === 'gap' || S.view === 'home' || PART[S.view] || S.view === 'tools' || /^tool:/.test(S.view))) paint(); });
     function readHash() { var hm = /#money=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (hm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} receive(hm[1]); } }
     if (opts.readHash) { readHash(); window.addEventListener('hashchange', readHash); }
     return {
       go: go, refresh: paint, receive: receive, view: function () { return S.view; },
-      destroy: function () { if (scanStop) scanStop(); root.removeEventListener('click', onClick); root.removeEventListener('change', onChange); root.removeEventListener('input', onInput); root.removeEventListener('keydown', onKey); if (typeof unsub === 'function') unsub(); window.removeEventListener('hashchange', readHash); if (toastEl) toastEl.remove(); el.innerHTML = ''; }
+      destroy: function () { if (scanStop) scanStop(); root.removeEventListener('click', onClick); root.removeEventListener('change', onChange); root.removeEventListener('input', onInput); root.removeEventListener('keydown', onKey); root.removeEventListener('focusout', onBlur); if (typeof unsub === 'function') unsub(); window.removeEventListener('hashchange', readHash); if (toastEl) toastEl.remove(); el.innerHTML = ''; }
     };
   }
 

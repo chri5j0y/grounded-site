@@ -33,7 +33,7 @@
      #me               the profile sheet: Numbers, Household, Settings, Privacy, Switch Profile
      #<tab>=<section>  a Tending section inside a tab (#week=shop, #week=prep, #today=log, #today=tending,
                        #library=workouts, #me=numbers, #me=settings, ...)
-     #library=money    Grounded Money (BLD 937, shared/gg-money.js), with its own view after it: #library=money-plan,
+     #library=money    Grounded Money (BLD 937, shared/gg-money.js), the One Page sheet since BLD 941, with its own view after it: #library=money-plan,
                        money-month, money-log, money-check, money-import, money-share, money-tools, money-tool:<id>
      #money=<code>     a Family money plan shared from another phone (read here, never sent anywhere)
      Old addresses keep working: #tending opens Today, #tree opens Grow, #more and #privacy open the sheet,
@@ -56,7 +56,7 @@
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b938', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b940';
-  var MONEY_SRC = '/shared/gg-money.js?v=b940';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
+  var MONEY_SRC = '/shared/gg-money.js?v=b941';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -4506,8 +4506,8 @@
       MN.ctl = GGMoney.render(box, {
         store: 'ggp',                                  // the open profile, locked with it
         member: function () { return member(); },      // read each paint, so a code added now opens the Membership places
-        view: sub || 'home',                           // BLD 939: Money Home (the five parts) opens first; every older view name still opens its place
-        onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money' + (v === 'home' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
+        view: sub || 'sheet',                          // BLD 941: the One Page sheet opens first (#library=money); Money Home is #library=money-home, and every older view name still opens its place
+        onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money' + (v === 'sheet' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
         onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
         toast: toast
       });
@@ -4537,7 +4537,7 @@
   /* The Library: Grounded Money beside Grounded Relationships (Branches), and for a Member, the Money Date for couples. */
   function moneyShelves() {
     if (!moneyFor()) return '';
-    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Give, live, protect, grow, and plan: your whole money picture, bright and clear.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'tree-branches.webp' }) +
+    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your whole money plan on one page: money in, money out, and every line at a glance.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'tree-branches.webp' }) +
       (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'growth-plan.webp' }) : '');
   }
   function moneySearch(has, out) {
