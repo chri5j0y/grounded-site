@@ -877,16 +877,19 @@ function wbMerge(L, n){ if (!L || L.wb889 || PUB()) return L; const sp = (APP() 
     L.items.push({id: 'w' + i, store: x.store === 'grocer' ? 'grocer' : 'costco', sec: x.gg ? 'Grab and Go' : SECX().includes(x.sec) ? x.sec : 'Other', name: x.name, amt: x.amt || '', price: +x.price || 0, for: x.for || '', nut: nOk(x.nut) ? x.nut : undefined, done: false, n: 400 + i}); });
   L.wb889 = 1; return L; }
 function keepShop(n, L){ const h = H(); delete L.seed; L.u = Date.now(); h.shop[String(Math.max(1, n))] = L; save(); }
+// BLD 945: which items a store view shows. Both: everything. Costco: Costco items (and own and menu items). Coborn's: Coborn's items,
+// own and menu items, and every Costco item still unchecked (whatever Costco did not have waits here). An item checked while
+// shopping Coborn's keeps got: 'g', so it stays on the Coborn's list as checked.
+function shopVis(items, st){ return items.filter(x => st === 'all' || x.store === st || x.own || x.mm || (st === 'grocer' && (!x.done || x.got === 'g'))); }
 function vShop(){
   const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = KJ() && !PUB() ? kitTable() : num(h.set.household);
   if (!L) return `<p class="hj-note">The shopping lists arrive with the next library update.</p>`;
-  const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st || x.own || x.mm), left = vis.filter(x => !x.done);
+  const st = PUB() ? 'all' : S.store || 'costco', vis = shopVis(L.items, st), left = vis.filter(x => !x.done);
   const tot = vis.reduce((a, x) => a + (+x.price || 0), 0), cart = vis.filter(x => x.done).reduce((a, x) => a + (+x.price || 0), 0);
-  // BLD 943: each store in its own walking order; Both shows Costco, then Coborn's, each in its own order.
+  // BLD 945: each store in its own walking order. Both is one list in Costco order; Coborn's also carries what is still unchecked from Costco.
   const byN = (a, b) => (a.done - b.done) || (a.n - b.n);
   const groups = PUB() ? SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort(byN)]).filter(g => g[1].length)
-    : (st === 'all' ? ['costco', 'grocer'] : [st]).flatMap(sk => { const its = vis.filter(x => st !== 'all' || x.store === sk), A = its.map(x => [x, aisleOf(x, n)]);
-      const gs = AISLES[sk].map(s => [s, A.filter(a => a[1] === s).map(a => a[0]).sort(byN)]).filter(g => g[1].length); if (st === 'all' && gs.length) gs[0].store = STORES[sk]; return gs; });
+    : (A => AISLES[st === 'grocer' ? 'grocer' : 'costco'].map(s => [s, A.filter(a => a[1] === s).map(a => a[0]).sort(byN)]).filter(g => g[1].length))(vis.map(x => [x, aisleOf(x, n)]));
   const ed = S.shopEd;
   return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${fwl(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
   ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${fwl(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
@@ -902,8 +905,8 @@ function vShop(){
 }
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
-  (PUB() ? [''] : st === 'all' ? ['costco', 'grocer'] : [st]).forEach(s => { const g = L.items.filter(x => (!s || x.store === s) && !x.done); if (!g.length) return; if (s) out.push(STORES[s].toUpperCase());
-    const secs = s ? AISLES[s] : SECX(), sec0 = x => s ? aisleOf(x, n) : (SECX().includes(x.sec) ? x.sec : 'Other'); // BLD 943: the store's own walking order
+  (PUB() ? [''] : [st]).forEach(s => { const g = (s ? shopVis(L.items, s) : L.items).filter(x => !x.done); if (!g.length) return; if (s && s !== 'all') out.push(STORES[s].toUpperCase());
+    const secs = s ? AISLES[s === 'grocer' ? 'grocer' : 'costco'] : SECX(), sec0 = x => s ? aisleOf(x, n) : (SECX().includes(x.sec) ? x.sec : 'Other'); // BLD 945: the store's own walking order, Both in Costco order
     secs.forEach(sec => { const r = g.filter(x => sec0(x) === sec).sort((a, b) => a.n - b.n); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (mmAmt(x) ? ' (' + mmAmt(x) + ')' : ''))); }); out.push(''); });
   return out.join('\n').trim() || 'Everything is in the cart.';
 }
@@ -1076,7 +1079,7 @@ function actTool(a, v){
     case 'store': S.store = v; S.shopEd = null; rerender(true); return true;
     case 'hide': S.hideDone = !S.hideDone; rerender(true); return true;
     case 'ewlvl': S.ewLvl = v; S.ewOpen = 'strength'; rerender(true); return true;
-    case 'buy': { const n = S.shopWk || foodWeek(new Date()), L = shopList(n), x = L.items.find(y => y.id === v); if (!x) return true; x.done = !x.done; keepShop(n, L); rerender(true); return true; }
+    case 'buy': { const n = S.shopWk || foodWeek(new Date()), L = shopList(n), x = L.items.find(y => y.id === v); if (!x) return true; x.done = !x.done; if (x.done && S.store === 'grocer') x.got = 'g'; else delete x.got; keepShop(n, L); rerender(true); return true; }
     case 'shoped': S.shopEd = S.shopEd === v ? null : v; rerender(true); return true;
     case 'shopclose': S.shopEd = null; rerender(true); return true;
     case 'shopsave': { const n = S.shopWk || foodWeek(new Date()), L = shopList(n), x = L.items.find(y => y.id === v); if (!x) return true;
@@ -1089,7 +1092,7 @@ function actTool(a, v){
       const show = () => { if (box){ box.hidden = false; box.value = txt; box.focus(); box.select(); } toast('Select the list and copy it.'); };
       try { navigator.clipboard.writeText(txt).then(() => toast('Copied. Paste it into a text.'), show); } catch(e){ show(); } return true; }
     case 'shopreset': { if (!S.sureReset){ S.sureReset = true; rerender(true); setTimeout(() => { if (S.sureReset){ S.sureReset = false; rerender(true); } }, 3500); return true; }
-      S.sureReset = false; const n = S.shopWk || foodWeek(new Date()), L = shopList(n); L.items.forEach(x => x.done = false); keepShop(n, L); toast('All boxes cleared.'); rerender(true); return true; }
+      S.sureReset = false; const n = S.shopWk || foodWeek(new Date()), L = shopList(n); L.items.forEach(x => { x.done = false; delete x.got; }); keepShop(n, L); toast('All boxes cleared.'); rerender(true); return true; }
     case 'ovclose': { if (o && o.k === 'work' && !o.fin && o.done.length && !o.sure){ o.sure = true; toast('Tap the X again to end this workout.'); return true; } closeOv(); return true; }
     case 'tstart': { const st = o.steps[o.i]; startTimer(o, (o.left && o.left < st.secs * 1000 ? o.left : st.secs * 1000) / 1000); rerender(true); return true; }
     case 'pause': o.left = Math.max(0, o.end - Date.now()); o.run = false; rerender(true); return true;
