@@ -1088,7 +1088,7 @@ VIEWS.guides = () => {
       <button class="lc-chip" style="--rc:var(--ink-soft)" aria-pressed="${st.ring === 'all'}" onclick="W.gRing('all')">All</button>
       ${G.rings.map(r => `<button class="lc-chip" style="--rc:${RING_COLOR[r[0]]}" aria-pressed="${st.ring === r[0]}" onclick="W.gRing('${r[0]}')">${esc(r[1])}</button>`).join('')}
     </div><div id="w-glist">${gListHtml()}</div>
-    <p class="lc-note">Worried? Call your hospice's 24/7 line first, day or night. In danger now, call 911. Thinking about ending your life, call or text 988. These guides offer spiritual and emotional support alongside your hospice team. For medical, therapy, or legal questions, turn to your hospice nurse, your doctor, a therapist, or a lawyer.</p>`;
+    <p class="lc-note">Worried? Call your hospice's 24/7 line first, day or night. These guides offer spiritual and emotional support alongside your hospice team. For medical, therapy, or legal questions, turn to your hospice nurse, your doctor, a therapist, or a lawyer.</p>`;
   return h;
 };
 /* When Life Changes as Cards (GWG BLD 790): with no search and All chosen, one card per group; a card is the same

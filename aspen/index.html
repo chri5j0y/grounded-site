@@ -2195,7 +2195,7 @@ function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().ma
 function asLifeLinesHtml(){
   const L = asLifeUse() ? GGLife.lines('aspen') : []; if (!L.length) return '';
   const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
-  return `<div class="as-life-lines"><h3>${esc(GGLife.LINES_TITLE || 'Information and Support')}</h3><p class="muted small">For information and support. In danger right now, call 911. In a crisis, call or text 988.</p><ul>${L.map(x => `<li><b>${esc(x.name)}</b> ${href(x) ? `<a href="${esc(href(x))}"${x.tel ? '' : ' target="_blank" rel="noopener"'}>${esc(x.how)}</a>` : esc(x.how)}${x.tel && x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">Website</a>` : ''}<small>${esc(x.note || '')}</small></li>`).join('')}</ul></div>`;
+  return `<div class="as-life-lines"><h3>${esc(GGLife.LINES_TITLE || 'Information and Support')}</h3><p class="muted small">For information and support.</p><ul>${L.map(x => `<li><b>${esc(x.name)}</b> ${href(x) ? `<a href="${esc(href(x))}"${x.tel ? '' : ' target="_blank" rel="noopener"'}>${esc(x.how)}</a>` : esc(x.how)}${x.tel && x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">Website</a>` : ''}<small>${esc(x.note || '')}</small></li>`).join('')}</ul></div>`;
 }
 // Pine and Birch never suggest Hardy while pain or mental health is chosen; Aspen follows the same rule.
 function asHardyRests(){ return asLifeIds().some(id => id === 'pain' || id === 'mind'); }
@@ -2729,7 +2729,7 @@ window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
 <!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=b934"><script src="/shared/practice-rhythm.js?v=b929"></script><script src="/shared/gg-guided.js?v=b907"></script><script src="/shared/guided/aspen.js?v=b907"></script><script src="/aspen/guided.js?v=b907"></script><!-- /GUIDED -->
-<script src="/shared/gg-learn.js?v=b940" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b940';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b944" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b944';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=b941" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b941';document.head.appendChild(s)"></script>
 </body>

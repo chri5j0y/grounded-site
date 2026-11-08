@@ -39,7 +39,7 @@
 (function () {
   'use strict';
   if (window.GGSober) return;
-  var V = 'b939';
+  var V = 'b944';
   var TREES = ['birch', 'oak', 'sequoia'];
   var SITE = 'https://growwithgrounded.com/living-sober';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
@@ -624,7 +624,7 @@
         '<div class="ggs-foot"><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
       else html += '<h2>' + esc(x.title) + '</h2><p>' + esc(x.lead || '') + '</p>' + ul(x.items) +
         (x.try ? '<h3>Try Saying</h3><p class="ggs-toastline">' + esc(x.try) + '</p>' : '') +
-        (x.id === 'safe' ? linesHtml(tree) : '') + srcLine(C2.credits) +
+        (x.id === 'safe' ? linesHtml(tree, true) : '') + srcLine(C2.credits) +
         '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-cr="" data-first>All Steps</button><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
       dialog(x ? x.title : (C2.title || 'Loving Someone Who Drinks or Uses'), html, function (d) {
         d.box.setAttribute('data-ggs-craft', id || 'all');
@@ -770,9 +770,11 @@
     ['move', 'Move my body: stretch, lift, or dance'], ['pray', 'Pray, or sit quietly for a minute'], ['bed', 'Go to bed early']
   ];
   var IDEA = {}; IDEAS.forEach(function (x) { IDEA[x[0]] = x[1]; });
-  function linesHtml(tree) {
+  // safe: Staying Safe (Someone I Love) keeps the crisis line, a safety topic; My Anchor Plan shows the help lines only (BLD 944).
+  function linesHtml(tree, safe) {
     var g = L(), ls = g && g.soberLines ? g.soberLines(tree) : [];
-    return '<div class="ggs-lines"><p><b>Help Lines</b></p><p>In a crisis, call or text 988. In an emergency, call 911.</p>' +
+    if (!safe && !ls.length) return '';
+    return '<div class="ggs-lines"><p><b>Help Lines</b></p>' + (safe ? '<p>In a crisis, call or text 988. In an emergency, call 911.</p>' : '') +
       ls.map(function (x) { var href = x.tel ? 'tel:' + x.tel : x.url || ''; return '<p><b>' + esc(x.name) + ':</b> ' + (href ? '<a href="' + esc(href) + '"' + (x.tel ? '' : ' target="_blank" rel="noopener"') + '>' + esc(x.how) + '</a>' : esc(x.how)) + '. ' + esc(x.note) + '</p>'; }).join('') + '</div>';
   }
   function telHref(n) { var d = String(n || '').replace(/[^0-9+]/g, ''); return d.length >= 3 ? 'tel:' + d : ''; }

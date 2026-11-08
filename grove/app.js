@@ -812,7 +812,9 @@ function helpCardHtml(more, hospice) {
   if ((isFamily() && G.hard) || hospice) first = G && G.line && G.line.phone
     ? `<p><b>${esc(G.line.name || 'Our hospice 24/7 line')}</b>: <a class="text-link" href="tel:${esc(String(G.line.phone).replace(/[^0-9+]/g, ''))}">${esc(G.line.phone)}</a>. Call first, day or night, for anything hospice can help with.</p>`
     : `<p><b>In a hard season with hospice?</b> Call your hospice's 24/7 line first, day or night, for anything hospice can help with. It is on the admission papers.</p>`;
-  return `<div class="card gv-help" role="note"><h3>If Someone Needs Help Now</h3>${first}<p>If someone is thinking about ending their life, or is in crisis, call or text <a class="text-link" href="tel:988">988</a>, any time, day or night.</p><p>If anyone is in danger right now, call <a class="text-link" href="tel:911">911</a>.</p>${more ? `<p>If a vulnerable adult in Minnesota may be harmed, neglected, or taken advantage of, call MAARC at <a class="text-link" href="tel:18448801574">1-844-880-1574</a>, any time.</p>` : ''}</div>`;
+  // BLD 944: the card keeps the hospice 24/7 line and MAARC; the crisis line lives in the check-ins and Help Is Close.
+  if (!first && !more) return '';
+  return `<div class="card gv-help" role="note"><h3>If Someone Needs Help Now</h3>${first}${more ? `<p>If a vulnerable adult in Minnesota may be harmed, neglected, or taken advantage of, call MAARC at <a class="text-link" href="tel:18448801574">1-844-880-1574</a>, any time.</p>` : ''}</div>`;
 }
 
 /* ---------- The Wall (Family), Teacher Notes (Classroom), and a leader's wall (other kinds, when turned on) ---------- */
@@ -1026,7 +1028,7 @@ function viewLife() {
     <div class="gv-chips" role="group" aria-label="Filter by topic"><button type="button" class="chip${st.ring === 'all' ? ' on' : ''}" aria-pressed="${st.ring === 'all'}" data-act="lc-ring" data-id="all">All Topics</button>${filled.map(r => `<button type="button" class="chip${st.ring === r.key ? ' on' : ''}" aria-pressed="${st.ring === r.key}" data-act="lc-ring" data-id="${r.key}" style="--rc:${r.color}">${esc(r.name)}</button>`).join('')}</div>`;
   if (G && G.lockOn && !vaultOpen()) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} Unlock the grove to see Picked for Us, from your check-in and What's Changed Lately. <button class="text-btn" data-act="unlock">Unlock</button></p>`;
   h += `<div id="gv-lclist">${lcListHtml()}</div>`;
-  return h + helpCardHtml(true) + `<p class="muted gv-lc-note">These guides offer spiritual guidance and emotional support for groups going through change, drawn from chaplaincy and trusted family, school, faith, and workplace organizations. For therapy, medical care, or legal advice, they point you to the right people. In danger right now, call 911. For a crisis, call or text 988.</p>`;
+  return h + helpCardHtml(true) + `<p class="muted gv-lc-note">These guides offer spiritual guidance and emotional support for groups going through change, drawn from chaplaincy and trusted family, school, faith, and workplace organizations. For therapy, medical care, or legal advice, they point you to the right people.</p>`;
 }
 function lcWatchedOne(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('grove', id)); } catch (e) { return false; } }
 function lcWatchedBoth(gid) { return lcWatchedOne('gr-g-' + gid + '-you') && lcWatchedOne('gr-g-' + gid + '-helper'); }
@@ -1112,9 +1114,8 @@ function lcPrint(id) {
     <div class="muted" style="font-size:13px">${lcSources(t0)}</div>`;
   const now = () => printDoc(t.title, inner);
   if (!window.GGApp || !window.ggPdfFromHTML) { now(); return; }
-  const help = W('print.footer') ? '' : '<p>If someone needs help now: call or text 988, any time. If anyone is in danger, call 911.</p>';
   GGApp.sheet({ title: t.title, file: 'grove-' + t0.id + '.pdf', print: now,
-    blocks: () => ggPdfFromHTML(`<h1>${esc(t.title)}</h1>` + inner + help, { eyebrow: 'The Grove by Grow With Grounded', foot: 'The Grove(TM) by Grow With Grounded.' }) });
+    blocks: () => ggPdfFromHTML(`<h1>${esc(t.title)}</h1>` + inner, { eyebrow: 'The Grove by Grow With Grounded', foot: 'The Grove(TM) by Grow With Grounded.' }) });
 }
 // Read Aloud for a guide, in the Grounded voice (Jenny, BLD 796), with pause, stop, voice, and speed (read.js), like the
 // other trees. It takes the place of the guide's own Read Aloud button, which stays as the way in until read.js loads.
@@ -1454,7 +1455,7 @@ function loadScript(src) { return new Promise(ok => { if (document.querySelector
 function printDoc(title, inner, win) {
   const K = KW();
   const hs = isFamily() && G.hard ? ' In a hard season, call your hospice 24/7 line first.' : '';
-  const help = W('print.footer') ? (hs ? `<div class="help">${hs.trim()}</div>` : '') : `<div class="help"><b>If someone needs help now:</b> call or text 988, any time. If anyone is in danger, call 911.${hs}</div>`;
+  const help = hs ? `<div class="help">${hs.trim()}</div>` : '';
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><link rel="stylesheet" href="${location.origin}/fonts/fonts.css"><style>
     *{box-sizing:border-box}body{margin:0;background:#E6DFD2;font-family:Barlow,Helvetica,Arial,sans-serif;color:#2C1810;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .bar{position:sticky;top:0;display:flex;gap:10px;align-items:center;padding:10px 14px;background:#2E2118;color:#F6EFE2}.bar b{font-family:"Cormorant Garamond",Georgia,serif;font-size:20px;margin-right:auto}

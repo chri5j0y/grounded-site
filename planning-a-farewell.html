@@ -158,7 +158,6 @@
     <div class="ff-help" role="note">
       <p><b>If someone is in danger, or a death was sudden or unexpected, call <a href="tel:911">911</a>.</b></p>
       <p>If hospice is caring for them and the death was expected, call the hospice&rsquo;s 24/7 line first, not 911. The hospice nurse comes to confirm the death and helps with the next steps.</p>
-      <p>If you ever feel like hurting yourself, call or text <a href="tel:988">988</a>. In danger now, call <a href="tel:911">911</a>.</p>
     </div>
 
     <div class="ff-row"><button type="button" class="btn btn-secondary ff-sm" id="fw-print">Print the Checklist</button><span class="ff-status" id="fw-st" role="status" aria-live="polite"></span></div>
@@ -332,7 +331,7 @@ var GGSend = (function () {
   $('fw-print').addEventListener('click', function () {
     GGF.print('<p class="p-eb">Grow With Grounded</p><h1>Planning a Farewell</h1>' + SECS.map(function (s) {
       return '<h2>' + esc(s.name) + '</h2><ul class="p-check">' + s.items.map(function (it) { var on = st.c[s.id + '.' + it.id]; return '<li><span class="bx">' + (on ? '&#10003;' : '') + '</span><span>' + esc(it.t) + '<small>' + esc(it.d) + '</small></span></li>'; }).join('') + '</ul>';
-    }).join('') + '<p style="margin-top:6mm">If someone is in danger, or a death was sudden or unexpected, call 911. With hospice, call the hospice’s 24/7 line first. In crisis? Call or text 988.</p><p style="font-size:9pt;color:#6B5A4D">Sources: Federal Trade Commission, Shopping for Funeral Services (the Funeral Rule); Minnesota county vital records pages (Dakota County, Isanti County); Social Security Administration, When Someone Dies; U.S. Department of Veterans Affairs, Burials and Memorials; Bankrate, How to Protect Dead Relatives from Identity Theft.</p>');
+    }).join('') + '<p style="margin-top:6mm">If someone is in danger, or a death was sudden or unexpected, call 911. With hospice, call the hospice’s 24/7 line first.</p><p style="font-size:9pt;color:#6B5A4D">Sources: Federal Trade Commission, Shopping for Funeral Services (the Funeral Rule); Minnesota county vital records pages (Dakota County, Isanti County); Social Security Administration, When Someone Dies; U.S. Department of Veterans Affairs, Burials and Memorials; Bankrate, How to Protect Dead Relatives from Identity Theft.</p>');
   });
   $('fw-clear').addEventListener('click', function () {
     if (!window.confirm('Clear your check marks and answers from this device?')) return;
@@ -512,6 +511,6 @@ var GGSend = (function () {
   window.GGFarewellStart = { data: data, text: text, qrParts: qrParts, clear: function () { GGF.drop(KEY); st = { a: {} }; render(); $('fs-inc').checked = true; $('fs-out').innerHTML = ''; } };
 })();
 </script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b940" defer></script><!-- /PAGE VIDEO -->
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b944" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

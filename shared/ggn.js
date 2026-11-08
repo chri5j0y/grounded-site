@@ -10,14 +10,14 @@
    Videos play in shared/gg-learn.js with recorded Brian or Jenny clips (the viewer's choice, shown as Male Voice and Female Voice).
    Mindful Moments (BLD 914): a wide door under the four that opens its own list: Mindful Meal, Present Drive, Mindful Walk,
    and Listening Well (kids: Mindful Snack and Mindful Walk), each one short video that opens with a timed breath to arrive.
-   Crisis lines are never spoken (BLD 808); this page carries one quiet line of type at the bottom.
+   Crisis lines are never spoken (BLD 808); Get Grounded Now carries none (BLD 944).
    Data: shared/ggn-videos.js (window.GG_NOW), generated from patches/bld809 in grounded-workshop.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGNow) return;
   var V = 'b913';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b940', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b944', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
@@ -26,7 +26,6 @@
   ];
   var MINDFUL = { id: 'mindful', h: 'Mindful Moments', sub: 'Be fully here for a meal, a drive, a walk, or a talk', kh: 'Mindful Moments', ksub: 'A slow snack or a quiet fox walk', note: 'Short guided moments for everyday life, each one opening with a calm breath.', knote: 'Slow, curious moments for you and a grown-up.' };
   var TRAD = [['christian', 'Christian'], ['jewish', 'Jewish'], ['muslim', 'Muslim'], ['buddhist', 'Buddhist'], ['hindu', 'Hindu'], ['spiritual', 'Spiritual, Not Religious'], ['kids', 'For Kids']];
-  var QUIET = 'Support any time: 988, call or text · 911, emergency';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -72,7 +71,6 @@
       '.ggn-seg button{background:none;border:0;padding:8px 14px;font:inherit;font-size:15px;color:var(--ink-soft);cursor:pointer;min-height:44px;}',
       '.ggn-seg button[aria-pressed="true"]{background:var(--sage);color:var(--card);}',
       '.ggn-root button:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}',
-      '.ggn-quiet{font-size:14px;color:var(--ink-soft);opacity:.85;text-align:center;margin:4px 0 0;}',
       '.ggn-all{display:grid;gap:26px;}',
       '.ggn-all h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clamp(26px,4vw,32px);margin:0;}',
       '.ggn-all h3{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:0 0 8px;}',
@@ -136,7 +134,6 @@
       + '<div class="ggn-row"><button type="button" class="ggn-pill" data-ggn-act="every">See Every Practice</button>'
       + '<button type="button" class="ggn-pill" data-ggn-act="kids" aria-pressed="' + kids + '">For Kids</button>'
       + '<span class="ggn-seg" role="group" aria-label="Voice"><button type="button" data-ggn-voice="brian" aria-pressed="' + (v === 'brian') + '">Male Voice</button><button type="button" data-ggn-voice="jenny" aria-pressed="' + (v === 'jenny') + '">Female Voice</button></span></div>'
-      + '<p class="ggn-quiet">' + esc(QUIET) + '</p>'
       + '</div>' + allHtml() + '</div>';
   }
 
@@ -164,7 +161,7 @@
       root.className = 'ggl ggl-app ggn-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
       root.style.setProperty('--ggl-acc', '#5F7D48'); root.style.setProperty('--ggl-bar', '#24301F'); root.style.setProperty('--ggl-lite', '#CFE0BF');
       root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>' + esc(tName) + '</b><button type="button" class="ggl-x" data-ggn-x="1">' + esc(bName) + '</button></div>'
-        + '<div class="ggl-in"><div class="ggl-eb">' + esc(o.title ? o.title : l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div><p class="ggn-quiet" style="margin-top:12px">' + esc(QUIET) + '</p></div>';
+        + '<div class="ggl-in"><div class="ggl-eb">' + esc(o.title ? o.title : l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div></div>';
       document.body.appendChild(root);
       S.open = { root: root, from: keepFrom, overflow: S.open ? S.open.overflow : document.body.style.overflow, queue: queue || [id], id: id };
       document.body.style.overflow = 'hidden';

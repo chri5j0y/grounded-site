@@ -78,7 +78,7 @@
       '<h3>Learn more</h3><ul>' + (t.more || []).map(function (m) { return '<li><a class="text-link" href="' + m[1] + '" target="_blank" rel="noopener">' + esc(m[0]) + '</a></li>'; }).join('') + '</ul>' +
       (window.GGShelf ? GGShelf.html('maple', t.id) : '') +
       (window.GGSources ? GGSources.html('maple:' + t.id) : '') +
-      '<p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance that works alongside professional care. Emergency: 911. Crisis: call or text 988. &copy; ' + new Date().getFullYear() + ' ' + K.OWNER + '. Yours to print for families and classrooms.</p>' +
+      '<p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance that works alongside professional care. &copy; ' + new Date().getFullYear() + ' ' + K.OWNER + '. Yours to print for families and classrooms.</p>' +
       K.lifeLines('maple', ctx.id, 'mp-life-lines', 'gt-small', 'For information and support. In an emergency, call 911. In a crisis, call or text 988.') +
       '</article>';
   }
@@ -120,7 +120,7 @@
     },
     files: function (tree) {
       return ['/shared/gg-parts.js?v=b929', '/shared/gg-life.js?v=b907', '/shared/gg-shelf.js?v=b934', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803',
-        '/read.js?v=b813', '/shared/gg-learn.js?v=b940', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
+        '/read.js?v=b813', '/shared/gg-learn.js?v=b944', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
     },
     open: function (ctx) {
       var K = window.GGKidKit, tree = ctx.tree, id = ctx.talk, host = ctx.host;

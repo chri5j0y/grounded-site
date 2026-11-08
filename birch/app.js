@@ -1004,7 +1004,7 @@ function renderLC(mode) {
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
     ${LC_OAK}
     ${lcHelpHtml()}
-    <p class="lc-note">These guides offer general spiritual and emotional guidance and support, drawn from chaplaincy and trusted mental health, health, and family organizations. For therapy, medical care, or legal advice, they point you to the right people. In danger right now, call 911. For a crisis, call or text 988.</p>`;
+    <p class="lc-note">These guides offer general spiritual and emotional guidance and support, drawn from chaplaincy and trusted mental health, health, and family organizations. For therapy, medical care, or legal advice, they point you to the right people.</p>`;
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
@@ -1192,7 +1192,7 @@ function lcDetail(mode, t) {
     ${window.GGShelf ? GGShelf.html('birch', t.id) : ''}
     ${lcSourcesHtml(t)}
     ${lcHelpHtml(t)}
-    <p class="lc-note">From When Life Changes in Birch&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. In danger right now: 911. Crisis: call or text 988, or text HOME to 741741. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use.</p>
+    <p class="lc-note">From When Life Changes in Birch&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use.</p>
   </article>`;
 }
 /* When Life Changes videos (GWG BLD 743): two per guide, For You and For the Helper, played by shared/gg-learn.js
