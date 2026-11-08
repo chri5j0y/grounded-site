@@ -53,7 +53,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b945', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b947', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b944';
   var MONEY_SRC = '/shared/gg-money.js?v=b942';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
