@@ -1676,6 +1676,7 @@
        },
        {
         "id": "pn-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -1867,6 +1868,7 @@
        },
        {
         "id": "pn-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -2408,6 +2410,7 @@
        },
        {
         "id": "br-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -2599,6 +2602,7 @@
        },
        {
         "id": "br-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -3140,6 +3144,7 @@
        },
        {
         "id": "ok-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -3331,6 +3336,7 @@
        },
        {
         "id": "ok-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -3872,6 +3878,7 @@
        },
        {
         "id": "sq-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -4063,6 +4070,7 @@
        },
        {
         "id": "sq-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,

@@ -5766,6 +5766,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-body-helper",
+"crisis": ["911: emergency"],
 "guide": "body",
 "side": "helper",
 "title": "A Changing Body",
@@ -7958,6 +7959,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-sleep-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sleep",
 "side": "helper",
 "title": "Sleep, Screens, and Gaming",
@@ -8611,6 +8613,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Crushes, Feelings, and Who You Like",
 "you": {
 "id": "as-g-wholike-you",
+"crisis": ["988: call or text, any time"],
 "guide": "wholike",
 "side": "you",
 "title": "Crushes, Feelings, and Who You Like",
@@ -9099,6 +9102,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Figuring Out Who You Are",
 "you": {
 "id": "as-g-identity-you",
+"crisis": ["988: call or text, any time"],
 "guide": "identity",
 "side": "you",
 "title": "Figuring Out Who You Are",

@@ -151,6 +151,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-new-baby-helper",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "new-baby",
     "side": "helper",
     "title": "A New Baby",
@@ -775,6 +776,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-grandparent-moves-in-helper",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "grandparent-moves-in",
     "side": "helper",
     "title": "A Grandparent Moves In",
@@ -11433,6 +11435,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-one-voice-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "one-voice",
     "side": "helper",
     "title": "One Voice Fills the Room",
