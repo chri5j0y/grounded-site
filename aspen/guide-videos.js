@@ -45,7 +45,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "In the Middle of a Blowup",
 "you": {
 "id": "as-g-blowup-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "blowup",
 "side": "you",
 "title": "In the Middle of a Blowup",
@@ -151,7 +150,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-blowup-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "blowup",
 "side": "helper",
 "title": "In the Middle of a Blowup",
@@ -342,7 +340,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "When Someone Dies",
 "you": {
 "id": "as-g-death-you",
-"crisis": ["988: call or text, any time"],
 "guide": "death",
 "side": "you",
 "title": "When Someone Dies",
@@ -451,7 +448,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-death-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "death",
 "side": "helper",
 "title": "When Someone Dies",
@@ -1055,7 +1051,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Divorce and Two Homes",
 "you": {
 "id": "as-g-divorce-you",
-"crisis": ["911: emergency"],
 "guide": "divorce",
 "side": "you",
 "title": "Divorce and Two Homes",
@@ -1154,7 +1149,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-divorce-helper",
-"crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
 "guide": "divorce",
 "side": "helper",
 "title": "Divorce and Two Homes",
@@ -1288,7 +1282,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "A New Stepfamily",
 "you": {
 "id": "as-g-stepfamily-you",
-"crisis": ["Childhelp: call or text 1-800-422-4453", "911: emergency"],
 "guide": "stepfamily",
 "side": "you",
 "title": "A New Stepfamily",
@@ -1395,7 +1388,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-stepfamily-helper",
-"crisis": ["Childhelp: call or text 1-800-422-4453", "911: emergency"],
 "guide": "stepfamily",
 "side": "helper",
 "title": "A New Stepfamily",
@@ -1831,7 +1823,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-money-helper",
-"crisis": ["211: local help"],
 "guide": "money",
 "side": "helper",
 "title": "Money Is Tight",
@@ -2039,7 +2030,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-lying-helper",
-"crisis": ["911: emergency"],
 "guide": "lying",
 "side": "helper",
 "title": "Lying, Sneaking, and Stealing",
@@ -2293,7 +2283,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-deployed-helper",
-"crisis": ["988: call or text, any time", "Military OneSource: 800-342-9647", "911: emergency"],
 "guide": "deployed",
 "side": "helper",
 "title": "A Parent Is Deployed or Far Away",
@@ -2525,7 +2514,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-baby-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "baby",
 "side": "helper",
 "title": "A New Baby or Sibling",
@@ -2660,7 +2648,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Someone at Home Drinks or Uses Too Much",
 "you": {
 "id": "as-g-drinking-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "drinking",
 "side": "you",
 "title": "Someone at Home Drinks or Uses Too Much",
@@ -2766,7 +2753,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-drinking-helper",
-"crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
 "guide": "drinking",
 "side": "helper",
 "title": "Someone at Home Drinks or Uses Too Much",
@@ -2901,7 +2887,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "A Parent in Jail",
 "you": {
 "id": "as-g-jail-you",
-"crisis": ["988: call or text, any time"],
 "guide": "jail",
 "side": "you",
 "title": "A Parent in Jail",
@@ -2986,7 +2971,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-jail-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "jail",
 "side": "helper",
 "title": "A Parent in Jail",
@@ -3123,7 +3107,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Foster Care or Adoption",
 "you": {
 "id": "as-g-foster-you",
-"crisis": ["988: call or text, any time"],
 "guide": "foster",
 "side": "you",
 "title": "Foster Care or Adoption",
@@ -3207,7 +3190,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-foster-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "foster",
 "side": "helper",
 "title": "Foster Care or Adoption",
@@ -3427,7 +3409,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-pet-helper",
-"crisis": ["988: call or text, any time"],
 "guide": "pet",
 "side": "helper",
 "title": "A Pet Dies",
@@ -4477,7 +4458,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Grades and Pressure",
 "you": {
 "id": "as-g-grades-you",
-"crisis": ["988: call or text, any time"],
 "guide": "grades",
 "side": "you",
 "title": "Grades and Pressure",
@@ -4579,7 +4559,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-grades-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "grades",
 "side": "helper",
 "title": "Grades and Pressure",
@@ -4718,7 +4697,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "ADHD and Learning Differences",
 "you": {
 "id": "as-g-adhd-you",
-"crisis": ["988: call or text, any time"],
 "guide": "adhd",
 "side": "you",
 "title": "ADHD and Learning Differences",
@@ -4823,7 +4801,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-adhd-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "adhd",
 "side": "helper",
 "title": "ADHD and Learning Differences",
@@ -5526,7 +5503,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-teacher-helper",
-"crisis": ["Childhelp: call or text 1-800-422-4453", "911: emergency"],
 "guide": "teacher",
 "side": "helper",
 "title": "A Teacher or Coach Leaves",
@@ -5766,7 +5742,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-body-helper",
-"crisis": ["911: emergency"],
 "guide": "body",
 "side": "helper",
 "title": "A Changing Body",
@@ -6164,7 +6139,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Comparing Yourself to Others",
 "you": {
 "id": "as-g-compare-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "compare",
 "side": "you",
 "title": "Comparing Yourself to Others",
@@ -6264,7 +6238,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-compare-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "compare",
 "side": "helper",
 "title": "Comparing Yourself to Others",
@@ -6524,7 +6497,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-phone-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "phone",
 "side": "helper",
 "title": "First Phone and Group Chats",
@@ -7034,7 +7006,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-porn-helper",
-"crisis": ["CyberTipline: 1-800-843-5678"],
 "guide": "porn",
 "side": "helper",
 "title": "Pornography",
@@ -7601,7 +7572,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "AI Chatbots and Companions",
 "you": {
 "id": "as-g-ai-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "ai",
 "side": "you",
 "title": "AI Chatbots and Companions",
@@ -7693,7 +7663,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-ai-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "ai",
 "side": "helper",
 "title": "AI Chatbots and Companions",
@@ -7959,7 +7928,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-sleep-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sleep",
 "side": "helper",
 "title": "Sleep, Screens, and Gaming",
@@ -8084,7 +8052,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Not Liking How You Look",
 "you": {
 "id": "as-g-looks-you",
-"crisis": ["988: call or text, any time"],
 "guide": "looks",
 "side": "you",
 "title": "Not Liking How You Look",
@@ -8185,7 +8152,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-looks-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "looks",
 "side": "helper",
 "title": "Not Liking How You Look",
@@ -8434,10 +8400,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "sub": "Telling someone is a strong first step.",
 "say": "You are so much more than a body. You are a whole person, with things you love and people who love you. Telling someone is a strong first step."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: fainting, chest pain, or confusion"
 ]
 },
 "helper": {
@@ -8613,7 +8575,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Crushes, Feelings, and Who You Like",
 "you": {
 "id": "as-g-wholike-you",
-"crisis": ["988: call or text, any time"],
 "guide": "wholike",
 "side": "you",
 "title": "Crushes, Feelings, and Who You Like",
@@ -8719,7 +8680,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-wholike-helper",
-"crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
 "guide": "wholike",
 "side": "helper",
 "title": "Crushes, Feelings, and Who You Like",
@@ -8969,7 +8929,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-faith-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "faith",
 "side": "helper",
 "title": "Big Questions About Faith",
@@ -9102,7 +9061,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Figuring Out Who You Are",
 "you": {
 "id": "as-g-identity-you",
-"crisis": ["988: call or text, any time"],
 "guide": "identity",
 "side": "you",
 "title": "Figuring Out Who You Are",
@@ -9210,7 +9168,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-identity-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "identity",
 "side": "helper",
 "title": "Figuring Out Who You Are",
@@ -9444,7 +9401,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-illness-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "illness",
 "side": "helper",
 "title": "Living with an Illness or Disability",
@@ -9963,7 +9919,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-news-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "news",
 "side": "helper",
 "title": "Scary News and Politics",
@@ -10211,7 +10166,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-immigration-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "immigration",
 "side": "helper",
 "title": "Immigration Raids",
@@ -10357,7 +10311,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Being Treated Unfairly",
 "you": {
 "id": "as-g-unfair-you",
-"crisis": ["911: emergency"],
 "guide": "unfair",
 "side": "you",
 "title": "Being Treated Unfairly",
@@ -10946,7 +10899,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-disaster-helper",
-"crisis": ["Disaster Distress Helpline: call or text 1-800-985-5990", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
 "guide": "disaster",
 "side": "helper",
 "title": "Disasters and Storms",
@@ -11184,7 +11136,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-war-helper",
-"crisis": ["Disaster Distress Helpline: call or text 1-800-985-5990", "911: emergency"],
 "guide": "war",
 "side": "helper",
 "title": "War in the News",
@@ -11844,7 +11795,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-school-health-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "school-health",
 "side": "helper",
 "title": "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days",
@@ -12077,7 +12027,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-pain-headaches-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "pain-headaches",
 "side": "helper",
 "title": "Pain or Headaches That Keep Coming Back",
@@ -12471,7 +12420,6 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Deaf or Hard of Hearing",
 "you": {
 "id": "as-g-deaf-hoh-you",
-"crisis": ["988: call or text, any time"],
 "guide": "deaf-hoh",
 "side": "you",
 "title": "Deaf or Hard of Hearing",
@@ -12568,7 +12516,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-deaf-hoh-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "deaf-hoh",
 "side": "helper",
 "title": "Deaf or Hard of Hearing",
@@ -12804,7 +12751,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-blind-low-vision-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "blind-low-vision",
 "side": "helper",
 "title": "Blind or Low Vision",
@@ -13041,7 +12987,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-autistic-ms-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "autistic-ms",
 "side": "helper",
 "title": "Autistic in Middle School",
@@ -13284,7 +13229,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-sibling-disability-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sibling-disability",
 "side": "helper",
 "title": "A Sibling with a Disability or Illness",
@@ -13492,7 +13436,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-telling-friends-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "telling-friends",
 "side": "helper",
 "title": "Telling Friends, or Not",
@@ -13703,7 +13646,6 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 "helper": {
 "id": "as-g-why-me-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "why-me",
 "side": "helper",
 "title": "Why Me? Faith and a Body That's Different",
@@ -13829,7 +13771,6 @@ window.GG_LEARN_GUIDES.aspen = {
   "title": "Someone in My Family Drinks or Uses",
   "you": {
    "id": "as-g-sober-family-you",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-family",
    "side": "you",
    "title": "Someone in My Family Drinks or Uses",
@@ -13955,7 +13896,6 @@ window.GG_LEARN_GUIDES.aspen = {
   },
   "helper": {
    "id": "as-g-sober-family-helper",
-   "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-family",
    "side": "helper",
    "title": "Someone in My Family Drinks or Uses",
@@ -14093,7 +14033,6 @@ window.GG_LEARN_GUIDES.aspen = {
   "title": "A Parent in Treatment",
   "you": {
    "id": "as-g-sober-treatment-you",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-treatment",
    "side": "you",
    "title": "A Parent in Treatment",
@@ -14190,7 +14129,6 @@ window.GG_LEARN_GUIDES.aspen = {
   },
   "helper": {
    "id": "as-g-sober-treatment-helper",
-   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-treatment",
    "side": "helper",
    "title": "A Parent in Treatment",
@@ -14308,7 +14246,6 @@ window.GG_LEARN_GUIDES.aspen = {
   "title": "When Someone Offers You Alcohol or a Vape",
   "you": {
    "id": "as-g-sober-offered-you",
-   "crisis": ["911: emergency"],
    "guide": "sober-offered",
    "side": "you",
    "title": "When Someone Offers You Alcohol or a Vape",
@@ -14539,7 +14476,6 @@ window.GG_LEARN_GUIDES.aspen = {
   "title": "Worried About a Friend",
   "you": {
    "id": "as-g-sober-friend-you",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-friend",
    "side": "you",
    "title": "Worried About a Friend",
@@ -14631,7 +14567,6 @@ window.GG_LEARN_GUIDES.aspen = {
   },
   "helper": {
    "id": "as-g-sober-friend-helper",
-   "crisis": ["988: call or text, any time", "Poison Control: 1-800-222-1222", "911: emergency"],
    "guide": "sober-friend",
    "side": "helper",
    "title": "Worried About a Friend",
@@ -14753,7 +14688,6 @@ window.GG_LEARN_GUIDES.aspen = {
   "title": "When Someone Dies from an Overdose",
   "you": {
    "id": "as-g-sober-overdose-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "sober-overdose",
    "side": "you",
    "title": "When Someone Dies from an Overdose",
@@ -14858,7 +14792,6 @@ window.GG_LEARN_GUIDES.aspen = {
   },
   "helper": {
    "id": "as-g-sober-overdose-helper",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-overdose",
    "side": "helper",
    "title": "When Someone Dies from an Overdose",
@@ -14961,7 +14894,6 @@ window.GG_LEARN_GUIDES.aspen = {
   "title": "Big Feelings and Wanting to Feel Different",
   "you": {
    "id": "as-g-sober-feelings-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "sober-feelings",
    "side": "you",
    "title": "Big Feelings and Wanting to Feel Different",
@@ -15078,7 +15010,6 @@ window.GG_LEARN_GUIDES.aspen = {
   },
   "helper": {
    "id": "as-g-sober-feelings-helper",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-feelings",
    "side": "helper",
    "title": "Big Feelings and Wanting to Feel Different",

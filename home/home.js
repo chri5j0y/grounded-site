@@ -55,8 +55,8 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b938', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=b936';
-  var MONEY_SRC = '/shared/gg-money.js?v=b937';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
+  var GGN_SRC = '/shared/ggn.js?v=b939';
+  var MONEY_SRC = '/shared/gg-money.js?v=b939';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -625,9 +625,11 @@
     '</div>';
     return '<div class="hm-wrap">' + hero + acctWelcome() + soberNote + promiseHtml() +
       '<div class="hm-plink"><a class="hm-link hm-p-leaves" href="#hm-privacy">' + I('shield') + 'How your privacy works</a><span class="hm-time">' + (back ? 'New here? Three short steps' : 'Three short steps · about a minute') + '</span></div>' +
-      steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div>' + helpLine() + '</div>';
+      steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div></div>';
   }
   function afterWelcome() {}
+  // BLD 939 (Chris: the crisis line belongs only where it fits): the quiet line shows on the Check-in tab only; check-ins,
+  // Get Grounded Now, and Living Sober carry their own.
   function helpLine() { return '<p class="hm-help">' + (S.p && isKid(S.p) ? 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.' : 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.') + '</p>'; }
 
   /* Creating a profile through the real dialogs, then the Home's own choices. */
@@ -1298,7 +1300,7 @@
   }
   function shellHtml(tab, body) {
     return '<div class="hm-app" data-tab="' + tab + '">' + (tab === 'today' ? '' : bannerHtml(tab)) +
-      '<div class="hm-pane" id="hm-pane">' + body + '</div>' + helpLine() + '</div>';
+      '<div class="hm-pane" id="hm-pane">' + body + '</div>' + (tab === 'checkin' ? helpLine() : '') + '</div>';
   }
   function paintTabbar(cur) {
     var old = document.getElementById('hm-bnav'); if (old) old.remove();
@@ -2342,8 +2344,8 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b936';
-  var WELCOME_SRC = '/shared/learn-welcome.js?v=b936'; // BLD 924: Welcome to The Grounded Way, one series per age group
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b939';
+  var WELCOME_SRC = '/shared/learn-welcome.js?v=b939'; // BLD 924: Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=b930', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b930', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
@@ -3525,7 +3527,7 @@
     if (!SU.open || SU.id !== S.id) { var sv = obj(homeRec().setup); SU = { open: true, id: S.id, i: +sv.i || 0, d: suDraft(), edit: false }; }
     closeSheet(true); paintNav('');
     document.body.classList.add('hm-bn');
-    root.innerHTML = '<div class="hm-wrap hm-su" id="hm-su">' + suHtml() + '</div>' + helpLine();
+    root.innerHTML = '<div class="hm-wrap hm-su" id="hm-su">' + suHtml() + '</div>';
     loadTending().then(function () { if (SU.open && SU.i === 3 && document.getElementById('hm-su') && !SU.infoPainted) { SU.infoPainted = 1; suPaint(); } });
   }
   function suChip(act, label, on, c) { return '<button type="button" class="hm-wp-chip" data-hm-su="' + esc(act) + '" aria-pressed="' + !!on + '"' + (c ? ' style="--c:var(--' + c + ')"' : '') + '>' + esc(label) + '</button>'; }
@@ -4072,7 +4074,7 @@
      profile's first 14 days. Each carries a small Seed chip and is followed by one quiet line, "This was a seed. Membership
      grows the whole tree." with See Membership and I Have a Code, never a pop up. The Library's Seeds shelf gathers them all.
      Never on a kid's screen; Members see their own library, unchanged. */
-  var SEEDS_JS = '/shared/seeds-public.js?v=b920';
+  var SEEDS_JS = '/shared/seeds-public.js?v=b939';
   var SEED_STORIES = [['time-of-your-life', 'Time of Your Life'], ['the-recovery', 'The Recovery'], ['grounded-in-coffee', 'Grounded in Coffee']];
   var SEED_DAYS = 14;
   function seedsOn() { return !member() && !isYoung(S.p); }
@@ -4277,7 +4279,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b930', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b936', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b930', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b939', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4379,7 +4381,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b934'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b939'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -4485,7 +4487,11 @@
   var MONEY_TOOLS = [['debt', 'Debt Payoff Planner', 'debt payoff snowball avalanche interest loans credit card'], ['goals', 'Emergency Fund and Savings Goals', 'emergency fund savings goals save'], ['pay', 'Paycheck Planner', 'paycheck payday bills by paycheck'],
     ['fund', 'Set-Aside Funds', 'set aside sinking funds yearly bills'], ['grocery', 'Grocery Saver', 'grocery groceries food meals at home eating out', 1], ['car', 'True Cost of a Car', 'car truck vehicle cost per mile'],
     ['side', 'Side Income Calculator', 'side income extra income earn'], ['subs', 'Subscription Check', 'subscriptions streaming apps', 1], ['calls', 'Call Scripts', 'call scripts phone internet insurance lower a bill'],
-    ['date', 'Money Date', 'money date couple couples together weekly'], ['give', 'Giving Planner', 'giving give tithe generosity charity'], ['kids', 'Allowance Helper', 'allowance kids jars'], ['tips', 'Grounded Money Tips', 'tips ways to save', 1]];
+    ['date', 'Money Date', 'money date couple couples together weekly'], ['give', 'Giving Planner', 'giving give tithe generosity charity'], ['kids', 'Allowance Helper', 'allowance kids jars'], ['tips', 'Grounded Money Tips', 'tips ways to save', 1],
+    // BLD 939: the new tools of the five parts (Give, Live, Protect, Grow, Plan)
+    ['givelog', 'Giving Tracker', 'giving tracker gifts given generosity donations'], ['insure', 'Insurance Overview', 'insurance coverage health life disability renters home auto umbrella'],
+    ['blind', 'Blind Spot Check', 'blind spots will beneficiaries power of attorney health care directive credit freeze documents'], ['grow', 'Growth Calculator', 'invest investing compound growth retirement interest index funds'],
+    ['year', 'Year Plan', 'year plan yearly calendar seasons big dates birthdays']];
   function moneyFor() { return !!(S.id && S.p && !isYoung(S.p)); }
   function moneyOff() { if (MN.ctl) { try { MN.ctl.destroy(); } catch (e) {} MN.ctl = null; } }
   function paintMoney(box, sub) {
@@ -4497,8 +4503,8 @@
       MN.ctl = GGMoney.render(box, {
         store: 'ggp',                                  // the open profile, locked with it
         member: function () { return member(); },      // read each paint, so a code added now opens the Membership places
-        view: sub || 'gap',
-        onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money' + (v === 'gap' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
+        view: sub || 'home',                           // BLD 939: Money Home (the five parts) opens first; every older view name still opens its place
+        onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money' + (v === 'home' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
         onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
         toast: toast
       });
@@ -4528,12 +4534,12 @@
   /* The Library: Grounded Money beside Grounded Relationships (Branches), and for a Member, the Money Date for couples. */
   function moneyShelves() {
     if (!moneyFor()) return '';
-    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your monthly plan, calm and clear. Close the Gap first.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'tree-branches.webp' }) +
+    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Give, live, protect, grow, and plan: your whole money picture, bright and clear.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'tree-branches.webp' }) +
       (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'growth-plan.webp' }) : '');
   }
   function moneySearch(has, out) {
     if (!moneyFor()) return;
-    if (has('Grounded Money') || has('money budget spending plan gap bills income savings save debt paycheck close the gap')) out.push({ k: 'money', id: 'gap', title: 'Grounded Money', sub: 'Branches' });
+    if (has('Grounded Money') || has('money budget spending plan gap bills income savings save debt paycheck close the gap giving invest investing insurance retirement')) out.push({ k: 'money', id: 'gap', title: 'Grounded Money', sub: 'Branches' });
     MONEY_TOOLS.forEach(function (t) { if ((member() || t[3]) && (has(t[1]) || has(t[2]))) out.push({ k: 'money', id: 'tool:' + t[0], title: t[1], sub: 'Grounded Money' }); });
   }
   /* Today: This Month, for a Member with a plan, only when the month needs closing. A quick look in the vault first, so the
@@ -4631,7 +4637,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b936';
+  var LEARN_JS = '/shared/gg-learn.js?v=b939';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -4878,7 +4884,7 @@
   }
   /* BLD 911 (Chris: "when i chose a vid from When life changes.. i am forced to a new page and then hard to find way back"):
      a guide's two videos (For You and For the Helper) play in the same window on Learn; Read the Guide opens the written guide. */
-  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=b936', aspen: '/aspen/guide-videos.js?v=b936', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b936', pine: '/pine/guide-videos.js?v=b936', birch: '/birch/guide-videos.js?v=b936' };
+  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=b939', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b939', sequoia: '/sequoia/guide-videos.js?v=b939', pine: '/pine/guide-videos.js?v=b939', birch: '/birch/guide-videos.js?v=b939' };
   function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
   function playGuide(id, side, tree0) {
     var tree = tree0 && GUIDE_JS[tree0] ? tree0 : S.tree, src = GUIDE_JS[tree]; if (!src) { toast('This guide waits in Learn.'); goTo('learn'); return; }

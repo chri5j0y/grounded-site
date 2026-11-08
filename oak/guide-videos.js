@@ -53,7 +53,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Anxiety That Won't Settle",
 "you": {
 "id": "ok-g-anxiety-you",
-"crisis": ["988: call or text, any time"],
 "guide": "anxiety",
 "side": "you",
 "title": "Anxiety That Won't Settle",
@@ -172,7 +171,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-anxiety-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "anxiety",
 "side": "helper",
 "title": "Anxiety That Won't Settle",
@@ -284,7 +282,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Sadness That Lingers",
 "you": {
 "id": "ok-g-sadness-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sadness",
 "side": "you",
 "title": "Sadness That Lingers",
@@ -395,7 +392,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-sadness-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sadness",
 "side": "helper",
 "title": "Sadness That Lingers",
@@ -509,7 +505,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Loneliness",
 "you": {
 "id": "ok-g-loneliness-you",
-"crisis": ["988: call or text, any time"],
 "guide": "loneliness",
 "side": "you",
 "title": "Loneliness",
@@ -631,7 +626,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-loneliness-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "loneliness",
 "side": "helper",
 "title": "Loneliness",
@@ -757,7 +751,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Burnout",
 "you": {
 "id": "ok-g-burnout-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "burnout",
 "side": "you",
 "title": "Burnout",
@@ -888,7 +881,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-burnout-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "burnout",
 "side": "helper",
 "title": "Burnout",
@@ -999,7 +991,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Anger That Runs Hot",
 "you": {
 "id": "ok-g-anger-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "anger",
 "side": "you",
 "title": "Anger That Runs Hot",
@@ -1133,7 +1124,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-anger-helper",
-"crisis": ["911: emergency"],
 "guide": "anger",
 "side": "helper",
 "title": "Anger That Runs Hot",
@@ -1247,7 +1237,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Shame and Guilt",
 "you": {
 "id": "ok-g-shame-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "shame",
 "side": "you",
 "title": "Shame and Guilt",
@@ -1343,7 +1332,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-shame-helper",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "shame",
 "side": "helper",
 "title": "Shame and Guilt",
@@ -1461,7 +1450,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Feeling Lost or Without Purpose",
 "you": {
 "id": "ok-g-lost-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "lost",
 "side": "you",
 "title": "Feeling Lost or Without Purpose",
@@ -1588,7 +1576,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-lost-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "lost",
 "side": "helper",
 "title": "Feeling Lost or Without Purpose",
@@ -1703,7 +1690,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "After Something Traumatic",
 "you": {
 "id": "ok-g-trauma-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "trauma",
 "side": "you",
 "title": "After Something Traumatic",
@@ -1824,7 +1810,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-trauma-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "trauma",
 "side": "helper",
 "title": "After Something Traumatic",
@@ -1939,7 +1924,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "ADHD as an Adult, or a Late Diagnosis",
 "you": {
 "id": "ok-g-adhd-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "adhd",
 "side": "you",
 "title": "ADHD as an Adult, or a Late Diagnosis",
@@ -2061,7 +2045,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-adhd-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "adhd",
 "side": "helper",
 "title": "ADHD as an Adult, or a Late Diagnosis",
@@ -2163,7 +2146,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Spouse or Partner Died",
 "you": {
 "id": "ok-g-spouse-death-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spouse-death",
 "side": "you",
 "title": "Your Spouse or Partner Died",
@@ -2279,7 +2261,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-spouse-death-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spouse-death",
 "side": "helper",
 "title": "Your Spouse or Partner Died",
@@ -2386,7 +2367,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Parent Died",
 "you": {
 "id": "ok-g-parent-death-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "parent-death",
 "side": "you",
 "title": "Your Parent Died",
@@ -2507,7 +2487,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-parent-death-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "parent-death",
 "side": "helper",
 "title": "Your Parent Died",
@@ -2612,7 +2591,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Child Died",
 "you": {
 "id": "ok-g-child-death-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "child-death",
 "side": "you",
 "title": "Your Child Died",
@@ -2724,7 +2702,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-child-death-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "child-death",
 "side": "helper",
 "title": "Your Child Died",
@@ -2834,7 +2811,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Pregnancy or Infant Loss",
 "you": {
 "id": "ok-g-pregnancy-loss-you",
-"crisis": ["988: call or text, any time", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "pregnancy-loss",
 "side": "you",
 "title": "Pregnancy or Infant Loss",
@@ -2964,7 +2940,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-pregnancy-loss-helper",
-"crisis": ["988: call or text, any time", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "pregnancy-loss",
 "side": "helper",
 "title": "Pregnancy or Infant Loss",
@@ -3540,7 +3515,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Ambiguous Loss",
 "you": {
 "id": "ok-g-ambiguous-loss-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "ambiguous-loss",
 "side": "you",
 "title": "Ambiguous Loss",
@@ -3659,7 +3633,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-ambiguous-loss-helper",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "ambiguous-loss",
 "side": "helper",
 "title": "Ambiguous Loss",
@@ -3774,7 +3748,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Holidays and Anniversaries After a Loss",
 "you": {
 "id": "ok-g-grief-days-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "grief-days",
 "side": "you",
 "title": "Holidays and Anniversaries After a Loss",
@@ -3902,7 +3875,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-grief-days-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "grief-days",
 "side": "helper",
 "title": "Holidays and Anniversaries After a Loss",
@@ -4021,7 +3993,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Pet Died",
 "you": {
 "id": "ok-g-pet-death-you",
-"crisis": ["988: call or text, any time"],
 "guide": "pet-death",
 "side": "you",
 "title": "Your Pet Died",
@@ -4136,7 +4107,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-pet-death-helper",
-"crisis": ["988: call or text, any time"],
 "guide": "pet-death",
 "side": "helper",
 "title": "Your Pet Died",
@@ -4258,7 +4228,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Hard Diagnosis",
 "you": {
 "id": "ok-g-diagnosis-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "diagnosis",
 "side": "you",
 "title": "A Hard Diagnosis",
@@ -4378,7 +4347,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-diagnosis-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "diagnosis",
 "side": "helper",
 "title": "A Hard Diagnosis",
@@ -4485,7 +4453,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Chronic Illness or Pain",
 "you": {
 "id": "ok-g-chronic-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "chronic",
 "side": "you",
 "title": "Chronic Illness or Pain",
@@ -4605,7 +4572,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-chronic-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "chronic",
 "side": "helper",
 "title": "Chronic Illness or Pain",
@@ -4712,7 +4678,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Facing Your Own Death",
 "you": {
 "id": "ok-g-own-death-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "own-death",
 "side": "you",
 "title": "Facing Your Own Death",
@@ -4841,7 +4806,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-own-death-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "own-death",
 "side": "helper",
 "title": "Facing Your Own Death",
@@ -5436,7 +5400,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "The First Days After a Death",
 "you": {
 "id": "ok-g-after-death-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "after-death",
 "side": "you",
 "title": "The First Days After a Death",
@@ -5569,7 +5532,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-after-death-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "after-death",
 "side": "helper",
 "title": "The First Days After a Death",
@@ -5691,7 +5653,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Addiction and Recovery",
 "you": {
 "id": "ok-g-addiction-you",
-"crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
 "guide": "addiction",
 "side": "you",
 "title": "Addiction and Recovery",
@@ -5822,7 +5783,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-addiction-helper",
-"crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
 "guide": "addiction",
 "side": "helper",
 "title": "Addiction and Recovery",
@@ -5967,7 +5927,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Caring for Someone Who Is Ill",
 "you": {
 "id": "ok-g-caregiving-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "caregiving",
 "side": "you",
 "title": "Caring for Someone Who Is Ill",
@@ -6095,7 +6054,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-caregiving-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "caregiving",
 "side": "helper",
 "title": "Caring for Someone Who Is Ill",
@@ -6196,7 +6154,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Caring for Someone with Dementia",
 "you": {
 "id": "ok-g-dementia-care-you",
-"crisis": ["988: call or text, any time", "Alzheimer's Association Helpline: 1-800-272-3900", "911: emergency"],
 "guide": "dementia-care",
 "side": "you",
 "title": "Caring for Someone with Dementia",
@@ -6298,7 +6255,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-dementia-care-helper",
-"crisis": ["MAARC (Minnesota): 1-844-880-1574", "Alzheimer's Association Helpline: 1-800-272-3900", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "dementia-care",
 "side": "helper",
 "title": "Caring for Someone with Dementia",
@@ -6426,7 +6383,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Living with a New Disability",
 "you": {
 "id": "ok-g-disability-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "disability",
 "side": "you",
 "title": "Living with a New Disability",
@@ -6531,7 +6487,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-disability-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "disability",
 "side": "helper",
 "title": "Living with a New Disability",
@@ -6640,7 +6595,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Eating Disorders",
 "you": {
 "id": "ok-g-eating-you",
-"crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
 "guide": "eating",
 "side": "you",
 "title": "Eating Disorders",
@@ -6758,7 +6712,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-eating-helper",
-"crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
 "guide": "eating",
 "side": "helper",
 "title": "Eating Disorders",
@@ -6875,7 +6828,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "After a Car Accident or Sudden Injury",
 "you": {
 "id": "ok-g-accident-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "accident",
 "side": "you",
 "title": "After a Car Accident or Sudden Injury",
@@ -6995,7 +6947,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-accident-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "accident",
 "side": "helper",
 "title": "After a Car Accident or Sudden Injury",
@@ -7116,7 +7067,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Pornography That's Hard to Stop",
 "you": {
 "id": "ok-g-porn-you",
-"crisis": ["988: call or text, any time", "Stop It Now: 1-888-773-8368", "911: emergency"],
 "guide": "porn",
 "side": "you",
 "title": "Pornography That's Hard to Stop",
@@ -7255,7 +7205,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-porn-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "porn",
 "side": "helper",
 "title": "Pornography That's Hard to Stop",
@@ -7468,7 +7417,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-gambling-helper",
-"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency"],
 "guide": "gambling",
 "side": "helper",
 "title": "Gambling That's Out of Control",
@@ -7581,7 +7529,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Divorce or a Breakup",
 "you": {
 "id": "ok-g-divorce-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "divorce",
 "side": "you",
 "title": "Divorce or a Breakup",
@@ -7697,7 +7644,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-divorce-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "divorce",
 "side": "helper",
 "title": "Divorce or a Breakup",
@@ -7812,7 +7758,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Your Marriage Is Struggling",
 "you": {
 "id": "ok-g-marriage-strain-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "marriage-strain",
 "side": "you",
 "title": "When Your Marriage Is Struggling",
@@ -7941,7 +7886,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-marriage-strain-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "marriage-strain",
 "side": "helper",
 "title": "When Your Marriage Is Struggling",
@@ -8050,7 +7994,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Betrayal",
 "you": {
 "id": "ok-g-betrayal-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "betrayal",
 "side": "you",
 "title": "Betrayal",
@@ -8172,7 +8115,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-betrayal-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "betrayal",
 "side": "helper",
 "title": "Betrayal",
@@ -8282,7 +8224,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Infertility",
 "you": {
 "id": "ok-g-infertility-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "infertility",
 "side": "you",
 "title": "Infertility",
@@ -8383,7 +8324,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-infertility-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "infertility",
 "side": "helper",
 "title": "Infertility",
@@ -8490,7 +8430,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Estrangement",
 "you": {
 "id": "ok-g-estrangement-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "estrangement",
 "side": "you",
 "title": "Estrangement",
@@ -8588,7 +8527,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-estrangement-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "estrangement",
 "side": "helper",
 "title": "Estrangement",
@@ -8693,7 +8631,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Aging Parents",
 "you": {
 "id": "ok-g-aging-parents-you",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "aging-parents",
 "side": "you",
 "title": "Aging Parents",
@@ -8788,7 +8726,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-aging-parents-helper",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "aging-parents",
 "side": "helper",
 "title": "Aging Parents",
@@ -8895,7 +8833,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Empty Nest and Big Life Transitions",
 "you": {
 "id": "ok-g-empty-nest-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "empty-nest",
 "side": "you",
 "title": "Empty Nest and Big Life Transitions",
@@ -9009,7 +8946,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-empty-nest-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "empty-nest",
 "side": "helper",
 "title": "Empty Nest and Big Life Transitions",
@@ -9126,7 +9062,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Parenting a Struggling Child",
 "you": {
 "id": "ok-g-struggling-child-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "struggling-child",
 "side": "you",
 "title": "Parenting a Struggling Child",
@@ -9258,7 +9193,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-struggling-child-helper",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "struggling-child",
 "side": "helper",
 "title": "Parenting a Struggling Child",
@@ -9375,7 +9310,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Becoming a Parent",
 "you": {
 "id": "ok-g-newparent-you",
-"crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "newparent",
 "side": "you",
 "title": "Becoming a Parent",
@@ -9509,7 +9443,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-newparent-helper",
-"crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
 "guide": "newparent",
 "side": "helper",
 "title": "Becoming a Parent",
@@ -9632,7 +9565,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Someone You Love Is Incarcerated",
 "you": {
 "id": "ok-g-incarceration-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "incarceration",
 "side": "you",
 "title": "When Someone You Love Is Incarcerated",
@@ -9753,7 +9685,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-incarceration-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "incarceration",
 "side": "helper",
 "title": "When Someone You Love Is Incarcerated",
@@ -9870,7 +9801,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Losing Your Job",
 "you": {
 "id": "ok-g-job-loss-you",
-"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "job-loss",
 "side": "you",
 "title": "Losing Your Job",
@@ -9990,7 +9920,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-job-loss-helper",
-"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "job-loss",
 "side": "helper",
 "title": "Losing Your Job",
@@ -10111,7 +10040,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Money Trouble",
 "you": {
 "id": "ok-g-money-crisis-you",
-"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "money-crisis",
 "side": "you",
 "title": "Money Trouble",
@@ -10231,7 +10159,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-money-crisis-helper",
-"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "money-crisis",
 "side": "helper",
 "title": "Money Trouble",
@@ -10351,7 +10278,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Retirement",
 "you": {
 "id": "ok-g-retirement-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "retirement",
 "side": "you",
 "title": "Retirement",
@@ -10466,7 +10392,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-retirement-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "retirement",
 "side": "helper",
 "title": "Retirement",
@@ -10581,7 +10506,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Career Change",
 "you": {
 "id": "ok-g-career-change-you",
-"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "career-change",
 "side": "you",
 "title": "A Career Change",
@@ -10696,7 +10620,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-career-change-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "career-change",
 "side": "helper",
 "title": "A Career Change",
@@ -10811,7 +10734,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Moving to a New Place",
 "you": {
 "id": "ok-g-moving-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "moving",
 "side": "you",
 "title": "Moving to a New Place",
@@ -10926,7 +10848,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-moving-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "moving",
 "side": "helper",
 "title": "Moving to a New Place",
@@ -11140,11 +11061,6 @@ window.GG_LEARN_GUIDES.oak = {
 "sub": "The full guide has more, whenever you want it.",
 "say": "Your service mattered, and so does what comes next. The full guide has more, whenever you want it."
 }
-],
-"crisis": [
-"988, then press 1: Veterans Crisis Line",
-"Text 838255: Veterans Crisis Line",
-"911: danger right now"
 ]
 },
 "helper": {
@@ -11250,11 +11166,6 @@ window.GG_LEARN_GUIDES.oak = {
 "sub": "The full guide has more, whenever you want it.",
 "say": "Be patient. Adjustment takes time. Keep saying it, in words and in showing up: I'm glad you're home. The full guide has more, whenever you want it."
 }
-],
-"crisis": [
-"988, then press 1: Veterans Crisis Line",
-"Text 838255: Veterans Crisis Line",
-"911: danger right now"
 ]
 }
 },
@@ -11264,7 +11175,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Crisis of Faith",
 "you": {
 "id": "ok-g-faith-crisis-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "faith-crisis",
 "side": "you",
 "title": "A Crisis of Faith",
@@ -11369,7 +11279,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-faith-crisis-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "faith-crisis",
 "side": "helper",
 "title": "A Crisis of Faith",
@@ -11488,7 +11397,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Changing or Leaving a Faith",
 "you": {
 "id": "ok-g-leaving-faith-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "leaving-faith",
 "side": "you",
 "title": "Changing or Leaving a Faith",
@@ -11591,7 +11499,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-leaving-faith-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "leaving-faith",
 "side": "helper",
 "title": "Changing or Leaving a Faith",
@@ -11710,7 +11617,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When the Sacred Feels Far Away",
 "you": {
 "id": "ok-g-spiritual-dryness-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spiritual-dryness",
 "side": "you",
 "title": "When the Sacred Feels Far Away",
@@ -11822,7 +11728,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-spiritual-dryness-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spiritual-dryness",
 "side": "helper",
 "title": "When the Sacred Feels Far Away",
@@ -12200,11 +12105,6 @@ window.GG_LEARN_GUIDES.oak = {
 "sub": "The full guide has more, whenever you want it.",
 "say": "You can't take this away from them. You can be someone safe to tell, again and again. The full guide has more, whenever you want it."
 }
-],
-"crisis": [
-"988, then press 1: Veterans Crisis Line",
-"Text 838255: Veterans Crisis Line",
-"911: danger right now"
 ]
 }
 },
@@ -12214,7 +12114,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Forgiving Someone, or Yourself",
 "you": {
 "id": "ok-g-forgiveness-you",
-"crisis": ["911: emergency"],
 "guide": "forgiveness",
 "side": "you",
 "title": "Forgiving Someone, or Yourself",
@@ -12357,7 +12256,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-forgiveness-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "forgiveness",
 "side": "helper",
 "title": "Forgiving Someone, or Yourself",
@@ -12492,7 +12390,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Faith Communities Have Hurt You",
 "you": {
 "id": "ok-g-church-hurt-you",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "church-hurt",
 "side": "you",
 "title": "When Faith Communities Have Hurt You",
@@ -12644,7 +12542,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-church-hurt-helper",
-"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+"crisis": ["MAARC (Minnesota): 1-844-880-1574"],
 "guide": "church-hurt",
 "side": "helper",
 "title": "When Faith Communities Have Hurt You",
@@ -12771,7 +12669,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Political Division in Families",
 "you": {
 "id": "ok-g-political-division-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "political-division",
 "side": "you",
 "title": "Political Division in Families",
@@ -12879,7 +12776,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-political-division-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "political-division",
 "side": "helper",
 "title": "Political Division in Families",
@@ -12983,7 +12879,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Living with Immigration Fear",
 "you": {
 "id": "ok-g-immigration-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "immigration",
 "side": "you",
 "title": "Living with Immigration Fear",
@@ -13093,7 +12988,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-immigration-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "immigration",
 "side": "helper",
 "title": "Living with Immigration Fear",
@@ -13511,11 +13405,6 @@ window.GG_LEARN_GUIDES.oak = {
 "sub": "The full guide has more, whenever you want it.",
 "say": "Say it to yourself when the list feels endless. We're rebuilding one step at a time. The full guide has more, whenever you want it."
 }
-],
-"crisis": [
-"1-800-985-5990: Disaster Distress Helpline, call or text",
-"988: call or text, any time",
-"911: danger right now"
 ]
 },
 "helper": {
@@ -13625,11 +13514,6 @@ window.GG_LEARN_GUIDES.oak = {
 "sub": "The full guide has more, whenever you want it.",
 "say": "The first week brings a crowd. The months after need a friend. Keep showing up. The full guide has more, whenever you want it."
 }
-],
-"crisis": [
-"1-800-985-5990: Disaster Distress Helpline, call or text",
-"988: call or text, any time",
-"911: danger right now"
 ]
 }
 },
@@ -13639,7 +13523,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Overwhelmed by the News",
 "you": {
 "id": "ok-g-news-overwhelm-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "news-overwhelm",
 "side": "you",
 "title": "Overwhelmed by the News",
@@ -13747,7 +13630,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-news-overwhelm-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "news-overwhelm",
 "side": "helper",
 "title": "Overwhelmed by the News",
@@ -13848,7 +13730,6 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Facing Prejudice",
 "you": {
 "id": "ok-g-prejudice-you",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "prejudice",
 "side": "you",
 "title": "Facing Prejudice",
@@ -13943,7 +13824,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-prejudice-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "prejudice",
 "side": "helper",
 "title": "Facing Prejudice",
@@ -15481,7 +15361,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Fatigue, Flares, and Pacing Your Energy",
   "you": {
    "id": "ok-g-pacing-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "pacing",
    "side": "you",
    "title": "Fatigue, Flares, and Pacing Your Energy",
@@ -15613,7 +15492,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-pacing-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "pacing",
    "side": "helper",
    "title": "Fatigue, Flares, and Pacing Your Energy",
@@ -15757,7 +15635,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Working with a Disability or Illness, or Stepping Away",
   "you": {
    "id": "ok-g-work-ability-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "work-ability",
    "side": "you",
    "title": "Working with a Disability or Illness, or Stepping Away",
@@ -15877,7 +15754,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-work-ability-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "work-ability",
    "side": "helper",
    "title": "Working with a Disability or Illness, or Stepping Away",
@@ -16020,7 +15896,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Parenting with a Disability or Chronic Illness",
   "you": {
    "id": "ok-g-parenting-ability-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "parenting-ability",
    "side": "you",
    "title": "Parenting with a Disability or Chronic Illness",
@@ -16151,7 +16026,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-parenting-ability-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "parenting-ability",
    "side": "helper",
    "title": "Parenting with a Disability or Chronic Illness",
@@ -16266,7 +16140,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Raising a Child with a Disability or Serious Illness",
   "you": {
    "id": "ok-g-child-ability-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "child-ability",
    "side": "you",
    "title": "Raising a Child with a Disability or Serious Illness",
@@ -16387,7 +16260,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-child-ability-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "child-ability",
    "side": "helper",
    "title": "Raising a Child with a Disability or Serious Illness",
@@ -16503,7 +16375,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Hearing Loss or Deafness as an Adult",
   "you": {
    "id": "ok-g-hearing-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "hearing",
    "side": "you",
    "title": "Hearing Loss or Deafness as an Adult",
@@ -16646,7 +16517,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-hearing-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "hearing",
    "side": "helper",
    "title": "Hearing Loss or Deafness as an Adult",
@@ -16773,7 +16643,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Vision Loss as an Adult",
   "you": {
    "id": "ok-g-vision-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "vision",
    "side": "you",
    "title": "Vision Loss as an Adult",
@@ -16898,7 +16767,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-vision-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "vision",
    "side": "helper",
    "title": "Vision Loss as an Adult",
@@ -17022,7 +16890,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Autistic, or Diagnosed as an Adult",
   "you": {
    "id": "ok-g-autistic-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "autistic",
    "side": "you",
    "title": "Autistic, or Diagnosed as an Adult",
@@ -17131,7 +16998,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-autistic-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "autistic",
    "side": "helper",
    "title": "Autistic, or Diagnosed as an Adult",
@@ -17247,7 +17113,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Living with a Serious Mental Illness",
   "you": {
    "id": "ok-g-serious-mi-you",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "serious-mi",
    "side": "you",
    "title": "Living with a Serious Mental Illness",
@@ -17357,7 +17222,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-serious-mi-helper",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "serious-mi",
    "side": "helper",
    "title": "Living with a Serious Mental Illness",
@@ -17475,7 +17339,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "After a Brain Injury or Stroke",
   "you": {
    "id": "ok-g-brain-injury-you",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "brain-injury",
    "side": "you",
    "title": "After a Brain Injury or Stroke",
@@ -17580,7 +17443,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-brain-injury-helper",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "brain-injury",
    "side": "helper",
    "title": "After a Brain Injury or Stroke",
@@ -17704,7 +17566,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Faith and Disability: When Worship Is Hard to Reach",
   "you": {
    "id": "ok-g-faith-access-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "faith-access",
    "side": "you",
    "title": "Faith and Disability: When Worship Is Hard to Reach",
@@ -17811,7 +17672,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-faith-access-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "faith-access",
    "side": "helper",
    "title": "Faith and Disability: When Worship Is Hard to Reach",
@@ -17938,7 +17798,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Thinking About a Change",
   "you": {
    "id": "ok-g-sober-change-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-change",
    "side": "you",
    "title": "Thinking About a Change",
@@ -18091,7 +17950,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-change-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-change",
    "side": "helper",
    "title": "Thinking About a Change",
@@ -18221,7 +18079,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "The First 30 Days, Safely",
   "you": {
    "id": "ok-g-sober-first-30-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-first-30",
    "side": "you",
    "title": "The First 30 Days, Safely",
@@ -18356,7 +18213,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-first-30-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-first-30",
    "side": "helper",
    "title": "The First 30 Days, Safely",
@@ -18730,7 +18586,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Cravings and Triggers",
   "you": {
    "id": "ok-g-sober-cravings-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-cravings",
    "side": "you",
    "title": "Cravings and Triggers",
@@ -18868,7 +18723,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-cravings-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-cravings",
    "side": "helper",
    "title": "Cravings and Triggers",
@@ -19001,7 +18855,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "After a Slip",
   "you": {
    "id": "ok-g-sober-slip-you",
-   "crisis": ["911: emergency"],
    "guide": "sober-slip",
    "side": "you",
    "title": "After a Slip",
@@ -19133,7 +18986,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-slip-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-slip",
    "side": "helper",
    "title": "After a Slip",
@@ -19390,7 +19242,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-healing-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "sober-healing",
    "side": "helper",
    "title": "Healing What You Drank Over",
@@ -19630,7 +19481,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-repair-helper",
-   "crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-repair",
    "side": "helper",
    "title": "Repairing Relationships",
@@ -19738,7 +19588,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Sober at Work and with Friends",
   "you": {
    "id": "ok-g-sober-work-friends-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-work-friends",
    "side": "you",
    "title": "Sober at Work and with Friends",
@@ -20193,7 +20042,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "When Your Partner Drinks or Uses",
   "you": {
    "id": "ok-g-sober-partner-you",
-   "crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-partner",
    "side": "you",
    "title": "When Your Partner Drinks or Uses",
@@ -20324,7 +20172,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-partner-helper",
-   "crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-partner",
    "side": "helper",
    "title": "When Your Partner Drinks or Uses",
@@ -20437,7 +20284,6 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Grieving an Overdose",
   "you": {
    "id": "ok-g-sober-overdose-grief-you",
-   "crisis": ["988: call or text, any time"],
    "guide": "sober-overdose-grief",
    "side": "you",
    "title": "Grieving an Overdose",
@@ -20568,7 +20414,6 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-overdose-grief-helper",
-   "crisis": ["988: call or text, any time"],
    "guide": "sober-overdose-grief",
    "side": "helper",
    "title": "Grieving an Overdose",

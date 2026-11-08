@@ -54,7 +54,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Starting High School",
    "you": {
     "id": "pn-g-start-hs-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "start-hs",
     "side": "you",
     "title": "Starting High School",
@@ -175,7 +174,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-start-hs-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "start-hs",
     "side": "helper",
     "title": "Starting High School",
@@ -288,7 +286,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Grades, Pressure, and Perfectionism",
    "you": {
     "id": "pn-g-grades-pressure-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "grades-pressure",
     "side": "you",
     "title": "Grades, Pressure, and Perfectionism",
@@ -428,7 +425,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-grades-pressure-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "grades-pressure",
     "side": "helper",
     "title": "Grades, Pressure, and Perfectionism",
@@ -541,7 +537,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "ADHD and Learning Differences",
    "you": {
     "id": "pn-g-adhd-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "you",
     "title": "ADHD and Learning Differences",
@@ -659,7 +654,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-adhd-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "helper",
     "title": "ADHD and Learning Differences",
@@ -902,7 +896,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-sports-cut-helper",
-    "crisis": ["Childhelp: call or text 1-800-422-4453"],
     "guide": "sports-cut",
     "side": "helper",
     "title": "Sports: Getting Cut, Injury, and Burnout",
@@ -1013,7 +1006,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Choosing a Path After High School",
    "you": {
     "id": "pn-g-path-after-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "path-after",
     "side": "you",
     "title": "Choosing a Path After High School",
@@ -1269,7 +1261,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Graduation, College, and Leaving Home",
    "you": {
     "id": "pn-g-graduation-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "graduation",
     "side": "you",
     "title": "Graduation, College, and Leaving Home",
@@ -1364,7 +1355,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-graduation-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "graduation",
     "side": "helper",
     "title": "Graduation, College, and Leaving Home",
@@ -1487,7 +1477,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Friendship Changes and Losing a Friend Group",
    "you": {
     "id": "pn-g-friend-changes-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-changes",
     "side": "you",
     "title": "Friendship Changes and Losing a Friend Group",
@@ -1706,7 +1695,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Feeling Lonely or Left Out",
    "you": {
     "id": "pn-g-left-out-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "left-out",
     "side": "you",
     "title": "Feeling Lonely or Left Out",
@@ -1822,7 +1810,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-left-out-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "left-out",
     "side": "helper",
     "title": "Feeling Lonely or Left Out",
@@ -2136,7 +2123,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "First Relationships and What Healthy Looks Like",
    "you": {
     "id": "pn-g-first-relationship-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "first-relationship",
     "side": "you",
     "title": "First Relationships and What Healthy Looks Like",
@@ -2366,7 +2352,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Breakups",
    "you": {
     "id": "pn-g-breakup-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "breakup",
     "side": "you",
     "title": "Breakups",
@@ -2484,7 +2469,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-breakup-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "breakup",
     "side": "helper",
     "title": "Breakups",
@@ -2830,7 +2814,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Parents' Divorce or Separation",
    "you": {
     "id": "pn-g-divorce-you",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "divorce",
     "side": "you",
     "title": "Parents' Divorce or Separation",
@@ -2938,7 +2921,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-divorce-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "divorce",
     "side": "helper",
     "title": "Parents' Divorce or Separation",
@@ -3048,7 +3030,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A New Stepfamily",
    "you": {
     "id": "pn-g-stepfamily-you",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "stepfamily",
     "side": "you",
     "title": "A New Stepfamily",
@@ -3154,7 +3135,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-stepfamily-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "stepfamily",
     "side": "helper",
     "title": "A New Stepfamily",
@@ -3264,7 +3244,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Moving or Changing Schools",
    "you": {
     "id": "pn-g-moving-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving",
     "side": "you",
     "title": "Moving or Changing Schools",
@@ -3366,7 +3345,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-moving-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving",
     "side": "helper",
     "title": "Moving or Changing Schools",
@@ -3476,7 +3454,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Parent Deployed, and Military Family Life",
    "you": {
     "id": "pn-g-deployed-you",
-    "crisis": ["988: call or text, any time", "Military OneSource: 800-342-9647", "911: emergency"],
     "guide": "deployed",
     "side": "you",
     "title": "A Parent Deployed, and Military Family Life",
@@ -3582,7 +3559,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-deployed-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647", "911: emergency"],
     "guide": "deployed",
     "side": "helper",
     "title": "A Parent Deployed, and Military Family Life",
@@ -3804,7 +3780,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-family-substance-helper",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "family-substance",
     "side": "helper",
     "title": "A Family Member's Drinking or Drug Use",
@@ -3915,7 +3890,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Parent in Jail or Prison",
    "you": {
     "id": "pn-g-parent-jail-you",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "parent-jail",
     "side": "you",
     "title": "A Parent in Jail or Prison",
@@ -4018,7 +3992,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-parent-jail-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "parent-jail",
     "side": "helper",
     "title": "A Parent in Jail or Prison",
@@ -4346,7 +4319,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Lying, Sneaking Out, and Stealing",
    "you": {
     "id": "pn-g-lying-you",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "CyberTipline: 1-800-843-5678", "911: emergency"],
     "guide": "lying",
     "side": "you",
     "title": "Lying, Sneaking Out, and Stealing",
@@ -4452,7 +4424,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-lying-helper",
-    "crisis": ["988: call or text, any time", "CyberTipline: 1-800-843-5678"],
     "guide": "lying",
     "side": "helper",
     "title": "Lying, Sneaking Out, and Stealing",
@@ -4554,7 +4525,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When a Parent or Sibling Dies",
    "you": {
     "id": "pn-g-parent-death-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "parent-death",
     "side": "you",
     "title": "When a Parent or Sibling Dies",
@@ -4676,7 +4646,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-parent-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "parent-death",
     "side": "helper",
     "title": "When a Parent or Sibling Dies",
@@ -4789,7 +4758,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When a Friend or Classmate Dies",
    "you": {
     "id": "pn-g-friend-death-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "you",
     "title": "When a Friend or Classmate Dies",
@@ -4993,7 +4961,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When a Grandparent Dies",
    "you": {
     "id": "pn-g-grandparent-death-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "grandparent-death",
     "side": "you",
     "title": "When a Grandparent Dies",
@@ -5089,7 +5056,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-grandparent-death-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "grandparent-death",
     "side": "helper",
     "title": "When a Grandparent Dies",
@@ -5186,7 +5152,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Car Crashes and New Drivers",
    "you": {
     "id": "pn-g-car-crash-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "car-crash",
     "side": "you",
     "title": "Car Crashes and New Drivers",
@@ -5304,7 +5269,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-car-crash-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "car-crash",
     "side": "helper",
     "title": "Car Crashes and New Drivers",
@@ -5402,7 +5366,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When Someone You Love Is Seriously Ill",
    "you": {
     "id": "pn-g-loved-one-ill-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "loved-one-ill",
     "side": "you",
     "title": "When Someone You Love Is Seriously Ill",
@@ -5508,7 +5471,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-loved-one-ill-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "loved-one-ill",
     "side": "helper",
     "title": "When Someone You Love Is Seriously Ill",
@@ -5631,7 +5593,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Sleep and the Teen Body Clock",
    "you": {
     "id": "pn-g-sleep-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "sleep",
     "side": "you",
     "title": "Sleep and the Teen Body Clock",
@@ -5880,7 +5841,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Body Image and Comparison",
    "you": {
     "id": "pn-g-body-image-you",
-    "crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767"],
     "guide": "body-image",
     "side": "you",
     "title": "Body Image and Comparison",
@@ -6102,7 +6062,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Eating Disorders",
    "you": {
     "id": "pn-g-eating-you",
-    "crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "you",
     "title": "Eating Disorders",
@@ -6204,7 +6163,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-eating-helper",
-    "crisis": ["ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "helper",
     "title": "Eating Disorders",
@@ -6328,7 +6286,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Concussion and Sports Injuries",
    "you": {
     "id": "pn-g-concussion-you",
-    "crisis": ["911: emergency"],
     "guide": "concussion",
     "side": "you",
     "title": "Concussion and Sports Injuries",
@@ -6444,7 +6401,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-concussion-helper",
-    "crisis": ["911: emergency"],
     "guide": "concussion",
     "side": "helper",
     "title": "Concussion and Sports Injuries",
@@ -6555,7 +6511,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Living with a Chronic Illness or Disability",
    "you": {
     "id": "pn-g-chronic-illness-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "chronic-illness",
     "side": "you",
     "title": "Living with a Chronic Illness or Disability",
@@ -6671,7 +6626,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-chronic-illness-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "chronic-illness",
     "side": "helper",
     "title": "Living with a Chronic Illness or Disability",
@@ -6791,7 +6745,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Vaping, Drinking, and Drugs",
    "you": {
     "id": "pn-g-substances-you",
-    "crisis": ["911: emergency"],
     "guide": "substances",
     "side": "you",
     "title": "Vaping, Drinking, and Drugs",
@@ -6922,7 +6875,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-substances-helper",
-    "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "helper",
     "title": "Vaping, Drinking, and Drugs",
@@ -7037,7 +6989,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Anxiety and Panic",
    "you": {
     "id": "pn-g-anxiety-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "anxiety",
     "side": "you",
     "title": "Anxiety and Panic",
@@ -7325,7 +7276,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Depression and Feeling Numb",
    "you": {
     "id": "pn-g-depression-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "depression",
     "side": "you",
     "title": "Depression and Feeling Numb",
@@ -7455,7 +7405,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-depression-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "depression",
     "side": "helper",
     "title": "Depression and Feeling Numb",
@@ -8122,7 +8071,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
    "you": {
     "id": "pn-g-counseling-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "counseling",
     "side": "you",
     "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
@@ -8613,7 +8561,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Pornography",
    "you": {
     "id": "pn-g-porn-you",
-    "crisis": ["CyberTipline: 1-800-843-5678"],
     "guide": "porn",
     "side": "you",
     "title": "Pornography",
@@ -8719,7 +8666,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-porn-helper",
-    "crisis": ["CyberTipline: 1-800-843-5678"],
     "guide": "porn",
     "side": "helper",
     "title": "Pornography",
@@ -8838,7 +8784,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Social Media, Comparison, and Phone Balance",
    "you": {
     "id": "pn-g-social-media-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "social-media",
     "side": "you",
     "title": "Social Media, Comparison, and Phone Balance",
@@ -8941,7 +8886,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-social-media-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "social-media",
     "side": "helper",
     "title": "Social Media, Comparison, and Phone Balance",
@@ -9076,7 +9020,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "AI Chatbots and Companions",
    "you": {
     "id": "pn-g-ai-companions-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "ai-companions",
     "side": "you",
     "title": "AI Chatbots and Companions",
@@ -9189,7 +9132,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-ai-companions-helper",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
     "guide": "ai-companions",
     "side": "helper",
     "title": "AI Chatbots and Companions",
@@ -9315,7 +9257,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Gambling and Sports Betting",
    "you": {
     "id": "pn-g-gambling-you",
-    "crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673"],
     "guide": "gambling",
     "side": "you",
     "title": "Gambling and Sports Betting",
@@ -10034,7 +9975,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A First Job, and Balancing Work with School",
    "you": {
     "id": "pn-g-first-job-you",
-    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "you",
     "title": "A First Job, and Balancing Work with School",
@@ -10132,7 +10072,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-first-job-helper",
-    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "helper",
     "title": "A First Job, and Balancing Work with School",
@@ -10233,7 +10172,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Money: Paychecks, Saving, and Debt",
    "you": {
     "id": "pn-g-money-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "money",
     "side": "you",
     "title": "Money: Paychecks, Saving, and Debt",
@@ -10328,7 +10266,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-money-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "money",
     "side": "helper",
     "title": "Money: Paychecks, Saving, and Debt",
@@ -10429,7 +10366,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Faith Questions and Doubt",
    "you": {
     "id": "pn-g-faith-doubt-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-doubt",
     "side": "you",
     "title": "Faith Questions and Doubt",
@@ -10561,7 +10497,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-doubt-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-doubt",
     "side": "helper",
     "title": "Faith Questions and Doubt",
@@ -10672,7 +10607,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Hurt by a Faith Community",
    "you": {
     "id": "pn-g-faith-hurt-you",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "faith-hurt",
     "side": "you",
     "title": "Hurt by a Faith Community",
@@ -10773,7 +10707,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-hurt-helper",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "faith-hurt",
     "side": "helper",
     "title": "Hurt by a Faith Community",
@@ -10895,7 +10828,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Finding Purpose, and Serving Others",
    "you": {
     "id": "pn-g-purpose-service-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose-service",
     "side": "you",
     "title": "Finding Purpose, and Serving Others",
@@ -11010,7 +10942,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-purpose-service-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose-service",
     "side": "helper",
     "title": "Finding Purpose, and Serving Others",
@@ -11425,7 +11356,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-pain-fatigue-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "pain-fatigue",
     "side": "helper",
     "title": "Chronic Pain and Fatigue",
@@ -11738,7 +11668,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Deaf or Hard of Hearing",
    "you": {
     "id": "pn-g-deaf-hoh-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "deaf-hoh",
     "side": "you",
     "title": "Deaf or Hard of Hearing",
@@ -11829,7 +11758,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-deaf-hoh-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "deaf-hoh",
     "side": "helper",
     "title": "Deaf or Hard of Hearing",
@@ -11922,7 +11850,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Blind or Low Vision",
    "you": {
     "id": "pn-g-blind-low-vision-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "blind-low-vision",
     "side": "you",
     "title": "Blind or Low Vision",
@@ -12103,7 +12030,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Autistic in High School",
    "you": {
     "id": "pn-g-autistic-hs-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "autistic-hs",
     "side": "you",
     "title": "Autistic in High School",
@@ -12285,7 +12211,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Serious Illness or Long Treatment as a Teen",
    "you": {
     "id": "pn-g-serious-illness-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "serious-illness",
     "side": "you",
     "title": "A Serious Illness or Long Treatment as a Teen",
@@ -12468,7 +12393,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Living with a Mental Health Condition Long-Term",
    "you": {
     "id": "pn-g-mh-longterm-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "mh-longterm",
     "side": "you",
     "title": "Living with a Mental Health Condition Long-Term",
@@ -12568,7 +12492,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-mh-longterm-helper",
-    "crisis": ["988: call or text, any time", "NAMI HelpLine: 1-800-950-6264", "911: emergency"],
     "guide": "mh-longterm",
     "side": "helper",
     "title": "Living with a Mental Health Condition Long-Term",
@@ -12667,7 +12590,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Helping Care for a Parent or Sibling",
    "you": {
     "id": "pn-g-young-carer-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "young-carer",
     "side": "you",
     "title": "Helping Care for a Parent or Sibling",
@@ -12856,7 +12778,6 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Faith Questions When Your Body Hurts",
    "you": {
     "id": "pn-g-faith-body-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-body",
     "side": "you",
     "title": "Faith Questions When Your Body Hurts",
@@ -12946,7 +12867,6 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-body-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-body",
     "side": "helper",
     "title": "Faith Questions When Your Body Hurts",
@@ -13051,7 +12971,6 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Thinking About Cutting Back",
   "you": {
    "id": "pn-g-sober-cutting-back-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-cutting-back",
    "side": "you",
    "title": "Thinking About Cutting Back",
@@ -13173,7 +13092,6 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-cutting-back-helper",
-   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-cutting-back",
    "side": "helper",
    "title": "Thinking About Cutting Back",
@@ -13287,7 +13205,6 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Getting Sober as a Teen",
   "you": {
    "id": "pn-g-sober-teen-you",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-teen",
    "side": "you",
    "title": "Getting Sober as a Teen",
@@ -13394,7 +13311,6 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-teen-helper",
-   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-teen",
    "side": "helper",
    "title": "Getting Sober as a Teen",
@@ -13508,7 +13424,6 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Party Pressure and Saying No Your Way",
   "you": {
    "id": "pn-g-sober-party-you",
-   "crisis": ["911: emergency"],
    "guide": "sober-party",
    "side": "you",
    "title": "Party Pressure and Saying No Your Way",
@@ -13621,7 +13536,6 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-party-helper",
-   "crisis": ["Poison Control: 1-800-222-1222", "911: emergency"],
    "guide": "sober-party",
    "side": "helper",
    "title": "Party Pressure and Saying No Your Way",
@@ -13734,7 +13648,6 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "A Parent's Drinking or Using",
   "you": {
    "id": "pn-g-sober-parent-you",
-   "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
    "guide": "sober-parent",
    "side": "you",
    "title": "A Parent's Drinking or Using",
@@ -13847,7 +13760,6 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-parent-helper",
-   "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-parent",
    "side": "helper",
    "title": "A Parent's Drinking or Using",
@@ -14362,12 +14274,6 @@ window.GG_LEARN_GUIDES.pine = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "Calling for help is always the right call. You can be the one who knows what to do. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "911: someone won't wake up or is breathing slowly",
-    "Naloxone (Narcan): give it, then stay",
-    "Poison Help: 1-800-222-1222",
-    "988: call or text, any time"
    ]
   },
   "helper": {
@@ -14492,12 +14398,6 @@ window.GG_LEARN_GUIDES.pine = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "Calm talks, naloxone at home, and a promise about calling for help. That's how families stay ready. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "911: someone won't wake up or is breathing slowly",
-    "Naloxone (Narcan): give it, then stay",
-    "Poison Help: 1-800-222-1222",
-    "988: call or text, any time"
    ]
   }
  },
@@ -14610,11 +14510,6 @@ window.GG_LEARN_GUIDES.pine = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "Ask for help, and let people stay close. Small steps still count. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "911: someone won't wake up or is breathing slowly",
-    "988: call or text, any time",
-    "Text HOME to 741741 (in Minnesota, MN to 741741)"
    ]
   },
   "helper": {

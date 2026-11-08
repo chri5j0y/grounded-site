@@ -14,7 +14,8 @@
                       {get() -> the money object (kept and changed in place), put() -> saves it, ok() -> true when open}
        opts.member    true, false, or a function: Membership opens This Month, Log, the weekly check-in, and Family sharing.
                       Start (false) is the taste: Close the Gap and My Plan (with Bring In a Spreadsheet).
-       opts.view      first view: gap, plan, month, log, check, import, share
+       opts.view      first view: home (Money Home, the default), give, live, protect, grow, ahead (the Plan part), gap, plan, month,
+                    log, check, import, share, tools, tool:<id>
        opts.onView    fn(view) when the view changes (the host can keep its address in step)
        opts.onMembership fn('see' or 'code') for the Membership line buttons
        opts.toast     fn(message) to use the host's toast (the module has its own)
@@ -22,7 +23,7 @@
        opts.qrSrc     where shared/vendor/qrcode.js lives (default /shared/vendor/qrcode.js?v=b921)
        opts.css       false when the host already loads gg-money.css; else it is added once from beside this file
        opts.readHash  true reads #money=<code> from the address on render (then clears it)
-       opts.art       where the paintings live (default /shared/heroes/way/), or a function(name) returning each one's address
+       opts.art       (kept for older hosts; since BLD 939 every picture is drawn in code)
        opts.toolsSrc  where gg-money-tools.js lives (default beside this file); loaded the first time Grounded Money opens
      GGMoney.summary(store)  {has, income, spend, gap, after, month: {ahead, short, line}} for a Today line
      GGMoney.model, GGMoney.parse, GGMoney.share   the data layer, for tests and stage 2
@@ -39,12 +40,20 @@
       own:    {lines, income, ideas, pid} this phone's own plan, kept while it follows a Family plan}
    Removing sets x and u (so a removal travels in a share); Undo clears it.
 
+   BLD 939 (Chris: "better flow more color, variety.. bigger titles.. cards that collaps.. giving, generosity, investing,
+   diversity, planning, no blind spots"): Grounded Money in five parts with plain names, Give, Live, Protect, Grow, and
+   Plan. New views: home (Money Home, the first view: five bright tiles and Your Money Picture), give, live, protect, grow,
+   and ahead (the Plan part; plan stays My Plan, so every older address still opens the same place). Each part is a page of
+   cards that fold open and closed (open state kept for this tab, sessionStorage gg-money-open). Drawings are inline SVG in
+   Grounded's own colors. New answers: tools.givelog, tools.insure, tools.blind, tools.grow (with grow.match), tools.year,
+   and tools.generous (generosity ideas tried); a Family share still carries the plan, ideas, and logs only.
+
    No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMoney) return;
-  var V = 'b937';
+  var V = 'b939';
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
   var SHARE_BASE = 'https://growwithgrounded.com/home/#money=';
 
@@ -104,7 +113,13 @@
     phone: '<rect x="6.5" y="2.8" width="11" height="18.4" rx="2.6"/><path d="M10.5 18h3"/>',
     gift: '<rect x="4" y="9" width="16" height="11.5" rx="1.5"/><path d="M3 9h18M12 9v11.5M12 9c-1-3-5-5-6-2.5S9.5 9 12 9zM12 9c1-3 5-5 6-2.5S14.5 9 12 9z"/>',
     people: '<circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 19.5c.4-3.4 2.6-5.5 5.5-5.5s5.1 2.1 5.5 5.5M14.2 14.3c.7-.3 1.4-.5 2.3-.5 2.4 0 4.1 1.8 4.5 4.7"/>',
-    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>'
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    map: '<path d="M3.5 6.5l5.5-2 6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/>',
+    eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+    umbrella: '<path d="M3 12a9 9 0 0 1 18 0z"/><path d="M12 12v6.5a2 2 0 0 1-4 0"/><path d="M12 3v.5"/>',
+    chart: '<path d="M4 20h16"/><path d="M6.5 16v-3M11 16V10M15.5 16V7.5"/><path d="M5 9.5l5-4 3.5 2.5L19 3.5"/><path d="M15.5 3.5H19V7"/>',
+    chev: '<path d="M6.5 9.5l5.5 5.5 5.5-5.5"/>',
+    star: '<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/>'
   };
   function I(id) { return '<svg class="gm-i" aria-hidden="true" focusable="false"><use href="#gmi-' + id + '"/></svg>'; }
   function mountIcons() {
@@ -542,8 +557,25 @@
     { v: 'gap', n: 'Close the Gap', i: 'gap' }, { v: 'plan', n: 'My Plan', i: 'list' }, { v: 'month', n: 'This Month', i: 'cal', m: 1 },
     { v: 'log', n: 'Log', i: 'tap', m: 1 }, { v: 'check', n: 'Check-in', i: 'leaf', m: 1 }, { v: 'tools', n: 'Tools', i: 'grid' }
   ];
-  var TITLE = { gap: 'Close the Gap', plan: 'My Plan', month: 'This Month', log: 'Log Spending', check: 'Weekly Money Check-in', import: 'Bring In a Spreadsheet', share: 'Share With Family', tools: 'Tools and Calculators' };
-  var LINE = { gap: 'Tend your money, and your Branches grow.', plan: 'Every line, calm and clear.', month: 'Where this month is going.', log: 'One tap, and back to your day.', check: 'A calm look each week keeps money peaceful.', import: 'Start from the sheet you already keep.', share: 'One plan for your home, on each phone.', tools: 'Ways to save, earn, and plan, all on this device.' };
+  // BLD 939: the five parts. 'ahead' is the Plan part's view name (plan stays My Plan).
+  var PARTS = [
+    { id: 'give', n: 'Give', i: 'gift', line: 'Generosity first: your giving goal, a giving tracker, and gifts beyond money.' },
+    { id: 'live', n: 'Live', i: 'home', line: 'Your monthly plan, bills, spending, and smart ways to save.' },
+    { id: 'protect', n: 'Protect', i: 'shield', line: 'An emergency fund, the right coverage, and no blind spots.' },
+    { id: 'grow', n: 'Grow', i: 'chart', line: 'Investing basics, compound growth, and income on the side.' },
+    { id: 'ahead', n: 'Plan', i: 'map', line: 'Goals, debt payoff, big purchases, paydays, and your whole year.' }
+  ];
+  var PART = {}; PARTS.forEach(function (x, i) { PART[x.id] = x; x.ix = i; });
+  var LIVE_VIEWS = { gap: 1, plan: 1, month: 1, log: 1, check: 1, import: 1, share: 1 };
+  var GEN = [
+    ['time', 'Give an Hour', 'Volunteer an hour with a group you care about.'], ['meal', 'Bring a Meal', 'A warm meal for a new parent, a neighbor, or a friend in a hard season.'],
+    ['skill', 'Share a Skill', 'Fix, teach, mow, or build something for someone.'], ['note', 'Write a Thank You Note', 'A few lines to someone who made a difference for you.'],
+    ['visit', 'Make a Visit', 'Sit with someone who would love the company.'], ['lend', 'Lend and Share', 'Tools, books, and gear from your shelf to a neighbor.'],
+    ['ride', 'Offer a Ride', 'To an appointment, the store, or a gathering.'], ['listen', 'Listen Well', 'Fifteen unhurried minutes, phone away, for someone who needs to be heard.']
+  ];
+  var TITLE = { home: 'Grounded Money', give: 'Give', live: 'Live', protect: 'Protect', grow: 'Grow', ahead: 'Plan', gap: 'Close the Gap', plan: 'My Plan', month: 'This Month', log: 'Log Spending', check: 'Weekly Money Check-in', import: 'Bring In a Spreadsheet', share: 'Share With Family', tools: 'Tools and Calculators' };
+  var LINE = { home: 'Give, live, protect, grow, and plan: your whole money picture, bright and clear.', give: PARTS[0].line, live: PARTS[1].line, protect: PARTS[2].line, grow: PARTS[3].line, ahead: PARTS[4].line,
+    gap: 'Every idea you choose brings your plan into balance.', plan: 'Every line, calm and clear.', month: 'Where this month is going.', log: 'One tap, and back to your day.', check: 'A calm look each week keeps money peaceful.', import: 'Start from the sheet you already keep.', share: 'One plan for your home, on each phone.', tools: 'Ways to save, earn, and plan, all on this device.' };
   var COMMON = [
     { n: 'Rent or Mortgage', s: 'fixed' }, { n: 'Groceries', s: 'varies' }, { n: 'Energy', s: 'varies' }, { n: 'Water and Trash', s: 'fixed' },
     { n: 'Phone Plan', s: 'fixed' }, { n: 'Car Payment', s: 'fixed' }, { n: 'Car Insurance', s: 'fixed' }, { n: 'Gas for the Car', s: 'varies' },
@@ -555,7 +587,7 @@
     if (!el) return null;
     mountIcons();
     if (opts.css !== false && !document.getElementById('gm-css')) { var lk = document.createElement('link'); lk.id = 'gm-css'; lk.rel = 'stylesheet'; lk.href = opts.cssHref || HERE + 'gg-money.css?v=' + V; document.head.appendChild(lk); }
-    var st = storeOf(opts.store), S = { view: opts.view || 'gap', pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false, leaves: -1, tw: {} };
+    var st = storeOf(opts.store), S = { view: opts.view || 'home', open: readOpen(), pick: null, map: null, sheets: null, mode: 'replace', inc: null, share: null, more: {}, undo: null, addIdea: false, logAmt: '', logDate: '', chk: null, showOff: false, tw: {} };
     var ART = opts.art || '/shared/heroes/way/';
     function art(name) { return typeof ART === 'function' ? ART(name) : ART + name; }
     var root = document.createElement('div'); root.className = 'gm'; el.innerHTML = ''; el.appendChild(root);
@@ -584,7 +616,7 @@
     }
     function tstate(d, id) { var t = d.tools[id]; if (!t || typeof t !== 'object') t = d.tools[id] = {}; return t; }
     function tctx(d, id) { return { d: d, t: tstate(d, id), U: UTIL, save: save, paint: paint, say: say, go: go, member: member, celebrate: celebrate }; }
-    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'gap'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    function go(v) { if (!TITLE[v] && !/^tool:[a-z]+$/.test(v)) v = 'home'; if (!allowed(v)) v = 'gap'; if (v === 'share') S.share = null; S.view = v; paint(); if (opts.onView) try { opts.onView(S.view); } catch (e) {} try { root.scrollIntoView && root.getBoundingClientRect().top < 0 && root.scrollIntoView({ block: 'start' }); } catch (e) {} }
 
     /* ----- painting ----- */
     function paint() {
@@ -592,26 +624,38 @@
       if (!d) { root.innerHTML = '<div class="gm-card gm-hello">' + head() + '<p class="gm-sub">Open your profile to see your money plan. It stays locked on this device with your passcode.</p>' + (window.GGP && GGP.require ? '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="unlock">Open My Profile</button></div>' : '') + '</div>'; return; }
       // Stage 2: a view this person cannot open (a Membership place on Start) settles on Close the Gap, and the host's address follows.
       if (!allowed(S.view)) { S.view = 'gap'; if (opts.onView) try { opts.onView('gap'); } catch (e) {} }
-      var tid = /^tool:(.+)$/.exec(S.view), body = tid ? vTool(d, tid[1]) : { gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare, tools: vTools }[S.view](d);
-      root.innerHTML = '<div class="gm-shell">' + head() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
+      var tid = /^tool:(.+)$/.exec(S.view), body = tid ? vTool(d, tid[1]) : PART[S.view] ? vPart(d, S.view) : { home: vHome, gap: vGap, plan: vPlan, month: vMonth, log: vLog, check: vCheck, import: vImport, share: vShare, tools: vTools }[S.view](d);
+      root.innerHTML = '<div class="gm-shell gm-c-' + (partOf(S.view) || 'home') + '">' + head() + pnav() + tabs() + (S.inc ? vIncoming(d) : '') + '<div class="gm-body" data-gm-view="' + (tid ? 'tool' : S.view) + '"' + (tid ? ' data-tool="' + esc(tid[1]) + '"' : '') + '>' + body + '</div></div>';
     }
-    // The painted header: Grounded's Branches painting (a nest in the oak), the place, and one warm line.
+    // The part this view belongs to (give, live, protect, grow, ahead), or '' for Money Home and All Tools.
+    function partOf(v) {
+      if (PART[v]) return v; if (LIVE_VIEWS[v]) return 'live';
+      var tid = /^tool:(.+)$/.exec(v || ''), T = tid && TL() && TL().get(tid[1]); return T ? T.part || '' : '';
+    }
+    // The header: a bright band in the part's own color, a big title, and the part's drawing.
     function head() {
-      var tid = /^tool:(.+)$/.exec(S.view), T = tid && TL() && TL().get(tid[1]);
+      var tid = /^tool:(.+)$/.exec(S.view), T = tid && TL() && TL().get(tid[1]), pt = partOf(S.view), P = PART[pt];
       var title = T ? T.n : TITLE[S.view] || 'Grounded Money', line = T ? T.sub : LINE[S.view] || '';
-      return '<header class="gm-hero' + (S.view === 'gap' ? ' tall' : '') + '"><img class="gm-hero-art" src="' + esc(art('tree-branches.webp')) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' +
-        '<div class="gm-hero-tx"><span class="gm-badge">' + I('coin') + '</span><div><div class="gm-k">Grounded Money · Branches</div><h2 class="gm-h2">' + esc(title) + '</h2>' + (line ? '<p>' + esc(line) + '</p>' : '') + '</div></div></header>';
+      var kick = S.view === 'home' ? 'Grounded Money' : 'Grounded Money · ' + (P ? P.n : 'Tools');
+      return '<header class="gm-hero' + (S.view === 'home' ? ' home' : '') + '"><div class="gm-hero-tx"><div><div class="gm-k">' + esc(kick) + '</div><h2 class="gm-h2">' + esc(title) + '</h2>' + (line ? '<p>' + esc(line) + '</p>' : '') + '</div></div>' + draw(P ? pt : 'home', 'gm-hero-draw') + '</header>';
+    }
+    // The five parts, always in reach, each in its own color.
+    function pnav() {
+      var cur = partOf(S.view) || (S.view === 'home' ? 'home' : '');
+      return '<nav class="gm-pnav" aria-label="Grounded Money parts"><button type="button" class="gm-pn gm-c-home" data-gm="go:home"' + (cur === 'home' ? ' aria-current="page"' : '') + '>' + I('coin') + '<span>Money Home</span></button>' +
+        PARTS.map(function (x) { return '<button type="button" class="gm-pn gm-c-' + x.id + '" data-gm="go:' + x.id + '"' + (cur === x.id ? ' aria-current="page"' : '') + '>' + I(x.i) + '<span>' + esc(x.n) + '</span></button>'; }).join('') + '</nav>';
     }
     function tabs() {
-      return '<nav class="gm-tabs" aria-label="Grounded Money">' + TABS.filter(function (t) { return !t.m || member(); }).map(function (t) {
-        var on = S.view === t.v || (t.v === 'plan' && (S.view === 'import' || S.view === 'share')) || (t.v === 'tools' && /^tool:/.test(S.view));
+      if (!(LIVE_VIEWS[S.view] || S.view === 'live' || S.view === 'tools')) return '';
+      return '<nav class="gm-tabs" aria-label="Live">' + TABS.filter(function (t) { return !t.m || member(); }).map(function (t) {
+        var on = S.view === t.v || (t.v === 'plan' && (S.view === 'import' || S.view === 'share'));
         return '<button type="button" class="gm-tab" data-gm="go:' + t.v + '"' + (on ? ' aria-current="page"' : '') + '>' + I(t.i) + '<span>' + esc(t.n) + '</span></button>';
       }).join('') + '</nav>';
     }
     function memberLine() {
       if (member()) return '';
       var b = opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : '';
-      return '<div class="gm-card gm-mem"><p class="gm-sub">Membership adds This Month, one tap logging, a weekly money check-in, one shared plan with your family, and every Grounded Money tool.</p>' + b + '</div>';
+      return '<div class="gm-card gm-mem"><p class="gm-sub">Membership adds This Month, one tap logging, a weekly money check-in, one shared plan with your family, and every Grounded Money tool, with the Giving Tracker, Blind Spot Check, Growth Calculator, and Year Plan.</p>' + b + '</div>';
     }
     function sumRow(t) {
       var g = t.gap;
@@ -627,14 +671,14 @@
           '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' + memberLine();
       }
       var t = totals(d), short = t.gap < 0, start = Math.abs(Math.min(0, t.gap)), left = Math.max(0, -t.after), pct = start ? Math.min(100, Math.round(t.saved / start * 100)) : 100;
-      var top, tr = tree(pct);
+      var top, tr = balance(pct);
       if (short) {
         top = '<div class="gm-card gm-gap' + (left === 0 ? ' closed' : '') + '">' + tr + '<span class="gm-k">' + (left === 0 ? 'The Gap Is Closed' : 'Your Monthly Gap') + '</span>' +
           '<div class="gm-big" data-gm-gap="' + left + '">' + money(left) + '</div><p class="gm-sub">' + (left === 0 ? 'Your chosen ideas close the gap, with ' + money(t.after) + ' a month to spare for savings and giving.' : t.saved ? 'a month to close, down from ' + money(start) + '.' : 'a month to close. Each idea you choose brings it closer.') + '</p>' +
           '<div class="gm-bar" role="img" aria-label="' + pct + ' percent of the gap closed"><span style="width:' + pct + '%"></span></div>' +
           (t.saved ? '<p class="gm-mini">Ideas you chose: ' + money(t.saved) + ' a month</p>' : '') + '</div>';
       } else {
-        top = '<div class="gm-card gm-gap closed">' + tr + '<span class="gm-k">Ahead Each Month</span><div class="gm-big" data-gm-gap="0">' + money(t.after) + '</div><p class="gm-sub">Your income covers your plan. The ideas below grow what you keep for savings and giving.</p></div>';
+        top = '<div class="gm-card gm-gap closed">' + balance(100) + '<span class="gm-k">Ahead Each Month</span><div class="gm-big" data-gm-gap="0">' + money(t.after) + '</div><p class="gm-sub">Your income covers your plan. The ideas below grow what you keep for savings and giving.</p></div>';
       }
       var vis = t.ideas.filter(function (x) { return !x.off; }), hid = t.ideas.filter(function (x) { return x.off; });
       var cards = vis.map(ideaCard).join('');
@@ -643,53 +687,265 @@
         '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="idea:addsave">Add Idea</button><button type="button" class="gm-btn sm line" data-gm="idea:addcancel">Done</button></div></div>'
         : '<div class="gm-acts"><button type="button" class="gm-btn line sm" data-gm="idea:add">' + I('plus') + 'Add Your Own Idea</button></div>';
       var off = hid.length ? '<p class="gm-quiet"><button type="button" class="gm-linkbtn" data-gm="idea:showoff">' + (S.showOff ? 'Rest the hidden ideas' : 'Show ' + hid.length + ' hidden idea' + (hid.length > 1 ? 's' : '')) + '</button></p>' + (S.showOff ? hid.map(ideaCard).join('') : '') : '';
-      return top + '<p class="gm-tend">' + I('leaf') + '<span>Branches is the part of your tree for the people you love. Tending your money is tending them: each idea you choose grows a leaf, and a closed gap bears fruit.</span></p>' +
-        '<h3 class="gm-sec">Ideas From Your Own Plan</h3><div class="gm-ideas">' + cards + '</div>' + mine + off + tipCard() + memberLine();
+      return top + '<h3 class="gm-sec">Ideas From Your Own Plan</h3><div class="gm-ideas">' + cards + '</div>' + mine + off + tipCard() + memberLine();
     }
     function tipCard() {
       if (!TL()) return '';
       var T = TL(), i = T.tipOfWeek(), tip = T.tips[i];
       return '<div class="gm-card gm-tipwk"><span class="gm-k">This Week\u2019s Money Tip</span><p>' + esc(tip[1]) + '</p><button type="button" class="gm-linkbtn" data-gm="go:tool:tips">More Tips' + I('arrow') + '</button></div>';
     }
-    /* The Branches tree: two buds always, a leaf for each step of the gap closed, and fruit once it is closed.
-       Sage and Honey, like the breathing ring. New leaves open with a small grow (still, under reduced motion). */
-    var LEAF = [[88, 74, -30], [132, 70, 30], [70, 92, -50], [150, 88, 45], [104, 52, -10], [118, 50, 15], [58, 72, -40], [162, 68, 40], [94, 40, -20], [128, 38, 25], [78, 58, -60], [146, 54, 55], [110, 30, 0], [64, 104, -70], [156, 102, 65], [100, 64, 10]];
-    var FRUIT = [[84, 84], [136, 80], [110, 44], [70, 70], [150, 64], [118, 62]];
-    function tree(pct) {
-      var n = pct >= 100 ? LEAF.length : Math.max(2, Math.round(pct / 100 * (LEAF.length - 2))), was = S.leaves; S.leaves = n;
-      var lv = LEAF.slice(0, n).map(function (l, i) { var c = ['#8DB38A', '#6E9C6B', '#A9CBA0'][i % 3]; return '<ellipse class="gm-leaf' + (was >= 0 && i >= was ? ' new' : '') + '" cx="' + l[0] + '" cy="' + l[1] + '" rx="9" ry="5" fill="' + c + '" transform="rotate(' + l[2] + ' ' + l[0] + ' ' + l[1] + ')"/>'; }).join('');
-      var fr = pct >= 100 ? FRUIT.map(function (f, i) { return '<circle class="gm-fruit' + (was >= 0 && was < LEAF.length ? ' new' : '') + '" style="--i:' + i + '" cx="' + f[0] + '" cy="' + f[1] + '" r="5.5" fill="#DDA45A" stroke="#B9822F" stroke-width="1"/>'; }).join('') : '';
-      return '<svg class="gm-tree" viewBox="0 0 220 150" role="img" aria-label="' + (pct >= 100 ? 'Your Branches tree in full leaf, bearing fruit' : 'Your Branches tree, ' + n + ' leaves growing') + '">' +
-        '<ellipse cx="110" cy="142" rx="70" ry="6" class="gm-ground"/>' +
-        '<path class="gm-trunk" d="M104 142c2-14 2-30 0-46M116 142c-2-14-2-30 0-46M104 96c-8-8-18-14-30-18M116 96c8-8 18-14 32-20M108 98c-2-18 0-34 2-50M110 70c-10-8-24-10-36-6M112 66c10-8 24-12 38-8M110 56c-6-8-8-14-8-20M111 54c6-6 12-12 18-14"/>' + lv + fr + '</svg>';
+    // The balance: the beam levels as the gap closes (a still drawing; no motion needed).
+    function balance(pct) {
+      var a = -(1 - Math.max(0, Math.min(100, pct)) / 100) * 14;
+      return '<svg class="gm-bal" viewBox="0 0 220 120" role="img" aria-label="' + (pct >= 100 ? 'Your plan in balance' : 'Your plan, ' + pct + ' percent of the way to balance') + '">' +
+        '<ellipse cx="110" cy="112" rx="64" ry="6" class="gm-ground"/><path class="gm-bal-post" d="M110 104V34M88 108h44"/>' +
+        '<g transform="rotate(' + a.toFixed(1) + ' 110 34)"><path class="gm-bal-beam" d="M46 34h128"/>' +
+        '<path class="gm-bal-cord" d="M46 34l-16 34M46 34l16 34M174 34l-16 34M174 34l16 34"/><path class="gm-bal-pan" d="M26 68h40a20 10 0 0 1-40 0zM154 68h40a20 10 0 0 1-40 0z"/>' +
+        '<ellipse class="gm-bal-coin" cx="46" cy="64" rx="11" ry="4"/><ellipse class="gm-bal-coin" cx="46" cy="59" rx="11" ry="4"/><path class="gm-bal-heart" d="M174 66c-6-4-10-7-10-11a5 5 0 0 1 10-2 5 5 0 0 1 10 2c0 4-4 7-10 11z"/></g>' +
+        '<circle cx="110" cy="34" r="6" class="gm-bal-hub"/></svg>';
     }
     // A warm moment: a few leaves drift down over the card with a kind line (only a line under reduced motion).
     function celebrate(msg) {
-      var box = document.createElement('div'); box.className = 'gm-cele'; box.setAttribute('role', 'status');
+      var box = document.createElement('div'); box.className = 'gm gm-cele'; box.setAttribute('role', 'status');
       var sp = ''; for (var i = 0; i < 14; i++) sp += '<span style="--x:' + (4 + (i * 37) % 92) + '%;--d:' + ((i * 0.17) % 1.4).toFixed(2) + 's;--r:' + ((i * 53) % 360) + 'deg" class="' + (i % 4 === 0 ? 'f' : '') + '"></span>';
       box.innerHTML = sp + '<p>' + I('sun') + esc(msg) + '</p>';
-      var host = root.querySelector('.gm-shell') || root; host.appendChild(box);
+      el.appendChild(box);   // beside the drawn view, so a redraw keeps the moment
       setTimeout(function () { if (box.parentNode) box.remove(); }, 4200);
+    }
+
+    /* =====================================================================
+       BLD 939: Money Home, the five parts, and cards that fold
+       ===================================================================== */
+    function readOpen() { try { return JSON.parse(sessionStorage.getItem('gg-money-open') || '{}') || {}; } catch (e) { return {}; } }
+    function keepOpen() { try { sessionStorage.setItem('gg-money-open', JSON.stringify(S.open)); } catch (e) {} }
+    function isOpen(key, dflt) { return S.open[key] == null ? !!dflt : !!S.open[key]; }
+    // A card that folds: a header button (aria-expanded) with a summary line that stays in view when closed.
+    // o: {t title, i icon, sum summary, body, open (the first time), need (a view this card opens; on Start a Membership view shows the Membership line), what (one line for Start)}
+    function fold(key, o) {
+      var locked = o.need && !allowed(o.need), on = isOpen(key, o.open), id = 'gmf-' + key;
+      var sum = locked ? 'With Membership' : o.sum || '';
+      var body = locked ? '<p class="gm-sub">' + esc(o.what || '') + '</p>' + memBtns() : o.body;
+      return '<section class="gm-fc' + (on ? ' open' : '') + (locked ? ' locked' : '') + '" data-fold="' + esc(key) + '"><h3 class="gm-fh"><button type="button" class="gm-fbtn" data-gm="fold:' + esc(key) + '" aria-expanded="' + on + '" aria-controls="' + id + '">' +
+        '<span class="gm-fic">' + I(o.i || 'leaf') + '</span><span class="gm-ftx"><b>' + esc(o.t) + '</b>' + (sum ? '<small class="gm-fsum">' + sum + '</small>' : '') + '</span><span class="gm-chev">' + I('chev') + '</span></button></h3>' +
+        '<div class="gm-fbody" id="' + id + '"' + (on ? '' : ' hidden') + '>' + body + '</div></section>';
+    }
+    function memBtns() { return opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : ''; }
+    function openBtn(v, label, line) { return '<button type="button" class="gm-btn sm' + (line ? ' line' : '') + '" data-gm="go:' + v + '">' + esc(label) + I('arrow') + '</button>'; }
+    function bar(pct, cls) { pct = Math.max(0, Math.min(100, Math.round(pct || 0))); return '<div class="gm-bar thin' + (cls ? ' ' + cls : '') + (pct >= 100 ? ' full' : '') + '" role="img" aria-label="' + pct + ' percent"><span style="width:' + pct + '%"></span></div>'; }
+    function tl(id) { return TL() && TL().get(id); }
+    function tv(d, id) { var t = d.tools[id]; return t && typeof t === 'object' ? t : {}; }
+    function ess(d) { return live(d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax'; }).reduce(function (s, l) { return s + monthly(l); }, 0); }
+    function n0(v) { var n = +v; return isFinite(n) ? n : 0; }
+
+    // Where each part stands: {pct 0 to 100, line, next: [label, view]} (a quiet guide, never a score to chase).
+    function status(d) {
+      var T = TL(), M = T && T.math, out = {}, mn = MONTHS[new Date().getMonth()];
+      // Give
+      var g = T ? T.giveGoal(d) : 0, gs = M ? M.givenSums(tv(d, 'givelog').list) : { month: 0, year: 0 };
+      out.give = g > 0 ? { pct: gs.month / g * 100, line: money(gs.month) + ' of ' + money(g) + ' given in ' + mn, next: gs.month < g ? ['Add a gift to the Giving Tracker', 'tool:givelog'] : null }
+        : { pct: 0, line: 'Choose your giving goal', next: ['Set your giving goal', 'tool:give'] };
+      // Live
+      if (!live(d.lines).length) out.live = { pct: 0, line: 'Build your monthly plan', next: ['Build your monthly plan', 'gap'] };
+      else { var t = totals(d), st = Math.abs(Math.min(0, t.gap)); out.live = t.after >= 0 ? { pct: 100, line: 'Ahead ' + money(t.after) + ' a month', next: null } : { pct: st ? t.saved / st * 100 : 0, line: money(-t.after) + ' a month to bring into balance', next: ['Close the Gap', 'gap'] }; }
+      // Protect
+      var gl = tv(d, 'goals'), e = ess(d), aim = n0(gl.efm) || 3, mo = e > 0 ? Math.floor(n0(gl.ef) / e * 10) / 10 : 0;
+      var bl = M ? M.blindSums(tv(d, 'blind')) : { done: 0, total: 15, next: null }, ins = M ? M.insureSums(tv(d, 'insure')) : { have: 0, total: 6 };
+      var pp = ((e > 0 ? Math.min(1, mo / aim) : 0) + (bl.total ? bl.done / bl.total : 1) + (ins.total ? ins.have / ins.total : 1)) / 3 * 100;
+      out.protect = { pct: pp, line: e > 0 && n0(gl.ef) > 0 ? 'Emergency Fund: ' + mo + ' of ' + aim + ' months' : 'Blind Spots: ' + bl.done + ' of ' + bl.total + ' covered', ef: { mo: mo, aim: aim, has: e > 0 }, blind: bl, ins: ins,
+        next: !(e > 0 && mo >= aim) ? ['Grow your emergency fund', 'tool:goals'] : bl.next ? ['Blind Spot Check: ' + bl.next[1], 'tool:blind'] : ins.have < ins.total ? ['Review your insurance', 'tool:insure'] : null };
+      // Grow
+      var gr = tv(d, 'grow'), gc = obj(gr.c), gm = n0(gc.monthly), match = gr.match, yrs = n0(gc.years) || 20;
+      var fvv = M && gm > 0 ? M.fv(gc.start, gm, gc.rate == null ? 6 : gc.rate, yrs) : 0;
+      out.grow = { pct: (gm > 0 || n0(obj(gr.r).monthly) > 0 ? 50 : 0) + (match === 'full' || match === 'na' ? 50 : match === 'check' ? 25 : 0),
+        line: gm > 0 ? money(gm) + ' a month grows to ' + money(fvv) + ' in ' + yrs + ' years' : 'See how steady saving grows', next: gm > 0 ? (match === 'full' || match === 'na' ? null : ['Look at your employer match', 'grow']) : ['Try the Growth Calculator', 'tool:grow'] };
+      // Plan
+      var goals = arr(gl.goals).filter(function (x) { return n0(x.target) > 0; }), debts = arr(tv(d, 'debt').list).filter(function (x) { return n0(x.bal) > 0; }), yr = tv(d, 'year'), py = tv(d, 'pay');
+      var hasYear = arr(yr.items).length || Object.keys(obj(yr.lm)).some(function (k) { return yr.lm[k] !== '' && yr.lm[k] != null; }), hasPay = n0(py.amt) > 0 || Object.keys(obj(py.due)).some(function (k) { return n0(py.due[k]) > 0; });
+      var dp = M && debts.length ? M.debtPlan(debts, n0(tv(d, 'debt').extra), tv(d, 'debt').method) : null, dfree = dp && !dp.plan.stuck ? (function () { var x = new Date(); x.setMonth(x.getMonth() + dp.plan.months); return MONTHS[x.getMonth()] + ' ' + x.getFullYear(); })() : '';
+      out.ahead = { pct: (goals.length ? 25 : 0) + (debts.length ? 25 : 0) + (hasYear ? 25 : 0) + (hasPay ? 25 : 0), goals: goals, debts: debts, dfree: dfree, hasYear: hasYear, hasPay: hasPay,
+        line: dfree ? 'All debts paid off by ' + dfree : goals.length ? goals.length + ' savings goal' + (goals.length === 1 ? '' : 's') + ' in motion' : 'Goals, debt payoff, and your year',
+        next: !goals.length ? ['Name a savings goal', 'tool:goals'] : !hasYear ? ['Map out your year', 'tool:year'] : !hasPay ? ['Plan your paychecks', 'tool:pay'] : null };
+      Object.keys(out).forEach(function (k) { out[k].pct = Math.max(0, Math.min(100, Math.round(out[k].pct || 0))); });
+      return out;
+    }
+
+    /* Money Home: five bright tiles, Your Money Picture, and the tip of the week. */
+    function vHome(d) {
+      var ss = status(d);
+      var tiles = '<div class="gm-tiles">' + PARTS.map(function (x) {
+        return '<button type="button" class="gm-tile gm-c-' + x.id + '" data-gm="go:' + x.id + '">' + draw(x.id, 'gm-tile-draw') + '<span class="gm-tile-tx"><b>' + esc(x.n) + '</b><small>' + esc(x.line) + '</small><span class="gm-tile-st">' + esc(ss[x.id].line) + '</span></span></button>';
+      }).join('') + '</div>';
+      var nx = PARTS.map(function (x) { return { p: x, s: ss[x.id] }; }).filter(function (r) { return r.s.next; }).sort(function (a, b) { return a.s.pct - b.s.pct; })[0];
+      var pic = '<section class="gm-card gm-pic"><h3 class="gm-h3">Your Money Picture</h3><p class="gm-sub">Each part, side by side. A full picture leaves no blind spots.</p><div class="gm-picrows">' + PARTS.map(function (x) {
+        return '<button type="button" class="gm-picrow gm-c-' + x.id + '" data-gm="go:' + x.id + '"><span class="gm-picn">' + I(x.i) + esc(x.n) + '</span>' + bar(ss[x.id].pct) + '<small>' + esc(ss[x.id].line) + '</small></button>';
+      }).join('') + '</div>' + (nx ? '<div class="gm-nextstep gm-c-' + nx.p.id + '">' + I('star') + '<span><span class="gm-k">A Good Next Step</span><b>' + esc(nx.s.next[0]) + '</b></span>' + openBtn(allowed(nx.s.next[1]) ? nx.s.next[1] : nx.p.id, 'Go') + '</div>' : '<p class="gm-note">' + I('sun') + 'Every part is in motion. Look again each month, and enjoy the calm.</p>') + '</section>';
+      var empty = !live(d.lines).length && !live(d.income).length ? '<div class="gm-card gm-hello gm-c-live"><h3 class="gm-h3">Start with your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then each part fills in with your own numbers. Everything stays on this device.</p>' +
+        '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' : '';
+      return empty + tiles + pic + tipCard() + '<div class="gm-acts gm-center"><button type="button" class="gm-btn line sm" data-gm="go:tools">' + I('grid') + 'All Tools</button></div>' + memberLine();
+    }
+
+    /* A part page: its cards, its tips, and the way on to the next part. */
+    function vPart(d, id) {
+      var ss = status(d), s = ss[id], P = PART[id], cards = [];
+      if (id === 'give') cards = partGive(d, s);
+      else if (id === 'live') cards = partLive(d, s);
+      else if (id === 'protect') cards = partProtect(d, s);
+      else if (id === 'grow') cards = partGrow(d, s);
+      else cards = partPlan(d, s);
+      cards.push(tipsFold(id));
+      var nx = PARTS[P.ix + 1];
+      return '<div class="gm-partsum gm-c-' + id + '"><b>' + esc(s.line) + '</b>' + bar(s.pct) + '</div>' +
+        '<div class="gm-fcs">' + cards.join('') + '</div>' +
+        (nx ? '<button type="button" class="gm-next gm-c-' + nx.id + '" data-gm="go:' + nx.id + '">' + draw(nx.id, 'gm-next-draw') + '<span><span class="gm-k">Next Part</span><b>' + esc(nx.n) + '</b><small>' + esc(nx.line) + '</small></span>' + I('arrow') + '</button>'
+          : '<button type="button" class="gm-next gm-c-home" data-gm="go:home">' + draw('home', 'gm-next-draw') + '<span><span class="gm-k">All Five Parts</span><b>Money Home</b><small>Your whole money picture, side by side.</small></span>' + I('arrow') + '</button>') + memberLine();
+    }
+    function tipsFold(part) {
+      if (!TL() || !TL().partTips) return '';
+      var T = TL(), ix = T.partTips(part), keep = obj(tv(D() || { tools: {} }, 'tips').keep), name = PART[part].n;
+      return fold(part + '-tips', { t: name + ' Tips', i: 'leaf', sum: ix.length + ' short tips', body: '<ul class="gm-tips">' + ix.map(function (i) { var on = !!keep[i]; return '<li><p>' + esc(T.tips[i][1]) + '</p><button type="button" class="gm-linkbtn" data-gm="tool:tips:keep:' + i + '" aria-pressed="' + on + '">' + (on ? 'Trying This' : 'Try This') + '</button></li>'; }).join('') + '</ul>' + '<div class="gm-acts">' + openBtn('tool:tips', 'All Tips', 1) + '</div>' });
+    }
+    function toolTiles(ids) { return '<div class="gm-tools">' + ids.map(function (id) { var T = tl(id); return T ? toolCard(T) : ''; }).join('') + '</div>'; }
+    function partGive(d, s) {
+      var g = TL() ? TL().giveGoal(d) : 0, gv = tv(d, 'give'), gs = TL() ? TL().math.givenSums(tv(d, 'givelog').list) : { month: 0, year: 0 }, mn = MONTHS[new Date().getMonth()];
+      var recent = arr(tv(d, 'givelog').list).slice().sort(function (a, b) { return a.d < b.d ? 1 : -1; }).slice(0, 3), gen = obj(tv(d, 'generous')), gn = GEN.filter(function (x) { return gen[x[0]]; }).length;
+      return [
+        fold('give-goal', { t: 'Giving Goal', i: 'gift', open: 1, need: 'tool:give', what: 'Choose your giving first: a percent of income or a set amount each month, and the causes and people it goes to.',
+          sum: g > 0 ? esc(money(g) + ' a month' + (gv.mode === 'amt' ? '' : ', ' + n0(gv.pct == null ? 10 : gv.pct) + '% of income')) : 'Choose a percent or an amount',
+          body: (g > 0 ? '<div class="gm-tbigs"><div class="gm-tbig ok"><span class="gm-k">Giving a Month</span><b>' + money(g) + '</b></div><div class="gm-tbig"><span class="gm-k">Giving a Year</span><b>' + money(g * 12) + '</b></div></div>' : '<p class="gm-sub">Generosity grows when it comes first. Choose a percent of income or a set amount; you choose what fits your home.</p>') + '<div class="gm-acts">' + openBtn('tool:give', 'Giving Planner') + '</div>' }),
+        fold('give-track', { t: 'Giving Tracker', i: 'heart', need: 'tool:givelog', what: 'What you gave and to whom, with a running total for the month and the year beside your goal.',
+          sum: esc(money(gs.month, 1) + (g > 0 ? ' of ' + money(g) : '') + ' given in ' + mn),
+          body: (g > 0 ? '<div class="gm-prog"><div class="gm-pt"><b>' + esc(mn) + '</b><span>' + money(gs.month, 1) + ' of ' + money(g) + '</span></div>' + bar(gs.month / g * 100) + '</div><div class="gm-prog"><div class="gm-pt"><b>This Year</b><span>' + money(gs.year, 1) + ' of ' + money(g * 12) + '</span></div>' + bar(gs.year / (g * 12) * 100) + '</div>' : '') +
+            (recent.length ? '<ul class="gm-mlist">' + recent.map(function (x) { return '<li><span>' + esc(niceDate(x.d)) + '</span><b>' + esc(x.n || 'A gift') + '</b><span>' + money(x.a, 1) + '</span></li>'; }).join('') + '</ul>' : '<p class="gm-sub">Each gift you add shows here, with a running total.</p>') + '<div class="gm-acts">' + openBtn('tool:givelog', 'Giving Tracker') + '</div>' }),
+        fold('give-more', { t: 'Generosity Beyond Money', i: 'people', sum: gn ? gn + ' of ' + GEN.length + ' you are trying' : GEN.length + ' gifts of time, skill, and presence',
+          body: '<p class="gm-sub">Some of the best gifts cost nothing but time. Choose one or two for this month.</p><ul class="gm-gen">' + GEN.map(function (x) { var on = !!gen[x[0]]; return '<li class="' + (on ? 'on' : '') + '"><button type="button" class="gm-tick" data-gm="gen:' + x[0] + '" aria-pressed="' + on + '" aria-label="' + esc((on ? 'Trying: ' : 'Try: ') + x[1]) + '">' + I('check') + '</button><span class="gm-tx"><b>' + esc(x[1]) + '</b><small>' + esc(x[2]) + '</small></span></li>'; }).join('') + '</ul>' })
+      ];
+    }
+    function partLive(d, s) {
+      var has = live(d.lines).length, t = totals(d), m = has ? month(d) : null, wk = d.checks[weekKey()], L = live(d.lines), N = live(d.income);
+      return [
+        fold('live-gap', { t: 'Close the Gap', i: 'gap', open: 1, sum: esc(has ? (t.after >= 0 ? 'Ahead ' + money(t.after) + ' a month' : money(-t.after) + ' a month to bring into balance') : 'Start with your plan'),
+          body: (has ? balance(Math.abs(Math.min(0, t.gap)) ? Math.min(100, Math.round(t.saved / Math.abs(t.gap) * 100)) : 100) + '<p class="gm-sub">Ideas from your own plan, each showing what it saves. Choose a few, and watch the plan come into balance.</p>' : '<p class="gm-sub">Bring in your spreadsheet or start with common lines, and Close the Gap shows ideas that fit your numbers.</p>') + '<div class="gm-acts">' + openBtn('gap', 'Close the Gap') + '</div>' }),
+        fold('live-plan', { t: 'My Plan', i: 'list', sum: esc(L.length + ' line' + (L.length === 1 ? '' : 's') + ', ' + N.length + ' income source' + (N.length === 1 ? '' : 's')),
+          body: sumRow(t) + '<div class="gm-acts">' + openBtn('plan', 'My Plan') + openBtn('import', 'Bring In a Spreadsheet', 1) + (member() ? openBtn('share', 'Share With Family', 1) : '') + '</div>' }),
+        fold('live-month', { t: 'This Month', i: 'cal', need: 'month', what: 'Where this month is going, line by line, with one tap logging as you spend.', sum: esc(m ? m.line : 'Your month at a glance'),
+          body: (m ? '<p class="gm-line1 ' + (m.diff >= 0 ? 'ok' : 'gp') + '">' + I(m.diff >= 0 ? 'sun' : 'leaf') + esc(m.line) + '</p><p class="gm-mini">Logged so far: ' + money(m.logged, 1) + '</p>' : '') + '<div class="gm-acts">' + openBtn('month', 'This Month') + openBtn('log', 'Log Spending', 1) + '</div>' }),
+        fold('live-check', { t: 'Weekly Money Check-in', i: 'leaf', need: 'check', what: 'Three short questions each week, about a minute, calm and forward.', sum: wk ? 'Saved for this week' : 'About a minute, three questions',
+          body: '<p class="gm-sub">What went well, how steady money feels, and one small step for the week ahead.</p><div class="gm-acts">' + openBtn('check', wk ? 'See This Week' : 'Start My Check-in') + '</div>' }),
+        fold('live-save', { t: 'Ways to Save', i: 'coin', sum: 'Groceries, subscriptions, calls, and the car', body: toolTiles(['grocery', 'subs', 'calls', 'car']) }),
+        fold('live-home', { t: 'Family and Home', i: 'people', sum: 'A weekly Money Date, and allowances for the kids', body: toolTiles(['date', 'kids']) })
+      ];
+    }
+    function partProtect(d, s) {
+      var ef = s.ef, bl = s.blind, ins = s.ins, gl = tv(d, 'goals'), iv = obj(tv(d, 'insure').k);
+      return [
+        fold('prot-fund', { t: 'Emergency Fund', i: 'shield', open: 1, need: 'tool:goals', what: 'A cushion of three to six months of spending, set aside for a hard season, with months covered at a glance.',
+          sum: ef.has && n0(gl.ef) > 0 ? ef.mo + ' of ' + ef.aim + ' months' : 'Set aside a few months of spending',
+          body: (ef.has ? '<div class="gm-prog"><div class="gm-pt"><b>Months Covered</b><span>' + ef.mo + ' of ' + ef.aim + '</span></div>' + bar(ef.mo / ef.aim * 100) + '</div>' : '<p class="gm-sub">Add your plan’s lines, and the months covered show here.</p>') + '<div class="gm-acts">' + openBtn('tool:goals', 'Emergency Fund') + '</div>' }),
+        fold('prot-insure', { t: 'Insurance Overview', i: 'umbrella', need: 'tool:insure', what: 'Health, life, disability, home or renters, auto, and umbrella coverage at a glance: in place, or time to review.',
+          sum: ins.have + ' of ' + ins.total + ' in place',
+          body: '<ul class="gm-ilist">' + (TL() ? TL().insure : []).map(function (k) { var v = iv[k[0]]; return '<li class="' + (v || 'open') + '"><span>' + esc(k[1]) + '</span><b>' + (v === 'have' ? 'In Place' : v === 'review' ? 'Review' : v === 'na' ? 'Left Off' : 'To Look At') + '</b></li>'; }).join('') + '</ul><div class="gm-acts">' + openBtn('tool:insure', 'Insurance Overview') + '</div>' }),
+        fold('prot-blind', { t: 'Blind Spot Check', i: 'eye', need: 'tool:blind', what: 'A will, beneficiaries, a health care directive, a credit freeze, an account list for family, and more: the often missed pieces, one by one.',
+          sum: bl.done + ' of ' + bl.total + ' covered',
+          body: '<div class="gm-blindsum">' + (TL() ? ring(bl.total ? bl.done / bl.total * 100 : 0) : '') + '<span>' + (bl.next ? '<span class="gm-k">Your Next Step</span><b>' + esc(bl.next[1]) + '</b><small>' + esc(bl.next[3]) + '</small>' : '<b>No blind spots.</b><small>Look again once a year.</small>') + '</span></div><div class="gm-acts">' + openBtn('tool:blind', 'Blind Spot Check') + '</div>' })
+      ];
+    }
+    function ring(p) { p = Math.max(0, Math.min(100, Math.round(p))); var R = 26, C = 2 * Math.PI * R; return '<svg class="gm-ring" viewBox="0 0 64 64" role="img" aria-label="' + p + ' percent covered"><circle cx="32" cy="32" r="' + R + '" class="gm-ring-bg"/>' + (p > 0 ? '<circle cx="32" cy="32" r="' + R + '" class="gm-ring-fg" stroke-dasharray="' + (C * p / 100).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 32 32)"/>' : '') + '<text x="32" y="37" text-anchor="middle">' + p + '%</text></svg>'; }
+    function partGrow(d, s) {
+      var gr = tv(d, 'grow'), match = gr.match || '', sd = tv(d, 'side'), sideRows = arr(sd.rows).filter(function (r) { return n0(r.qty) * n0(r.rate) > 0; });
+      var MATCH = [['full', 'I Receive the Full Match'], ['check', 'I Will Look This Week'], ['na', 'Self Employed or Another Plan']];
+      return [
+        fold('grow-calc', { t: 'Growth Calculator', i: 'chart', open: 1, need: 'tool:grow', what: 'Compound growth and a retirement estimate: how much a monthly amount grows by the age you choose.',
+          sum: esc(s.line), body: '<p class="gm-sub">Money set aside each month earns growth, and that growth earns more. Try a monthly amount and a number of years.</p><div class="gm-acts">' + openBtn('tool:grow', 'Growth Calculator') + '</div>' }),
+        fold('grow-mix', { t: 'Diversification: Spread It Out', i: 'grid', sum: 'A mix of kinds, so no single one carries your future',
+          body: '<div class="gm-mix">' + mixArt() + '<div class="gm-mixtx"><p class="gm-sub">Diversification means owning a mix of investment kinds. <b>Stocks</b> are small shares of many companies, for long term growth. <b>Bonds</b> are loans to governments and companies, for steadiness. <b>Cash</b> covers what you need soon.</p>' +
+            '<p class="gm-sub">Many people use low cost index funds, which hold hundreds of companies in one fund, as a simple way to spread risk and keep fees small. Steady monthly amounts and time do much of the work.</p><p class="gm-mini">For your own plan, a licensed financial planner can help.</p></div></div>' }),
+        fold('grow-match', { t: 'Employer Match', i: 'star', sum: match === 'full' ? 'Receiving the full match' : match === 'na' ? 'Another plan fits you' : match === 'check' ? 'Looking this week' : 'Money your workplace adds beside yours',
+          body: '<p class="gm-sub">Many workplaces add to your retirement account when you add to it, often matching part of what you put in. Putting in at least enough to receive the full match is one of the strongest first steps in growing your money.</p>' +
+            '<div class="gm-scale">' + MATCH.map(function (x) { var on = match === x[0]; return '<button type="button" class="gm-chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-gm="match:' + x[0] + '">' + esc(x[1]) + '</button>'; }).join('') + '</div>' }),
+        fold('grow-order', { t: 'A Common Order of Steps', i: 'path', sum: 'Five steps many families follow',
+          body: '<ol class="gm-steps"><li><b>Start an emergency fund.</b> One month first, then three to six.</li><li><b>Receive the full employer match.</b> Money added beside yours.</li><li><b>Pay off high interest debt.</b> The Debt Payoff Planner shows the month.</li><li><b>Invest steadily each month.</b> A low cost mix, spread out, for the long run.</li><li><b>Keep giving and keep growing.</b> Generosity and growth travel well together.</li></ol><p class="gm-mini">For your own plan, a licensed financial planner can help.</p>' }),
+        fold('grow-side', { t: 'Side Income', i: 'sprout', need: 'tool:side', what: 'Ceremonies, lessons, repairs, or seasonal work: what a few hours or events a month bring in, after taxes.',
+          sum: sideRows.length && TL() ? esc(money(TL().math.sideIncome(sd.rows, sd.tax == null ? 25 : sd.tax).keep) + ' a month to keep') : 'Hours or events a month, times your rate',
+          body: '<p class="gm-sub">A skill you already have, a few hours a month, can fund a goal or close a gap.</p><div class="gm-acts">' + openBtn('tool:side', 'Side Income Calculator') + '</div>' })
+      ];
+    }
+    function partPlan(d, s) {
+      var gl = tv(d, 'goals'), goals = s.goals, py = tv(d, 'pay'), PAYN = { w: 'Weekly', b: 'Every two weeks', s: 'Twice a month', m: 'Monthly' }, setA = live(d.lines).filter(function (l) { return l.s !== 'hold' && (l.f === 'y' || l.f === 'h' || l.f === 's'); }).reduce(function (z, l) { return z + monthly(l); }, 0);
+      var nextGoal = goals.filter(function (x) { return n0(x.saved) < n0(x.target); }).sort(function (a, b) { return String(a.date || '9') < String(b.date || '9') ? -1 : 1; })[0];
+      return [
+        fold('plan-goals', { t: 'Savings Goals', i: 'star', open: 1, need: 'tool:goals', what: 'Name each goal, its target, and its date, and see the monthly amount that gets you there.',
+          sum: goals.length ? esc(goals.length + ' goal' + (goals.length === 1 ? '' : 's') + (nextGoal ? ', next: ' + (nextGoal.n || 'Goal') : '')) : 'Name a goal and its date',
+          body: (goals.length ? goals.slice(0, 4).map(function (x) { return '<div class="gm-prog"><div class="gm-pt"><b>' + esc(x.n || 'Goal') + '</b><span>' + money(x.saved) + ' of ' + money(x.target) + '</span></div>' + bar(n0(x.saved) / n0(x.target) * 100) + '</div>'; }).join('') : '<p class="gm-sub">A family trip, a newer car, a home repair: each goal gets its own target and date.</p>') + '<div class="gm-acts">' + openBtn('tool:goals', 'Savings Goals') + '</div>' }),
+        fold('plan-debt', { t: 'Debt Payoff', i: 'path', need: 'tool:debt', what: 'Smallest balance first or highest rate first: your payoff month and the interest you keep.',
+          sum: s.dfree ? esc('All paid off by ' + s.dfree) : s.debts.length ? s.debts.length + ' debts listed' : 'Your payoff month, and the interest you keep',
+          body: '<p class="gm-sub">List each debt with its balance, rate, and minimum, and watch the payoff month come closer as you add a little each month.</p><div class="gm-acts">' + openBtn('tool:debt', 'Debt Payoff Planner') + '</div>' }),
+        fold('plan-big', { t: 'Big Purchases and Set-Aside Funds', i: 'jar', need: 'tool:fund', what: 'A little each month for yearly bills and big purchases, so each one arrives ready.',
+          sum: setA ? esc(money(setA) + ' a month set aside') : 'A little each month for the big ones',
+          body: '<p class="gm-sub">Yearly bills become set-aside funds, and a big purchase becomes a savings goal with its own date.</p><div class="gm-acts">' + openBtn('tool:fund', 'Set-Aside Funds') + openBtn('tool:goals', 'Add a Big Purchase Goal', 1) + '</div>' }),
+        fold('plan-pay', { t: 'Paycheck Planner', i: 'cal', need: 'tool:pay', what: 'Which bills each paycheck covers, and the months with an extra paycheck.',
+          sum: s.hasPay ? esc('Paid ' + (PAYN[py.s] || 'every two weeks').toLowerCase()) : 'Bills by paycheck, and extra paycheck months',
+          body: '<p class="gm-sub">Every bill gets its paycheck, and each extra paycheck month goes to a goal.</p><div class="gm-acts">' + openBtn('tool:pay', 'Paycheck Planner') + '</div>' }),
+        fold('plan-year', { t: 'Year Plan', i: 'map', need: 'tool:year', what: 'Big dates, yearly bills, and goals, season by season, so nothing big arrives as a surprise.',
+          sum: s.hasYear ? 'Your year, season by season' : 'Big dates, yearly bills, and goals by season',
+          body: yearStrip(d) + '<div class="gm-acts">' + openBtn('tool:year', 'Year Plan') + '</div>' })
+      ];
+    }
+    // Twelve small months, each marked when the Year Plan holds something for it.
+    function yearStrip(d) {
+      var yr = tv(d, 'year'), on = {}; arr(yr.items).forEach(function (x) { on[+x.m || 0] = 1; }); Object.keys(obj(yr.lm)).forEach(function (k) { var m = yr.lm[k]; if (m !== '' && m != null && isFinite(+m)) on[+m] = 1; });
+      return '<div class="gm-ystrip" role="img" aria-label="' + Object.keys(on).length + ' months with plans">' + MONTHS.map(function (m, i) { return '<span class="' + (on[i] ? 'on' : '') + (i === new Date().getMonth() ? ' now' : '') + '">' + m.slice(0, 1) + '</span>'; }).join('') + '</div>';
+    }
+    function mixArt() {
+      // An illustration of a mix (three kinds), never a recommended split.
+      return '<svg class="gm-mixart" viewBox="0 0 120 120" role="img" aria-label="A drawing of a mix of three investment kinds"><circle cx="60" cy="60" r="44" class="mx-a"/><path d="M60 60L60 16A44 44 0 0 1 101 76z" class="mx-b"/><path d="M60 60L101 76A44 44 0 0 1 82 98z" class="mx-c"/><circle cx="60" cy="60" r="22" class="mx-hole"/>' +
+        '<text x="60" y="57" text-anchor="middle">A Mix</text><text x="60" y="70" text-anchor="middle" class="mx-sm">of kinds</text></svg>';
+    }
+
+    /* The drawings: simple, bright, in each part's own color (Give a gift and a heart, Live a home in the sun, Protect a shield,
+       Grow rising bars, Plan a map with a path, Money Home coins in the sun). */
+    function draw(id, cls) {
+      var g = '<ellipse class="d-g" cx="60" cy="92" rx="46" ry="6"/>', a = '';
+      if (id === 'give') a = g + '<rect class="d-k" x="32" y="50" width="56" height="38" rx="5"/><rect class="d-k2" x="28" y="40" width="64" height="14" rx="4"/><rect class="d-h" x="55" y="40" width="10" height="48"/>' +
+        '<ellipse class="d-h" cx="50" cy="35" rx="10" ry="6" transform="rotate(-25 50 35)"/><ellipse class="d-h" cx="70" cy="35" rx="10" ry="6" transform="rotate(25 70 35)"/><circle class="d-h2" cx="60" cy="38" r="4"/>' +
+        '<path class="d-k" d="M98 30c-7-5-11-8-11-12.5a5.5 5.5 0 0 1 11-2 5.5 5.5 0 0 1 11 2c0 4.5-4 7.5-11 12.5z"/><circle class="d-h" cx="20" cy="26" r="3"/><circle class="d-h" cx="104" cy="50" r="2.5"/>';
+      else if (id === 'live') a = g + '<circle class="d-h" cx="96" cy="22" r="11"/><path class="d-hl" d="M96 4v4M96 36v4M78 22h4M110 22h4M83 9l3 3M106 32l3 3M83 35l3-3M106 12l3-3"/>' +
+        '<rect class="d-s" x="30" y="48" width="56" height="40" rx="3"/><rect class="d-k" x="70" y="26" width="8" height="16"/><path class="d-k" d="M22 52L58 22l36 30z"/><rect class="d-k2" x="51" y="64" width="13" height="24" rx="2"/><rect class="d-h" x="36" y="58" width="10" height="10" rx="2"/><rect class="d-h" x="70" y="58" width="10" height="10" rx="2"/>';
+      else if (id === 'protect') a = g + '<path class="d-k" d="M60 10l32 12v24c0 21-14 36-32 43-18-7-32-22-32-43V22z"/><path class="d-s" d="M60 20l23 9v17c0 15-10 26-23 32z"/><path class="d-lw" d="M45 50l10 10 20-21"/>' +
+        '<path class="d-h" d="M100 18l2.5 5 5 2.5-5 2.5-2.5 5-2.5-5-5-2.5 5-2.5z"/><path class="d-h" d="M18 34l2 4 4 2-4 2-2 4-2-4-4-2 4-2z"/>';
+      else if (id === 'grow') a = g + '<rect class="d-s" x="22" y="64" width="15" height="24" rx="3"/><rect class="d-s" x="42" y="54" width="15" height="34" rx="3"/><rect class="d-k2" x="62" y="42" width="15" height="46" rx="3"/><rect class="d-k" x="82" y="28" width="15" height="60" rx="3"/>' +
+        '<path class="d-hl3" d="M18 52L40 40l18 6L94 14"/><path class="d-hl3" d="M80 13h15v15"/><circle class="d-h" cx="104" cy="70" r="7"/><circle class="d-h2" cx="104" cy="70" r="3"/>';
+      else if (id === 'ahead') a = g + '<path class="d-s d-st" d="M16 24l28-8 28 8 32-8v62l-32 8-28-8-28 8z"/><path class="d-ln" d="M44 16v62M72 24v62"/><path class="d-dash" d="M26 70c10-18 22-4 30-18s20-14 28-16"/>' +
+        '<path class="d-k" d="M88 14a10 10 0 0 1 10 10c0 8-10 18-10 18s-10-10-10-18a10 10 0 0 1 10-10z"/><circle class="d-w" cx="88" cy="24" r="3.6"/><circle class="d-h" cx="26" cy="70" r="4"/>';
+      else a = g + '<circle class="d-h" cx="92" cy="24" r="12"/><path class="d-hl" d="M92 4v4M92 40v4M72 24h4M108 24h4M78 10l3 3M103 35l3 3M78 38l3-3M103 13l3-3"/>' +
+        '<ellipse class="d-k2" cx="46" cy="82" rx="22" ry="7"/><rect class="d-k2" x="24" y="72" width="44" height="10"/><ellipse class="d-k" cx="46" cy="72" rx="22" ry="7"/><rect class="d-k" x="24" y="62" width="44" height="10"/><ellipse class="d-h" cx="46" cy="62" rx="22" ry="7"/><rect class="d-h" x="24" y="52" width="44" height="10"/><ellipse class="d-h2" cx="46" cy="52" rx="22" ry="7"/>' +
+        '<circle class="p-give" cx="80" cy="66" r="5"/><circle class="p-live" cx="92" cy="60" r="5"/><circle class="p-protect" cx="104" cy="66" r="5"/><circle class="p-grow" cx="86" cy="78" r="5"/><circle class="p-ahead" cx="99" cy="78" r="5"/>';
+      return '<svg class="gm-draw ' + (cls || '') + '" viewBox="0 0 120 100" aria-hidden="true" focusable="false">' + a + '</svg>';
     }
 
     /* Tools */
     function vTools(d) {
-      if (!TL()) { loadTools().then(function (ok) { if (ok) paint(); }); return '<p class="gm-sub">Opening the tools\u2026</p>'; }
-      var L = TL().list, open = L.filter(function (T) { return member() || T.start; }), rest = L.filter(function (T) { return !member() && !T.start; });
-      return '<div class="gm-tools">' + open.map(toolCard).join('') + '</div>' +
-        (rest.length ? '<div class="gm-card gm-mem"><span class="gm-k">With Membership</span><p class="gm-sub">' + esc(rest.map(function (T) { return T.n; }).join(', ')) + '.</p>' + (opts.onMembership ? '<div class="gm-acts"><button type="button" class="gm-btn sm" data-gm="mem:see">See Membership</button><button type="button" class="gm-btn sm line" data-gm="mem:code">I Have a Code</button></div>' : '') + '</div>' : '');
+      if (!TL()) { loadTools().then(function (ok) { if (ok) paint(); }); return '<p class="gm-sub">Opening the tools…</p>'; }
+      var L = TL().list, rest = L.filter(function (T) { return !member() && !T.start; });
+      return PARTS.map(function (P) {
+        var mine = L.filter(function (T) { return (T.part || 'live') === P.id && (member() || T.start); });
+        return mine.length ? '<h3 class="gm-sec gm-c-' + P.id + '"><span class="gm-dot"></span>' + esc(P.n) + '</h3><div class="gm-tools">' + mine.map(toolCard).join('') + '</div>' : '';
+      }).join('') +
+        (rest.length ? '<div class="gm-card gm-mem"><span class="gm-k">With Membership</span><p class="gm-sub">' + esc(rest.map(function (T) { return T.n; }).join(', ')) + '.</p>' + memBtns() + '</div>' : '');
     }
+    // A tool card: a bright tile in its part's color with the tool's own mark.
     function toolCard(T) {
-      return '<button type="button" class="gm-card gm-toolcard" data-gm="go:tool:' + T.id + '">' + (T.art ? '<span class="gm-art"><img src="' + esc(art(T.art)) + '" alt="" decoding="async" onerror="this.parentNode.classList.add(\'none\');this.remove()">' + I(T.i) + '</span>' : '<span class="gm-art none">' + I(T.i) + '</span>') +
-        '<span class="gm-tx"><b>' + esc(T.n) + '</b><small>' + esc(T.sub) + '</small></span>' + I('arrow') + '</button>';
+      var ok = member() || T.start;
+      return '<button type="button" class="gm-card gm-toolcard gm-c-' + (T.part || 'live') + '" data-gm="go:tool:' + T.id + '"><span class="gm-art">' + I(T.i) + '</span>' +
+        '<span class="gm-tx"><b>' + esc(T.n) + '</b><small>' + esc(ok ? T.sub : 'With Membership') + '</small></span>' + I('arrow') + '</button>';
     }
     function vTool(d, id) {
       if (!TL()) { loadTools().then(function (ok) { if (ok) paint(); }); return '<p class="gm-sub">Opening the tool\u2026</p>'; }
       var T = TL().get(id); if (!T) return '<p class="gm-sub">This tool rests for now.</p>';
       var c = tctx(d, id); if (T.init) T.init(c.t, c);
       if (T.watch && !S.tw[id]) S.tw[id] = T.watch(c, null).state;
-      return '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:tools">' + I('back') + 'All Tools</button></div>' +
-        '<div class="gm-card gm-tform">' + T.form(c) + '</div><div class="gm-tres" aria-live="polite">' + T.out(c) + '</div>' + (T.start && !member() ? memberLine() : '');
+      var P = PART[T.part || 'live'];
+      return '<div class="gm-acts"><button type="button" class="gm-linkbtn" data-gm="go:' + P.id + '">' + I('back') + 'Back to ' + esc(P.n) + '</button><button type="button" class="gm-linkbtn" data-gm="go:tools">' + I('grid') + 'All Tools</button></div>' +
+        (T.outFirst ? '<div class="gm-tres" aria-live="polite">' + T.out(c) + '</div><div class="gm-card gm-tform">' + T.form(c) + '</div>' : '<div class="gm-card gm-tform">' + T.form(c) + '</div><div class="gm-tres" aria-live="polite">' + T.out(c) + '</div>') + (T.start && !member() ? memberLine() : '');
     }
     function ideaCard(x) {
       var verb = x.k === 'income' ? 'Adds about ' : 'Saves about ';
@@ -849,9 +1105,22 @@
       if (!d) return;
       switch (p[0]) {
         case 'go': S.sureLeave = 0; go(p.slice(1).join(':')); return;
+        case 'fold':
+          var fk = p.slice(1).join(':'), fc = root.querySelector('[data-fold="' + cssq(fk) + '"]'), now = !(fc && fc.classList.contains('open'));
+          S.open[fk] = now ? 1 : 0; keepOpen();
+          if (fc) { fc.classList.toggle('open', now); var fb = fc.querySelector('.gm-fbtn'), fd = fc.querySelector('.gm-fbody'); if (fb) fb.setAttribute('aria-expanded', String(now)); if (fd) fd.hidden = !now; }
+          return;
+        case 'gen':
+          var gv = d.tools.generous; if (!gv || typeof gv !== 'object') gv = d.tools.generous = {};
+          if (gv[p[1]]) delete gv[p[1]]; else { gv[p[1]] = Date.now(); say('A good choice. Generosity grows by giving.'); }
+          touch(d); save(); var yg = window.scrollY; paint(); window.scrollTo(0, yg); return;
+        case 'match':
+          var gw = d.tools.grow; if (!gw || typeof gw !== 'object') gw = d.tools.grow = {};
+          if (gw.match === p[1]) delete gw.match; else gw.match = p[1];
+          touch(d); save(); var ym = window.scrollY; paint(); window.scrollTo(0, ym); return;
         case 'tool':
           var TT = TL() && TL().get(p[1]); if (!TT || !TT.act) return;
-          var cx = tctx(d, p[1]); if (TT.act(p[2], p.slice(3).join(':'), cx)) { touch(d); save(); var y0 = window.scrollY; paint(); window.scrollTo(0, y0); watchTool(d, p[1]); }
+          var cx = tctx(d, p[1]); if (TT.init) TT.init(cx.t, cx); if (TT.act(p[2], p.slice(3).join(':'), cx)) { touch(d); save(); var y0 = window.scrollY; paint(); window.scrollTo(0, y0); watchTool(d, p[1]); }
           return;
         case 'mem': if (opts.onMembership) opts.onMembership(p[1]); return;
         case 'common': COMMON.forEach(function (c) { addLine(d, c); }); save(); S.view = 'plan'; paint(); say('Twelve common lines are ready. Add your amounts, and rename or remove any.'); focusFirstEmpty(); return;
@@ -868,7 +1137,7 @@
         case 'leave': if (!S.sureLeave) { S.sureLeave = 1; paint(); return; } S.sureLeave = 0; leave(d); save(); paint(); say('Your own plan is back.'); return;
         case 'idea':
           if (p[1] === 'tick') { var key = p.slice(2).join(':'), on = !d.ideas.done[key], was = totals(d).after; ideaSet(d, key, { done: on }); save(); paint(); var t = totals(d);
-            if (on && was < 0 && t.after >= 0) celebrate('The gap is closed. Your Branches are bearing fruit.'); else if (on) say(t.after < 0 ? 'Chosen. ' + money(-t.after) + ' to go.' : 'Chosen. More to keep for savings and giving.'); return; }
+            if (on && was < 0 && t.after >= 0) celebrate('The gap is closed. Your plan is in balance.'); else if (on) say(t.after < 0 ? 'Chosen. ' + money(-t.after) + ' to go.' : 'Chosen. More to keep for savings and giving.'); return; }
           if (p[1] === 'ed') { var k2 = p.slice(2).join(':'), was = S.more['e:' + k2]; if (was) { var v = root.querySelector('[data-gmi="save:' + cssq(k2) + '"]'); if (v) commitSave(d, k2, v.value); } S.more['e:' + k2] = !was; paint(); if (!was) { var f = root.querySelector('[data-gmi="save:' + cssq(k2) + '"]'); if (f) { f.focus(); f.select && f.select(); } } return; }
           if (p[1] === 'off') { var k3 = p.slice(2).join(':'); ideaSet(d, k3, { off: !d.ideas.off[k3] }); save(); paint(); return; }
           if (p[1] === 'showoff') { S.showOff = !S.showOff; paint(); return; }
@@ -946,6 +1215,7 @@
       var v = t.value; if (t.getAttribute('data-n')) { var n = num(v); v = n == null ? '' : n; } else if (t.tagName === 'SELECT' && /^\d+$/.test(v)) v = +v;
       var c = tctx(d, id); setPath(c.t, t.getAttribute('data-gt'), v); touch(d);
       var out = root.querySelector('.gm-tres'); if (out) out.innerHTML = T.out(c);
+      var lv = root.querySelector('[data-gm-live]'); if (lv && T.live) lv.innerHTML = T.live(c);
       return true;
     }
     function watchTool(d, id) { var T = TL() && TL().get(id); if (!T || !T.watch) return; var r = T.watch(tctx(d, id), S.tw[id]); S.tw[id] = r.state; if (r.msg) celebrate(r.msg); }
@@ -1004,7 +1274,7 @@
 
     if (TL()) TL().use(UTIL);
     paint();
-    loadTools().then(function (ok) { if (ok && (S.view === 'gap' || S.view === 'tools' || /^tool:/.test(S.view))) paint(); });
+    loadTools().then(function (ok) { if (ok && (S.view === 'gap' || S.view === 'home' || PART[S.view] || S.view === 'tools' || /^tool:/.test(S.view))) paint(); });
     function readHash() { var hm = /#money=([A-Za-z0-9_-]+)/.exec(location.hash || ''); if (hm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} receive(hm[1]); } }
     if (opts.readHash) { readHash(); window.addEventListener('hashchange', readHash); }
     return {
