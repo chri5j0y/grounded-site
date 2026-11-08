@@ -2195,7 +2195,7 @@ function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().ma
 function asLifeLinesHtml(){
   const L = asLifeUse() ? GGLife.lines('aspen') : []; if (!L.length) return '';
   const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
-  return `<div class="as-life-lines"><h3>${esc(GGLife.LINES_TITLE || 'Information and Support')}</h3><p class="muted small">For information and support. In danger right now, call 911. In a crisis, call or text 988.</p><ul>${L.map(x => `<li><b>${esc(x.name)}</b> ${href(x) ? `<a href="${esc(href(x))}"${x.tel ? '' : ' target="_blank" rel="noopener"'}>${esc(x.how)}</a>` : esc(x.how)}${x.tel && x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">Website</a>` : ''}<small>${esc(x.note || '')}</small></li>`).join('')}</ul></div>`;
+  return `<div class="as-life-lines"><h3>${esc(GGLife.LINES_TITLE || 'Information and Support')}</h3><p class="muted small">For information and support.</p><ul>${L.map(x => `<li><b>${esc(x.name)}</b> ${href(x) ? `<a href="${esc(href(x))}"${x.tel ? '' : ' target="_blank" rel="noopener"'}>${esc(x.how)}</a>` : esc(x.how)}${x.tel && x.url ? ` <a href="${esc(x.url)}" target="_blank" rel="noopener">Website</a>` : ''}<small>${esc(x.note || '')}</small></li>`).join('')}</ul></div>`;
 }
 // Pine and Birch never suggest Hardy while pain or mental health is chosen; Aspen follows the same rule.
 function asHardyRests(){ return asLifeIds().some(id => id === 'pain' || id === 'mind'); }

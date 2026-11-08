@@ -33,11 +33,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -130,11 +125,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -226,11 +216,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -323,11 +308,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -422,11 +402,6 @@
    "sources": [
     "bowen09"
    ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -520,11 +495,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -625,11 +595,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -731,11 +696,6 @@
    "sources": [
     "act"
    ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -825,11 +785,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -923,11 +878,6 @@
    "voice": "brian",
    "sources": [
     "lieberman"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -1023,11 +973,6 @@
    "sources": [
     "pennebaker"
    ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -1118,11 +1063,6 @@
    "voice": "brian",
    "sources": [
     "ratey08"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -1217,11 +1157,6 @@
    "voice": "brian",
    "sources": [
     "nestor20"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -1321,11 +1256,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -1416,11 +1346,6 @@
    "voice": "brian",
    "sources": [
     "li18"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -1514,11 +1439,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -1609,11 +1529,6 @@
    "voice": "brian",
    "sources": [
     "hanson09"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -1708,11 +1623,6 @@
    "sources": [
     "neff"
    ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -1805,11 +1715,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -1901,11 +1806,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -1999,11 +1899,6 @@
    "sources": [
     "litt09"
    ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2095,11 +1990,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2188,11 +2078,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2284,11 +2169,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2381,11 +2261,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2477,11 +2352,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2573,11 +2443,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2667,11 +2532,6 @@
    "voice": "brian",
    "sources": [
     "randles13"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -2764,11 +2624,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2860,11 +2715,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -2957,11 +2807,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3054,11 +2899,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3151,11 +2991,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3249,11 +3084,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3349,11 +3179,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3449,11 +3274,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3550,11 +3370,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3647,11 +3462,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3748,11 +3558,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -3846,11 +3651,6 @@
    "voice": "brian",
    "sources": [
     "li18"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -3948,11 +3748,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4044,11 +3839,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4145,11 +3935,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4246,11 +4031,6 @@
    "voice": "brian",
    "sources": [
     "bowen09"
-   ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
    ],
    "life": [
     "sober"
@@ -4350,11 +4130,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4450,11 +4225,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4550,11 +4320,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4646,11 +4411,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4742,11 +4502,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4838,11 +4593,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -4938,11 +4688,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5039,11 +4784,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5139,11 +4879,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5239,11 +4974,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5337,11 +5067,6 @@
    "sources": [
     "randles13"
    ],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5434,11 +5159,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5534,11 +5254,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5635,11 +5350,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5731,11 +5441,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5831,11 +5536,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -5928,11 +5628,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6025,11 +5720,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6121,11 +5811,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6217,11 +5902,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6314,11 +5994,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6411,11 +6086,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6514,11 +6184,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6610,11 +6275,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6706,11 +6366,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6802,11 +6457,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6898,11 +6548,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -6995,11 +6640,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7091,11 +6731,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7187,11 +6822,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7283,11 +6913,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7379,11 +7004,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7475,11 +7095,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7571,11 +7186,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7667,11 +7277,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7763,11 +7368,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7859,11 +7459,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -7955,11 +7550,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8052,11 +7642,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8148,11 +7733,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8244,11 +7824,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8338,11 +7913,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8431,11 +8001,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8527,11 +8092,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8623,11 +8183,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8727,11 +8282,6 @@
    "audio": "sober30",
    "voice": "brian",
    "sources": [],
-   "crisis": [
-    "SAMHSA National Helpline: 1-800-662-4357, any time",
-    "988: call or text, any time",
-    "911: danger right now"
-   ],
    "life": [
     "sober"
    ],
@@ -8828,11 +8378,6 @@
    "bowen09",
    "mbrp21",
    "marlatt85"
-  ],
-  "crisis": [
-   "SAMHSA National Helpline: 1-800-662-4357, any time",
-   "988: call or text, any time",
-   "911: danger right now"
   ],
   "life": [
    "sober"

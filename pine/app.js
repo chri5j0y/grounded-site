@@ -1215,7 +1215,7 @@ function lcDetail(mode, t) {
     ${window.GGShelf ? GGShelf.html('pine', t.id) : ''}
     ${lcSourcesHtml(t)}
     ${lcHelpHtml()}
-    <p class="lc-note">From When Life Changes in Pine&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. In danger right now: 911. Crisis: call or text 988, or text HOME to 741741. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use.</p>
+    <p class="lc-note">From When Life Changes in Pine&trade; by Grow With Grounded. General spiritual and emotional guidance and support; for therapy, medical care, or legal advice, it points you to the right people. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use.</p>
   </article>`;
 }
 /* When Life Changes videos (GWG BLD 740): two per guide, For You and For the Grown-up, played by shared/gg-learn.js

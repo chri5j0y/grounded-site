@@ -5029,7 +5029,7 @@
         '<h3>When to reach out for more help</h3>' + gList(T.reach) +
         (arr(T.more).length ? '<h3>Learn more</h3><ul class="hm-glist">' + arr(T.more).map(function (m) { return '<li><a class="hm-linkbtn" href="' + esc(m[1]) + '" target="_blank" rel="noopener">' + esc(m[0]) + '</a></li>'; }).join('') + '</ul>' : '') +
         (window.GGSources && GGSources.html ? GGSources.html(tree + ':' + T.id, { stories: T.story ? [T.story.title] : [] }) : '') +
-        '<p class="hm-gnote">General spiritual and emotional support. For therapy, medical care, or legal advice, see a licensed professional. Emergency: 911. Crisis: call or text 988.</p></div>';
+        '<p class="hm-gnote">General spiritual and emotional support. For therapy, medical care, or legal advice, see a licensed professional.</p></div>';
       if (M_CTL && M_CTL.stop) { try { M_CTL.stop(); } catch (e) {} } M_CTL = null;
       var box = document.getElementById('hm-mdlg-b');
       if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }

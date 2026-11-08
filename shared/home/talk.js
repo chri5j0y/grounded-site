@@ -78,7 +78,7 @@
       '<h3>Learn more</h3><ul>' + (t.more || []).map(function (m) { return '<li><a class="text-link" href="' + m[1] + '" target="_blank" rel="noopener">' + esc(m[0]) + '</a></li>'; }).join('') + '</ul>' +
       (window.GGShelf ? GGShelf.html('maple', t.id) : '') +
       (window.GGSources ? GGSources.html('maple:' + t.id) : '') +
-      '<p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance that works alongside professional care. Emergency: 911. Crisis: call or text 988. &copy; ' + new Date().getFullYear() + ' ' + K.OWNER + '. Yours to print for families and classrooms.</p>' +
+      '<p class="talk-note">From When Life Changes in Maple&trade; by Grow With Grounded. General guidance that works alongside professional care. &copy; ' + new Date().getFullYear() + ' ' + K.OWNER + '. Yours to print for families and classrooms.</p>' +
       K.lifeLines('maple', ctx.id, 'mp-life-lines', 'gt-small', 'For information and support. In an emergency, call 911. In a crisis, call or text 988.') +
       '</article>';
   }
