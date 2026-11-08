@@ -55,7 +55,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b943', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=b940';
+  var GGN_SRC = '/shared/ggn.js?v=b944';
   var MONEY_SRC = '/shared/gg-money.js?v=b942';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
@@ -4279,7 +4279,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b940', next: '/shared/home/nextsteps.js?v=b940', legacy: '/shared/home/legacy.js?v=b940', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b940', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b940', next: '/shared/home/nextsteps.js?v=b940', legacy: '/shared/home/legacy.js?v=b940', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b944', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4381,7 +4381,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b939'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=b944'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -4642,7 +4642,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b940';
+  var LEARN_JS = '/shared/gg-learn.js?v=b944';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
