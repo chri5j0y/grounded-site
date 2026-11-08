@@ -151,7 +151,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-new-baby-helper",
-    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "new-baby",
     "side": "helper",
     "title": "A New Baby",
@@ -578,7 +577,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-blended-helper",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "blended",
     "side": "helper",
     "title": "Becoming a Blended Family",
@@ -776,7 +774,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-grandparent-moves-in-helper",
-    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "grandparent-moves-in",
     "side": "helper",
     "title": "A Grandparent Moves In",
@@ -980,7 +978,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-two-homes-helper",
-    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "National DV Hotline: 1-800-799-7233", "911: emergency"],
     "guide": "two-homes",
     "side": "helper",
     "title": "Two Homes After a Separation",
@@ -1195,7 +1192,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-parent-away-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647", "911: emergency"],
     "guide": "parent-away",
     "side": "helper",
     "title": "A Parent Away for Service or Work",
@@ -1665,7 +1661,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-teen-away-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "teen-away",
     "side": "helper",
     "title": "A Teen Pulling Away",
@@ -2855,15 +2850,10 @@ window.GG_LEARN_GUIDES.grove = {
       "sub": "The full guide has more, whenever we want it.",
       "say": "People get better with help, time, and love. Help works, and our love stays. The full guide has more, whenever we want it."
      }
-    ],
-    "crisis": [
-     "988: call, text, or chat, any time",
-     "911: danger right now"
     ]
    },
    "helper": {
     "id": "gr-g-struggling-inside-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "struggling-inside",
     "side": "helper",
     "title": "When Someone at Home Is Struggling Inside",
@@ -3335,7 +3325,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-diagnosis-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "diagnosis",
     "side": "helper",
     "title": "A Serious Diagnosis in the Family",
@@ -3552,7 +3541,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hospital-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "hospital",
     "side": "helper",
     "title": "Someone We Love in the Hospital",
@@ -4376,8 +4364,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-recovery-helper",
-    "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency",
- "NAMI HelpLine: 1-800-950-6264, classes and groups for families"],
     "guide": "recovery",
     "side": "helper",
     "title": "Recovery in the Family",
@@ -4588,7 +4574,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-family-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "family-death",
     "side": "helper",
     "title": "When Someone in Our Family Dies",
@@ -4845,7 +4830,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-first-holidays-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "first-holidays",
     "side": "helper",
     "title": "The First Holidays After a Loss",
@@ -5302,7 +5286,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-dates-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "hard-dates",
     "side": "helper",
     "title": "Remembering Together on Hard Dates",
@@ -5541,7 +5524,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-scary-news-helper",
-    "crisis": ["Disaster Distress Helpline: call or text 1-800-985-5990"],
     "guide": "scary-news",
     "side": "helper",
     "title": "After Scary News",
@@ -6003,7 +5985,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-classmate-death-helper",
-    "crisis": ["911: emergency"],
     "guide": "classmate-death",
     "side": "helper",
     "title": "A Classmate or Teacher Dies",
@@ -6478,7 +6459,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-classmate-ill-helper",
-    "crisis": ["911: emergency"],
     "guide": "classmate-ill",
     "side": "helper",
     "title": "A Classmate Is Seriously Ill",
@@ -7210,7 +7190,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-left-out-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "left-out",
     "side": "helper",
     "title": "Friendship Trouble and Being Left Out",
@@ -7978,7 +7957,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-family-changing-helper",
-    "crisis": ["Military OneSource: 800-342-9647"],
     "guide": "family-changing",
     "side": "helper",
     "title": "A Classmate's Family Is Changing",
@@ -8228,7 +8206,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-online-drama-helper",
-    "crisis": ["911: emergency"],
     "guide": "online-drama",
     "side": "helper",
     "title": "Group Chats and Online Drama",
@@ -9099,7 +9076,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "After a Loss in Our Congregation",
    "you": {
     "id": "gr-g-congregation-loss-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "congregation-loss",
     "side": "you",
     "title": "After a Loss in Our Congregation",
@@ -9301,7 +9277,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-congregation-loss-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "congregation-loss",
     "side": "helper",
     "title": "After a Loss in Our Congregation",
@@ -9537,7 +9512,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Conflict in Our Group",
    "you": {
     "id": "gr-g-group-conflict-you",
-    "crisis": ["911: emergency"],
     "guide": "group-conflict",
     "side": "you",
     "title": "Conflict in Our Group",
@@ -10573,7 +10547,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-group-ends-helper",
-    "crisis": ["NAMI HelpLine: 1-800-950-6264"],
     "guide": "group-ends",
     "side": "helper",
     "title": "When a Group Ends",
@@ -11435,7 +11408,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-one-voice-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "one-voice",
     "side": "helper",
     "title": "One Voice Fills the Room",
@@ -11797,7 +11769,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-conversations-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "hard-conversations",
     "side": "helper",
     "title": "Hard Conversations in Our Group",
@@ -12028,7 +11999,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "When Trust Is Broken",
    "you": {
     "id": "gr-g-trust-broken-you",
-    "crisis": ["911: emergency"],
     "guide": "trust-broken",
     "side": "you",
     "title": "When Trust Is Broken",
@@ -13693,7 +13663,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Hurt Inside Our Faith Community",
    "you": {
     "id": "gr-g-hurt-inside-you",
-    "crisis": ["911: emergency"],
     "guide": "hurt-inside",
     "side": "you",
     "title": "Hurt Inside Our Faith Community",
@@ -14481,7 +14450,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "When a Leader Falls Short",
    "you": {
     "id": "gr-g-leader-falls-short-you",
-    "crisis": ["911: emergency"],
     "guide": "leader-falls-short",
     "side": "you",
     "title": "When a Leader Falls Short",
@@ -15289,7 +15257,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "After a Hard Death",
    "you": {
     "id": "gr-g-hard-death-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "hard-death",
     "side": "you",
     "title": "After a Hard Death",
@@ -15417,7 +15384,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-death-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "hard-death",
     "side": "helper",
     "title": "After a Hard Death",
@@ -15528,7 +15494,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Change, Layoffs, or Reorganization",
    "you": {
     "id": "gr-g-team-change-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "team-change",
     "side": "you",
     "title": "Change, Layoffs, or Reorganization",
@@ -15783,7 +15748,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "A Coworker Dies",
    "you": {
     "id": "gr-g-coworker-death-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "coworker-death",
     "side": "you",
     "title": "A Coworker Dies",
@@ -15890,7 +15854,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-coworker-death-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "coworker-death",
     "side": "helper",
     "title": "A Coworker Dies",
@@ -16009,7 +15972,6 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "A Season of Burnout",
    "you": {
     "id": "gr-g-burnout-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "burnout",
     "side": "you",
     "title": "A Season of Burnout",
@@ -16124,7 +16086,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-burnout-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "burnout",
     "side": "helper",
     "title": "A Season of Burnout",
@@ -16337,7 +16298,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-coworker-conflict-helper",
-    "crisis": ["911: emergency"],
     "guide": "coworker-conflict",
     "side": "helper",
     "title": "Conflict Between Coworkers",
@@ -16960,7 +16920,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-workplace-injury-helper",
-    "crisis": ["911: emergency"],
     "guide": "workplace-injury",
     "side": "helper",
     "title": "A Workplace Injury or Accident",
@@ -17201,7 +17160,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-coworker-loss-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "coworker-loss",
     "side": "helper",
     "title": "Supporting a Coworker Through Loss",
@@ -17432,7 +17390,6 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-things-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "hard-things",
     "side": "helper",
     "title": "When the Work Asks Hard Things",
@@ -17670,7 +17627,6 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-family-helper",
-   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-family",
    "side": "helper",
    "title": "A Family Growing Sober Together",
@@ -17785,7 +17741,6 @@ var V = [
   "title": "Talking with Kids About a Parent's Recovery",
   "you": {
    "id": "gr-g-sober-kids-talk-you",
-   "crisis": ["911: emergency"],
    "guide": "sober-kids-talk",
    "side": "you",
    "title": "Talking with Kids About a Parent's Recovery",
@@ -17898,7 +17853,6 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-kids-talk-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-kids-talk",
    "side": "helper",
    "title": "Talking with Kids About a Parent's Recovery",
@@ -18328,7 +18282,6 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-trust-helper",
-   "crisis": ["988: call or text, any time", "National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-trust",
    "side": "helper",
    "title": "Rebuilding Trust at Home",
@@ -18442,7 +18395,6 @@ var V = [
   "title": "When a Teammate Is Getting Sober",
   "you": {
    "id": "gr-g-sober-teammate-you",
-   "crisis": ["911: emergency"],
    "guide": "sober-teammate",
    "side": "you",
    "title": "When a Teammate Is Getting Sober",
@@ -18555,7 +18507,6 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-teammate-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-teammate",
    "side": "helper",
    "title": "When a Teammate Is Getting Sober",
@@ -18692,7 +18643,6 @@ var V = [
   "title": "Welcoming Someone Growing Sober",
   "you": {
    "id": "gr-g-sober-welcome-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-welcome",
    "side": "you",
    "title": "Welcoming Someone Growing Sober",
@@ -18807,7 +18757,6 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-welcome-helper",
-   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-welcome",
    "side": "helper",
    "title": "Welcoming Someone Growing Sober",

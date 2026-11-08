@@ -1418,7 +1418,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b808', oak: '/oak/guide-videos.js?v=b939', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b888', sequoia: '/sequoia/guide-videos.js?v=b939', pine: '/pine/guide-videos.js?v=b939', birch: '/birch/guide-videos.js?v=b939', grove: '/grove/guide-videos.js?v=b939' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b939', oak: '/oak/guide-videos.js?v=b939', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b939', sequoia: '/sequoia/guide-videos.js?v=b939', pine: '/pine/guide-videos.js?v=b939', birch: '/birch/guide-videos.js?v=b939', grove: '/grove/guide-videos.js?v=b939' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -1469,9 +1469,9 @@
   function pageBody(p) {
     return (p.lead ? '<p class="ggl-pg-lead">' + esc(p.lead) + '</p>' : '') + (p.sections || []).map(function (sc) { return (sc.h ? '<h2>' + esc(sc.h) + '</h2>' : '') + blocksHtml(sc.b); }).join('');
   }
-  // BLD 939: the printed page names 988 and 911 only when the page carries a crisis line or its own words name 988
-  // (a hard-season page); every other printout ends with the plain support line.
-  function pageCrisis(p) { return !!((Array.isArray(p.crisis) && p.crisis.length) || /\b988\b/.test(JSON.stringify(p.sections || []) + (p.lead || ''))); }
+  // BLD 939 (Chris: "Only these: suicide, self-harm, safety and abuse"): the printed page names 988 and 911 only when it
+  // carries a crisis line, the same rule as the line under a video; every other printout ends with the plain support line.
+  function pageCrisis(p) { return !!(Array.isArray(p.crisis) && p.crisis.length); }
   // Print a page (a new tab with the page alone and a Print button; a hidden frame when pop-ups are blocked).
   function printPage(app, p) {
     var meta = APPS[app] || { name: 'Grow With Grounded', color: '#8B5E1A' }, src = window.GGSources ? GGSources.line(p.sources || []) : '';

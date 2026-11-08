@@ -54,7 +54,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "College: The First Year",
    "you": {
     "id": "br-g-first-year-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-year",
     "side": "you",
     "title": "College: The First Year",
@@ -190,7 +189,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-year-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-year",
     "side": "helper",
     "title": "College: The First Year",
@@ -303,7 +301,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
    "you": {
     "id": "br-g-not-college-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "not-college",
     "side": "you",
     "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
@@ -515,7 +512,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
    "you": {
     "id": "br-g-changing-plans-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "changing-plans",
     "side": "you",
     "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
@@ -630,7 +626,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-changing-plans-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "changing-plans",
     "side": "helper",
     "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
@@ -734,7 +729,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Pressure, Grades, and Burnout",
    "you": {
     "id": "br-g-pressure-burnout-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "pressure-burnout",
     "side": "you",
     "title": "Pressure, Grades, and Burnout",
@@ -863,7 +857,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-pressure-burnout-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "pressure-burnout",
     "side": "helper",
     "title": "Pressure, Grades, and Burnout",
@@ -981,7 +974,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "ADHD and Learning Differences on Your Own",
    "you": {
     "id": "br-g-adhd-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "you",
     "title": "ADHD and Learning Differences on Your Own",
@@ -1100,7 +1092,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-adhd-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "helper",
     "title": "ADHD and Learning Differences on Your Own",
@@ -1217,7 +1208,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "After Graduation: The \"What Now?\" Season",
    "you": {
     "id": "br-g-what-now-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "what-now",
     "side": "you",
     "title": "After Graduation: The \"What Now?\" Season",
@@ -1335,7 +1325,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-what-now-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "what-now",
     "side": "helper",
     "title": "After Graduation: The \"What Now?\" Season",
@@ -1444,7 +1433,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "A First Full-Time Job",
    "you": {
     "id": "br-g-first-job-you",
-    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "you",
     "title": "A First Full-Time Job",
@@ -1552,7 +1540,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-job-helper",
-    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "helper",
     "title": "A First Full-Time Job",
@@ -1647,7 +1634,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Losing a Job, or Not Finding One",
    "you": {
     "id": "br-g-job-loss-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "job-loss",
     "side": "you",
     "title": "Losing a Job, or Not Finding One",
@@ -1750,7 +1736,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-job-loss-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "job-loss",
     "side": "helper",
     "title": "Losing a Job, or Not Finding One",
@@ -2059,7 +2044,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Money Basics: Paychecks, Budgets, and Credit",
    "you": {
     "id": "br-g-money-basics-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "money-basics",
     "side": "you",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2160,7 +2144,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-money-basics-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "money-basics",
     "side": "helper",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2255,7 +2238,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Student Loans and Other Debt",
    "you": {
     "id": "br-g-debt-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "debt",
     "side": "you",
     "title": "Student Loans and Other Debt",
@@ -2356,7 +2338,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-debt-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "debt",
     "side": "helper",
     "title": "Student Loans and Other Debt",
@@ -2461,7 +2442,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Gambling and Sports Betting",
    "you": {
     "id": "br-g-gambling-you",
-    "crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "1-800-MY-RESET: 1-800-697-3738"],
     "guide": "gambling",
     "side": "you",
     "title": "Gambling and Sports Betting",
@@ -2680,7 +2660,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving Out for the First Time",
    "you": {
     "id": "br-g-moving-out-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-out",
     "side": "you",
     "title": "Moving Out for the First Time",
@@ -2783,7 +2762,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-moving-out-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-out",
     "side": "helper",
     "title": "Moving Out for the First Time",
@@ -2892,7 +2870,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Roommates",
    "you": {
     "id": "br-g-roommates-you",
-    "crisis": ["Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "roommates",
     "side": "you",
     "title": "Roommates",
@@ -3008,7 +2985,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-roommates-helper",
-    "crisis": ["Day One (Minnesota): 1-866-223-1111", "911: emergency"],
     "guide": "roommates",
     "side": "helper",
     "title": "Roommates",
@@ -3331,7 +3307,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving Back Home",
    "you": {
     "id": "br-g-moving-back-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-back",
     "side": "you",
     "title": "Moving Back Home",
@@ -3432,7 +3407,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-moving-back-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-back",
     "side": "helper",
     "title": "Moving Back Home",
@@ -3542,7 +3516,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving to a New City",
    "you": {
     "id": "br-g-new-city-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-city",
     "side": "you",
     "title": "Moving to a New City",
@@ -3639,7 +3612,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-new-city-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-city",
     "side": "helper",
     "title": "Moving to a New City",
@@ -3946,7 +3918,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Making Friends After School",
    "you": {
     "id": "br-g-friends-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "friends",
     "side": "you",
     "title": "Making Friends After School",
@@ -4049,7 +4020,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-friends-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "friends",
     "side": "helper",
     "title": "Making Friends After School",
@@ -4159,7 +4129,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Loneliness",
    "you": {
     "id": "br-g-loneliness-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "loneliness",
     "side": "you",
     "title": "Loneliness",
@@ -4263,7 +4232,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-loneliness-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "loneliness",
     "side": "helper",
     "title": "Loneliness",
@@ -4391,7 +4359,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Dating and Finding Someone",
    "you": {
     "id": "br-g-dating-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating",
     "side": "you",
     "title": "Dating and Finding Someone",
@@ -4521,7 +4488,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-dating-helper",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating",
     "side": "helper",
     "title": "Dating and Finding Someone",
@@ -4627,7 +4593,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Breakups",
    "you": {
     "id": "br-g-breakup-you",
-    "crisis": ["988: call or text, any time", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "breakup",
     "side": "you",
     "title": "Breakups",
@@ -4741,7 +4706,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-breakup-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "breakup",
     "side": "helper",
     "title": "Breakups",
@@ -5088,7 +5052,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Engaged or Newly Married",
    "you": {
     "id": "br-g-engaged-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "engaged",
     "side": "you",
     "title": "Engaged or Newly Married",
@@ -5196,7 +5159,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-engaged-helper",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "engaged",
     "side": "helper",
     "title": "Engaged or Newly Married",
@@ -5423,7 +5385,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-parents-adult-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "parents-adult",
     "side": "helper",
     "title": "You and Your Parents, as Adults",
@@ -5533,7 +5494,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Hard Family Ties and Estrangement",
    "you": {
     "id": "br-g-estrangement-you",
-    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "National DV Hotline: 1-800-799-7233", "National Runaway Safeline: 1-800-786-2929", "211: local help", "911: emergency"],
     "guide": "estrangement",
     "side": "you",
     "title": "Hard Family Ties and Estrangement",
@@ -5650,7 +5610,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-estrangement-helper",
-    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "National DV Hotline: 1-800-799-7233", "911: emergency"],
     "guide": "estrangement",
     "side": "helper",
     "title": "Hard Family Ties and Estrangement",
@@ -5756,7 +5715,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "An Unplanned Pregnancy",
    "you": {
     "id": "br-g-unplanned-pregnancy-you",
-    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "unplanned-pregnancy",
     "side": "you",
     "title": "An Unplanned Pregnancy",
@@ -5866,7 +5824,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-unplanned-pregnancy-helper",
-    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "unplanned-pregnancy",
     "side": "helper",
     "title": "An Unplanned Pregnancy",
@@ -6091,7 +6048,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-young-parent-helper",
-    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "young-parent",
     "side": "helper",
     "title": "Becoming a Parent Young",
@@ -6202,7 +6158,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "After the Baby: Depression and Anxiety for Moms and Dads",
    "you": {
     "id": "br-g-after-baby-you",
-    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "after-baby",
     "side": "you",
     "title": "After the Baby: Depression and Anxiety for Moms and Dads",
@@ -6312,7 +6267,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-after-baby-helper",
-    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "after-baby",
     "side": "helper",
     "title": "After the Baby: Depression and Anxiety for Moms and Dads",
@@ -6437,7 +6391,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Pregnancy or Infant Loss",
    "you": {
     "id": "br-g-pregnancy-loss-you",
-    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262"],
     "guide": "pregnancy-loss",
     "side": "you",
     "title": "Pregnancy or Infant Loss",
@@ -6549,7 +6502,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-pregnancy-loss-helper",
-    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262"],
     "guide": "pregnancy-loss",
     "side": "helper",
     "title": "Pregnancy or Infant Loss",
@@ -6659,7 +6611,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Anxiety and Panic",
    "you": {
     "id": "br-g-anxiety-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "anxiety",
     "side": "you",
     "title": "Anxiety and Panic",
@@ -6935,7 +6886,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Depression and Feeling Stuck",
    "you": {
     "id": "br-g-depression-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
     "guide": "depression",
     "side": "you",
     "title": "Depression and Feeling Stuck",
@@ -7041,7 +6991,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-depression-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "depression",
     "side": "helper",
     "title": "Depression and Feeling Stuck",
@@ -7447,7 +7396,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Drinking and Other Drugs",
    "you": {
     "id": "br-g-substances-you",
-    "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "you",
     "title": "Drinking and Other Drugs",
@@ -7695,7 +7643,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Eating Disorders",
    "you": {
     "id": "br-g-eating-you",
-    "crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "you",
     "title": "Eating Disorders",
@@ -7809,7 +7756,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-eating-helper",
-    "crisis": ["ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "helper",
     "title": "Eating Disorders",
@@ -7956,7 +7902,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Your Own Health: Insurance, Doctors, and Turning 26",
    "you": {
     "id": "br-g-health-26-you",
-    "crisis": ["911: emergency"],
     "guide": "health-26",
     "side": "you",
     "title": "Your Own Health: Insurance, Doctors, and Turning 26",
@@ -8087,7 +8032,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-health-26-helper",
-    "crisis": ["211: local help"],
     "guide": "health-26",
     "side": "helper",
     "title": "Your Own Health: Insurance, Doctors, and Turning 26",
@@ -9525,7 +9469,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Pornography That's Hard to Stop",
    "you": {
     "id": "br-g-porn-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "porn",
     "side": "you",
     "title": "Pornography That's Hard to Stop",
@@ -9897,7 +9840,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-military-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647"],
     "guide": "military",
     "side": "helper",
     "title": "Joining the Military, and Military Life",
@@ -9995,7 +9937,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Coming Home From Service",
    "you": {
     "id": "br-g-coming-home-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "coming-home",
     "side": "you",
     "title": "Coming Home From Service",
@@ -10086,7 +10027,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-coming-home-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1"],
     "guide": "coming-home",
     "side": "helper",
     "title": "Coming Home From Service",
@@ -10189,7 +10129,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
    "you": {
     "id": "br-g-grief-young-you",
-    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "grief-young",
     "side": "you",
     "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
@@ -10285,7 +10224,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-grief-young-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "grief-young",
     "side": "helper",
     "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
@@ -10606,7 +10544,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Hurt by a Faith Community",
    "you": {
     "id": "br-g-faith-hurt-you",
-    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "RAINN: 1-800-656-4673", "911: emergency"],
     "guide": "faith-hurt",
     "side": "you",
     "title": "Hurt by a Faith Community",
@@ -10696,7 +10633,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-faith-hurt-helper",
-    "crisis": ["Day One (Minnesota): 1-866-223-1111", "RAINN: 1-800-656-4673", "911: emergency"],
     "guide": "faith-hurt",
     "side": "helper",
     "title": "Hurt by a Faith Community",
@@ -10808,7 +10744,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Finding Purpose and Calling",
    "you": {
     "id": "br-g-purpose-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose",
     "side": "you",
     "title": "Finding Purpose and Calling",
@@ -10914,7 +10849,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-purpose-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "purpose",
     "side": "helper",
     "title": "Finding Purpose and Calling",
@@ -12137,7 +12071,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Deaf or Hard of Hearing",
    "you": {
     "id": "br-g-deaf-hoh-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "deaf-hoh",
     "side": "you",
     "title": "Deaf or Hard of Hearing",
@@ -12566,7 +12499,6 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Dating and Marriage with a Disability or Illness",
    "you": {
     "id": "br-g-dating-disability-you",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
     "guide": "dating-disability",
     "side": "you",
     "title": "Dating and Marriage with a Disability or Illness",
@@ -12657,7 +12589,6 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-dating-disability-helper",
-    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating-disability",
     "side": "helper",
     "title": "Dating and Marriage with a Disability or Illness",
@@ -13171,7 +13102,6 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Your First Year Sober",
   "you": {
    "id": "br-g-sober-first-year-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-first-year",
    "side": "you",
    "title": "Your First Year Sober",
@@ -13303,7 +13233,6 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-first-year-helper",
-   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-first-year",
    "side": "helper",
    "title": "Your First Year Sober",
@@ -13430,7 +13359,6 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Sober in College and Nightlife",
   "you": {
    "id": "br-g-sober-college-nightlife-you",
-   "crisis": ["911: emergency"],
    "guide": "sober-college-nightlife",
    "side": "you",
    "title": "Sober in College and Nightlife",
@@ -13548,7 +13476,6 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-college-nightlife-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-college-nightlife",
    "side": "helper",
    "title": "Sober in College and Nightlife",
@@ -13670,7 +13597,6 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Sober Friends and Dating",
   "you": {
    "id": "br-g-sober-friends-dating-you",
-   "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
    "guide": "sober-friends-dating",
    "side": "you",
    "title": "Sober Friends and Dating",
@@ -13900,7 +13826,6 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "After a Slip",
   "you": {
    "id": "br-g-sober-after-slip-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-after-slip",
    "side": "you",
    "title": "After a Slip",
@@ -14008,7 +13933,6 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-after-slip-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-after-slip",
    "side": "helper",
    "title": "After a Slip",
@@ -14127,7 +14051,6 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Life After Treatment",
   "you": {
    "id": "br-g-sober-after-treatment-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-after-treatment",
    "side": "you",
    "title": "Life After Treatment",
@@ -14357,7 +14280,6 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "A Parent's Drinking or Using, Now That You're Grown",
   "you": {
    "id": "br-g-sober-parent-grown-you",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-parent-grown",
    "side": "you",
    "title": "A Parent's Drinking or Using, Now That You're Grown",
@@ -14478,7 +14400,6 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-parent-grown-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-parent-grown",
    "side": "helper",
    "title": "A Parent's Drinking or Using, Now That You're Grown",

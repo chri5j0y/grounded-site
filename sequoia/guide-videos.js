@@ -55,7 +55,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Retirement: Who Am I Now?",
    "you": {
     "id": "sq-g-retirement-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "retirement",
     "side": "you",
     "title": "Retirement: Who Am I Now?",
@@ -180,7 +179,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-retirement-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "retirement",
     "side": "helper",
     "title": "Retirement: Who Am I Now?",
@@ -307,7 +305,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Finding Purpose Again",
    "you": {
     "id": "sq-g-purpose-again-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "purpose-again",
     "side": "you",
     "title": "Finding Purpose Again",
@@ -409,7 +406,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-purpose-again-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "purpose-again",
     "side": "helper",
     "title": "Finding Purpose Again",
@@ -726,7 +722,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Working Longer, or Going Back to Work",
    "you": {
     "id": "sq-g-working-longer-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "working-longer",
     "side": "you",
     "title": "Working Longer, or Going Back to Work",
@@ -828,7 +823,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-working-longer-helper",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "working-longer",
     "side": "helper",
     "title": "Working Longer, or Going Back to Work",
@@ -1043,10 +1037,6 @@ window.GG_LEARN_GUIDES.sequoia = {
       "sub": "The full guide has more, whenever you want it.",
       "say": "You matter, just by being you, not by what you can do. The full guide has more, whenever you want it."
      }
-    ],
-    "crisis": [
-     "988: call or text, any time",
-     "911: danger right now"
     ]
    },
    "helper": {
@@ -1154,10 +1144,6 @@ window.GG_LEARN_GUIDES.sequoia = {
       "sub": "The full guide has more, whenever you want it.",
       "say": "Hearing someone you love say they feel like a burden can hurt, and helping every day can wear you down. Both can sit beside love. Take real breaks, and talk with someone you trust. Your steady love is enough. The full guide has more, whenever you want it."
      }
-    ],
-    "crisis": [
-     "988: call or text, any time",
-     "911: danger right now"
     ]
    }
   },
@@ -1167,7 +1153,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing a Spouse or Partner",
    "you": {
     "id": "sq-g-spouse-death-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "spouse-death",
     "side": "you",
     "title": "Losing a Spouse or Partner",
@@ -1287,7 +1272,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-spouse-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "spouse-death",
     "side": "helper",
     "title": "Losing a Spouse or Partner",
@@ -1392,7 +1376,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Outliving Your Friends",
    "you": {
     "id": "sq-g-friend-death-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "you",
     "title": "Outliving Your Friends",
@@ -1502,7 +1485,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-friend-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "helper",
     "title": "Outliving Your Friends",
@@ -1619,7 +1601,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing an Adult Child",
    "you": {
     "id": "sq-g-child-death-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "child-death",
     "side": "you",
     "title": "Losing an Adult Child",
@@ -1731,7 +1712,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-child-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "child-death",
     "side": "helper",
     "title": "Losing an Adult Child",
@@ -1842,7 +1822,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing a Sibling",
    "you": {
     "id": "sq-g-sibling-death-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "sibling-death",
     "side": "you",
     "title": "Losing a Sibling",
@@ -1951,7 +1930,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-sibling-death-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "sibling-death",
     "side": "helper",
     "title": "Losing a Sibling",
@@ -2063,7 +2041,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "When Grief Won't Ease",
    "you": {
     "id": "sq-g-grief-stuck-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "grief-stuck",
     "side": "you",
     "title": "When Grief Won't Ease",
@@ -2162,7 +2139,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-grief-stuck-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "grief-stuck",
     "side": "helper",
     "title": "When Grief Won't Ease",
@@ -2297,7 +2273,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Holidays and Anniversaries Alone",
    "you": {
     "id": "sq-g-holidays-alone-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "911: emergency"],
     "guide": "holidays-alone",
     "side": "you",
     "title": "Holidays and Anniversaries Alone",
@@ -2411,7 +2386,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-holidays-alone-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "holidays-alone",
     "side": "helper",
     "title": "Holidays and Anniversaries Alone",
@@ -2533,7 +2507,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing a Pet",
    "you": {
     "id": "sq-g-pet-death-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "pet-death",
     "side": "you",
     "title": "Losing a Pet",
@@ -2646,7 +2619,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-pet-death-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "pet-death",
     "side": "helper",
     "title": "Losing a Pet",
@@ -2766,7 +2738,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "A New Diagnosis",
    "you": {
     "id": "sq-g-new-diagnosis-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "new-diagnosis",
     "side": "you",
     "title": "A New Diagnosis",
@@ -2881,7 +2852,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-new-diagnosis-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-diagnosis",
     "side": "helper",
     "title": "A New Diagnosis",
@@ -3003,7 +2973,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Living with Pain",
    "you": {
     "id": "sq-g-pain-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "pain",
     "side": "you",
     "title": "Living with Pain",
@@ -3111,7 +3080,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-pain-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "pain",
     "side": "helper",
     "title": "Living with Pain",
@@ -3234,7 +3202,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "After a Fall",
    "you": {
     "id": "sq-g-falls-you",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "falls",
     "side": "you",
     "title": "After a Fall",
@@ -3349,7 +3316,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-falls-helper",
-    "crisis": ["911: emergency"],
     "guide": "falls",
     "side": "helper",
     "title": "After a Fall",
@@ -3899,7 +3865,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Giving Up Driving",
    "you": {
     "id": "sq-g-driving-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116"],
     "guide": "driving",
     "side": "you",
     "title": "Giving Up Driving",
@@ -4129,7 +4094,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Surgery, Recovery, or a Hospital Stay",
    "you": {
     "id": "sq-g-hospital-you",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "hospital",
     "side": "you",
     "title": "Surgery, Recovery, or a Hospital Stay",
@@ -4246,7 +4210,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-hospital-helper",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "911: emergency"],
     "guide": "hospital",
     "side": "helper",
     "title": "Surgery, Recovery, or a Hospital Stay",
@@ -4354,7 +4317,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing Appetite or Weight",
    "you": {
     "id": "sq-g-appetite-you",
-    "crisis": ["Eldercare Locator: 1-800-677-1116"],
     "guide": "appetite",
     "side": "you",
     "title": "Losing Appetite or Weight",
@@ -4445,7 +4407,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-appetite-helper",
-    "crisis": ["Eldercare Locator: 1-800-677-1116"],
     "guide": "appetite",
     "side": "helper",
     "title": "Losing Appetite or Weight",
@@ -4554,7 +4515,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worried About Your Memory",
    "you": {
     "id": "sq-g-memory-worry-you",
-    "crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "memory-worry",
     "side": "you",
     "title": "Worried About Your Memory",
@@ -4698,7 +4658,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-memory-worry-helper",
-    "crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "memory-worry",
     "side": "helper",
     "title": "Worried About Your Memory",
@@ -4819,7 +4778,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "A Dementia Diagnosis",
    "you": {
     "id": "sq-g-dementia-you",
-    "crisis": ["988: call or text, any time", "Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "dementia",
     "side": "you",
     "title": "A Dementia Diagnosis",
@@ -4935,7 +4893,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-dementia-helper",
-    "crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "dementia",
     "side": "helper",
     "title": "A Dementia Diagnosis",
@@ -5155,11 +5112,6 @@ window.GG_LEARN_GUIDES.sequoia = {
       "sub": "The full guide has more, whenever you want it.",
       "say": "Depression is an illness, not the truth about you or your life. With help, many people feel like themselves again. The full guide has more, whenever you want it."
      }
-    ],
-    "crisis": [
-     "988: call or text, any time",
-     "Veterans: 988, then press 1",
-     "911: danger right now"
     ]
    },
    "helper": {
@@ -5272,11 +5224,6 @@ window.GG_LEARN_GUIDES.sequoia = {
       "sub": "The full guide has more, whenever you want it.",
       "say": "Notice. Ask. Stay close. With help, many older adults feel like themselves again, and your steady presence is part of that. The full guide has more, whenever you want it."
      }
-    ],
-    "crisis": [
-     "988: call or text, any time",
-     "Veterans: 988, then press 1",
-     "911: danger right now"
     ]
    }
   },
@@ -5286,7 +5233,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worry and Anxiety",
    "you": {
     "id": "sq-g-anxiety-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "anxiety",
     "side": "you",
     "title": "Worry and Anxiety",
@@ -5422,7 +5368,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-anxiety-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "anxiety",
     "side": "helper",
     "title": "Worry and Anxiety",
@@ -5538,7 +5483,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "When Old Memories Return",
    "you": {
     "id": "sq-g-old-memories-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "old-memories",
     "side": "you",
     "title": "When Old Memories Return",
@@ -5652,7 +5596,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-old-memories-helper",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "old-memories",
     "side": "helper",
     "title": "When Old Memories Return",
@@ -6447,7 +6390,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Money Worries on a Fixed Income",
    "you": {
     "id": "sq-g-fixed-income-you",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "fixed-income",
     "side": "you",
     "title": "Money Worries on a Fixed Income",
@@ -6549,7 +6491,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-fixed-income-helper",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "fixed-income",
     "side": "helper",
     "title": "Money Worries on a Fixed Income",
@@ -7151,7 +7092,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Caring for a Spouse or Partner",
    "you": {
     "id": "sq-g-spouse-caregiving-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "spouse-caregiving",
     "side": "you",
     "title": "Caring for a Spouse or Partner",
@@ -7269,7 +7209,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-spouse-caregiving-helper",
-    "crisis": ["988: call or text, any time", "Alzheimer's Association Helpline: 1-800-272-3900", "911: emergency"],
     "guide": "spouse-caregiving",
     "side": "helper",
     "title": "Caring for a Spouse or Partner",
@@ -7587,7 +7526,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Raising Grandchildren",
    "you": {
     "id": "sq-g-raising-grandkids-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "raising-grandkids",
     "side": "you",
     "title": "Raising Grandchildren",
@@ -7704,7 +7642,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-raising-grandkids-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "raising-grandkids",
     "side": "helper",
     "title": "Raising Grandchildren",
@@ -7813,7 +7750,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Estrangement From an Adult Child",
    "you": {
     "id": "sq-g-estrangement-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "estrangement",
     "side": "you",
     "title": "Estrangement From an Adult Child",
@@ -7925,7 +7861,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-estrangement-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "estrangement",
     "side": "helper",
     "title": "Estrangement From an Adult Child",
@@ -8025,7 +7960,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worry About Adult Children",
    "you": {
     "id": "sq-g-worry-adult-children-you",
-    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "worry-adult-children",
     "side": "you",
     "title": "Worry About Adult Children",
@@ -8128,7 +8063,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-worry-adult-children-helper",
-    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "worry-adult-children",
     "side": "helper",
     "title": "Worry About Adult Children",
@@ -8665,7 +8600,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Divorce Late in Life",
    "you": {
     "id": "sq-g-gray-divorce-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "gray-divorce",
     "side": "you",
     "title": "Divorce Late in Life",
@@ -8781,7 +8715,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-gray-divorce-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "gray-divorce",
     "side": "helper",
     "title": "Divorce Late in Life",
@@ -9155,7 +9088,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Loneliness and Living Alone",
    "you": {
     "id": "sq-g-loneliness-you",
-    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "loneliness",
     "side": "you",
     "title": "Loneliness and Living Alone",
@@ -9265,7 +9197,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-loneliness-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "loneliness",
     "side": "helper",
     "title": "Loneliness and Living Alone",
@@ -9397,7 +9328,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Friendship in Later Life",
    "you": {
     "id": "sq-g-friendship-you",
-    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "friendship",
     "side": "you",
     "title": "Friendship in Later Life",
@@ -9621,7 +9551,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Growing Older as a Veteran",
    "you": {
     "id": "sq-g-veterans-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "veterans",
     "side": "you",
     "title": "Growing Older as a Veteran",
@@ -9846,7 +9775,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Feeling Invisible or Written Off Because of Age",
    "you": {
     "id": "sq-g-invisible-you",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "invisible",
     "side": "you",
     "title": "Feeling Invisible or Written Off Because of Age",
@@ -9962,7 +9890,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-invisible-helper",
-    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "invisible",
     "side": "helper",
     "title": "Feeling Invisible or Written Off Because of Age",
@@ -10087,7 +10015,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Faith Questions Late in Life",
    "you": {
     "id": "sq-g-faith-questions-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-questions",
     "side": "you",
     "title": "Faith Questions Late in Life",
@@ -10219,7 +10146,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-faith-questions-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "faith-questions",
     "side": "helper",
     "title": "Faith Questions Late in Life",
@@ -10326,7 +10252,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Facing Death and Sharing Your Wishes",
    "you": {
     "id": "sq-g-facing-death-you",
-    "crisis": ["988: call or text, any time"],
     "guide": "facing-death",
     "side": "you",
     "title": "Facing Death and Sharing Your Wishes",
@@ -10437,7 +10362,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-facing-death-helper",
-    "crisis": ["988: call or text, any time"],
     "guide": "facing-death",
     "side": "helper",
     "title": "Facing Death and Sharing Your Wishes",
@@ -10547,7 +10471,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Making Peace with Regrets",
    "you": {
     "id": "sq-g-regrets-you",
-    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1"],
     "guide": "regrets",
     "side": "you",
     "title": "Making Peace with Regrets",
@@ -10662,7 +10585,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-regrets-helper",
-    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "regrets",
     "side": "helper",
     "title": "Making Peace with Regrets",
@@ -11821,7 +11743,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-adult-child-disability-helper",
-    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "adult-child-disability",
     "side": "helper",
     "title": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
@@ -11926,7 +11848,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "After a Stroke",
    "you": {
     "id": "sq-g-stroke-you",
-    "crisis": ["911: emergency"],
     "guide": "stroke",
     "side": "you",
     "title": "After a Stroke",
@@ -12057,7 +11978,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-stroke-helper",
-    "crisis": ["911: emergency"],
     "guide": "stroke",
     "side": "helper",
     "title": "After a Stroke",
@@ -12189,7 +12109,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Living with Heart or Lung Disease, and Oxygen",
    "you": {
     "id": "sq-g-heart-lung-you",
-    "crisis": ["911: emergency"],
     "guide": "heart-lung",
     "side": "you",
     "title": "Living with Heart or Lung Disease, and Oxygen",
@@ -12320,7 +12239,6 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-heart-lung-helper",
-    "crisis": ["911: emergency"],
     "guide": "heart-lung",
     "side": "helper",
     "title": "Living with Heart or Lung Disease, and Oxygen",
@@ -12561,7 +12479,6 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-retirement-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-retirement",
    "side": "helper",
    "title": "Drinking in Retirement and Loneliness",
@@ -12785,11 +12702,6 @@ window.GG_LEARN_GUIDES.sequoia = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "You can tend your pain and your sobriety together. A plan made ahead is a strong plan. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "911: very hard to wake, or breathing slowly",
-    "Poison Control: 1-800-222-1222",
-    "988: call or text, any time"
    ]
   },
   "helper": {
@@ -12907,11 +12819,6 @@ window.GG_LEARN_GUIDES.sequoia = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "Calm, practical, and close by. That is your part. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "911: very hard to wake, or breathing slowly",
-    "Poison Control: 1-800-222-1222",
-    "988: call or text, any time"
    ]
   }
  },
@@ -12921,7 +12828,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   "title": "When Your Adult Child Drinks or Uses",
   "you": {
    "id": "sq-g-sober-adult-child-you",
-   "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+   "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
    "guide": "sober-adult-child",
    "side": "you",
    "title": "When Your Adult Child Drinks or Uses",
@@ -13021,7 +12928,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-adult-child-helper",
-   "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
+   "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
    "guide": "sober-adult-child",
    "side": "helper",
    "title": "When Your Adult Child Drinks or Uses",
@@ -13260,7 +13167,6 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-grandkids-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-grandkids",
    "side": "helper",
    "title": "Raising Grandchildren Through a Parent's Drinking or Using",
@@ -13504,7 +13410,6 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-long-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-long",
    "side": "helper",
    "title": "Long-Term Sober, Still Growing",

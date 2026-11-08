@@ -657,7 +657,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-meltdown-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "meltdown",
 "side": "helper",
 "title": "In the Middle of a Meltdown",
@@ -941,7 +940,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-sadness-helper",
-"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sadness",
 "side": "helper",
 "title": "Sadness That Lingers",
@@ -1691,7 +1689,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-family-death-helper",
-"crisis": ["988: call or text, any time"],
 "guide": "family-death",
 "side": "helper",
 "title": "A Family Member Died",
@@ -3674,10 +3671,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Your grown-ups are here with you.",
 "say": "If you ever feel very sad or worried, tell a grown-up. That's how help starts. If you are ever scared that someone is not safe, tell a grown-up right away. You are loved, and you have grown-ups all around you."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: danger right now"
 ]
 },
 "helper": {
@@ -3821,10 +3814,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Look after yourself too.",
 "say": "Honest words, hope, and caring grown-ups all around. Check in on your child's feelings regularly, especially during hard stretches. And if the one struggling is you, reaching for help is a gift to your child too."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: danger right now"
 ]
 }
 },
@@ -3936,10 +3925,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Grown-ups are here to help.",
 "say": "Drinking or using too much is a grown-up problem, and grown-ups can get help for it. You are loved, and grown-ups are here to help."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: danger right now"
 ]
 },
 "helper": {
@@ -4076,10 +4061,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "The full guide has more, whenever you want it.",
 "say": "A slip can happen. If it does, talk about it honestly, and keep the safety plan current. Celebrate recovery milestones in ways a child can enjoy. And look after yourself too. Truth, safety, and kept promises. The full guide has more, whenever you want it."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: danger right now"
 ]
 }
 },
@@ -4192,7 +4173,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-dementia-helper",
-"crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
 "guide": "dementia",
 "side": "helper",
 "title": "A Grandparent with Dementia",
@@ -4709,10 +4689,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Eating can get easier.",
 "say": "Eating can get easier with help. Meals can be a time to be together. You are loved, just as you are."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: fainting, chest pain, or confusion"
 ]
 },
 "helper": {
@@ -4884,10 +4860,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Not a test.",
 "say": "Many families give thanks before meals, or keep a tradition at the table. However your family gathers, a shared meal can be a place of belonging, not a test. Keep meals calm and steady. Recovery takes time, and families are a big part of it."
 }
-],
-"crisis": [
-"988: call or text, any time",
-"911: fainting, chest pain, or confusion"
 ]
 }
 },
@@ -6304,7 +6276,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-deployed-helper",
-"crisis": ["Military OneSource: 800-342-9647"],
 "guide": "deployed",
 "side": "helper",
 "title": "A Parent Deployed or Away for Work",
@@ -7058,7 +7029,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-money-helper",
-"crisis": ["211: local help"],
 "guide": "money",
 "side": "helper",
 "title": "Money Worries or a Job Loss",
@@ -7302,7 +7272,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-home-loss-helper",
-"crisis": ["211: local help"],
 "guide": "home-loss",
 "side": "helper",
 "title": "Losing a Home",
@@ -7535,10 +7504,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Grown-ups can make up, too.",
 "say": "Grown-ups who argue can also make up. You are loved, and you deserve a home that feels safe and calm."
 }
-],
-"crisis": [
-"National DV Hotline: 1-800-799-7233",
-"911: danger right now"
 ]
 },
 "helper": {
@@ -7678,10 +7643,6 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "It is never their job to fix it.",
 "say": "Grown-ups disagree. Let your child see you make up, and keep home warm and steady. It is never their job to fix it."
 }
-],
-"crisis": [
-"National DV Hotline: 1-800-799-7233",
-"911: danger right now"
 ]
 }
 },
@@ -10035,7 +9996,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-lying-helper",
-"crisis": ["211: local help"],
 "guide": "lying",
 "side": "helper",
 "title": "Lying and Taking Things",
@@ -12518,7 +12478,6 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-prejudice-helper",
-"crisis": ["911: emergency"],
 "guide": "prejudice",
 "side": "helper",
 "title": "When a Child Faces or Sees Prejudice",
@@ -17340,9 +17299,6 @@ window.GG_LEARN_GUIDES.maple = {
      "sub": "Grown-ups are here to help.",
      "say": "Grown-ups take care of the grown-up problems. Your job is to be a kid: to play, to learn, and to rest. You are loved, and grown-ups are here to help."
     }
-   ],
-   "crisis": [
-    "911: danger right now"
    ]
   },
   "helper": {
@@ -17483,10 +17439,6 @@ window.GG_LEARN_GUIDES.maple = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "Take care of yourself too, with rest, real food, time outside, and people who lift you. Honest words, a simple plan, and steady love go a long way. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "SAMHSA Helpline: 1-800-662-4357, any time",
-    "911: danger right now"
    ]
   }
  },
@@ -17613,7 +17565,6 @@ window.GG_LEARN_GUIDES.maple = {
   },
   "helper": {
    "id": "mp-g-sober-never-your-fault-helper",
-   "crisis": ["911: emergency"],
    "guide": "sober-never-your-fault",
    "side": "helper",
    "title": "It's Never Your Fault",
@@ -17845,7 +17796,6 @@ window.GG_LEARN_GUIDES.maple = {
   },
   "helper": {
    "id": "mp-g-sober-getting-better-helper",
-   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-getting-better",
    "side": "helper",
    "title": "When Mom or Dad Is Getting Better",
@@ -18509,10 +18459,6 @@ window.GG_LEARN_GUIDES.maple = {
      "sub": "The full guide has more, whenever you want it.",
      "say": "Grief comes back on birthdays and holidays. Mark those days together. Say their name, and keep talking. The full guide has more, whenever you want it."
     }
-   ],
-   "crisis": [
-    "988: call or text, any time",
-    "911: danger right now"
    ]
   }
  }
