@@ -246,8 +246,11 @@
     });
   }
   function pretaxSum(d) { return r2(U.live(d.lines).filter(function (l) { return l.s === 'pretax'; }).reduce(function (s, l) { return s + U.monthly(l); }, 0)); }
-  // Pretax saving a month: entered a month ('m') or a paycheck ('p', on the Paycheck Planner's schedule, every two weeks by default).
-  function pretaxMonthly(d, t) { var v = n0(t && t.pretax); if (t && t.pretaxF === 'p') { var s = (d.tools && d.tools.pay && d.tools.pay.s) || 'b'; return r2(v * checksPerYear(s) / 12); } return r2(v); }
+  // Pretax saving a month. BLD 941: the Before Taxes lines on the One Page sheet are the one source; an amount entered in the
+  // Standards before BLD 941 (a month 'm' or a paycheck 'p', on the Paycheck Planner's schedule) is read only when there are no
+  // such lines, and the Standards move it onto the sheet as a Before Taxes line the first time they open.
+  function hasPretax(d) { return U.live(d && d.lines).some(function (l) { return l.s === 'pretax'; }); }
+  function pretaxMonthly(d, t) { if (hasPretax(d)) return pretaxSum(d); var v = n0(t && t.pretax); if (t && t.pretaxF === 'p') { var s = (d.tools && d.tools.pay && d.tools.pay.s) || 'b'; return r2(v * checksPerYear(s) / 12); } return r2(v); }
   // Cards that carry a balance: the Debt Payoff Planner's cards (a card name, or a yearly rate of 15% or more).
   function cardsOf(d) { var t = d.tools && d.tools.debt; return arr(t && t.list).filter(function (x) { return n0(x.bal) > 0 && (CARD.test(x.n || '') || n0(x.rate) >= 15); }).map(function (x) { return { n: x.n || 'Card', bal: n0(x.bal), rate: n0(x.rate) }; }); }
   function cardsCarry(d, t) {
@@ -794,7 +797,9 @@
       init: function (t, c) {
         t.areas = t.areas && typeof t.areas === 'object' ? t.areas : {}; t.trims = t.trims && typeof t.trims === 'object' ? t.trims : {}; t.celebrated = t.celebrated && typeof t.celebrated === 'object' ? t.celebrated : {};
         if (t.size == null) { var kd = c.d.tools && c.d.tools.kids; t.size = 2 + arr(kd && kd.kids).filter(function (k) { return n0(k.age) > 0; }).length; }
-        if (t.pretax == null) t.pretax = pretaxSum(c.d) || ''; t.pretaxF = t.pretaxF === 'p' ? 'p' : 'm';
+        // BLD 941: one source for pretax saving, the sheet's Before Taxes lines (an older entered amount becomes one).
+        if (n0(t.pretax) > 0 && !hasPretax(c.d)) { U.addLine(c.d, { n: 'Pretax Saving', a: pretaxMonthly(c.d, t), f: 'm', s: 'pretax' }); c.save(); }
+        delete t.pretax; delete t.pretaxF;
         if (!U.live(c.d.lines).length) return;
         // A warm moment for each step met (and for reaching Growing Season), once each; a step that slips can be celebrated again.
         var se = seasonOf(c.d, t), fresh = [];
@@ -804,7 +809,7 @@
       },
       out: function (c) {
         var t = c.t, d = c.d;
-        if (!U.live(d.lines).length) return '<div class="gm-note">' + U.I('list') + '<span>Add your plan’s lines in My Plan, and the standards show beside them. <button type="button" class="gm-linkbtn" data-gm="go:plan">My Plan' + U.I('arrow') + '</button></span></div>';
+        if (!U.live(d.lines).length) return '<div class="gm-note">' + U.I('list') + '<span>Add your plan’s lines on One Page, and the standards show beside them. <button type="button" class="gm-linkbtn" data-gm="go:sheet">One Page' + U.I('arrow') + '</button></span></div>';
         var v = stdView(d, t), se = v.season, inc = v.income;
         var head = se.building
           ? '<div class="gm-seasoncard b" data-season="building"><span class="gm-k">Building Season</span><h3 class="gm-h3">Building Season: every step here is a win.</h3><p class="gm-sub">' + (se.short ? 'The month runs ' + M(se.short) + ' short' + (se.cards ? ' and cards carry a balance' : '') : 'Cards carry a balance') + '. Five steps lead the way: ' + se.done + ' of 5 done.</p>' + stepsHtml(se.met) +
@@ -812,7 +817,7 @@
           : '<div class="gm-seasoncard g" data-season="growing"><span class="gm-k">Growing Season</span><h3 class="gm-h3">Growing Season: your plan has room to grow.</h3><p class="gm-sub">Your month is in balance and the cards are clear. The full standards guide each area below.</p></div>';
         var G = GOALS.filter(function (g) { return g[0] === v.goal; })[0];
         var goal = '<div class="gm-stdgoal"><h3 class="gm-h4">Your Top Goal</h3>' + chips('std', 'goal', v.goal, GOALS.map(function (g) { return [g[0], g[1]]; })) + '<p class="gm-mini" data-goal-line>' + E(G[2]) + '</p></div>';
-        if (!(inc > 0)) return head + goal + '<div class="gm-note">' + U.I('coin') + '<span>Add your take-home pay in My Plan, and each area shows its share. <button type="button" class="gm-linkbtn" data-gm="go:plan">My Plan' + U.I('arrow') + '</button></span></div>';
+        if (!(inc > 0)) return head + goal + '<div class="gm-note">' + U.I('coin') + '<span>Add your take-home pay on One Page, and each area shows its share. <button type="button" class="gm-linkbtn" data-gm="go:sheet">One Page' + U.I('arrow') + '</button></span></div>';
         var rows = '<h3 class="gm-h4">Side by Side</h3><p class="gm-mini">Shares of your take-home pay of ' + M(inc) + ' a month, for a household of ' + v.size + '.</p><div class="gm-stds">' + v.rows.map(function (r) { return stdRow(r, inc); }).join('') + '</div>' +
           '<p class="gm-mini" data-food-ref>Food for a household of ' + v.size + ': about ' + M(v.food) + ' a month on the USDA Moderate-Cost plan (approximate, ' + FOOD_AS_OF + '). Within it, a bigger share for food is fair for your family size.</p>' +
           (v.dti > 0 ? '<p class="gm-mini" data-dti>Debt payments, the home included: ' + v.dti + '% of take-home. Lenders often look for 36% or less of pay before taxes, so their number for you reads a little lower.</p>' : '');
@@ -833,8 +838,9 @@
         var t = c.t, d = c.d; if (!U.live(d.lines).length) return '';
         var v = stdView(d, t), opts = AREAS.map(function (a) { return [a[0], a[1]]; });
         var trims = v.rows.filter(function (r) { return r.lo != null && r.id !== 'give' && r.id !== 'save' && r.flex > 0; });
-        return '<h3 class="gm-h4">Your Household and Pretax Saving</h3><div class="gm-grid3">' + fld('People in your household', 'size', t.size, { ph: '2' }) + fld('Pretax saving', 'pretax', t.pretax, { ph: '0' }) + fld('Entered', 'pretaxF', t.pretaxF, { sel: [['m', 'A Month'], ['p', 'A Paycheck']], re: 1 }) + '</div>' +
-          '<p class="gm-mini">Money set aside before pay counts as saving: a workplace retirement plan with the employer’s part, and an HSA. Lines marked Before Taxes in My Plan stay out of the areas.</p>' +
+        return '<h3 class="gm-h4">Your Household and Pretax Saving</h3><div class="gm-grid3">' + fld('People in your household', 'size', t.size, { ph: '2' }) +
+          '<div class="gm-f" data-pretax="' + v.pretax + '"><span>Pretax saving</span><b class="gm-pretaxv">' + M(v.pretax) + ' a month</b><button type="button" class="gm-linkbtn" data-gm="go:sheet">' + (v.pretax > 0 ? 'Change on One Page' : 'Add Before Taxes on One Page') + U.I('arrow') + '</button></div></div>' +
+          '<p class="gm-mini">Money set aside before pay counts as saving: a workplace retirement plan with the employer’s part, and an HSA. It comes from the Before Taxes lines on One Page, and stays out of the areas.</p>' +
           (trims.length ? '<h3 class="gm-h4">Your Own Trims</h3><p class="gm-mini">Trims come from lines that vary; fixed lines stay as they are.</p><div class="gm-grid3">' + trims.map(function (r) { return fld(r.n + ' (up to ' + M(r.flex) + ')', 'trims.' + r.id, t.trims[r.id] == null ? '' : t.trims[r.id], { ph: r.suggest ? String(r.suggest) : '0' }); }).join('') + '</div>' : '') +
           '<details class="gm-fold gm-stdmap"><summary>Your Lines and Their Areas</summary><p class="gm-mini">Each line finds its area by its name. Choose another area for any line.</p><div class="gm-grid3">' +
           stdLines(d, t).map(function (l) { return fld(l.n + ' (' + M(l.amt) + ')' + (l.fixed ? ', Fixed' : ''), 'areas.' + l.id, l.area, { sel: opts, re: 1 }); }).join('') + '</div></details>' +
@@ -878,7 +884,7 @@
   var BY = {}; TOOLS.forEach(function (t) { BY[t.id] = t; });
 
   window.GGMoneyTools = {
-    v: 'b940', list: TOOLS, get: function (id) { return BY[id] || null; }, tips: TIPS, tipOfWeek: tipOfWeek, tipPart: tipPart, partTips: partTips,
+    v: 'b941', list: TOOLS, get: function (id) { return BY[id] || null; }, tips: TIPS, tipOfWeek: tipOfWeek, tipPart: tipPart, partTips: partTips,
     use: function (u) { U = u; },
     math: { debtSim: debtSim, debtPlan: debtPlan, goalMonthly: goalMonthly, monthsUntil: monthsUntil, efMonths: efMonths, paydays: paydays, extraMonths: extraMonths, billsByCheck: billsByCheck, checksPerYear: checksPerYear,
       homeMeal: homeMeal, grocerySave: grocerySave, carCost: carCost, sideIncome: sideIncome, subsTotals: subsTotals, givingTotal: givingTotal, allowance: allowance, setAside: setAside,
