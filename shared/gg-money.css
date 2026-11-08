@@ -474,3 +474,61 @@ textarea.gm-in{resize:vertical;}
 }
 @media (prefers-reduced-motion:reduce){.gm-tile,.gm-chev{transition:none;}}
 .gm .gm-bar.over span{background:var(--gp);}
+
+/* =====================================================================
+   BLD 940: Grounded Money Standards and the Windfall Planner. Kind words in Grounded's own colors
+   (On Track sage, Room to Grow honey, Fair for Your Family Size sky blue, Above the Range warm gold), never red marks.
+   ===================================================================== */
+.gm{--kon:var(--ok);--kon-s:var(--oks);--kgrow:var(--honey);--kgrow-s:var(--honey-s);--kfair:var(--protect);--kfair-s:var(--protect-s);--kabove:var(--gp);--kabove-s:var(--gps);}
+.gm-seasoncard{display:grid;gap:8px;border-radius:var(--r);padding:18px;border:1px solid var(--line);box-shadow:var(--shadow);background:linear-gradient(180deg,color-mix(in srgb,var(--honey-s) 75%,var(--card)) 0%,var(--card) 80%);}
+.gm-seasoncard.g{background:linear-gradient(180deg,color-mix(in srgb,var(--sage-s) 75%,var(--card)) 0%,var(--card) 80%);}
+.gm-seasoncard .gm-k{color:var(--honey);} .gm-seasoncard.g .gm-k{color:var(--ok);}
+.gm-seasoncard .gm-h3{font-size:28px;}
+.gm-bsteps{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+.gm-bsteps li{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px;min-width:0;}
+.gm-bsteps li .gm-tx{flex:1 1 180px;min-width:0;display:grid;gap:2px;}
+.gm-bsteps li small{color:var(--ink-soft);font-size:14px;line-height:1.35;}
+.gm-bnum{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--honey-s);color:var(--honey);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:17px;}
+.gm-bsteps li.on{background:color-mix(in srgb,var(--sage-s) 55%,var(--card));}
+.gm-bsteps li.on .gm-bnum{background:var(--ok);color:var(--on);}
+.gm-bsteps li.on .gm-bnum .gm-i{font-size:18px;}
+.gm-stdgoal{display:grid;gap:8px;}
+.gm-stdgoal .gm-scale{display:flex;flex-wrap:wrap;gap:8px;}
+.gm-stds{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;}
+.gm-std{display:grid;gap:8px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--kon);border-radius:18px;padding:12px 14px;min-width:0;box-shadow:var(--shadow);}
+.gm-std.k-grow{border-left-color:var(--kgrow);} .gm-std.k-fair{border-left-color:var(--kfair);} .gm-std.k-above{border-left-color:var(--kabove);}
+.gm-std-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+.gm-std-n{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;min-width:0;}
+.gm-std-n .gm-i{font-size:20px;color:var(--pc);}
+.gm-std-w{display:inline-flex;padding:3px 10px;border-radius:999px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.5px;text-transform:uppercase;background:var(--kon-s);color:var(--kon);}
+.k-grow .gm-std-w{background:var(--kgrow-s);color:var(--kgrow);} .k-fair .gm-std-w{background:var(--kfair-s);color:var(--kfair);} .k-above .gm-std-w{background:var(--kabove-s);color:var(--kabove);}
+.gm-std-c{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.gm-std-c>div{display:grid;gap:1px;min-width:0;}
+.gm-std-c b{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.1;overflow-wrap:anywhere;}
+.gm-std-c small{color:var(--ink-soft);font-size:12.5px;line-height:1.3;}
+.gm-std-t{position:relative;height:12px;border-radius:999px;background:var(--card-2);border:1px solid var(--line);}
+.gm-std-b{position:absolute;top:0;bottom:0;border-radius:999px;background:color-mix(in srgb,var(--kon) 30%,transparent);}
+.gm-std-d{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--ink);border:2px solid var(--card);}
+.gm-std-y{font-size:14px;color:var(--ink-soft);}
+.gm-std-other{border-left-color:var(--line);}
+.gm-stdnext{margin:0;padding-left:22px;display:grid;gap:8px;font-size:15px;line-height:1.4;}
+.gm-stdnext li b{display:block;}
+.gm-stdnext li span{color:var(--ink-soft);}
+.gm-stdmap .gm-grid3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.gm-srcline{border-top:1px solid var(--line);padding-top:10px;overflow-wrap:anywhere;}
+.gm-srcline a{color:var(--c);}
+.gm-wsplit{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+.gm-wsplit li{display:grid;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px;}
+.gm-wsplit li small{color:var(--ink-soft);font-size:13.5px;}
+.gm-stdcard{border-top:4px solid var(--pc);}
+.gm-stdcard .gm-k{color:var(--pc);}
+.gm-stdcard .gm-h3{font-size:26px;}
+.gm-stdstrip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:16px;background:var(--card);}
+.gm-stdstrip>.gm-k{flex:1 0 100%;color:var(--pc);}
+.gm-stdchip{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:4px;padding:4px 10px;border-radius:999px;background:var(--kon-s);color:var(--ink);font-size:14px;max-width:100%;}
+.gm-stdchip em{font-style:normal;font-weight:700;color:var(--kon);font-size:13px;}
+.gm-stdchip small{color:var(--ink-soft);}
+.gm-stdchip.k-grow{background:var(--kgrow-s);} .gm-stdchip.k-grow em{color:var(--kgrow);}
+.gm-stdchip.k-fair{background:var(--kfair-s);} .gm-stdchip.k-fair em{color:var(--kfair);}
+.gm-stdchip.k-above{background:var(--kabove-s);} .gm-stdchip.k-above em{color:var(--kabove);}
+@media (max-width:520px){.gm-stds{grid-template-columns:minmax(0,1fr);} .gm-seasoncard .gm-h3{font-size:24px;}}

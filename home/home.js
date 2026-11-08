@@ -55,8 +55,8 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b938', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b935', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=b939';
-  var MONEY_SRC = '/shared/gg-money.js?v=b939';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
+  var GGN_SRC = '/shared/ggn.js?v=b940';
+  var MONEY_SRC = '/shared/gg-money.js?v=b940';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -980,7 +980,7 @@
       (lsVid(F.video) ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-a-sober" data-hm-ls="watch:' + esc(F.video) + '">' + I('play') + 'Watch the Practice</button></div>' : '') +
       '<div class="hm-ls4steps">' + steps + '</div><div class="hm-src" id="hm-ls4src">' + (F.credit ? esc(F.credit) + '.' : '') + '</div></div>');
     // The Sources line (shared/gg-sources.js): Practice: Chris Joy, then the research behind the steps.
-    if (arr(F.sources).length) load('/shared/gg-sources.js?v=b916').then(function () {
+    if (arr(F.sources).length) load('/shared/gg-sources.js?v=b940').then(function () {
       var el = document.getElementById('hm-ls4src'); if (!el || !window.GGSources || typeof GGSources.line !== 'function') return;
       try { var h = GGSources.line(F.sources, { practice: true }); if (h) el.innerHTML = h; } catch (e) {}
     });
@@ -4279,7 +4279,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b930', next: '/shared/home/nextsteps.js?v=b916', legacy: '/shared/home/legacy.js?v=b916', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b939', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b929', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b940', next: '/shared/home/nextsteps.js?v=b940', legacy: '/shared/home/legacy.js?v=b940', guide: '/shared/home/grownup.js?v=b934', talk: '/shared/home/talk.js?v=b940', visit: '/shared/home/visit.js?v=b934', helper: '/shared/home/helper.js?v=b934' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4491,7 +4491,10 @@
     // BLD 939: the new tools of the five parts (Give, Live, Protect, Grow, Plan)
     ['givelog', 'Giving Tracker', 'giving tracker gifts given generosity donations'], ['insure', 'Insurance Overview', 'insurance coverage health life disability renters home auto umbrella'],
     ['blind', 'Blind Spot Check', 'blind spots will beneficiaries power of attorney health care directive credit freeze documents'], ['grow', 'Growth Calculator', 'invest investing compound growth retirement interest index funds'],
-    ['year', 'Year Plan', 'year plan yearly calendar seasons big dates birthdays']];
+    ['year', 'Year Plan', 'year plan yearly calendar seasons big dates birthdays'],
+    // BLD 940: the Grounded Money Standards and the Windfall Planner (Plan part, Membership)
+    ['std', 'Grounded Money Standards', 'standards money standards budget percent percentages how much should i spend rent housing food share of income building season growing season'],
+    ['windfall', 'Windfall Planner', 'windfall tax return tax refund bonus gift inheritance lump sum']];
   function moneyFor() { return !!(S.id && S.p && !isYoung(S.p)); }
   function moneyOff() { if (MN.ctl) { try { MN.ctl.destroy(); } catch (e) {} MN.ctl = null; } }
   function paintMoney(box, sub) {
@@ -4637,7 +4640,7 @@
     setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
   function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
-  var LEARN_JS = '/shared/gg-learn.js?v=b939';
+  var LEARN_JS = '/shared/gg-learn.js?v=b940';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5030,7 +5033,7 @@
       if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }
       else mDialog(T.title, html);
     };
-    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b916')]).then(go);
+    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=b940')]).then(go);
   }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;

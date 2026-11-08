@@ -468,6 +468,11 @@
     nsfsleep: ["Hirshkowitz and colleagues, National Sleep Foundation's sleep duration recommendations (Sleep Health, 2015)", "https://profiles.wustl.edu/en/publications/national-sleep-foundations-updated-sleep-duration-recommendations/"],
     pewparents: ["Pew Research Center, parents, young adult children, and the transition to adulthood (2024)", "https://www.pewresearch.org/wp-content/uploads/sites/20/2024/01/ST_2024.01.25_Parents-Young-Adults_Report.pdf"],
     pewrls: ["Pew Research Center, Religious Landscape Study 2023 to 24 (2025)", "https://www.pewresearch.org/religious-landscape-study/age-distribution/18-29/"],
+    // Grounded Money Standards (GWG BLD 940); the Standards tool draws the same line from shared/gg-money-tools.js.
+    "money-usda-food": ["USDA Food Plans: Cost of Food, U.S. Department of Agriculture (the Moderate-Cost plan and household size factors)", "https://www.fns.usda.gov/research/cnpp/usda-food-plans/cost-food-monthly-reports"],
+    "money-fidelity15": ["Fidelity Investments, How much should I save for retirement? (15% of pay, employer contributions included)", "https://www.fidelity.com/viewpoints/retirement/how-much-money-should-i-save"],
+    "money-cfpb-dti": ["Consumer Financial Protection Bureau, Your Money, Your Goals: debt to income calculator (all debts, the home included, at 36% or less)", "https://files.consumerfinance.gov/f/documents/cfpb_your-money-your-goals_debt_income_calc_tool_2018-11_ADA.pdf"],
+    "money-nfcc": ["National Foundation for Credit Counseling", "https://www.nfcc.org/"],
     shed24: ["Federal Reserve Board, Economic Well-Being of U.S. Households in 2024 (2025)", "https://www.federalreserve.gov/publications/2025-economic-well-being-of-us-households-in-2024-executive-summary.htm"],
     smithsnell: ["Christian Smith with Patricia Snell, Souls in Transition: The Religious and Spiritual Lives of Emerging Adults (2009)", "https://youthandreligion.nd.edu/announcements/book-announcements/souls-in-transition/"],
     sumner: ["Purpose in life across education levels (Applied Research in Quality of Life, 2017)", "https://ideas.repec.org/a/spr/ariqol/v12y2017i1d10.1007_s11482-016-9448-9.html"],
@@ -963,6 +968,7 @@
     "birch:loneliness": ["mcc21", "mcc24", "murthy"],
     "birch:military": ["monew"],
     "birch:money-basics": ["shed24", "cfpbfwb"],
+    "money:standards": ["money-usda-food", "money-fidelity15", "money-cfpb-dti", "money-nfcc", "unknown"],   // BLD 940
     "birch:moving-back": ["pewparents"],
     "birch:moving-out": ["pewparents", "mcc21"],
     "birch:new-city": ["mcc21", "hall18", "murthy"],
