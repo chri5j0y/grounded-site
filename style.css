@@ -634,3 +634,11 @@ section.about-lead{padding-bottom:36px;}
 .gg-jump a:hover,.gg-jump a:focus-visible{border-color:var(--gold);color:var(--gold);}
 html:has(.gg-jump){scroll-padding-top:140px;}
 @media (max-width:600px){.gg-jump ul{padding:8px 16px;}.gg-jump a{font-size:14px;padding:7px 12px;min-height:38px;}}
+
+/* BLD 956: on a phone, a hero with people shows its painting whole, above the words, so no face sits under the words or buttons (Chris, November 9, 2026) */
+@media (max-width:700px){
+.pg-hero.pp,.pg-hero.pp.ph,.pg-hero.pp.strip{display:block;min-height:0;padding:0 0 30px;background-image:none !important;background-color:rgb(var(--shade-rgb,30,20,10));}
+.pg-hero.pp::before{position:relative;inset:auto;display:block;width:100%;aspect-ratio:4/3;margin:0 0 22px;background:var(--img-n,var(--img)) var(--pos-n,center 60%)/cover no-repeat;}
+.pg-hero.pp .pg-hero-in{padding-top:0;}
+.pg-hero.pp.ph .cer-actions{margin-top:22px;padding-top:0;}
+}
