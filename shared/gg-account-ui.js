@@ -147,7 +147,7 @@
   };
   V.join = function (o) {
     if (G().state() === 'out') { var s = V.signin(); return s.then(function () { if (G().state() !== 'out') return V.join(o); }); }
-    var c = sheet('Join the Household', 'Each person keeps their own private account. The Family Kitchen and Grounded Money can be shared between you, and everything else stays yours alone.');
+    var c = sheet('Join the Household', 'Each person keeps their own private account. The Family Kitchen, Grounded Money, and the Family Planner can be shared between you, and everything else stays yours alone.');
     c.body.innerHTML = '<button type="button" class="ga-btn big" data-go="join">Join the Household</button>';
     on('[data-go=join]', function (btn) { busy(btn, true); G().household.join(o.token).then(function () { say('You are in the Household now.', true); setTimeout(close, 1000); }).catch(fail(btn)); });
     return c.p;
@@ -236,10 +236,10 @@
     });
     return c.p;
   };
-  var KIND = { kitchen: 'Family Kitchen', money: 'Grounded Money' };
+  var KIND = { kitchen: 'Family Kitchen', money: 'Grounded Money', planner: 'Family Planner' };   // BLD 950: the Family Planner joins the shared spaces
   V.household = function () {
     if (G().state() === 'out') return V.signin();
-    var c = sheet('Household', 'Up to 6 people, each with their own private account. The Family Kitchen and Grounded Money can be shared between you; everything else stays each person’s own.');
+    var c = sheet('Household', 'Up to 6 people, each with their own private account. The Family Kitchen, Grounded Money, and the Family Planner can be shared between you; everything else stays each person’s own.');
     var paint = function () {
       return G().household.get().then(function (h) {
         if (cur !== c) return;
@@ -254,7 +254,7 @@
               (h.owner && !p.me ? (p.account ? '<button type="button" class="ga-btn sm line" data-rm="' + esc(p.account) + '">Remove</button>' : '<button type="button" class="ga-btn sm line" data-inv="' + esc(p.email) + '">Cancel Invite</button>') : '') + '</li>';
           }).join('') + '</ul></div>' +
           (h.owner && h.people.length < h.seats ? '<form class="ga-card" novalidate><span class="ga-k">Invite</span>' + field('ga-em', 'Their Email', 'email', 'off') + '<button type="submit" class="ga-btn">Send the Invite</button></form>' : '') +
-          '<div class="ga-card"><span class="ga-k">Shared</span><ul class="ga-list">' + ['kitchen', 'money'].map(function (k) {
+          '<div class="ga-card"><span class="ga-k">Shared</span><ul class="ga-list">' + ['kitchen', 'money', 'planner'].map(function (k) {
             var onIt = shared.indexOf(k) >= 0 || h.spaces.some(function (s) { return s.kind === k && s.key; });
             return '<li><div><b>' + KIND[k] + '</b><small>' + (onIt ? 'Shared with your Household' : 'On your own devices') + '</small></div>' + (onIt || !window.GGSync ? '' : '<button type="button" class="ga-btn sm" data-share="' + k + '">Share With Our Household</button>') + '</li>';
           }).join('') + '</ul></div>' +
