@@ -7887,7 +7887,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Your Pine check-in is yours.",
       "body": "Private, just for you. Help is one call or text away.",
-      "say": "Your Pine check-in is private, just for you, and it stays on your device. If thoughts of suicide come, reach out right away. Call or text 988, and tell a trusted adult. And if someone is hurting you, tell a trusted adult outside your home."
+      "say": "Your Pine check-in is private, just for you, and it stays locked with your passcode. If thoughts of suicide come, reach out right away. Call or text 988, and tell a trusted adult. And if someone is hurting you, tell a trusted adult outside your home."
      },
      {
       "k": "big",

@@ -33,7 +33,7 @@
    sense if the prompt is edited later or the notebook moves to another tree.
 
    Firm rules:
-   - Private. Everything stays on the device, encrypted in the teen's own
+   - Private. Everything stays encrypted in the teen's own
      profile, opened only with the teen's passcode. A grown-up never sees
      Next Steps, and Share to Family never includes it. No helper or
      "told to" entries in Pine.
@@ -153,7 +153,7 @@ const INTRO = [
   'Next Steps is your private notebook for what matters to you and where you might go after high school.',
   'Pick any chapter and any prompt. Skip whatever you like. Nothing is due, and nothing here is graded.',
   'Every path is a real path: work, college, trade school, an apprenticeship, the military, service, a gap year, or staying close to home. You can change your mind as often as you need to.',
-  'Your notebook stays on this device, locked with your passcode, so only you can open it. You decide what to print or share, and with whom.',
+  'Your notebook stays locked with your passcode, so only you can open it. You decide what to print or share, and with whom.',
   'When you move on from Pine, your notebook comes with you.'
 ];
 
@@ -166,7 +166,7 @@ const CAUTIONS = [
   'The faith and meaning chapter is opt-in in both wordings, follows the kids\' faith rules, and shows the Plain wording when the profile uses Plain.',
   'Prompts that could stir hard things carry care: 1, so the care line shows under them. If home is not safe, the teen\'s outside help lines (Childhelp, Day One, Love Is Respect, 911, a trusted adult at school) are one tap away.',
   'Never prefill, invent, or rewrite the teen\'s words.',
-  'Everything stays on the device, encrypted in the profile, carried into Birch later and into Oak by Start My Oak, and printed or shared only when the teen chooses.'
+  'Everything stays encrypted in the profile, carried into Birch later and into Oak by Start My Oak, and printed or shared only when the teen chooses.'
 ];
 
 // Ids in gg-sources.js (proposed in p739/out/nextsteps-sources.json).

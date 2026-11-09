@@ -54,12 +54,12 @@
   var FILES = [
     '/shared/gg-parts.js?v=b929',
     '/pine/checkin.js?v=b907',
-    '/pine/practices.js?v=b929',
+    '/pine/practices.js?v=b949',
     '/shared/gg-life.js?v=b907',
     '/pine/life.js?v=b907',
     '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
-    '/shared/guided/pine.js?v=b907'
+    '/shared/guided/pine.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // 181
   var TEND_FALLBACK = ['roots', 'bark', 'leaves', 'branches'];

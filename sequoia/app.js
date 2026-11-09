@@ -11,7 +11,7 @@
      shared/gg-journey.js  the twelve weeks, anchors, and movement levels (AGES.sequoia)
 
    What is saved, and where
-   - Everything stays on this device, locked in the person's own Grounded profile
+   - Everything stays locked in the person's own Grounded profile
      under "sequoia": history (check-ins), tend (daily tending), legacy (the Legacy
      Book), helpersOn and share (helpers), and a few settings.
    - A grown-up profile keeps the age "adult". Its tree choice (GGP.tree) sets where
@@ -481,10 +481,10 @@ function screenHtml(sc, idx) {
   }
   if (sc.kind === 'sit') return `<section class="step-panel" id="step-${idx}" style="--domain-color:${d.color};">${head}
       <div class="sit-with"><div class="step-label">Sit with this <span class="opt">(optional)</span></div><p class="domain-prompt">${d.prompt || 'What is true for you in this part of your life right now?'}</p>
-      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you'd like, or use your phone's microphone key to speak it. It stays on this device." style="--domain-color:${d.color};"></textarea></div>
+      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you'd like, or use your phone's microphone key to speak it. It stays locked and private." style="--domain-color:${d.color};"></textarea></div>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="goToStep(${idx + 1})">${nextLabel}</button></div></section>`;
   if (sc.kind === 'finish') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">All done</div><h2 class="step-title">Thank you</h2></div></div>
-      <p class="lead">${CK.by === 'observed' ? 'These answers are kept apart from ' + escapeHtml(CK.name) + '\'s own, and help the people who care for them notice what is changing.' : CK.by === 'helper' ? 'Your answers stay in your own profile.' : 'Your answers stay on this device. Tap below to see your tree.'}</p>
+      <p class="lead">${CK.by === 'observed' ? 'These answers are kept apart from ' + escapeHtml(CK.name) + '\'s own, and help the people who care for them notice what is changing.' : CK.by === 'helper' ? 'Your answers stay in your own profile.' : 'Your answers stay locked and private. Tap below to see your tree.'}</p>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'self' ? 'See My Tree' : 'See the Results'}</button></div></section>`;
   return '';
 }
@@ -2019,7 +2019,7 @@ function renderLegacy() {
     <div class="btn-row"><button class="btn btn-primary" onclick="legPickBook()">Save or Print My Book</button></div>
     ${LG.pick ? legPickHtml(L) : ''}
     <div id="sq-legsheet" class="sq-legsheet" aria-hidden="true"></div>
-    <p class="gt-small sq-legfoot">Your book stays on this device, locked in your profile. You decide what to print or share, and with whom. If you later use Willow, what you write here comes along into Willow's Cuttings.</p>
+    <p class="gt-small sq-legfoot">Your book stays locked in your profile. You decide what to print or share, and with whom. If you later use Willow, what you write here comes along into Willow's Cuttings.</p>
     <p class="gt-small sq-legfoot">One day, your stories here can help your family write about you. They can use the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>, the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a>, and <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>.</p>`;
 }
 function legChapterHtml(c, L, who) {

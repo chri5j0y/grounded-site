@@ -49,12 +49,12 @@
   var FILES = [
     '/shared/gg-parts.js?v=b929',
     '/birch/checkin.js?v=b929',
-    '/birch/practices.js?v=b929',
+    '/birch/practices.js?v=b949',
     '/shared/gg-life.js?v=b907',
     '/shared/gg-life-kit.js?v=b888',
     '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
-    '/shared/guided/birch.js?v=b929'
+    '/shared/guided/birch.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // 194
   var TEND_FALLBACK = ['roots', 'bark', 'leaves', 'branches'];                    // 207

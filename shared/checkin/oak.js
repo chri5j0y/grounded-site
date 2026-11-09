@@ -36,7 +36,7 @@
     '/shared/gg-life.js?v=b907',
     '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
-    '/shared/guided/oak.js?v=b929'
+    '/shared/guided/oak.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // oak/index.html:1337
   // oak/index.html:1746

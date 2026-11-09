@@ -316,7 +316,7 @@ function addTrip(t){ const h = data(); t.id = t.id || uid(); t.u = Date.now(); h
 // Grounded Money: Groceries and Household for this trip, matched to the plan's own lines by name.
 function young(){ try { if (B.TEEN && B.TEEN()) return true; } catch(e){} return /^(pine|teen|aspen|maple|seed|sprout|kid)$/i.test(B.age ? B.age() : ''); }
 function moneyStore(){ const M = window.GGMoney; if (!M || !M.stores || !window.GGP) return null; const st = M.stores.ggp(); if (!st.ok()) return null; const d = st.get(); return d && arr(d.lines).some(l => l && !l.x) ? {M, st, d} : null; }
-function moneyReady(){ if (window.GGMoney || !window.GGP || !window.GGP.active || !window.GGP.active()) return Promise.resolve(); return loadScript(abs('shared/gg-money.js?v=b942')).catch(() => {}); }
+function moneyReady(){ if (window.GGMoney || !window.GGP || !window.GGP.active || !window.GGP.active()) return Promise.resolve(); return loadScript(abs('shared/gg-money.js?v=b949')).catch(() => {}); }
 function toMoney(t){
   if (young()) return 'Saved here. Grounded Money is for grown-ups, so this trip stays with the list.';
   const g = moneyStore(); if (!g) return 'Saved here. When Grounded Money is set up in Home, trips you log add to it.';

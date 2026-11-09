@@ -120,7 +120,7 @@ const LC_TOPICS = [
     "If they sound low for more than a few weeks, stop eating, sleeping, or going to class, or talk about not wanting to live, encourage the counseling center or a doctor, and call or text 988 together if it's urgent.",
     "Send something small from home: a card, a photo, a favorite snack. It says you're thinking of them without asking anything back."
    ],
-   "you": "Their first year can be a hard year for you too: a quieter house, worry you can't fix, pride you don't always get to share with them. Name that to someone in your own life. If they use Birch, their answers stay on their own device; you'll see only what they choose to share, and Birch sends nothing to anyone. Your trust is part of what helps them find their footing."
+   "you": "Their first year can be a hard year for you too: a quieter house, worry you can't fix, pride you don't always get to share with them. Name that to someone in your own life. If they use Birch, their answers stay private to them; you'll see only what they choose to share, and Birch sends no alerts. Your trust is part of what helps them find their footing."
   },
   "faith": "For some students, faith steadies the first year: a campus ministry, a congregation near school, or a practice from home that still fits. For others, college is where faith questions get louder, and that's a normal part of these years. If faith is part of your life, you might look for one place to bring both your gratitude and your questions. If it isn't, the same need is real: a few people who share what matters most to you, and a quiet habit that steadies you on a hard day.",
   "practices": [
@@ -217,7 +217,7 @@ const LC_TOPICS = [
     "Name the strengths you see that have nothing to do with school: reliability, skill with their hands, how they treat people.",
     "If they're between things for a while and seem low, stuck, or hopeless, ask how they're really doing, and point to a doctor or counselor."
    ],
-   "you": "Their road may not be the one you pictured, and that can bring its own grief. Name that to someone else, not to them. If they use Birch, their answers stay on their own device; you see only what they choose to share. What helps most is belief that they can find their way, and a steady place to come back to."
+   "you": "Their road may not be the one you pictured, and that can bring its own grief. Name that to someone else, not to them. If they use Birch, their answers stay private to them; you see only what they choose to share. What helps most is belief that they can find their way, and a steady place to come back to."
   },
   "faith": "For some, faith shapes this question: work as a calling, a way to serve, or a gift to use well. Prayer, a mentor in a faith community, or quiet time can help someone listen for what's theirs to do. For others, the same question points to their values and the people they want to help. Either way, good work done with care for others carries its own dignity.",
   "practices": [
@@ -313,7 +313,7 @@ const LC_TOPICS = [
     "Help them keep a routine while they're between things, and invite them to things that have nothing to do with the decision.",
     "Notice what they're learning and how they're growing, out loud."
    ],
-   "you": "You may feel your own disappointment, worry about money, or fear for their future. Those are real; bring them to a friend, a partner, or your own support first. If they use Birch, their answers stay on their own device, and you see only what they choose to share. Your calm can help them make a clear decision."
+   "you": "You may feel your own disappointment, worry about money, or fear for their future. Those are real; bring them to a friend, a partner, or your own support first. If they use Birch, their answers stay private to them, and you see only what they choose to share. Your calm can help them make a clear decision."
   },
   "faith": "For some, faith speaks into a change of plans: a sense of being led, a calling that gets clearer by trying, or comfort that their worth doesn't rest on finishing one road. For others, meaning comes through values and the people they want to serve. If faith is part of your life, you might bring the decision there honestly, uncertainty and all. Either way, changing course can be part of finding what's truly yours to do.",
   "practices": [
@@ -408,7 +408,7 @@ const LC_TOPICS = [
     "If they're working to pay for school, talk honestly about the load, and whether any practical help is possible.",
     "If low mood, numbness, or exhaustion lasts two weeks or more, encourage a doctor or counselor. If they talk about not wanting to live, call or text 988 together."
    ],
-   "you": "Look gently at your own expectations too, and ask whose goal this is. Warmth plus clear, reasonable expectations helps young adults do well. If they use Birch, their answers stay on their own device, and you see only what they choose to share. Your steady love on a bad-grade day teaches more than any lecture."
+   "you": "Look gently at your own expectations too, and ask whose goal this is. Warmth plus clear, reasonable expectations helps young adults do well. If they use Birch, their answers stay private to them, and you see only what they choose to share. Your steady love on a bad-grade day teaches more than any lecture."
   },
   "faith": "Some people find that faith loosens the grip of perfectionism: the sense of being loved and worthy before achieving anything, or a rhythm of rest like a Sabbath. If faith is part of your life, you might bring the pressure there honestly, or take one hour a week to set the work down. If it isn't, the same truth stands: your worth isn't something you earn with grades or hours.",
   "practices": [
@@ -502,7 +502,7 @@ const LC_TOPICS = [
     "Talk honestly about driving if it comes up. Young drivers with ADHD have a somewhat higher crash risk; phones out of reach and extra focus help.",
     "Notice and name their strengths often. Many have heard far more about what went wrong than what went right."
    ],
-   "you": "Living with ADHD affects partners, roommates, and families too, and your patience has limits. Rest matters for you as well. If you have ADHD yourself, your story can help: tell them what worked for you. If they use Birch, their answers stay on their own device, and you see only what they choose to share."
+   "you": "Living with ADHD affects partners, roommates, and families too, and your patience has limits. Rest matters for you as well. If you have ADHD yourself, your story can help: tell them what worked for you. If they use Birch, their answers stay private to them, and you see only what they choose to share."
   },
   "faith": "Many traditions teach that each person is made with purpose and their own gifts, and is loved before accomplishing anything. If faith is part of your life, that can be a steady place on a day when your brain won't cooperate. If it isn't, the same truth holds: your worth isn't measured in tasks finished, and you can stop fighting who you are.",
   "practices": [
@@ -599,7 +599,7 @@ const LC_TOPICS = [
     "Help them keep an eye on practical dates if they'd like: health insurance, loan grace periods, leases.",
     "If they seem low, stuck, or withdrawn for two weeks or more, ask how they're really doing, and encourage a doctor or counselor. If they talk about not wanting to live, call or text 988 together."
    ],
-   "you": "You may feel your own worry about their future, or pressure from people asking you about them. Bring that to your own people. If they use Birch, their answers stay on their own device, and you see only what they choose to share. Your patience, and your belief that they'll find their way, matters more than any advice."
+   "you": "You may feel your own worry about their future, or pressure from people asking you about them. Bring that to your own people. If they use Birch, their answers stay private to them, and you see only what they choose to share. Your patience, and your belief that they'll find their way, matters more than any advice."
   },
   "faith": "For some, this season raises calling questions: what am I made for, where am I being led, what's mine to do? Prayer, a mentor in a faith community, or quiet time can help someone listen. For others, the same question points to their values and the people they want to help. Either way, the search itself is part of how purpose grows.",
   "practices": [
@@ -1281,7 +1281,7 @@ const LC_TOPICS = [
     "Teach one skill when they ask: reading a lease, setting up a bill, cooking a few meals, a basic repair.",
     "Agree on how you'll stay in touch, and let them set the pace.",
     "If you help with money, be clear about what, for how long, and any expectations, so no one is guessing.",
-    "If they use Birch and turn you on as a helper, you'll see only what they choose to share. Their answers stay on their own device."
+    "If they use Birch and turn you on as a helper, you'll see only what they choose to share. Their answers stay private to them."
    ],
    "you": "Watching someone you love move out can bring pride and an empty space at the same time. Let yourself feel both, and fill some of that space with your own people and plans. Your steady support from a little farther away is one of the best gifts you can give."
   },
@@ -1838,7 +1838,7 @@ const LC_TOPICS = [
     "“One good friend is a real start.”",
     "“I can be the one who goes first.”"
    ],
-   "people": "To a coworker or classmate: “A few of us are getting food after. Want to come?” To an old friend: “I miss you. Can we get a call on the calendar?” To someone new at a group: “I'm new here too. How long have you been coming?” If you'd like company on this, you can turn on a helper in Birch, like a roommate, friend, or family member. A helper sees only what you choose to share, and your answers stay on your device."
+   "people": "To a coworker or classmate: “A few of us are getting food after. Want to come?” To an old friend: “I miss you. Can we get a call on the calendar?” To someone new at a group: “I'm new here too. How long have you been coming?” If you'd like company on this, you can turn on a helper in Birch, like a roommate, friend, or family member. A helper sees only what you choose to share, and your answers stay locked and private."
   },
   "helper": {
    "feel": "They may say they're fine, that they're just busy, or that they like being alone. Some do, and that's okay. Others feel embarrassed that they don't have many friends after school, especially when everyone online seems to have a crowd. They may worry that asking people to hang out looks desperate. They are an adult building a new social life, often in a new job, schedule, or place, and they may not want to be managed.",
@@ -2238,7 +2238,7 @@ const LC_TOPICS = [
     "“I deserve to feel safe, all the time.”",
     "“Asking for help is strong.”"
    ],
-   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” Love Is Respect, the National Domestic Violence Hotline, Day One, and 911 are there any time. Your Birch answers stay on your device behind your own passcode. Birch sends nothing to anyone, and a helper never sees your private notes, so you stay in charge of who you tell."
+   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” Love Is Respect, the National Domestic Violence Hotline, Day One, and 911 are there any time. Your Birch answers stay locked behind your own passcode. Birch sends no alerts, and a helper never sees your private notes, so you stay in charge of who you tell."
   },
   "helper": {
    "feel": "They may feel confused, ashamed, scared, or loyal to the person hurting them. Many don't call it abuse. They may defend the partner, play down what happened, or go back after leaving. Leaving often takes more than one try. Control often works by cutting a person off from the people who love them, so pulling away from you may be part of the pattern, not a rejection of you. They're an adult, and the decisions are theirs, which can be hard to watch.",
@@ -2440,7 +2440,7 @@ const LC_TOPICS = [
     "“Their worry is about love. My life is still mine to steer.”",
     "“We are both learning how to do this.”"
    ],
-   "people": "Try: “I know you worry because you care. I've thought this through, and I'm going to try it. I'll tell you how it goes.” Or: “I'd love your help with this, and I'd like to make the final call.” Or, about money: “Can we write down what you're helping with and for how long, so we're both clear?” If you're on a parent's health plan, statements may be mailed to them; you can call the plan and ask how to keep your information private. In Birch, your answers stay on this device, and a helper sees only what you choose to share."
+   "people": "Try: “I know you worry because you care. I've thought this through, and I'm going to try it. I'll tell you how it goes.” Or: “I'd love your help with this, and I'd like to make the final call.” Or, about money: “Can we write down what you're helping with and for how long, so we're both clear?” If you're on a parent's health plan, statements may be mailed to them; you can call the plan and ask how to keep your information private. In Birch, your answers stay locked and private, and a helper sees only what you choose to share."
   },
   "helper": {
    "feel": "Young adults want two things at once: to be trusted to run their own lives, and to stay close to the people who raised them. Many still need practical help, and needing it can make them feel smaller, or quick to bristle. When they push back, they're usually not rejecting you. They're practicing being an adult with you, which is a sign the relationship matters to them.",
@@ -2642,7 +2642,7 @@ const LC_TOPICS = [
     "“I deserve support and honest answers.”",
     "“No one gets to pressure me.”"
    ],
-   "people": "To a partner, parent, or friend: “I have something important to tell you. Right now I mostly need you to listen.” If you'd like help with something specific: “Could you come with me to an appointment?” If someone is pushing: “I hear you. I need time and space to think, and I'm asking you to give me that.” If you're on a parent's health plan, statements may be mailed to the policyholder; you can call the plan and ask how to keep your information private. In Birch, your answers stay on this device, and a helper sees only what you choose to share. No alert goes to anyone."
+   "people": "To a partner, parent, or friend: “I have something important to tell you. Right now I mostly need you to listen.” If you'd like help with something specific: “Could you come with me to an appointment?” If someone is pushing: “I hear you. I need time and space to think, and I'm asking you to give me that.” If you're on a parent's health plan, statements may be mailed to the policyholder; you can call the plan and ask how to keep your information private. In Birch, your answers stay locked and private, and a helper sees only what you choose to share. No alert goes to anyone."
   },
   "helper": {
    "feel": "When a young adult tells you about an unplanned pregnancy, they're often frightened of how you'll react. They may be in shock, numb, or carrying many feelings at once, and those feelings may change from day to day. What they usually need most from you is calm, privacy, and room to think, along with practical help when they ask for it.",
@@ -2743,7 +2743,7 @@ const LC_TOPICS = [
     "“Needing help doesn't make me a bad parent.”",
     "“Young doesn't mean less. My baby has me.”"
    ],
-   "people": "Try: “I'm doing okay, and I'm more tired than I expected. Could you watch the baby Saturday morning so I can sleep?” To your own parents: “I really value your help. I'd like to make the final call on how we do bedtime.” To the other parent: “Can we sit down this week and write out a schedule we can both keep?” In Birch, your answers stay on this device, and a helper sees only what you choose to share."
+   "people": "Try: “I'm doing okay, and I'm more tired than I expected. Could you watch the baby Saturday morning so I can sleep?” To your own parents: “I really value your help. I'd like to make the final call on how we do bedtime.” To the other parent: “Can we sit down this week and write out a schedule we can both keep?” In Birch, your answers stay locked and private, and a helper sees only what you choose to share."
   },
   "helper": {
    "feel": "Young parents often feel watched and judged, and they may be quick to hear criticism even in friendly advice. Many are exhausted, short on money, and lonely as friends' lives move in different directions. Under it, most want two things: to be seen as the capable parent they're becoming, and to have real, practical help without strings.",
@@ -2852,7 +2852,7 @@ const LC_TOPICS = [
     "“I will feel like myself again.”",
     "“Getting help is something I'm doing for my baby, too.”"
    ],
-   "people": "Try: “I'm not okay, and I don't think it's just being tired. Can you help me call the doctor?” To a partner: “I need you to take the night feeding twice this week so I can sleep.” Dads and partners: “I've been short-tempered and checked out since the baby came. I want to talk to someone about it.” In Birch, your answers stay on this device, and a helper sees only what you choose to share. No alert goes to anyone."
+   "people": "Try: “I'm not okay, and I don't think it's just being tired. Can you help me call the doctor?” To a partner: “I need you to take the night feeding twice this week so I can sleep.” Dads and partners: “I've been short-tempered and checked out since the baby came. I want to talk to someone about it.” In Birch, your answers stay locked and private, and a helper sees only what you choose to share. No alert goes to anyone."
   },
   "helper": {
    "feel": "New parents often hide how bad they feel. They may fear being judged, or that saying it out loud means they're failing their baby. Some don't recognize it as depression or anxiety at all, especially dads, whose signs can look like anger, overwork, drinking, or withdrawal. They may need you to notice, to name it gently, and to help them take the first step.",
@@ -2950,7 +2950,7 @@ const LC_TOPICS = [
     "“My grief is as big as my love.”",
     "“I get to grieve in my own way, and in my own time.”"
    ],
-   "people": "Try: “We lost the baby. We'd love your support, and it helps when people say something.” Or: “I'm not ready to talk about it, but I'd love company.” To a partner: “I'm grieving differently from you, and I still need you. Can we talk tonight?” In Birch, your answers stay on this device, and a helper sees only what you choose to share."
+   "people": "Try: “We lost the baby. We'd love your support, and it helps when people say something.” Or: “I'm not ready to talk about it, but I'd love company.” To a partner: “I'm grieving differently from you, and I still need you. Can we talk tonight?” In Birch, your answers stay locked and private, and a helper sees only what you choose to share."
   },
   "helper": {
    "feel": "They may feel their grief is invisible, especially after an early loss or one few people knew about. Silence from others can hurt as much as the wrong words. Many blame themselves without reason. Partners, including dads, often get overlooked. Young adults may also face a world of friends who don't know what to say, and a school or job that expects them back fast.",
@@ -3077,7 +3077,7 @@ const LC_TOPICS = [
     "Encourage a doctor or counselor if it has lasted weeks or is blocking work, school, or sleep. Offer to help find one, and let them make the call.",
     "If panic comes with chest pain, fainting, or trouble breathing and no one is sure what's happening, get medical help to be safe."
    ],
-   "you": "Their anxiety can stir up your own. Keep your own sleep, movement, and people. You are a companion, not a cure. If they use Birch, they choose what to share with you; their answers stay on their own device."
+   "you": "Their anxiety can stir up your own. Keep your own sleep, movement, and people. You are a companion, not a cure. If they use Birch, they choose what to share with you; their answers stay private to them."
   },
   "faith": "If faith is part of your life, you may find steadiness in a breath prayer, a psalm or sacred text, or a practice of handing over what you can't control. You can reach for peace from right where you are. If faith isn't part of your life, music, time outside, or a few slow breaths can do the same steadying work.",
   "practices": [
@@ -3171,7 +3171,7 @@ const LC_TOPICS = [
     "If they mention guns or a lot of medicine where they live, ask whether someone they trust could hold them for now.",
     "If they share thoughts of suicide, stay with them, thank them for telling you, and call or text 988 together."
    ],
-   "you": "Supporting someone who is depressed is tiring, and their mood can pull on yours. Keep your own sleep, walks, and people, and share the load with others who love them. If they use Birch, they choose what you see; private notes are never shown to a helper, and nothing is sent to anyone, so your own checking in matters."
+   "you": "Supporting someone who is depressed is tiring, and their mood can pull on yours. Keep your own sleep, walks, and people, and share the load with others who love them. If they use Birch, they choose what you see; private notes are never shown to a helper, and no alert goes to anyone, so your own checking in matters."
   },
   "faith": "If faith is part of your life, honest sorrow has a long history there. Many traditions hold lament, words for feeling far away or empty, and the comfort of being carried by a community on dark days. Feeling numb doesn't mean you've failed at faith. If faith isn't part of your life, the same steadiness can come from people who keep showing up for you.",
   "practices": [
@@ -3266,7 +3266,7 @@ const LC_TOPICS = [
     "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911.",
     "Learn about it. NAMI offers classes and support groups for families and friends."
    ],
-   "you": "This can be one of the most frightening things to watch in someone you love. You don't have to understand it all to be helpful. Get support for yourself, through NAMI's family programs, a counselor, or people you trust. If they use Birch, they choose what you see; private notes are never shown, and nothing is sent to anyone."
+   "you": "This can be one of the most frightening things to watch in someone you love. You don't have to understand it all to be helpful. Get support for yourself, through NAMI's family programs, a counselor, or people you trust. If they use Birch, they choose what you see; private notes are never shown, and no alert goes to anyone."
   },
   "faith": "If faith is part of your life, a faith leader or community can be one more steady presence, and a source of comfort while you get checked out. Strong spiritual experiences can be meaningful, and they can also overlap with symptoms when sleep and stress are way off, so it helps to talk with both a trusted faith leader and a doctor. If faith isn't part of your life, the same steadiness can come from people who know you well.",
   "practices": [
@@ -3365,7 +3365,7 @@ const LC_TOPICS = [
     "If they're ready for help, offer to look at options together: a doctor, therapy, a support group, or the SAMHSA National Helpline.",
     "Find support for yourself, such as SMART Recovery Family and Friends or a therapist."
    ],
-   "you": "Loving someone who uses a lot is exhausting, and you can't control their choices. You can take care of yourself, keep the door open, and stay safe. If they use Birch, they choose what you see; their answers stay on their own device, and no alert goes to anyone."
+   "you": "Loving someone who uses a lot is exhausting, and you can't control their choices. You can take care of yourself, keep the door open, and stay safe. If they use Birch, they choose what you see; their answers stay private to them, and no alert goes to anyone."
   },
   "faith": "If faith is part of your life, it may offer community, a sense of a higher power, and grace that walks beside accountability. Many recovery paths draw on these. If faith isn't part of your life, your values, your people, and a recovery community can do the same steadying work.",
   "practices": [
@@ -3463,7 +3463,7 @@ const LC_TOPICS = [
     "If they agree, ask how you can help in their treatment plan. Many teams welcome a support person.",
     "Get emergency help for fainting, chest pain, confusion, or a racing or very slow heartbeat."
    ],
-   "you": "Loving someone with an eating disorder is exhausting and scary. ANAD has support groups for loved ones, too. Keep your own meals, rest, and people. If they use Birch, they choose what you see; their answers stay on their own device, and no alert goes to anyone."
+   "you": "Loving someone with an eating disorder is exhausting and scary. ANAD has support groups for loved ones, too. Keep your own meals, rest, and people. If they use Birch, they choose what you see; their answers stay private to them, and no alert goes to anyone."
   },
   "faith": "If faith is part of your life, you may find comfort in being loved apart from how you eat or look, or in a tradition that treats the body as a gift and the shared table as sacred. If a faith practice like fasting gets tangled up with food rules, talk with a trusted faith leader and your treatment team; many traditions excuse people who are unwell from fasting. If faith isn't part of your life, the same truth holds: your worth isn't measured by your body.",
   "practices": [
@@ -3556,7 +3556,7 @@ const LC_TOPICS = [
     "Plan for 26 together, a few months ahead: a job plan, the marketplace, or public programs. In Minnesota, MNsure can help.",
     "If money is tight, point them to Minnesota 211 for local help, and remind them that clinics often have payment plans or sliding fees."
    ],
-   "you": "Letting go of the forms can feel strange, and it's a real gift. You're teaching a skill they'll use for life. If they use Birch, they choose what to share with you; their answers stay on their own device."
+   "you": "Letting go of the forms can feel strange, and it's a real gift. You're teaching a skill they'll use for life. If they use Birch, they choose what to share with you; their answers stay private to them."
   },
   "faith": "If faith is part of your life, caring for your body may feel like caring for a gift, and a faith community can sometimes connect you with people who know how to navigate insurance or find a clinic. If faith isn't part of your life, the same idea holds: your health is worth your time.",
   "practices": [
@@ -3987,7 +3987,7 @@ const LC_TOPICS = [
    "If it was someone you're dating or with: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time. Or the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
    "If intimate images were taken or shared: StopNCII (stopncii.org) for adults, or Take It Down (takeitdown.ncmec.org) for images from before you were 18.",
    "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time.",
-   "In Birch, everything you write stays on your device, just for you, even with a helper."
+   "In Birch, everything you write stays locked and private, just for you, even with a helper."
   ],
   "more": [
    [
@@ -4841,7 +4841,7 @@ const LC_TOPICS = [
     "If money or forms are a barrier, help them ask the school's financial aid office and Disability Hub MN about resources.",
     "Notice their strengths out loud. Many students with disabilities hear far more about what's hard."
    ],
-   "you": "Stepping back after years of advocating can feel like letting go of the wheel. It's also how they become their own best advocate. If they use Birch, they choose what to share with you; their answers stay on their own device."
+   "you": "Stepping back after years of advocating can feel like letting go of the wheel. It's also how they become their own best advocate. If they use Birch, they choose what to share with you; their answers stay private to them."
   },
   "faith": "If faith is part of your life, a campus ministry or a congregation near school can be a place to belong, and it's fair to ask about access there too: a ramp, a sound system, a quiet place. If faith isn't part of your life, any community built around what you care about can do the same.",
   "practices": [
@@ -5174,7 +5174,7 @@ const LC_TOPICS = [
     "Learn about the illness, and find support for yourself. NAMI's Family-to-Family classes are for family and friends.",
     "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911."
    ],
-   "you": "Loving someone with a serious mental illness can be a long road, with good years and hard weeks. Get your own support, rest, and people. If they use Birch, they choose what you see; private notes are never shown, and nothing is sent to anyone."
+   "you": "Loving someone with a serious mental illness can be a long road, with good years and hard weeks. Get your own support, rest, and people. If they use Birch, they choose what you see; private notes are never shown, and no alert goes to anyone."
   },
   "faith": "If faith is part of your life, a faith community can be one more steady place, with people who knew you before and will know you after. Some people also carry hard messages, like being told to just pray more, or that treatment shows weak faith. Many traditions welcome both faith and good treatment, and a trusted faith leader can talk that through with you. If faith isn't part of your life, steadiness can come from people who know you well.",
   "practices": [

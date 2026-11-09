@@ -21,7 +21,7 @@
   'use strict';
   window.GGScreen = window.GGScreen || {};
   if (window.GGScreen.legacy) return;
-  var FILES = ['/sequoia/legacy.js?v=b787', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
+  var FILES = ['/sequoia/legacy.js?v=b949', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
 
   function open(ctx) {
     var N = window.GGScrNotebook, esc = N.esc, LEG = window.SEQUOIA_LEGACY || { chapters: [], intro: [] };
@@ -46,7 +46,7 @@
       home: function () {
         return { title: 'Your Legacy Book', intro: LEG.intro || [], pickLabel: 'Save or Print My Book',
           count: function (n) { return n ? n + ' ' + (n === 1 ? 'page' : 'pages') + ' written so far.' : 'Ready when you are. One story is enough to start.'; },
-          foot: '<p class="ggnb-foot">Your book stays on this device, locked in your profile. You decide what to print or share, and with whom. If you later use Willow, what you write here comes along into Willow\'s Cuttings.</p>' +
+          foot: '<p class="ggnb-foot">Your book stays locked in your profile. You decide what to print or share, and with whom. If you later use Willow, what you write here comes along into Willow\'s Cuttings.</p>' +
             '<p class="ggnb-foot">One day, your stories here can help your family write about you. They can use the <a href="/obituary-helper.html">Obituary Helper</a>, the <a href="/eulogy-helper.html">Eulogy Helper</a>, and <a href="/planning-a-farewell.html">Planning a Farewell</a>.</p>' };
       },
       chSub: function (c, L, n, closed) { return closed ? 'Opens only when you choose' : n ? n + ' of ' + (c.prompts || []).length + ' written' : (c.prompts || []).length + ' prompts'; },

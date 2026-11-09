@@ -178,10 +178,10 @@ window.GG_LEARN = {
         ],
         [
          "Private by design",
-         "Everything stays on this device"
+         "Everything stays locked and private"
         ]
        ],
-       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has more than seventy guides for hard talks, from a pet dying to scary news. Health and Ability, in Settings, helps Maple fit each child's body and health. And everything stays on this device, yours alone."
+       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has more than seventy guides for hard talks, from a pet dying to scary news. Health and Ability, in Settings, helps Maple fit each child's body and health. And everything stays locked and private, yours alone."
       },
       {
        "k": "big",
@@ -331,10 +331,10 @@ window.GG_LEARN = {
         ],
         [
          "Private by design",
-         "Everything stays on this device"
+         "Everything stays locked and private"
         ]
        ],
-       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has more than seventy guides for hard talks, from a pet dying to scary news. Health and Ability, in Settings, helps Maple fit each child's body and health. And everything stays on this device, yours alone."
+       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has more than seventy guides for hard talks, from a pet dying to scary news. Health and Ability, in Settings, helps Maple fit each child's body and health. And everything stays locked and private, yours alone."
       },
       {
        "k": "big",
@@ -1286,10 +1286,10 @@ window.GG_LEARN = {
         ],
         [
          "Open, gentle questions",
-         "Every answer stays on this device"
+         "Every answer stays locked and private"
         ]
        ],
-       "say": "Next, how a check-in works. A child picks On my own, or With a grown-up. With a grown-up adds a short tip under every question. Each grade has its own questions. Each part has four short questions, and any part can be skipped. Every question is open and gentle, and every answer stays on this device. If an answer leans hard, the For Grown-ups box gives you a gentle way to start talking."
+       "say": "Next, how a check-in works. A child picks On my own, or With a grown-up. With a grown-up adds a short tip under every question. Each grade has its own questions. Each part has four short questions, and any part can be skipped. Every question is open and gentle, and every answer stays locked and private. If an answer leans hard, the For Grown-ups box gives you a gentle way to start talking."
       },
       {
        "k": "points",
@@ -1548,9 +1548,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Everything stays on this device.",
-       "sub": "Everything stays on this device.",
-       "say": "Everything in Maple stays on this device. It is yours alone."
+       "h": "Everything stays locked and private.",
+       "sub": "Everything stays locked and private.",
+       "say": "Everything in Maple stays locked and private. It is yours alone."
       },
       {
        "k": "points",
@@ -3372,7 +3372,7 @@ window.GG_LEARN = {
         ],
         [
          "Saved",
-         "On this device only"
+         "Locked and private"
         ],
         [
          "At the bottom",
@@ -3383,7 +3383,7 @@ window.GG_LEARN = {
         "See my tree"
        ],
        "tap": 0,
-       "say": "Maple asks open, gentle questions, and every answer is welcome. It asks nothing about harm, and everything stays on this device. One quiet line of type sits at the bottom of the check-in, pointing your child to a trusted grown-up. If an answer about feeling alone, kindness from other kids, or hope leans hard, the For Grown-ups box gives you a gentle way to start talking. So your noticing, and your open questions, matter most."
+       "say": "Maple asks open, gentle questions, and every answer is welcome. It asks nothing about harm, and everything stays locked and private. One quiet line of type sits at the bottom of the check-in, pointing your child to a trusted grown-up. If an answer about feeling alone, kindness from other kids, or hope leans hard, the For Grown-ups box gives you a gentle way to start talking. So your noticing, and your open questions, matter most."
       },
       {
        "k": "big",
@@ -3717,7 +3717,7 @@ window.GG_LEARN = {
          "The weekly thoughts they write"
         ]
        ],
-       "say": "Here is what you can see. The big picture, which means their check-ins, their tree, how many days they tended it, and which parts they are tending. If your child says they feel alone inside, that other kids are unkind, or that good things feel far away, you always see it, with a gentle idea for a talk, so you can help. The weekly thoughts they write are theirs, and they can share one with you anytime. Everything stays on this device."
+       "say": "Here is what you can see. The big picture, which means their check-ins, their tree, how many days they tended it, and which parts they are tending. If your child says they feel alone inside, that other kids are unkind, or that good things feel far away, you always see it, with a gentle idea for a talk, so you can help. The weekly thoughts they write are theirs, and they can share one with you anytime. Everything stays locked and private."
       },
       {
        "k": "big",
@@ -5653,8 +5653,8 @@ window.GG_LEARN = {
        "h": "Yours to keep",
        "items": [
         [
-         "Everything stays on your device",
-         "Your tree stays on this device"
+         "Everything stays locked and private",
+         "Your tree stays locked and private"
         ],
         [
          "Your grown-up sees the big picture",
@@ -5665,7 +5665,7 @@ window.GG_LEARN = {
          "One tap, any time"
         ]
        ],
-       "say": "Aspen is yours. Your tree stays right here, on this device. Your grown-up sees the big picture of your tree, plus a few answers about friends and hope, so they can help. And the Need help now button is always one tap away."
+       "say": "Aspen is yours. Your tree stays locked and private, just for you. Your grown-up sees the big picture of your tree, plus a few answers about friends and hope, so they can help. And the Need help now button is always one tap away."
       },
       {
        "k": "points",
@@ -5814,8 +5814,8 @@ window.GG_LEARN = {
        "h": "Yours to keep",
        "items": [
         [
-         "Everything stays on your device",
-         "Your tree stays on this device"
+         "Everything stays locked and private",
+         "Your tree stays locked and private"
         ],
         [
          "Your grown-up sees the big picture",
@@ -5826,7 +5826,7 @@ window.GG_LEARN = {
          "One tap, any time"
         ]
        ],
-       "say": "Aspen is yours. Your tree stays right here, on this device. Your grown-up sees the big picture of your tree, plus a few answers about friends and hope, so they can help. And the Need help now button is always one tap away."
+       "say": "Aspen is yours. Your tree stays locked and private, just for you. Your grown-up sees the big picture of your tree, plus a few answers about friends and hope, so they can help. And the Need help now button is always one tap away."
       },
       {
        "k": "points",
@@ -6039,7 +6039,7 @@ window.GG_LEARN = {
          "People you can reach, any time"
         ]
        ],
-       "say": "At the bottom of every check-in sits one quiet line. It reminds you to tell a trusted grown-up right away, any time you feel unsafe. Your answers stay on this device, and nothing is sent anywhere. And Need help now, next to your name, shows people you can reach any time."
+       "say": "At the bottom of every check-in sits one quiet line. It reminds you to tell a trusted grown-up right away, any time you feel unsafe. Your answers stay locked and private, and only you can open them. And Need help now, next to your name, shows people you can reach any time."
       },
       {
        "k": "big",
@@ -7029,7 +7029,7 @@ window.GG_LEARN = {
         "Just try it without saving"
        ],
        "tap": 0,
-       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know, and your answers stay right here. A grown-up agrees when your profile is made. The grown-up also picks the wording. Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores compare the same either way. A grown-up can change it later on your page in the Grown-ups tab, or in Settings, and a school's Aspen Guide can set Plain for everyone there."
+       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays locked with a passcode only you know, and your answers stay private. A grown-up agrees when your profile is made. The grown-up also picks the wording. Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores compare the same either way. A grown-up can change it later on your page in the Grown-ups tab, or in Settings, and a school's Aspen Guide can set Plain for everyone there."
       },
       {
        "k": "points",
@@ -8966,7 +8966,7 @@ window.GG_LEARN = {
         "See the help list"
        ],
        "tap": 0,
-       "say": "Aspen helps you notice too. Every question is open and curious, and Aspen asks nothing about harm. When an answer about feeling lonely, how people treat them, or feeling hopeful leans hard, you see a marker on that ring that says Worth a conversation, with what they said and a gentle way to start. Aspen sends nothing anywhere, and it cannot follow up on its own. That part is yours."
+       "say": "Aspen helps you notice too. Every question is open and curious, and Aspen asks nothing about harm. When an answer about feeling lonely, how people treat them, or feeling hopeful leans hard, you see a marker on that ring that says Worth a conversation, with what they said and a gentle way to start. Aspen keeps every answer private and sends no alerts, and it cannot follow up on its own. That part is yours."
       },
       {
        "k": "big",
@@ -10825,7 +10825,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Your answers are yours.",
            "sub": "Locked on this device with your own passcode.",
-           "say": "Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you."
+           "say": "Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays private, just for you."
           },
           {
            "k": "tabs",
@@ -10949,7 +10949,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Your answers are yours.",
            "sub": "Locked on this device with your own passcode.",
-           "say": "Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you."
+           "say": "Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays private, just for you."
           },
           {
            "k": "tabs",
@@ -11032,7 +11032,7 @@ window.GG_LEARN = {
           {
            "k": "card",
            "title": "Your Private Profile",
-           "body": "Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.",
+           "body": "Your tree, practices, and check-ins stay locked with a passcode only you know.",
            "fields": [
             [
              "Your name",
@@ -11048,7 +11048,7 @@ window.GG_LEARN = {
             "Maybe Later"
            ],
            "tap": 0,
-           "say": "First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode."
+           "say": "First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode."
           },
           {
            "k": "flow",
@@ -11123,8 +11123,8 @@ window.GG_LEARN = {
              "About every part of your tree"
             ],
             [
-             "Stays on this device",
-             "Nothing is sent anywhere"
+             "Locked and private",
+             "Only you can open it"
             ],
             [
              "A quiet line",
@@ -11138,7 +11138,7 @@ window.GG_LEARN = {
            "cue": {
             "at": [0, 1, 2, 3]
            },
-           "say": "Every Oak question is open and curious, and Oak asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. One quiet line of type sits at the bottom of the check-in. And See help lines opens Help Is Close, with people you can reach any time."
+           "say": "Every Oak question is open and curious, and Oak asks nothing about harm. Your answers stay locked and private, and only you can open them. One quiet line of type sits at the bottom of the check-in. And See help lines opens Help Is Close, with people you can reach any time."
           },
           {
            "k": "points",
@@ -17138,7 +17138,7 @@ window.GG_LEARN = {
       "items": [
        [
         "Locked in their profile",
-        "Kept on this device"
+        "Kept locked and private"
        ],
        [
         "What Matters to Me",
@@ -17149,7 +17149,7 @@ window.GG_LEARN = {
         "Shown at the top when shared"
        ]
       ],
-      "say": "The page stays locked in the person's own profile, on this device. Helpers see it when the What Matters to Me switch is on in Willow Settings. And when the person also shares their faith answers, a short summary sits at the top of the page, with who to call."
+      "say": "The page stays locked in the person's own profile. Helpers see it when the What Matters to Me switch is on in Willow Settings. And when the person also shares their faith answers, a short summary sits at the top of the page, with who to call."
      },
      {
       "k": "big",
@@ -17374,7 +17374,7 @@ window.GG_LEARN = {
       "items": [
        [
         "Locked in their profile",
-        "On this device"
+        "Locked and private"
        ],
        [
         "The Cuttings switch",
@@ -17385,7 +17385,7 @@ window.GG_LEARN = {
         "Still there, just as they were"
        ]
       ],
-      "say": "Cuttings stay locked in the person's own profile, on this device. Helpers see them when the Cuttings switch is on in Willow Settings. And after a death, their tree stays just as it was, with a button on Today that opens their Cuttings."
+      "say": "Cuttings stay locked in the person's own profile. Helpers see them when the Cuttings switch is on in Willow Settings. And after a death, their tree stays just as it was, with a button on Today that opens their Cuttings."
      },
      {
       "k": "quiz",
@@ -18078,14 +18078,14 @@ window.GG_LEARN = {
      },
      {
       "k": "big",
-      "h": "Everything stays on this device.",
+      "h": "Everything stays locked and private.",
       "sub": "Locked with a passcode, in each person's own profile.",
-      "say": "Everything saved in Willow stays on this device, locked with a passcode, in each person's own profile. Each person's words stay private."
+      "say": "Everything saved in Willow stays locked with a passcode, in each person's own profile. Each person's words stay private."
      },
      {
       "k": "card",
       "title": "Is Willow for you, or for someone you love?",
-      "body": "Everything stays on this device, locked with a passcode.",
+      "body": "Everything stays locked with a passcode.",
       "btns": [
        "This is for me",
        "I'm caring for someone I love"
@@ -18098,7 +18098,7 @@ window.GG_LEARN = {
       "h": "Keep your passcode close",
       "items": [
        [
-        "It stays on this device",
+        "It stays locked and private",
         "Only you know it"
        ],
        [
@@ -20307,7 +20307,7 @@ window.GG_LEARN = {
       "h": "Your words, your choice",
       "items": [
        [
-        "Kept on this device",
+        "Kept locked and private",
         "Locked in your own profile"
        ],
        [
@@ -20319,7 +20319,7 @@ window.GG_LEARN = {
         "Any cutting, on paper too"
        ]
       ],
-      "say": "Your cuttings are yours. They stay on this device, locked in your own profile. You choose whether your helpers can see them, in Settings. And every cutting has a Save or Print button, so you can hand it to someone on paper."
+      "say": "Your cuttings are yours. They stay locked in your own profile. You choose whether your helpers can see them, in Settings. And every cutting has a Save or Print button, so you can hand it to someone on paper."
      },
      {
       "k": "points",
@@ -22429,9 +22429,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Everything stays on this device.",
+       "h": "Everything stays locked and private.",
        "sub": "Locked in your profile, with a passcode only you know.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Nothing you write is sent to Grounded or anyone else."
+       "say": "Your privacy matters here. Everything stays locked in your own profile, with a passcode only you know. Only you can open what you write."
       },
       {
        "k": "tabs",
@@ -22474,11 +22474,11 @@ window.GG_LEARN = {
        "q": "Where does what you write in Sequoia stay?",
        "opts": [
         "On a Grounded server",
-        "On this device, locked in your profile",
+        "Locked in your profile",
         "With your doctor"
        ],
        "right": 1,
-       "why": "Everything stays on this device, locked with a passcode only you know.",
+       "why": "Everything stays locked with a passcode only you know.",
        "say": "Quick question. Where does what you write in Sequoia stay?"
       }
      ],
@@ -22559,9 +22559,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Everything stays on this device.",
+       "h": "Everything stays locked and private.",
        "sub": "Locked in your profile, with a passcode only you know.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Nothing you write is sent to Grounded or anyone else."
+       "say": "Your privacy matters here. Everything stays locked in your own profile, with a passcode only you know. Only you can open what you write."
       },
       {
        "k": "tabs",
@@ -22604,11 +22604,11 @@ window.GG_LEARN = {
        "q": "Where does what you write in Sequoia stay?",
        "opts": [
         "On a Grounded server",
-        "On this device, locked in your profile",
+        "Locked in your profile",
         "With your doctor"
        ],
        "right": 1,
-       "why": "Everything stays on this device, locked with a passcode only you know.",
+       "why": "Everything stays locked with a passcode only you know.",
        "say": "Quick question. Where does what you write in Sequoia stay?"
       }
      ]
@@ -22764,11 +22764,11 @@ window.GG_LEARN = {
          "Use your phone’s microphone key"
         ],
         [
-         "Stays on this device",
+         "Locked and private",
          "Like everything you write"
         ]
        ],
-       "say": "Good. After each part, there is a page called Sit with this. It offers one question to think about. You can write an answer, or use the microphone key on your phone to speak it. Or simply move on. It is always optional, and it stays on this device."
+       "say": "Good. After each part, there is a page called Sit with this. It offers one question to think about. You can write an answer, or use the microphone key on your phone to speak it. Or simply move on. It is always optional, and it stays locked and private."
       },
       {
        "k": "points",
@@ -22780,14 +22780,14 @@ window.GG_LEARN = {
         ],
         [
          "Every answer is welcome",
-         "Nothing is sent anywhere"
+         "Only you can open it"
         ],
         [
          "See help lines",
          "One tap, any time"
         ]
        ],
-       "say": "Before you see your tree, there is one quiet line of type at the bottom of the page. Every answer is welcome, and Sequoia asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. And See help lines opens Help Is Close, any time you want it."
+       "say": "Before you see your tree, there is one quiet line of type at the bottom of the page. Every answer is welcome, and Sequoia asks nothing about harm. Your answers stay locked and private, and only you can open them. And See help lines opens Help Is Close, any time you want it."
       },
       {
        "k": "screen",
@@ -23475,11 +23475,11 @@ window.GG_LEARN = {
          "Your pages come along into Cuttings"
         ],
         [
-         "Everything stays on this device",
+         "Everything stays locked and private",
          "Unless you print or share it"
         ]
        ],
-       "say": "A helper sees your Legacy Book only if you turn it on, and it starts turned off. And if you later use Willow, what you write here comes along into Willow’s Cuttings, so your words are never lost. Everything stays on this device until you print or share it."
+       "say": "A helper sees your Legacy Book only if you turn it on, and it starts turned off. And if you later use Willow, what you write here comes along into Willow’s Cuttings, so your words are never lost. Everything stays locked and private until you print or share it."
       },
       {
        "k": "big",
@@ -23667,7 +23667,7 @@ window.GG_LEARN = {
          "Answers, scores, notes, growth plan"
         ]
        ],
-       "say": "Your link shares your first name, your tree, how many days you have tended, which parts you tended this week, and the day you made the link. Your answers, scores, notes, journal, and growth plan stay on this device. Send it to family only, and share again any time for a fresh one."
+       "say": "Your link shares your first name, your tree, how many days you have tended, which parts you tended this week, and the day you made the link. Your answers, scores, notes, journal, and growth plan stay locked and private. Send it to family only, and share again any time for a fresh one."
       },
       {
        "k": "points",
@@ -23725,9 +23725,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Everything stays on this device.",
-       "sub": "Everything stays on this device.",
-       "say": "Here is the heart of it. Everything you do in Sequoia stays on this device. Your answers, your notes, your growth plan, and your Legacy Book are never sent to Grounded or anyone else."
+       "h": "Everything stays locked and private.",
+       "sub": "Everything stays locked and private.",
+       "say": "Here is the heart of it. Everything you do in Sequoia stays locked and private. Your answers, your notes, your growth plan, and your Legacy Book are yours alone, and only you can open them."
       },
       {
        "k": "card",
@@ -25259,11 +25259,11 @@ window.GG_LEARN = {
          "Some answers start private"
         ],
         [
-         "Nothing is sent",
-         "Everything stays on their device"
+         "Private to them",
+         "Everything stays locked and private"
         ]
        ],
-       "say": "If they use Sequoia, here is how helpers work. Helpers are optional, and off unless the person adds one. Only they can add a helper, in Settings. They choose what each helper sees, and some answers start private. Sequoia asks nothing about harm, and nothing is sent anywhere. Whether or not they add you, everything in this series is yours to use."
+       "say": "If they use Sequoia, here is how helpers work. Helpers are optional, and off unless the person adds one. Only they can add a helper, in Settings. They choose what each helper sees, and some answers start private. Sequoia asks nothing about harm, and their answers stay private to them. Whether or not they add you, everything in this series is yours to use."
       },
       {
        "k": "flow",
@@ -25950,11 +25950,11 @@ window.GG_LEARN = {
          "Kept in their own words"
         ],
         [
-         "Stays on their device",
+         "Private to them",
          "They decide what to share"
         ]
        ],
-       "say": "If they use Sequoia, the Legacy Book is made for this. They can pick any chapter and any prompt, and skip whatever they like. Go at your own pace. You can write while they tell, and mark it told to, so it stays theirs. Write their words as they say them. The book stays on their device, locked in their profile, and they decide what to print or share, and with whom."
+       "say": "If they use Sequoia, the Legacy Book is made for this. They can pick any chapter and any prompt, and skip whatever they like. Go at your own pace. You can write while they tell, and mark it told to, so it stays theirs. Write their words as they say them. The book stays locked in their profile, and they decide what to print or share, and with whom."
       },
       {
        "k": "points",
@@ -29611,7 +29611,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. Pine sends nothing anywhere. And help lines are always close, on your growth plan, any time you want them."
+       "say": "Your privacy matters here. Everything stays locked in your own profile, with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. Pine keeps every answer private and sends no alerts. And help lines are always close, on your growth plan, any time you want them."
       },
       {
        "k": "tabs",
@@ -29665,7 +29665,7 @@ window.GG_LEARN = {
         "Your levels and your notes"
        ],
        "right": 1,
-       "why": "Your answers, levels, notes, and Next Steps stay yours, on this device.",
+       "why": "Your answers, levels, notes, and Next Steps stay yours, locked and private.",
        "say": "Quick question. What does your grown-up see from your Pine check-in?"
       }
      ],
@@ -29738,7 +29738,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. Pine sends nothing anywhere. And help lines are always close, on your growth plan, any time you want them."
+       "say": "Your privacy matters here. Everything stays locked in your own profile, with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. Pine keeps every answer private and sends no alerts. And help lines are always close, on your growth plan, any time you want them."
       },
       {
        "k": "tabs",
@@ -29792,7 +29792,7 @@ window.GG_LEARN = {
         "Your levels and your notes"
        ],
        "right": 1,
-       "why": "Your answers, levels, notes, and Next Steps stay yours, on this device.",
+       "why": "Your answers, levels, notes, and Next Steps stay yours, locked and private.",
        "say": "Quick question. What does your grown-up see from your Pine check-in?"
       }
      ]
@@ -29934,11 +29934,11 @@ window.GG_LEARN = {
          "On your growth plan, any time"
         ],
         [
-         "Stays on this device",
-         "Nothing is sent anywhere"
+         "Locked and private",
+         "Only you can open it"
         ]
        ],
-       "say": "Good. Pine asks open questions, and every answer is welcome. One quiet line of type sits at the bottom of the check-in. Your growth plan always has help lines, any time you want them. Your answers stay on this device, and nothing is sent anywhere."
+       "say": "Good. Pine asks open questions, and every answer is welcome. One quiet line of type sits at the bottom of the check-in. Your growth plan always has help lines, any time you want them. Your answers stay locked and private, and only you can open them."
       },
       {
        "k": "points",
@@ -30427,7 +30427,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Locked with your passcode",
-         "On this device"
+         "Locked and private"
         ],
         [
          "It stays yours alone",
@@ -30438,7 +30438,7 @@ window.GG_LEARN = {
          "Only the chapters you pick"
         ]
        ],
-       "say": "Nice. Next Steps is yours. It stays on this device, locked with your passcode. It stays yours alone, and Share to Family never includes it. If you want to show someone, like a counselor or a parent, you can print or save just the chapters you pick."
+       "say": "Nice. Next Steps is yours. It stays locked with your passcode. It stays yours alone, and Share to Family never includes it. If you want to show someone, like a counselor or a parent, you can print or save just the chapters you pick."
       },
       {
        "k": "big",
@@ -30529,7 +30529,7 @@ window.GG_LEARN = {
        "k": "points",
        "items": [
         [
-         "Stays on this device",
+         "Locked and private",
          "Locked with your passcode"
         ],
         [
@@ -30538,7 +30538,7 @@ window.GG_LEARN = {
         ]
        ],
        "h": "Your check-in stays with you",
-       "say": "Your check-in stays with you, on this device. Pine sends nothing anywhere. If you want a grown-up to know how you are doing, you choose when to tell them, or you can do a check-in together with someone you trust."
+       "say": "Your check-in stays with you, locked and private. Pine keeps every answer private and sends no alerts. If you want a grown-up to know how you are doing, you choose when to tell them, or you can do a check-in together with someone you trust."
       },
       {
        "k": "big",
@@ -30608,7 +30608,7 @@ window.GG_LEARN = {
         "Your levels for each part"
        ],
        "right": 1,
-       "why": "Pine sends nothing anywhere. Your answers stay yours.",
+       "why": "Pine keeps every answer private and sends no alerts. Your answers stay yours.",
        "say": "Quick question. What does Pine send to your grown-up?"
       }
      ]
@@ -32077,15 +32077,15 @@ window.GG_LEARN = {
          "Behind their own passcode"
         ],
         [
-         "Nothing is sent",
-         "Their answers stay on their device"
+         "Private to them",
+         "Their answers stay locked and private"
         ],
         [
          "They can invite you in",
          "With someone I trust"
         ]
        ],
-       "say": "If your teen uses Pine, here is how it fits. Pine belongs to your teen. They answer the check-in on their own, behind their own passcode, and you never see their answers. Pine sends nothing anywhere, so your noticing and your open questions matter. Lesson two explains it all. And your teen can invite you in. Pine has a way to do a check-in together, called With someone I trust, that gives the adult a conversation prompt after each answer."
+       "say": "If your teen uses Pine, here is how it fits. Pine belongs to your teen. They answer the check-in on their own, behind their own passcode, and you never see their answers. Pine keeps every answer private and sends no alerts, so your noticing and your open questions matter. Lesson two explains it all. And your teen can invite you in. Pine has a way to do a check-in together, called With someone I trust, that gives the adult a conversation prompt after each answer."
       },
       {
        "k": "big",
@@ -32177,11 +32177,11 @@ window.GG_LEARN = {
          "At the bottom of every check-in"
         ],
         [
-         "Nothing sent",
-         "Everything stays on their device"
+         "Private to them",
+         "Everything stays locked and private"
         ]
        ],
-       "say": "Pine asks open, curious questions, and it asks nothing about harm. One quiet line of type sits at the bottom of every check-in, and help lines are always on their growth plan. Pine sends nothing anywhere, not to you, and not to The Grove. Their answers stay on their own device. So the next step always starts with you. Your own noticing, and your open questions, are what keep you close. That is the heart of this lesson."
+       "say": "Pine asks open, curious questions, and it asks nothing about harm. One quiet line of type sits at the bottom of every check-in, and help lines are always on their growth plan. Pine sends nothing anywhere, not to you, and not to The Grove. Their answers stay locked and private to them. So the next step always starts with you. Your own noticing, and your open questions, are what keep you close. That is the heart of this lesson."
       },
       {
        "k": "big",
@@ -32637,7 +32637,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "You are part of the safety net.",
        "sub": "Their answers stay private. Your noticing matters.",
-       "say": "Pine asks open questions, and it asks nothing about harm. Their answers stay private, and nothing is sent anywhere. So your noticing, your open questions, and your staying close matter. You are part of the safety net."
+       "say": "Pine asks open questions, and it asks nothing about harm. Their answers stay private, and only they can open them. So your noticing, your open questions, and your staying close matter. You are part of the safety net."
       },
       {
        "k": "quiz",
@@ -35159,7 +35159,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. And help lines are always close, on your growth plan."
+       "say": "Your privacy matters here. Everything stays locked in your own profile, with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. And help lines are always close, on your growth plan."
       },
       {
        "k": "tabs",
@@ -35292,7 +35292,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. And help lines are always close, on your growth plan."
+       "say": "Your privacy matters here. Everything stays locked in your own profile, with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. And help lines are always close, on your growth plan."
       },
       {
        "k": "tabs",
@@ -35488,11 +35488,11 @@ window.GG_LEARN = {
          "On your growth plan, any time"
         ],
         [
-         "Stays on this device",
-         "Nothing is sent anywhere"
+         "Locked and private",
+         "Only you can open it"
         ]
        ],
-       "say": "Good. Birch asks open questions, and every answer is welcome. One quiet line of type sits at the bottom of the check-in. Your growth plan always has help lines, any time you want them. Your answers stay on this device, and nothing is sent to anyone."
+       "say": "Good. Birch asks open questions, and every answer is welcome. One quiet line of type sits at the bottom of the check-in. Your growth plan always has help lines, any time you want them. Your answers stay locked and private, and only you can open them."
       },
       {
        "k": "points",
@@ -36022,7 +36022,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Locked with your passcode",
-         "On this device"
+         "Locked and private"
         ],
         [
          "Never in Share to Family",
@@ -36033,7 +36033,7 @@ window.GG_LEARN = {
          "Only the pages you pick"
         ]
        ],
-       "say": "Nice. Groundwork is yours. It stays on this device, locked with your passcode, and Share to Family never includes it. If you want to show someone, like a mentor or a counselor, you can print just the pages you pick. Every prompt can be skipped, and nothing here is graded or due."
+       "say": "Nice. Groundwork is yours. It stays locked with your passcode, and Share to Family never includes it. If you want to show someone, like a mentor or a counselor, you can print just the pages you pick. Every prompt can be skipped, and nothing here is graded or due."
       },
       {
        "k": "quiz",
@@ -36067,7 +36067,7 @@ window.GG_LEARN = {
       {
        "k": "card",
        "title": "Your Private Profile",
-       "body": "Your tree, practices, check-ins, and Groundwork stay on this device, locked with a passcode only you know.",
+       "body": "Your tree, practices, check-ins, and Groundwork stay locked with a passcode only you know.",
        "fields": [
         [
          "Your name",
@@ -36083,7 +36083,7 @@ window.GG_LEARN = {
         "Maybe Later"
        ],
        "tap": 0,
-       "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. Nothing is sent to anyone."
+       "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. Only you decide who sees it."
       },
       {
        "k": "big",
@@ -36126,7 +36126,7 @@ window.GG_LEARN = {
        "h": "Who could you reach out to?",
        "sub": "Two people, if something were wrong.",
        "beats": [
-        "Birch sends nothing to anyone, so reaching out is up to you, and that takes a plan.",
+        "Birch sends no alerts, so reaching out is up to you, and that takes a plan.",
         "Think of one person you could call if something were wrong.",
         "Now think of one more, maybe someone outside your family, like a friend, a mentor, a coworker, or a counselor.",
         {
@@ -36134,7 +36134,7 @@ window.GG_LEARN = {
          "w": 10
         }
        ],
-       "say": "Birch sends nothing to anyone, so reaching out is up to you, and that takes a plan. Think of one person you could call if something were wrong. Now think of one more, maybe someone outside your family, like a friend, a mentor, a coworker, or a counselor. Say both names, out loud or in your head."
+       "say": "Birch sends no alerts, so reaching out is up to you, and that takes a plan. Think of one person you could call if something were wrong. Now think of one more, maybe someone outside your family, like a friend, a mentor, a coworker, or a counselor. Say both names, out loud or in your head."
       },
       {
        "k": "points",
@@ -37543,11 +37543,11 @@ window.GG_LEARN = {
          "By their choice"
         ],
         [
-         "Nothing is sent",
+         "Private to them",
          "So their answers stay honest"
         ]
        ],
-       "say": "If they use Birch, here is how it fits. Birch belongs to them, behind their own passcode. They can add helpers if they choose, and a helper sees only what they decide to share. Birch sends nothing to anyone, so they can answer honestly. Lesson two explains it all."
+       "say": "If they use Birch, here is how it fits. Birch belongs to them, behind their own passcode. They can add helpers if they choose, and a helper sees only what they decide to share. Birch sends no alerts, so they can answer honestly. Lesson two explains it all."
       },
       {
        "k": "big",
@@ -37613,11 +37613,11 @@ window.GG_LEARN = {
          "Shared only by choice"
         ],
         [
-         "Nothing is sent",
-         "Everything stays on this device"
+         "Private to them",
+         "Everything stays locked and private"
         ]
        ],
-       "say": "Here is what stays theirs. Every check-in answer and every level, locked with their own passcode and kept on their own device. Groundwork, their private notebook for building a life, is never shown to a helper. Their notes are shared only if they choose. And Birch sends nothing to anyone, not to a parent, a partner, or a helper."
+       "say": "Here is what stays theirs. Every check-in answer and every level, locked with their own passcode and kept on their own device. Groundwork, their private notebook for building a life, is never shown to a helper. Their notes are shared only if they choose. And no alert ever goes to a parent, a partner, or a helper."
       },
       {
        "k": "flow",
@@ -41840,7 +41840,7 @@ window.GG_LEARN = {
         "Aspen",
         "Maple"
        ],
-       "say": "It starts with one tree. A grown-up taps Make my profile, chooses a name, a picture, and a passcode. That profile is private, and it stays on this device."
+       "say": "It starts with one tree. A grown-up taps Make my profile, chooses a name, a picture, and a passcode. That profile is private, locked with its own passcode."
       },
       {
        "k": "points",

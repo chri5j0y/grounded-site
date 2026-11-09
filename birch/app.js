@@ -16,7 +16,7 @@
      shared/gg-journey.js the twelve weeks, anchors, and movement levels (AGES.birch)
 
    What is saved, and where
-   - Everything stays on this device, locked in the person's own Grounded
+   - Everything stays locked in the person's own Grounded
      profile under "birch": history (check-ins), tend (daily tending and the
      game layer, game state in tend.bc), groundwork (the notebook and skills),
      wording ('faith' or 'plain'), seasons (My Season ids), askOpt (the
@@ -26,7 +26,7 @@
      'birch' (GGP.tree). Any adult profile opened here tends a Birch tree;
      one whose tree is Oak or Sequoia sees a gentle note, never a block.
    - Only the person's own passcode opens it. There is no alert of any kind and
-     nothing is ever sent to anyone. No safety step and no flags (GWG BLD 887).
+     no alert of any kind goes to anyone. No safety step and no flags (GWG BLD 887).
    - Save to a file writes a passcode-locked file (shared/gg-filelock.js).
 
    Helpers (Sequoia's model, only when the person turns it on)
@@ -508,10 +508,10 @@ function screenHtml(sc, idx) {
   }
   if (sc.kind === 'sit') return `<section class="step-panel" id="step-${idx}" style="--domain-color:${d.color};">${head}
       <div class="sit-with"><div class="step-label">Sit with this <span class="opt">(optional)</span></div><p class="domain-prompt">${partDef(d).prompt || 'What is true for you in this part of your life right now?'}</p>
-      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you want, or use your phone's microphone key to speak it. It stays on this device." style="--domain-color:${d.color};"></textarea></div>
+      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you want, or use your phone's microphone key to speak it. It stays locked and private." style="--domain-color:${d.color};"></textarea></div>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="goToStep(${idx + 1})">${nextLabel}</button></div></section>`;
   if (sc.kind === 'finish') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">All done</div><h2 class="step-title">Nice work</h2></div></div>
-      <p class="lead">${CK.by === 'tapped' ? 'This check-in saves to ' + escapeHtml(CK.name) + '\'s tree, marked as taken together.' : 'Your answers stay on this device, locked in your profile. Tap below to see your tree.'}</p>
+      <p class="lead">${CK.by === 'tapped' ? 'This check-in saves to ' + escapeHtml(CK.name) + '\'s tree, marked as taken together.' : 'Your answers stay locked in your profile. Tap below to see your tree.'}</p>
       ${CK.by === 'tapped' ? '<p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now? Help lines</button></p>' : ''}
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'tapped' ? 'See the Tree' : 'See My Tree'}</button></div></section>`;
   return '';
@@ -1804,7 +1804,7 @@ async function profResume() {
 // =====================================================================
 // SETTINGS, behind the profile picture
 // =====================================================================
-const BC_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, the optional question, your reflections, and your Groundwork notebook stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone, and no one gets an alert.</p>
+const BC_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, the optional question, your reflections, and your Groundwork notebook stay locked in your profile. Only your passcode opens it, so only you can see them, and no one gets an alert.</p>
   <p><b>Helpers, only if you choose</b>You can let someone you trust open your Birch with their own passcode. They see only what you share, and never your optional question or Groundwork. This stays off unless you turn it on.</p>
   <p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>`;
 function bcProfileHtml() {
@@ -2070,7 +2070,7 @@ function renderGround() {
     <div class="btn-row"><button class="btn btn-primary" onclick="gwPickBook()">Save or Print My Notebook</button></div>
     ${GX.pick ? gwPickHtml(L) : ''}
     <div id="bc-gwsheet" class="sq-legsheet" aria-hidden="true"></div>
-    <p class="gt-small sq-legfoot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. It is never part of Share to Family, and helpers never see it.</p>
+    <p class="gt-small sq-legfoot">Your notebook stays locked in your profile. You decide what to print or share, and with whom. It is never part of Share to Family, and helpers never see it.</p>
     ${window.GGSources ? GGSources.html('birch:groundwork') : ''}`;
 }
 // Skills whose Oak guide (birch/groundwork.js link.guide) has a Birch guide that fits better.

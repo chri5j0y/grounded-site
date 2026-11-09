@@ -484,26 +484,26 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
   </nav>
   <p class="foot-local foot-way"><a class="text-link" href="/home/">Begin The Grounded Way</a></p>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota, and travels for ceremonies and talks.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
-  <p class="footer-privacy">Check-ins stay in this browser. Everything a student enters here stays on this device.</p>
+  <p class="footer-privacy">Check-ins and everything a student enters here stay locked and private.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. The Grow With Grounded Aspen name, logo, Tend Four, Grow Two tree framework, questions, practices, illustrations, and guides are original works protected by copyright and may not be copied, adapted, or redistributed without written permission.</p>
 </footer>
 
 <div id="overlay-root"></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script src="/shared/gg-avatars.js?v=b782"></script>
+<script src="/shared/gg-avatars.js?v=b949"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js?v=b934"></script>
 <script src="/shared/gg-practice-alias.js?v=b907"></script>
-<script src="/shared/gg-profiles.js?v=b938"></script>
+<script src="/shared/gg-profiles.js?v=b949"></script>
 <script src="/shared/gg-life.js?v=b907"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="checkin.js?v=b907"></script>
 <script src="/shared/gg-journey.js?v=b929"></script>
 <script src="/shared/gg-library.js?v=b934"></script>
 <script src="/shared/gg-parts.js?v=b929"></script>
-<script src="/shared/gg-tend.js?v=b934"></script>
+<script src="/shared/gg-tend.js?v=b949"></script>
 <script src="/shared/gg-treeart.js?v=b907"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
 <script>
@@ -1470,7 +1470,7 @@ function renderStudents(opts){
   if (!(opts && opts.list) && list.length === 1 && !locked.length){ openStudent(list[0].id); return; }
   $('view-students').innerHTML = `
     <h2>Who's checking in?</h2>
-    <p class="lede">Tap your name, or add yourself. Everything stays on this device, locked with your own passcode.</p>
+    <p class="lede">Tap your name, or add yourself. Everything stays locked with your own passcode.</p>
     <div class="people">${list.map(s=>`<button class="person" onclick="openStudent('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}, ${aspDays(s)} ${aspDays(s)===1?'day':'days'} tended${s._pid?'':'. Not saved yet'}</span></button>`).join('')}${locked.map(p=>`<button class="person" onclick="openStudentProfile('${p.id}')">${GGAv.html(p.avatar, p.name, 44)}<b>${esc(p.name)}</b><span class="muted">Locked. Tap to open</span></button>`).join('')}</div>
     <div class="panel" style="max-width:460px">
       <h3>Add a student</h3>
@@ -2051,14 +2051,14 @@ function renderGrown(){
         return `<p class="muted">Open your own grown-up profile (the button at the top of the page) to see every student you agreed for.</p>`; })()}
       ${list.length ? `<div class="people">${list.map(s=>{const l=s.rings[s.rings.length-1];return `<button class="person" onclick="openG('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}${l?', last '+fmtDate(l.date):''}</span>${l&&ringTalks(l).length?'<span class="flagged">Worth a conversation</span>':''}</button>`;}).join('')}</div>` : '<p class="muted">Students add themselves from the Students tab.</p>'}
       <div class="row"><button class="btn ghost small" onclick="exportFile()">Save to a file</button><label class="btn ghost small" style="cursor:pointer">Load from a file<input type="file" accept="application/json,.json" hidden onchange="importFile(this)"></label></div>
-      <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it. Each file is locked with a passcode you choose.</p>
+      <p class="muted small">Everything is locked in each student's own profile. Save to a file now and then, since clearing the browser or resetting a device erases what is saved here. Each file is locked with a passcode you choose.</p>
     </div>
     <div class="panel"><h3>How Aspen works</h3>
       <p>Each check-in has 36 questions, six for each part of the tree, written for the student's grade. Students choose "On my own" or "With a grown-up." A calm recorded voice guides them one question at a time, and Read It All shows every question on one page. In grown-up mode, a gold note after each answer gives you a question to take the conversation deeper. Afterward, Aspen suggests two parts to tend, and the student builds a growth plan of small daily practices. Each day they tend their tree, each week brings a theme and a short check-in, and a full check-in at the end of a twelve-week season adds a growth ring.</p>
       <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Growing Edge (1 to 4). Students see the levels too, with a reminder that a growing edge is where the next growth begins. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
       <p>Roots questions and a few practices come in two wordings, and a grown-up chooses when a student is added. Faith wording, the starting choice, names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way, so rings compare across both. You can change it any time from the student's page here.</p>
       <p>Aspen follows the Grounded tree standard, the same one behind Maple, Pine, Birch, Oak, and Sequoia, so every check-in measures every part of the tree the same way, written for each grade. Students tend four parts (Spirit, or what grounds you in Plain wording; Mind; Body; and Relationships), and meaning and hope grow from that tending.</p>
-      <p>Inside Aspen: the check-in, the growth plan and daily tending, When Life Changes guides with two short videos each, Learn videos with tabs and search on top, Read Aloud, and Save or Print. Their Health and Ability, chosen together with a grown-up who agreed, opens guides and practices that fit a disability, illness, or difference, and Someone in Our Family Drinks or Uses opens gentle guides for that season too. Everything stays private on this device. A student's profile also opens in The Grounded Way, Grounded's private app for whole person living, with its own Today and My Tree, and the Get Grounded leaf at the top of the page opens Get Grounded Now, with calm breathing and practices made for kids.</p>
+      <p>Inside Aspen: the check-in, the growth plan and daily tending, When Life Changes guides with two short videos each, Learn videos with tabs and search on top, Read Aloud, and Save or Print. Their Health and Ability, chosen together with a grown-up who agreed, opens guides and practices that fit a disability, illness, or difference, and Someone in Our Family Drinks or Uses opens gentle guides for that season too. Everything stays locked and private. A student's profile also opens in The Grounded Way, Grounded's private app for whole person living, with its own Today and My Tree, and the Get Grounded leaf at the top of the page opens Get Grounded Now, with calm breathing and practices made for kids.</p>
     </div>
     <div class="panel"><h3>What you can see</h3>
       <p>Aspen gives students some privacy, in three layers, and tells them so plainly before they start. Kids answer more honestly when they know up front.</p>
@@ -2068,7 +2068,7 @@ function renderGrown(){
     </div>
     <div class="panel"><h3>Open Questions and Quiet Help</h3>
       <p>Every Aspen question is open and curious, and every answer is welcome. Every grade asks about feeling lonely or left out, how people treat them, and feeling hopeful. When one of those answers leans hard, you see a "Worth a conversation" marker on that ring, with what they said and a gentle way to start talking.</p>
-      <p>Aspen is for reflection and growth, and it stays on this device. A quiet line under every check-in reminds students to tell a trusted grown-up right away whenever they feel unsafe, with 988 and 911 for an emergency, and a help list is always one tap away.</p>
+      <p>Aspen is for reflection and growth, and it stays locked and private. A quiet line under every check-in reminds students to tell a trusted grown-up right away whenever they feel unsafe, with 988 and 911 for an emergency, and a help list is always one tap away.</p>
       <button class="btn ghost small" onclick="showCalm()">See the help list</button>
     </div>
     <div class="panel"><h3>Why each part matters</h3>
@@ -2135,7 +2135,7 @@ function canSetSens(s){ if (!s._pid || !window.GGP) return true; const a = GGP.a
 function sensPanel(s){
   const on = !!s.askSens, can = canSetSens(s), g7 = CK.sensitive['7'][2][0], g8 = CK.sensitive['8'][2][0];
   return `<div class="panel"><h3>Optional question</h3>
-    <p>In grades 7 and 8, Aspen can ask one more question about being offered a vape or other substances. It is off unless you turn it on. When it is on, it takes the place of the question about knowing how to get out of it, so every part still has six questions. It never asks whether a student has used anything, and the answer never leaves Aspen.</p>
+    <p>In grades 7 and 8, Aspen can ask one more question about being offered a vape or other substances. It is off unless you turn it on. When it is on, it takes the place of the question about knowing how to get out of it, so every part still has six questions. It never asks whether a student has used anything, and the answer stays inside Aspen, locked and private.</p>
     <p class="muted small">Grade 7: "${esc(g7)}"<br>Grade 8: "${esc(g8)}"</p>
     <p class="muted small">At school, questions like this can need a parent's written permission first. If you are a teacher or counselor, follow your school's rules before turning it on.</p>
     <label class="switch-row"><input type="checkbox" ${on ? 'checked' : ''} ${can ? '' : 'disabled'} onchange="setSens(this.checked)"><span><b>Ask the optional question</b><br><span class="muted small">${on ? (s.grade === 6 ? 'On. Grade 6 never gets it, so it starts in grade 7.' : 'On. It starts with the next check-in.') : 'Off.'}</span></span></label>
@@ -2729,8 +2729,8 @@ window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
 <!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=b934"><script src="/shared/practice-rhythm.js?v=b929"></script><script src="/shared/gg-guided.js?v=b907"></script><script src="/shared/guided/aspen.js?v=b907"></script><script src="/aspen/guided.js?v=b907"></script><!-- /GUIDED -->
-<script src="/shared/gg-learn.js?v=b944" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b944';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b949" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b944';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b941" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b941';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=b949" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b941';document.head.appendChild(s)"></script>
 </body>
 </html>

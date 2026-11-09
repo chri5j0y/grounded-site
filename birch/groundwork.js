@@ -71,7 +71,7 @@
    still make sense if this file is edited later or the tree changes.
 
    Firm rules:
-   - Private. Everything stays on the device, encrypted in the person's own
+   - Private. Everything stays encrypted in the person's own
      profile, opened only with their passcode. Share to Family never
      includes Groundwork. A helper (when the person turns helpers on) never
      sees Groundwork unless the person prints or shares a chapter by choice.
@@ -287,7 +287,7 @@ const INTRO = [
   'Groundwork is your private notebook for who you are becoming and the life you are building, plus Skills I\'ve Got, a checklist of practical skills you mark at your own pace.',
   'Pick any chapter and any prompt. Skip whatever you like. Go at your own pace: every page here is simply yours.',
   'Every path counts: work, school, a trade, an apprenticeship, the military, service, parenting, caring for someone, or time between things. You can change your mind as often as you need to.',
-  'Your notebook stays on this device, locked with your passcode, so only you can open it. You decide what to print or share, and with whom.',
+  'Your notebook stays locked with your passcode, so only you can open it. You decide what to print or share, and with whom.',
   'If you started in Pine, what you wrote in Next Steps is here too, in its own chapter.'
 ];
 
@@ -312,7 +312,7 @@ const CAUTIONS = [
   'Skills are a checklist for the person, never a test. Marking one done is a quiet milestone; unmarking takes nothing away.',
   'The From Pine chapter shows Pine\'s words as they were written, never edited, with room to keep writing.',
   'Never prefill, invent, or rewrite the person\'s words.',
-  'Everything stays on the device, encrypted in the profile, and stays whole in the Birch record when the tree moves to Oak.'
+  'Everything stays encrypted in the profile, and stays whole in the Birch record when the tree moves to Oak.'
 ];
 
 // Ids in gg-sources.js (proposed in p742/out/groundwork-sources.json).

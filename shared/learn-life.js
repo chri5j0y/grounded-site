@@ -126,7 +126,7 @@
          {
           "k": "points",
           "h": "Good to know",
-          "say": "Your child’s choice stays locked inside their profile, on this device. The check-in questions and scores stay exactly the same. Your child sees only the help it adds. And Clear My Choices erases it, any time.",
+          "say": "Your child’s choice stays locked inside their profile. The check-in questions and scores stay exactly the same. Your child sees only the help it adds. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -826,7 +826,7 @@
          {
           "k": "points",
           "h": "Good to know",
-          "say": "It stays locked inside your profile, on this device, and your questions and scores stay the same. Show Gentler Ways First, in Settings, works for anyone, with no choice needed. Rest Week, on Today, holds your tree still for a hard week. And Clear My Choices erases it, any time.",
+          "say": "It stays locked inside your profile, and your questions and scores stay the same. Show Gentler Ways First, in Settings, works for anyone, with no choice needed. Rest Week, on Today, holds your tree still for a hard week. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -1525,7 +1525,7 @@
          {
           "k": "points",
           "h": "Yours alone",
-          "say": "Only you set it, and only your passcode opens it. It stays yours alone, and nothing is sent anywhere. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
+          "say": "Only you set it, and only your passcode opens it. It stays yours alone, locked in your profile. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Only you set it",
@@ -1533,7 +1533,7 @@
            ],
            [
             "It stays yours alone",
-            "Nothing is sent anywhere"
+            "Only you can open it"
            ],
            [
             "Questions and scores stay the same",
@@ -2257,7 +2257,7 @@
          {
           "k": "points",
           "h": "Yours to share, if you choose",
-          "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
+          "say": "It stays locked in your profile. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -2989,7 +2989,7 @@
          {
           "k": "points",
           "h": "Good to know",
-          "say": "It stays locked in your profile, on this device, and nothing about it ever leaves. Visit cards, The Grove, and printed plans never carry it. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
+          "say": "It stays locked in your profile, and only you can open it. Visit cards, The Grove, and printed plans never carry it. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -3721,7 +3721,7 @@
          {
           "k": "points",
           "h": "Yours to share, if you choose",
-          "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
+          "say": "It stays locked in your profile. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",

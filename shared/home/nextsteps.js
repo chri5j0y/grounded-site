@@ -19,7 +19,7 @@
   'use strict';
   window.GGScreen = window.GGScreen || {};
   if (window.GGScreen.next) return;
-  var FILES = ['/pine/nextsteps.js?v=b788', '/pine/checkin.js?v=b907', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
+  var FILES = ['/pine/nextsteps.js?v=b949', '/pine/checkin.js?v=b907', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
 
   function open(ctx) {
     var N = window.GGScrNotebook, esc = N.esc, NS = window.PINE_NEXTSTEPS || { chapters: [], intro: [] };
@@ -49,7 +49,7 @@
       chapters: function () { return NS.chapters || []; },
       home: function () {
         return { title: 'Next Steps', intro: NS.intro || [], count: function (n) { return n ? n + ' ' + (n === 1 ? 'page' : 'pages') + ' written so far.' : 'One prompt is enough to start.'; },
-          foot: '<p class="ggnb-foot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>' + (window.GGSources ? GGSources.html('pine:nextsteps') : '') };
+          foot: '<p class="ggnb-foot">Your notebook stays locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>' + (window.GGSources ? GGSources.html('pine:nextsteps') : '') };
       },
       chSub: function (c, L, n, closed) { return closed ? 'Opens only when you choose' : n ? n + ' of ' + (c.prompts || []).length + ' written' : (c.prompts || []).length + ' prompts'; },
       // The care line with "Help from outside your home" (nsChapterHtml 1925; showCalm('hurt'), shown in place).

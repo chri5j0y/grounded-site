@@ -182,8 +182,8 @@ window.GG_LEARN_WELCOME = {
        "hero": "oak",
        "eyebrow": "Welcome, Lesson 2",
        "h": "Your Profile and Your Tree",
-       "sub": "Private, on your own device",
-       "say": "Your profile holds your tree, and it stays private, on your own device."
+       "sub": "Locked and private",
+       "say": "Your profile holds your tree, and it stays locked and private."
       },
       {
        "k": "demo",
@@ -260,7 +260,7 @@ window.GG_LEARN_WELCOME = {
          "shot": "b924/g-passcode"
         }
        ],
-       "say": "Next comes your profile: a first name or a nickname, and a passcode only you know. Everything you save stays on this device, locked with that passcode.",
+       "say": "Next comes your profile: a first name or a nickname, and a passcode only you know. Everything you save stays locked with that passcode.",
        "cue": {
         "at": [
          0,
@@ -639,7 +639,7 @@ window.GG_LEARN_WELCOME = {
          ]
         }
        ],
-       "say": "When you finish, your tree lights up on the Check-in tab. Each part shows as Strong, Steady, or a Growing Edge. Your answers stay right here, on this device.",
+       "say": "When you finish, your tree lights up on the Check-in tab. Each part shows as Strong, Steady, or a Growing Edge. Your answers stay locked and private, just for you.",
        "cue": {
         "at": [
          0,
@@ -1583,7 +1583,7 @@ window.GG_LEARN_WELCOME = {
        "shot": "b924/g-privacy",
        "items": [
         {
-         "b": "On this device",
+         "b": "Private",
          "s": "Locked with your passcode"
         },
         {
@@ -1601,7 +1601,7 @@ window.GG_LEARN_WELCOME = {
          "s": "One locked file you keep"
         }
        ],
-       "say": "Everything stays on this device, locked with your passcode, with your Root Words as a second key. Save a Backup keeps one locked file wherever you like.",
+       "say": "Everything stays locked with your passcode, with your Root Words as a second key. Save a Backup keeps one locked file wherever you like.",
        "cue": {
         "at": [
          0,
@@ -1713,7 +1713,7 @@ window.GG_LEARN_WELCOME = {
          ]
         }
        ],
-       "say": "Pine is set up with a grown-up who agrees, and only your passcode opens it. Your answers and your plans stay yours, on this device.",
+       "say": "Pine is set up with a grown-up who agrees, and only your passcode opens it. Your answers and your plans stay yours, locked and private.",
        "cue": {
         "at": [
          0,
@@ -2338,11 +2338,11 @@ window.GG_LEARN_WELCOME = {
        "k": "demo",
        "hero": "pine",
        "eyebrow": "Privacy",
-       "h": "Yours, on this device",
+       "h": "Yours alone",
        "shot": "b924/g-privacy",
        "items": [
         {
-         "b": "On this device",
+         "b": "Private",
          "s": "Locked with your passcode"
         },
         {
@@ -2356,7 +2356,7 @@ window.GG_LEARN_WELCOME = {
          ]
         }
        ],
-       "say": "Everything stays on this device, locked with your passcode, and your Root Words open it again if your passcode ever slips your mind.",
+       "say": "Everything stays locked with your passcode, and your Root Words open it again if your passcode ever slips your mind.",
        "cue": {
         "at": [
          0,
@@ -2952,10 +2952,10 @@ window.GG_LEARN_WELCOME = {
         ],
         [
          "Private by design",
-         "Everything stays on this device"
+         "Everything stays locked and private"
         ]
        ],
-       "say": "Maple and Aspen are made to do together, a few minutes most days. Ask about the weather on their tree, listen, and stay close. And everything stays on this device.",
+       "say": "Maple and Aspen are made to do together, a few minutes most days. Ask about the weather on their tree, listen, and stay close. And everything stays locked and private.",
        "cue": {
         "at": [
          0,

@@ -669,7 +669,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b940"></script>
-<script src="../shared/gg-learn.js?v=b944"></script>
+<script src="../shared/gg-learn.js?v=b949"></script>
 <script src="../shared/gg-parts.js?v=b929"></script>
 <script src="../shared/gg-print.js?v=b939"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
@@ -688,13 +688,14 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b907"></script>
 <script src="grovevisit.js?v=b907"></script>
 <script src="heartwood.js?v=b934"></script>
-<script src="../shared/gg-stories.js?v=b944"></script>
+<script src="member-acct.js?v=b950"></script>
+<script src="../shared/gg-stories.js?v=b949"></script>
 <script src="moves.js?v=b903"></script>
 <script src="stage.js?v=b931"></script>
 <script src="coach.js?v=b931"></script>
 <script src="../shared/gg-scale.js?v=b934"></script>
 <script src="../shared/gg-holidays.js?v=b919b"></script>
-<script src="health.js?v=b948"></script>
+<script src="health.js?v=b949"></script>
 <script src="vault.js?v=b934"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1271,6 +1272,8 @@ if (window.GGGv) GGGv.init({data: () => DATA, gvg: () => GVG(), gt: () => GT, ti
 // GWG BLD 772 hook: Heartwood (heartwood.js, GGHw): Seal Heartwood in the Founder tab, and couple invites from the client file and the premarital couple.
 if (window.GGHw) GGHw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), toast: m => toast(m),
   pendingPlain: l => pendingPlain(l), updBusy: () => !!UPD, setUpd: u => { UPD = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
+// GWG BLD 949 hook: Membership on the Account (member-acct.js, GGMa): Members, seats, renewals, and the Member key, Founders only.
+if (window.GGMa) GGMa.init({tier: () => TIER, mKey: () => mKey(), render: () => render(), toast: m => toast(m)});
 // GWG BLD 784 hook: the Story Vault (vault.js, GGVault): Founders only, in the Founder tab. Its edits go into FDR.storyVault and
 // fdrKeep seals the Founder library into "Ready to Upload" (lib-founder.js), the way Seal It does.
 // BLD 785: every code lives in the Access list (accView); the Vault seals data.js with the wraps of every code in use.
@@ -2371,6 +2374,7 @@ function vFounder(){
     slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
     SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
+    window.GGMa && TIER === 'founder' ? GGMa.card() : null, // GWG BLD 949 hook
     {k: 'pricing', title: 'Private Pricing', desc: 'Rates and pricing notes for Chris and Kayti.'},
     {k: 'guide', title: 'What Guides See', desc: 'Which guides are open to Guides, Orientation, and the welcome.'},
     FLD ? {k: 'guides', title: 'Maple, Aspen, Pine, Birch, Sequoia, and Willow', desc: 'Open each guide to Guides, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
@@ -2382,6 +2386,7 @@ function vFounder(){
   if (C2 === 'upd') return back(vUpdateCard());
   if (C2 === 'hw') return back(GGHw.sealView()); // GWG BLD 772 hook
   if (C2 === 'vault') return back(GGVault.view()); // GWG BLD 784 hook
+  if (C2 === 'macct' && window.GGMa) return back(GGMa.view()); // GWG BLD 949 hook
   if (C2 === 'speak') return back(vSpeak());
   if (C2 === 'biz') return back(vBiz());
   if (C2 === 'pricing') return back(priceH);
@@ -10038,7 +10043,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=b930', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b930'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=b930', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b949'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -11319,6 +11324,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('lg-') && lgAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
+  if (a && a.startsWith('ma-') && window.GGMa && GGMa.act(a, v)) return; // GWG BLD 949 hook
   if (a && a.startsWith('acc-') && await accAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;

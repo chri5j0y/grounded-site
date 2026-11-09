@@ -27,7 +27,7 @@
    mist, and Hardy rests); one tap ends it early. Never limited or counted.
 
    Everything is saved inside the person's own locked Grounded profile
-   (GGP), under the tool's record, as "tend". Nothing leaves the device.
+   (GGP), under the tool's record, as "tend", locked with the profile.
 
    For tools
      GGTend.init(cfg)        see the Oak page for a full example
@@ -314,7 +314,7 @@
   /* ---------- Today ---------- */
   function needProfile(where) {
     if (C && C.lockedHtml) { var lh = C.lockedHtml(where); if (lh) return lh; }   // a tool's own "who's tending" screen (Oak, Rebrand Session 4)
-    return '<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. Nothing is sent anywhere.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary" onclick="GGTend.act(\'openProfile\')">Open my profile</button></div><p class="gt-small"><a class="text-link" href="#" onclick="GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a></p></div>';
+    return '<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile, locked with a passcode only you know. Only you can open it.</p><div class="btn-row"><button class="btn btn-primary" onclick="GGTend.act(\'createProfile\')">Create a profile</button><button class="btn btn-secondary" onclick="GGTend.act(\'openProfile\')">Open my profile</button></div><p class="gt-small"><a class="text-link" href="#" onclick="GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a></p></div>';
   }
   function anchorHtml(s, which) {
     var A = (J.ANCHORS || {})[which]; if (!A) return '';
@@ -496,7 +496,7 @@
       + (C.extraSettings ? C.extraSettings() : '')
       + '<section><h3>Daily Reminder</h3>' + (can ? '<label class="gt-switch"><input type="checkbox"' + (rem && rem.on ? ' checked' : '') + ' onchange="GGTend.remind(this.checked)"> Remind me to tend my tree</label><label class="gt-small" for="gt-rtime">Time</label> <input type="time" id="gt-rtime" value="' + esc((rem && rem.time) || '08:00') + '" onchange="GGTend.remind(null)">' : '<p class="gt-small">Daily reminders come with the ' + esc(C.toolName) + ' phone app. They are set on your phone, and nothing is sent to a server.</p>') + '</section>'
       + '<section><h3>Reading and Display</h3><div class="btn-row">' + (window.GGRead && GGRead.settings ? '<button class="btn btn-secondary btn-sm" onclick="GGRead.settings()">Read Aloud Voice</button>' : '') + '<button class="btn btn-secondary btn-sm" onclick="GGTend.act(\'textSize\')">Text Size</button><button class="btn btn-secondary btn-sm" onclick="GGTend.theme()">Light or dark</button>' + (window.GGEase ? '<button class="btn btn-secondary btn-sm" onclick="GGEase.open(this)">Ease of Use</button>' : '') + '</div></section>'
-      + (C.noRecords ? '' : '<section><h3>Your Records</h3><div class="btn-row">' + '<button class="btn btn-secondary btn-sm" onclick="GGBackupGo(\'make\')">Back up everything</button><button class="btn btn-secondary btn-sm" onclick="GGBackupGo(\'pick\')">Load a backup</button>' + '<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'progress\')">Save or load a results file</button>' + rootBtn() + '</div><p class="gt-small">Back up everything saves one file with every profile on this device (each still locked), The Grove, and settings, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Load it on any device to bring it all back. Everything stays on this device.' + (rootBtn() ? ' Your Root Words open your profile if your passcode is ever forgotten.' : '') + ' To delete a profile and everything in it, open Picture, passcode, and more.</p></section>')
+      + (C.noRecords ? '' : '<section><h3>Your Records</h3><div class="btn-row">' + '<button class="btn btn-secondary btn-sm" onclick="GGBackupGo(\'make\')">Back up everything</button><button class="btn btn-secondary btn-sm" onclick="GGBackupGo(\'pick\')">Load a backup</button>' + '<button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGTend.act(\'progress\')">Save or load a results file</button>' + rootBtn() + '</div><p class="gt-small">Back up everything saves one file with every profile on this device (each still locked), The Grove, and settings, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Load it on any device to bring it all back. The file stays locked, wherever you keep it.' + (rootBtn() ? ' Your Root Words open your profile if your passcode is ever forgotten.' : '') + ' To delete a profile and everything in it, open Picture, passcode, and more.</p></section>')
       + '<section><h3>About</h3><p><a class="text-link" href="#" onclick="GGTend.closeSettings();GGTend.act(\'about\');return false;">How ' + esc(C.toolName) + ' works</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/privacy.html">Privacy</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/terms.html">Terms</a> &nbsp; <a class="text-link" href="https://growwithgrounded.com/accessibility.html">Accessibility</a></p></section>'
       + '</div></div>';
     document.body.insertAdjacentHTML('beforeend', html);
@@ -617,7 +617,7 @@
       + '<label class="gt-small" for="gt-fam-name">First name to show</label><br><input id="gt-fam-name" class="gt-fam-name" type="text" maxlength="24" autocomplete="given-name" value="' + esc(famFirst()) + '" oninput="GGTend.famDraw()"></section>'
       + '<section id="gt-fam-out"></section>'
       + '<section><h3>What Your Link Shares</h3><ul class="gt-fam-list"><li>Your first name</li><li>Your tree: ' + tn + '</li><li>How your tree looks: days tended and which parts you tended this week</li><li>Whether you tended today, and how many days this week</li><li>The day you made the link</li></ul>'
-      + '<h3>What Stays with You</h3><p>Your answers, scores, notes, journal, and growth plan stay on this device.</p>'
+      + '<h3>What Stays with You</h3><p>Your answers, scores, notes, journal, and growth plan stay locked and private.</p>'
       + '<p class="gt-small">Anyone with this link can see what it shares, so send it to family only. Your link is a snapshot: share again any time to send a fresh one.</p></section>'
       + '</div></div>';
     document.body.insertAdjacentHTML('beforeend', html);

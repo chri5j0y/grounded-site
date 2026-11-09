@@ -983,7 +983,7 @@ function vShop(){
 const TRIP = {H, save, shopList, keepShop, rerender: () => rerender(true), toast, esc, PUB, TEEN, STORES, aisleOf, asset, fwl: n => fwl(n), shopDate: n => shopDate(n),
   week: () => S.shopWk || foodWeek(new Date()), age: () => { try { return C.age ? String(C.age() || '') : ''; } catch(e){ return ''; } }};
 let TRIPL = 0;
-function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('field-guide/trip.js?v=b948');
+function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('field-guide/trip.js?v=b949');
   s.onload = () => { if (S.sec === 'shop' || document.querySelector('.hj-shopbar')) rerender(true); }; s.onerror = () => { TRIPL = 0; }; document.head.appendChild(s); } return ''; }
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
@@ -2895,7 +2895,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b935'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b949'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -3151,7 +3151,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b938'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b949'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);

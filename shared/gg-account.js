@@ -35,13 +35,23 @@
      GGAccount.deleteAccount({password, confirm: 'DELETE', erase})
      GGAccount.household.get(), create(), invite(email), join(token), remove(accountId), leave(), cancelInvite(email), end()
      GGAccount.readHash()                #confirm=, #recover=, #keep=, #join= from the address, cleared at once
-     GGAccount.member()                  Build 3 seam: Membership on the account (null until then)
+     GGAccount.member()                  Membership on the account (BLD 949): {status, kind, ends, household, org, auto} or null,
+                                         as last read from the server (memberRefresh reads it again)
+     GGAccount.memberRefresh()           Promise of the same, read fresh (GET /member)
+     GGAccount.memberKey()               Promise of the Member lock key bytes (GET /member/key, locked to this account's public
+                                         key: ECDH P-256, HKDF "gg-acct-v1 member", AES-GCM with aad "gg1|member|<accountId>").
+                                         shared/gg-member.js imports them at once as a non extractable key and clears the bytes.
+     GGAccount.memberCode(body)          Promise: a code entered while signed in attaches to the account ({code} or {code, c, ck})
+     GGAccount.checkoutUrl(href)         a Stripe payment link that carries this account (client_reference_id, prefilled_email)
+   Membership buy buttons (links to buy.stripe.com) carry the signed in account by themselves, and the Welcome, Member page
+   and the Membership note on The Grounded Way say how Membership opens on the account. This file loads only while
+   Accounts are live (shared/gg-profiles.js ACCOUNTS_LIVE), so none of this runs before then.
    No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGAccount) return;
-  var V = 'b938', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
+  var V = 'b950', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
   var TERMS_V = '2026-10-28', PRIVACY_V = '2026-10-28';   // stage 2 moves these to the launch date with gg-profiles.js
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var site = /(^|\.)growwithgrounded\.com$/.test(location.hostname);
@@ -199,13 +209,13 @@
   function kDel() { return kv('readwrite', function (s) { s.delete('acct'); }).catch(function () {}); }
 
   /* ---------- state ---------- */
-  var A = null, net = true, subs = [];
+  var A = null, net = true, subs = [], MB = null;
   function emit(type, detail) { subs.slice().forEach(function (fn) { try { fn(type, detail); } catch (e) { console.error(e); } }); }
   function state() { return !A ? 'out' : net ? 'in' : 'offline'; }
   function setNet(v) { if (v !== net) { net = v; emit('state', state()); } }
   function info() { return A ? { accountId: A.accountId, email: A.email, confirmed: !!A.confirmed } : null; }
   // signed out from somewhere else (Sign Out That Device, a new password, Delete My Account on another device)
-  function lost() { if (!A) return; A = null; kDel().then(function () { if (window.GGSync && GGSync.forget) return GGSync.forget(); }).then(function () { emit('state', 'out'); }); }
+  function lost() { if (!A) return; A = null; MB = null; kDel().then(function () { if (window.GGSync && GGSync.forget) return GGSync.forget(); }).then(function () { emit('state', 'out'); }); }
   function deviceTag() { try { var t = localStorage.getItem('gg-device-tag'); if (!t) { t = b64u(rand(18)); localStorage.setItem('gg-device-tag', t); } return t; } catch (e) { return ''; } }
   function deviceName() {
     var u = navigator.userAgent || '', p = /iPhone/.test(u) ? 'iPhone' : /iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? 'iPad' : /Android/.test(u) ? 'Android' : /Macintosh|Mac OS X/.test(u) ? 'Mac' : /Windows/.test(u) ? 'Windows' : /CrOS/.test(u) ? 'Chromebook' : /Linux/.test(u) ? 'Linux' : 'A device';
@@ -287,7 +297,7 @@
     return api('POST', '/auth/signout', {}, { quiet401: true }).catch(function () {}).then(function () { return forgetHere(o.erase, carried); });
   }
   function forgetHere(erase, carried) {
-    A = null;
+    A = null; MB = null;
     return kDel().then(function () { if (window.GGSync && GGSync.forget) return GGSync.forget(); }).then(function () {
       if (erase) emit('erase', { docs: carried || [] });
       emit('state', 'out');
@@ -300,6 +310,7 @@
   function account() {
     return api('GET', '/account').then(function (r) {
       if (A && (r.confirmed !== A.confirmed || r.email !== A.email)) { A.confirmed = r.confirmed; A.email = r.email; kPut(A); if (r.confirmed) emit('confirmed', true); }
+      if (A && 'member' in r) setMember(r.member);
       return r;
     });
   }
@@ -448,6 +459,71 @@
     end: function () { return api('DELETE', '/household').then(function (r) { emit('household', 'end'); if (window.GGSync) GGSync.leftHousehold(); return r; }); }
   };
 
+
+  /* ---------- Membership on the account (BLD 949) ---------- */
+  function setMember(m) {
+    var was = JSON.stringify(MB);
+    MB = m && typeof m === 'object' ? { status: m.status === 'active' ? 'active' : 'ended', kind: String(m.kind || 'member'), ends: m.ends == null ? null : +m.ends, household: !!m.household, org: !!m.org, auto: !!m.auto } : null;
+    if (A) { A.member = MB; kPut(A).catch(function () {}); }
+    if (JSON.stringify(MB) !== was) emit('member', MB);
+    return MB;
+  }
+  function member() { return MB ? Object.assign({}, MB) : null; }
+  function memberRefresh() {
+    if (!A) return Promise.resolve(null);
+    return api('GET', '/member').then(function (r) { return setMember(r.member); });
+  }
+  // The Member lock key, opened here with this account's private key (the server locked it to the public key)
+  function memberKey() {
+    if (!A) return Promise.reject(kind('signin'));
+    return api('GET', '/member/key').then(function (r) {
+      var w = r.wrapped, id = A.accountId;
+      if (r.member) setMember(r.member);
+      if (!w || !w.epk || !w.iv || !w.ct) throw kind('server');
+      return subtle.importKey('jwk', { kty: 'EC', crv: 'P-256', x: w.epk.x, y: w.epk.y, ext: true }, { name: 'ECDH', namedCurve: 'P-256' }, false, []).then(function (pk) {
+        return subtle.deriveBits({ name: 'ECDH', public: pk }, A.priv, 256);
+      }).then(function (bits) { return hkdfBase(new Uint8Array(bits)); }).then(function (b) {
+        return subtle.deriveKey(hk('gg-acct-v1 member'), b, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+      }).then(function (k) {
+        return subtle.decrypt({ name: 'AES-GCM', iv: unb64u(w.iv), additionalData: enc.encode('gg1|member|' + id) }, k, unb64u(w.ct));
+      }).then(function (pt) { return new Uint8Array(pt); }, function () { throw kind('box'); });
+    });
+  }
+  function memberCode(b) {
+    if (!A) return Promise.reject(kind('signin'));
+    return api('POST', '/member/code', b || {}).then(function (r) { setMember(r.member); return r; });
+  }
+  // A Stripe payment link that carries this account, so paying opens Membership on it
+  function checkoutUrl(href) {
+    try {
+      var u = new URL(href, location.href);
+      if (u.hostname !== 'buy.stripe.com' || !A) return href;
+      u.searchParams.set('client_reference_id', A.accountId);
+      if (A.email) u.searchParams.set('prefilled_email', A.email);
+      return u.toString();
+    } catch (e) { return href; }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href*="buy.stripe.com"]');
+    if (a && A) a.href = checkoutUrl(a.href);
+  }, true);
+  // The Welcome, Member page and the Membership note: how Membership opens with an account (words live here, so the
+  // pages carry none of them while Accounts are hidden)
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function paintBuy() {
+    var inn = !!A;
+    [].forEach.call(document.querySelectorAll('a[href*="buy.stripe.com"]'), function (a) { if (inn) a.href = checkoutUrl(a.href); });
+    var note = document.querySelector('[data-gg-after]');
+    if (note) note.textContent = inn ? 'Membership opens on your Grounded Account as soon as you join, on every device you sign in on. No code to type.'
+      : 'Make your Grounded Account first, or use the same email when you join. Membership then opens by itself on every device you sign in on.';
+    var lead = document.querySelector('[data-gg-wm="lead"]'), steps = document.querySelector('[data-gg-wm="steps"]');
+    if (!lead || !steps) return;
+    var S = inn ? [['Open The Grounded Way.', 'On any device where you are signed in to your Grounded Account.'], ['Membership opens by itself.', 'No code to type. Every profile you keep there has the full suite.'], ['On every device.', 'Sign in on your phone, tablet, or computer, and Membership is there too. A Household Membership covers everyone in your Household.']]
+      : [['Open The Grounded Way.', 'On your phone, open growwithgrounded.com/home and make your profile, if you have not yet.'], ['Make your Grounded Account.', 'Use the same email you paid with, and confirm it from your inbox. It is in Settings, My Account.'], ['Membership opens by itself.', 'On every device you sign in on, with no code to type. A Household Membership covers everyone in your Household.']];
+    lead.textContent = inn ? 'Thank you for joining. Your payment went through, and Membership opens on your Grounded Account.' : 'Thank you for joining. Your payment went through, and your Membership is ready for your Grounded Account.';
+    steps.innerHTML = S.map(function (x, i) { return '<li><b class="n">' + (i + 1) + '</b><div><h2>' + esc(x[0]) + '</h2><p>' + esc(x[1]) + '</p></div></li>'; }).join('');
+  }
+
   /* ---------- the address: #confirm=, #recover=, #keep=, #join= ---------- */
   function readHash() {
     var m = /#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})/.exec(location.hash || '');
@@ -462,7 +538,11 @@
     api: api, seal: seal, open: open, pack: pack, unpack: unpack, boxId: boxId, AAD: AAD, b64u: b64u, unb64u: unb64u, rand: rand, hkdfBase: hkdfBase, hkAes: hkAes, hkMac: hkMac, kind: kind, words: words, deviceTag: deviceTag
   };
 
-  var readyP = kGet().then(function (v) { if (v && v.DK && v.accountId) { A = v; emit('state', 'in'); } }).catch(function () {}).then(function () { return info(); });
+  var readyP = kGet().then(function (v) { if (v && v.DK && v.accountId) { A = v; MB = v.member || null; emit('state', 'in'); } }).catch(function () {}).then(function () { return info(); });
+  readyP.then(function () {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paintBuy); else paintBuy();
+    subs.push(function (t) { if (t === 'state') paintBuy(); });
+  });
 
   window.GGAccount = {
     v: V, KDF: KDF, ready: readyP, state: state, info: info, on: function (fn) { subs.push(fn); return function () { subs = subs.filter(function (f) { return f !== fn; }); }; },
@@ -472,7 +552,7 @@
     changePassword: changePassword, rootWords: rootWords, newRootWords: newRootWords, changeEmail: changeEmail,
     devices: devices, signOutDevice: signOutDevice, exportData: exportData, openExport: openExport, deleteAccount: deleteAccount,
     household: household, readHash: readHash, words: words, health: function () { return api('GET', '/health', null, { tries: 1 }); },
-    member: function () { return null; },   // Build 3: Membership on the account (GET /account answers member)
+    member: member, memberRefresh: memberRefresh, memberKey: memberKey, memberCode: memberCode, checkoutUrl: checkoutUrl,
     _: inner
   };
 })();

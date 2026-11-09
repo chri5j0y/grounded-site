@@ -42,7 +42,7 @@
     '/shared/gg-life.js?v=b907',
     '/shared/practice-rhythm.js?v=b929',
     '/shared/gg-guided.js?v=b907',
-    '/shared/guided/sequoia.js?v=b929'
+    '/shared/guided/sequoia.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // sequoia/app.js:195
   // sequoia/app.js:566
