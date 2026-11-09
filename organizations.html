@@ -327,6 +327,19 @@ section.sb-plan{padding:48px 0}
 .org-story{padding:44px 0}
 .org-story p{max-width:62ch;margin:0 auto;font-size:19px;line-height:1.6;color:var(--ink-soft);text-align:center}
 @media (max-width:640px){.sb-steps{grid-template-columns:1fr}.sb-guide-in{flex-wrap:nowrap;gap:16px;align-items:flex-start}.sb-guide-in img{width:96px;flex:0 0 96px}.sb-guide h2{font-size:23px}}
+/* BLD 951: buy buttons and after you buy */
+.org-tier .org-buy{margin-top:auto;align-self:flex-start;text-align:center}
+.org-tier .seats+.org-buy{margin-top:auto}.org-tier .seats{margin-bottom:18px}
+.org-after{margin-top:22px;border-left:5px solid var(--gold)}
+.org-after h2{font-size:30px;margin:0}
+.org-after-steps{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}
+.org-after-steps li{display:flex;gap:14px;align-items:flex-start}
+.org-after-steps li>b{display:inline-grid;place-items:center;flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--gold);color:#fff;font-weight:700}
+.org-after-steps h3{font-size:22px;margin:2px 0 4px}
+.org-after-steps p{margin:0;font-size:17px;color:var(--ink-soft)}
+.org-wait{font-weight:500}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .org-after-steps li>b{color:#1F1A14}}:root[data-theme="dark"] .org-after-steps li>b{color:#1F1A14}
+@media(max-width:700px){.org-after-steps{grid-template-columns:1fr}.org-tier .org-buy{align-self:stretch}}
 </style>
 </head>
 <body>
@@ -345,7 +358,7 @@ section.sb-plan{padding:48px 0}
     <div class="eyebrow">For Organizations</div>
     <h1>Help your people grow whole.</h1>
     <p class="cer-sub org-sub">Membership packs for churches, schools, and workplaces: The Grounded Way for every person, so your people grow healthy in mind, body, spirit, and relationships, every day.</p>
-    <div class="card-actions cer-actions gg-watch-acts"><a class="btn btn-primary org-main" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack">Get a Membership Pack</a><!-- PAGE VIDEO (BLD 780) --><button type="button" class="btn btn-ghost gg-watch gg-watch-hero" data-gg-watch="demo-organizations" hidden>Watch the Video</button><!-- /PAGE VIDEO --></div>
+    <div class="card-actions cer-actions gg-watch-acts"><a class="btn btn-primary org-main" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack" data-gg-buy-jump="org" data-gg-to="#packs">Get a Membership Pack</a><!-- PAGE VIDEO (BLD 780) --><button type="button" class="btn btn-ghost gg-watch gg-watch-hero" data-gg-watch="demo-organizations" hidden>Watch the Video</button><!-- /PAGE VIDEO --></div>
   </div>
 </section>
 
@@ -389,8 +402,8 @@ section.sb-plan{padding:48px 0}
 
 <section class="sb-plan" id="steps" aria-labelledby="org-plan-h"><div class="wrap">
   <h2 class="c" id="org-plan-h">Three simple steps.</h2>
-  <ol class="sb-steps"><li><b aria-hidden="true">1</b><span>Reach out.</span><small>Tell us about your people and about how many will join.</small></li><li><b aria-hidden="true">2</b><span>Choose your pack.</span><small>25, 50, or 100 people, with a talk or training to begin together, if you like.</small></li><li><b aria-hidden="true">3</b><span>Your people begin.</span><small>Each person receives a Member code and starts The Grounded Way on their own device.</small></li></ol>
-  <div class="sb-cta"><a class="btn btn-primary" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack">Get a Membership Pack</a></div>
+  <ol class="sb-steps"><li><b aria-hidden="true">1</b><span>Choose your pack.</span><small>25, 50, or 100 people, with a talk or training to begin together, if you like.</small></li><li><b aria-hidden="true">2</b><span>Share one code.</span><small>Your organization code arrives by email. Share it with your people however you like.</small></li><li><b aria-hidden="true">3</b><span>Your people begin.</span><small>Each person enters the code once in The Grounded Way, and full Membership opens for them.</small></li></ol>
+  <div class="sb-cta"><a class="btn btn-primary" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack" data-gg-buy-jump="org" data-gg-to="#packs">Get a Membership Pack</a></div>
 </div></section>
 
 <section class="org-story" id="story" aria-labelledby="org-story-h"><div class="wrap">
@@ -404,10 +417,22 @@ section.sb-plan{padding:48px 0}
     <div class="eyebrow">Choices and Price</div>
     <h2 id="packs">Membership packs</h2>
     <div class="org-price org-packs">
-      <div class="org-tier"><h3>25 People</h3><div class="by">A small group, team, or congregation</div><div class="amt">$1,200<small>a year</small></div><div class="seats">Full Membership for 25 people</div></div>
-      <div class="org-tier"><h3>50 People</h3><div class="by">A growing church, school staff, or workplace</div><div class="amt">$2,100<small>a year</small></div><div class="seats">Full Membership for 50 people</div></div>
-      <div class="org-tier"><h3>100 People</h3><div class="by">A larger community, with room to grow</div><div class="amt">$3,600<small>a year</small></div><div class="seats">Full Membership for 100 people</div></div>
+      <div class="org-tier"><h3>25 People</h3><div class="by">A small group, team, or congregation</div><div class="amt">$1,200<small>a year</small></div><div class="seats">Full Membership for 25 people</div><a class="btn btn-primary org-buy" data-gg-buy="org25" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack%2C%2025%20people" aria-label="Get the 25 People pack, $1,200 a year">Get This Pack</a></div>
+      <div class="org-tier"><h3>50 People</h3><div class="by">A growing church, school staff, or workplace</div><div class="amt">$2,100<small>a year</small></div><div class="seats">Full Membership for 50 people</div><a class="btn btn-primary org-buy" data-gg-buy="org50" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack%2C%2050%20people" aria-label="Get the 50 People pack, $2,100 a year">Get This Pack</a></div>
+      <div class="org-tier"><h3>100 People</h3><div class="by">A larger community, with room to grow</div><div class="amt">$3,600<small>a year</small></div><div class="seats">Full Membership for 100 people</div><a class="btn btn-primary org-buy" data-gg-buy="org100" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack%2C%20100%20people" aria-label="Get the 100 People pack, $3,600 a year">Get This Pack</a></div>
     </div>
+
+    <!-- BLD 951: what happens after a pack is bought (shown once Chris's payment links are filled in, shared/gg-buy.js) -->
+    <div class="card org-after" id="after-you-buy" data-gg-buy-show="org" hidden>
+      <h2>After you buy</h2>
+      <ol class="org-after-steps">
+        <li><b aria-hidden="true">1</b><div><h3>Your code arrives by email.</h3><p>One organization code, sent to the email you pay with. One code serves your whole pack.</p></div></li>
+        <li><b aria-hidden="true">2</b><div><h3>Share it with your people.</h3><p>In a meeting, an email, or a note on the table, however suits your group.</p></div></li>
+        <li><b aria-hidden="true">3</b><div><h3>Each person enters it once.</h3><p>On their own Grounded Account, under Membership, I Have a Code. Each person takes one seat, and Membership opens on every device they sign in on.</p></div></li>
+        <li><b aria-hidden="true">4</b><div><h3>Ask about your seats any time.</h3><p>Write to us, and we will tell you how many seats are in use.</p></div></li>
+      </ol>
+    </div>
+    <p class="org-note org-wait" data-gg-buy-wait="org">To get your pack, tap Get This Pack and tell us a little about your people. We set up your pack with you and send your organization code by email.</p>
     <p class="org-note">Talks and trainings are priced on their own: a community, church, or nonprofit talk from $750, a half-day training $1,250, a full day $2,000, and a conference keynote from $2,000, with virtual sessions 20% less. Listed prices may change. Once you sign, your price is locked for that year, and Founding Partner rates stay as promised.</p>
     <div class="org-pair">
       <div class="card org-found"><h2 style="font-size:30px">Founding Partners</h2><p>The first five organizations help shape what comes next, and pay less for it.</p>
@@ -443,7 +468,21 @@ section.sb-plan{padding:48px 0}
     </div>
 
 
-    <div class="org-cta"><p class="lead">Every organization is different, from churches and schools to workplaces, senior living communities, and community groups. Tell us about yours, and we will help you choose.</p><a class="btn btn-primary" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack">Get a Membership Pack</a><p class="org-more"><a class="text-link" href="speaking-training.html">Speaking and Training</a> &middot; <a class="text-link" href="rates.html">Rates and Accessibility</a></p></div>
+
+    <!-- BLD 951: questions about Membership packs -->
+    <h2 id="faq" style="margin-top:46px">Questions about Membership packs</h2>
+    <div class="faq-list">
+      <details class="faq"><summary>How does my organization receive its code?</summary><p>One organization code arrives by email to the person who buys the pack. One code serves your whole pack, so there is one simple thing to share.</p></details>
+      <details class="faq" data-gg-buy-show="org" hidden><summary>Does each person need a Grounded Account?</summary><p>Yes. Each person makes their own Grounded Account with their email, then enters the code once. Membership then opens on every device they sign in on, and the kids' and teens' profiles they keep have it too.</p></details>
+      <details class="faq"><summary>How do seats work?</summary><p>Each person who enters the code takes one seat, once, however many devices they use. When every seat is in use, the code is full. To welcome more people, choose a larger pack, or add a second pack with its own code.</p></details>
+      <details class="faq"><summary>Can I see how many seats are in use?</summary><p>Yes. Write to us any time, and we will tell you how many seats are in use.</p></details>
+      <details class="faq"><summary>How long does a pack last?</summary><p>A pack opens full Membership for one year from the day you buy it. Renew each year to keep growing together.</p></details>
+      <details class="faq"><summary>What does our organization see?</summary><p>Everything each person writes stays locked with their own passcode, private to them. What we share with your organization is how many seats are in use.</p></details>
+      <details class="faq"><summary>What about Founding Partner or Grace Fund pricing?</summary><p>Those packs are set up with you directly, at their own price. <a class="text-link" href="contact.html#plan=Organizations&amp;about=Founding%20Partners">Reach out first</a>, and we will take it from there.</p></details>
+      <details class="faq"><summary>Prefer another way to pay, or have a question first?</summary><p><a class="text-link" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack">Reach out</a>, and we will set up your pack with you.</p></details>
+    </div>
+
+    <div class="org-cta"><p class="lead">Every organization is different, from churches and schools to workplaces, senior living communities, and community groups. Tell us about yours, and we will help you choose.</p><a class="btn btn-primary" href="contact.html#plan=Organizations&amp;about=A%20Membership%20pack" data-gg-buy-jump="org" data-gg-to="#packs">Get a Membership Pack</a><p class="org-more"><a class="text-link" href="speaking-training.html">Speaking and Training</a> &middot; <a class="text-link" href="rates.html">Rates and Accessibility</a></p></div>
   </div>
 </section>
 </main>
@@ -466,6 +505,7 @@ section.sb-plan{padding:48px 0}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b934"></script>
+<script src="/shared/gg-buy.js?v=b952"></script>
 <script src="nav.js?v=b949" defer></script>
 <!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b949" defer></script><!-- /PAGE VIDEO -->
 </body>
