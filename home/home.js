@@ -426,7 +426,7 @@
     fruit: ['gg-k-kind-wishes-now', 'gg-k-senses-detective-now'],
     none: ['gg-k-calm-place-now', 'gg-k-balloon-belly-now', 'gg-k-tree-roots-now']
   };
-  var ART = { bark: 'tend-mind', leaves: 'tend-move', roots: 'tend-spirit', trunk: 'tend-spirit', branches: 'tend-people', fruit: 'tend-fruit', none: 'tend-mind', calm: 'tend-mind' };
+  var ART = { bark: 'p-tend-mind', leaves: 'p-tend-move', roots: 'tend-spirit', trunk: 'tend-spirit', branches: 'p-tend-people', fruit: 'tend-fruit', none: 'p-tend-mind', calm: 'p-tend-mind' };
   /* BLD 912: Get Grounded Now opens in Home's own window (GGNow.mount), never as a page in a frame. */
   function openGGN() {
     mDialog('Get Grounded Now', '<div id="hm-ggn" class="ggn-root hm-ggn"><p class="hm-loading">Opening Get Grounded Now…</p></div>');
@@ -578,10 +578,10 @@
   /* ---------- first visit ---------- */
   function promiseHtml() {
     return '<div class="hm-promise">' +
-      '<div class="hm-card hm-prom hm-p-leaves">' + pb(IMG + 'quiet-morning-sq.webp') + '<div><h3 class="hm-h3">Private</h3><div class="hm-sub">The Grounded Way is yours alone. Begin with just a name and a passcode.</div></div></div>' +
-      '<div class="hm-card hm-prom hm-p-branches">' + pb(IMG + 'tending-sq.webp') + '<div><h3 class="hm-h3">On Your Device</h3><div class="hm-sub">Everything is saved right here, on this phone or computer, locked so only you can open it.</div></div></div>' +
+      '<div class="hm-card hm-prom hm-p-leaves">' + pb(IMG + 'p-quiet-morning-sq.webp') + '<div><h3 class="hm-h3">Private</h3><div class="hm-sub">The Grounded Way is yours alone. Begin with just a name and a passcode.</div></div></div>' +
+      '<div class="hm-card hm-prom hm-p-branches">' + pb(IMG + 'p-tending-sq.webp') + '<div><h3 class="hm-h3">On Your Device</h3><div class="hm-sub">Everything is saved right here, on this phone or computer, locked so only you can open it.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-trunk">' + pb(IMG + 'candle-alcove-sq.webp') + '<div><h3 class="hm-h3">Locked With Your Passcode</h3><div class="hm-sub">Only your passcode, or your Root Words, opens it.</div></div></div>' +
-      '<div class="hm-card hm-prom hm-p-bark">' + pb(IMG + 'way-plan-sq.webp') + '<div><h3 class="hm-h3">Yours to Shape</h3><div class="hm-sub">Choose how you tend each of the four. Change it any time in Settings.</div></div></div>' +
+      '<div class="hm-card hm-prom hm-p-bark">' + pb(IMG + 'p-way-plan-sq.webp') + '<div><h3 class="hm-h3">Yours to Shape</h3><div class="hm-sub">Choose how you tend each of the four. Change it any time in Settings.</div></div></div>' +
     '</div>';
   }
   var STAGES = [['maple'], ['aspen'], ['pine'], ['birch'], ['oak'], ['sequoia'], [null, 'For a Season of Life'], ['willow'], ['grove'], ['heartwood']];
@@ -615,7 +615,7 @@
     var who = [['me', 'user', 'Me', 'Your own tree and your own day.'], ['family', 'people', 'My Family', 'Each person\'s tree, growing together in The Grove.'], ['other', 'love', 'Someone I Love', 'Set up their Grounded Way and stay close as their helper.']];
     var steps = '<div class="hm-steps" id="hm-steps">' +
       '<div class="hm-card hm-step hm-p-branches"><div class="hm-shd"><span class="hm-num">1</span><div><div class="hm-k">Step 1 of 3</div><h2 class="hm-h2">Who Is This For?</h2></div></div>' +
-        '<div class="hm-who" role="group" aria-label="Who is this for">' + who.map(function (w) { return '<button type="button" class="hm-p-branches" aria-pressed="' + (W.who === w[0]) + '" data-hm-who="' + w[0] + '">' + pb(w[0] === 'me' ? treeArt('oak') : w[0] === 'family' ? treeArt('grove') : IMG + 'tend-people.webp') + '<span><b>' + w[2] + '</b><small>' + w[3] + '</small></span><span class="rd"></span></button>'; }).join('') + '</div></div>' +
+        '<div class="hm-who" role="group" aria-label="Who is this for">' + who.map(function (w) { return '<button type="button" class="hm-p-branches" aria-pressed="' + (W.who === w[0]) + '" data-hm-who="' + w[0] + '">' + pb(w[0] === 'me' ? treeArt('oak') : w[0] === 'family' ? treeArt('grove') : IMG + 'p-tend-people.webp') + '<span><b>' + w[2] + '</b><small>' + w[3] + '</small></span><span class="rd"></span></button>'; }).join('') + '</div></div>' +
       '<div class="hm-card hm-step hm-p-leaves"><div class="hm-shd"><span class="hm-num">2</span><div><div class="hm-k">Step 2 of 3</div><h2 class="hm-h2">Your Stage of Life</h2></div></div>' +
         '<p class="hm-sub" style="margin:-4px 0 12px">Your stage picks your tree. Each one is built for its season of life.</p>' + sp +
         '<div class="hm-note hm-p-leaves" style="margin-top:12px">' + I('people') + '<span id="hm-stage-note">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode.</span></div></div>' +
@@ -1100,7 +1100,7 @@
         '<div class="hm-acts">' + (GGP.rootState && GGP.rootState(S.id) ? '<button class="hm-btn line hm-p-trunk" type="button" data-hm="rootwords">' + I('key') + 'See My Root Words</button>' : '') + '<button class="hm-btn line hm-p-fruit" type="button" data-hm="manage">' + I('gear') + 'Manage My Profile</button><button class="hm-btn line hm-p-branches" type="button" data-hm="lock">' + I('lock') + 'Lock</button></div>' : '') +
       '</article><div class="hm-col">' +
         '<article class="hm-card hm-a-numbers"><div class="hm-hd">' + pb(IMG + 'progress-sq.webp') + '<div><div class="hm-k">A Note on Health Numbers</div><h3 class="hm-h3">Talk It Over With Your Doctor</h3></div></div><div class="hm-sub">Plate rings, lab lines, and progress paths are research-informed estimates. They are here to help you notice and plan, and to bring to your doctor. Grounded offers guidance and support, and your doctor guides your medical choices.</div></article>' +
-        '<article class="hm-card hm-p-trunk"><div class="hm-hd">' + pb(IMG + 'tend-people.webp') + '<div><div class="hm-k">Kids and Helpers</div><h3 class="hm-h3">A Key for Those Who Help</h3></div></div><div class="hm-sub">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode. In Birch, Sequoia, and Willow, a helper sees only what the person chooses to share.</div></article>' +
+        '<article class="hm-card hm-p-trunk"><div class="hm-hd">' + pb(IMG + 'p-tend-people.webp') + '<div><div class="hm-k">Kids and Helpers</div><h3 class="hm-h3">A Key for Those Who Help</h3></div></div><div class="hm-sub">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode. In Birch, Sequoia, and Willow, a helper sees only what the person chooses to share.</div></article>' +
         '<article class="hm-card hm-p-leaves"><div class="hm-hd">' + pb(IMG + 'candle-alcove-sq.webp') + '<div><div class="hm-k">Locked Tight</div><h3 class="hm-h3">How the Lock Works</h3></div></div><div class="hm-sub">Your saved data is sealed with its own key (AES 256). That key is locked with your passcode, and again with your Root Words, so either one opens it.</div><div class="hm-quiet" style="margin-top:10px"><a href="/privacy.html">Read the full Privacy Policy</a></div></article>' +
       '</div></div>';
   }
@@ -1149,7 +1149,7 @@
     var v = GGN[id];
     var line = !ck ? 'Check in with your grown-up to wake up your tree.' : ed.edges.filter(isTend).length ? 'The + part could use a little love today.' : 'Your whole tree is growing. Great tending!';
     return '<div class="hm-wrap"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><div class="hm-lay kidlay"><div class="hm-kid">' +
-      '<div class="hm-ksky"><img class="art" src="' + IMG + (eve ? 'home-evening' : 'home-morning') + '-narrow.webp" alt=""><div class="hi"><span><b>Hi, ' + esc(S.p.name) + '!</b><small>' + DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '</small></span></div><img class="mark" src="' + mark(S.tree) + '" alt=""></div>' +
+      '<div class="hm-ksky"><img class="art" src="' + IMG + (eve ? 'p-home-evening' : 'p-home-morning') + '-narrow.webp" alt=""><div class="hi"><span><b>Hi, ' + esc(S.p.name) + '!</b><small>' + DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '</small></span></div><img class="mark" src="' + mark(S.tree) + '" alt=""></div>' +
       '<div class="hm-kin">' +
         '<div class="hm-kcard" style="--c:#FF9F1C"><h2 class="hm-kh">Your ' + t.n + ' Is Growing</h2><div class="hm-kparts">' + parts + '</div>' + grow + '<p style="margin-top:10px;font-weight:500">' + esc(line) + '</p></div>' +
         '<div class="hm-kcard" style="--c:#9B5DE5"><div class="hm-kprac"><button type="button" class="ill" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + IMG + ART[lead] + '.webp" alt=""><span>' + I('play') + '</span></button><div><h3 class="hm-kh">Today: ' + esc(v[0]) + '</h3><p>' + esc(v[2]) + '</p></div></div>' +
@@ -1202,12 +1202,12 @@
   var HERO = '/shared/heroes/';
   /* BLD 895: Chris's Grok paintings, each card its own; -sq files are the square crops for small tiles, the others are wide. */
   var ART2 = {
-    quiet: IMG + 'quiet-morning-sq.webp', move: IMG + 'move-strength-sq.webp', meal: IMG + 'meal-lunch-sq.webp', cook: IMG + 'tend-body.webp',
+    quiet: IMG + 'p-quiet-morning-sq.webp', move: IMG + 'move-strength-sq.webp', meal: IMG + 'meal-lunch-sq.webp', cook: IMG + 'tend-body.webp',
     head: IMG + 'kitchen-headstart-sq.webp', shop: IMG + 'shop-wide.webp', shopSq: IMG + 'shop-sq.webp', prep: IMG + 'prep-together-sq.webp', supp: IMG + 'supplements-sq.webp',
-    spirit: IMG + 'tend-spirit.webp', people: IMG + 'tend-people.webp', start: IMG + 'tending-sq.webp', startWide: IMG + 'tending-wide.webp', growth: HERO + 'page-growth-narrow.webp',
-    batch: IMG + 'weekly-batch-sq.webp', rest: IMG + 'rest-day-sq.webp', plan: IMG + 'growth-plan-sq.webp', med: IMG + 'quiet-meditation-sq.webp'
+    spirit: IMG + 'tend-spirit.webp', people: IMG + 'p-tend-people.webp', start: IMG + 'p-tending-sq.webp', startWide: IMG + 'p-tending-wide.webp', growth: IMG + 'p-growth-narrow.webp',
+    batch: IMG + 'weekly-batch-sq.webp', rest: IMG + 'p-rest-day-sq.webp', plan: IMG + 'p-growth-plan-sq.webp', med: IMG + 'quiet-meditation-sq.webp'
   };
-  var FOOD_ROT = [IMG + 'tend-body.webp', IMG + 'tend-fruit.webp', IMG + 'tend-people.webp', IMG + 'recipes-narrow.webp'];
+  var FOOD_ROT = [IMG + 'tend-body.webp', IMG + 'tend-fruit.webp', IMG + 'p-tend-people.webp', IMG + 'recipes-narrow.webp'];
   function treeArt(tree, wide) { if (tree === 'heartwood') return wide ? '/heartwood/hero-wide.webp' : HERO + 'heartwood-card.webp'; return HERO + (/^(oak|birch|sequoia|pine|maple|aspen|willow|grove)$/.test(tree) ? tree : 'oak') + (wide ? '-wide.webp' : '-phone.webp'); }
   function artFor(x) {
     var k = String(x.kind || '') + ' ' + String(x.hkey || x.key || '');
@@ -1293,7 +1293,7 @@
     var b = BANNER[tab] || BANNER.grow;
     if (tab === 'week' && !member()) b = isYoung(S.p) ? BANNER.weekTeen : BANNER.weekStart;   // BLD 935 (audit M1)
     if (b[0] === 'mytree' || b[0] === 'learn') return bannerArt(tab, b, b[0] === 'mytree' ? treeArt(S.tree, true) : HERO + 'learn/c133.webp', b[0] === 'mytree' ? treeArt(S.tree) : HERO + 'learn/c133.webp');
-    var wide = b[0] === 'tree' ? HERO + 'page-growth-wide.webp' : b[0] === 'recipes' ? IMG + 'recipes-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? HERO + 'page-growth-narrow.webp' : b[0] === 'recipes' ? IMG + 'recipes-narrow.webp' : HERO + 'library-phone.webp';
+    var wide = b[0] === 'tree' ? IMG + 'p-growth-wide.webp' : b[0] === 'recipes' ? IMG + 'recipes-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? IMG + 'p-growth-narrow.webp' : b[0] === 'recipes' ? IMG + 'recipes-narrow.webp' : HERO + 'library-phone.webp';
     return '<header class="hm-ah hm-banner"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + narrow + '"><img src="' + wide + '" alt="" fetchpriority="high"></picture>' +
       '<div class="hm-ahl"><div class="hm-ak">The Grounded Way</div><h1 class="hm-at">' + esc(headingOf(tab)) + '</h1><p class="hm-asub">' + esc(b[1]) + '</p></div>' + meBtn() + '</header>';
   }
@@ -1425,7 +1425,7 @@
                    and name: no time of day, how often, or days of the week, so every practice shows every day
                    (as on the tree's own Today) and the time of day comes from its name or its part. */
   var PART_KEYS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
-  var PRAC_ART = { roots: IMG + 'tend-spirit.webp', trunk: '/shared/heroes/page-growth-narrow.webp', bark: IMG + 'tend-mind.webp', branches: IMG + 'tend-people.webp', leaves: IMG + 'tend-move.webp', fruit: IMG + 'tend-fruit.webp' };
+  var PRAC_ART = { roots: IMG + 'tend-spirit.webp', trunk: '/shared/heroes/way/p-growth-narrow.webp', bark: IMG + 'p-tend-mind.webp', branches: IMG + 'p-tend-people.webp', leaves: IMG + 'p-tend-move.webp', fruit: IMG + 'tend-fruit.webp' };
   var PART_SLOT = { roots: [6.9, 'Morning'], leaves: [7.6, 'Morning'], trunk: [11.8, 'Midday'], bark: [13.2, 'Midday'], branches: [18, 'Evening'], fruit: [19.8, 'Evening'] };
   var PINFO = {};
   function tendHost(id, tree) {
@@ -1500,7 +1500,7 @@
   }
   function practiceArt(part, name) {
     if (part === 'leaves' && /\b(eat|food|meal|water|nourish|cook|vegetable|fruit|plate|kitchen)\b/i.test(name)) return IMG + 'tend-body.webp';
-    return PRAC_ART[part] || IMG + 'tend-mind.webp';
+    return PRAC_ART[part] || IMG + 'p-tend-mind.webp';
   }
   /* Today's cards for the plan, for any tree. kid: Maple and Aspen wording. */
   function planItems(kid) {
@@ -1944,7 +1944,7 @@
         host.done = !!(host.done || x.doneToday); x.filledBy = host.key; drop.push(x); return;
       }
       if (host) { if (!x.doneToday) drop.push(x); return; }
-      items[i] = Object.assign({}, x, { title: 'Today\'s Movement', sub: x.title + (x.sub ? '. ' + x.sub : ''), image: IMG + 'move-walk-sq.webp' });
+      items[i] = Object.assign({}, x, { title: 'Today\'s Movement', sub: x.title + (x.sub ? '. ' + x.sub : ''), image: IMG + 'p-move-walk-sq.webp' });
     });
   }
   /* A Then step's own Done, and an item's own Done (its Then steps aside). */
@@ -2068,7 +2068,7 @@
     // BLD 935 (audit L2): an item whose time of day has passed reads plainly Right Now (no Morning at 9 PM).
     var late = cur && cur.hour + 3 < hr, ct = cur ? cur.ftitle || cur.title : '', cs = cur ? String(cur.sub || '') : '';
     if (ct && cs.indexOf(ct + '. ') === 0) cs = cs.slice(ct.length + 2);
-    if (!cur) return '<article class="hm-now hm-tn-p"><img class="bg" src="' + IMG + 'home-evening-narrow.webp" alt="" aria-hidden="true"><div class="in"><div class="k">Right Now</div><h2>Everything for today is tended.</h2><p>Rest well. Tomorrow keeps growing.</p></div></article>';
+    if (!cur) return '<article class="hm-now hm-tn-p"><img class="bg" src="' + IMG + 'p-home-evening-narrow.webp" alt="" aria-hidden="true"><div class="in"><div class="k">Right Now</div><h2>Everything for today is tended.</h2><p>Rest well. Tomorrow keeps growing.</p></div></article>';
     return '<article class="hm-now ' + tintClass(cur.tint, cur.kind) + '"><img class="bg" src="' + esc(cur.image || artFor(cur)) + '" alt="" aria-hidden="true"><div class="in"><div class="k">' + (late || !cur.when ? 'Right Now' : 'Right Now · ' + esc(cur.when)) + '</div><h2>' + esc(ct) + '</h2>' + (cs ? '<p>' + esc(cs) + '</p>' : '') +
       '<div class="hm-acts tight"><button type="button" class="hm-btn big pulse" data-hm-go="' + esc(cur.key) + '">' + I(GO_ICON[cur.btn] || 'play') + esc(cur.btn) + '</button></div></div></article>';
   }
@@ -2081,7 +2081,7 @@
     return { k: 'For Today', text: pick(LINES, dayIndex()) };
   }
   function todayHero(done, n) {
-    var d = now(), hr = d.getHours() + d.getMinutes() / 60, eve = hr >= 17 || hr < 5, k = eve ? 'home-evening' : 'home-morning', t = TREES[S.tree] || TREES.oak, tend = tendOf(S.id, S.tree), wk = weekNo(tend), hl = heroLine();
+    var d = now(), hr = d.getHours() + d.getMinutes() / 60, eve = hr >= 17 || hr < 5, k = eve ? 'p-home-evening' : 'p-home-morning', t = TREES[S.tree] || TREES.oak, tend = tendOf(S.id, S.tree), wk = weekNo(tend), hl = heroLine();
     // BLD 929 (M16): each week label names its thing, and Today shows one: the fitness week when the 12-week program runs,
     // else the tree's season.
     var fit = member() && tendReady() ? String((wpInfo() || {}).prog || '').split(' · ')[0] : '';
@@ -2101,7 +2101,7 @@
     items.filter(function (x) { return x.side; }).forEach(function (x) {
       if (x.key === 'pray') out.push('<article class="hm-card edge lift hm-p-roots hm-side' + (x.done ? ' done' : '') + '"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-spirit.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Any time</div><h3 class="hm-h3">A Sacred Pause</h3><div class="hm-meta"><span>' + I('flame') + 'Prayer, a reading, or quiet, in your own way</span></div>' +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm" data-hm-go="pray">' + I('play') + 'Begin</button><a class="hm-btn sm line" href="/readings.html">' + I('feather') + 'Readings</a>' + doneBtn(x) + dtBtn(x) + '</div></div></div></article>');
-      if (x.key === 'talk') out.push('<article class="hm-card edge hm-p-branches hm-side hm-tqcard' + (x.done ? ' done' : '') + '"><img class="bg" src="' + IMG + 'tend-people.webp" alt="" aria-hidden="true" loading="lazy"><div class="hm-hd" style="margin-bottom:4px">' + pb(IMG + 'dinner-chili-sq.webp') + '<div><div class="hm-k">Tonight\'s Question</div><div class="hm-sub">For dinner together, phones away</div></div></div><p class="hm-tq">' + esc(pick(QUESTIONS, dayIndex() + (+d.q || 0))) + '</p>' +
+      if (x.key === 'talk') out.push('<article class="hm-card edge hm-p-branches hm-side hm-tqcard' + (x.done ? ' done' : '') + '"><img class="bg" src="' + IMG + 'p-tend-people.webp" alt="" aria-hidden="true" loading="lazy"><div class="hm-hd" style="margin-bottom:4px">' + pb(IMG + 'dinner-chili-sq.webp') + '<div><div class="hm-k">Tonight\'s Question</div><div class="hm-sub">For dinner together, phones away</div></div></div><p class="hm-tq">' + esc(pick(QUESTIONS, dayIndex() + (+d.q || 0))) + '</p>' +
         '<div class="hm-acts tight"><button class="hm-btn sm line" type="button" data-hm-go="talk">' + I('swap') + 'Another Question</button>' + doneBtn(x, 'We Talked') + dtBtn(x) + '</div></article>');
     });
     out.push(progressHtml(h, lastCheckin(S.id, S.tree), tendOf(S.id, S.tree)));
@@ -2134,7 +2134,7 @@
     }
     lead = wayNoteHtml() + lead;
     var list = items.filter(function (x) { return !x.side; });
-    var head = '<div class="hm-grp hm-p-leaves">' + pb(IMG + 'tending-sq.webp') + '<h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
+    var head = '<div class="hm-grp hm-p-leaves">' + pb(IMG + 'p-tending-sq.webp') + '<h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
     /* BLD 896 (Chris, note E: "not sure why we have the random green +"): the Plate card's + Log a Plate button is the one way in.
        With no Plate card, a labeled Log a Note button stands in its place, never a bare plus. */
     var plate = T.ready ? plateCardHtml() : '';
@@ -2241,7 +2241,7 @@
     }).join('');
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
     var nw = hasFn('news') ? hCall('news') : null;
-    var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-hd">' + pb(IMG + 'growth-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">' + esc(nw.title) + '</div></div></div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
+    var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-hd">' + pb(IMG + 'p-growth-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">' + esc(nw.title) + '</div></div></div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
     return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div></div></div>';
   }
 
@@ -2637,9 +2637,9 @@
      the locked profile and its backups. Reopens from the initials sheet as How It Works (kids: a How It Works link). */
   var TOUR_V = 'b884';
   var TOUR = [
-    { k: 'today', art: 'home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: a practice for each of your four, your meals, movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
+    { k: 'today', art: 'p-home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: a practice for each of your four, your meals, movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
     // BLD 911: five tabs (BLD 910), and Week opens from Today and Grow.
-    { k: 'checkin', art: 'tend-mind', ey: 'Tab 2 of 5', t: 'Check-in', d: 'How each part of your tree is growing: Strong, Steady, or a Growing Edge. The questions come from your tree, made for your age.', tr: 'Take a Quick Check-in, about two minutes.' },
+    { k: 'checkin', art: 'p-tend-mind', ey: 'Tab 2 of 5', t: 'Check-in', d: 'How each part of your tree is growing: Strong, Steady, or a Growing Edge. The questions come from your tree, made for your age.', tr: 'Take a Quick Check-in, about two minutes.' },
     { k: 'grow', art: 'growth', ey: 'Tab 3 of 5', t: 'Grow', d: 'My Growth Plan, your week, your season, and your family: the practices you choose, body, mind, spirit, and your table, in one plan.', tr: 'Open My Growth Plan and choose one practice to begin with.' },
     { k: 'learn', art: 'learn', ey: 'Tab 4 of 5', t: 'Learn', d: 'Short lessons and guides for when life changes, chosen for your tree, each playing right here.', tr: 'Play one lesson, about three minutes.' },
     { k: 'library', art: 'library', ey: 'Tab 5 of 5', t: 'Library', d: 'Grounded Recipes with holidays and gatherings, movement, quiet, and stories, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'The gear on Today opens Numbers, Household, Settings, Privacy, and this tour again.' }
@@ -2652,11 +2652,11 @@
     return L.map(function (c) { return c.k !== 'today' ? c : Object.assign({}, c, { d: 'Your whole day in order: a practice for each of your four, your movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.' }); });
   }
   var KTOUR = [
-    { k: 'today', art: 'home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
+    { k: 'today', art: 'p-home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
     { k: 'tree', art: 'tend-fruit', ey: 'Check-in', t: 'Check-in', d: 'You tend four parts of your tree, and the trunk and fruit grow from your tending. A check-in shows how each part is doing.', tr: 'Check in with your grown-up and watch your tree light up!' },
-    { k: 'watch', art: 'tend-mind', ey: 'Watch', t: 'Watch', d: 'Short videos to breathe, feel calm and strong, and learn about your tree.', tr: 'Try Birthday Candle Sigh: sniff, sniff, whoosh!' }
+    { k: 'watch', art: 'p-tend-mind', ey: 'Watch', t: 'Watch', d: 'Short videos to breathe, feel calm and strong, and learn about your tree.', tr: 'Try Birthday Candle Sigh: sniff, sniff, whoosh!' }
   ];
-  var TOUR_ART = { learn: [HERO + 'learn/c133.webp', HERO + 'learn/c133.webp'], 'home-morning': [IMG + 'home-morning-wide.webp', IMG + 'home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'tend-mind': [IMG + 'tend-mind.webp', IMG + 'tend-mind.webp'], growth: [HERO + 'page-growth-wide.webp', HERO + 'page-growth-wide.webp'], library: [HERO + 'library-wide.webp', HERO + 'library-wide.webp'] };
+  var TOUR_ART = { learn: [HERO + 'learn/c133.webp', HERO + 'learn/c133.webp'], 'p-home-morning': [IMG + 'p-home-morning-wide.webp', IMG + 'p-home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'p-tend-mind': [IMG + 'p-tend-mind.webp', IMG + 'p-tend-mind.webp'], growth: [IMG + 'p-growth-wide.webp', IMG + 'p-growth-wide.webp'], library: [HERO + 'library-wide.webp', HERO + 'library-wide.webp'] };
   var T = { open: false, i: 0, list: TOUR, asked: {}, tries: 0, back: null };
   function tourSeen() { var h = homeRec(); return !!h.tour; }
   function maybeTour() {
@@ -2674,7 +2674,7 @@
     }, 400);
   }
   function tourCardHtml() {
-    var c = T.list[T.i], n = T.list.length, last = T.i === n - 1, a = TOUR_ART[c.art] || TOUR_ART['home-morning'];
+    var c = T.list[T.i], n = T.list.length, last = T.i === n - 1, a = TOUR_ART[c.art] || TOUR_ART['p-home-morning'];
     return '<div class="hm-tour-pic"><picture aria-hidden="true"><source media="(max-width:699px)" srcset="' + a[1] + '"><img src="' + a[0] + '" alt="" decoding="async"></picture>' +
         '<div class="hm-tour-hd"><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2>' + '' + '</div></div>' +
       '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') +
@@ -2876,7 +2876,7 @@
   }
   function wayNoteHtml() {
     var w = wayRec(); if (!w.note) return '';
-    return '<article class="hm-card hm-p-leaves hm-waynote" role="status"><div class="hm-hd">' + pb(IMG + 'way-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">Week 3 · Your Plan Grows</div><h3 class="hm-h3">Spirit and practices join your day</h3></div></div>' +
+    return '<article class="hm-card hm-p-leaves hm-waynote" role="status"><div class="hm-hd">' + pb(IMG + 'p-way-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">Week 3 · Your Plan Grows</div><h3 class="hm-h3">Spirit and practices join your day</h3></div></div>' +
       '<p class="hm-sub">Two good weeks of movement, meditation, and dinner. Today the rest of your plan joins in: your spirit choices and the practices for your Growing Edges.</p>' +
       '<div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-wpnote="1">Got It</button></div></article>';
   }
@@ -3330,7 +3330,7 @@
   function planDoorGrow() {
     if (!planOK()) return '';
     var w = wayRec(), s = w.saved;
-    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Growth Plan</div>' +
+    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'p-way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Growth Plan</div>' +
       '<h3 class="hm-h3">My Growth Plan</h3><p class="hm-sub">' + (function () { var pc = planList(S.id, S.tree).length; return (pc ? nWord(pc) + (pc === 1 ? ' practice' : ' practices') + ' for your four. ' : '') + (s ? 'Your practices, body, mind, spirit, and table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Your practices, body, mind, spirit, and table, in one plan shaped by your latest check-in. About five minutes.'); })() + '</p>' +
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Growth Plan') + '</button></div></div></div></article>';
   }
@@ -4090,7 +4090,7 @@
   };
   function inviteHtml(id, cls) {
     var x = INVITE[id]; if (!x) return '';
-    return '<article class="hm-card hm-invite ' + (cls || 'hm-p-trunk') + '" data-hm-inv="' + id + '">' + pb(IMG + 'growth-plan-sq.webp') + '<div style="flex:1;min-width:0"><div class="hm-k">Membership</div><h3 class="hm-h3">' + esc(x[0]) + '</h3><p class="hm-sub">' + esc(x[1]) + '</p>' +
+    return '<article class="hm-card hm-invite ' + (cls || 'hm-p-trunk') + '" data-hm-inv="' + id + '">' + pb(IMG + 'p-growth-plan-sq.webp') + '<div style="flex:1;min-width:0"><div class="hm-k">Membership</div><h3 class="hm-h3">' + esc(x[0]) + '</h3><p class="hm-sub">' + esc(x[1]) + '</p>' +
       '<div class="hm-acts tight"><a class="hm-btn sm hm-pill" href="' + MEMBER_URL + '" data-hm-mlink="1">' + I('arrow') + 'See Membership</a><button type="button" class="hm-btn sm line hm-pill" data-hm-mcode="1">' + I('lock') + 'I Have a Code</button></div></div></article>';
   }
 
@@ -4133,7 +4133,7 @@
   function seedPlanOpen() { return seedsOn() && seedPlanDay() <= SEED_DAYS; }
   function seedPlanHtml() {
     var n = seedPlanDay(), open = n <= SEED_DAYS;
-    return '<article class="hm-card hm-gcard hm-p-trunk hm-seedplan" id="hm-seedplan"><div class="hm-hd">' + pb(IMG + 'growth-plan-sq.webp') + '<div><div class="hm-time">' + seedChip() + (open ? 'Day ' + n + ' of ' + SEED_DAYS : 'Your First 14 Days') + '</div><h3 class="hm-h3">Your Full Growth Plan</h3></div></div>' +
+    return '<article class="hm-card hm-gcard hm-p-trunk hm-seedplan" id="hm-seedplan"><div class="hm-hd">' + pb(IMG + 'p-growth-plan-sq.webp') + '<div><div class="hm-time">' + seedChip() + (open ? 'Day ' + n + ' of ' + SEED_DAYS : 'Your First 14 Days') + '</div><h3 class="hm-h3">Your Full Growth Plan</h3></div></div>' +
       '<p class="hm-sub">' + (open ? 'Your full growth plan is open for your first 14 days. Today brings one practice a day for each of the four, taking turns through every practice you choose, and every day you tended stays with you.' : 'Your first 14 days with the full growth plan are complete. Today brings one practice a day for each of the four, and every day you tended stays with you.') + '</p>' + seedLine() + '</article>';
   }
   function seedMedHtml() {
@@ -4280,8 +4280,8 @@
   function memberGrowHtml() {
     if (isYoung(S.p)) return '';
     if (!member()) return seedPlanHtml() + (seedPlanOpen() ? '' : inviteHtml('plan'));
-    var ART_M = { 'hm-phist': IMG + 'tending-sq.webp', 'hm-custom': IMG + 'way-plan-sq.webp', 'hm-remind': IMG + 'quiet-morning-sq.webp' };
-    var card = function (cls, ey, title, body, id) { return '<article class="hm-card hm-gcard ' + cls + '" id="' + id + '"><div class="hm-hd">' + pb(ART_M[id] || IMG + 'growth-plan-sq.webp') + '<div><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3></div></div>' + body + '</article>'; };
+    var ART_M = { 'hm-phist': IMG + 'p-tending-sq.webp', 'hm-custom': IMG + 'p-way-plan-sq.webp', 'hm-remind': IMG + 'p-quiet-morning-sq.webp' };
+    var card = function (cls, ey, title, body, id) { return '<article class="hm-card hm-gcard ' + cls + '" id="' + id + '"><div class="hm-hd">' + pb(ART_M[id] || IMG + 'p-growth-plan-sq.webp') + '<div><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3></div></div>' + body + '</article>'; };
     return card('hm-p-leaves hm-mcard', 'Membership', 'Practice History', historyHtml(), 'hm-phist') +
       card('hm-p-roots hm-mcard', 'Membership', 'My Custom Practices', customHtml(), 'hm-custom') +
       card('hm-p-branches hm-mcard', 'Membership', 'Reminders', '<p class="hm-sub">A calendar file with each daily and weekly practice at its time of day, with a gentle alert five minutes before. Save it once, and your phone keeps the rhythm.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-remind="1">' + I('clock') + 'Save My Reminders</button></div>', 'hm-remind');
@@ -4569,7 +4569,7 @@
   function moneyShelves() {
     if (!moneyFor()) return '';
     return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your whole money plan on one page: money in, money out, and every line at a glance.', cls: 'hm-sh-life hm-sh-money', art: PEOPLE + 'money-sq.webp' }) +
-      (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'growth-plan.webp' }) : '');
+      (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'p-growth-plan.webp' }) : '');
   }
   function moneySearch(has, out) {
     if (!moneyFor()) return;
@@ -4658,7 +4658,7 @@
   var MSHELVES = [
     { id: 'meditation', name: 'Grounded Meditation', line: 'Guided meditations for sleep, worry, grief, focus, and more.', art: IMG + 'quiet-meditation.webp', cls: 'hm-sh-quiet' },
     { id: 'spirit', name: 'Grounded Spirit', line: 'Deeper guided programs for what grounds you, in your own tradition or your own way.', art: IMG + 'tend-spirit.webp', cls: 'hm-sh-learn' },
-    { id: 'relationships', name: 'Grounded Relationships', line: 'Listening, repair, unplugged time, family dinner, and a weekly connection plan.', art: IMG + 'tend-people.webp', cls: 'hm-sh-life' },
+    { id: 'relationships', name: 'Grounded Relationships', line: 'Listening, repair, unplugged time, family dinner, and a weekly connection plan.', art: IMG + 'p-tend-people.webp', cls: 'hm-sh-life' },
     { id: 'seasons', name: 'Grounded Seasons', line: 'Guided programs for the seasons of life: a grief year, a new baby, a move, retirement, caring for a parent, and a new diagnosis.', art: HERO + 'page-hard-seasons-narrow.webp', cls: 'hm-sh-life' }
   ];
   /* A section may be a list of items, {items: [...]}, or {programs: [{title, items or sessions}]}; items carry scenes. */
@@ -4675,7 +4675,7 @@
   }
   function mShelfHtml() {
     if (isYoung(S.p)) return '';
-    if (!member()) return seedsOn() ? [{ id: 'seeds', name: 'Seeds', count: 'Yours to keep', line: 'A real piece of every part of Membership: meditation, Spirit, Relationships, Seasons, stories read aloud, Gentle, meals, and My Heart Risk.', cls: 'hm-sh-life hm-sh-seeds', art: IMG + 'growth-plan.webp' }].concat(MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { return { id: 'm-' + s.id, name: s.name, count: 'Seed: each first session', line: s.line, cls: s.cls, art: s.art }; })).map(shelfHtml).join('') : '';
+    if (!member()) return seedsOn() ? [{ id: 'seeds', name: 'Seeds', count: 'Yours to keep', line: 'A real piece of every part of Membership: meditation, Spirit, Relationships, Seasons, stories read aloud, Gentle, meals, and My Heart Risk.', cls: 'hm-sh-life hm-sh-seeds', art: IMG + 'p-growth-plan.webp' }].concat(MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { return { id: 'm-' + s.id, name: s.name, count: 'Seed: each first session', line: s.line, cls: s.cls, art: s.art }; })).map(shelfHtml).join('') : '';
     return MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { var n = mItems(s.id).length; return shelfHtml({ id: 'm-' + s.id, name: s.name, count: n ? n + (n === 1 ? ' session' : ' sessions') : 'Membership', plain: 'Membership', line: s.line, cls: s.cls, art: s.art }); }).join('');
   }
   function openMShelf(id) {
@@ -4869,10 +4869,10 @@
   // A lesson card's painting by its topic (BLD 911: the art plans spread paintings across scenes, so the first one can miss
   // the topic); the tree's own painting for welcomes, check-ins, and anything else.
   var TOPIC_ART = [
-    [/roots|spirit|prayer|faith|sacred|gratitude/i, IMG + 'tend-spirit.webp'], [/bark|mind|worry|anxi|calm|breath|stress|sleep/i, IMG + 'tend-mind.webp'],
-    [/leaves|body|move|walk|stretch|food|eat|meal/i, IMG + 'tend-move.webp'], [/branches|relationship|family|friend|marriage|together|household/i, IMG + 'tend-people.webp'],
-    [/trunk|meaning|purpose|values/i, HERO + 'page-growth-narrow.webp'], [/fruit|hope|joy/i, IMG + 'tend-fruit.webp'],
-    [/growth plan|practice|plan\b/i, IMG + 'growth-plan.webp'], [/when life changes|grief|loss|hard season/i, HERO + 'page-hard-seasons-narrow.webp'],
+    [/roots|spirit|prayer|faith|sacred|gratitude/i, IMG + 'tend-spirit.webp'], [/bark|mind|worry|anxi|calm|breath|stress|sleep/i, IMG + 'p-tend-mind.webp'],
+    [/leaves|body|move|walk|stretch|food|eat|meal/i, IMG + 'p-tend-move.webp'], [/branches|relationship|family|friend|marriage|together|household/i, IMG + 'p-tend-people.webp'],
+    [/trunk|meaning|purpose|values/i, IMG + 'p-growth-narrow.webp'], [/fruit|hope|joy/i, IMG + 'tend-fruit.webp'],
+    [/growth plan|practice|plan\b/i, IMG + 'p-growth-plan.webp'], [/when life changes|grief|loss|hard season/i, HERO + 'page-hard-seasons-narrow.webp'],
     [/today, week|season|rings|progress/i, IMG + 'this-season.webp']
   ];
   function lessonArt(app, id, i, title) {
@@ -5021,7 +5021,7 @@
   }
 
   /* Grow: the tree's own tools as painted cards (Week, Season and Rings, and each tree's special book), all in this app. */
-  var SPECIAL = { pine: ['next', 'Next Steps', 'After high school: college, work, service, and the life you are growing toward.', HERO + 'page-growth-narrow.webp'], birch: ['ground', 'Groundwork', 'Money, home, work, and the everyday skills of a grown-up life.', IMG + 'balance-lawn.webp'], sequoia: ['legacy', 'Legacy Book', 'Your stories, your wisdom, and the words you want to pass on.', IMG + 'library-learn.webp'] };
+  var SPECIAL = { pine: ['next', 'Next Steps', 'After high school: college, work, service, and the life you are growing toward.', IMG + 'p-growth-narrow.webp'], birch: ['ground', 'Groundwork', 'Money, home, work, and the everyday skills of a grown-up life.', IMG + 'balance-lawn.webp'], sequoia: ['legacy', 'Legacy Book', 'Your stories, your wisdom, and the words you want to pass on.', IMG + 'library-learn.webp'] };
   function gtool(cls, img, ey, title, line, attr, btn, more) {
     return '<article class="hm-card edge lift ' + cls + ' hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + img + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">' + esc(ey) + '</div><h3 class="hm-h3">' + esc(title) + '</h3><p class="hm-sub">' + esc(line) + '</p><div class="hm-acts tight' + (more ? ' hm-wkjump' : '') + '"><button type="button" class="hm-btn sm hm-pill" ' + attr + '>' + btn + '</button>' + (more || '') + '</div></div></div></article>';
   }
@@ -5029,11 +5029,11 @@
      A Sample Week of Meals with its list (Sunday Together Prep is part of Membership, so its button rests); a teen's card is
      the week's practices only. */
   function weekToolHtml() {
-    if (member()) return gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day, with the Shopping List, Sunday Together Prep, and the month.', 'data-hm-tab="week"', I('grid') + 'Week and Month',
+    if (member()) return gtool('hm-p-trunk', IMG + 'p-tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day, with the Shopping List, Sunday Together Prep, and the month.', 'data-hm-tab="week"', I('grid') + 'Week and Month',
         '<button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=shop">' + I('cart') + 'Shopping List</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=prep">' + I('sprout') + 'Sunday Prep</button>');
-    if (seedsOn() && !seedMoved()) return gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, day by day, and A Sample Week of Meals with its shopping list.', 'data-hm-tab="week"', I('grid') + 'My Week',
+    if (seedsOn() && !seedMoved()) return gtool('hm-p-trunk', IMG + 'p-tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, day by day, and A Sample Week of Meals with its shopping list.', 'data-hm-tab="week"', I('grid') + 'My Week',
         '<button type="button" class="hm-btn sm line hm-pill" data-hm-seed="meals">' + I('cart') + 'Shopping List</button>');
-    return gtool('hm-p-trunk', IMG + 'tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, day by day.', 'data-hm-tab="week"', I('grid') + 'My Week');
+    return gtool('hm-p-trunk', IMG + 'p-tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, day by day.', 'data-hm-tab="week"', I('grid') + 'My Week');
   }
   function growToolsHtml() {
     var t = TREES[S.tree] || TREES.oak, sp = SPECIAL[S.tree];
@@ -5053,7 +5053,7 @@
       var tr = treeOfProfile(p), tn = (TREES[tr] || TREES.oak).n, here = p.id === S.id;
       return '<li><button type="button" class="hm-whop" data-hm-pick="' + esc(p.id) + '"' + (here ? ' aria-current="true"' : '') + '><span class="av"><img src="' + treeArt(tr) + '" alt=""></span><span class="tx"><b>' + esc(p.name) + '</b><small>' + esc(tn) + (here ? ', open now' : '') + '</small></span>' + I('arrow') + '</button></li>';
     }).join('');
-    mDialog('Who Is Tending?', '<picture class="hm-whoband" aria-hidden="true"><img src="' + IMG + 'home-morning-narrow.webp" alt=""></picture><p class="hm-sub" style="margin:10px 2px 12px">One app for the whole family. Each person\'s tree comes from their age and grows with them.</p>' +
+    mDialog('Who Is Tending?', '<picture class="hm-whoband" aria-hidden="true"><img src="' + IMG + 'p-home-morning-narrow.webp" alt=""></picture><p class="hm-sub" style="margin:10px 2px 12px">One app for the whole family. Each person\'s tree comes from their age and grows with them.</p>' +
       '<ul class="hm-wholist">' + rows + '</ul><button type="button" class="hm-btn line hm-pill hm-whoadd" data-hm-padd="1">' + I('plus') + 'Add a Person</button>' +
       '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
