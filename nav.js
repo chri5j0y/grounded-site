@@ -33,12 +33,12 @@
   var WAY_GROUPS = [
     { name: 'Start Here', items: [
       { id: 'home', title: 'Begin The Grounded Way', desc: 'One app for every age: make your profile, meet your tree, and tend your four, every day. Your tree grows with you', href: HOME + '/home/', icon: WAYIC, bg: '#E2EEDB' },
-      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: pic('/shared/heroes/way/grounded-way-square.webp'), bg: '#F1E6CC' },
-      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: pic('/shared/heroes/way/tending-sq.webp'), bg: '#E3EFD6' },
-      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, now open to Founding Members', href: HOME + '/the-grounded-way.html#ways', icon: pic('/shared/heroes/way/way-plan-sq.webp'), bg: '#F3E5CC', color: '#6E4A14' }
+      { id: 'way', title: 'What Is The Grounded Way?', desc: 'Get grounded, tend four, and grow in meaning and hope', href: HOME + '/the-grounded-way.html', icon: pic('/shared/heroes/people/card-way.webp'), bg: '#F1E6CC' },
+      { id: 'try', title: 'Try One Practice', desc: 'Tend Four in Four: one minute each for mind, body, spirit, and relationships', href: HOME + '/try-one-practice.html', icon: pic('/shared/heroes/people/card-tending.webp'), bg: '#E3EFD6' },
+      { id: 'member', title: 'Membership', desc: 'Go as deep as you like: the full suite for you or your household, now open to Founding Members', href: HOME + '/the-grounded-way.html#ways', icon: pic('/shared/heroes/people/card-way-plan.webp'), bg: '#F3E5CC', color: '#6E4A14' }
     ] },
     { name: 'For Every Season', items: [
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: pic('/shared/cards/way-sober.webp'), bg: '#DCE8E1' },
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: pic('/shared/heroes/people/card-sober.webp'), bg: '#DCE8E1' },
       { id: 'wlc', title: 'When Life Changes', desc: 'Guides for grief and hard seasons, for every age, each with two short videos', href: HOME + '/home/#learn=life', icon: pic('/shared/heroes/page-hard-seasons-narrow.webp'), bg: '#F1E6CC', color: '#6E4A14' },
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: pic('/shared/heroes/grove-phone.webp'), bg: '#E3EFD6' }
     ] }
@@ -51,7 +51,7 @@
       { id: 'recipes', title: 'Grounded Recipes', desc: 'Every meal and the big days, sized for your table, with ingredients, steps, and a calm voice to guide you', href: HOME + '/recipes/', icon: pic('/shared/cards/way-recipes.webp'), bg: '#F3E5CC' },
       { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: pic('/shared/heroes/library-phone.webp'), bg: '#F1E6CC' },
       { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: pic('/shared/heroes/page-readings-narrow.webp'), bg: '#F1E6CC' },
-      { id: 'ggn', title: 'Get Grounded Now', desc: 'Short guided videos to calm your body and come back to now', href: HOME + '/get-grounded-now.html', icon: pic('/shared/heroes/page-get-grounded-now-narrow.webp'), bg: '#E3EFD6' },
+      { id: 'ggn', title: 'Get Grounded Now', desc: 'Short guided videos to calm your body and come back to now', href: HOME + '/get-grounded-now.html', icon: pic('/shared/heroes/people/card-get-grounded-now.webp'), bg: '#E3EFD6' },
       { id: 'stories', title: 'Grounded Stories', desc: 'Real stories, narrated or to read', href: HOME + '/stories.html', icon: pic('/shared/heroes/page-stories-narrow.webp'), bg: '#F1E6CC' }
     ] },
     { name: 'Companion Apps', items: [
@@ -175,8 +175,8 @@
       ['For Organizations', 'Membership packs for your people', 'organizations']] }
   ];
   var SVC_PIC = { weddings: '/shared/heroes/people/card-weddings.webp', elopements: '/shared/heroes/people/card-elopements.webp', 'child-blessings': '/shared/heroes/people/card-child-blessings.webp', milestones: '/shared/heroes/people/card-milestones.webp',
-    'celebrations-of-life': '/shared/heroes/people/card-celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/heroes/people/card-speaking.webp', 'talk-grounded-way': '/shared/cards/talk-grounded-way.webp', 'talk-living-sober': '/shared/cards/talk-living-sober.webp',
-    'talk-ritual': '/shared/cards/talk-ritual.webp', 'talk-compassion': '/shared/cards/talk-compassion.webp', trainings: '/shared/cards/trainings.webp', organizations: '/shared/heroes/people/card-organizations.webp' };
+    'celebrations-of-life': '/shared/heroes/people/card-celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/heroes/people/card-speaking.webp', 'talk-grounded-way': '/shared/heroes/people/card-talk-grounded-way.webp', 'talk-living-sober': '/shared/heroes/people/card-talk-living-sober.webp',
+    'talk-ritual': '/shared/heroes/people/card-talk-ritual.webp', 'talk-compassion': '/shared/heroes/people/card-talk-compassion.webp', trainings: '/shared/heroes/people/card-trainings.webp', organizations: '/shared/heroes/people/card-organizations.webp' };
   function onPage(href) {
     var a = (href.replace(HOME, '') || '/').replace(/\.html$/, ''), b = location.pathname.replace(/\.html$/, '');
     return a === b;
@@ -203,7 +203,7 @@
   var ABOUT_ITEMS = [
     { title: 'About Us', desc: 'A life giving company: who we are and how we work', href: HOME + '/about.html', icon: pic('/shared/heroes/people/card-about.webp'), bg: '#F1E6CC' },
     { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: pic('/shared/heroes/people/card-contact.webp'), bg: '#F3E5CC' },
-    { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: pic('/shared/heroes/page-supporters-narrow.webp'), bg: '#F1E6CC' }
+    { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: pic('/shared/heroes/people/card-rates.webp'), bg: '#F1E6CC' }
   ];
   function aboutBody() {
     return '<div class="gn-group"><div class="gn-h">About Grow With Grounded</div>' + ABOUT_ITEMS.map(function (t) {
