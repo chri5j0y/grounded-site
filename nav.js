@@ -174,9 +174,9 @@
       ['Trainings for Your Team', 'Half day, full day, keynote, or virtual', 'trainings'],
       ['For Organizations', 'Membership packs for your people', 'organizations']] }
   ];
-  var SVC_PIC = { weddings: '/shared/cards/weddings.webp', elopements: '/shared/cards/elopements.webp', 'child-blessings': '/shared/cards/child-blessings.webp', milestones: '/shared/cards/milestones.webp',
-    'celebrations-of-life': '/shared/cards/celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/cards/sq-speaking.webp', 'talk-grounded-way': '/shared/cards/talk-grounded-way.webp', 'talk-living-sober': '/shared/cards/talk-living-sober.webp',
-    'talk-ritual': '/shared/cards/talk-ritual.webp', 'talk-compassion': '/shared/cards/talk-compassion.webp', trainings: '/shared/cards/trainings.webp', organizations: '/shared/heroes/page-organizations-narrow.webp' };
+  var SVC_PIC = { weddings: '/shared/heroes/people/card-weddings.webp', elopements: '/shared/heroes/people/card-elopements.webp', 'child-blessings': '/shared/heroes/people/card-child-blessings.webp', milestones: '/shared/heroes/people/card-milestones.webp',
+    'celebrations-of-life': '/shared/heroes/people/card-celebrations-of-life.webp', 'funerals-memorials': '/shared/cards/funerals-memorials.webp', 'speaking-training': '/shared/heroes/people/card-speaking.webp', 'talk-grounded-way': '/shared/cards/talk-grounded-way.webp', 'talk-living-sober': '/shared/cards/talk-living-sober.webp',
+    'talk-ritual': '/shared/cards/talk-ritual.webp', 'talk-compassion': '/shared/cards/talk-compassion.webp', trainings: '/shared/cards/trainings.webp', organizations: '/shared/heroes/people/card-organizations.webp' };
   function onPage(href) {
     var a = (href.replace(HOME, '') || '/').replace(/\.html$/, ''), b = location.pathname.replace(/\.html$/, '');
     return a === b;
@@ -201,8 +201,8 @@
   function wayBody() { return toolsBody(WAY_GROUPS); }
   // BLD 909: About holds Contact and Rates, so the top bar stays short. BLD 933: For Organizations lives only under Services.
   var ABOUT_ITEMS = [
-    { title: 'About Us', desc: 'A life giving company: who we are and how we work', href: HOME + '/about.html', icon: pic('/shared/heroes/page-about-narrow.webp'), bg: '#F1E6CC' },
-    { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: pic('/shared/heroes/page-contact-narrow.webp'), bg: '#F3E5CC' },
+    { title: 'About Us', desc: 'A life giving company: who we are and how we work', href: HOME + '/about.html', icon: pic('/shared/heroes/people/card-about.webp'), bg: '#F1E6CC' },
+    { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: pic('/shared/heroes/people/card-contact.webp'), bg: '#F3E5CC' },
     { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: pic('/shared/heroes/page-supporters-narrow.webp'), bg: '#F1E6CC' }
   ];
   function aboutBody() {
