@@ -113,7 +113,7 @@
   /* BLD 938 Accounts and Sync: the one site setting. Accounts stay hidden, and their files never load, until this is true.
      Turn it on only after the server is live (grounded-workshop patches/bld938/GO-LIVE.md). Tests turn it on for a page with
      window.GG_ACCOUNTS_LIVE = true before this file runs. */
-  var ACCOUNTS_LIVE = true;
+  var ACCOUNTS_LIVE = false;   // November 9, 2026: off again while a blank screen after sign up on iPhone is fixed
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
