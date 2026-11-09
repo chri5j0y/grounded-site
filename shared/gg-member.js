@@ -54,12 +54,20 @@
    file (the profile's own key, behind the passcode). It never sits anywhere in clear text, never in a link or a QR code.
    On the other device adopt() checks it against lib-member.js (wrap tag, end date, the lock) and keeps it the same way.
    Membership opened before BLD 922 moves once the code is typed again on this device.
+   Membership on the Account (GWG BLD 949, only while Accounts are live: shared/gg-profiles.js ACCOUNTS_LIVE): when this
+   browser is signed in to a Grounded Account with Membership (paid through Stripe, a Household Membership in its
+   Household, or a code entered while signed in), Membership opens here with no code. The account hands the Member lock
+   key over locked to its own public key (GGAccount.memberKey); it is imported at once as a non extractable key and kept
+   the same way as a typed code's, with rec.acct (the account id) and no wrap tag. Each visit (and on return after half an
+   hour) the account is asked again: active keeps it open, ended returns this device to Start with Renew Membership, and
+   signing out closes it here. A code typed while signed in attaches to the account (Worker checked, once per account; an
+   organization code takes a seat); without an account, a code opens Membership on this device as before.
    Words: forward and plain. No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMember && window.GGMember.__v) return;
-  var V = 'b922', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
+  var V = 'b950', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
   var me = document.currentScript;
   var LIB = (me && me.getAttribute('data-lib')) || '/field-guide/lib-member.js';
   var SEE = (me && me.getAttribute('data-see')) || '/the-grounded-way.html#ways';
@@ -133,7 +141,7 @@
     }).then(function () { return true; }, function () { return false; });
   }
   function carry() {
-    if (!subtle || ST.status !== 'member' || !LIBR) return Promise.resolve(null);
+    if (!subtle || ST.status !== 'member' || !LIBR || (REC && REC.acct)) return Promise.resolve(null);
     return idb('readonly', function (s) { return s.get('carry'); }).then(function (box) {
       box = box || MEM.carry; if (!box || !box.ct) return null;
       return devKey().then(function (dk) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(box.iv) }, dk, unb64(box.ct)); })
@@ -190,15 +198,15 @@
   function lockKey(raw) { return subtle.importKey('raw', typeof raw === 'string' ? unb64(raw) : raw, { name: 'AES-GCM' }, false, ['decrypt']); }
 
   /* ---------- state ---------- */
-  var ST = { status: 'start', kind: '', ends: '', rev: 0 }, LIBR = null, KEYC = null, FNS = [];
+  var ST = { status: 'start', kind: '', ends: '', rev: 0 }, LIBR = null, KEYC = null, FNS = [], REC = null;
   function state() { return { status: ST.status, kind: ST.kind, ends: ST.ends, rev: ST.rev }; }
   function emit() { var s = state(); FNS.slice().forEach(function (f) { try { f(s); } catch (e) {} }); try { document.dispatchEvent(new CustomEvent('gg-member', { detail: s })); } catch (e) {} paintCards(); }
   function setOpen(lib, rec) {
-    LIBR = lib; TENDC = null;
+    LIBR = lib; TENDC = null; REC = rec || null;
     ST = { status: 'member', kind: rec.kind || 'member', ends: rec.ends || '', rev: +(lib && lib._rev) || 0 };
     try { var k = lib && lib.storiesKey && (lib.storiesKey.key || lib.storiesKey); if (k && typeof k === 'string') { if (window.GGStories && GGStories.remember) GGStories.remember(k); else localStorage.setItem('gg_stories_key', k); } } catch (e) {}
   }
-  function setClosed(status, rec) { LIBR = null; KEYC = null; TENDC = null; ST = { status: status, kind: (rec && rec.kind) || '', ends: (rec && rec.ends) || '', rev: 0 }; }
+  function setClosed(status, rec) { LIBR = null; KEYC = null; TENDC = null; REC = rec || null; ST = { status: status, kind: (rec && rec.kind) || '', ends: (rec && rec.ends) || '', rev: 0 }; }
   function ended(rec) { return !!(rec && rec.ends && rec.ends < today()); }
 
   // The Open Membership on This Browser handoff from the Field Guide: #mk=<key>&mt=<staff|founder>.
@@ -247,26 +255,61 @@
     });
   }
 
-  function unlock(code) {
-    if (!subtle) return Promise.resolve({ ok: false, why: 'crypto' });
-    if (!normCode(code)) return Promise.resolve({ ok: false, why: 'empty' });
-    return loadLib(true).then(function (got) {
-      var g = box();
-      if (!g) return { ok: false, why: got === 'offline' ? 'offline' : 'none' };
-      var W = (g.wraps || []).filter(function (w) { return w && w.iv && w.ct; });
-      return codeKey(code, unb64(g.ws)).then(function (ck) {
+  // The sealed wraps: which one this code opens (with the code key's bytes, so a signed in account can show the Worker)
+  function codeBits(code, salt) {
+    return subtle.importKey('raw', enc.encode(normCode(code)), 'PBKDF2', false, ['deriveBits']).then(function (base) {
+      return subtle.deriveBits({ name: 'PBKDF2', salt: salt, iterations: ROUNDS, hash: 'SHA-256' }, base, 256);
+    }).then(function (b) { return new Uint8Array(b); });
+  }
+  function matchWrap(code) {
+    var g = box(); if (!g) return Promise.resolve(null);
+    var W = (g.wraps || []).filter(function (w) { return w && w.iv && w.ct; });
+    return codeBits(code, unb64(g.ws)).then(function (bits) {
+      return subtle.importKey('raw', bits, { name: 'AES-GCM' }, false, ['decrypt']).then(function (ck) {
         return Promise.all(W.map(function (w) {
           return subtle.decrypt({ name: 'AES-GCM', iv: unb64(w.iv) }, ck, unb64(w.ct)).then(function (pt) { return { w: w, o: JSON.parse(dec.decode(pt)) }; }, function () { return null; });
         }));
       }).then(function (r) {
         var hit = r.filter(Boolean)[0];
-        if (!hit || !hit.o || !hit.o.k) return { ok: false, why: 'nomatch' };
-        var rec = { c: hit.w.c, kind: KINDS[hit.o.kind] ? hit.o.kind : 'member', ends: hit.o.ends || '', at: Date.now() };
-        if (ended(rec)) return { ok: false, why: 'ended' };
-        return lockKey(hit.o.k).then(function (key) {
-          return openLock(key).then(function (lib) {
-            KEYC = key; setOpen(lib, rec);
-            return keep(key, rec).then(function (saved) { return keepCarry(hit.o.k, rec).then(function () { emit(); return { ok: true, kind: rec.kind, kept: saved }; }); });
+        if (!hit || !hit.o || !hit.o.k) return null;
+        hit.ck = b64(bits).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        return hit;
+      });
+    });
+  }
+  // Opens Membership on this device from a matched wrap (the path without an account, as before)
+  function openHit(hit) {
+    var rec = { c: hit.w.c, kind: KINDS[hit.o.kind] ? hit.o.kind : 'member', ends: hit.o.ends || '', at: Date.now() };
+    if (ended(rec)) return Promise.resolve({ ok: false, why: 'ended' });
+    return lockKey(hit.o.k).then(function (key) {
+      return openLock(key).then(function (lib) {
+        KEYC = key; setOpen(lib, rec);
+        return keep(key, rec).then(function (saved) { return keepCarry(hit.o.k, rec).then(function () { emit(); return { ok: true, kind: rec.kind, kept: saved }; }); });
+      });
+    });
+  }
+  function unlock(code) {
+    if (!subtle) return Promise.resolve({ ok: false, why: 'crypto' });
+    if (!normCode(code)) return Promise.resolve({ ok: false, why: 'empty' });
+    return loadLib(true).then(function (got) {
+      return acctNow().then(function (G) {
+        var g = box();
+        if (!G) {
+          if (!g) return { ok: false, why: got === 'offline' ? 'offline' : 'none' };
+          return matchWrap(code).then(function (hit) { return hit ? openHit(hit) : { ok: false, why: acctOn() ? 'acct' : 'nomatch' }; });
+        }
+        // Signed in: the code attaches to the account (checked by the Worker), and Membership opens from the account.
+        return (g ? matchWrap(code) : Promise.resolve(null)).then(function (hit) {
+          return G.memberCode(hit ? { code: code, c: hit.w.c, ck: hit.ck } : { code: code }).then(function () {
+            return acctSync(true).then(function () {
+              if (ST.status === 'member' && LIBR) return { ok: true, kind: ST.kind, kept: true, acct: true };
+              return hit ? openHit(hit) : { ok: false, why: 'none' };
+            });
+          }, function (e) {
+            var w = e && e.why;
+            if (w === 'offline' || w === 'setup' || w === 'server') return hit ? openHit(hit) : { ok: false, why: 'offline' };
+            if (w === 'full' || w === 'ended' || w === 'wait') return { ok: false, why: w };
+            return { ok: false, why: 'nomatch' };
           });
         });
       });
@@ -274,6 +317,94 @@
   }
   function forget() {
     setClosed('start'); return wipe().then(function () { emit(); return true; }, function () { emit(); return true; });
+  }
+
+  /* ---------- Membership on the Account (GWG BLD 949) ---------- */
+  function acctOn() { return !!(window.GGP && GGP.account && GGP.account.live); }
+  // The signed in account on this page, or null (Accounts hidden, signed out, or the account files missing)
+  function acctNow() {
+    if (!acctOn()) return Promise.resolve(null);
+    return Promise.resolve(GGP.account.ready).then(function (ok) {
+      if (!ok || !window.GGAccount) return null;
+      return GGAccount.ready.then(function () { return GGAccount.state() === 'out' ? null : GGAccount; });
+    }).catch(function () { return null; });
+  }
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function dayOf(ms) { var d = new Date(ms); return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  var ACH = 0, ASYNC = null;
+  function acctSync(force) {
+    if (!subtle) return Promise.resolve();
+    if (ASYNC && !force) return ASYNC;
+    var p = acctNow().then(function (G) {
+      if (!G) {
+        // signed out here: Membership that came from the account closes on this device
+        if (REC && REC.acct) { setClosed('start'); return wipe().then(emit); }
+        return;
+      }
+      var me = (G.info() || {}).accountId || '';
+      return G.memberRefresh().then(function (m) {
+        ACH = Date.now();
+        var mine = REC && REC.acct === me;
+        if (m && m.status === 'active') {
+          var rec = { c: '', kind: KINDS[m.kind] ? m.kind : 'member', ends: m.ends ? dayOf(m.ends) : '', at: Date.now(), acct: me, auto: m.auto ? 1 : 0, hh: m.household ? 1 : 0, org: m.org ? 1 : 0 };
+          if (ST.status === 'member' && LIBR && mine) {
+            var was = JSON.stringify([REC.kind, REC.ends, REC.auto, REC.hh, REC.org]);
+            REC = rec; ST.kind = rec.kind; ST.ends = rec.ends;
+            if (was !== JSON.stringify([rec.kind, rec.ends, rec.auto, rec.hh, rec.org])) { keepRec2(rec); emit(); }
+            return;
+          }
+          if (ST.status === 'member' && LIBR && REC && !REC.acct) return;   // a code already opened it on this device
+          return loadLib().then(function () {
+            if (!box()) return;
+            return G.memberKey().then(function (raw) {
+              return lockKey(raw).then(function (key) {
+                try { raw.fill(0); } catch (e) {}
+                return openLock(key).then(function (lib) {
+                  KEYC = key; setOpen(lib, rec);
+                  MEM.carry = null;
+                  return keep(key, rec).then(function () { return idb('readwrite', function (s) { s.delete('carry'); }); }).then(emit);
+                });
+              });
+            }).catch(function () {
+              // the account is a Member, but its key opens nothing here yet (a fresh lock waiting on the server)
+              if (ST.status !== 'member') { setClosed('renew', Object.assign({}, rec, { lapsed: 'renew' })); emit(); }
+            });
+          });
+        }
+        if (m && m.status === 'ended' && (mine || ST.status !== 'member')) {
+          var r2 = { c: '', kind: KINDS[m.kind] ? m.kind : 'member', ends: m.ends ? dayOf(m.ends) : '', at: Date.now(), acct: me, lapsed: 'ended' };
+          setClosed('ended', r2); return keepRec(r2).then(emit);
+        }
+        if (!m && mine) { setClosed('start'); return wipe().then(emit); }
+      }, function () { /* out of reach: this device keeps what it has */ });
+    });
+    ASYNC = p.then(function () { ASYNC = null; later(); }, function () { ASYNC = null; later(); });
+    return ASYNC;
+  }
+  // While a page stays open: ask again when the paid time ends, and at least every 6 hours
+  var LT = null;
+  function later() {
+    if (LT) { clearTimeout(LT); LT = null; }
+    if (!REC || !REC.acct || ST.status !== 'member') return;
+    var at = Date.now() + 6 * 3600000, e = window.GGAccount && GGAccount.member && GGAccount.member();
+    if (e && e.ends && e.ends > Date.now() && e.ends < at) at = e.ends + 1000;
+    LT = setTimeout(function () { LT = null; acctSync(); }, Math.max(1000, at - Date.now()));
+  }
+  function keepRec2(rec) { MEM.rec = rec; return idb('readwrite', function (s) { s.put(rec, 'rec'); }); }
+  function acctHook() {
+    if (!acctOn()) return;
+    Promise.resolve(GGP.account.ready).then(function (ok) {
+      if (!ok || !window.GGAccount) return;
+      GGAccount.on(function (t, d) { if (t === 'state' && d !== 'offline') acctSync(true); });
+    }).catch(function () {});
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && Date.now() - ACH > 30 * 60000) acctSync(); });
+  }
+  // The first visit: wait (a few seconds at most) for the account, so Home opens on Membership with no Start flash
+  function acctFirst() {
+    if (!acctOn()) return Promise.resolve();
+    acctHook();
+    var t = new Promise(function (ok) { setTimeout(ok, 6000); });
+    return Promise.race([acctSync(), t]);
   }
 
   /* ---------- content ---------- */
@@ -375,7 +506,11 @@
   function css() { if (document.getElementById('ggm-css')) return; var s = document.createElement('style'); s.id = 'ggm-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); }
   function kindName(k) { return KINDS[k] || 'Member'; }
   function statusLine() {
-    var s = ST;
+    var s = ST, R0 = REC || {};
+    if (s.status === 'member' && R0.acct) return 'Membership is open on your Grounded Account' + (R0.hh ? ' through your Household' : R0.org ? ' through your organization' : s.kind && s.kind !== 'member' && s.kind !== 'household' ? ' as ' + kindName(s.kind) : '') +
+      (s.ends && !R0.auto ? ', through ' + nice(s.ends) : s.ends && R0.auto ? ', renewing ' + nice(s.ends) : '') + '. Every device you sign in on has the full suite.';
+    if (s.status === 'renew' && R0.acct) return 'Membership has a fresh lock, and it opens again by itself on your Grounded Account in a little while.';
+    if (s.status === 'ended' && R0.acct) return 'Your Membership time has ended. Everything you made stays right here. Renew Membership, and the full suite opens again on every device.';
     if (s.status === 'member') return 'Membership is open on this device' + (s.kind && s.kind !== 'member' ? ' with a ' + kindName(s.kind) + ' code' : '') + (s.ends ? ', through ' + nice(s.ends) : '') + '. Every profile here has the full suite.';
     if (s.status === 'ended') return 'Your Membership code has ended. Renew Membership with a new code, and everything here keeps going.';
     if (s.status === 'renew') return 'Membership has a fresh lock. Enter your code once more to keep going.';
@@ -386,6 +521,7 @@
     var on = ST.status === 'member', t = on ? 'Membership' : ST.status === 'start' ? 'Membership' : 'Renew Membership';
     return '<div class="ggm-card" data-ggm-card="1"><span class="ggm-ey">Grounded</span><b>' + esc(t) + '</b><small data-ggm-line="1">' + esc(statusLine()) + '</small>' +
       '<div class="ggm-row">' + (on ? '<button type="button" class="ggm-b l" data-ggm="open">Membership on This Device</button>'
+        : ST.status === 'ended' && REC && REC.acct ? '<a class="ggm-b" href="' + esc(SEE) + '" data-ggm-see="1">Renew Membership</a><button type="button" class="ggm-b l" data-ggm="open">I Have a Code</button>'
         : '<button type="button" class="ggm-b" data-ggm="open">I Have a Code</button>' + (o.see === false ? '' : '<a class="ggm-b l" href="' + esc(SEE) + '" data-ggm-see="1">See Membership</a>')) + '</div></div>';
   }
   function invite(o) {
@@ -401,11 +537,14 @@
   function onKey(e) { if (e.key === 'Escape') { e.preventDefault(); close(); } }
   function sheetHtml() {
     var on = ST.status === 'member';
+    if (on && REC && REC.acct) return '<span class="ggm-ey">Membership</span><h2 id="ggm-t">Membership on Your Account</h2><p>' + esc(statusLine()) + '</p>' +
+      '<p>Your answers and plans stay in each person\'s own locked profile. Signing out of your Grounded Account closes Membership on this device.</p>' +
+      '<div class="ggm-row"><button type="button" class="ggm-b" data-ggm="close">Done</button></div><p class="ggm-msg" role="status" aria-live="polite"></p>';
     if (on) return '<span class="ggm-ey">Membership</span><h2 id="ggm-t">Membership on This Device</h2><p>' + esc(statusLine()) + '</p>' +
       '<p>Your answers and plans stay in each person\'s own locked profile.</p>' +
       '<div class="ggm-row"><button type="button" class="ggm-b" data-ggm="close">Done</button><button type="button" class="ggm-b l" data-ggm="forget">Forget Membership on This Device</button></div><p class="ggm-msg" role="status" aria-live="polite"></p>';
     return '<span class="ggm-ey">Membership</span><h2 id="ggm-t">' + (ST.status === 'start' ? 'I Have a Code' : 'Renew Membership') + '</h2><p>' + esc(statusLine()) + '</p>' +
-      '<p>Enter your code once. Membership then stays open on this device for every profile here.</p>' +
+      '<p>' + (acctIn() ? 'Enter your code once. It joins your Grounded Account, and Membership opens on every device you sign in on.' : 'Enter your code once. Membership then stays open on this device for every profile here.') + '</p>' +
       '<form data-ggm-form="1" autocomplete="off"><label for="ggm-code">Your Membership code</label><input id="ggm-code" name="code" type="text" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="four words and a number" inputmode="text">' +
       '<div class="ggm-row"><button type="submit" class="ggm-b">Open Membership</button><button type="button" class="ggm-b l" data-ggm="close">Later</button></div></form>' +
       '<p class="ggm-msg" role="status" aria-live="polite"></p>';
@@ -419,13 +558,17 @@
     document.addEventListener('keydown', onKey, true);
     var f = OV.querySelector('#ggm-code') || OV.querySelector('.ggm-b'); if (f) try { f.focus(); } catch (e) {}
   }
+  function acctIn() { return acctOn() && window.GGAccount && GGAccount.state && GGAccount.state() !== 'out'; }
   var WHY = {
     empty: 'Enter your code, then tap Open Membership.',
     nomatch: 'That code opens a different part of Grounded. Check each word and the number, and try again. Guide codes open the Field Guide.',
     ended: 'That code reached its end date. A new code renews Membership.',
     none: 'Membership is still loading on this device. Refresh the page and try again.',
     offline: 'Membership needs a connection the first time. Try again once you are online.',
-    crypto: 'This browser needs a newer version to open Membership.'
+    crypto: 'This browser needs a newer version to open Membership.',
+    acct: 'That code opens a different part of Grounded. Organization and gift codes open on a Grounded Account: sign in from Settings, My Account, then enter the code here.',
+    full: 'Every seat on that organization code is in use. The organization can ask us for more seats.',
+    wait: 'Let us pause a moment. Try again in a little while.'
   };
   document.addEventListener('submit', function (e) {
     var f = e.target && e.target.closest && e.target.closest('[data-ggm-form]'); if (!f) return;
@@ -452,7 +595,7 @@
   });
 
   /* ---------- the API ---------- */
-  var ready = boot().then(function () { emit(); return state(); }, function () { return state(); });
+  var ready = boot().then(acctFirst).then(function () { emit(); return state(); }, function () { return state(); });
   window.GGMember = {
     __v: V,
     ready: ready,
@@ -475,6 +618,7 @@
     lib: function () { return LIBR; },
     carry: carry,
     adopt: adopt,
+    sync: function () { return acctSync(true).then(state); },
     sections: SECTIONS.slice()
   };
 })();
