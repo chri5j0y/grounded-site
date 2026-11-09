@@ -1293,7 +1293,7 @@
     var b = BANNER[tab] || BANNER.grow;
     if (tab === 'week' && !member()) b = isYoung(S.p) ? BANNER.weekTeen : BANNER.weekStart;   // BLD 935 (audit M1)
     if (b[0] === 'mytree' || b[0] === 'learn') return bannerArt(tab, b, b[0] === 'mytree' ? treeArt(S.tree, true) : HERO + 'learn/c133.webp', b[0] === 'mytree' ? treeArt(S.tree) : HERO + 'learn/c133.webp');
-    var wide = b[0] === 'tree' ? IMG + 'p-growth-wide.webp' : b[0] === 'recipes' ? IMG + 'recipes-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? IMG + 'p-growth-narrow.webp' : b[0] === 'recipes' ? IMG + 'recipes-narrow.webp' : HERO + 'library-phone.webp';
+    var wide = b[0] === 'tree' ? IMG + 'p-growth-wide.webp' : b[0] === 'recipes' ? IMG + 'recipes-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? IMG + 'p-growth-banner-narrow.webp' : b[0] === 'recipes' ? IMG + 'recipes-narrow.webp' : HERO + 'library-phone.webp';
     return '<header class="hm-ah hm-banner"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + narrow + '"><img src="' + wide + '" alt="" fetchpriority="high"></picture>' +
       '<div class="hm-ahl"><div class="hm-ak">The Grounded Way</div><h1 class="hm-at">' + esc(headingOf(tab)) + '</h1><p class="hm-asub">' + esc(b[1]) + '</p></div>' + meBtn() + '</header>';
   }
