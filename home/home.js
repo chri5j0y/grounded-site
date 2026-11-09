@@ -53,10 +53,11 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b949', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b951', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b949';
-  var MONEY_SRC = '/shared/gg-money.js?v=b949';   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
+  var MONEY_SRC = '/shared/gg-money.js?v=b949';
+  var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -524,13 +525,13 @@
     if (KIN === undefined) readKitchen();
     if (MIN === undefined) readMoney();
     if (DOOR === undefined) readDoor();
-    moneyOff();
+    moneyOff(); plannerOff();
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
     if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
     var changed = S.id !== a.id;
     S.id = a.id; S.p = GGP.get ? GGP.get(a.id) : a; S.tree = treeOfProfile(S.p);
-    if (changed) { S.tendInit = false; S.words = null; S.paintedFor = null; LIB.load = null; if (SU.id !== a.id) SU.open = false; }
+    if (changed) { S.tendInit = false; S.words = null; S.paintedFor = null; LIB.load = null; if (SU.id !== a.id) SU.open = false; if (window.GGPlanner) GGPlanner.load(); }
     // BLD 907: the Home's own records follow re-filed practices (once a profile opens; a second pass changes nothing).
     if (changed && GGP.isOpen && GGP.isOpen(a.id)) { var hr0 = GGP.data(a.id, 'home'); if (hr0 && aliasHome(hr0)) saveHome(); }
     S.view = viewOf();
@@ -544,7 +545,7 @@
       var kck = location.hash === '#checkin', kgu = location.hash === '#grownups';
       if (kck || kgu || location.hash === '#tree') { try { history.replaceState(null, '', location.pathname + '#today'); } catch (e) {} }
       if (S.view === 'watch') { root.innerHTML = kidWatchHtml(); paintNav('kidwatch'); fillLearn(); maybeTour(); return; }
-      var kf = focusKey(); root.innerHTML = kidHtml(); paintNav('kid'); focusBack(kf); maybeTour();
+      var kf = focusKey(); root.innerHTML = kidHtml(); paintNav('kid'); focusBack(kf); maybeTour(); fillKidPlanner();
       if (kck) openTreeSheet('checkin'); else if (kgu) openTool('guide');
       kitSoon();
       return;
@@ -1153,7 +1154,7 @@
         '<div class="hm-kcard" style="--c:#FF9F1C"><h2 class="hm-kh">Your ' + t.n + ' Is Growing</h2><div class="hm-kparts">' + parts + '</div>' + grow + '<p style="margin-top:10px;font-weight:500">' + esc(line) + '</p></div>' +
         '<div class="hm-kcard" style="--c:#9B5DE5"><div class="hm-kprac"><button type="button" class="ill" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + IMG + ART[lead] + '.webp" alt=""><span>' + I('play') + '</span></button><div><h3 class="hm-kh">Today: ' + esc(v[0]) + '</h3><p>' + esc(v[2]) + '</p></div></div>' +
           '<button class="hm-kbtn" type="button" style="margin-top:12px" data-hm="kiddid" aria-pressed="' + did + '">' + I('check') + (did ? 'You Did It!' : 'We Did It!') + '</button></div>' +
-        kidPracHtml() + kidKitchenHtml() +
+        kidPracHtml() + kidKitchenHtml() + kidPlannerHtml() +
         (did ? '<div class="hm-kcard hm-surprise" style="--c:#00B4D8"><svg viewBox="0 0 52 52" aria-hidden="true"><g class="bird"><ellipse cx="26" cy="30" rx="13" ry="10" fill="#00B4D8"/><circle cx="34" cy="22" r="7" fill="#00B4D8"/><circle cx="36" cy="21" r="1.6" fill="#2C1810"/><path d="M40 22l6 2-6 2z" fill="#FF9F1C"/><path d="M16 28c4-6 10-6 14-2-5 1-9 3-14 2z" fill="#0090B0"/></g><path d="M8 44h36" stroke="#8A5A36" stroke-width="4" stroke-linecap="round"/></svg><div><h3 class="hm-kh" style="font-size:20px">A visitor came to your tree!</h3><div style="font-size:15px;font-weight:500">A little bird stopped by because you tended your tree today.</div></div></div>' : '') +
         '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</button>' +
         '<button type="button" class="hm-khow" data-hm-tool="guide">' + I('people') + 'For Grown-ups</button>' +
@@ -1248,6 +1249,8 @@
     if (/^recipe-./.test(h)) return { tab: 'library', sub: '', recipe: h.slice(7) };
     // BLD 937: Grounded Money and the view inside it (#library=money-plan, #library=money-tool:debt).
     var mm = /^library=money(?:-([a-z]+(?::[a-z]+)?))?$/.exec(h); if (mm) return { tab: 'library', sub: 'money', money: mm[1] || '' };
+    // BLD 950: the Family Planner and its places (#library=planner, #library=planner-wall, #library=planner-week)
+    var pm = /^library=planner(?:-(wall|week))?$/.exec(h); if (pm) return { tab: 'library', sub: 'planner', planner: pm[1] || '' };
     var m = /^([a-z]+)(?:=([a-z0-9-]+))?$/.exec(h) || [], k = m[1] || '', sub = m[2] || '';
     if (k === 'week') return { tab: 'week', sub: SUBS.week[sub] ? sub : '' };
     if (k === 'grow' || k === 'tree') return { tab: 'grow', sub: '' };
@@ -1263,7 +1266,7 @@
     if (k === 'tending') return { tab: 'today', sub: '' };
     return { tab: 'today', sub: '' };
   }
-  function viewOf() { var r = route(); return r.recipe ? 'recipe-' + r.recipe : r.tab + (r.sub ? '=' + r.sub : '') + (r.money ? '-' + r.money : ''); }
+  function viewOf() { var r = route(); return r.recipe ? 'recipe-' + r.recipe : r.tab + (r.sub ? '=' + r.sub : '') + (r.money ? '-' + r.money : '') + (r.planner ? '-' + r.planner : ''); }
   function goTo(v) {
     var hash = '#' + (v === 'home' ? 'today' : v);
     if (location.hash !== hash) location.hash = hash; else render();
@@ -1320,26 +1323,29 @@
     var sub = r.tab === 'me' ? '' : r.sub, body;
     // BLD 937: Grounded Money opens inside the Library, grown-ups only (a teen's or a kid's Library has none).
     if (sub === 'money' && tab === 'library' && !moneyFor()) { try { history.replaceState(null, '', location.pathname + location.search + '#library'); } catch (e) {} S.view = 'library'; sub = ''; r = { tab: 'library', sub: '' }; }
+    if (sub === 'planner' && tab === 'library' && !plannerFor()) { try { history.replaceState(null, '', location.pathname + location.search + '#library'); } catch (e) {} S.view = 'library'; sub = ''; r = { tab: 'library', sub: '' }; }
     if (sub === 'money' && tab === 'library') body = subbarHtml(tab, sub) + '<div id="hm-money" class="hm-money"><p class="hm-loading">Opening Grounded Money…</p></div>';
+    else if (sub === 'planner' && tab === 'library') body = subbarHtml(tab, sub) + '<div id="hm-planner" class="hm-planner"><p class="hm-loading">Opening the Family Planner…</p></div>';
     else if (sub) body = subbarHtml(tab, sub) + (sub === 'quiet' ? medTopHtml() : '') + '<div id="hm-tend" class="hm-sec" data-sec="' + sub + '"><div class="hm-loading">Opening ' + esc(SUBS[tab][sub]) + '…</div></div>';
     else body = tabHtml(tab);
     root.innerHTML = shellHtml(tab, body);
     paintTabbar(tab);
     if (sub === 'money' && tab === 'library') paintMoney(document.getElementById('hm-money'), r.money);
+    else if (sub === 'planner' && tab === 'library') paintPlanner(document.getElementById('hm-planner'), r.planner);
     else if (sub) paintSection(document.getElementById('hm-tend'), sub);
     else afterTab(tab);
     if (r.tab === 'me') openSheet(r.sub); else closeSheet(true);
     if (r.recipe) { try { history.replaceState(null, '', location.pathname + '#library'); } catch (e) {} S.view = 'library'; openRecipe(r.recipe); }
     if (!tendReady() || S.tendInit !== S.id) loadTending().then(function () { if (S.id && app() && S.paintedFor !== S.id + ':' + S.view) { S.paintedFor = S.id + ':' + S.view; refreshPane(); } });
   }
-  function tabHtml(tab) { return tab === 'week' ? weekHtml() : tab === 'grow' ? growHtml() : tab === 'library' ? libraryHtml() : tab === 'checkin' ? checkinTabHtml() : tab === 'learn' ? learnTabHtml() : todayHtml(); }
+  function tabHtml(tab) { return tab === 'week' ? plannerWeekSlot() + weekHtml() : tab === 'grow' ? growHtml() : tab === 'library' ? libraryHtml() : tab === 'checkin' ? checkinTabHtml() : tab === 'learn' ? learnTabHtml() : todayHtml(); }
   function afterTab(tab) {
     if (tab === 'checkin') { paintRings(app()); return; }
     if (tab === 'learn') { fillLearn(); return; }
     if (tab === 'today') { paintRings(app()); mileGlow(app()); fillAlso(); fillWords(); fillMantra(); }
     else if (tab === 'grow') { fillWords(); fillMantra(); paintRings(app()); mileGlow(app()); fillFruit(); }
     else if (tab === 'library') fillLibrary();
-    else if (tab === 'week') { var wb = document.querySelector('#hm-pane #hm-tend[data-sec="week"]'); if (wb) paintSection(wb, 'week'); var mb = document.querySelector('#hm-pane #hm-tend[data-sec="month"]'); if (mb) paintSection(mb, 'month'); }
+    else if (tab === 'week') { fillPlannerWeek(); var wb = document.querySelector('#hm-pane #hm-tend[data-sec="week"]'); if (wb) paintSection(wb, 'week'); var mb = document.querySelector('#hm-pane #hm-tend[data-sec="month"]'); if (mb) paintSection(mb, 'month'); }
   }
   /* Redraw just the page under the header (after Tending loads, or after a change), keeping the sheet. */
   function refreshPane() {
@@ -2409,7 +2415,7 @@
   }
   // BLD 937: Grounded Money sits right after Grounded Relationships when that shelf shows, else at the end of the shelves.
   function withMoney(h) {
-    var mh = moneyShelves(); if (!mh) return h;
+    var mh = plannerShelf() + moneyShelves(); if (!mh) return h;
     var at = h.indexOf('data-hm-shelf="m-relationships"');
     if (at < 0) return h + mh;
     var end = h.indexOf('</button>', at) + 9;
@@ -2466,6 +2472,7 @@
     else if (id === 'holidays') openRecipe('holidays');
     else if (id === 'seeds') openSeeds();
     else if (id === 'money') goTo('library=money');
+    else if (id === 'planner') goTo('library=planner');
     else if (id === 'money-date') goTo('library=money-tool:date');
     else if (/^m-/.test(id)) openMShelf(id.slice(2));
     else if (id === 'workouts') goTo('library=workouts');
@@ -3709,9 +3716,11 @@
        money    Grounded Money's plan and logs ({pid, lines, income, ideas, logs}); debts, goals, and tool answers stay
                 each person's own. A phone joining keeps its own plan aside (Return to My Own Plan), and a phone that
                 returns to its own plan stops sharing it.
-     Both answer null while no grown-up profile is open here, so nothing shared moves for a closed profile. */
+     Both answer null while no grown-up profile is open here, so nothing shared moves for a closed profile.
+     BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
+     who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=b938';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=b951';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -3838,6 +3847,14 @@
       return saveHome().then(function () { if (MN.ctl && MN.ctl.refresh) MN.ctl.refresh(); });
     }
   };
+  // BLD 950: the Family Planner space; the module answers for the open profile (any family member who holds its key)
+  var PLAN_SPACE = {
+    // Only a family member who holds the planner key, or a grown-up carried in this account (never another grown-up
+    // who happens to share this computer), takes part.
+    get: function () { return acctIn() && window.GGPlanner && planOk() ? GGPlanner.space.get() : null; },
+    put: function (o) { if (!acctIn() || !S.id || !planOk()) return; return loadPlanner().then(function (ok) { if (ok) return GGPlanner.space.put(o); }); }
+  };
+  function planOk() { return !!(S.id && (plannerRec() || (S.p && S.p.age === 'adult' && GGP.account && GGP.account.carried(S.id)))); }
   // After a sync, a space this profile just shared or met remembers it, so a later change here travels.
   function acctSeen() {
     if (!spaceOk() || !window.GGSync) return;
@@ -3853,11 +3870,13 @@
       if (!ok || !window.GGSync) return;
       AH.on = true;
       SUBS.me.account = 'My Account';
-      GGSync.space('kitchen', KIT_SPACE); GGSync.space('money', MON_SPACE);
+      GGSync.space('kitchen', KIT_SPACE); GGSync.space('money', MON_SPACE); GGSync.space('planner', PLAN_SPACE);
+      loadPlanner().then(function (ok) { if (ok) GGPlanner.load(); });
       GGAccount.on(function (t) { if (t === 'state' || t === 'confirmed' || t === 'household') { acctPaint(); if (t === 'state' && !S.id) render(); } });
       GGSync.on(function (t, d) {
         if (t === 'status') { if (d && d.state === 'idle') acctSeen(); var dot = acctStatus().dot; if (dot !== AH.dot || (d && d.state === 'idle')) { AH.dot = dot; acctPaint(); } }
         else if (t === 'spaces') acctSeen();
+        if (t === 'spaces' || (t === 'status' && d && d.state === 'idle')) plannerHH();   // BLD 950: the Household line in the Family Planner
       });
       acctHashGo();
       if (S.view === 'welcome') render(); else acctPaint();
@@ -4570,6 +4589,69 @@
     return '<button type="button" class="hm-moneyline" data-hm-tab="library=money-month"><span class="ic" aria-hidden="true"><img src="' + IMG + 'tree-branches.webp" alt="" loading="lazy" decoding="async"></span>' +
       '<span class="tx"><span class="ey">This Month</span><b>' + esc(amt) + ' to bring into balance this month</b><small>Grounded Money has ideas to close it.</small></span><span class="go">See My Month' + I('arrow') + '</span></button>';
   }
+
+  /* ---------- BLD 950: the Family Planner (shared/gg-planner.js, window.GGPlanner) ----------
+     Chris (November 7, 2026): "our family calendar we all share.. a live wall for notes to each other.. shared schedules..
+     this can be a big feature for the Relationships category". The Family Calendar, the Family Wall, and Shared Schedules,
+     in the Library beside Grounded Relationships (#library=planner, -wall, -week) and as a card on the Week tab. A kid sees
+     a simple read only family week on Today. The planner is its own locked box on this device; its key sits in each family
+     member's vault (vault.planner). With Accounts live it is also the Household shared space 'planner'. Start keeps the
+     calendar and Shared Schedules; Membership opens the Family Wall, the Family Check-in, adding a teen or another grown-up
+     here, and the Household (choices in grounded-workshop patches/bld950/NOTES.md). */
+  SUBS.library.planner = 'Family Planner';
+  var PL = { ctl: null, hosted: false };
+  function plannerRec(id) { var d = window.GGP && GGP.isOpen && GGP.isOpen(id || S.id) ? GGP.data(id || S.id) : null; return !!(d && d.planner && d.planner.fid); }
+  // Grown-ups always; a teen once a grown-up added them; a kid sees the family week on Today instead
+  function plannerFor() { return !!(S.id && S.p && !isKid(S.p) && (S.p.age === 'adult' || plannerRec())); }
+  function plannerOff() { if (PL.ctl) { try { PL.ctl.destroy(); } catch (e) {} PL.ctl = null; } }
+  function plannerDinners(off) {
+    if (!member() || !S.id) return {};
+    if (!tendReady()) { if (tendStarted() && !PL.tl) { PL.tl = true; loadTending().then(function () { if (PL.ctl) PL.ctl.refresh(); }); } return {}; }
+    var w = hasFn('week') && tendIsReady() ? hCall('week', off || 0) : null, out = {};
+    arr(w && w.days).forEach(function (d) { var t = obj(d.dinner).title, dt = String(d.date || '').slice(0, 10); if (t && /^\d{4}-\d{2}-\d{2}$/.test(dt)) out[dt] = t; });
+    return out;
+  }
+  function plannerHost() {
+    if (!window.GGPlanner) return false;
+    if (PL.hosted) return true;
+    PL.hosted = true;
+    GGPlanner.host({
+      id: function () { return S.id; }, age: function () { return S.p ? S.p.age : 'adult'; }, name: function () { return S.p ? S.p.name : ''; },
+      member: function () { return member(); }, dinners: plannerDinners, toast: toast,
+      onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=planner' + (v === 'cal' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
+      onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
+      go: function (v) { goTo('library=planner' + (v === 'cal' || !v ? '' : '-' + v)); },
+      household: function () { if (!acctIn() || !window.GGSync || !GGSync.household || !GGSync.household()) return null; return { shared: GGSync.spaces().some(function (x) { return x.kind === 'planner'; }) }; },
+      share: function () { return GGSync.shareSpace('planner'); }
+    });
+    // A change from another tab or the Household redraws the Week card and a kid's family week
+    GGPlanner.on(function () { var w = document.getElementById('hm-plweek'), k = document.getElementById('hm-kplan'); if (w) GGPlanner.weekCard(w, S.wkOff || 0); if (k) GGPlanner.kidCard(k); });
+    return true;
+  }
+  // Redraw the Family Planner when the Household line would read differently (joined, or shared)
+  function plannerHH() {
+    if (!PL.ctl) return;
+    var hh = !acctIn() || !window.GGSync || !GGSync.household || !GGSync.household() ? 'none' : GGSync.spaces().some(function (x) { return x.kind === 'planner'; }) ? 'shared' : 'in';
+    if (hh !== PL.hh) { PL.hh = hh; PL.ctl.refresh(); }
+  }
+  function loadPlanner() { return load(PLANNER_SRC).then(function (ok) { return !!(ok && window.GGPlanner && plannerHost()); }); }
+  function paintPlanner(box, sub) {
+    if (!box) return;
+    loadPlanner().then(function (ok) {
+      if (!box.isConnected) return;
+      if (!ok) { box.innerHTML = '<p class="hm-sub">The Family Planner is getting ready. Try again in a moment.</p>'; return; }
+      plannerOff();
+      PL.ctl = GGPlanner.render(box, { bare: true, view: sub === 'wall' || sub === 'week' ? sub : 'cal' });
+    });
+  }
+  function plannerShelf() {
+    if (!plannerFor()) return '';
+    return shelfHtml({ id: 'planner', name: 'Family Planner', count: 'Relationships', line: 'One calendar for your family: trips, games, performances, days off, a Family Wall, and who is where this week.', cls: 'hm-sh-life hm-sh-planner', art: IMG + 'home-morning-narrow.webp' });
+  }
+  function plannerWeekSlot() { return plannerFor() ? '<div id="hm-plweek" class="hm-plweek"></div>' : ''; }
+  function fillPlannerWeek() { var el = document.getElementById('hm-plweek'); if (!el) return; loadPlanner().then(function (ok) { if (ok && el.isConnected) GGPlanner.weekCard(el, S.wkOff || 0); }); }
+  function kidPlannerHtml() { return plannerRec() ? '<div id="hm-kplan"></div>' : ''; }
+  function fillKidPlanner() { var el = document.getElementById('hm-kplan'); if (!el) return; loadPlanner().then(function (ok) { if (ok && el.isConnected) GGPlanner.kidCard(el); }); }
 
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
   var MSHELVES = [

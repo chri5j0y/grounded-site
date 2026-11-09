@@ -27,7 +27,7 @@
    For stage 2
      GGSync.doc(name, adapter, opts)     an account doc. adapter: {get() -> object or null (null: closed for now),
                                          put(object, info) -> Promise}. opts: {rules: [{path, field}], opaque}
-     GGSync.space(kind, adapter, opts)   a household shared doc: kind 'kitchen' or 'money'
+     GGSync.space(kind, adapter, opts)   a household shared doc: kind 'kitchen', 'money', or 'planner' (BLD 950, the Family Planner)
      GGSync.drop(name)                   stop syncing a doc here (its pieces stay on the server)
      GGSync.changed(name)                a doc changed: sync in a few seconds
      GGSync.poke()                       sync in a few seconds, marking nothing (stage 2)
@@ -44,7 +44,7 @@
 (function () {
   'use strict';
   if (window.GGSync) return;
-  var V = 'b938', enc = new TextEncoder(), dec = new TextDecoder(), subtle = window.crypto && crypto.subtle;
+  var V = 'b951', enc = new TextEncoder(), dec = new TextDecoder(), subtle = window.crypto && crypto.subtle;
   function X() { if (!window.GGAccount || !GGAccount._) throw new Error('GGSync needs shared/gg-account.js'); return GGAccount._; }
 
   /* ---------- plain helpers ---------- */
@@ -572,7 +572,7 @@
 
   window.GGSync = {
     v: V, doc: function (name, adapter, o) { return register(name, adapter, o, null) && name; },
-    space: function (kind, adapter, o) { if (['kitchen', 'money'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
+    space: function (kind, adapter, o) { if (['kitchen', 'money', 'planner'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
     drop: function (name) { delete docs[name]; }, changed: changed, sync: sync, status: status,
     // stage 2: a save that touches only a shared space (no doc of its own here) asks for a sync in a few seconds
     poke: function () { clearTimeout(timer); timer = setTimeout(sync, CFG.debounce); },

@@ -98,6 +98,13 @@
      of tending (vault.keepSafe): Save a Backup and See My Root Words.
      GGP.rootWords(id)               see (or make) the Root Words, after the passcode
      GGP.rootState(id)               'has', 'none', or '' (not for this profile)
+
+   The Family Planner key (GWG BLD 950, shared/gg-planner.js)
+   - A family's planner is locked with its own key, kept inside each family
+     member's vault (vault.planner). GGP.giveTo(id, pass, 'planner', rec)
+     places that one record in another profile on this device: a child a
+     grown-up opens already, or a teen or another grown-up who types their own
+     passcode right there. It writes only that record and reads nothing back.
    ===================================================================== */
 (function () {
   if (window.GGP) return;
@@ -1388,6 +1395,18 @@
   function paintAll() { try { paintNav(); paintStories(); fillForms(); welcome(); } catch (e) { console.error(e); } }
 
   /* ---------- Willow helpers ---------- */
+  // BLD 950: the Family Planner record into another profile on this device (only that record; nothing is read back).
+  var GIVE = ['planner'];
+  function giveTo(id, pass, tool, rec) {
+    var p = getP(id);
+    if (!cur || !open[cur.id]) return Promise.reject(new Error('Open your own profile first.'));
+    if (!p || GIVE.indexOf(tool) < 0 || !rec || typeof rec !== 'object') return Promise.reject(new Error('Choose someone on this device.'));
+    var val = JSON.parse(JSON.stringify(rec));
+    if (open[id]) { open[id].data[tool] = val; return writeVault(id, open[id].raw, open[id].data).then(function () { return true; }); }
+    return rawFromPass(p, pass || '').then(function (raw) {
+      return readVault(id, raw).then(function (d) { d[tool] = val; return writeVault(id, raw, d); });
+    }).then(function () { return true; });
+  }
   function addHelper(id, helperId, helperPass) {
     var p = getP(id), h = getP(helperId);
     if (!p || !h || !open[id]) return Promise.reject(new Error('Open their profile first.'));
@@ -1503,7 +1522,7 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=b938', '/shared/gg-sync.js?v=b938'], CARRY = 'gg-acct-carry';
+  var ACCT_SRC = ['/shared/gg-account.js?v=b938', '/shared/gg-sync.js?v=b951'], CARRY = 'gg-acct-carry';
   var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created'];
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
@@ -1686,7 +1705,7 @@
     tree: function (id) { return treeOf(getP(id)); },
     setTree: function (id, t) { var p = getP(id); if (!p || p.age !== 'adult' || !open[id]) return false; if (t === 'sequoia' || t === 'birch') p.tree = t; else delete p.tree; putP(p); emit('change'); return true; },
     helpers: function (id) { var p = getP(id); return p ? (p.helpers || []).slice() : []; },
-    helping: helping, addHelper: addHelper, removeHelper: removeHelper,
+    helping: helping, addHelper: addHelper, removeHelper: removeHelper, giveTo: giveTo,
     active: function () { var p = cur && getP(cur.id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, until: cur.until } : null; },
     openIds: function () { return Object.keys(open); },
     isOpen: function (id) { return !!open[id]; },
