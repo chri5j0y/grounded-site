@@ -1,4 +1,4 @@
-/* Grounded buy buttons (GWG BLD 951): the Stripe payment links for Organization Membership packs and Gift Membership,
+/* Grounded buy buttons (GWG BLD 951, Household Gift BLD 952): the Stripe payment links for Organization Membership packs and Gift Membership,
    kept in one place. Each link is the buy.stripe.com address Stripe gives a payment link (public, safe to share).
    Until a link is filled in, its buttons keep their own href (the contact form), so every button always works.
 
@@ -7,7 +7,7 @@
      <a data-gg-buy-jump="org" data-gg-to="#packs" href="..."> a main button: it moves to the choices once any link of the group is filled in
      <div data-gg-buy-show="org" hidden>                       shown once any link of the group is filled in
      <div data-gg-buy-wait="org">                              shown until then
-   Groups: "org" is org25, org50, and org100; "gift" is gift.
+   Groups: "org" is org25, org50, and org100; "gift" is gift and giftHousehold (BLD 952).
    Every buy button gets data-gg-buy-ready="1" (payment link) or "0" (contact form).
    With Grounded Accounts live, gg-account.js adds the signed in account (client_reference_id, prefilled_email) to every
    buy.stripe.com link by itself, as it does for the Member and Household buttons. */
@@ -16,9 +16,10 @@
     org25: '',    // Organization Membership, 25 People ($1,200)
     org50: '',    // Organization Membership, 50 People ($2,100)
     org100: '',   // Organization Membership, 100 People ($3,600)
-    gift: ''      // Gift Membership, 12 months ($64)
+    gift: '',     // Gift Membership, 12 months ($64)
+    giftHousehold: ''   // Household Gift, 12 months for a whole home, up to six people ($128) (BLD 952)
   };
-  var GROUPS = { org: ['org25', 'org50', 'org100'], gift: ['gift'] };
+  var GROUPS = { org: ['org25', 'org50', 'org100'], gift: ['gift', 'giftHousehold'] };
   var OK = /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_]+(\?[A-Za-z0-9_=&%.\-]*)?$/;
   function link(k) { var v = LINKS[k]; return typeof v === 'string' && OK.test(v) ? v : ''; }
   function any(g) { return (GROUPS[g] || [g]).some(function (k) { return !!link(k); }); }

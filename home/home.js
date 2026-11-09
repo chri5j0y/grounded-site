@@ -1226,6 +1226,7 @@
     return ART2.meal;
   }
   // BLD 910 (Chris: "all cards get high quality images not the cheap graphics"): a card's badge is one of Grounded's paintings.
+  var PEOPLE = '/shared/heroes/people/';   // BLD 952: paintings with people
   function pb(src) { return '<span class="hm-badge hm-pb" aria-hidden="true"><img src="' + src + '" alt="" loading="lazy" decoding="async"></span>'; }
   function tile(src, cls) { return '<span class="hm-art ' + (cls || '') + '" aria-hidden="true"><img src="' + src + '" alt="" loading="lazy" decoding="async"></span>'; }
   var TINT_HEX = { '#6b4e8c': 'hm-tn-q', '#3f6f94': 'hm-tn-m', '#4e7d4a': 'hm-tn-p', '#a9562a': 'hm-tn-k', '#8b5e1a': 'hm-tn-g' };
@@ -2521,7 +2522,7 @@
     if (sub === 'household') {
       var hh = tableOf(), fam = familyHtml(h);
       b.innerHTML = '<article class="hm-wcard hm-tn-p">' + tile(ART2.people) + '<div class="tx"><span class="ey">Your Table</span><b>' + (hh ? hh + (hh === 1 ? ' person at your table' : ' people at your table') : 'The people at your table') + '</b><small>Recipes and the shopping list follow this number. Change it in Tending setup.</small></div><button type="button" class="hm-pill" data-hm-me="settings">Change</button></article>' +
-        (fam || '<article class="hm-card hm-p-branches"><div class="hm-hd">' + pb(treeArt('grove')) + '<div><div class="hm-k">Your Family</div><div class="hm-sub">Add the people you tend with. Each one has a tree of their own.</div></div></div><div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm="addkid">' + I('plus') + 'Add a Family Member</button><button type="button" class="hm-btn line hm-p-branches" data-hm="addlove">' + I('love') + 'Someone I Love</button></div></article>');
+        (fam || '<article class="hm-card hm-p-branches"><div class="hm-hd">' + pb(PEOPLE + 'household-sq.webp') + '<div><div class="hm-k">Your Family</div><div class="hm-sub">Add the people you tend with. Each one has a tree of their own.</div></div></div><div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm="addkid">' + I('plus') + 'Add a Family Member</button><button type="button" class="hm-btn line hm-p-branches" data-hm="addlove">' + I('love') + 'Someone I Love</button></div></article>');
       return;
     }
     if (sub === 'settings') {
@@ -3772,7 +3773,7 @@
   function acctFill(b) {
     if (!acctFor()) { b.innerHTML = '<p class="hm-sub">My Account is for grown-ups. A child or teen rides inside their grown-up\'s account.</p>'; return; }
     if (!acctIn()) {
-      b.innerHTML = '<article class="hm-card hm-p-branches hm-acct"><div class="hm-hd">' + pb(IMG + 'grounded-way-square.webp') + '<div style="min-width:0"><div class="hm-k">Optional</div><h3 class="hm-h3">Your Tree on Every Device</h3></div></div>' +
+      b.innerHTML = '<article class="hm-card hm-p-branches hm-acct"><div class="hm-hd">' + pb(PEOPLE + 'account-sq.webp') + '<div style="min-width:0"><div class="hm-k">Optional</div><h3 class="hm-h3">Your Tree on Every Device</h3></div></div>' +
         '<p class="hm-sub" style="margin:8px 0">A Grounded Account brings your profiles, Tending, check-ins, Family Kitchen, and Grounded Money to every phone, tablet, and computer you sign in on. Everything is locked on this device before it leaves, so only you can open it.</p>' +
         '<p class="hm-sub" style="margin:0 0 12px">Grounded keeps working right here on this device either way, just as it does today.</p>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm-acct="signup">' + I('sprout') + 'Create My Account</button><button type="button" class="hm-btn line hm-p-branches" data-hm-acct="signin">' + I('open') + 'Sign In</button></div></article>';
@@ -4567,7 +4568,7 @@
   /* The Library: Grounded Money beside Grounded Relationships (Branches), and for a Member, the Money Date for couples. */
   function moneyShelves() {
     if (!moneyFor()) return '';
-    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your whole money plan on one page: money in, money out, and every line at a glance.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'tree-branches.webp' }) +
+    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your whole money plan on one page: money in, money out, and every line at a glance.', cls: 'hm-sh-life hm-sh-money', art: PEOPLE + 'money-sq.webp' }) +
       (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: IMG + 'growth-plan.webp' }) : '');
   }
   function moneySearch(has, out) {
@@ -4646,7 +4647,7 @@
   }
   function plannerShelf() {
     if (!plannerFor()) return '';
-    return shelfHtml({ id: 'planner', name: 'Family Planner', count: 'Relationships', line: 'One calendar for your family: trips, games, performances, days off, a Family Wall, and who is where this week.', cls: 'hm-sh-life hm-sh-planner', art: IMG + 'home-morning-narrow.webp' });
+    return shelfHtml({ id: 'planner', name: 'Family Planner', count: 'Relationships', line: 'One calendar for your family: trips, games, performances, days off, a Family Wall, and who is where this week.', cls: 'hm-sh-life hm-sh-planner', art: PEOPLE + 'planner-sq.webp' });
   }
   function plannerWeekSlot() { return plannerFor() ? '<div id="hm-plweek" class="hm-plweek"></div>' : ''; }
   function fillPlannerWeek() { var el = document.getElementById('hm-plweek'); if (!el) return; loadPlanner().then(function (ok) { if (ok && el.isConnected) GGPlanner.weekCard(el, S.wkOff || 0); }); }
