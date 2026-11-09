@@ -109,11 +109,11 @@
 (function () {
   if (window.GGP) return;
 
-  var TERMS_V = '2026-10-28', PRIVACY_V = '2026-10-28';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
+  var TERMS_V = '2026-11-09', PRIVACY_V = '2026-11-09';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
   /* BLD 938 Accounts and Sync: the one site setting. Accounts stay hidden, and their files never load, until this is true.
      Turn it on only after the server is live (grounded-workshop patches/bld938/GO-LIVE.md). Tests turn it on for a page with
      window.GG_ACCOUNTS_LIVE = true before this file runs. */
-  var ACCOUNTS_LIVE = false;
+  var ACCOUNTS_LIVE = true;
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
@@ -1522,7 +1522,7 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=b938', '/shared/gg-sync.js?v=b951'], CARRY = 'gg-acct-carry';
+  var ACCT_SRC = ['/shared/gg-account.js?v=b958', '/shared/gg-sync.js?v=b951'], CARRY = 'gg-acct-carry';
   var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created'];
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
