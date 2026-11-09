@@ -52,7 +52,7 @@
   function dayKey(t) { var d = new Date(t); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }   // aspen 1905
 
   function files(tree) {
-    var f = ['/shared/gg-journey.js?v=b929', '/shared/gg-avatars.js?v=b782', '/shared/gg-ease.js?v=ez1'];
+    var f = ['/shared/gg-journey.js?v=b929', '/shared/gg-avatars.js?v=b949', '/shared/gg-ease.js?v=ez1'];
     f.push('/shared/gg-life.js?v=b907');                                  // Health and Ability (Aspen reads it for Steady or Hardy)
     if (tree === 'birch') f.push('/birch/checkin.js?v=b929');              // My Season (BIRCH_CHECKIN.mySeason)
     if (tree === 'pine') f.push('/pine/checkin.js?v=b907');                // the grades (PINE_CHECKIN.grades)

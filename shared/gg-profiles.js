@@ -435,7 +435,7 @@
   function loadAvatars(cb) {
     if (window.GGAv) { cb && cb(); return; }
     var s = document.querySelector('script[data-ggav]');
-    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-avatars.js?v=b782'; s.setAttribute('data-ggav', '1'); document.head.appendChild(s); }
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-avatars.js?v=b949'; s.setAttribute('data-ggav', '1'); document.head.appendChild(s); }
     s.addEventListener('load', function () { paintAll(); cb && cb(); });
   }
   function toast(msg) {

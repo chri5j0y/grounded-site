@@ -21,7 +21,7 @@
   'use strict';
   window.GGScreen = window.GGScreen || {};
   if (window.GGScreen.legacy) return;
-  var FILES = ['/sequoia/legacy.js?v=b787', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
+  var FILES = ['/sequoia/legacy.js?v=b949', '/shared/gg-sources.js?v=b940', '/shared/gg-pdf.js?v=b803', '/shared/home/notebook.js?v=b912'];
 
   function open(ctx) {
     var N = window.GGScrNotebook, esc = N.esc, LEG = window.SEQUOIA_LEGACY || { chapters: [], intro: [] };
