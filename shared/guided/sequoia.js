@@ -130,7 +130,7 @@
           [
             "Welcome. You have lived through many seasons, and each one has shaped your tree. Let us take a gentle look together, one question at a time.",
             "Make yourself comfortable. We will go slowly, one question at a time, and you can rest or come back whenever you like.",
-            "Thank you for being here. Think back over the past two weeks, and answer with what is true. Your answers stay on this device.",
+            "Thank you for being here. Think back over the past two weeks, and answer with what is true. Your answers stay locked and private.",
             "A sequoia grows strong through many years. This check-in helps us see how yours is doing today, part by part."
           ]
         ],

@@ -578,7 +578,7 @@
   function promiseHtml() {
     return '<div class="hm-promise">' +
       '<div class="hm-card hm-prom hm-p-leaves">' + pb(IMG + 'quiet-morning-sq.webp') + '<div><h3 class="hm-h3">Private</h3><div class="hm-sub">The Grounded Way is yours alone. Begin with just a name and a passcode.</div></div></div>' +
-      '<div class="hm-card hm-prom hm-p-branches">' + pb(IMG + 'tending-sq.webp') + '<div><h3 class="hm-h3">On Your Device</h3><div class="hm-sub">Everything stays right here, on this phone or computer.</div></div></div>' +
+      '<div class="hm-card hm-prom hm-p-branches">' + pb(IMG + 'tending-sq.webp') + '<div><h3 class="hm-h3">On Your Device</h3><div class="hm-sub">Everything is saved right here, on this phone or computer, locked so only you can open it.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-trunk">' + pb(IMG + 'candle-alcove-sq.webp') + '<div><h3 class="hm-h3">Locked With Your Passcode</h3><div class="hm-sub">Only your passcode, or your Root Words, opens it.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-bark">' + pb(IMG + 'way-plan-sq.webp') + '<div><h3 class="hm-h3">Yours to Shape</h3><div class="hm-sub">Choose how you tend each of the four. Change it any time in Settings.</div></div></div>' +
     '</div>';
@@ -1089,7 +1089,7 @@
     return '<div class="hm-lay c2"><article class="hm-card hm-priv hm-p-leaves"><div class="hm-pv-hd">' + pb(IMG + 'candle-alcove-sq.webp') + '<div><div class="hm-k">' + (open ? 'Settings and Privacy' : 'How Your Privacy Works') + '</div><h2 class="hm-h2" style="font-size:34px">Your Grounded Way Stays Yours</h2></div></div>' +
       '<div class="hm-set" style="margin-top:10px">' +
         '<div class="hm-row hm-p-leaves"><span class="ic2">' + I('eye') + '</span><div class="tx"><b>What is kept</b><small>Your name and picture, your check-ins and growth plan, the days you tend, your Tending plan, your Living Sober count, and any lab numbers you add.</small></div></div>' +
-        '<div class="hm-row hm-p-branches"><span class="ic2">' + I('phone') + '</span><div class="tx"><b>Where it lives</b><small>Only on this device, in this browser, locked with your passcode. You hold the only key.</small></div></div>' +
+        '<div class="hm-row hm-p-branches"><span class="ic2">' + I('phone') + '</span><div class="tx"><b>Where it lives</b><small>Saved in this browser, locked with your passcode. You hold the only key.</small></div></div>' +
         '<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>Root Words</b><small>Twelve plain words that open The Grounded Way again if you forget your passcode. Keep them somewhere safe.</small></div></div>' +
         '<div class="hm-row hm-p-roots"><span class="ic2">' + I('save') + '</span><div class="tx"><b>Save a Backup</b><small>One locked file you keep in your files, iCloud, or a drive. It opens with your passcode.</small></div></div>' +
         '<div class="hm-row hm-p-bark"><span class="ic2">' + I('swap') + '</span><div class="tx"><b>Move to Another Device</b><small>Send your locked profile to the new device, then tap Bring In My Profile there and enter your passcode. Your tree comes with you.</small></div></div>' +
@@ -3087,7 +3087,7 @@
       b = wpK('Grow') + wpH('Build one plan for your whole self') + '<p class="hm-wp-lead">Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes, and every choice can change anytime.</p>' +
         '<div class="hm-wp-card">' + wpK('What you will choose', 'leaves') + '<div style="margin-top:6px"></div>' + wpRow('move', plabel('leaves'), wpStart() ? 'Flow, Yoga, Balance, Stretch, and the Gentle sessions' : 'Strength, Cardio, Flow, Yoga, Balance, Stretch') + wpRow('bark', plabel('bark'), 'Meditation, how often and when') +
         wpRow('roots', plabel('roots'), 'Gratitude, kindness, quiet, and more') + wpRow('plate', 'Leaves: the Table', 'Weekly dinners and Sunday Together Prep') + wpRow('leaves', 'Practices', 'A few for your Growing Edges') + '</div>' +
-        '<p class="hm-wp-lead sm">Everything stays on this device, inside your locked profile.</p>';
+        '<p class="hm-wp-lead sm">Everything stays inside your locked profile.</p>';
       f = wpBtn('next', 'Start My Plan');
     } else if (i === 1) {
       var trees = wpTrees(), ck = lastCheckin(S.id, d.lead), ed = edgesOf(ck);

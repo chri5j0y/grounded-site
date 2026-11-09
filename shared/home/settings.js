@@ -80,15 +80,15 @@
   var PARTS6 = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
 
   // What stays private, word for word from each tree.
-  var OK_SEE = '<p><b>Just yours</b>Every answer, your levels, your notes, and your reflections stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone.</p>'
+  var OK_SEE = '<p><b>Just yours</b>Every answer, your levels, your notes, and your reflections stay locked in your profile. Only your passcode opens it, so only you can see them.</p>'
     + '<p><b>Helpers, only if you choose</b>You can let someone you trust open your Oak with their own passcode. They see only what you share. This stays off unless you turn it on.</p>'
     + '<p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>';   // oak 2831
-  var BC_SEE = '<p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, the optional question, your reflections, and your Groundwork notebook stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone, and no one gets an alert.</p>'
+  var BC_SEE = '<p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, the optional question, your reflections, and your Groundwork notebook stay locked in your profile. Only your passcode opens it, so only you can see them, and no one gets an alert.</p>'
     + '<p><b>Helpers, only if you choose</b>You can let someone you trust open your Birch with their own passcode. They see only what you share, and never your optional question or Groundwork. This stays off unless you turn it on.</p>'
     + '<p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>';   // birch 1807
   var PN_SEE = '<p><b>The big picture, only while you leave it on</b>Days tended, rings, and which parts you tended, through The Grove. You can turn this off any time with Show my growth on The Grove.</p>'
     + '<p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, your optional questions, your reflections, and your Next Steps notebook. Only your passcode opens your profile. A grown-up can help reset a forgotten passcode, but can never read what is inside.</p>';   // pine 1756
-  var MP_SEE = '<p><b>Talked about together</b>A few answers about friends, feeling close to your people, and looking forward show to your grown-up as an idea for a good talk together. Nothing is sent anywhere.</p>'
+  var MP_SEE = '<p><b>Talked about together</b>A few answers about friends, feeling close to your people, and looking forward show to your grown-up as an idea for a good talk together. Only your grown-up sees these, when you open your profile together.</p>'
     + '<p><b>The big picture</b>Maple is made to do together, so your grown-up can see your check-ins, your tree, how many days you tended it, and which parts you\'re tending.</p>'
     + '<p><b>Just yours</b>The weekly thoughts you write. You can share one with your grown-up anytime.</p>';   // maple 2425
   var ASP_SEE = '<p><b>Always shown to your grown-up</b>If you answer the questions about feeling lonely or left out, how people treat you, or feeling hopeful, your grown-up sees that answer so they can cheer you on and help.</p>'
@@ -452,7 +452,7 @@
       var st = P().rootState ? P().rootState(id) : '';
       return sec('gss-records', 'Your Records', '<div class="gss-row">' + btn('backup', 'Back up everything') + btn('restore', 'Load a backup') + btn('progress', 'Save or load a results file')
         + (st ? btn('rootWords', st === 'has' ? 'See My Root Words' : 'Make My Root Words') : '') + '</div>'
-        + '<p class="gt-small">Back up everything saves one file with every profile on this device (each still locked), The Grove, and settings, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Load it on any device to bring it all back. Everything stays on this device.' + (st ? ' Your Root Words open your profile if your passcode is ever forgotten.' : '') + ' To delete a profile and everything in it, open Picture, passcode, and more.</p>');
+        + '<p class="gt-small">Back up everything saves one file with every profile on this device (each still locked), The Grove, and settings, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Load it on any device to bring it all back. The file stays locked, wherever you keep it.' + (st ? ' Your Root Words open your profile if your passcode is ever forgotten.' : '') + ' To delete a profile and everything in it, open Picture, passcode, and more.</p>');
     }
     function aboutHtml() {
       return sec('gss-about', 'About', '<p class="gss-links"><a href="https://growwithgrounded.com/privacy.html" target="_blank" rel="noopener">Privacy</a><a href="https://growwithgrounded.com/terms.html" target="_blank" rel="noopener">Terms</a><a href="https://growwithgrounded.com/accessibility.html" target="_blank" rel="noopener">Accessibility</a></p>');

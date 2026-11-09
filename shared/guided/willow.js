@@ -185,7 +185,7 @@
           'This check-in is just for you, the one in hospice care. Welcome to Willow, and we are glad you are here.',
           'Wherever you are on this part of the path, we will go slowly, one question at a time.',
           'Answer as things are lately, in your own way. Not Sure is always a fine answer.',
-          'Some questions may touch tender places. You can pause, rest, or come back later. Your answers stay on this device.',
+          'Some questions may touch tender places. You can pause, rest, or come back later. Your answers stay locked and private.',
           'Let your breath settle for a moment. When you are ready, we will begin.'
         ],
         faith: FAITH_PERSON,

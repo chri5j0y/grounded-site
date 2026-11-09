@@ -557,7 +557,7 @@
       }
       function step1(d) {
         d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : 'Create a Grounded profile') + '</h2>' +
-          (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode, on this device only.</p>') +
+          (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode only you know.</p>') +
           '<label class="ggp-l" for="ggp-name">' + (other ? 'Their first name, or what you call them' : 'First name or a nickname') + '</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
           (other || fixAge ? '' : '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
           (fixTree || (fixAge && st.age !== 'adult') ? treeLine() : treeBlock(st, other)) +
@@ -623,7 +623,7 @@
         var minor = isMinor(st.age);
         d.show('<h2 id="ggp-title">Almost There</h2>' +
           '<p>Grounded tools are for reflection and growth. For therapy, medical care, or crisis support, reach a licensed professional or a crisis line. If you or someone you love is in crisis, call or text 988 any time.</p>' +
-          '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + '. It stays with you.</p>' +
+          '<p class="ggp-small">Everything saved in this profile is locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + ', so only you can open it.</p>' +
           (minor ? grownBlock(st.name, st.age)
             : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +

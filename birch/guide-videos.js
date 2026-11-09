@@ -4213,8 +4213,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your check-in stays yours",
-      "body": "Ideas and help lines on your own screen. Everything stays on your device. Helpers see only what you share.",
-      "say": "Your Birch check-in keeps ideas for connection and help lines right on your own screen. Everything stays on your own device. A helper sees only what you choose to share."
+      "body": "Ideas and help lines on your own screen. Everything stays locked and private. Helpers see only what you share.",
+      "say": "Your Birch check-in keeps ideas for connection and help lines right on your own screen. Everything stays locked and private. A helper sees only what you choose to share."
      },
      {
       "k": "card",
@@ -4904,8 +4904,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your check-in keeps you in charge",
-      "body": "Everything stays on your device. Helpers see only what you share. The help lines here are ready any time.",
-      "say": "Your Birch check-in stays on your own device, just for you. Birch sends nothing to anyone, and a helper sees only what you choose to share. You stay in charge of who you tell."
+      "body": "Everything stays locked and private. Helpers see only what you share. The help lines here are ready any time.",
+      "say": "Your Birch check-in stays locked and private, just for you. Birch sends no alerts, and a helper sees only what you choose to share. You stay in charge of who you tell."
      },
      {
       "k": "big",
@@ -5029,8 +5029,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Privacy, and urgent help",
-      "body": "Their answers stay on their device. Birch sends nothing to anyone.",
-      "say": "One thing to know. Their Birch check-in stays on their own device, and Birch sends nothing to anyone. Their answers stay just for them. That keeps them free to answer honestly, so your warmth matters even more."
+      "body": "Their answers stay private to them. Birch sends no alerts.",
+      "say": "One thing to know. Their Birch check-in stays locked and private to them, and Birch sends no alerts. Their answers stay just for them. That keeps them free to answer honestly, so your warmth matters even more."
      },
      {
       "k": "big",
@@ -5477,7 +5477,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "What a helper sees in Birch",
       "body": "Only what they choose to share. Worried? Ask how they are.",
-      "say": "One thing to know. In Birch, a helper sees only what the young adult chooses to share. Everything else stays on their device. So if you're worried, ask an open question, kindly, like how are you, really?"
+      "say": "One thing to know. In Birch, a helper sees only what the young adult chooses to share. Everything else stays private to them. So if you're worried, ask an open question, kindly, like how are you, really?"
      },
      {
       "k": "big",
@@ -5802,7 +5802,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Support for your mind, too",
-      "say": "Your Birch answers stay on this device, and a helper sees only what you choose to share."
+      "say": "Your Birch answers stay locked and private, and a helper sees only what you choose to share."
      },
      {
       "k": "words",
@@ -6141,7 +6141,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "What a helper sees in Birch",
       "body": "Only what they choose to share. Ask kindly.",
-      "say": "In Birch, a helper sees only what the young parent chooses to share. Everything else stays on their device. So ask, warmly and kindly, how they're doing. And if the crying is wearing them down, offer to take a shift."
+      "say": "In Birch, a helper sees only what the young parent chooses to share. Everything else stays private to them. So ask, warmly and kindly, how they're doing. And if the crying is wearing them down, offer to take a shift."
      },
      {
       "k": "big",
@@ -6245,7 +6245,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it becomes an emergency",
-      "say": "And if you see or hear things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency. Your Birch answers stay on this device, so reaching out is up to you, and it's worth it."
+      "say": "And if you see or hear things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency. Your Birch answers stay locked and private, so reaching out is up to you, and it's worth it."
      },
      {
       "k": "words",
@@ -6594,7 +6594,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "What a helper sees in Birch",
       "body": "Only what they choose to share. Ask kindly.",
-      "say": "In Birch, a helper sees only what the person chooses to share. Everything else stays on their device. So ask, kindly and warmly, how they're doing, and keep asking in the months ahead."
+      "say": "In Birch, a helper sees only what the person chooses to share. Everything else stays private to them. So ask, kindly and warmly, how they're doing, and keep asking in the months ahead."
      },
      {
       "k": "big",
@@ -6869,7 +6869,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Be the calm in the room.",
       "sub": "Look after your own stress too.",
-      "say": "Their anxiety can stir up yours. Keep your own sleep, movement, and people, so you can be the calm in the room. If they use Birch, their answers stay on their own device, and they choose what to share with you. You're a companion, not a cure."
+      "say": "Their anxiety can stir up yours. Keep your own sleep, movement, and people, so you can be the calm in the room. If they use Birch, their answers stay private to them, and they choose what to share with you. You're a companion, not a cure."
      },
      {
       "k": "big",
@@ -7112,7 +7112,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "A companion, not a cure.",
       "sub": "Keep your own supports.",
-      "say": "Supporting someone who is depressed is tiring. Keep your own sleep and people, and share the load. If they use Birch, they choose what you see, and everything else stays on their device. So your own checking in matters."
+      "say": "Supporting someone who is depressed is tiring. Keep your own sleep and people, and share the load. If they use Birch, they choose what you see, and everything else stays private to them. So your own checking in matters."
      },
      {
       "k": "big",
@@ -8250,8 +8250,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "In your Birch check-in",
-      "body": "Open questions. Everything stays on your device, just for you.",
-      "say": "Your Birch check-in asks open questions about your whole tree. Your answers stay on your device. Everything stays just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
+      "body": "Open questions. Everything stays locked and private, just for you.",
+      "say": "Your Birch check-in asks open questions about your whole tree. Your answers stay locked and private. Everything stays just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
      },
      {
       "k": "big",
@@ -8420,7 +8420,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Birch keeps their answers private.",
       "body": "Their answers stay with them. Your open questions matter.",
-      "say": "If they use Birch, know this. Birch sends nothing to anyone, and a helper sees only what they choose to share. That privacy is on purpose, for adults. So your open questions and steady presence matter most."
+      "say": "If they use Birch, know this. Birch sends no alerts, and a helper sees only what they choose to share. That privacy is on purpose, for adults. So your open questions and steady presence matter most."
      },
      {
       "k": "big",
@@ -8781,8 +8781,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your Birch check-in is yours.",
-      "body": "Answers stay on your device. Everything stays on your device.",
-      "say": "Your Birch check-in is yours. Answers stay on your device, just for you, even with a helper. Telling someone is your choice, and Birch keeps the help lines close whenever you want them."
+      "body": "Answers stay locked and private, just for you.",
+      "say": "Your Birch check-in is yours. Answers stay locked and private, just for you, even with a helper. Telling someone is your choice, and Birch keeps the help lines close whenever you want them."
      },
      {
       "k": "big",

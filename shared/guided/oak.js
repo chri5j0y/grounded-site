@@ -118,7 +118,7 @@
             "Welcome back. Let us see how your tree is growing, one question at a time, for the past two weeks.",
             "Good to see you again. Settle in, take a breath, and we will walk through your whole tree together.",
             "Time for a check-in. Answer with what is true right now, and notice how far you have come.",
-            "Here we go again, one part at a time. Your answers stay on this device."
+            "Here we go again, one part at a time. Your answers stay locked and private."
           ]
         ],
         "mid": {

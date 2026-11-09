@@ -13,7 +13,7 @@
      shared/gg-journey.js  the twelve weeks, anchors, and movement levels (AGES.pine)
 
    What is saved, and where
-   - Everything stays on this device, locked in the teen's own Grounded profile
+   - Everything stays locked in the teen's own Grounded profile
      (age "pine", High school) under "pine": history (check-ins), tend (daily
      tending and the game layer), nextsteps (the notebook), grade, wording
      ('faith' or 'plain'), askSens (the optional questions), setup, and oakBrought.
@@ -518,10 +518,10 @@ function screenHtml(sc, idx) {
   }
   if (sc.kind === 'sit') return `<section class="step-panel" id="step-${idx}" style="--domain-color:${d.color};">${head}
       <div class="sit-with"><div class="step-label">Sit with this <span class="opt">(optional)</span></div><p class="domain-prompt">${partDef(d).prompt || 'What is true for you in this part of your life right now?'}</p>
-      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you want, or use your phone's microphone key to speak it. It stays on this device." style="--domain-color:${d.color};"></textarea></div>
+      <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you want, or use your phone's microphone key to speak it. It stays locked and private." style="--domain-color:${d.color};"></textarea></div>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="goToStep(${idx + 1})">${nextLabel}</button></div></section>`;
   if (sc.kind === 'finish') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">All done</div><h2 class="step-title">Nice work</h2></div></div>
-      <p class="lead">Your answers stay on this device, locked in your profile. Tap below to see your tree.</p>
+      <p class="lead">Your answers stay locked in your profile. Tap below to see your tree.</p>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">See My Tree</button></div></section>`;
   return '';
 }
@@ -1910,7 +1910,7 @@ function renderNext() {
     <div class="btn-row"><button class="btn btn-primary" onclick="nsPickBook()">Save or Print My Notebook</button></div>
     ${NX.pick ? nsPickHtml(L) : ''}
     <div id="pn-nssheet" class="sq-legsheet" aria-hidden="true"></div>
-    <p class="gt-small sq-legfoot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>
+    <p class="gt-small sq-legfoot">Your notebook stays locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>
     ${window.GGSources ? GGSources.html('pine:nextsteps') : ''}`;
 }
 function nsChapterHtml(c, L) {

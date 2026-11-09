@@ -307,7 +307,7 @@
     g: { why: "Writing helps you sort out what you think and feel, and over months it shows you how much you've grown.",
       today: "Write for five minutes about anything: today, a worry, a win, a question. Any spelling works.",
       build: "Keep it in the same place, a notebook or your Pine journal, and write at the same time most days.",
-      hard: "Worried someone will read it? Your Pine journal stays on your device and opens only with your passcode. Or write and throw it away. The writing still helps." } },
+      hard: "Worried someone will read it? Your Pine journal stays locked and opens only with your passcode. Or write and throw it away. The writing still helps." } },
   { p: 'bark', n: 'Study Sprints', d: "Study in short, focused blocks with real breaks in between.",
     m: ['L', '30 min', 'S', ''], s: [POMO],
     g: { why: "Short, focused blocks with real breaks make it easier to start and to stay focused than one long, distracted stretch.",

@@ -285,7 +285,7 @@ function welcomeHtml() {
   return `<div class="w-card w-welcome">
     <p class="w-eyebrow">Welcome</p>
     <h2>Is Willow for you, or for someone you love?</h2>
-    <p class="lead">Willow keeps what matters in one gentle place: how the spirit is doing, what the person wants, the stories they want kept, and what helped today. Everything stays on this device, locked with a passcode.</p>
+    <p class="lead">Willow keeps what matters in one gentle place: how the spirit is doing, what the person wants, the stories they want kept, and what helped today. Everything stays locked with a passcode.</p>
     <div class="w-choices w-choices-big">
       <button type="button" class="w-choice" data-w-for="me" onclick="W.setup('me')"><b>This is for me</b><span>I am in hospice care, or facing the end of life. Willow and its check-ins speak to me.</span></button>
       <button type="button" class="w-choice" data-w-for="helper" onclick="W.setup('helper')"><b>I'm caring for someone I love</b><span>A parent, a partner, a friend, or family. I set up their tree, and my own caregiver tree grows here too.</span></button>
@@ -528,7 +528,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
-  <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays on this device, locked with a passcode. Nothing is sent to Grow With Grounded or anyone else. Willow offers spiritual guidance and emotional support; your hospice team holds the medical care. For anything urgent, call your hospice first, day or night.</div>
+  <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays locked with a passcode. Grow With Grounded never reads it, and only the people you choose can open it. Willow offers spiritual guidance and emotional support; your hospice team holds the medical care. For anything urgent, call your hospice first, day or night.</div>
   <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button><button type="button" class="btn btn-secondary" onclick="W.go('guides')">When Life Changes</button><button type="button" class="btn btn-secondary" onclick="W.go('readings')">Readings</button></div>`;
 function begin() {
   const a = me();
@@ -1330,7 +1330,7 @@ function openSettings(focus) {
   const rs = a && GP() && GGP.rootState ? GGP.rootState(a.id) : '';
   h += `<section><h3>Your Records</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGBackupGo('pick')">Load a backup</button>${rs ? `<button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGP.rootWords()">${rs === 'has' ? 'See My Root Words' : 'Make My Root Words'}</button>` : ''}</div><p class="w-small">One file with every profile on this device, each still locked, for a lost or broken phone: keep it on this device, iCloud Drive, or another drive. Load it on any device to bring it all back.${rs ? ' Your Root Words open your profile if your passcode is ever forgotten.' : ''}</p></section>
   <section><h3>Reading and Text</h3><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="cycleTextSize()">Change text size</button></div></section>
-    <p class="w-small">Everything in Willow stays on this device, locked in each person's own profile. <a class="text-link" href="/privacy.html#willow">How Willow keeps things private</a></p></div>`;
+    <p class="w-small">Everything in Willow stays locked in each person's own profile. <a class="text-link" href="/privacy.html#willow">How Willow keeps things private</a></p></div>`;
   wrap.innerHTML = h;
   document.body.appendChild(wrap);
   wrap.addEventListener('click', e => { if (e.target === wrap) closeSettings(); });

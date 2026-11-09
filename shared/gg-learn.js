@@ -1656,7 +1656,7 @@
       return '<h2 class="ggl-sr">Videos</h2>' + voiceCard()
         + (cats.length ? '<div class="ggl-cats">' + cats.map(catCard).join('') + '</div>' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>')
         + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
-        + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';
+        + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays locked in your profile and goes along in your Grow With Grounded backup.</p>';
     };
     // Search results: every word typed appears in the title, the blurb, or the track's name. The listed tracks only, so
     // a low-key track (Living Sober) is found once it is chosen, like the list.

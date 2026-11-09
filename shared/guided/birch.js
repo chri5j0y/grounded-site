@@ -96,7 +96,7 @@ const G = window.GG_GUIDED.birch = {
         'This is your first check-in, a look at your whole tree.',
         'One question at a time. Think about the past two weeks, and pick what fits best.',
         'Every answer is welcome. Honest answers grow the strongest trees.',
-        'Your answers stay on this device, locked in your profile. Take your time.'
+        'Your answers stay locked in your profile. Take your time.'
       ],
       enter: ENTER,
       mid: { every: 6, lines: [

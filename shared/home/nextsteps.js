@@ -49,7 +49,7 @@
       chapters: function () { return NS.chapters || []; },
       home: function () {
         return { title: 'Next Steps', intro: NS.intro || [], count: function (n) { return n ? n + ' ' + (n === 1 ? 'page' : 'pages') + ' written so far.' : 'One prompt is enough to start.'; },
-          foot: '<p class="ggnb-foot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>' + (window.GGSources ? GGSources.html('pine:nextsteps') : '') };
+          foot: '<p class="ggnb-foot">Your notebook stays locked in your profile. You decide what to print or share, and with whom. When you move on from Pine, it comes with you.</p>' + (window.GGSources ? GGSources.html('pine:nextsteps') : '') };
       },
       chSub: function (c, L, n, closed) { return closed ? 'Opens only when you choose' : n ? n + ' of ' + (c.prompts || []).length + ' written' : (c.prompts || []).length + ' prompts'; },
       // The care line with "Help from outside your home" (nsChapterHtml 1925; showCalm('hurt'), shown in place).

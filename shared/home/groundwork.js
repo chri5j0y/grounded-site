@@ -174,7 +174,7 @@
       home: function (L) {
         return { title: GW.title || 'Groundwork', intro: (GW.intro || []).filter(function (t, i) { return i < 4 || L.fromPine; }),
           count: function (n) { return n ? n + ' ' + (n === 1 ? 'page' : 'pages') + ' written so far.' : 'Ready when you are. One prompt is enough to start.'; },
-          foot: '<p class="ggnb-foot">Your notebook stays on this device, locked in your profile. You decide what to print or share, and with whom. It is never part of Share to Family, and helpers never see it.</p>' + (window.GGSources ? GGSources.html('birch:groundwork') : '') };
+          foot: '<p class="ggnb-foot">Your notebook stays locked in your profile. You decide what to print or share, and with whom. It is never part of Share to Family, and helpers never see it.</p>' + (window.GGSources ? GGSources.html('birch:groundwork') : '') };
       },
       chSub: function (c, L, n, closed) { return (closed ? 'Opens only when you choose' : c.fromPine ? 'Written in Pine, and room to keep going' : n ? n + ' of ' + (c.prompts || []).length + ' written' : (c.prompts || []).length + ' prompts') + ((GW.skills || {})[c.id] ? '. Skills too' : ''); },
       homeMore: function () { var sk = skillsAll(); return sk.length ? '<button type="button" class="ggnb-ch skills" data-nb="open" data-id="skills"><b>' + esc(GW.skillsTitle || 'Skills I\'ve Got') + '</b><span>' + skillsDone().length + ' of ' + sk.length + ' marked, at your own pace.</span></button>' : ''; },

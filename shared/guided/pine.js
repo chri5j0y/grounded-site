@@ -36,7 +36,7 @@ const G = window.GG_GUIDED.pine = {
         'This is your first check-in, and it\'s all about you.',
         'We\'ll ask about your whole tree, one question at a time.',
         'Think about the past two weeks, and pick the answer that fits best. Every answer helps your tree.',
-        'Your answers stay on this device, just for you. Take your time.'
+        'Your answers stay locked and private, just for you. Take your time.'
       ],
       enter: {
         roots: [],

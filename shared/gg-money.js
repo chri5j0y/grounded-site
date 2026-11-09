@@ -4,7 +4,7 @@
    Chris (November 7, 2026): "the gap is real and exactly why im doing this.. i need to build a tool that can fill the gap".
    Plan: grounded-workshop patches/plan/budget-plan.md. Stage 2 wiring: patches/bld937/STAGE2.md.
 
-   Everything stays on this device. No bank connections, nothing sent anywhere. The Family share travels in the
+   Everything stays locked in the profile. No bank connections. The Family share travels in the
    address hash (#money=), which never reaches a server.
 
    For a host page
@@ -828,7 +828,7 @@
     /* Close the Gap */
     function vGap(d) {
       if (!live(d.lines).length && !live(d.income).length) {
-        return '<div class="gm-card gm-hello"><h3 class="gm-h3">Let\u2019s build your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then Close the Gap shows ideas that fit your own numbers. Everything stays on this device.</p>' +
+        return '<div class="gm-card gm-hello"><h3 class="gm-h3">Let\u2019s build your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then Close the Gap shows ideas that fit your own numbers. Everything stays locked in your profile.</p>' +
           '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' + memberLine();
       }
       var t = totals(d), short = t.gap < 0, start = Math.abs(Math.min(0, t.gap)), left = Math.max(0, -t.after), pct = start ? Math.min(100, Math.round(t.saved / start * 100)) : 100;
@@ -940,7 +940,7 @@
       var pic = '<section class="gm-card gm-pic"><h3 class="gm-h3">Your Money Picture</h3><p class="gm-sub">Each part, side by side. A full picture leaves no blind spots.</p><div class="gm-picrows">' + PARTS.map(function (x) {
         return '<button type="button" class="gm-picrow gm-c-' + x.id + '" data-gm="go:' + x.id + '"><span class="gm-picn">' + I(x.i) + esc(x.n) + '</span>' + bar(ss[x.id].pct) + '<small>' + esc(ss[x.id].line) + '</small></button>';
       }).join('') + '</div>' + (nx ? '<div class="gm-nextstep gm-c-' + nx.p.id + '">' + I('star') + '<span><span class="gm-k">A Good Next Step</span><b>' + esc(nx.s.next[0]) + '</b></span>' + openBtn(allowed(nx.s.next[1]) ? nx.s.next[1] : nx.p.id, 'Go') + '</div>' : '<p class="gm-note">' + I('sun') + 'Every part is in motion. Look again each month, and enjoy the calm.</p>') + '</section>';
-      var empty = !live(d.lines).length && !live(d.income).length ? '<div class="gm-card gm-hello gm-c-live"><h3 class="gm-h3">Start with your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then each part fills in with your own numbers. Everything stays on this device.</p>' +
+      var empty = !live(d.lines).length && !live(d.income).length ? '<div class="gm-card gm-hello gm-c-live"><h3 class="gm-h3">Start with your monthly plan.</h3><p class="gm-sub">Bring in the spreadsheet you already use, or start with a few common lines. Then each part fills in with your own numbers. Everything stays locked in your profile.</p>' +
         '<div class="gm-acts"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div></div>' : '';
       return empty + tiles + stdCard(d) + pic + tipCard() + '<div class="gm-acts gm-center"><button type="button" class="gm-btn line sm" data-gm="go:sheet">' + I('list') + 'One Page</button><button type="button" class="gm-btn line sm" data-gm="go:tools">' + I('grid') + 'Tools and Tips</button></div>' + memberLine();
     }

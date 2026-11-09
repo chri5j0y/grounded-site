@@ -321,7 +321,7 @@
     g: { why: "Writing helps you sort out what you think and feel, and over months it shows you how much you've grown, even in years that feel messy.",
       today: "Write for five minutes about anything: today, a worry, a win, a question. Spelling doesn't matter.",
       build: "Keep it in the same place, a notebook or Groundwork, and write at the same time most days.",
-      hard: "Worried someone will read it? Groundwork stays on your device and opens only with your passcode. Or write on paper and toss it. The writing still helps." } },
+      hard: "Worried someone will read it? Groundwork stays locked and opens only with your passcode. Or write on paper and toss it. The writing still helps." } },
   { p: 'bark', n: 'Study Sprints', d: "Study or work in short, focused blocks with real breaks in between.",
     m: ['L', '30 min', 'S', ''], s: [POMO], z: ['school'],
     g: { why: "Short, focused blocks with real breaks make it easier to start and to stay focused than one long, distracted stretch, whether it's an exam, a certification, or a big application.",

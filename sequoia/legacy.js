@@ -17,7 +17,7 @@
    - Nothing assumes marriage, children, faith, or a family shape.
    - A family member can write for the person ("told to" entries).
    - Nothing is prefilled, invented, or rewritten for the person.
-   - Everything stays on the device, encrypted in the profile, until the
+   - Everything stays encrypted in the profile, until the
      person chooses to print or share a page.
 
    Each chapter: { id, title, lead, optIn, note, prompts: [{ id, t, help }] }.
@@ -192,7 +192,7 @@ const INTRO = [
   'Your Legacy Book is a place to keep the stories, lessons, recipes, and blessings you want the people you love to have.',
   'Pick any chapter and any prompt. Skip whatever you like. Go in any order, at your own pace.',
   'Someone you trust can write while you tell. Mark it "told to," and it stays yours.',
-  'Your book stays on this device, locked in your profile. You decide what to print or share, and with whom.',
+  'Your book stays locked in your profile. You decide what to print or share, and with whom.',
   'Looking back can bring joy, and sometimes grief. Harder chapters stay closed until you choose to open them.'
 ];
 
@@ -204,7 +204,7 @@ const CAUTIONS = [
   'Nothing assumes marriage, children, faith, or a particular family shape.',
   'People with memory changes can write with a family member, with "told to" entries. Looking back together is a way to connect, whatever it brings.',
   'Never prefill, invent, or rewrite a person\'s words. Their book holds only what they or the person they chose wrote.',
-  'Everything stays on the device, encrypted in the profile, until the person chooses to print or share a page.'
+  'Everything stays encrypted in the profile, until the person chooses to print or share a page.'
 ];
 
 // Ids in gg-sources.js (proposed in the build's sources.json).

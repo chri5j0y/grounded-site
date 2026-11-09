@@ -402,7 +402,7 @@
   function sheetHtml() {
     var on = ST.status === 'member';
     if (on) return '<span class="ggm-ey">Membership</span><h2 id="ggm-t">Membership on This Device</h2><p>' + esc(statusLine()) + '</p>' +
-      '<p>Your answers and plans stay in each person\'s own locked profile, right here on this device.</p>' +
+      '<p>Your answers and plans stay in each person\'s own locked profile.</p>' +
       '<div class="ggm-row"><button type="button" class="ggm-b" data-ggm="close">Done</button><button type="button" class="ggm-b l" data-ggm="forget">Forget Membership on This Device</button></div><p class="ggm-msg" role="status" aria-live="polite"></p>';
     return '<span class="ggm-ey">Membership</span><h2 id="ggm-t">' + (ST.status === 'start' ? 'I Have a Code' : 'Renew Membership') + '</h2><p>' + esc(statusLine()) + '</p>' +
       '<p>Enter your code once. Membership then stays open on this device for every profile here.</p>' +
