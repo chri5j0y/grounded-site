@@ -1555,3 +1555,5 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
 .hm-me.hm-setlab svg{width:20px;height:20px;}
 .hm-me.hm-setlab span{line-height:1;}
 @media (max-width:380px){ .hm-me.hm-setlab{padding:0 12px 0 10px;font-size:14px;height:40px;} }
+/* BLD 964: the Settings button sits above Today's greeting line, so a tap always reaches it (the greeting row spans the hero). */
+.hm-thero .hm-me{z-index:4;}

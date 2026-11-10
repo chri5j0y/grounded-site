@@ -1293,7 +1293,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=b975';
+  var PV_SRC = '/shared/page-videos.js?v=b976';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2406,7 +2406,7 @@
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b949';
-  var WELCOME_SRC = '/shared/learn-welcome.js?v=b949'; // BLD 924: Welcome to The Grounded Way, one series per age group
+  var WELCOME_SRC = '/shared/learn-welcome.js?v=b976'; // BLD 924: Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=b930', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b949', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
@@ -2690,11 +2690,12 @@
   var TOUR_V = 'b884';
   var TOUR = [
     { k: 'today', art: 'p-home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: a practice for each of your four, your meals, movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
-    // BLD 911: five tabs (BLD 910), and Week opens from Today and Grow.
-    { k: 'checkin', art: 'p-tend-mind', ey: 'Tab 2 of 5', t: 'Check-in', d: 'How each part of your tree is growing: Strong, Steady, or a Growing Edge. The questions come from your tree, made for your age.', tr: 'Take a Quick Check-in, about two minutes.' },
-    { k: 'grow', art: 'growth', ey: 'Tab 3 of 5', t: 'Grow', d: 'My Growth Plan, your week, your season, and your family: the practices you choose, body, mind, spirit, and your table, in one plan.', tr: 'Open My Growth Plan and choose one practice to begin with.' },
-    { k: 'learn', art: 'learn', ey: 'Tab 4 of 5', t: 'Learn', d: 'Short lessons and guides for when life changes, chosen for your tree, each playing right here.', tr: 'Play one lesson, about three minutes.' },
-    { k: 'library', art: 'library', ey: 'Tab 5 of 5', t: 'Library', d: 'Grounded Recipes with holidays and gatherings, movement, quiet, and stories, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'The gear on Today opens Numbers, Household, Settings, Privacy, and this tour again.' }
+    // BLD 911: five tabs (BLD 910). BLD 964: six, with Week second (BLD 963).
+    { k: 'week', art: 'recipes', ey: 'Tab 2 of 6', t: 'Week', d: 'Every day of your week, clear and bold: dinners, workouts, practices, and your family\'s plans. Back and Next move a week at a time, and Month shows the whole month.', tr: 'Tap Week, and find today.' },
+    { k: 'checkin', art: 'p-tend-mind', ey: 'Tab 3 of 6', t: 'Check-in', d: 'How each part of your tree is growing: Strong, Steady, or a Growing Edge. The questions come from your tree, made for your age.', tr: 'Take a Quick Check-in, about two minutes.' },
+    { k: 'grow', art: 'growth', ey: 'Tab 4 of 6', t: 'Grow', d: 'My Growth Plan first, then your numbers, your season, and your family: the practices you choose, body, mind, spirit, and your table, in one plan.', tr: 'Open My Growth Plan and choose one practice to begin with.' },
+    { k: 'learn', art: 'learn', ey: 'Tab 5 of 6', t: 'Learn', d: 'Short lessons and guides for when life changes, chosen for your tree, each playing right here.', tr: 'Play one lesson, about three minutes.' },
+    { k: 'library', art: 'library', ey: 'Tab 6 of 6', t: 'Library', d: 'Grounded Recipes with holidays and gatherings, movement, quiet, and stories, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Settings, top right on every tab, opens Membership, Numbers, Household, Settings, Privacy, and this tour again.' }
   ];
   /* BLD 935 (audit L4): on Start and for a teen, Today's step names what their day holds (no meals). */
   function tourList() {
