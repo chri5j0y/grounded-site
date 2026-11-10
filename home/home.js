@@ -3721,7 +3721,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=b951';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=b961';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -3817,15 +3817,24 @@
       if (!spaceOk() || !tendReady() || !hasFn('kitchenCode')) return null;
       var c = hCall('kitchenCode'); if (!c) return null;
       var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
-      return { c: c };
+      // BLD 957: a plan moved from the Field Guide carries its recipes with the kitchen (locked in the Household), so a family
+      // phone with another library takes the same menu (Chris and Kayti, November 9, 2026: the kitchen could not travel).
+      var w = tendWrap(S.id), L = w && w.lib && w.lib.healthJourney ? { healthJourney: w.lib.healthJourney, audio: w.lib.audio || null } : null;
+      return L ? { c: c, lib: L } : { c: c };
     },
     put: function (o) {
       if (!o || typeof o.c !== 'string' || !spaceOk() || !tendReady()) return;
       var cur = hCall('kitchenCode') || '', hh = obj(homeRec().kitHH);
-      if (o.c === cur || (hh.in === o.c && hh.out === cur)) return;
-      var ok = !!hCall('kitchenJoin', o.c), h = homeRec();
-      h.kitHH = { in: o.c, out: hCall('kitchenCode') || '' };
-      return saveHome().then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } });
+      if (o.c === cur || (hh.in === o.c && hh.out === cur && !hh.err)) return;
+      var info = hasFn('kitchenInfo') ? hCall('kitchenInfo', o.c) : null, w = tendWrap(S.id), took = false;
+      // BLD 957: the kitchen's recipes are ones this phone does not hold: take the library the kitchen carries.
+      if (info && info.missing && o.lib && o.lib.healthJourney && w) {
+        w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); took = true;
+        S.tendInit = null; if (S.id) initTending(); info = hCall('kitchenInfo', o.c);
+      }
+      var ok = !!(info && !info.missing) && !!hCall('kitchenJoin', o.c), h = homeRec();
+      h.kitHH = { in: o.c, out: hCall('kitchenCode') || '', at: Date.now(), err: ok ? 0 : 'missing' };
+      return (took && GGP.save ? GGP.save(S.id) : Promise.resolve()).then(saveHome).then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } else toast('The Family Kitchen could not open on this phone yet. On the phone that shares it, tap Sync Now.'); });
     }
   };
   var MKEYS = ['pid', 'lines', 'income', 'ideas', 'logs'];
@@ -3865,6 +3874,13 @@
     if (kinds.indexOf('kitchen') >= 0 && !tendReady()) loadTending().then(function () { if (S.tendInit !== S.id) initTending(); GGSync.poke(); });
     if (ch) saveHome();
   }
+  // BLD 957: a Household invite saved before the account was made or confirmed joins by itself once the email is confirmed.
+  function joinWaitGo() {
+    if (!acctIn() || AH.joining) return; var inf = GGAccount.info && GGAccount.info(); if (!inf || inf.confirmed !== true) return;
+    // it waits for any account sheet showing (Confirm Your Email, the Root Words) to close first
+    if (document.querySelector('.ga-sheet, .ggr')) { clearTimeout(AH.jwT); AH.jwT = setTimeout(joinWaitGo, 800); return; }
+    acctUI().then(function (U) { var t = U && U.joinWaiting && U.joinWaiting(); if (!t || AH.joining) return; AH.joining = true; return U.open('join', { token: t }).then(function () { AH.joining = false; acctPaint(); }, function () { AH.joining = false; }); });
+  }
   function acctHome() {
     if (!acctLive() || !GGP.account.ready) return;
     GGP.account.ready.then(function (ok) {
@@ -3873,13 +3889,14 @@
       SUBS.me.account = 'My Account';
       GGSync.space('kitchen', KIT_SPACE); GGSync.space('money', MON_SPACE); GGSync.space('planner', PLAN_SPACE);
       loadPlanner().then(function (ok) { if (ok) GGPlanner.load(); });
-      GGAccount.on(function (t) { if (t === 'state' || t === 'confirmed' || t === 'household') { acctPaint(); if (t === 'state' && !S.id) render(); } });
+      GGAccount.on(function (t) { if (t === 'state' || t === 'confirmed' || t === 'household') { acctPaint(); if (t === 'state' && !S.id) render(); if (t !== 'household') joinWaitGo(); } });
       GGSync.on(function (t, d) {
         if (t === 'status') { if (d && d.state === 'idle') acctSeen(); var dot = acctStatus().dot; if (dot !== AH.dot || (d && d.state === 'idle')) { AH.dot = dot; acctPaint(); } }
         else if (t === 'spaces') acctSeen();
         if (t === 'spaces' || (t === 'status' && d && d.state === 'idle')) plannerHH();   // BLD 950: the Household line in the Family Planner
       });
       acctHashGo();
+      if (!AH.hash) setTimeout(joinWaitGo, 1500);
       if (S.view === 'welcome') render(); else acctPaint();
     });
   }
