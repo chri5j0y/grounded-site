@@ -3813,6 +3813,8 @@
   // The shared spaces
   function spaceOk() { return acctIn() && !!(S.id && S.p && S.p.age === 'adult' && GGP.isOpen && GGP.isOpen(S.id)); }
   // BLD 957: what the Family Kitchen did last on this phone, said plainly in My Account (no silent fails)
+  // BLD 957: the phone that taps Share With Our Household for the kitchen is the one whose menu the Household starts from
+  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-share="kitchen"]'); if (!t || !S.id) return; var h = homeRec(); h.kitMine = Date.now(); saveHome(); }, true);
   function kitWhy(t, good) { AH.kit = { t: t, good: !!good, at: Date.now() }; }
   function kitLine() { var k = AH.kit; if (!k) return ''; return '<p class="hm-sub" data-hm-kitline style="margin:8px 0 0"><b>Family Kitchen:</b> ' + esc(k.t) + ' (' + new Date(k.at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ').</p>'; }
   var KIT_SPACE = {
@@ -3821,6 +3823,10 @@
       if (spaceOk() && !tendReady()) return loadTending().then(function () { if (!tendReady()) kitWhy('Tending could not open on this phone'); return tendReady() ? KIT_SPACE.get() : null; });
       if (!spaceOk()) { kitWhy(!acctIn() ? 'not signed in' : !(S.p && S.p.age === 'adult') ? 'a grown-up profile shares the kitchen' : 'open your profile first'); return null; }
       if (!tendReady() || !hasFn('kitchenCode')) { kitWhy('Tending is still loading'); return null; }
+      // BLD 957: a phone that has not joined the Household kitchen yet (it has received another phone's kitchen) never
+      // sends its own menu over it: it reads as empty, and the sync hands it the Household's kitchen to take.
+      var hh0 = obj(homeRec().kitHH), kj = hasFn('kitchen') ? hCall('kitchen') : null;
+      if (!(kj && kj.joined) && !homeRec().kitMine && (hh0.in || hh0.err)) { kitWhy('taking the Household kitchen'); return {}; }
       var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
       var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
       // BLD 957: a plan moved from the Field Guide carries its recipes with the kitchen (locked in the Household), so a family
