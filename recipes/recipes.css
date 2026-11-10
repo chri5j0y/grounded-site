@@ -290,3 +290,8 @@ html.rg-lock,html.rg-lock body{overflow:hidden;}
 .rc-sp-go{font-size:19px;min-height:54px;padding-left:28px;padding-right:28px;}
 .rc-sp-all{margin:18px 0 0;font-size:16px;}
 @media (max-width:620px){.rc-sp{padding:16px 0 40px;}.rc-sp-body{padding:18px 16px 22px;}.rc-sp-go{width:100%;justify-content:center;text-align:center;}}
+
+/* BLD 966: On Your Week on a dinner that is on this week's Week. */
+.rc-pill.rc-onwk{background:#E9F2E1;color:#3F6B2A;font-weight:700;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rc-pill.rc-onwk{background:#2E3B26;color:#BFDCA8;}}
+:root[data-theme="dark"] .rc-pill.rc-onwk{background:#2E3B26;color:#BFDCA8;}
