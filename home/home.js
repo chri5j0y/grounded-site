@@ -3794,7 +3794,7 @@
       '<article class="hm-card hm-p-leaves"><div class="hm-k">Profiles in My Account</div><div class="hm-set" style="margin-top:6px">' + mine.concat(others).map(prow).join('') + '</div>' +
         '<p class="hm-sub" style="margin-top:10px">Each profile still opens only with its own passcode. On a shared family computer, a signed in account brings a profile\'s data down only after that profile opens there.</p></article>' +
       '<article class="hm-card hm-p-roots"><div class="hm-k">Household</div><p class="hm-sub" style="margin:6px 0 12px">Up to 6 people, each with their own private account. Share the Family Kitchen and Grounded Money between you; everything else stays each person\'s own.</p>' +
-        '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-roots" data-hm-acct="household">' + I('people') + 'Household</button></div></article>' +
+        kitLine() + '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-roots" data-hm-acct="household">' + I('people') + 'Household</button></div></article>' +
       '<div class="hm-set">' +
         '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="password"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Change My Password</b><small>Your Root Words stay the same.</small></span></button>' +
         '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="account"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Root Words and Devices</b><small>See My Root Words, New Root Words, Sign Out That Device, and Download My Account Data.</small></span></button>' +
@@ -3812,16 +3812,21 @@
   });
   // The shared spaces
   function spaceOk() { return acctIn() && !!(S.id && S.p && S.p.age === 'adult' && GGP.isOpen && GGP.isOpen(S.id)); }
+  // BLD 957: what the Family Kitchen did last on this phone, said plainly in My Account (no silent fails)
+  function kitWhy(t, good) { AH.kit = { t: t, good: !!good, at: Date.now() }; }
+  function kitLine() { var k = AH.kit; if (!k) return ''; return '<p class="hm-sub" data-hm-kitline style="margin:8px 0 0"><b>Family Kitchen:</b> ' + esc(k.t) + ' (' + new Date(k.at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ').</p>'; }
   var KIT_SPACE = {
     get: function () {
       // BLD 957: Tending loads first when it is not on screen yet, so the kitchen always travels with a sync
-      if (spaceOk() && !tendReady()) return loadTending().then(function () { return tendReady() ? KIT_SPACE.get() : null; });
-      if (!spaceOk() || !tendReady() || !hasFn('kitchenCode')) return null;
-      var c = hCall('kitchenCode'); if (!c) return null;
+      if (spaceOk() && !tendReady()) return loadTending().then(function () { if (!tendReady()) kitWhy('Tending could not open on this phone'); return tendReady() ? KIT_SPACE.get() : null; });
+      if (!spaceOk()) { kitWhy(!acctIn() ? 'not signed in' : !(S.p && S.p.age === 'adult') ? 'a grown-up profile shares the kitchen' : 'open your profile first'); return null; }
+      if (!tendReady() || !hasFn('kitchenCode')) { kitWhy('Tending is still loading'); return null; }
+      var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
       var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
       // BLD 957: a plan moved from the Field Guide carries its recipes with the kitchen (locked in the Household), so a family
       // phone with another library takes the same menu (Chris and Kayti, November 9, 2026: the kitchen could not travel).
       var w = tendWrap(S.id), L = w && w.lib && w.lib.healthJourney ? { healthJourney: w.lib.healthJourney, audio: w.lib.audio || null } : null;
+      kitWhy(L ? 'sending your menu and its recipes' : 'sending your menu', 1);
       return L ? { c: c, lib: L } : { c: c };
     },
     put: function (o) {
@@ -3837,6 +3842,7 @@
       }
       var ok = !!(info && !info.missing) && !!hCall('kitchenJoin', o.c), h = homeRec();
       h.kitHH = { in: o.c, out: hCall('kitchenCode') || '', at: Date.now(), err: ok ? 0 : 'missing' };
+      kitWhy(ok ? 'your menu matches the Household kitchen' : (o.lib ? 'the kitchen\'s recipes could not open here' : 'the kitchen came without its recipes; the phone that shares it needs the newest app'), ok);
       return (took && GGP.save ? GGP.save(S.id) : Promise.resolve()).then(saveHome).then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } else toast('The Family Kitchen could not open on this phone yet. On the phone that shares it, tap Sync Now.'); });
     }
   };
