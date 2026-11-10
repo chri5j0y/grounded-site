@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b971'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b975'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -412,6 +412,18 @@
     st.textContent = '.gg-theme{flex:none;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(128,112,90,.45);background:transparent;color:inherit;cursor:pointer;margin:0 6px;padding:0;transition:background .2s ease;}.gg-theme:hover{background:rgba(160,120,60,.14);}.gg-theme svg{display:block;}';
     document.head.appendChild(st);
     var size = document.querySelector('.size-btn'), menuBtn = document.querySelector('.menu-btn'), menu = document.getElementById('site-menu');
+    // BLD 963 (Chris: "the settings gear looks a lot like the day/night mode button"): on a phone or tablet (the menu button shows,
+    // up to 980px wide) the round toggle leaves the header and Dark Mode or Light Mode is a line in the menu; a computer keeps the button.
+    if (menu) {
+      var item = document.createElement('button'); item.type = 'button'; item.className = 'gg-theme-item';
+      var pi = function () { var d = effective() === 'dark'; item.innerHTML = (d ? SUN : MOON) + '<span>' + (d ? 'Light Mode' : 'Dark Mode') + '</span>'; item.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); };
+      pi(); menu.appendChild(item);
+      item.addEventListener('click', function () { var t = effective() === 'dark' ? 'light' : 'dark'; apply(t); save(t); pi(); paint(); window.dispatchEvent(new CustomEvent('gg-theme', { detail: t })); });
+      if (window.matchMedia) { try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', pi); } catch (e) {} }
+      var st2 = document.createElement('style');
+      st2.textContent = '.gg-theme-item{display:none;}@media (max-width:980px){.topbar .gg-theme,.topbar-inner>.gg-theme{display:none !important;}.site-menu .gg-theme-item{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;border-top:1px solid var(--line,rgba(128,112,90,.3));color:inherit;font-family:\'Barlow\',sans-serif;font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:14px 10px;cursor:pointer;text-align:left;}.site-menu .gg-theme-item svg{flex:none;}}';
+      document.head.appendChild(st2);
+    }
     var anchor = size || menuBtn;
     if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(btn, anchor);
     else if (menu && menu.parentNode) menu.parentNode.appendChild(btn);
