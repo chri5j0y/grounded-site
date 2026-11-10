@@ -1525,7 +1525,7 @@ function preLines(o, st, set, k){
   const path = st.kind === 'time' ? 'time' : o.count && repN(st) ? 'count' : o.hands !== false ? 'hf' : '';
   if (!path) return null;
   const L = [], lead = set === 1 && !k, sides = st.side ? (st.first === 'R' ? ['R', 'L'] : ['L', 'R']) : [''];
-  if (!k){ if (set === 1){ if (st.fin){ L.push(LN.fin); L.push(pushOf()); } L.push(LN.ex(st)); if (st.alt) L.push(LN.alt); if (st.cue && !st.form && !st.breathLine) L.push(st.cue); } else L.push(LN.set(set, st.sets)); }
+  if (!k){ if (set === 1){ if (st.fin && o.finOpen !== st){ L.push(LN.fin); L.push(pushOf()); } L.push(LN.ex(st)); if (st.alt) L.push(LN.alt); if (st.cue && !st.form && !st.breathLine) L.push(st.cue); } else L.push(LN.set(set, st.sets)); }
   const sd = sides[k || 0]; if (sd) L.push(sd === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
   if (lead && st.form) L.push(st.form);
   if (lead && st.breathLine && path !== 'time') L.push(st.breathLine);
@@ -1683,9 +1683,12 @@ async function between(o, nx, secs){
   if (!secs){ await speak(o, LN.next(nx.name)); return; }
   o.between = true; lg(o, {e: 'between', secs});
   // BLD 965 (Chris: "add water graphic and verbal tips"): when the water tip is due at this Break, Ava says it too.
-  const wd = waterAt(o, o.i + '|b');
-  (async () => { await speak(o, LN.nextRest(secs, nx.name)); if (wd && !o.dead && !(o.pre && o.pre.started)) await speak(o, WATER); })();
-  preArm(o, preLines(o, nx, 1, 0), LN.nextRest(secs, nx.name) + (wd ? ' ' + WATER : ''));
+  // BLD 965: before the Finish Strong move, "Last move. Finish strong." and the motivation line open the Break (right after Next up),
+  // so the countdown ends with the move's usual lines and Go (six lines in the last seconds ran a second early).
+  const wd = waterAt(o, o.i + '|b'), fo = nx.fin ? [LN.fin, pushOf()] : []; o.finOpen = nx.fin ? nx : null;
+  const open = [LN.nextRest(secs, nx.name)].concat(fo, wd ? [WATER] : []);
+  (async () => { for (const l of open){ if (o.dead || (l !== open[0] && o.pre && o.pre.started)) break; await speak(o, l); } })();
+  preArm(o, preLines(o, nx, 1, 0), open.join(' '));
   await runTimer(o, secs * 1000, 'between'); await preDone(o);
   o.between = false; o.skip = false;
 }
@@ -1720,7 +1723,7 @@ async function runSession(o){
     // BLD 915: the move's name and sets, then (in doSet) its form line and its breath line, then Go: two short lines of
     // instruction. The cue is spoken only for a move with neither (it stays on the screen); tips and the weight line stay
     // on the screen between moves, with the recommended weight.
-    if (o.set === 1){ if (st.fin){ await ins(o, LN.fin); await ins(o, pushOf()); } await ins(o, LN.ex(st)); if (st.alt) await ins(o, LN.alt); if (st.cue && !st.form && !st.breathLine) await ins(o, st.cue); } else await ins(o, LN.set(o.set, st.sets));
+    if (o.set === 1){ if (st.fin && o.finOpen !== st){ await ins(o, LN.fin); await ins(o, pushOf()); } await ins(o, LN.ex(st)); if (st.alt) await ins(o, LN.alt); if (st.cue && !st.form && !st.breathLine) await ins(o, st.cue); } else await ins(o, LN.set(o.set, st.sets));
     await hold(o); if (o.dead) break;
     await doSet(o, st);
     if (o.dead) break;
