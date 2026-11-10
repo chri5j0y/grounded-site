@@ -3837,7 +3837,8 @@
       // Once the kitchen has carried recipes, only the leader sends; every other device only takes, so nothing erases them.
       if (!lead && (w0 && w0.kitLib || homeRec().kitSawLib || (!(kj && kj.joined) && !homeRec().kitMine && (hh0.in || hh0.err)))) { kitWhy('taking the Household kitchen'); return {}; }
       var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
-      var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
+      // BLD 957: the leader always sends its own menu (never a menu it once took from another phone).
+      var hh = obj(homeRec().kitHH); if (!lead && hh.out && hh.out === c && hh.in) c = hh.in;
       // BLD 957: a plan moved from the Field Guide carries its recipes with the kitchen (locked in the Household), so a family
       // phone with another library takes the same menu (Chris and Kayti, November 9, 2026: the kitchen could not travel).
       var w = tendWrap(S.id), L = w && w.lib && w.lib.healthJourney ? { healthJourney: w.lib.healthJourney, audio: w.lib.audio || null } : null;
