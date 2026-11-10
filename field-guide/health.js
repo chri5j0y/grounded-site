@@ -2916,7 +2916,7 @@ const R_ICO = {
 const rIco = m => `<span class="ri" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">${R_ICO[m] || R_ICO.dinner}</svg></span>`;
 function recipesAll(){
   const out = [], seen = new Set(), add = r => { const k = String(r.name || '').trim().toLowerCase(); if (!r.id || !k || seen.has(r.id) || seen.has('n:' + k)) return; seen.add(r.id); seen.add('n:' + k); out.push(r); };
-  if (PUB()){ arr((PLIB() || {}).recipes).forEach(r => { if (r && arr(r.steps).length) add({id: r.id, meal: r.meal || 'dinner', name: r.name, mins: r.mins, nut: r.nut, ing: arr(r.ingredients), goals: arr(r.goals), fits: arr(r.fits), pub: true}); }); return out; }
+  if (PUB()){ arr((PLIB() || {}).recipes).forEach(r => { if (r && arr(r.steps).length) add({id: r.id, meal: r.meal || 'dinner', name: r.name, mins: r.mins, nut: r.nut, ing: arr(r.ingredients), goals: arr(r.goals), fits: arr(r.fits), pub: true, plan: r.plan || ''}); }); return out; }
   const din = (APP() || {}).dinners || {}, wks = din.weeks || {};
   Object.keys(wks).sort().forEach(wk => arr((wks[wk] || {}).dinners).forEach(x => { if (x && arr(x.steps).length) add({id: x.id, meal: 'dinner', name: x.name, mins: x.mins, nut: x.nut, ing: arr(x.ingredients), goals: arr(x.goals), fits: arr(x.fits), wk}); }));
   [['breakfasts', 'breakfast'], ['lunches', 'lunch'], ['snacks', 'snack']].forEach(([ty, m]) => arr(din[ty]).forEach((x, i) => { if (x && arr(x.steps).length) add({id: x.id || ty + '-' + i, meal: m, name: x.name, mins: x.mins, nut: x.nut, ing: arr(x.ingredients).concat(arr(x.shop).map(g => g && g.name)), goals: arr(x.goals), fits: arr(x.fits), ty, i}); }));
@@ -2940,10 +2940,17 @@ function recipesShown(all){
 const rNut = n => nOk(n) ? nLine(TEEN() ? Object.assign({}, n, {cal: null}) : n) : '';
 function recipeRows(list){
   if (!list.length) return `<div class="tn-card tn-rnone"><p class="tn-sub">Clear the filters to see every recipe again.</p><button type="button" class="tn-btn sm line" data-hja="rclear">${ic('leaf')}Show Every Recipe</button></div>`;
-  const ML = Object.fromEntries(R_MEALS);
-  return list.map(r => `<button type="button" class="tn-card tn-lift tn-rc" data-hja="recipe" data-hjv="${esc(r.id)}">${rIco(r.meal)}<span class="tx"><span class="tn-time">${esc(ML[r.meal] || 'Dinner')}${r.mins ? ' · ' + esc(r.mins) + ' min' : ''}</span><span class="h3">${esc(r.name)}</span>${nOk(r.nut) ? `<span class="tn-meta hj-nl">${rNut(r.nut)}</span>` : ''}</span></button>`).join('');
+  const ML = Object.fromEntries(R_MEALS), W = onWeekSet();
+  return list.map(r => `<button type="button" class="tn-card tn-lift tn-rc" data-hja="recipe" data-hjv="${esc(r.id)}">${rIco(r.meal)}<span class="tx"><span class="tn-time">${esc(ML[r.meal] || 'Dinner')}${r.mins ? ' · ' + esc(r.mins) + ' min' : ''}${onWeek(r, W) ? '<span class="tn-onwk" data-hjonwk>On Your Week</span>' : ''}</span><span class="h3">${esc(r.name)}</span>${nOk(r.nut) ? `<span class="tn-meta hj-nl">${rNut(r.nut)}</span>` : ''}</span></button>`).join('');
 }
 const rCount = n => n + (n === 1 ? ' recipe' : ' recipes');
+// BLD 966 (Chris: "several menu items are not in recipe book"): a recipe whose dinner is on this week's Week carries On Your Week,
+// matched by the dinner's id, the plan dinner a book recipe was written from (recipe.plan), or the same name.
+const rNorm = t => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+function onWeekSet(){ const ids = new Set(), names = new Set();
+  try { const w = window.GGHealth && GGHealth.week ? GGHealth.week(0) : null; arr(w && w.days).forEach(d => { const dn = d && d.dinner; if (!dn) return; ids.add(String(dn.key || '').split(':').pop()); names.add(rNorm(dn.title)); }); } catch(e){}
+  return {ids, names}; }
+const onWeek = (r, W) => !!W && r.meal === 'dinner' && (W.ids.has(r.id) || (r.plan && W.ids.has(r.plan)) || W.names.has(rNorm(r.name)));
 function vRecipes(){
   const all = recipesAll(), list = recipesShown(all), m = S.rMeal || 'all';
   const has = k => all.some(r => r[k].length), meals = R_MEALS.filter(([id]) => id === 'all' || all.some(r => r.meal === id));
@@ -5524,7 +5531,7 @@ const CSS = `
 /* BLD 931: the water and back safety tips in a Break, push-up stands, the start screen's focus line, and Full Screen */
 .hj-xtip{max-width:44ch;margin:8px auto 10px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);border-left:4px solid #8DB38A;text-align:left;font-size:15.5px;line-height:1.45;}
 .hj-xtip span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:13px;color:var(--ink-soft);margin-bottom:2px;}
-.hj-xtip.hj-wtip{border-left-color:#5B9BD5;}.hj-xtip .hj-drop{float:left;margin:1px 8px 0 0;}.hj-xtip.hj-stip{border-left-color:#C98A2C;}
+.hj-xtip.hj-wtip{border-left-color:#5B9BD5;}.hj-xtip .hj-drop{float:left;margin:1px 8px 0 0;}.tn-onwk{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:#E9F2E1;color:#3F6B2A;font-size:11px;font-weight:700;letter-spacing:.3px;vertical-align:1px;}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tn-onwk{background:#2E3B26;color:#BFDCA8;}}:root[data-theme="dark"] .tn-onwk{background:#2E3B26;color:#BFDCA8;}.hj-xtip.hj-stip{border-left-color:#C98A2C;}
 .hj-stands{font-weight:600;}
 .hj-focus{max-width:44ch;margin:10px auto 8px;font:600 15.5px/1.4 'Barlow',sans-serif;text-align:center;}
 .hj-links{display:flex;gap:6px 22px;justify-content:center;flex-wrap:wrap;}.hj-links .linkbtn{margin-top:14px;}
