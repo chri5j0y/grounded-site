@@ -3814,6 +3814,8 @@
   function spaceOk() { return acctIn() && !!(S.id && S.p && S.p.age === 'adult' && GGP.isOpen && GGP.isOpen(S.id)); }
   var KIT_SPACE = {
     get: function () {
+      // BLD 957: Tending loads first when it is not on screen yet, so the kitchen always travels with a sync
+      if (spaceOk() && !tendReady()) return loadTending().then(function () { return tendReady() ? KIT_SPACE.get() : null; });
       if (!spaceOk() || !tendReady() || !hasFn('kitchenCode')) return null;
       var c = hCall('kitchenCode'); if (!c) return null;
       var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
@@ -3823,6 +3825,7 @@
       return L ? { c: c, lib: L } : { c: c };
     },
     put: function (o) {
+      if (o && typeof o.c === 'string' && spaceOk() && !tendReady()) return loadTending().then(function () { return tendReady() ? KIT_SPACE.put(o) : undefined; });
       if (!o || typeof o.c !== 'string' || !spaceOk() || !tendReady()) return;
       var cur = hCall('kitchenCode') || '', hh = obj(homeRec().kitHH);
       if (o.c === cur || (hh.in === o.c && hh.out === cur && !hh.err)) return;
