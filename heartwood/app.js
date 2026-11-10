@@ -63,7 +63,7 @@
   var AV = AF && AF.atv && typeof AF.atv === 'object' ? AF.atv : {};
   var ATV_VIDS = Array.isArray(AV.videos) && AV.videos.length ? AV.videos : ['btv-differ', 'btv-keep', 'gm-k-listen', 'gm-k-pause', 'gm-k-repair', 'gm-k-close'];
   function avText(k, d) { return typeof AV[k] === 'string' && AV[k] ? AV[k] : d; }
-  var LEADERS = ATV ? 'Chris and Kayti' : 'your leaders';
+  var LEADERS = ATV ? 'us' : 'your leaders';
   var TG = (window.GM_TOGETHER && typeof window.GM_TOGETHER === 'object') ? window.GM_TOGETHER : null;
   var TWOQ = (F && F.two && Array.isArray(F.two.questions)) ? F.two.questions : [];
   var TWO_AREA = { id: 'two', name: 'Two Traditions, One Home', lead: F && F.two ? F.two.lead : '' };
@@ -419,14 +419,14 @@
   function vWelcome() {
     var pc = pendingCard();
     if (ATV) {
-      var W = Array.isArray(AV.welcome) && AV.welcome.length ? AV.welcome : ['Heartwood is a private place for the two of you, for your first year together and beyond.', 'Inside: Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, a Week Card to share with Chris and Kayti when you like, and short videos in Learn.'];
+      var W = Array.isArray(AV.welcome) && AV.welcome.length ? AV.welcome : ['Heartwood is a private place for the two of you, for your first year together and beyond.', 'Inside: Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, a Week Card to share with us when you like, and short videos in Learn.'];
       return '<div class="ff-card gold"><h2>Welcome</h2>' + W.map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') +
         '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays right here on this device.</span></p>' +
         '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div>' +
         (setup() ? '' : '<p class="btv-small gm-newphone">New phone, or setting up again? ' + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</p>') + '</div>';
     }
     return '<div class="ff-card gold"><h2>Welcome</h2>' +
-      '<p>Heartwood is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, and Your Tree, Then Your Grove. A Week Card shares what you choose with Chris and Kayti, and Learn has short videos for the two of you.</p>' +
+      '<p>Heartwood is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, and Your Tree, Then Your Grove. A Week Card shares what you choose with us, and Learn has short videos for the two of you.</p>' +
       '<p>It is a conversation tool. Every answer is simply a place to start talking.</p>' +
       '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays right here on this device.</span></p>' +
       (pc ? '<div class="btv-note"><p><b>A card from your partner is here.</b> Open it with the word the two of you chose.</p>' + btn('open-pending', 'Open the Card', { cls: 'btn-primary ff-sm' }) + '</div>' : '') +
@@ -438,7 +438,7 @@
     var s = setup(); if (!s) return '';
     var who = oneDevice() ? ['a', 'b'] : [s.me];
     var rw = who.filter(function (w) { return box(w); }).map(function (w) { return btn('rw-see', esc(nm(w)) + '’s Root Words', { w: w, cls: 'btn-secondary ff-sm' }); }).join('');
-    return '<div class="gm-set" id="gm-keepsafe"><h3>Keep It Safe</h3><p class="btv-small">Save a Backup keeps a locked file of Heartwood, for a lost or broken phone: save it to this device, iCloud Drive, or another drive. Each partner’s answers stay locked inside it with their own passcode. Load it on a new phone, then type your code from Chris and Kayti.</p>' +
+    return '<div class="gm-set" id="gm-keepsafe"><h3>Keep It Safe</h3><p class="btv-small">Save a Backup keeps a locked file of Heartwood, for a lost or broken phone: save it to this device, iCloud Drive, or another drive. Each partner’s answers stay locked inside it with their own passcode. Load it on a new phone, then type the code we gave you.</p>' +
       '<div class="ff-row">' + btn('hw-backup', 'Save a Backup', { cls: 'btn-primary ff-sm' }) + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</div>' +
       '<p class="btv-small">Root Words are 12 plain words for each of you, made with your passcode. If a passcode is ever forgotten, they open those answers again. Only the person who knows the passcode sees them.</p>' +
       (rw ? '<div class="ff-row">' + rw + '</div>' : '<p class="btv-small">Root Words come with each passcode, when you start your answers.</p>') + '</div>';
@@ -577,13 +577,13 @@
     if (SAMPLE || !SEND_WHAT[kind]) return '';
     var what = SEND_WHAT[kind], who = fromWho(kind) || '', our = kind === 'week' ? 'our' : 'my';
     var sub = 'Heartwood: ' + (kind === 'week' ? 'Week Card' : kind === 'm' ? 'Check-in Card' : 'Card') + (who ? ' from ' + who : '');
-    var body = 'Hi Chris and Kayti,\n\nHere is ' + our + ' ' + what + ' from Heartwood:\n\n' + link + '\n\nOur shared word stays out of this message. We will tell you in person.' + (who ? '\n\n' + who : '');
-    var sms = 'Hi Chris and Kayti, here is ' + our + ' ' + what + ' from Heartwood: ' + link + ' We will tell you our shared word in person.';
+    var body = 'Hi Grounded team,\n\nHere is ' + our + ' ' + what + ' from Heartwood:\n\n' + link + '\n\nOur shared word stays out of this message. We will tell you in person.' + (who ? '\n\n' + who : '');
+    var sms = 'Hi Grounded team, here is ' + our + ' ' + what + ' from Heartwood: ' + link + ' We will tell you our shared word in person.';
     var mail = 'mailto:' + GG_MAIL + '?subject=' + encodeURIComponent(sub) + '&body=' + encodeURIComponent(body);
     var text = 'sms:' + GG_SMS + '?&body=' + encodeURIComponent(sms);
-    return '<div class="ff-row gm-send"><a class="btn btn-primary" id="gm-send-mail" href="' + esc(mail) + '">Email to Chris and Kayti</a>' +
-      '<a class="btn btn-secondary ff-sm" id="gm-send-text" href="' + esc(text) + '">Text to Chris and Kayti</a></div>' +
-      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, apart from the message.</p>' +
+    return '<div class="ff-row gm-send"><a class="btn btn-primary" id="gm-send-mail" href="' + esc(mail) + '">Email Us</a>' +
+      '<a class="btn btn-secondary ff-sm" id="gm-send-text" href="' + esc(text) + '">Text Us</a></div>' +
+      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell us your shared word in person, apart from the message.</p>' +
       '<details class="btv-more gm-mailcopy"><summary>Copy the message to send it yourself</summary>' +
       '<p class="btv-small">Send it to <b>' + esc(GG_MAIL) + '</b> from any email you use.</p>' +
       '<textarea readonly rows="7" aria-label="The message to copy">' + esc('To: ' + GG_MAIL + '\nSubject: ' + sub + '\n\n' + body) + '</textarea>' +
@@ -871,7 +871,7 @@
   }
   // The First-Year Check-in invite: a time with Chris and Kayti around the first anniversary. BLD 934: the button opens the
   // contact form on Wedding or vow renewal with the topic filled in (a choice the form has today).
-  function fyInvite() { return ATV ? avText('invite', 'Around your first anniversary, you are welcome to sit down with Chris and Kayti for a First-Year Check-in. Bring your answers, and we will look back and ahead together.') : AF.firstYear.invite; }
+  function fyInvite() { return ATV ? avText('invite', 'Around your first anniversary, you are welcome to sit down with us for a First-Year Check-in. Bring your answers, and we will look back and ahead together.') : AF.firstYear.invite; }
   function bookBtn() {
     var label = ATV ? avText('book', 'Ask About a First-Year Check-in') : 'Ask About a First-Year Check-in';
     return '<a class="btn btn-primary ff-sm" href="/contact.html#plan=' + encodeURIComponent('Wedding or vow renewal') + '&about=' + encodeURIComponent('First-Year Check-in') + '">' + esc(label) + '</a>';
@@ -981,8 +981,8 @@
   function weekReady() { var ws = weekWho(); return ws.length && ws.every(function (w) { return !!DATA[w]; }); }
   function weekHub() {
     var two = !oneDevice();
-    if (ATV) return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">' + esc(avText('week', 'Whenever you like, share a short card with Chris and Kayti: the videos you watched, the practices you tried, and one question on your heart.')) + '</p>' +
-      '<p class="btv-small">It is your choice, and it is locked with your shared word, which you tell Chris and Kayti in person' + (two ? '. Each of you can make one from your own device' : '') + '.</p>' +
+    if (ATV) return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">' + esc(avText('week', 'Whenever you like, share a short card with us: the videos you watched, the practices you tried, and one question on your heart.')) + '</p>' +
+      '<p class="btv-small">It is your choice, and it is locked with your shared word, which you tell us in person' + (two ? '. Each of you can make one from your own device' : '') + '.</p>' +
       '<div class="ff-row">' + btn('week', 'Make a Week Card', { cls: 'btn-primary ff-sm' }) + '</div></div>';
     return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">Before each session, you can choose to share a short card with your leaders: the videos you watched, the practices you tried, any workbook answers you marked Share with Our Leaders, and one question you want to talk about.</p>' +
       '<p class="btv-small">It is your choice, and it is locked with your shared word. You open it with your leaders at your session' + (two ? ', and each of you can make one from your own device' : '') + '.</p>' +
@@ -1012,8 +1012,8 @@
       '<h3>Practices You Tried</h3>' + (I.prs.length ? '<div class="gm-wk-list">' + I.prs.map(function (p) { return row('pr', p, false); }).join('') + '</div>' : '<p class="btv-small">Practices for Two show here.</p>') +
       (ATV ? '' : '<h3>From The Couple Workbook</h3>' + (I.wbs.length ? '<div class="gm-wk-list">' + I.wbs.map(function (x) { return row('wb', x, true, esc(x.w) + ': ' + esc(x.a.length > 140 ? x.a.slice(0, 140) + '...' : x.a)); }).join('') + '</div>'
         : '<p class="btv-small">In The Couple Workbook, choose Share with Our Leaders on any exercise you would like to bring' + (two ? ' from your own answers' : '') + '.</p>')) +
-      '<h3>One Question</h3><label class="ff-f"><span class="h">' + (ATV ? 'One question you would like to talk about with Chris and Kayti, if you like.' : 'One question you want to talk about at your session, if you like.') + '</span><textarea id="gm-wk-q" rows="2" maxlength="500"></textarea></label>' +
-      '<label class="gm-check"><input type="checkbox" id="gm-wk-yes"><span>' + (two ? 'I say yes to sharing this card with ' : 'We both say yes to sharing this card with ') + (ATV ? 'Chris and Kayti' : 'our leaders') + '.</span></label>' +
+      '<h3>One Question</h3><label class="ff-f"><span class="h">' + (ATV ? 'One question you would like to talk about with us, if you like.' : 'One question you want to talk about at your session, if you like.') + '</span><textarea id="gm-wk-q" rows="2" maxlength="500"></textarea></label>' +
+      '<label class="gm-check"><input type="checkbox" id="gm-wk-yes"><span>' + (two ? 'I say yes to sharing this card with ' : 'We both say yes to sharing this card with ') + (ATV ? 'us' : 'our leaders') + '.</span></label>' +
       '<div class="ff-row">' + btn('wk-make', 'Lock and Make the Card') + btn('leave-talk', 'Lock and Close', sec()) + '<span class="ff-status" id="gm-wkst" role="status" aria-live="polite"></span></div>' +
       '<p class="btv-small">The card rides in a link you send or bring to ' + LEADERS + ', and it opens only with your shared word. Everything else stays on this device.</p></div>';
   }
@@ -1027,13 +1027,13 @@
       vid: pick(I.vids, on('vid')).map(function (x) { return x.title; }), pr: pick(I.prs, on('pr')).map(function (x) { return x.title; }),
       wb: pick(I.wbs, on('wb')).map(function (x) { return { w: x.w, t: x.t, a: x.a.slice(0, W.LIM.ans) }; }).slice(0, W.LIM.wb), q: String(($('gm-wk-q') || {}).value || '').trim().slice(0, W.LIM.q) };
     if (!card.vid.length && !card.pr.length && !card.wb.length && !card.q) { if (msg) msg.textContent = 'Choose at least one thing to share, or write your question.'; return; }
-    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. ' + (ATV ? 'When you meet, you type it into Chris and Kayti’s Field Guide to open the card.' : 'At your session, you type it into your leaders’ Field Guide to open the card.') + ' Capital or small letters both work.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
+    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. ' + (ATV ? 'When you meet, you type it into our Field Guide to open the card.' : 'At your session, you type it into your leaders’ Field Guide to open the card.') + ' Capital or small letters both work.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
       check: function (v) { return v[0].trim().length < 4 ? 'Use at least 4 letters. Longer is safer.' : v[0].trim().toLowerCase() !== v[1].trim().toLowerCase() ? 'The two words are different.' : ''; } })
       .then(function (v) { if (!v) return; return W.make(card, v[0]).then(function (code) { go('wcard', { code: code }); }); })
       .catch(function () { if (msg) msg.textContent = 'The card could not be made. Try again.'; });
   }
   function vWCard(code) {
-    return cardView(C.week.link(code), 'Your Week Card', ATV ? 'Send this link to Chris and Kayti, or bring it when you meet. There, you type your shared word into their Field Guide to open it.' : 'Send this link to your leaders, or bring it to your session. There, you type your shared word into their Field Guide to open it.',
+    return cardView(C.week.link(code), 'Your Week Card', ATV ? 'Send this link to us, or bring it when you meet. There, you type your shared word into our Field Guide to open it.' : 'Send this link to your leaders, or bring it to your session. There, you type your shared word into their Field Guide to open it.',
       'The card carries your first names, the ' + (ATV ? 'videos and practices' : 'videos, practices, and workbook answers') + ' you chose, and your question, locked with your shared word. Everything else stays in the app.', 'QR code for your Week Card', 'week');
   }
 

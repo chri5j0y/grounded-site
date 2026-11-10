@@ -157,10 +157,10 @@
   var LIBNOW = null, WHY = '';
   function sampleNote() {
     var inv = savedInvite(), ready = sealed(LIBNOW);
-    return '<div class="ff-card gold hw-note"><div class="eyebrow">A Sample of Heartwood</div><h2>Heartwood opens with the code Chris and Kayti send you</h2>' +
+    return '<div class="ff-card gold hw-note"><div class="eyebrow">A Sample of Heartwood</div><h2>Heartwood opens with the code we send you</h2>' +
       (WHY ? '<p class="hw-why">' + esc(WHY) + '</p>' : '') +
-      '<p>Every couple Chris and Kayti marry receives Heartwood, your private app for the two of you. Here you can try ten of its questions, one of its Practices for Two, and two of its videos. Anything you write here stays on this device.</p>' +
-      (inv && ready ? '' : '<p class="btv-small">Have your invite? Open the link Chris and Kayti sent you on each of your phones, then type your code.</p>') +
+      '<p>Every couple we marry receives Heartwood, your private app for the two of you. Here you can try ten of its questions, one of its Practices for Two, and two of its videos. Anything you write here stays on this device.</p>' +
+      (inv && ready ? '' : '<p class="btv-small">Have your invite? Open the link we sent you on each of your phones, then type your code.</p>') +
       '<div class="ff-row"><a class="btn btn-primary" href="' + ASK + '">Ask About Your Wedding</a>' +
       (inv && ready ? '<button type="button" class="btn btn-secondary" data-hw="gate">I Have My Code</button>' : '<a class="btn btn-secondary" href="' + PROGRAM + '">About Weddings</a>') + '</div></div>';
   }
@@ -170,7 +170,7 @@
     var atv = hintAtv(), name = 'Heartwood';
     if (atv && window.HWChrome) window.HWChrome('atv');
     el.innerHTML = '<div class="ff-card gold hw-gate"><h2>Open ' + name + '</h2>' +
-      '<p>Type the code Chris and Kayti gave you. Each of you opens this same link on your own phone, and types the same code.</p>' +
+      '<p>Type the code we gave you. Each of you opens this same link on your own phone, and types the same code.</p>' +
       '<form id="hw-form" novalidate><label class="ff-f"><span class="l">Your ' + name + ' code</span><input id="hw-code" name="hw-code" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="24" aria-describedby="hw-err"></label>' +
       '<p class="hw-err" id="hw-err" role="alert">' + esc(err || '') + '</p>' +
       '<div class="ff-row"><button type="submit" class="btn btn-primary" id="hw-go">Open ' + name + '</button><button type="button" class="btn btn-secondary ff-sm" data-hw="sample">See the Sample</button></div></form>' +
@@ -185,8 +185,8 @@
     var done = function (m) { busy = false; if (go) { go.disabled = false; go.textContent = 'Open Heartwood'; } if (m && err) err.textContent = m; if (m && f) { f.focus(); f.select(); } };
     unwrap(savedInvite(), code).then(function (u) {
       return openLib(u.key, LIBNOW).then(function (data) { return putKey(u.key, u.mode).then(function () { done(''); start(data, false, u.mode); }); },
-        function () { done('This invite is from an earlier Heartwood. Ask Chris and Kayti for a new invite link and code.'); });
-    }, function () { done('That code does not open this invite. Check the code from Chris and Kayti, and try again.'); });
+        function () { done('This invite is from an earlier Heartwood. Ask us for a new invite link and code.'); });
+    }, function () { done('That code does not open this invite. Check the code we gave you, and try again.'); });
   }
   document.addEventListener('submit', function (e) { if (e.target && e.target.id === 'hw-form') { e.preventDefault(); tryCode(); } });
   document.addEventListener('click', function (e) {
@@ -211,11 +211,11 @@
     var h = $('gm-title'); if (h) h.textContent = title;
     var eb = q('.gm-eb'); if (eb) eb.textContent = 'After the Vows';
     var sub = q('.gm-sub'); if (sub) sub.textContent = t('sub', 'Your private app for your first year together: Practices for Two, check-ins for two, and short videos to watch side by side.');
-    var way = q('.gm-way'); if (way) way.innerHTML = '<a href="/weddings.html">' + esc('Heartwood: After the Vows comes with every wedding, elopement, and vow renewal with Chris and Kayti.') + '</a>';
+    var way = q('.gm-way'); if (way) way.innerHTML = '<a href="/weddings.html">' + esc('Heartwood: After the Vows comes with every wedding, elopement, and vow renewal we lead.') + '</a>';
     var tabs = $('gm-tabs');
     if (tabs) { tabs.setAttribute('aria-label', title); var bv = tabs.querySelector('[data-tab="before"]'); if (bv) bv.hidden = true; }
     var app = $('gm-app'); if (app) app.setAttribute('aria-label', title);
-    var more = $('hw-more'); if (more) more.innerHTML = 'Chris and Kayti lead weddings and ceremonies for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello to Chris and Kayti</a>.';
+    var more = $('hw-more'); if (more) more.innerHTML = 'We lead weddings and ceremonies for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello</a>.';
     var cl = $('hw-clear-p'); if (cl) cl.textContent = 'Done, or using a shared device? Clear Everything removes both partners’ check-ins, any card, and the key to Heartwood from this device.';
   };
 
@@ -247,7 +247,7 @@
         return getKey().then(function (key) {
         // A new invite in the link always asks for its code, so a couple can move to a fresh Heartwood.
         if (key && !fresh) return openLib(key, lib).then(function (data) { return getMode().then(function (m) { start(data, false, m); }); }, function () {
-          return dropKey().then(function () { if (savedInvite()) { WHY = 'Heartwood has a new lock. Type your code again, or ask Chris and Kayti for a new invite.'; gate(WHY); WHY = ''; } else { WHY = 'Heartwood has a new lock. Ask Chris and Kayti for a new invite link and code.'; sample(); } });
+          return dropKey().then(function () { if (savedInvite()) { WHY = 'Heartwood has a new lock. Type your code again, or ask us for a new invite.'; gate(WHY); WHY = ''; } else { WHY = 'Heartwood has a new lock. Ask us for a new invite link and code.'; sample(); } });
         });
         if (savedInvite() && (fresh || wantGate || !key)) return gate(WHY);
         return sample();
