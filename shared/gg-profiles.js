@@ -1261,8 +1261,18 @@
     if (p) {
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
+      // BLD 963 (Kaden, through Chris, November 10, 2026: he could not find Membership, Household, and the rest): the account
+      // places lead the menu, each opening its own sheet inside The Grounded Way. Sign Out shows once signed in to an account.
+      var kidP = p.age === 'maple' || p.age === 'aspen', acc = LIVE && window.GGAccount && typeof GGAccount.state === 'function', inA = acc && GGAccount.state() !== 'out';
+      if (acc && !kidP) html += link('/home/#me=account', inA ? 'My Account' : 'Sign In to My Account');
+      if (!kidP) html += link('/home/#me=membership', 'Membership');
+      if (!kidP) html += link('/home/#me=household', 'Household');
+      html += link('/home/#me=settings', 'Settings');
+      if (inA) html += item('signout', 'Sign Out');
+      html += '<div class="ggp-h">Your Grounded Way</div>';
       // BLD 935 (audit M6): inside The Grounded Way the menu skips Open The Grounded Way; My Growth Plan replaces the old tree app name.
       if (!/^\/home\//.test(location.pathname)) html += link('/home/', 'Open The Grounded Way');
+      if (p.age !== 'maple' && p.age !== 'aspen') html += link('/home/#week', 'My Week');
       html += link('/grove/', 'The Grove');
       if (p.age !== 'maple' && p.age !== 'aspen') html += link('/home/#grow', 'My Growth Plan');
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
@@ -1293,6 +1303,7 @@
         else if (act === 'bring') bringIn();
         else if (act === 'bk') backupGo('make');
         else if (act === 'ld') backupGo('pick');
+        else if (act === 'signout') { if (window.confirm('Sign out of your Grounded Account on this device? Your profiles stay here, locked with their passcodes.')) GGAccount.signOut({ erase: false }).then(function () { toast('Signed out. Everything here stays locked on this device.'); }, function () { toast('That did not sign out. Try again from My Account.'); }); }
         else if (act === 'lock') lock().then(function () { toast('Locked. Everything is safe on this device.'); });
         else if (act === 'as') { var k = getP(b.dataset.id); openWithRaw(k.id, open[k.id].raw, cur.until).then(function () { toast('Now in ' + k.name + '\'s profile.'); }); }
       };

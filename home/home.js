@@ -53,7 +53,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b972', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b975', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b949';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -1169,13 +1169,15 @@
      render(el, section, {bare: true}) and counts(). Every call is guarded: while a function is missing, the app
      falls back to what the Home did before (GGHealth.summary, open and view).
      ===================================================================== */
-  // BLD 910 (Chris: "one app that had tree profiless"): five tabs for every grown-up tree; Week opens from Today and Grow.
-  var TABS = [['today', 'Today', 'sun'], ['checkin', 'Check-in', 'check'], ['grow', 'Grow', 'sprout'], ['learn', 'Learn', 'play'], ['library', 'Library', 'book']];
+  // BLD 910 (Chris: "one app that had tree profiless"): five tabs for every grown-up tree.
+  // BLD 963 (Chris, November 10, 2026: "week is key but is buried in Grow, then week, then scroll", then "1"): Week has its own
+  // button, second, so the whole week is one tap from anywhere.
+  var TABS = [['today', 'Today', 'sun'], ['week', 'Week', 'grid'], ['checkin', 'Check-in', 'check'], ['grow', 'Grow', 'sprout'], ['learn', 'Learn', 'play'], ['library', 'Library', 'book']];
   var SUBS = {
     today: { log: 'Log a Plate or a Note', tending: 'Tending' },
     week: { holidays: 'Holidays and Gatherings', shop: 'Shopping List', prep: 'Sunday Together Prep', own: 'My Own Items' },
     library: { holidays: 'Holidays and Gatherings', workouts: 'Grounded Fitness' },
-    me: { numbers: 'Numbers', household: 'Household', settings: 'Settings', privacy: 'Privacy' }
+    me: { numbers: 'Numbers', household: 'Household', settings: 'Settings', privacy: 'Privacy', account: 'My Account', membership: 'Membership' }   // BLD 963: My Account and Membership open by address too
   };
   // The old section names, for the fallback while GGHealth.render is missing.
   var OLDSEC = { week: 'week', log: 'plate', tending: 'today', shop: 'shop', prep: 'prep', workouts: 'move', numbers: 'numbers', settings: 'today' };
@@ -1285,10 +1287,37 @@
   }
   function weekLabel(l) { l = String(l || ''); return /^week\b/i.test(l) ? l : 'Week ' + l; }
   // BLD 929 (L4): the initials show once, in the header; the hero's button is the settings gear.
-  function meBtn() { return '<button type="button" class="hm-me hm-megear" data-hm="me" aria-label="Your profile, numbers, and settings" aria-haspopup="dialog">' + I('gear') + '</button>'; }
+  // BLD 963 (Chris: "the lil settings button is hard to see first time", "the settings gear looks a lot like the day/night mode
+  // button"): the gear carries the word Settings, so it reads at a glance and never looks like the light and dark toggle.
+  function meBtn() { return '<button type="button" class="hm-me hm-megear hm-setlab" data-hm="me" aria-label="Settings: your profile, Membership, Household, and numbers" aria-haspopup="dialog">' + I('gear') + '<span>Settings</span></button>'; }
+  /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
+  /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
+     (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
+  var PV_SRC = '/shared/page-videos.js?v=b975';
+  function wmKey() { return 'gg-wm-' + (S.id || ''); }
+  function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
+  function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
+  function wmCardHtml() {
+    if (!S.id || isKid(S.p) || !member() || wmSeen()) return '';
+    return '<article class="hm-card hm-p-leaves hm-wmcard"><div class="hm-hd">' + pb(IMG + 'p-growth-plan-sq.webp') + '<div><div class="hm-k">Welcome to Membership</div><div class="hm-sub">A two minute tour: where your Week, Household, Membership, and Settings live.</div></div></div><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-welcome="1">' + I('play') + 'Watch the Tour</button><button type="button" class="hm-linkbtn" data-hm-welcome="later">Later</button></div></article>';
+  }
+  function wmPlay(btn) {
+    wmMark();
+    load(PV_SRC).then(function (ok) { if (ok && window.GGPageVideo) window.GGPageVideo.open('welcome-membership', btn); else toast('The tour is getting ready. Try again in a moment.'); });
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-welcome]'); if (!t) return;
+    if (t.getAttribute('data-hm-welcome') === 'later') { wmMark(); var c = t.closest('.hm-wmcard'); if (c) c.remove(); toast('The tour waits in Settings, Membership.'); return; }
+    var card = t.closest('.hm-wmcard'); wmPlay(t); if (card) card.remove();
+  });
+  function membershipHtml() {
+    var card = ''; if (window.GGMember && typeof window.GGMember.card === 'function') { try { card = window.GGMember.card() || ''; } catch (e) { card = ''; } }
+    return (card ? '<div class="hm-sh-member">' + card + '</div>' : '') +
+      '<article class="hm-card hm-p-leaves"><div class="hm-hd">' + pb(IMG + 'p-growth-plan-sq.webp') + '<div><div class="hm-k">Welcome to Membership</div><div class="hm-sub">A two minute tour: where your Week, Household, Membership, and Settings live.</div></div></div><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-welcome="1">' + I('play') + 'Watch the Tour</button></div></article>';
+  }
   /* BLD 882 (Chris: "bring back UI and UX"): the pre-881 Home's look is the base again. Today opens on the big bright hero
      with the day and date; Week, Grow, and Library open on a painted banner with the tab's name. */
-  var BANNER = { week: ['recipes', 'Your meals, your movement, and Sunday Together Prep'], weekStart: ['recipes', 'Your practices, and A Sample Week of Meals'], weekTeen: ['recipes', 'Your practices for the week'], grow: ['tree', 'Tend four, grow two: your growth plan, your season, and your family'], library: ['library', 'Recipes, movement, quiet, and stories, all in one place'], checkin: ['mytree', 'How each part of your tree is growing'], learn: ['learn', 'Lessons and guides chosen for your tree'] };
+  var BANNER = { week: ['recipes', 'Every day of your week: meals, movement, practices, and family plans'], weekStart: ['recipes', 'Your practices, and A Sample Week of Meals'], weekTeen: ['recipes', 'Your practices for the week'], grow: ['tree', 'Tend four, grow two: your growth plan, your season, and your family'], library: ['library', 'Recipes, movement, quiet, and stories, all in one place'], checkin: ['mytree', 'How each part of your tree is growing'], learn: ['learn', 'Lessons and guides chosen for your tree'] };
   function bannerHtml(tab) {
     var b = BANNER[tab] || BANNER.grow;
     if (tab === 'week' && !member()) b = isYoung(S.p) ? BANNER.weekTeen : BANNER.weekStart;   // BLD 935 (audit M1)
@@ -1310,7 +1339,7 @@
     var old = document.getElementById('hm-bnav'); if (old) old.remove();
     var tabs = document.getElementById('hm-tabs'); if (tabs) tabs.innerHTML = '';
     var bn = document.createElement('nav'); bn.className = 'hm-tabbar'; bn.id = 'hm-bnav'; bn.setAttribute('aria-label', 'The Grounded Way');
-    var on = cur === 'week' ? 'today' : cur;
+    var on = cur;   // BLD 963: Week lights its own button
     bn.innerHTML = '<ul>' + TABS.map(function (t) { return '<li><a href="#' + t[0] + '" data-hm-tab="' + t[0] + '"' + (t[0] === on ? ' aria-current="page"' : '') + '><span class="bar" aria-hidden="true"></span><span class="ic">' + I(t[2]) + '</span><span class="l">' + t[1] + '</span></a></li>'; }).join('') + '</ul>';
     (document.querySelector('main.hm') || document.body).appendChild(bn);
   }
@@ -1339,7 +1368,7 @@
     if (r.recipe) { try { history.replaceState(null, '', location.pathname + '#library'); } catch (e) {} S.view = 'library'; openRecipe(r.recipe); }
     if (!tendReady() || S.tendInit !== S.id) loadTending().then(function () { if (S.id && app() && S.paintedFor !== S.id + ':' + S.view) { S.paintedFor = S.id + ':' + S.view; refreshPane(); } });
   }
-  function tabHtml(tab) { return tab === 'week' ? plannerWeekSlot() + weekHtml() : tab === 'grow' ? growHtml() : tab === 'library' ? libraryHtml() : tab === 'checkin' ? checkinTabHtml() : tab === 'learn' ? learnTabHtml() : todayHtml(); }
+  function tabHtml(tab) { return tab === 'week' ? weekHtml() + plannerWeekSlot() : tab === 'grow' ? growHtml() : tab === 'library' ? libraryHtml() : tab === 'checkin' ? checkinTabHtml() : tab === 'learn' ? learnTabHtml() : todayHtml(); }
   function afterTab(tab) {
     if (tab === 'checkin') { paintRings(app()); return; }
     if (tab === 'learn') { fillLearn(); return; }
@@ -2152,7 +2181,7 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     var ls = soberOn() ? soberHtml(soberDate()) : !isKid(S.p) && h.parts.indexOf('sober') >= 0 && !soberDate() ? soberInviteHtml() : ''; if (ls && soberOn()) lsPre();
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml(T) + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -2218,7 +2247,8 @@
   function weekHtml0() {
     var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = weekBody(planDoorWeek());
     if (!wp) return body;
-    if (body.indexOf('<div class="hm-wgrid"><div class="hm-col hm-wside">') >= 0) return body.replace('<div class="hm-col hm-wside">', '<div class="hm-col hm-wside">' + wp);
+    // BLD 963: the practices sit at the top of the side column, after the days on a phone and beside them on a wide screen.
+    if (body.indexOf('<div class="hm-col hm-wside">') >= 0) return body.replace('<div class="hm-col hm-wside">', '<div class="hm-col hm-wside">' + wp);
     return '<div class="hm-wpracs">' + wp + '</div>' + body;
   }
   function weekBody(door) {
@@ -2244,17 +2274,19 @@
     var mark = function (x) { return x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : ''; };
     var rows = w.days.map(function (d, di) {
       var isT = d.today === true || String(d.date || '').slice(0, 10) === td, din = obj(d.dinner), mv = obj(d.move);
-      return '<div class="hm-wday' + (isT ? ' today' : '') + '"' + (isT ? ' aria-current="date"' : '') + '><span class="dn">' + esc(String(d.day || '').slice(0, 3)) + '<small>' + esc(shortDate(d.date)) + '</small></span>' + tile(din.title ? (din.night || FOOD_ROT[di % FOOD_ROT.length]) : mv.title ? (mv.image || ART2.move) : obj(d.med).title ? (obj(d.med).image || ART2.med) : ART2.rest, 'sm') + '<div class="tx">' +
+      return '<div class="hm-wday' + (isT ? ' today' : '') + '"' + (isT ? ' aria-current="date"' : '') + ' data-date="' + esc(String(d.date || '').slice(0, 10)) + '"><span class="dn"><b class="full">' + esc(String(d.dayName || d.day || '')) + '</b><b class="abbr" aria-hidden="true">' + esc(String(d.day || '').slice(0, 3)) + '</b><small>' + esc(shortDate(d.date)) + '</small></span>' + tile(din.title ? (din.night || FOOD_ROT[di % FOOD_ROT.length]) : mv.title ? (mv.image || ART2.move) : obj(d.med).title ? (obj(d.med).image || ART2.med) : ART2.rest, 'sm') + '<div class="tx">' +
         (din.title ? '<button type="button" class="hm-wdin" data-hm-wk="' + esc(din.key || '') + '"' + (din.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ' dinner: ' + din.title + (din.key ? ', open to cook' : '')) + '">' + esc(din.title) + mark(din) + '</button>' : '') +
         (mv.title ? '<button type="button" class="hm-wmove" data-hm-wk="' + esc(mv.key || '') + '"' + (mv.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ': ' + mv.title + (mv.key ? ', start it' : '')) + '">' + esc(mv.title) + mark(mv) + '</button>' : '') +
         weekExtra(d) +
         (!din.title && !mv.title && !obj(d.med).title && !arr(d.own).length && !arr(d.menu).length ? '<span class="hm-wnone">A day to rest</span>' : '') +
-        '</div></div>';
+        '<span class="hm-wfam" hidden></span></div></div>';
     }).join('');
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
     var nw = hasFn('news') ? hCall('news') : null;
     var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-hd">' + pb(IMG + 'p-growth-plan-sq.webp') + '<div style="min-width:0"><div class="hm-k">' + esc(nw.title) + '</div></div></div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
-    return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div></div></div>';
+    // BLD 963 (Chris: "week can have everything clear and bold for the week"): Back, This Week, Next and the seven days lead;
+    // practices, the Shopping List, Sunday Together Prep, and the growth plan follow (beside the days on a wide screen).
+    return '<div class="hm-wgrid"><div class="hm-col hm-wmain">' + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div>' + news + '</div><div class="hm-col hm-wside">' + find + prep + door + '</div></div>';
   }
 
   /* BLD 946 (Chris, November 8, 2026: "when you are on This Week, how can i get to Next Week?"): Back and Next on the Week tab,
@@ -2366,7 +2398,9 @@
     void season; void ed;
     // BLD 911 (Chris: "it is confusing to have 2 plans.. cant we condense to one?"): one Growth Plan. My Growth Plan (the BLD 893
     // flow) holds the practices, body, mind, spirit, and table in one; the tree's own plan card shows only where that flow is not offered.
-    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + growToolsHtml() + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + stormRestHtml() + (planOK() ? planDoorGrow() : plan) + ready + memberGrowHtml() + sober + fruit + (h.hidden.tend || tendStarted() || !member() ? '' : offerHtml(h)) + '</div></div>';
+    // BLD 963 (Chris: "Grow can focus on growth plan and other good data"): the growth plan leads, then its numbers (sober days,
+    // tended days, history); the tree, the season, and the family follow.
+    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + stormRestHtml() + (planOK() ? planDoorGrow() : plan) + ready + sober + fruit + memberGrowHtml() + (h.hidden.tend || tendStarted() || !member() ? '' : offerHtml(h)) + '</div><div class="hm-gcol hm-col">' + growToolsHtml() + familyHtml(h) + '</div></div>';
   }
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
@@ -2502,11 +2536,14 @@
     ['household', 'people', 'Household', 'The people at your table and your family'],
     ['settings', 'gear', 'Settings', 'Your Four, voice, music, Tending setup'],
     ['privacy', 'shield', 'Privacy', 'On this device, locked with your passcode'],
-    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Check-in, Grow, Learn, and Library'],
+    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Week, Check-in, Grow, Learn, and Library'],
     ['switch', 'swap', 'Who Is Tending?', 'Open another person on this device, or add one']
   ];
   // BLD 938: My Account joins the rows after Settings, for a grown-up, once Accounts are live
-  function meRows() { var r = SHEET_ROWS.slice(), a = acctRows(); if (a.length) r.splice(3, 0, a[0]); return r; }
+  function meRows() { var r = SHEET_ROWS.slice(), a = acctRows(); if (a.length) r.splice(3, 0, a[0]);
+    // BLD 963: Membership has its own row, first, for everyone but a kid (Kaden could not find it).
+    if (!isKid(S.p)) r.unshift(['membership', 'star', 'Membership', member() ? 'Your Membership, codes, and the welcome video' : 'What Membership opens, and how to begin']);
+    return r; }
   function openSheet(sub) {
     var old = document.getElementById('hm-sheet'), keep = old && S.sheet === (sub || '') ? old : null;
     if (keep) return;
@@ -2530,10 +2567,13 @@
     var b = document.getElementById('hm-sheet-body'); if (!b) return;
     var h = homeRec();
     if (sub === 'privacy') { b.innerHTML = privacyBrief(true); return; }
-    if (sub === 'account') { acctFill(b); return; }
+    if (sub === 'account') { if (acctFor()) acctFill(b); else b.innerHTML = '<p class="hm-sub">My Account opens for a grown-up profile.</p>'; return; }
+    if (sub === 'membership') { b.innerHTML = membershipHtml(); return; }
     if (sub === 'household') {
       var hh = tableOf(), fam = familyHtml(h);
-      b.innerHTML = '<article class="hm-wcard hm-tn-p">' + tile(ART2.people) + '<div class="tx"><span class="ey">Your Table</span><b>' + (hh ? hh + (hh === 1 ? ' person at your table' : ' people at your table') : 'The people at your table') + '</b><small>Recipes and the shopping list follow this number. Change it in Tending setup.</small></div><button type="button" class="hm-pill" data-hm-me="settings">Change</button></article>' +
+      // BLD 963 (Kaden could not find Household): Our Household on a Grounded Account leads this sheet for a grown-up.
+      var ourH = acctFor() ? '<article class="hm-card hm-p-branches hm-ourh"><div class="hm-hd">' + pb(PEOPLE + 'household-sq.webp') + '<div><div class="hm-k">Our Household</div><div class="hm-sub">Up to 6 people, each with their own private account, sharing the Family Kitchen, Grounded Money, and the Family Planner.</div></div></div><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-branches" data-hm-acct="household">' + I('people') + (acctIn() ? 'Open Our Household' : 'Sign In to Start a Household') + '</button></div></article>' : '';
+      b.innerHTML = ourH + '<article class="hm-wcard hm-tn-p">' + tile(ART2.people) + '<div class="tx"><span class="ey">Your Table</span><b>' + (hh ? hh + (hh === 1 ? ' person at your table' : ' people at your table') : 'The people at your table') + '</b><small>Recipes and the shopping list follow this number. Change it in Tending setup.</small></div><button type="button" class="hm-pill" data-hm-me="settings">Change</button></article>' +
         (fam || '<article class="hm-card hm-p-branches"><div class="hm-hd">' + pb(PEOPLE + 'household-sq.webp') + '<div><div class="hm-k">Your Family</div><div class="hm-sub">Add the people you tend with. Each one has a tree of their own.</div></div></div><div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm="addkid">' + I('plus') + 'Add a Family Member</button><button type="button" class="hm-btn line hm-p-branches" data-hm="addlove">' + I('love') + 'Someone I Love</button></div></article>');
       return;
     }
@@ -4015,7 +4055,7 @@
   /* The Week for Start: the week's practices and the Tomorrow list, then one invitation for meals and movement. */
   function startWeekHtml() {
     var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '';
-    return (wp ? '<div class="hm-wpracs">' + wp + '</div>' : '<p class="hm-sub" style="margin:0 4px 12px">Each day brings one practice for each of the four to Today, from your growth plan, taking turns through the ones you chose.</p>') + seedWeekCard() + (isYoung(S.p) ? '' : inviteHtml('tend', 'hm-p-leaves'));
+    return (wp ? '<div class="hm-wpracs">' + wp + '</div>' : '<p class="hm-sub" style="margin:0 4px 12px">Each day brings one practice for each of the four to Today, from your growth plan, taking turns through the ones you chose.</p>' + planDoorWeek()) + seedWeekCard() + (isYoung(S.p) ? '' : inviteHtml('tend', 'hm-p-leaves'));
   }
   /* ---------- BLD 867: trees and tools open inside the Home ----------
      A tap on a tree or a tool from the Home opens it in a full-page frame with a slim Back bar, so the person
@@ -4711,7 +4751,7 @@
       share: function () { return GGSync.shareSpace('planner'); }
     });
     // A change from another tab or the Household redraws the Week card and a kid's family week
-    GGPlanner.on(function () { var w = document.getElementById('hm-plweek'), k = document.getElementById('hm-kplan'); if (w) GGPlanner.weekCard(w, S.wkOff || 0); if (k) GGPlanner.kidCard(k); });
+    GGPlanner.on(function () { var w = document.getElementById('hm-plweek'), k = document.getElementById('hm-kplan'); if (w) GGPlanner.weekCard(w, S.wkOff || 0); if (k) GGPlanner.kidCard(k); fillPlanDays(); });
     return true;
   }
   // Redraw the Family Planner when the Household line would read differently (joined, or shared)
@@ -4735,7 +4775,24 @@
     return shelfHtml({ id: 'planner', name: 'Family Planner', count: 'Relationships', line: 'One calendar for your family: trips, games, performances, days off, a Family Wall, and who is where this week.', cls: 'hm-sh-life hm-sh-planner', art: PEOPLE + 'planner-sq.webp' });
   }
   function plannerWeekSlot() { return plannerFor() ? '<div id="hm-plweek" class="hm-plweek"></div>' : ''; }
-  function fillPlannerWeek() { var el = document.getElementById('hm-plweek'); if (!el) return; loadPlanner().then(function (ok) { if (ok && el.isConnected) GGPlanner.weekCard(el, S.wkOff || 0); }); }
+  /* BLD 963: the Family Planner's events on their own days in the Week list (title, time, a colored dot), so the whole family
+     week reads in one place. Nothing shows until the planner is started. */
+  function fillPlanDays() {
+    var rows = [].slice.call(document.querySelectorAll('#hm-pane .hm-wday[data-date]')); if (!rows.length || !window.GGPlanner || !GGPlanner.load || !GGPlanner.model) return;
+    GGPlanner.load().then(function (plan) {
+      if (!plan || !rows[0].isConnected) return;
+      var d0 = rows[0].getAttribute('data-date'), d6 = rows[rows.length - 1].getAttribute('data-date'), map = {};
+      try { map = GGPlanner.model.byDay(plan, d0, d6) || {}; } catch (e) { return; }
+      rows.forEach(function (r) {
+        var box = r.querySelector('.hm-wfam'), L = arr(map[r.getAttribute('data-date')]); if (!box) return;
+        if (!L.length) { box.hidden = true; box.innerHTML = ''; return; }
+        box.innerHTML = L.slice(0, 4).map(function (x) { var e = obj(x.ev); return '<span class="hm-wfev"><span class="dot" aria-hidden="true"></span>' + esc(e.t || '') + (e.tm ? ' <small>' + esc(niceTimeH(e.tm)) + '</small>' : '') + '</span>'; }).join('') + (L.length > 4 ? '<span class="hm-wfev more">And ' + (L.length - 4) + ' more in the Family Planner</span>' : '');
+        box.hidden = false;
+      });
+    }, function () {});
+  }
+  function niceTimeH(tm) { var m = /^(\d{1,2}):(\d{2})$/.exec(String(tm || '')); if (!m) return String(tm || ''); var h = +m[1], ap = h < 12 ? 'am' : 'pm'; h = h % 12 || 12; return h + (m[2] === '00' ? '' : ':' + m[2]) + ' ' + ap; }
+  function fillPlannerWeek() { var el = document.getElementById('hm-plweek'); if (!el) return; loadPlanner().then(function (ok) { if (ok && el.isConnected) GGPlanner.weekCard(el, S.wkOff || 0); if (ok) fillPlanDays(); }); }
   function kidPlannerHtml() { return plannerRec() ? '<div id="hm-kplan"></div>' : ''; }
   function fillKidPlanner() { var el = document.getElementById('hm-kplan'); if (!el) return; loadPlanner().then(function (ok) { if (ok && el.isConnected) GGPlanner.kidCard(el); }); }
 
@@ -5113,18 +5170,10 @@
   /* BLD 935 (audit M1): Your Week on Grow. A Member keeps the Shopping List and Sunday Prep; on Start the Shopping List opens
      A Sample Week of Meals with its list (Sunday Together Prep is part of Membership, so its button rests); a teen's card is
      the week's practices only. */
-  function weekToolHtml() {
-    if (member()) return gtool('hm-p-trunk', IMG + 'p-tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, meals, and movement, day by day, with the Shopping List, Sunday Together Prep, and the month.', 'data-hm-tab="week"', I('grid') + 'Week and Month',
-        '<button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=shop">' + I('cart') + 'Shopping List</button><button type="button" class="hm-btn sm line hm-pill" data-hm-tab="week=prep">' + I('sprout') + 'Sunday Prep</button>');
-    if (seedsOn() && !seedMoved()) return gtool('hm-p-trunk', IMG + 'p-tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, day by day, and A Sample Week of Meals with its shopping list.', 'data-hm-tab="week"', I('grid') + 'My Week',
-        '<button type="button" class="hm-btn sm line hm-pill" data-hm-seed="meals">' + I('cart') + 'Shopping List</button>');
-    return gtool('hm-p-trunk', IMG + 'p-tending-sq.webp', 'This Week', 'Your Week', 'This week\'s practices, day by day.', 'data-hm-tab="week"', I('grid') + 'My Week');
-  }
   function growToolsHtml() {
     var t = TREES[S.tree] || TREES.oak, sp = SPECIAL[S.tree];
     return gtool('hm-p-leaves', treeArt(S.tree), 'My ' + t.n, 'Your ' + t.n + ' Grows With You', 'Your check-ins, practices, lessons, and guides are chosen for your ' + t.n + ', ' + String(t.who).toLowerCase() + '.', 'data-hm-tab="checkin"', I('check') + 'Check-in') +
-      // Chris (November 3, 2026): "where is our shopping list? The month and week stuff.. I need the Sunday prep", then "maybe they sit inside the Your Week card".
-      weekToolHtml() +
+      // BLD 963 (Chris: "Grow can focus on growth plan and other good data"): the Week card left Grow; Week has its own tab.
       seasonCardHtml() +
       (sp ? gtool('hm-p-fruit', sp[3], 'My ' + t.n, sp[1], sp[2], 'data-hm-tool="' + sp[0] + '"', I('book') + 'Open') : '') +
       '<div class="hm-acts tight hm-tset"><button type="button" class="hm-btn sm line hm-pill" data-hm-tool="settings">' + I('gear') + 'Tree Settings</button></div>';
