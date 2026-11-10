@@ -3,7 +3,7 @@
 // Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.
 window.GFG_CODES = {
  "v": 1,
- "stamp": "mvoa2nexstr7w",
+ "stamp": "mwa3g2y4jn4zr",
  "salt": "YDaHLbQgDd0HU0BbtgF6Cg==",
  "codes": [
   {
@@ -37,46 +37,6 @@ window.GFG_CODES = {
    "ends": "2027-10-09"
   },
   {
-   "iv": "xOmKQm3AIxA6EQKW",
-   "ct": "Em6yDnzin4zQ+yNCW6njLmpPz3c6G2bh/TsJATStzz8N8zCZuokXkTLiuujLcz/zkem9BLLKzhsnJ6RGm6noiV+BKy+mdRUnIhYpWF0FWR/2oRwlIQ==",
-   "id": "kitmvn6djkifpzb9",
-   "tier": "kitchen",
-   "kind": "kitchen",
-   "label": "Family Kitchen code",
-   "made": "2026-10-24",
-   "ends": null
-  },
-  {
-   "iv": "a4iCwG8jJSmM+Hcr",
-   "ct": "lQC4jpgPtVIAEOQ4e8oqG3EqgbQH3ZqxnmJoXC1H5cTggrV75soLbIGrkTgtUJOMzxfuClef2XL9h17A98jEfMx+iXNhmdqvOhdSHNEbaYFemgtFGg==",
-   "id": "kitmvn6h0bk0kn8x",
-   "tier": "kitchen",
-   "kind": "kitchen",
-   "label": "Family Kitchen code",
-   "made": "2026-10-24",
-   "ends": null
-  },
-  {
-   "iv": "bNnxhvRylpbf0qNk",
-   "ct": "B47YTOROIRyZqPzm0Ms/gkOV60GI+ts387Go29h+o/pIt87y4EV02hl2yyx0FOE/eMwmbBFGDIIU5tvvlEovwkyIjicYdKZfWZD/rPSx+LyWm0APSg==",
-   "id": "kitmvn6hjl4392ue",
-   "tier": "kitchen",
-   "kind": "kitchen",
-   "label": "Family Kitchen code",
-   "made": "2026-10-24",
-   "ends": null
-  },
-  {
-   "iv": "VA1q1qAqVC3cRf/a",
-   "ct": "MKVmfLrSfay8jUzU19j+/eKIyXWXTT/nsO6e27ARekJpquRgjs6Z01kp4EewOUVNkCYT3T5fRy7rUNbOIvTvtnYP/Wa5bXduMqCxXfpW9GkMgpCs5A==",
-   "id": "kitmvn6hte1m0gos",
-   "tier": "kitchen",
-   "kind": "kitchen",
-   "label": "Family Kitchen code",
-   "made": "2026-10-24",
-   "ends": null
-  },
-  {
    "iv": "K8BYkM5+fIBn3fb/",
    "ct": "Y+E+0bKOsbSBf6G7uFQuha/IJmD7YkfD05ngQ20JlBCi8bstx5PYvBPEAypj1J46FrltKsay35s51Nfz6yd3pYZUwhNY4eecJhVwS6c1P9hHJS8q/Q==",
    "id": "foumvoa2ndz5vffk",
@@ -89,16 +49,16 @@ window.GFG_CODES = {
  ],
  "links": {
   "founder>staff": {
-   "iv": "a5l/uUjrWvOkr4pr",
-   "ct": "wViuDypEFMDJybTE0XUjElICCAP/HmlxTAP5Bu+F0jFBDFyLM3Jk6qJ4P4mBRxlSwwQwwnxhbREAIbtn7+VZZtHKxko="
+   "iv": "J4nrcSUmyL0iOzga",
+   "ct": "k9g2EGtA+xCRDdbMPtd8TRgsnM33G727psUR4eHsaZvfHwl5bWAAYISbSedYKvTRJyrDeSV4lnPkf0L4vq/9Ab0mayo="
   },
   "founder>guide": {
-   "iv": "zbQ+76d5LJAXQX7n",
-   "ct": "QND7cM3E4EajhEMMeZDyeegTQvz8oIzOIwcxT725snUHlU266j4eNRq/IiH6OVhHVTJOio7K45NYO+kQcWDnB/EQdLg="
+   "iv": "tQcEMZQ+B0t8Zv1V",
+   "ct": "7qP5x8BwY2Ug5x4hIehLOCEiMnFicO0Ohcg/3w0ZtjCogHdsC0ePRhS8Ctg04IMEDSSzTr9LRihngjmEkVMMGpSpydA="
   },
   "staff>guide": {
-   "iv": "nHMcNmOt9TQmPbTP",
-   "ct": "FQ1VUaIgxLD4tm8lyBeX/Bc63fe7CP76ebb60CV/+SRCFTNcFOKf9DgylsXiu8T9FVGwwdV5v7PxUcN0J7ob1FW/IYQ="
+   "iv": "2mRXpkBmG1RTqBl2",
+   "ct": "bxiZXlewNBz5CirNyFENq29tAFpXoyJVxqsPk+/1z0u/Zo+5+qxbM8Yq1OWX26cP+h2V1a2A7xB31VsH5ont2XSLW8k="
   }
  }
 };
