@@ -3839,7 +3839,8 @@
       var w0 = tendWrap(S.id), lead = kitLead(w0);
       // A phone that took the kitchen's recipes always follows; one that has not joined yet follows once a kitchen reached it.
       // Once the kitchen has carried recipes, only the leader sends; every other device only takes, so nothing erases them.
-      if (!lead && (w0 && w0.kitLib || homeRec().kitSawLib || (!(kj && kj.joined) && !homeRec().kitMine && (hh0.in || hh0.err)))) { kitWhy('taking the Household kitchen'); return {}; }
+      // A new phone (Carson's, November 9, 2026) takes the Household kitchen by default; only a phone that tapped Share sends its own.
+      if (!lead && (w0 && w0.kitLib || homeRec().kitSawLib || (!homeRec().kitMine && !(kj && kj.joined)))) { kitWhy('taking the Household kitchen'); return {}; }
       var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
       // BLD 957: the leader always sends its own menu (never a menu it once took from another phone).
       var hh = obj(homeRec().kitHH); if (!lead && hh.out && hh.out === c && hh.in) c = hh.in;
