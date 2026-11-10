@@ -325,6 +325,33 @@ const byIdList = (list, ids) => { const L = arr(list); if (!Array.isArray(ids)) 
 // old place filter and order run exactly as before. A template: {title, lead, main: [slot], finisher: [slot], finisherLabel,
 // rest: {level: seconds between moves}, work: {level: seconds for timed cardio and agility moves}, warm: a day letter or warm-up ids}; a slot is a
 // pattern or {p, prefer: [move ids]} (the first preferred move that fits the level and the gear, else the pattern's pool).
+// BLD 965 (Chris, November 10, 2026: "use all 5, combine w workout, cardio, strength etc.."): the finish matched to the day.
+// strength days: One Last Best Set of the day's first main lift; full body and power days: Squat to Press; core and posture days:
+// Mountain Climbers; steady cardio days: a 30 Second Sprint; interval and power cardio days: Burpee Walk-Outs. A template may name
+// its own (strong: 'best' or a kind below). A kind's moves are tried in order (the first that fits the level and the gear).
+const STRONG = {sprint: ['m-sprint', 'm-c-knee-drive', 'm-march'], burpee: ['m-c-burpee-walkout', 'm-sprint', 'm-c-knee-drive'],
+  climbers: ['m-mountain-climbers', 'm-c-incline-climber', 'm-c-knee-drive'], press: ['m-squat-press', 'm-sprint', 'm-c-knee-drive']};
+const STRONG_SECS = {sprint: 30, climbers: 30};
+function strongKind(tp, track){
+  const t = String((tp && tp.title) || '');
+  if (tp && tp.strong) return tp.strong;
+  if (track === 'cardio') return /steady|long|climb/i.test(t) ? 'sprint' : /\bcore\b/i.test(t) ? 'climbers' : 'burpee';
+  if (/core|posture/i.test(t)) return 'climbers';
+  if (/power|tempo|circuit|total|conditioning|cardio/i.test(t)) return 'press';
+  return 'best';
+}
+function finishStrong(tp, track, blocks, MB, used, mk1, pre){
+  const kind = strongKind(tp, track), first = blocks[0] && blocks[0].items[0];
+  const best = () => { if (!first) return null; const it = JSON.parse(JSON.stringify(first));
+    it.id = 'best-' + String(first.id); it.sets = {'1': 1, '2': 1, '3': 1}; it.rest = 0; it.restAfter = 0;
+    it.cue = 'One last best set: your strongest, cleanest reps of the day.'; return it; };
+  let it = null;
+  if (kind !== 'best') for (const id of (STRONG[kind] || [])){ const m = MB[id]; if (m && !used.has(id)){ used.add(id); it = mk1(m); if (STRONG_SECS[kind] && it.kind === 'time'){ const n = String(STRONG_SECS[kind]); it.secs = STRONG_SECS[kind]; it.reps = {'1': n, '2': n, '3': n}; } break; } }
+  if (!it) it = best();
+  if (!it) return null;
+  it.rest = 0; it.sets = {'1': 1, '2': 1, '3': 1}; it.strong = kind;
+  return {title: 'Finish Strong', items: [it]};
+}
 function buildSessions(moves, templates, opts){
   opts = Object.assign({level: 'rise', place: 'home', mins: 40}, opts || {});
   const T = templates || {}, level = LEVELS.includes(opts.level) ? opts.level : 'rise', place0 = ['home', 'light', 'gym'].includes(opts.place) ? opts.place : 'home', mins = +opts.mins || 40;
@@ -365,7 +392,8 @@ function buildSessions(moves, templates, opts){
     add((T.blockTitles || {}).main || 'Main', slots.slice(0, +len.main || slots.length), m => Math.max(sLo, Math.min(base(m), sHi)));
     if (+len.finisher) add(tp.finisherLabel || 'Finisher', arr(tp.finisher).length ? tp.finisher.slice(0, +len.finisher) : Array(+len.finisher).fill('core'), m => Math.min(base(m), +len.finisherSets || 2));
     if (+len.cardio) add((T.blockTitles || {}).cardio || 'Cardio', Array(+len.cardio).fill('cardio'), base);
-    if (+len.mobility) add((T.blockTitles || {}).mobility || 'Mobility', Array(+len.mobility).fill('mobility'), base);
+    // BLD 965 (Chris's 11/10 notes: "finish strong, not 2 min stretch right before cooldown, ALL VIDS"): no Mobility block; every
+    // session ends on a Finish Strong block, added after the timing below so it is never trimmed away.
     const ses = {title: tp.title || days[d], lead: tp.lead || '', blocks};
     if (tset){ ses.letter = d; ses.track = track; ses.phase = phase; }
     // BLD 891: each day warms up for its own focus (templates.lengths[n].warmByDay), all moving mobility. BLD 892: a program
@@ -391,6 +419,7 @@ function buildSessions(moves, templates, opts){
       const it = mk(m, 2); blocks[0].items.push(it);
       if (est() > target * 1.05){ setAll(it, 1); if (est() > target * 1.05){ blocks[0].items.pop(); break; } }
     }
+    const fs = finishStrong(tp, track, blocks, MB, used, m => mk(m, 1), pre); if (fs) blocks.push(fs);
     items().forEach(it => { it.restAfter = ra; }); const all = items(); if (all.length) all[all.length - 1].restAfter = 0;
     ses.est = Math.round(est()); ses.mins = Math.round(ses.est / 60);
     sessions[d] = ses;
