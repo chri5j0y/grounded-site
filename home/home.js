@@ -3834,7 +3834,8 @@
       // BLD 957: a phone that holds its own moved library (its own recipes) leads the kitchen and never follows (Chris, November 9, 2026).
       var w0 = tendWrap(S.id), lead = kitLead(w0);
       // A phone that took the kitchen's recipes always follows; one that has not joined yet follows once a kitchen reached it.
-      if (!lead && (w0 && w0.kitLib || (!(kj && kj.joined) && !homeRec().kitMine && (hh0.in || hh0.err)))) { kitWhy('taking the Household kitchen'); return {}; }
+      // Once the kitchen has carried recipes, only the leader sends; every other device only takes, so nothing erases them.
+      if (!lead && (w0 && w0.kitLib || homeRec().kitSawLib || (!(kj && kj.joined) && !homeRec().kitMine && (hh0.in || hh0.err)))) { kitWhy('taking the Household kitchen'); return {}; }
       var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
       var hh = obj(homeRec().kitHH); if (hh.out && hh.out === c && hh.in) c = hh.in;
       // BLD 957: a plan moved from the Field Guide carries its recipes with the kitchen (locked in the Household), so a family
@@ -3854,6 +3855,7 @@
       // takes them whenever they are new to it, even when the menu code already matches, so every phone plans the same dinners
       // (Chris and Kayti, November 9, 2026: the same kitchen, different dinners).
       var lsig = o.lib && o.lib.healthJourney ? kitHash(o.lib) : '';
+      if (lsig && !homeRec().kitSawLib) { homeRec().kitSawLib = Date.now(); saveHome(); }
       if (lsig && w && !kitLead(w) && w.kitLibSig !== lsig) {
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending();
