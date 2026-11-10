@@ -3819,6 +3819,9 @@
   function kitLine() { var k = AH.kit; if (!k) return ''; return '<p class="hm-sub" data-hm-kitline style="margin:8px 0 0"><b>Family Kitchen:</b> ' + esc(k.t) + ' (' + new Date(k.at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + ').</p>'; }
   // BLD 957: a short fingerprint of the recipes a kitchen carries, so a phone takes them once and again only when they change
   function kitHash(L) { var t = JSON.stringify(L), h = 5381, i; for (i = 0; i < t.length; i++) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return t.length + '.' + h.toString(36); }
+  // BLD 957: the profile that moved its own library from the Field Guide (movedOnce) leads the Family Kitchen on every device,
+  // even when another of its devices once took the kitchen's recipes (Chris's iPad, November 9, 2026).
+  function kitLead(w) { return !!(w && w.lib && w.lib.healthJourney && (w.movedOnce || !w.kitLib)); }
   var KIT_SPACE = {
     get: function () {
       // BLD 957: Tending loads first when it is not on screen yet, so the kitchen always travels with a sync
@@ -3829,7 +3832,7 @@
       // sends its own menu over it: it reads as empty, and the sync hands it the Household's kitchen to take.
       var hh0 = obj(homeRec().kitHH), kj = hasFn('kitchen') ? hCall('kitchen') : null;
       // BLD 957: a phone that holds its own moved library (its own recipes) leads the kitchen and never follows (Chris, November 9, 2026).
-      var w0 = tendWrap(S.id), lead = !!(w0 && w0.lib && w0.lib.healthJourney && !w0.kitLib);
+      var w0 = tendWrap(S.id), lead = kitLead(w0);
       // A phone that took the kitchen's recipes always follows; one that has not joined yet follows once a kitchen reached it.
       if (!lead && (w0 && w0.kitLib || (!(kj && kj.joined) && !homeRec().kitMine && (hh0.in || hh0.err)))) { kitWhy('taking the Household kitchen'); return {}; }
       var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
@@ -3846,12 +3849,12 @@
       var w = tendWrap(S.id), took = false;
       // BLD 957: a phone with its own moved library leads: it keeps its own menu, and its menu and recipes go back up on the
       // next sync for the rest of the family to take.
-      if (w && w.lib && w.lib.healthJourney && !w.kitLib) { kitWhy('sending your menu and its recipes', 1); return; }
+      if (kitLead(w)) { kitWhy('sending your menu and its recipes', 1); return; }
       // BLD 957: the kitchen carries its recipes. A phone with no library of its own (or one it took from the kitchen before)
       // takes them whenever they are new to it, even when the menu code already matches, so every phone plans the same dinners
       // (Chris and Kayti, November 9, 2026: the same kitchen, different dinners).
       var lsig = o.lib && o.lib.healthJourney ? kitHash(o.lib) : '';
-      if (lsig && w && (!w.lib || w.kitLib) && w.kitLibSig !== lsig) {
+      if (lsig && w && !kitLead(w) && w.kitLibSig !== lsig) {
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending();
       }
@@ -3859,7 +3862,7 @@
       if (!took && (o.c === cur || (hh.in === o.c && hh.out === cur && !hh.err))) return;
       var info = hasFn('kitchenInfo') ? hCall('kitchenInfo', o.c) : null;
       // BLD 957: the kitchen's recipes are ones this phone does not hold: take the library the kitchen carries.
-      if (!took && info && info.missing && o.lib && o.lib.healthJourney && w) {
+      if (!took && info && info.missing && o.lib && o.lib.healthJourney && w && !kitLead(w)) {
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending(); info = hCall('kitchenInfo', o.c);
       }
