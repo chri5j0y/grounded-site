@@ -812,13 +812,17 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 .hm-hcount .hm-ring .mid small{color:#F1E3C8;}
 .hm-hcount>span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;}
 .hm-hero .chips .hm-chip.s{background:#3F6F94;color:#fff;border-color:#3F6F94;}
+/* BLD 960: on a phone, Today's words and the count sit on their own band above the painting, so every face in the
+   painting shows (Chris, November 9, 2026: "dont crop faces.. the button covers faces"). */
 @media (max-width:699px){
-  .hm-thero{min-height:0;}
-  .hm-thero picture,.hm-thero img.art{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;}
-  .hm-thero img.art{object-position:50% 70%;}
-  .hm .hm-thero .in{position:relative;padding:20px 18px 136px;}
-  .hm-hcount{left:16px;right:auto;bottom:16px;flex-direction:row;padding:8px 16px 8px 8px;gap:12px;}
+  .hm-thero{min-height:0;display:flex;flex-direction:column;background:#33261A;}
+  .hm-thero.eve{background:#1E1C2E;}
+  .hm-thero::after{display:none;}
+  .hm .hm-thero .in{order:1;position:relative;padding:20px 18px 12px;}
+  .hm-thero .hm-hcount{order:2;position:static;align-self:flex-start;margin:0 18px 16px;flex-direction:row;padding:8px 16px 8px 8px;gap:12px;background:rgba(255,247,232,.10);}
   .hm-hcount>span{font-size:14px;}
+  .hm-thero picture{order:3;position:relative;inset:auto;display:block;width:100%;height:auto;aspect-ratio:4 / 3;}
+  .hm-thero img.art{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-position:50% 50%;}
 }
 @media (min-width:700px){ .hm-thero{min-height:420px;} .hm-thero .in{padding:36px 44px 34px;} .hm-hcount{right:28px;bottom:28px;} .hm-thero .hm-me{top:22px;right:22px;} }
 /* the day and the panels beside it */
@@ -1522,3 +1526,4 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
 .hm-acrow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;font:inherit;color:inherit;cursor:pointer;}
 .hm-acmail{overflow-wrap:anywhere;}
 .hm-acct .hm-row .tx{min-width:0;flex:1;}
+.hm-thero.cl .hm-hcount{right:auto;left:20px;}

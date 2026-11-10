@@ -52,7 +52,7 @@
   'use strict';
   if (window.GGAccount) return;
   var V = 'b950', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
-  var TERMS_V = '2026-11-09', PRIVACY_V = '2026-11-09';   // stage 2 moves these to the launch date with gg-profiles.js
+  var TERMS_V = '2026-11-10', PRIVACY_V = '2026-11-10';   // stage 2 moves these to the launch date with gg-profiles.js
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var site = /(^|\.)growwithgrounded\.com$/.test(location.hostname);
   var CFG = { api: window.GG_ACCOUNT_API || (site ? 'https://api.growwithgrounded.com/v1' : ''), turnstile: null };
@@ -252,9 +252,12 @@
   }
 
   /* ---------- sign up, sign in, sign out ---------- */
+  // BLD 958: a kid signs in with a sign in name; the account's email is that name at the name only kid domain.
+  var KID_AT = '@kid.growwithgrounded.com';
+  function idOf(x) { x = String(x || '').trim(); return x && x.indexOf('@') < 0 && /^[A-Za-z0-9][A-Za-z0-9.]{2,23}$/.test(x) ? x.toLowerCase() + KID_AT : x; }
   function signUp(o) {
     o = o || {};
-    var email = String(o.email || '').trim(), pw;
+    var email = idOf(o.email), pw;
     try { pw = okPassword(o.password); } catch (e) { return Promise.reject(e); }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Promise.reject(kind('email'));
     if (o.agree === false) return Promise.reject(kind('agree', 'Check the box to agree to the Terms of Use and the Privacy Policy.'));
@@ -268,8 +271,8 @@
     }).then(function (j) {
       var pub = { kty: 'EC', crv: 'P-256', x: j[1].x, y: j[1].y };
       return Promise.all([seal(P.lock, ak, AAD.pw(id)), seal(R.lock, ak, AAD.root(id)), seal(K.DK, enc.encode(JSON.stringify(j[0])), AAD.priv(id))]).then(function (b) {
-        return api('POST', '/auth/signup', { accountId: id, email: email, pw_salt: b64u(pwSalt), proof: P.proof, pw_box: b64u(b[0]), root_salt: b64u(rootSalt), root_proof: R.proof, root_box: b64u(b[1]), pub: pub, priv_box: b64u(b[2]), device: dev(), terms_v: TERMS_V, privacy_v: PRIVACY_V, turnstile: o.turnstile }).then(function () {
-          return keep(ak, { accountId: id, email: email, confirmed: false, priv_box: b[2], pub: pub });
+        return api('POST', '/auth/signup', { accountId: id, email: email, pw_salt: b64u(pwSalt), proof: P.proof, pw_box: b64u(b[0]), root_salt: b64u(rootSalt), root_proof: R.proof, root_box: b64u(b[1]), pub: pub, priv_box: b64u(b[2]), device: dev(), terms_v: TERMS_V, privacy_v: PRIVACY_V, turnstile: o.turnstile, adult: o.invite ? undefined : o.adult !== false, invite: o.invite || undefined }).then(function (sr) {
+          return keep(ak, { accountId: id, email: email, confirmed: !!(sr && sr.confirmed), priv_box: b[2], pub: pub });
         });
       });
     }).then(function () {
@@ -278,7 +281,7 @@
   }
   function signIn(o) {
     o = o || {};
-    var email = String(o.email || '').trim(), pw = normPass(o.password), P;
+    var email = idOf(o.email), pw = normPass(o.password), P;
     return api('POST', '/auth/start', { email: email }).then(function (s) {
       return passKeys(pw, unb64u(s.salt));
     }).then(function (p) {
@@ -445,7 +448,8 @@
   var household = {
     get: function () { return api('GET', '/household').then(function (r) { return r.household; }); },
     create: function () { return api('POST', '/household', {}).then(function (r) { emit('household', 'create'); return r; }); },
-    invite: function (email, o) { return api('POST', '/household/invite', { email: email, turnstile: o && o.turnstile }); },
+    // BLD 958: o.band adult, teen, or kid; o.ok the parent's approval; o.name a kid's sign in name (no email). Answers {link}.
+    invite: function (email, o) { o = o || {}; return api('POST', '/household/invite', { email: email || undefined, band: o.band || 'adult', ok: o.ok === true, name: o.name || undefined, turnstile: o.turnstile }); },
     join: function (token) { return api('POST', '/household/join', { token: token }).then(function (r) { emit('household', 'join'); if (window.GGSync) GGSync.sync().catch(function () {}); return r; }); },
     // The payer removes someone: each shared space gets a new key, so only the people still in the Household hold it.
     remove: function (accountId) {
@@ -526,10 +530,10 @@
 
   /* ---------- the address: #confirm=, #recover=, #keep=, #join= ---------- */
   function readHash() {
-    var m = /#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})/.exec(location.hash || '');
+    var m = /#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})/.exec(location.hash || ''), k = /[#&]kid=([A-Za-z0-9.]{3,24})/.exec(location.hash || '');
     if (!m) return null;
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { location.hash = ''; }
-    return { kind: m[1], token: m[2] };
+    return { kind: m[1], token: m[2], kid: k ? k[1].toLowerCase() : '' };
   }
 
   /* ---------- for GGSync (same page only) ---------- */
