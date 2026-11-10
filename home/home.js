@@ -53,7 +53,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b975', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b977', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b949';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -1293,7 +1293,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=b976';
+  var PV_SRC = '/shared/page-videos.js?v=b977';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
