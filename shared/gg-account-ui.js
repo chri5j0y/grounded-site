@@ -14,7 +14,7 @@
   'use strict';
   if (window.GGAccountUI) return;
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
-  var CSS = HERE + 'gg-account.css?v=b938', cssOn = false, cur = null, uid = 0;
+  var CSS = HERE + 'gg-account.css?v=b971', cssOn = false, cur = null, uid = 0;
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function css(href) { if (cssOn || document.querySelector('link[data-ga-css]')) { cssOn = true; return; } var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href || CSS; l.setAttribute('data-ga-css', '1'); document.head.appendChild(l); cssOn = true; }
   var G = function () { return window.GGAccount; };
@@ -62,19 +62,24 @@
 
   /* ---------- the views ---------- */
   var V = {};
-  V.signup = function () {
-    var c = sheet('Create My Account', 'One email and password opens your tree on every device. Everything is locked on this device before it leaves, so only you can open it.');
-    c.body.innerHTML = '<form novalidate>' + field('ga-em', 'Email', 'email', 'email') + field('ga-pw', 'Password', 'password', 'new-password', 'At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your password is the key to your account, so keep it yours alone.') +
-      '<label class="ga-check"><input id="ga-ag" type="checkbox"><span>I am 18 or older, and I agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms of Use</a> and the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>' +
-      '<button type="submit" class="ga-btn big">Create My Account</button></form><div class="ga-alt"><button type="button" class="ga-link" data-go="signin">I Have an Account</button></div>';
+  V.signup = function (o) {
+    o = o || {};
+    // BLD 958: an invite on this device (a link from a parent) makes the account for the person it names; a teen or kid
+    // account comes only this way. A kid's invite carries a sign in name, so a kid needs no email.
+    var inv = o.token || joinWaiting(), kid = o.kid || joinKid();
+    var c = sheet('Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : 'One email and password opens your tree on every device. Everything is locked on this device before it leaves, so only you can open it.');
+    var agree = '<a href="/terms.html" target="_blank" rel="noopener">Terms of Use</a> and the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>';
+    c.body.innerHTML = '<form novalidate>' + (kid ? '<p class="ga-note">Your sign in name: <b>' + esc(kid) + '</b></p>' : field('ga-em', 'Email', 'email', 'email')) + field('ga-pw', 'Password', 'password', 'new-password', 'At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your password is the key to your account, so keep it yours alone.') +
+      '<label class="ga-check"><input id="ga-ag" type="checkbox"><span>' + (inv ? 'I agree to the ' + agree + '.' : 'I am 18 or older, and I agree to the ' + agree + '.') + '</span></label>' +
+      '<button type="submit" class="ga-btn big">Create My Account</button></form>' + (inv ? '' : '<p class="ga-note">Younger than 18? A parent adds you from their Grounded Household, and the invite opens your account.</p>') + '<div class="ga-alt"><button type="button" class="ga-link" data-go="signin">I Have an Account</button></div>';
     on('[data-go=signin]', function () { V.signin(); });
     form(function (btn) {
-      if (!cur.w.querySelector('#ga-ag').checked) return say('Check the box to agree to the Terms of Use and the Privacy Policy.');
+      if (!cur.w.querySelector('#ga-ag').checked) return say(inv ? 'Check the box to agree to the Terms of Use and the Privacy Policy.' : 'Check the box to say you are 18 or older and agree to the Terms of Use and the Privacy Policy.');
       busy(btn, true, 'Locking Your Keys');
       say('Making your keys on this device. This takes a few seconds.', true);
-      G().signUp({ email: val('ga-em'), password: val('ga-pw') }).then(function (r) {
-        var email = val('ga-em');
-        return showWords(r.words).then(function () { V.welcome(email); });
+      var email = kid || val('ga-em');
+      G().signUp({ email: email, password: val('ga-pw'), adult: !inv, invite: inv || undefined }).then(function (r) {
+        return showWords(r.words).then(function () { if (kid) { joinKid(null); close(); } else V.welcome(email); });
       }).catch(fail(btn));
     });
     return c.p;
@@ -85,8 +90,8 @@
     return c.p;
   };
   V.signin = function () {
-    var c = sheet('Sign In', 'Sign in with your Grounded Account email and password. Each profile still opens with its own passcode.');
-    c.body.innerHTML = '<form novalidate>' + field('ga-em', 'Email', 'email', 'username') + field('ga-pw', 'Password', 'password', 'current-password') + '<button type="submit" class="ga-btn big">Sign In</button></form>' +
+    var c = sheet('Sign In', 'Sign in with your Grounded Account email (or your sign in name) and password. Each profile still opens with its own passcode.');
+    c.body.innerHTML = '<form novalidate>' + field('ga-em', 'Email or Sign In Name', 'text', 'username') + field('ga-pw', 'Password', 'password', 'current-password') + '<button type="submit" class="ga-btn big">Sign In</button></form>' +
       '<div class="ga-alt"><button type="button" class="ga-link" data-go="forgot">Forgot My Password</button><button type="button" class="ga-link" data-go="signup">Create My Account</button></div>';
     on('[data-go=forgot]', function () { V.forgot(); }); on('[data-go=signup]', function () { V.signup(); });
     form(function (btn) {
@@ -150,15 +155,19 @@
   var JW = 'gg-join-wait';
   function joinWait(t) { try { if (t) localStorage.setItem(JW, JSON.stringify({ t: t, at: Date.now() })); else localStorage.removeItem(JW); } catch (e) {} }
   function joinWaiting() { try { var o = JSON.parse(localStorage.getItem(JW) || 'null'); return o && o.t && Date.now() - o.at < 14 * 86400000 ? o.t : null; } catch (e) { return null; } }
+  // BLD 958: a kid's invite carries the kid's sign in name; it waits with the invite.
+  function joinKid(k) { try { if (k) localStorage.setItem(JW + '-kid', k); else if (k === null) localStorage.removeItem(JW + '-kid'); return localStorage.getItem(JW + '-kid') || ''; } catch (e) { return ''; } }
 
   V.join = function (o) {
     if (o && o.token) joinWait(o.token);
-    if (G().state() === 'out') { var s = V.signin(); return s.then(function () { if (G().state() !== 'out') return V.join(o); }); }
+    if (o && o.kid) joinKid(o.kid);
+    // BLD 958: someone new opens their invite: Create My Account comes first (I Have an Account is one tap away).
+    if (G().state() === 'out') { var s = V.signup({ token: o && o.token, kid: o && o.kid }); return s.then(function () { if (G().state() !== 'out' && joinWaiting()) return V.join({ token: joinWaiting() }); }); }
     var inf = G().info && G().info();
     if (inf && inf.confirmed === false) { var w = sheet('Join the Household', 'Your invite is saved on this device. Confirm your email from the message we sent, and you join the Household by yourself.'); w.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">OK</button>'; return w.p; }
     var c = sheet('Join the Household', 'Each person keeps their own private account. The Family Kitchen, Grounded Money, and the Family Planner can be shared between you, and everything else stays yours alone.');
     c.body.innerHTML = '<button type="button" class="ga-btn big" data-go="join">Join the Household</button>';
-    on('[data-go=join]', function (btn) { busy(btn, true); G().household.join(o.token).then(function () { joinWait(null); say('You are in the Household now.', true); setTimeout(close, 1000); }).catch(function (e) { if (e && /exists|expired|other/.test(e.why || '')) joinWait(null); fail(btn)(e); }); });
+    on('[data-go=join]', function (btn) { busy(btn, true); G().household.join(o.token).then(function () { joinWait(null); joinKid(null); say('You are in the Household now.', true); setTimeout(close, 1000); }).catch(function (e) { if (e && /exists|expired|other/.test(e.why || '')) joinWait(null); fail(btn)(e); }); });
     return c.p;
   };
   // A password asked once more, for steps that need a recent sign in
@@ -246,6 +255,43 @@
     return c.p;
   };
   var KIND = { kitchen: 'Family Kitchen', money: 'Grounded Money', planner: 'Family Planner' };   // BLD 950: the Family Planner joins the shared spaces
+  // BLD 958: invite a grown-up, a teen (13 to 17), or a kid (12 and under). A teen or kid needs the parent's approval, and a
+  // kid can have a sign in name in place of an email. Every invite can be texted from the parent's own phone.
+  var BAND = { teen: 'Teen', kid: 'Kid' };
+  var AGES = [['adult', 'Grown-up'], ['teen', 'Teen, 13 to 17'], ['kid', 'Kid, 12 and Under']];
+  var OK_LINE = 'Every part of Grounded is shaped for each age. Kids and teens see guides, videos, and practices written for their age. Tending for them centers on movement, food, and energy, with weight and calories kept for grown-ups. Any question about a substance goes to a trusted grown-up, and Grounded asks open questions only. Their data stays locked to their own account, and you see them here in your Household, where you can remove their account any time.';
+  function inviteForm() {
+    return '<form class="ga-card ga-inv" novalidate><span class="ga-k">Invite</span><div class="ga-ages" role="radiogroup" aria-label="Who is it for">' + AGES.map(function (a, i) {
+      return '<label class="ga-check"><input type="radio" name="ga-age" value="' + a[0] + '"' + (i ? '' : ' checked') + '><span>' + esc(a[1]) + '</span></label>';
+    }).join('') + '</div>' + field('ga-em', 'Their Email', 'email', 'off') +
+      '<div class="ga-kidname" hidden>' + field('ga-kn', 'Their Sign In Name', 'text', 'off', 'Letters and numbers, like carson.joy. A kid signs in with this name, and every message about their account comes to you.') + '</div>' +
+      '<div class="ga-ok" hidden><p class="ga-note">' + esc(OK_LINE) + '</p><label class="ga-check"><input id="ga-okb" type="checkbox"><span>I am their parent or guardian, and I approve their Grounded Account.</span></label></div>' +
+      '<button type="submit" class="ga-btn">Send the Invite</button></form>';
+  }
+  function inviteWire(paint) {
+    var f = cur && cur.w.querySelector('.ga-inv'); if (!f) return;
+    var age = function () { var r = f.querySelector('input[name=ga-age]:checked'); return r ? r.value : 'adult'; };
+    var show = function () { var a = age(); f.querySelector('.ga-ok').hidden = a === 'adult'; f.querySelector('.ga-kidname').hidden = a !== 'kid'; f.querySelector('#ga-em').closest('label').querySelector('span').textContent = a === 'kid' ? 'Their Email (if they have one)' : 'Their Email'; };
+    Array.prototype.forEach.call(f.querySelectorAll('input[name=ga-age]'), function (r) { r.addEventListener('change', show); });
+    f.addEventListener('submit', function (ev) {
+      ev.preventDefault(); var btn = f.querySelector('button[type=submit]'), a = age(), em = val('ga-em').trim(), kn = val('ga-kn').trim();
+      if (a !== 'adult' && !f.querySelector('#ga-okb').checked) return say('Check the box to approve their account.');
+      if (a === 'kid' && !em && !kn) return say('Add their sign in name, or their email if they have one.');
+      busy(btn, true);
+      G().household.invite(a === 'kid' && !em ? null : em, { band: a, ok: a !== 'adult', name: a === 'kid' && !em ? kn : undefined }).then(function (r) { busy(btn, false); sent(r, em, paint); }).catch(fail(btn));
+    });
+  }
+  // After an invite: text it from this phone (the phone's own Messages; Grounded keeps no phone numbers), or copy the link.
+  function sent(r, em, paint) {
+    var box = document.createElement('div'); box.className = 'ga-card ga-sent';
+    var msg = 'You are invited to our family Household on Grounded. Open this link on your phone: ' + (r && r.link || '');
+    box.innerHTML = '<span class="ga-k">Invite Ready</span><p class="ga-note">' + (r && r.name ? 'Their sign in name is <b>' + esc(r.name) + '</b>. Text them the invite, and they choose their password when they open it.' : em ? 'The invite is on its way to ' + esc(em) + '. You can text it to them too.' : '') + '</p>' +
+      '<div class="ga-row"><a class="ga-btn" href="sms:?&body=' + encodeURIComponent(msg) + '">Text the Invite</a><button type="button" class="ga-btn line" data-go="copy">Copy the Link</button></div><div class="ga-alt"><button type="button" class="ga-link" data-go="more">Done</button></div>';
+    var f = cur && cur.w.querySelector('.ga-inv'); if (f) f.replaceWith(box); else if (cur) cur.body.appendChild(box);
+    box.querySelector('[data-go=copy]').addEventListener('click', function () { try { navigator.clipboard.writeText(r.link).then(function () { say('The link is copied.', true); }, function () { say(r.link, true); }); } catch (e) { say(r.link, true); } });
+    box.querySelector('[data-go=more]').addEventListener('click', function () { paint(); });
+    say('');
+  }
   V.household = function () {
     if (G().state() === 'out') return V.signin();
     var c = sheet('Household', 'Up to 6 people, each with their own private account. The Family Kitchen, Grounded Money, and the Family Planner can be shared between you; everything else stays each person’s own.');
@@ -259,16 +305,16 @@
         }
         var shared = window.GGSync ? GGSync.spaces().map(function (s) { return s.kind; }) : [];
         c.body.innerHTML = '<div class="ga-card"><span class="ga-k">People</span><ul class="ga-list">' + h.people.map(function (p) {
-            return '<li><div><b>' + esc(p.email) + (p.me ? ' (you)' : '') + '</b><small>' + (p.owner ? 'Started the Household' : p.joined ? 'Joined ' + esc(when(p.joined)) : 'Invited ' + esc(when(p.invited))) + '</small></div>' +
+            return '<li><div><b>' + esc(p.kid || p.email) + (p.me ? ' (you)' : '') + '</b><small>' + (BAND[p.band] ? BAND[p.band] + ' · ' : '') + (p.owner ? 'Started the Household' : p.joined ? 'Joined ' + esc(when(p.joined)) : 'Invited ' + esc(when(p.invited))) + '</small></div>' +
               (h.owner && !p.me ? (p.account ? '<button type="button" class="ga-btn sm line" data-rm="' + esc(p.account) + '">Remove</button>' : '<button type="button" class="ga-btn sm line" data-inv="' + esc(p.email) + '">Cancel Invite</button>') : '') + '</li>';
           }).join('') + '</ul></div>' +
-          (h.owner && h.people.length < h.seats ? '<form class="ga-card" novalidate><span class="ga-k">Invite</span>' + field('ga-em', 'Their Email', 'email', 'off') + '<button type="submit" class="ga-btn">Send the Invite</button></form>' : '') +
+          (h.owner && h.people.length < h.seats ? inviteForm() : '') +
           '<div class="ga-card"><span class="ga-k">Shared</span><ul class="ga-list">' + ['kitchen', 'money', 'planner'].map(function (k) {
             var onIt = shared.indexOf(k) >= 0 || h.spaces.some(function (s) { return s.kind === k && s.key; });
             return '<li><div><b>' + KIND[k] + '</b><small>' + (onIt ? 'Shared with your Household' : 'On your own devices') + '</small></div>' + (onIt || !window.GGSync ? '' : '<button type="button" class="ga-btn sm" data-share="' + k + '">Share With Our Household</button>') + '</li>';
           }).join('') + '</ul></div>' +
           '<div class="ga-alt">' + (h.owner ? '<button type="button" class="ga-link" data-go="end">End the Household</button>' : '<button type="button" class="ga-link" data-go="leave">Leave the Household</button>') + '</div>';
-        form(function (btn) { busy(btn, true); G().household.invite(val('ga-em')).then(function () { say('The invite is on its way.', true); paint(); }).catch(fail(btn)); });
+        inviteWire(paint);
         Array.prototype.forEach.call(c.w.querySelectorAll('[data-rm]'), function (b) { b.addEventListener('click', function () { busy(b, true); G().household.remove(b.getAttribute('data-rm')).then(paint).catch(fail(b)); }); });
         Array.prototype.forEach.call(c.w.querySelectorAll('[data-inv]'), function (b) { b.addEventListener('click', function () { busy(b, true); G().household.cancelInvite(b.getAttribute('data-inv')).then(paint).catch(fail(b)); }); });
         Array.prototype.forEach.call(c.w.querySelectorAll('[data-share]'), function (b) { b.addEventListener('click', function () { busy(b, true); GGSync.shareSpace(b.getAttribute('data-share')).then(function () { say('Shared with your Household.', true); paint(); }).catch(fail(b)); }); });
@@ -290,7 +336,7 @@
   function fromHash(o) {
     var h = G() && G().readHash();
     if (!h) return null;
-    return open(h.kind, Object.assign({ token: h.token }, o || {}));
+    return open(h.kind, Object.assign({ token: h.token, kid: h.kid || '' }, o || {}));
   }
   window.GGAccountUI = { open: open, fromHash: fromHash, close: close, css: css, joinWaiting: joinWaiting };
 })();

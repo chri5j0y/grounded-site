@@ -53,7 +53,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b951', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b971', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=b949', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b949';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -3721,7 +3721,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=b961';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=b971';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -3730,16 +3730,17 @@
   // when the link opens in a tab already showing Home. The token leaves the address bar at once.
   function acctHashRead() {
     if (!acctLive()) return false;
-    var m = /^#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})$/.exec(location.hash || '');
+    // BLD 958: a kid's invite also carries the kid's sign in name (&kid=name).
+    var m = /^#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})(?:&kid=([A-Za-z0-9.]{3,24}))?$/.exec(location.hash || '');
     if (!m) return false;
-    AH.hash = { kind: m[1], token: m[2] };
+    AH.hash = { kind: m[1], token: m[2], kid: m[1] === 'join' && m[3] ? m[3].toLowerCase() : '' };
     try { history.replaceState(null, '', location.pathname + location.search + (S.id ? '#today' : '')); } catch (e) {}
     return true;
   }
   function acctHashGo() {
     if (!AH.hash || !AH.on) return;
     var h = AH.hash; AH.hash = null;
-    acctUI().then(function (U) { if (U) return U.open(h.kind, { token: h.token }).then(acctPaint); }).catch(function () {});
+    acctUI().then(function (U) { if (U) return U.open(h.kind, { token: h.token, kid: h.kid || '' }).then(acctPaint); }).catch(function () {});
   }
   acctHashRead();
   function acctUI() { return AH.ui || (AH.ui = load(ACCT_UI).then(function (ok) { return ok && window.GGAccountUI ? window.GGAccountUI : null; })); }
@@ -3812,6 +3813,9 @@
   });
   // The shared spaces
   function spaceOk() { return acctIn() && !!(S.id && S.p && S.p.age === 'adult' && GGP.isOpen && GGP.isOpen(S.id)); }
+  // BLD 958: the Family Kitchen comes to every age on the family plan; a teen or kid profile takes the Household's kitchen.
+  function kitOk() { return acctIn() && !!(S.id && S.p && GGP.isOpen && GGP.isOpen(S.id)); }
+  function kitGrown() { return !!(S.p && S.p.age === 'adult'); }
   // BLD 957: what the Family Kitchen did last on this phone, said plainly in My Account (no silent fails)
   // BLD 957: the phone that taps Share With Our Household for the kitchen is the one whose menu the Household starts from
   document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-share="kitchen"]'); if (!t || !S.id) return; var h = homeRec(); h.kitMine = Date.now(); saveHome(); }, true);
@@ -3829,8 +3833,8 @@
   var KIT_SPACE = {
     get: function () {
       // BLD 957: Tending loads first when it is not on screen yet, so the kitchen always travels with a sync
-      if (spaceOk() && !tendReady()) return loadTending().then(function () { if (!tendReady()) kitWhy('Tending could not open on this phone'); return tendReady() ? KIT_SPACE.get() : null; });
-      if (!spaceOk()) { kitWhy(!acctIn() ? 'not signed in' : !(S.p && S.p.age === 'adult') ? 'a grown-up profile shares the kitchen' : 'open your profile first'); return null; }
+      if (kitOk() && !tendReady()) return loadTending().then(function () { if (!tendReady()) kitWhy('Tending could not open on this phone'); return tendReady() ? KIT_SPACE.get() : null; });
+      if (!kitOk()) { kitWhy(!acctIn() ? 'not signed in' : 'open your profile first'); return null; }
       if (!tendReady() || !hasFn('kitchenCode')) { kitWhy('Tending is still loading'); return null; }
       // BLD 957: a phone that has not joined the Household kitchen yet (it has received another phone's kitchen) never
       // sends its own menu over it: it reads as empty, and the sync hands it the Household's kitchen to take.
@@ -3840,6 +3844,7 @@
       // A phone that took the kitchen's recipes always follows; one that has not joined yet follows once a kitchen reached it.
       // Once the kitchen has carried recipes, only the leader sends; every other device only takes, so nothing erases them.
       // A new phone (Carson's, November 9, 2026) takes the Household kitchen by default; only a phone that tapped Share sends its own.
+      if (!kitGrown()) { kitWhy('taking the Household kitchen'); return {}; }
       if (!lead && (w0 && w0.kitLib || homeRec().kitSawLib || (!homeRec().kitMine && !(kj && kj.joined)))) { kitWhy('taking the Household kitchen'); return {}; }
       var c = hCall('kitchenCode'); if (!c) { kitWhy('Food is off in your Tending, so there is no kitchen to share'); return null; }
       // BLD 957: the leader always sends its own menu (never a menu it once took from another phone).
@@ -3851,8 +3856,8 @@
       return L ? { c: c, lib: L } : { c: c };
     },
     put: function (o) {
-      if (o && typeof o.c === 'string' && spaceOk() && !tendReady()) return loadTending().then(function () { return tendReady() ? KIT_SPACE.put(o) : undefined; });
-      if (!o || typeof o.c !== 'string' || !spaceOk() || !tendReady()) return;
+      if (o && typeof o.c === 'string' && kitOk() && !tendReady()) return loadTending().then(function () { return tendReady() ? KIT_SPACE.put(o) : undefined; });
+      if (!o || typeof o.c !== 'string' || !kitOk() || !tendReady()) return;
       var w = tendWrap(S.id), took = false;
       // BLD 957: a phone with its own moved library leads: it keeps its own menu, and its menu and recipes go back up on the
       // next sync for the rest of the family to take.
@@ -3914,7 +3919,8 @@
     get: function () { return acctIn() && window.GGPlanner && planOk() ? GGPlanner.space.get() : null; },
     put: function (o) { if (!acctIn() || !S.id || !planOk()) return; return loadPlanner().then(function (ok) { if (ok) return GGPlanner.space.put(o); }); }
   };
-  function planOk() { return !!(S.id && (plannerRec() || (S.p && S.p.age === 'adult' && GGP.account && GGP.account.carried(S.id)))); }
+  // BLD 958: the Family Planner is for every age on the family plan.
+  function planOk() { return !!(S.id && (plannerRec() || (S.p && GGP.account && GGP.account.carried(S.id)))); }
   // After a sync, a space this profile just shared or met remembers it, so a later change here travels.
   function acctSeen() {
     if (!spaceOk() || !window.GGSync) return;

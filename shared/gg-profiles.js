@@ -1522,7 +1522,7 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=b958', '/shared/gg-sync.js?v=b951'], CARRY = 'gg-acct-carry';
+  var ACCT_SRC = ['/shared/gg-account.js?v=b971', '/shared/gg-sync.js?v=b951'], CARRY = 'gg-acct-carry';
   var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created'];
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
