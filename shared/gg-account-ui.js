@@ -145,11 +145,20 @@
     G().confirm(o.token).then(function () { c.body.innerHTML = '<p class="ga-lead">Your email is confirmed. Sign in on every device you use, and your tree comes along.</p><button type="button" class="ga-btn big" data-ga="close">Done</button>'; }, function (e) { say(e.message); });
     return c.p;
   };
+  // BLD 957: an invite opened before the account exists or is confirmed waits on this device (gg-join-wait) and joins by
+  // itself once the email is confirmed, so the invite never gets lost on the way through sign up (Chris, November 9, 2026).
+  var JW = 'gg-join-wait';
+  function joinWait(t) { try { if (t) localStorage.setItem(JW, JSON.stringify({ t: t, at: Date.now() })); else localStorage.removeItem(JW); } catch (e) {} }
+  function joinWaiting() { try { var o = JSON.parse(localStorage.getItem(JW) || 'null'); return o && o.t && Date.now() - o.at < 14 * 86400000 ? o.t : null; } catch (e) { return null; } }
+
   V.join = function (o) {
+    if (o && o.token) joinWait(o.token);
     if (G().state() === 'out') { var s = V.signin(); return s.then(function () { if (G().state() !== 'out') return V.join(o); }); }
+    var inf = G().info && G().info();
+    if (inf && inf.confirmed === false) { var w = sheet('Join the Household', 'Your invite is saved on this device. Confirm your email from the message we sent, and you join the Household by yourself.'); w.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">OK</button>'; return w.p; }
     var c = sheet('Join the Household', 'Each person keeps their own private account. The Family Kitchen, Grounded Money, and the Family Planner can be shared between you, and everything else stays yours alone.');
     c.body.innerHTML = '<button type="button" class="ga-btn big" data-go="join">Join the Household</button>';
-    on('[data-go=join]', function (btn) { busy(btn, true); G().household.join(o.token).then(function () { say('You are in the Household now.', true); setTimeout(close, 1000); }).catch(fail(btn)); });
+    on('[data-go=join]', function (btn) { busy(btn, true); G().household.join(o.token).then(function () { joinWait(null); say('You are in the Household now.', true); setTimeout(close, 1000); }).catch(function (e) { if (e && /exists|expired|other/.test(e.why || '')) joinWait(null); fail(btn)(e); }); });
     return c.p;
   };
   // A password asked once more, for steps that need a recent sign in
@@ -283,5 +292,5 @@
     if (!h) return null;
     return open(h.kind, Object.assign({ token: h.token }, o || {}));
   }
-  window.GGAccountUI = { open: open, fromHash: fromHash, close: close, css: css };
+  window.GGAccountUI = { open: open, fromHash: fromHash, close: close, css: css, joinWaiting: joinWaiting };
 })();
