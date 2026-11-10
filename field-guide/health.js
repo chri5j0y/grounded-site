@@ -423,7 +423,7 @@ function vJourney(){
   return `<div class="hj-blk">${kick('Write Today')}<p class="hj-sub">What you noticed, what felt strong, what you are growing toward.</p>
     <textarea id="hj-note" rows="4" placeholder="Today I...">${esc(S.draft || '')}</textarea>
     <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-hja="note">Save Entry</button></div></div>
-  ${h.wlog.length ? `<div class="hj-blk">${kick('Workouts')}${h.wlog.slice().reverse().slice(0, 12).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : ''}
+  ${h.wlog.length ? `<div class="hj-blk">${kick('Workouts')}${h.wlog.slice().reverse().slice(0, 12).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${wlogLine(w)}</div>`).join('')}</div>` : ''}
   ${ms.length ? `<div class="hj-blk">${kick('Milestones')}<ul class="hj-ms">${ms.map(([t, d]) => `<li><span class="star">&#9733;</span><b>${esc(t)}</b><small>${nice(d)}</small></li>`).join('')}</ul></div>` : ''}
   ${N.length ? `<div class="hj-blk">${kick('My Journey')}${N.map(n => `<div class="hj-entry"><div class="spread"><b>${nice(n.date)}</b><button type="button" class="linkbtn" data-hja="note-del" data-hjv="${esc(n.id)}">Remove</button></div><p>${esc(n.text).replace(/\n/g, '<br>')}</p></div>`).join('')}</div>` : ''}`;
 }
@@ -1192,6 +1192,7 @@ function actTool(a, v){
     case 'skiprest': if (o.between) o.between = false; else { o.rest = false; o.set++; } o.run = false; rerender(true); return true;
     case 'wsave': { const nt = document.getElementById('hj-wnote'); logWork(o, {note: String(nt ? nt.value : '').trim().slice(0, 400)}); save(); toast('Workout saved. Well done.'); closeOv(); return true; }
     case 'wfeel': if (o) feelSave(o, v); return true;
+    case 'wq': if (o) wqSave(o, v); return true;
     case 'mstart': startTimer(o, (o.left && o.left < o.mins * 60000 ? o.left : o.mins * 60000) / 1000); rerender(true); return true;
     case 'mdone': markDone('med'); checkOn('still'); o.run = false; o.fin = true; chime(); rerender(true); return true;
     case 'step': { o.dn = o.dn || {}; o.dn[v] = !o.dn[v]; rerender(true); return true; }
@@ -1729,7 +1730,7 @@ async function runSession(o){
   V && V.music(null);
 }
 function sessClock(o){ const now = Date.now(); if (!o.paused) o.active += now - (o.lastT || now); o.lastT = now; return clock(o.active); }
-setInterval(() => { const o = S.ov; if (!o || o.mode !== 'auto' || o.fin) return; const e = document.querySelector('[data-hjsess]'); if (e) e.textContent = sessClock(o); const l = document.querySelector('[data-hjleft]'); if (l) l.textContent = 'about ' + Math.max(1, Math.round(estLeft(o) / 60000)) + ' min left'; }, 1000);
+setInterval(() => { const o = S.ov; if (!o || o.mode !== 'auto' || o.fin) return; document.querySelectorAll('[data-hjsess]').forEach(e => { e.textContent = sessClock(o); }); document.querySelectorAll('[data-hjleft]').forEach(l => { l.textContent = 'about ' + Math.max(1, Math.round(estLeft(o) / 60000)) + ' min left'; }); }, 1000);
 // ---------- color and the stage (BLD 857): every player wears its state's color over a scene from GGStage ----------
 // States: work, rest, next, breathe, last, done, cook, med, practice. A morning palette before noon, warmer after 6 pm.
 const HOUR = () => new Date().getHours();
@@ -2029,6 +2030,17 @@ function vStart(o, top){
 // saves the workout's log on this device with the answer. Too Easy and Too Hard move the personal adjustment 5 lb for
 // next time (within -5 to +15 lb) when the workout had a recommended weight, and say so; Just Right keeps it.
 const FEEL = [['easy', 'Too Easy'], ['right', 'Just Right'], ['hard', 'Too Hard']];
+// BLD 957 (Chris's workout notes: "more feedback questions at the end, kept in the journal to track the journey"): three quick
+// taps after a workout, saved with it and shown in the workout journal.
+const WQ = [['energy', 'Energy now', [['low', 'Low'], ['steady', 'Steady'], ['strong', 'Strong']]], ['form', 'My form', [['learning', 'Still Learning'], ['smoother', 'Getting Smoother'], ['solid', 'Solid']]], ['sleep', 'Sleep last night', [['short', 'Short'], ['okay', 'Okay'], ['rested', 'Rested']]]];
+function wqBlock(o){ const q = o.wq || {};
+  return `<div class="hj-wq">${WQ.map(([k, l, opts]) => `<p class="hj-feelq">${esc(l)}</p><div class="hj-feelc" role="group" aria-label="${esc(l)}">${opts.map(([v, t]) => `<button type="button" class="chip${q[k] === v ? ' on' : ''}" aria-pressed="${q[k] === v}" data-hja="wq" data-hjv="${k}:${v}">${esc(t)}</button>`).join('')}</div>`).join('')}</div>`; }
+function wqSave(o, v){ const [k, x] = String(v || '').split(':'), row = WQ.find(r => r[0] === k); if (!row || !row[2].some(y => y[0] === x)) return;
+  o.wq = Object.assign({}, o.wq, {[k]: o.wq && o.wq[k] === x ? undefined : x}); logWork(o, {wq: o.wq}); save(); rerender(true); }
+// One line for the journal: how it felt, the three answers, and the note.
+function wlogLine(w){ const f = FEEL.find(x => x[0] === w.feel), q = w.wq || {}, bits = [];
+  if (f) bits.push(f[1]); WQ.forEach(([k, l, opts]) => { const y = opts.find(z => z[0] === q[k]); if (y) bits.push(l + ': ' + y[1]); });
+  return (bits.length ? `<p class="hj-sub">${esc(bits.join(' · '))}</p>` : '') + (w.note ? `<p>${esc(w.note)}</p>` : ''); }
 function feelBlock(o){ const f = o.feel;
   return `<div class="hj-feel" data-hjfeel${f ? ` data-hjfelt="${esc(f)}"` : ''}><p class="hj-feelq">How did that feel?</p><div class="hj-feelc" role="group" aria-label="How did that feel?">${FEEL.map(([k, l]) => `<button type="button" class="chip${f === k ? ' on' : ''}" aria-pressed="${f === k}" data-hja="wfeel" data-hjv="${k}">${l}</button>`).join('')}</div>${o.feelMsg ? `<p class="hj-feelm" role="status">${esc(o.feelMsg)}</p>` : ''}</div>`; }
 function feelSave(o, k){ const h = H(); if (!h || !FEEL.some(x => x[0] === k)) return;
@@ -2048,7 +2060,7 @@ function logWork(o, more){ const h = H(); let e = o.logId ? h.wlog.find(x => x.i
   Object.assign(e, more || {}, {u: Date.now()}); return e; }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
   return `${stagePanel('done', o.med ? medOp(o) : {fig: ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
-    ${!o.prac && !o.med ? feelBlock(o) : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}${wr ? `<p class="hj-sub">${esc(wr)}</p>` : ''}
+    ${!o.prac && !o.med ? feelBlock(o) + wqBlock(o) : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}${wr ? `<p class="hj-sub">${esc(wr)}</p>` : ''}
     <label class="hj-fld" style="text-align:left"><span>${o.prac || o.med ? 'How did it feel? (optional)' : 'A word about it (optional)'}</span><input id="hj-wnote" placeholder="${o.prac ? 'Calm, loose, clear...' : 'Felt strong, knees easy...'}"></label>
     <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button>${o.gentle && o.start && !o.med && !o.prac ? memMore() : ''}</div>`; }
 // BLD 919 (Chris): after a Gentle session on Start, one quiet line with a link, never a pop-up.
@@ -2067,7 +2079,16 @@ function fsSet(on){
   if (!FS.on) return; FS.on = false; FS.t = Date.now(); el.classList.remove('gg-fs');
   if (cur() && ex){ try { const r = ex.call(d); if (r && r.catch) r.catch(() => {}); } catch(e){} }
   FS.api = false; if (S.ov) rerender(true); }
-const fsBar = o => `<div class="hj-fsbar" role="group" aria-label="Full screen controls"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="fsx">Exit Full Screen</button></div>`;
+// BLD 957 (Chris's workout notes: "a session progress bar or timer", "key tips without clutter", "safety, water, motivation"):
+// under the stage, a progress line with the time so far and the time left, and in a Break one tip at a time (water when it is
+// due, the back safety tip before a heavy carry, the Grounded Tip, then the next move's own tip). During a move the stage keeps
+// its one form tip.
+function fsTip(o){ const st = o.steps[o.i]; if (!st || !(o.between || o.rest)) return null;
+  if (waterLine(o)) return ['Water', WATER]; if (suitcase(st)) return ['Protect Your Back', SWITCH_DB];
+  if (o.between && o.run){ if (!o.tips) o.tips = tipPlan(o); if (o.tips[o.i]) return ['Grounded Tip', o.tips[o.i]]; }
+  const t = shortTip(arr(st.tips)[0] || st.how || ''); return t ? ['Next Up', t] : o.mline ? ['Keep Going', o.mline] : null; }
+const fsBar = o => { const pct = o.steps && o.steps.length ? Math.round(100 * o.i / o.steps.length) : 0, tip = fsTip(o);
+  return `<div class="hj-fsbar" role="group" aria-label="Full screen controls"><div class="hj-fsprog"><div class="hj-fsline" role="progressbar" aria-label="Workout progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></div><div class="hj-fstime"><span data-hjsess>${esc(clock(o.active || 0))}</span><span>${o.i + 1} of ${o.steps.length}</span><span data-hjleft>about ${Math.max(1, Math.round(estLeft(o) / 60000))} min left</span></div>${tip ? `<p class="hj-fstip"><b>${esc(tip[0])}</b> ${esc(tip[1])}</p>` : ''}</div><div class="hj-fsbtns"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="fsx">Exit Full Screen</button></div></div>`; };
 ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { if (!(document.fullscreenElement || document.webkitFullscreenElement) && FS.on && FS.api) fsSet(false); }));
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && (FS.on || Date.now() - FS.t < 500)){ e.stopImmediatePropagation(); e.preventDefault(); fsSet(false); } }, true);
 function vAuto(o, top){
@@ -2955,7 +2976,7 @@ function vMove(){
     ${ses.length ? `<h3 class="tn-h3">Workouts</h3><div class="tn-kgrid">${ses.map(([id, x]) => tile('work:' + id, 'work', (progOn() ? sesKick(id) : x.day || 'Session ' + id) + (x.mins ? ' · ' + x.mins + ' min' : ''), x.title || 'Session ' + id, lightOn(d) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x))).join('')}</div>` : ''}
     ${flowShelf(pr, x => tile('pracid:' + x.id, 'practice', flowKick(x), x.title, x.focus || '', 'a-move', flowArtName(x)))}
     ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map((x, j) => tile('medid:' + x.id, 'practice', (x.day || '') + ' · ' + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', medArtName(j))).join('')}</div>` : ''}
-    ${h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 8).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : ''}
+    ${h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 8).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${wlogLine(w)}</div>`).join('')}</div>` : ''}
     ${lifts.length ? `<div class="hj-blk">${kick('My Weights')}<ul class="hj-ms">${lifts.map(([id, v]) => `<li><b>${esc(String(id).replace(/[-_]/g, ' '))}</b><small>${esc(v)}${/^\d+(\.\d+)?$/.test(String(v)) ? ' lb' : ''}</small></li>`).join('')}</ul></div>` : ''}</div>`;
 }
 const NAVDEF = {today: ['Today', 'today', 'a-today'], week: ['Week', 'week', 'a-week'], plate: ['Plate', 'plate', 'a-plate'], kitchen: ['Kitchen', 'kitchen', 'a-kitchen'], move: ['Move', 'move', 'a-move'], numbers: ['Numbers', 'numbers', 'a-numbers']};
@@ -4551,7 +4572,7 @@ function vWorkouts(){
   const lv = sets.map(L => { const ses = Object.entries(L.sessions || {}); if (!ses.length) return '';
     return `<h3 class="tn-h3">${progOn() ? 'This Week' : esc(L.name)}${progOn() ? ` <small class="tn-mine">${esc(phName(phaseId(Math.max(1, progWeek(new Date())))))}</small>` : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
   const every = everyHtml((key, kick, title, sub, art) => artCard(i++, key, kick, title, sub, 'a-move', art));
-  const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : '';
+  const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${wlogLine(w)}</div>`).join('')}</div>` : '';
   return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : progCard()}${lv}${every}${recent}</div>`;
 }
 // BLD 896 (Chris, October 30, 2026): the Every Workout shelf. This Week (the phase the person is in) stays on top; then every workout
@@ -5500,9 +5521,45 @@ html.gg-fs .hj-ov{position:fixed;inset:0;z-index:2147483000;padding:0;overflow:h
 html.gg-fs .hj-ovin{max-width:none;margin:0;padding:0;height:100vh;height:100dvh;display:flex;flex-direction:column;}
 html.gg-fs .hj-ovin>:not(.hj-stagebox):not(.hj-fsbar){display:none!important;}
 html.gg-fs .hj-stagebox{flex:1 1 auto;margin:0;min-height:0;}
-html.gg-fs .hj-stagebox .ggs,html.gg-fs .hj-stagebox.g3-wait .ggs{--H:calc(100vh - 72px);--H:calc(100dvh - 72px - env(safe-area-inset-bottom,0px));--fs:min(340px,62vw,calc(var(--H) * .8));border-radius:0;}
+html.gg-fs{--fsb:172px;}
+html.gg-fs .hj-stagebox .ggs,html.gg-fs .hj-stagebox.g3-wait .ggs{--H:calc(100vh - var(--fsb));--H:calc(100dvh - var(--fsb) - env(safe-area-inset-bottom,0px));--fs:min(340px,62vw,calc(var(--H) * .8));border-radius:0;}
 html.gg-fs .hj-hasart .hj-stagebox{border-radius:0;box-shadow:none;}
-html.gg-fs .hj-fsbar{display:flex;gap:12px;justify-content:center;align-items:center;flex:0 0 auto;height:72px;padding:0 16px env(safe-area-inset-bottom,0px);}
+html.gg-fs .hj-fsbar{display:flex;flex-direction:column;gap:8px;justify-content:flex-end;align-items:stretch;flex:0 0 auto;height:calc(var(--fsb) + env(safe-area-inset-bottom,0px));box-sizing:border-box;overflow:hidden;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));}
+html.gg-fs .hj-fsbtns{display:flex;gap:12px;justify-content:center;}
+html.gg-fs .hj-fsbar{background:linear-gradient(180deg,#2E2218,#1F1610);}
+.hj-fsprog{display:none;}
+html.gg-fs .hj-fsprog{display:grid;gap:6px;width:min(860px,100%);margin:0 auto;}
+html.gg-fs .hj-fsline{height:8px;border-radius:999px;background:rgba(255,248,232,.22);overflow:hidden;}
+html.gg-fs .hj-fsline span{display:block;height:100%;border-radius:999px;background:#E7B04E;transition:width .4s ease;}
+html.gg-fs .hj-fstime{display:flex;justify-content:space-between;gap:10px;font:700 clamp(14px,1.6vw,20px)/1.1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.06em;color:#FFF7E8;font-variant-numeric:tabular-nums;}
+html.gg-fs .hj-fstip{margin:2px 0 0;font:500 clamp(15px,1.8vw,22px)/1.35 'Barlow',sans-serif;color:#FFF7E8;text-align:center;}
+html.gg-fs .hj-fstip b{font-family:'Barlow Condensed','Barlow',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#E7B04E;margin-right:6px;}
+/* BLD 957: top items come down, clear of the phone's own exit X in full screen, and on a tablet or computer everything is bigger. */
+html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-ftip{top:calc(56px + env(safe-area-inset-top,0px));}
+html.gg-fs .ggs-break,html.gg-fs .ggs-hud{top:calc(48px + env(safe-area-inset-top,0px));}
+@media (min-width:700px) and (min-height:560px){
+  html.gg-fs{--fsb:196px;}
+  html.gg-fs .hj-stagebox .ggs{--fs:min(560px,46vw,calc(var(--H) * .78));}
+  html.gg-fs .ggs-ring{width:min(380px,40vh);}
+  html.gg-fs .ggs-mid.hasfig .ggs-ring{width:min(200px,24vh);right:28px;bottom:28px;}
+  html.gg-fs .ggs-rest .ggs-mid.hasfig .ggs-ring,html.gg-fs .ggs-brk .ggs-mid .ggs-ring,html.gg-fs .ggs-brk.ggs-rest .ggs-mid.hasfig .ggs-ring{width:min(380px,40vh);}
+  html.gg-fs .ggs-secs{font-size:clamp(56px,9vh,110px);}
+  html.gg-fs .ggs-mid.hasfig:not(.ggs-rest *) .ggs-secs{font-size:clamp(34px,5vh,58px);}
+  html.gg-fs .ggs-breath{width:min(340px,38vh);}
+  html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-breath.wf.ggs-rings{width:min(230px,26vh);left:24px;}
+  html.gg-fs .ggs-ftip{left:calc(min(230px,26vh) + 44px);max-width:min(520px,calc(100% - min(230px,26vh) - 300px));padding:10px 16px 12px;}
+  html.gg-fs .ggs-ftip b{font-size:14px;}
+  html.gg-fs .ggs-ftip span{font-size:clamp(17px,2.2vh,24px);}
+  html.gg-fs .ggs-wt{right:24px;bottom:34px;padding:12px 18px 14px;}
+  html.gg-fs .ggs-hasring .ggs-wt{right:calc(min(200px,24vh) + 48px);}
+  html.gg-fs .ggs-wt b{font-size:15px;}
+  html.gg-fs .ggs-wt span{font-size:clamp(26px,4vh,40px);}
+  html.gg-fs .ggs-break{font-size:clamp(34px,5vh,52px);padding:10px 38px 11px;}
+  html.gg-fs .ggs-rsub{font-size:clamp(18px,2.4vh,26px);max-width:min(640px,80vw);top:calc(100% + 12px);}
+  html.gg-fs .ggs-side{font-size:20px;bottom:34px;left:24px;}
+  html.gg-fs .ggs-fig.small{--fs:min(260px,26vh);}
+  html.gg-fs .hj-fsbar .btn{min-height:56px;min-width:180px;font-size:18px;}
+}
 html.gg-fs .hj-fsbar .btn{min-height:48px;min-width:140px;justify-content:center;}
 .hj-form{margin:10px 0;padding:10px 12px;border-left:3px solid #C98A2C;background:rgba(243,200,103,.14);border-radius:0 12px 12px 0;text-align:left;line-height:1.45;overflow-wrap:anywhere;}
 .hj-form span{display:block;font:700 11px/1 'Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8A5A12;margin-bottom:4px;}
