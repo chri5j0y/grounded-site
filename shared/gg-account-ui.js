@@ -79,7 +79,11 @@
       say('Making your keys on this device. This takes a few seconds.', true);
       var email = kid || val('ga-em');
       G().signUp({ email: email, password: val('ga-pw'), adult: !inv, invite: inv || undefined }).then(function (r) {
-        return showWords(r.words).then(function () { if (kid) { joinKid(null); close(); } else V.welcome(email); });
+        return showWords(r.words).then(function () {
+          // A kid's account starts confirmed, so the invite joins the Household right away.
+          if (kid && inv) return G().household.join(inv).then(function () { joinWait(null); joinKid(null); var d = sheet('You Are In', 'Welcome to your family’s Household. Your tree opens on every device you sign in on.'); d.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>'; return d.p; }, function () { close(); });
+          V.welcome(email);
+        });
       }).catch(fail(btn));
     });
     return c.p;

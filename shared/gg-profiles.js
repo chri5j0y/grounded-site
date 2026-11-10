@@ -109,7 +109,7 @@
 (function () {
   if (window.GGP) return;
 
-  var TERMS_V = '2026-11-09', PRIVACY_V = '2026-11-09';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
+  var TERMS_V = '2026-11-10', PRIVACY_V = '2026-11-10';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
   /* BLD 938 Accounts and Sync: the one site setting. Accounts stay hidden, and their files never load, until this is true.
      Turn it on only after the server is live (grounded-workshop patches/bld938/GO-LIVE.md). Tests turn it on for a page with
      window.GG_ACCOUNTS_LIVE = true before this file runs. */

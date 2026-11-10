@@ -52,7 +52,7 @@
   'use strict';
   if (window.GGAccount) return;
   var V = 'b950', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
-  var TERMS_V = '2026-11-09', PRIVACY_V = '2026-11-09';   // stage 2 moves these to the launch date with gg-profiles.js
+  var TERMS_V = '2026-11-10', PRIVACY_V = '2026-11-10';   // stage 2 moves these to the launch date with gg-profiles.js
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var site = /(^|\.)growwithgrounded\.com$/.test(location.hostname);
   var CFG = { api: window.GG_ACCOUNT_API || (site ? 'https://api.growwithgrounded.com/v1' : ''), turnstile: null };

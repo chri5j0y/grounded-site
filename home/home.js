@@ -2080,13 +2080,25 @@
     if (why) return { k: 'My Why', text: why };
     return { k: 'For Today', text: pick(LINES, dayIndex()) };
   }
+  // BLD 960: Today's painting changes each day (the same day shows the same painting on every device). Every painting here is
+  // checked at desktop and phone with no face covered; p sets where the wide crop sits, and c 'l' moves the Tended today
+  // count to the left when faces sit at the lower right (Chris, November 9, 2026: "dont crop faces.. need to move buttons").
+  var TODAY_ART = {
+    m: [{ k: 'p-home-morning' }, { k: 'today-300' }, { k: 'today-308' }, { k: 'today-350' }, { k: 'today-332' }, { k: 'today-336' }],
+    e: [{ k: 'p-home-evening' }, { k: 'today-355' }, { k: 'today-310' }, { k: 'today-311' }, { k: 'today-322' }, { k: 'today-323' }]
+  };
+  function todayArt(eve) {
+    var L = TODAY_ART[eve ? 'e' : 'm'], i = dayIndex();
+    try { var o = /^([me]):(\d+)$/.exec(localStorage.getItem('gg-today-art') || ''); if (o && (o[1] === 'e') === eve) i = +o[2]; } catch (e) {}   // a test can hold one painting
+    return pick(L, i) || L[0];
+  }
   function todayHero(done, n) {
-    var d = now(), hr = d.getHours() + d.getMinutes() / 60, eve = hr >= 17 || hr < 5, k = eve ? 'p-home-evening' : 'p-home-morning', t = TREES[S.tree] || TREES.oak, tend = tendOf(S.id, S.tree), wk = weekNo(tend), hl = heroLine();
+    var d = now(), hr = d.getHours() + d.getMinutes() / 60, eve = hr >= 17 || hr < 5, ta = todayArt(eve), k = ta.k, t = TREES[S.tree] || TREES.oak, tend = tendOf(S.id, S.tree), wk = weekNo(tend), hl = heroLine();
     // BLD 929 (M16): each week label names its thing, and Today shows one: the fitness week when the 12-week program runs,
     // else the tree's season.
     var fit = member() && tendReady() ? String((wpInfo() || {}).prog || '').split(' · ')[0] : '';
     var chips = '<span class="hm-chip g">' + I('tree') + esc(t.n) + '</span>' + (fit && /^Week \d/.test(fit) ? '<span class="hm-chip">Fitness: ' + esc(fit) + '</span>' : wk ? '<span class="hm-chip">Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + '</span>' : '') + (soberDate() ? '<span class="hm-chip s">' + I('sun2') + 'Day ' + (soberCount(soberDate()).days + 1) + ' Sober</span>' : '');
-    return '<section class="hm-hero hm-thero o1' + (eve ? ' eve' : '') + '" aria-label="Today"><picture><source media="(max-width:699px)" srcset="' + IMG + k + '-narrow.webp"><img class="art" src="' + IMG + k + '-wide.webp" alt="" width="2000" height="800" fetchpriority="high"></picture>' +
+    return '<section class="hm-hero hm-thero o1' + (eve ? ' eve' : '') + (ta.c === 'l' ? ' cl' : '') + '" aria-label="Today"><picture><source media="(max-width:699px)" srcset="' + IMG + k + '-narrow.webp"><img class="art" src="' + IMG + k + '-wide.webp" alt="" width="2000" height="800" fetchpriority="high"' + (ta.p ? ' style="object-position:' + ta.p + '"' : '') + '></picture>' +
       '<div class="in"><div class="hm-greet">' + I(eve ? 'moon' : 'sunrise') + '<span>' + esc(greetWord()) + (firstName() ? ', ' + esc(firstName()) : '') + '</span></div>' +
       '<h1 class="hm-day">' + DAYS[d.getDay()] + '</h1><div class="hm-date">' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '</div>' +
       '<p class="hm-mantra"><span>' + esc(hl.k) + '</span><b' + (hl.id ? ' id="' + hl.id + '"' : '') + '>' + esc(hl.text) + '</b></p><div class="chips">' + chips + '</div></div>' +
