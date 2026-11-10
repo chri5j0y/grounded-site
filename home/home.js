@@ -3822,6 +3822,10 @@
   // BLD 957: the profile that moved its own library from the Field Guide (movedOnce) leads the Family Kitchen on every device,
   // even when another of its devices once took the kitchen's recipes (Chris's iPad, November 9, 2026).
   function kitLead(w) { return !!(w && w.lib && w.lib.healthJourney && (w.movedOnce || !w.kitLib)); }
+  function kitDec(c) { try { return JSON.parse(decodeURIComponent(escape(atob(String(c || '').replace(/-/g, '+').replace(/_/g, '/'))))); } catch (e) { return null; } }
+  function kitEnc(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  // A library menu (b 'g') takes this phone's recipe fingerprint, read from this phone's own menu code.
+  function kitAlign(c) { var x = kitDec(c), m = kitDec(hasFn('kitchenCode') ? hCall('kitchenCode') : ''); if (!x || x.b !== 'g' || !m || m.b !== 'g' || !m.f || x.f === m.f) return c; x.f = m.f; return kitEnc(x); }
   var KIT_SPACE = {
     get: function () {
       // BLD 957: Tending loads first when it is not on screen yet, so the kitchen always travels with a sync
@@ -3861,6 +3865,9 @@
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending();
       }
+      // BLD 957: the menu and its recipes can arrive from two devices of the leading profile whose recipe copies differ a little
+      // (Chris's phone, PC, and iPad, November 9, 2026): the menu is read against the recipes that came with it, so it opens here.
+      if (o.lib && !kitLead(w)) o = { c: kitAlign(o.c), lib: o.lib };
       var cur = hCall('kitchenCode') || '', hh = obj(homeRec().kitHH);
       if (!took && (o.c === cur || (hh.in === o.c && hh.out === cur && !hh.err))) return;
       var info = hasFn('kitchenInfo') ? hCall('kitchenInfo', o.c) : null;
@@ -3875,7 +3882,7 @@
       }
       var ok = !!(info && !info.missing) && !!hCall('kitchenJoin', o.c), h = homeRec();
       h.kitHH = { in: o.c, out: hCall('kitchenCode') || '', at: Date.now(), err: ok ? 0 : 'missing' };
-      kitWhy(ok ? 'your menu matches the Household kitchen' : (o.lib ? 'the kitchen\'s recipes could not open here' : 'the kitchen came without its recipes; the phone that shares it needs the newest app'), ok);
+      kitWhy(ok ? 'your menu matches the Household kitchen' : (o.lib ? 'the kitchen\'s recipes could not open here (' + (((kitDec(hCall('kitchenCode') || '') || {}).b) || 'none') + ')' : 'the kitchen came without its recipes; the phone that shares it needs the newest app'), ok);
       return (took && GGP.save ? GGP.save(S.id) : Promise.resolve()).then(saveHome).then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } else toast('The Family Kitchen could not open on this phone yet. On the phone that shares it, tap Sync Now.'); });
     }
   };
