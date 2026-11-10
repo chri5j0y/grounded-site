@@ -46,10 +46,10 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b919b';
+  var VER = 'b978';   // BLD 966: On Your Week
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
-    ['/shared/tending-public.js?v=b949', 'GGTendPublic'],
+    ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
     ['/field-guide/stage.js?v=b931', 'GGStage'],
     ['/field-guide/coach.js?v=b931', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
@@ -336,12 +336,21 @@
     }
 
     var lastArt = '';
+    // BLD 966 (Chris: "several menu items are not in recipe book"): a dinner on this week's Week carries On Your Week (matched by
+    // the dinner's id, the plan dinner a book recipe was written from (r.plan), or the same name), read from this window's GGHealth.
+    var WK = null, WKAT = 0;
+    function wkNorm(t) { return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+    function onWk(r) {
+      if (!WK || Date.now() - WKAT > 5000) { WK = { ids: {}, names: {} }; WKAT = Date.now();
+        try { var H = window.GGHealth, w = H && typeof H.week === 'function' ? H.week(0) : null; ((w && w.days) || []).forEach(function (d) { var dn = d && d.dinner; if (!dn) return; WK.ids[String(dn.key || '').split(':').pop()] = 1; WK.names[wkNorm(dn.title)] = 1; }); } catch (e) {} }
+      return r.meal === 'dinner' && !!(WK.ids[r.id] || (r.plan && WK.ids[r.plan]) || WK.names[wkNorm(r.name)]);
+    }
     function card(r, i) {
       var art = cardArt(r, typeof i === 'number' ? i : 0, typeof i === 'number' && i > 0 ? lastArt : ''); lastArt = art;
       return '<button type="button" class="rc-card rc-k-' + esc(r.meal) + '" data-id="' + esc(r.id) + '">' +
         '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + W + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
         '<span class="rc-cb"><b>' + esc(r.name) + '</b>' +
-        '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? sv(r) : r.serves)) + '</span></span>' +
+        '<span class="rc-pills">' + (onWk(r) ? '<span class="rc-pill rc-onwk" data-rc-onwk>On Your Week</span>' : '') + '<span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? sv(r) : r.serves)) + '</span></span>' +
         '<span class="rc-n" title="' + esc(nutLine(r)) + '">' + esc(shortNut(r)) + '</span></span></button>';
     }
     function section(c, list) {
