@@ -169,7 +169,7 @@
     var linesWhich = 'calm';
     var h = N.mount(ctx, {
       key: 'gw', book: GW, rec: rec, save: function () { return GGP.save(ctx.id); },
-      art: { src: '/shared/heroes/birch-wide.webp', alt: '', title: GW.title || 'Groundwork', sub: 'Your private notebook for the life you are building' },
+      art: { src: '/shared/heroes/p/groundwork-wide.webp', alt: '', title: GW.title || 'Groundwork', sub: 'Your private notebook for the life you are building' },
       T: T, P: P, H: H, written: written, chapters: chapters,
       home: function (L) {
         return { title: GW.title || 'Groundwork', intro: (GW.intro || []).filter(function (t, i) { return i < 4 || L.fromPine; }),
@@ -265,7 +265,7 @@
       return { out: out, skills: all, skillsTitle: (GW && GW.skillsTitle) || 'Skills I\'ve Got' };
     }
     var root = document.createElement('div'); root.className = 'ggnb ggscr-gwoak'; ctx.host.appendChild(root);
-    var art = '<figure class="ggnb-art"><img src="/shared/heroes/birch-wide.webp" alt="" loading="lazy"><figcaption>Your Groundwork Notebook<small>Written in Birch, kept in your profile</small></figcaption></figure>';
+    var art = '<figure class="ggnb-art"><img src="/shared/heroes/p/groundwork-wide.webp" alt="" loading="lazy"><figcaption>Your Groundwork Notebook<small>Written in Birch, kept in your profile</small></figcaption></figure>';
     // renderGround 2944
     function render() {
       var g = gwData();

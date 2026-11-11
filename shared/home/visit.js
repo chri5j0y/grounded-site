@@ -56,7 +56,7 @@
   var WORD = { roots: 'What grounds you', trunk: 'Purpose', bark: 'Mind and feelings', branches: 'Relationships', leaves: 'Body', fruit: 'Hope' };   // DOMAIN_DEFS name in each practices.js
   var MP_HEX = { roots: '#FF6B6B', trunk: '#FF9F1C', bark: '#9B5DE5', branches: '#00B4D8', leaves: '#6CCB3A', fruit: '#D62839' };   // maple/index.html PARTS 983
   var VPEND = 'gg-visit-in';   // gg-app.js 339
-  var ART = '/shared/heroes/way/growth-plan-sq.webp';
+  var ART = '/shared/heroes/p/guide-visit-card-sq.webp';   // BLD 970
 
   /* ---------- small helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -459,7 +459,7 @@
     root.className = 'ggv'; ctx.host.appendChild(root);
     var toast = function (m) { if (m && ctx.toast) ctx.toast(m); };
     function draw() {
-      var h = '<figure class="ggv-art"><img src="/shared/heroes/' + tree + '-wide.webp" alt="" loading="lazy"><figcaption><small>' + esc((NAME[tree] || '') + ' Guide visit') + '</small><b>From Your Visit</b></figcaption></figure>';
+      var h = '<figure class="ggv-art"><img src="/shared/heroes/p/from-your-visit-wide.webp" alt="" loading="lazy"><figcaption><small>' + esc((NAME[tree] || '') + ' Guide visit') + '</small><b>From Your Visit</b></figcaption></figure>';
       var ask = askHtml(id, tree), cards = cardsHtml(id, tree, { asking: asking });
       h += ask + cards;
       if (!ask && !cards) h += '<section class="ggv-card ggv-empty"><p>When you meet with a Grounded Guide, they can show you a Bring It Home code at the end of your visit. Scan it with this device, and your strong parts and the practices you chose to try land right here, on your own tree.</p></section>';

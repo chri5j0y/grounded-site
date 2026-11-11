@@ -44,7 +44,7 @@
     var chapter = function (id) { return (NS.chapters || []).filter(function (c) { return c.id === id; })[0]; };
     return N.mount(ctx, {
       key: 'ns', book: NS, rec: rec, save: function () { return GGP.save(ctx.id); },
-      art: { src: '/shared/heroes/pine-wide.webp', alt: '', title: 'Next Steps', sub: 'Your private notebook for what comes next' },
+      art: { src: '/shared/heroes/p/next-steps-wide.webp', alt: '', title: 'Next Steps', sub: 'Your private notebook for what comes next' },
       T: T, P: P, H: H, written: written,
       chapters: function () { return NS.chapters || []; },
       home: function () {

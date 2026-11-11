@@ -1,6 +1,6 @@
 {
  "version": 1,
- "about": "BLD 899: the meditation stage, read by field-guide/stage.js. Per painting (the name medArtFor picks, or quiet-meditation): src and lg (under base; lg is the larger file of the same picture, same framing), ar (width over height), focal [x, y] (the part of the painting kept in view and kept clear of the drawn candle), tone (0 to 1, how far the painting settles toward candlelit evening), and either flame or flames (a painting with its own light: [x, y] where the painted flame meets its wick, as a share of the painting's width and height, with size, the flame's height as a share of the painting's height, and kind 'candle' or 'lantern') or candle (a painting with no candle of its own: [x, y] where the drawn candle's dish sits, as a share of the stage panel, with dish 'stone' or 'wood'). use maps a day's painting to a different stage painting, so a new candle painting can stand in for any day by adding one line. default is the stage for a name with no entry.",
+ "about": "BLD 899: the meditation stage, read by field-guide/stage.js. Per painting (the name medArtFor picks, or quiet-meditation): src and lg (under base; lg is the larger file of the same picture, same framing), ar (width over height), focal [x, y] (the part of the painting kept in view and kept clear of the drawn candle), tone (0 to 1, how far the painting settles toward candlelit evening), and either flame or flames (a painting with its own light: [x, y] where the painted flame meets its wick, as a share of the painting's width and height, with size, the flame's height as a share of the painting's height, and kind 'candle' or 'lantern') or candle (a painting with no candle of its own: [x, y] where the drawn candle's dish sits, as a share of the stage panel, with dish 'stone' or 'wood'). use maps a day's painting to a different stage painting, so a new candle painting can stand in for any day by adding one line. default is the stage for a name with no entry. BLD 970: p:med-day-6 and p:med-day-7 are the new day 6 and day 7 paintings (shared/heroes/p/), each with its own candle.",
  "base": "heroes/way/",
  "default": "quiet-meditation",
  "use": {
@@ -264,6 +264,38 @@
      0.045
     ]
    ]
+  },
+  "p:med-day-6": {
+   "src": "../p/med-day-6-sq.webp",
+   "lg": "../p/med-day-6-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.55,
+    0.55
+   ],
+   "tone": 0.4,
+   "flame": [
+    0.783,
+    0.684
+   ],
+   "size": 0.03,
+   "kind": "candle"
+  },
+  "p:med-day-7": {
+   "src": "../p/med-day-7-sq.webp",
+   "lg": "../p/med-day-7-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.5,
+    0.55
+   ],
+   "tone": 0.4,
+   "flame": [
+    0.827,
+    0.62
+   ],
+   "size": 0.033,
+   "kind": "candle"
   }
  }
 }
