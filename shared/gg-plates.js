@@ -18,7 +18,7 @@
 (function () {
   'use strict';
   if (window.GGPlates) return;
-  var CFG = { poke: null }, DB = null, PHOTO_W = 480, CARD_W = 1080, CARD_H = 1350, MAX_WORDS = 280;
+  var CFG = { poke: null }, DB = null, PHOTOS_SENT = 40, PHOTO_W = 480, CARD_W = 1080, CARD_H = 1350, MAX_WORDS = 280;
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function arr(x) { return Array.isArray(x) ? x : []; }
   function P() { return window.GGP && GGP.active ? GGP.active() : null; }
@@ -186,24 +186,27 @@
   var space = {
     get: function () {
       var d = store(), p = P(); if (!d || !p) return null;
-      var L = d.mine.filter(function (n) { return n.fam; }).concat(d.fam);
-      return Promise.all(L.map(function (n) { return (n.img && !n.x ? getImg(n.id) : Promise.resolve('')).then(function (u) { var o = {}; Object.keys(n).forEach(function (k) { if (k !== 'img') o[k] = n[k]; }); o.img = u || ''; return o; }); }))
+      // the newest family notes carry their photos; older ones say their photo is kept (ik), so the shared box stays small
+      var L = d.mine.filter(function (n) { return n.fam; }).concat(d.fam).sort(function (a, b) { return (b.at || 0) - (a.at || 0); });
+      return Promise.all(L.map(function (n, i) { var send = n.img && !n.x && i < PHOTOS_SENT; return (send ? getImg(n.id) : Promise.resolve('')).then(function (u) { var o = {}; Object.keys(n).forEach(function (k) { if (k !== 'img') o[k] = n[k]; }); o.img = u || ''; if (n.img && !n.x && !u) o.ik = 1; else delete o.ik; return o; }); }))
         .then(function (notes) { return { notes: notes }; });
     },
     put: function (o) {
       var d = store(), p = P(); if (!d || !p || !o || !Array.isArray(o.notes)) return;
-      var mine = {}; d.mine.forEach(function (n) { mine[n.id] = n; });
+      var mine = {}, had = {}; d.mine.forEach(function (n) { mine[n.id] = n; }); d.fam.forEach(function (n) { had[n.id] = n; });
       var jobs = [], fam = [], touched = {};
       o.notes.forEach(function (n) {
         if (!n || typeof n.id !== 'string' || typeof n.rid !== 'string') return;
         if (n.by === p.id && mine[n.id]) { if (n.x && !mine[n.id].x) { mine[n.id].x = true; touched[n.rid] = 1; } return; }
-        if (n.by === p.id) return;
-        var m = {}; Object.keys(n).forEach(function (k) { if (k !== 'img') m[k] = n[k]; }); m.img = !!n.img && !n.x; fam.push(m); touched[n.rid] = 1;
+        var m = {}; Object.keys(n).forEach(function (k) { if (k !== 'img' && k !== 'ik') m[k] = n[k]; });
+        m.img = !n.x && (!!n.img || !!(n.ik && (had[n.id] || mine[n.id] || {}).img)); touched[n.rid] = 1;
+        // the same person's family note from their other device joins their own notes here
+        if (n.by === p.id) { d.mine.unshift(m); mine[n.id] = m; } else fam.push(m);
         if (n.img && !n.x) jobs.push(putImg(n.id, String(n.img).slice(0, 400000)));
       });
       d.fam = fam;
       return Promise.all(jobs).then(save).then(function () { Object.keys(touched).forEach(emit); });
     }
   };
-  window.GGPlates = { v: 'b979', compose: compose, share: function (r) { return shareOut(r, null); }, section: section, notes: notesFor, space: space, config: function (o) { Object.keys(o || {}).forEach(function (k) { CFG[k] = o[k]; }); }, on: function (fn) { subs.push(fn); }, _: { card: card, small: small, getImg: getImg } };
+  window.GGPlates = { v: 'b981', compose: compose, share: function (r) { return shareOut(r, null); }, section: section, notes: notesFor, space: space, config: function (o) { Object.keys(o || {}).forEach(function (k) { CFG[k] = o[k]; }); }, on: function (fn) { subs.push(fn); }, _: { card: card, small: small, getImg: getImg } };
 })();

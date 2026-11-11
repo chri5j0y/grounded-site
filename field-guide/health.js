@@ -2179,7 +2179,7 @@ setInterval(() => { const o = S.ov; if (!o || !o.guide || !o.timers || !o.timers
   if (typeof chime === 'function') chime(); kSay(o, LN.tdone); rerender(true); }, 500);
 // BLD 967: Share My Plate. A dinner in the plan opens the book recipe it was written from (recipe.plan), so its plates
 // show on that recipe in the Recipe Book; a dinner with no book recipe keeps its own id.
-const PLATES_JS = 'shared/gg-plates.js?v=b979';
+const PLATES_JS = 'shared/gg-plates.js?v=b981';
 let PLATESL = null;
 function platesLoad(){ if (window.GGPlates) return Promise.resolve(true); if (PLATESL) return PLATESL;
   PLATESL = new Promise(res => { const s = document.createElement('script'); s.src = asset(PLATES_JS); s.onload = () => res(!!window.GGPlates); s.onerror = () => { PLATESL = null; res(false); }; document.head.appendChild(s); }); return PLATESL; }
