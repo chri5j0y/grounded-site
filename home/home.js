@@ -53,7 +53,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b978', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=b978', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b931', '/field-guide/coach.js?v=b931', '/field-guide/health.js?v=b979', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=b978', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=b949';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -2491,7 +2491,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=b978';
+  var RECIPES_JS = '/recipes/recipes.js?v=b979';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -3774,7 +3774,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=b971';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=b979';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -3990,6 +3990,21 @@
     if (document.querySelector('.ga-sheet, .ggr')) { clearTimeout(AH.jwT); AH.jwT = setTimeout(joinWaitGo, 800); return; }
     acctUI().then(function (U) { var t = U && U.joinWaiting && U.joinWaiting(); if (!t || AH.joining) return; AH.joining = true; return U.open('join', { token: t }).then(function () { AH.joining = false; acctPaint(); }, function () { AH.joining = false; }); });
   }
+  /* BLD 967: Share My Plate. Each person's plates live in their locked profile (GGPlates, shared/gg-plates.js); the ones
+     marked For the Family travel to the Household in the locked shared space 'plates'. The first family note in a
+     Household makes that space; after that a change simply asks for a sync. */
+  var PLATES_JS = '/shared/gg-plates.js?v=b979';
+  function platesHome() {
+    load(PLATES_JS).then(function (ok) {
+      if (!ok || !window.GGPlates || !window.GGSync) return;
+      GGSync.space('plates', { get: function () { return acctIn() && S.id ? GGPlates.space.get() : null; }, put: function (o) { if (acctIn() && S.id) return GGPlates.space.put(o); } });
+      GGPlates.config({ poke: function () {
+        if (!acctIn() || !GGSync.household || !GGSync.household()) return;
+        if (GGSync.spaces().some(function (x) { return x.kind === 'plates'; })) GGSync.poke();
+        else Promise.resolve(GGSync.shareSpace('plates')).then(function () { GGSync.poke(); }, function () {});
+      } });
+    });
+  }
   function acctHome() {
     if (!acctLive() || !GGP.account.ready) return;
     GGP.account.ready.then(function (ok) {
@@ -3997,6 +4012,7 @@
       AH.on = true;
       SUBS.me.account = 'My Account';
       GGSync.space('kitchen', KIT_SPACE); GGSync.space('money', MON_SPACE); GGSync.space('planner', PLAN_SPACE);
+      platesHome();   // BLD 967: Our Plates, Share My Plate's family notes
       loadPlanner().then(function (ok) { if (ok) GGPlanner.load(); });
       GGAccount.on(function (t) { if (t === 'state' || t === 'confirmed' || t === 'household') { acctPaint(); if (t === 'state' && !S.id) render(); if (t !== 'household') joinWaitGo(); } });
       GGSync.on(function (t, d) {

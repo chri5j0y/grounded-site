@@ -563,7 +563,7 @@
   }
 
   // Default split rules for known docs (paths are inside the doc)
-  var RULES = { money: [{ path: 'logs', field: 'd' }], p: [{ path: 'money/logs', field: 'd' }] };
+  var RULES = { money: [{ path: 'logs', field: 'd' }], p: [{ path: 'money/logs', field: 'd' }], plates: [{ path: 'notes', field: 'd' }] };   // BLD 967: plate notes by month
 
   // pull now and then while the page is open and signed in; and when the connection returns
   window.addEventListener('online', function () { sync(); });
@@ -572,7 +572,8 @@
 
   window.GGSync = {
     v: V, doc: function (name, adapter, o) { return register(name, adapter, o, null) && name; },
-    space: function (kind, adapter, o) { if (['kitchen', 'money', 'planner'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
+    // BLD 967: plates, Share My Plate's family notes
+    space: function (kind, adapter, o) { if (['kitchen', 'money', 'planner', 'plates'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
     drop: function (name) { delete docs[name]; }, changed: changed, sync: sync, status: status,
     // stage 2: a save that touches only a shared space (no doc of its own here) asks for a sync in a few seconds
     poke: function () { clearTimeout(timer); timer = setTimeout(sync, CFG.debounce); },
