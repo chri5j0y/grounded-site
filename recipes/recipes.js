@@ -46,7 +46,7 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b978';   // BLD 966: On Your Week
+  var VER = 'b979';   // BLD 966: On Your Week; BLD 967: Share My Plate
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
@@ -414,7 +414,7 @@
         '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
         '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
         '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? sv(r) : r.serves) + '</span>' + fits + goals + '</div>' +
-        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + shareBtn('r:' + r.id) + '<span>Step by step, with a voice to guide you.</span></div><p class="rc-shnote" data-rc-shnote="' + esc('r:' + r.id) + '" role="status" hidden></p><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
+        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + shareBtn('r:' + r.id) + plateBtn(r.id) + '<span>Step by step, with a voice to guide you.</span></div><p class="rc-shnote" data-rc-shnote="' + esc('r:' + r.id) + '" role="status" hidden></p><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
         '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
         (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
           '<p class="rc-size-note">' + (isBatch(r) ? 'A full pitcher. Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
@@ -422,6 +422,7 @@
         '<div class="card"><h3>Steps</h3><ol class="rc-steps">' + steps + '</ol></div></div>' +
         '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Keeps', r.keeps) + note('For Kids', r.kid) + pairsHTML(r) +
         (swaps.length ? '<div class="card"><h3>Swaps</h3>' + swaps.map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('') + '</div>' : '') + '</div>' +
+        '<div class="rc-plates" id="rc-plates" data-rc-plates="' + esc(r.id) + '"></div>' +
         '<div class="rc-low"><div class="card"><h3>Nutrition per Serving</h3><table class="rc-nut"><caption>Estimates from USDA FoodData Central.</caption><tbody>' +
         rows.map(function (x) { return '<tr><th scope="row">' + x[0] + '</th><td>' + x[1] + x[2] + '</td></tr>'; }).join('') + '</tbody></table></div>' +
         '<div class="card rc-cook"><h3>Grounded Cooking</h3><p>Your kitchen guide, right here: one step at a time, read aloud by a calm voice, with a timer for every step that takes minutes. Cook at your own pace, with Back and Next.</p>' +
@@ -570,6 +571,13 @@
        name, one line, and the link); otherwise the link is copied and the button's line says Link copied. A public recipe shares
        its own page (recipes/r/<id>.html, with its painting in the link preview); any recipe outside the public file shares the
        Recipes page, and never its content. */
+    // BLD 967 Share My Plate (shared/gg-plates.js): a photo and a few words after cooking, kept with the recipe and shared as a card.
+    var PLATES_JS = '/shared/gg-plates.js?v=b979';
+    function plateBtn(id) { return '<button type="button" class="btn btn-secondary rc-plate-btn" data-rc-plate="' + esc(id) + '">' + SHARE_ICON + 'Share My Plate</button>'; }
+    function platesLoad() { if (window.GGPlates) return Promise.resolve(true); if (platesLoad.p) return platesLoad.p;
+      return (platesLoad.p = new Promise(function (ok) { var s = document.createElement('script'); s.src = PLATES_JS; s.onload = function () { ok(!!window.GGPlates); }; s.onerror = function () { platesLoad.p = null; ok(false); }; document.head.appendChild(s); })); }
+    function plateOf(id) { var r = byId(id); return r ? { id: r.id, name: r.name, url: '/recipes/r/' + r.id + '.html' } : null; }
+    function fillPlates(r) { var el = $('rc-plates'); if (!el || !r) return; platesLoad().then(function (ok) { if (ok && el.isConnected) GGPlates.section(el, plateOf(r.id)); }); }
     function shareBtn(ref) { return '<button type="button" class="btn btn-secondary rc-share-btn" data-rc-share="' + esc(ref) + '">' + SHARE_ICON + 'Share</button>'; }
     var PUB = {}; ((window.GGTendPublic || {}).recipes || []).forEach(function (r) { if (r && r.id && !r.member) PUB[r.id] = 1; });
     // BLD 934: two Sober Drinks are Sparklers; their share pages use the new names (patches/bld917/gen-recipe-pages.py FILE_NAME).
@@ -652,7 +660,7 @@
       if (G.on() && (!r || r.id !== G.id())) G.close(true);
       if (r) {
         if (!list.hidden) listY = getY();
-        det.innerHTML = detailHTML(r);
+        det.innerHTML = detailHTML(r); fillPlates(r);
         list.hidden = true; det.hidden = false;
         setTitle(r.name + ' | Grounded Recipes | Grow With Grounded');
         lastId = r.id;
@@ -926,6 +934,7 @@
         if (e.target.closest('#rc-back')) goBack();
         else if (e.target.closest('.rc-bkhol a')) { if (!MNT) fromList = true; }
         else if (e.target.closest('.rc-also .rc-card')) nav(e.target.closest('.rc-card').getAttribute('data-id'));
+        else if (e.target.closest('[data-rc-plate]')) { var pid = e.target.closest('[data-rc-plate]').getAttribute('data-rc-plate'); platesLoad().then(function (ok) { if (ok) GGPlates.compose(plateOf(pid)); }); }
         else if (e.target.closest('[data-rc-share]')) shareGo(e.target.closest('[data-rc-share]').getAttribute('data-rc-share'), e.target.closest('[data-rc-share]'));
         else if (e.target.closest('[data-rc-menu]')) menuGo(e.target.closest('[data-rc-menu]').getAttribute('data-rc-menu'));
         else if (e.target.closest('[data-rc-hguide]')) { var hv = e.target.closest('[data-rc-hguide]').getAttribute('data-rc-hguide').split('|'), hr = holRecipe(hv[0], hv[1]); if (hr) G.open(hr, e.target.closest('[data-rc-hguide]')); }

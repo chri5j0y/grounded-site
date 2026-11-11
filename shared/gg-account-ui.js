@@ -258,7 +258,7 @@
     });
     return c.p;
   };
-  var KIND = { kitchen: 'Family Kitchen', money: 'Grounded Money', planner: 'Family Planner' };   // BLD 950: the Family Planner joins the shared spaces
+  var KIND = { kitchen: 'Family Kitchen', money: 'Grounded Money', planner: 'Family Planner' , plates: 'Our Plates' };   // BLD 950: the Family Planner joins the shared spaces; BLD 967: Our Plates
   // BLD 958: invite a grown-up, a teen (13 to 17), or a kid (12 and under). A teen or kid needs the parent's approval, and a
   // kid can have a sign in name in place of an email. Every invite can be texted from the parent's own phone.
   var BAND = { teen: 'Teen', kid: 'Kid' };
@@ -313,7 +313,7 @@
               (h.owner && !p.me ? (p.account ? '<button type="button" class="ga-btn sm line" data-rm="' + esc(p.account) + '">Remove</button>' : '<button type="button" class="ga-btn sm line" data-inv="' + esc(p.email) + '">Cancel Invite</button>') : '') + '</li>';
           }).join('') + '</ul></div>' +
           (h.owner && h.people.length < h.seats ? inviteForm() : '') +
-          '<div class="ga-card"><span class="ga-k">Shared</span><ul class="ga-list">' + ['kitchen', 'money', 'planner'].map(function (k) {
+          '<div class="ga-card"><span class="ga-k">Shared</span><ul class="ga-list">' + ['kitchen', 'money', 'planner', 'plates'].map(function (k) {   // BLD 967: Our Plates
             var onIt = shared.indexOf(k) >= 0 || h.spaces.some(function (s) { return s.kind === k && s.key; });
             return '<li><div><b>' + KIND[k] + '</b><small>' + (onIt ? 'Shared with your Household' : 'On your own devices') + '</small></div>' + (onIt || !window.GGSync ? '' : '<button type="button" class="ga-btn sm" data-share="' + k + '">Share With Our Household</button>') + '</li>';
           }).join('') + '</ul></div>' +

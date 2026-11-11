@@ -1065,7 +1065,7 @@ function vOv(){
           ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>`}
       ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.swaps && typeof x.swaps === 'object' ? Object.entries(x.swaps).filter(([, t]) => t).map(([k, t]) => `<p class="hj-sub"><b>Swap for ${esc((arr((PLIB() || {}).needs).find(z => z.id === k) || {}).name || k.replace(/([A-Z])/g, ' $1').toLowerCase())}:</b> ${esc(t)}</p>`).join('') : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
-      <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
+      <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button>${o.k === 'cook' && !o.peek ? `<button type="button" class="btn btn-line hj-go" data-hja="plate">Share My Plate</button>` : ''}</div>`;
   }
   const sc = stCol(stState(o), HOUR()), art = ovArt(o);
   return `<div class="hj-ov hj-st${o.inline ? ' hj-inl' : ''}${art ? ' hj-hasart' : ''}" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};${sc.bg ? `--stbg:${esc(sc.bg)};` : ''}${sc.fg ? `--stfg:${esc(sc.fg)};` : ''}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'Tending')}">${art}<div class="hj-ovin">${body}</div></div>`;
@@ -1198,6 +1198,8 @@ function actTool(a, v){
     case 'step': { o.dn = o.dn || {}; o.dn[v] = !o.dn[v]; rerender(true); return true; }
     case 'stime': { const s = arr(o.data.steps)[+v], m = +(s && s.min) || 0; if (m) startTimer(o, m * 60, +v); rerender(true); return true; }
     case 'tstop': o.run = false; o.ti = null; rerender(true); return true;
+    case 'plate': if (o) plateOpen(o); return true;   // BLD 967: Share My Plate from the cook guide
+    case 'rshare': if (o) plateLink(o); return true;   // BLD 967: Share, the recipe's own page
     case 'cdone': markDone(o.key); toast(o.peek ? 'Tomorrow is ready.' : o.idea ? 'Done. Enjoy.' : o.k === 'cook' ? 'Dinner done. Enjoy the table together.' : 'Prep done. The week is ready.'); closeOv(); return true;
   }
   return false;
@@ -2164,10 +2166,23 @@ setInterval(() => { const o = S.ov; if (!o || !o.guide || !o.timers || !o.timers
   const done = o.timers.filter(t => t.end <= now); if (!done.length) return;
   o.timers = o.timers.filter(t => t.end > now); o.rang = done[done.length - 1];
   if (typeof chime === 'function') chime(); kSay(o, LN.tdone); rerender(true); }, 500);
+// BLD 967: Share My Plate. A dinner in the plan opens the book recipe it was written from (recipe.plan), so its plates
+// show on that recipe in the Recipe Book; a dinner with no book recipe keeps its own id.
+const PLATES_JS = 'shared/gg-plates.js?v=b979';
+let PLATESL = null;
+function platesLoad(){ if (window.GGPlates) return Promise.resolve(true); if (PLATESL) return PLATESL;
+  PLATESL = new Promise(res => { const s = document.createElement('script'); s.src = asset(PLATES_JS); s.onload = () => res(!!window.GGPlates); s.onerror = () => { PLATESL = null; res(false); }; document.head.appendChild(s); }); return PLATESL; }
+function plateRecipe(id, name){ const L = arr(((PLIB() || {}).recipes)), nm = rNorm(name || '');
+  const r = L.find(x => x && x.id === id) || L.find(x => x && x.plan && x.plan === id) || (nm ? L.find(x => x && rNorm(x.name) === nm) : null);
+  return r ? {id: r.id, name: r.name, url: '/recipes/r/' + r.id + '.html'} : {id: String(id || slug(name || 'dinner')), name: name || 'Dinner', url: '/recipes/'}; }
+function plateBook(o){ const r = plateRecipe(o.did || String(o.key || '').split(':').pop(), o.title || (o.data || {}).name); return r.url !== '/recipes/' ? r : null; }
+function plateLink(o){ const r = plateBook(o); if (!r) return; platesLoad().then(ok => ok && GGPlates.share(r)).then(v => { if (v === 'copied') toast('The recipe link is copied. Paste it anywhere to share.'); }); }
+function plateOpen(o){ const id = o.did || String(o.key || '').split(':').pop(), r = plateRecipe(id, o.title || (o.data || {}).name);
+  platesLoad().then(ok => { if (ok) GGPlates.compose(r); else toast('Share My Plate is getting ready. Try again in a moment.'); }); }
 function vGuide(o, top){
   const steps = kSteps(o), s = steps[o.gi], pct = Math.round(100 * o.gi / Math.max(1, steps.length));
   const rang = o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : '';
-  if (!s) return `${top(o.title, o.sub, 100)}${stagePanel('done', {fig: window.GGStage ? '' : POT, small: true})}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.idea ? 'Ready to enjoy.' : o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
+  if (!s) return `${top(o.title, o.sub, 100)}${stagePanel('done', {fig: window.GGStage ? '' : POT, small: true})}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.idea ? 'Ready to enjoy.' : o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button>${o.k === 'cook' && !o.peek ? `<button type="button" class="btn btn-line hj-go" data-hja="plate">Share My Plate</button>` : ''}</div>`;
   const tms = arr(o.timers);
   const t = trans(o, 'cook'), ft = tms.length ? tms.slice().sort((a, b) => a.end - b.end)[0] : null, fs = ft ? arr(o.data.steps)[ft.i] : null, ftot = fs ? (+fs.min || 1) * 60000 : 1;
   return `${top(o.title, 'Step ' + (o.gi + 1) + ' of ' + steps.length, pct)}
@@ -3193,7 +3208,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b975'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b979'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
@@ -6046,7 +6061,10 @@ function mmOvInfo(o){
   return null;
 }
 const mmBtn = (a, v, l, cls) => `<button type="button" class="btn ${cls || 'btn-line'} btn-sm" data-mma="${a}" data-mmv="${esc(v)}">${esc(l)}</button>`;
-function mmOvBtns(o){ const I = mmOvInfo(o); if (!I) return ''; const b = [];
+// BLD 967: a dinner that is in the Recipe Book also offers Share (its recipe page link, through the phone's share sheet).
+function mmOvBtns(o){ const sh = o && o.k === 'cook' && !o.peek && plateBook(o) ? `<button type="button" class="btn btn-line btn-sm" data-hja="rshare">Share</button>` : '';
+  const m = mmOvBtns0(o); return sh ? (m ? m.replace(/<\/div>$/, sh + '</div>') : `<div class="hj-mmacts">${sh}</div>`) : m; }
+function mmOvBtns0(o){ const I = mmOvInfo(o); if (!I) return ''; const b = [];
   if (I.entry){ b.push(mmBtn('swap', 'menu:' + I.entry.id, 'Swap')); b.push(mmBtn('remove', I.entry.id, 'Remove from My Menu')); }
   else { if (I.ref && mmRecipe(I.ref)) b.push(mmBtn('add', I.ref, 'Add to My Menu')); if (I.slot) b.push(mmBtn('swap', I.slot + '|' + I.date, 'Swap')); }
   return b.length ? `<div class="hj-mmacts">${b.join('')}</div>` : ''; }
