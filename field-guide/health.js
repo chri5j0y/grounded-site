@@ -431,7 +431,18 @@ function vJourney(){
 // FLD.healthJourney.app = {workouts, dinners: {weeks, breakfasts, lunches, snacks}, shop: {weeks: {A: {shop, sunday, wednesday, batch}}, staples}}
 // FDR.healthMine.addons = [shop items added to Week A lists]; FDR.healthMine.checks = [extra daily checks].
 // DATA.health adds: log {'YYYY-MM-DD': {key: time}}, shop {'<week no>': {items: [...], u}}, lifts {exerciseId: lb}, wlog [{id, date, s, sets, note, u}].
-const APP = () => { if (PUB() && !START()) return pubApp(); const l = FLDH(), a = l && l.app && typeof l.app === 'object' ? l.app : null; return a ? libApp(a) : null; };
+// BLD 968 (Chris: "1"): each Guide meal plan dinner shows its Grounded Recipes name (BLD 966 wrote one book recipe for each,
+// recipe.plan), so the Week, Today, the cook guide, and My Menu say the same name the Recipe Book does. Keyed by the plan's
+// dinner id; Use-it-up nights stay as they are.
+const BOOKN = {"a-fri": "Wild Shrimp Tacos with Slaw and Black Beans", "a-mon": "Turkey and Three Bean Chili", "a-sat": "Homemade Whole Wheat Pizza Night", "a-sun": "Rotisserie Chicken Dinner with Roasted Vegetables", "a-tue": "Sheet Pan Salmon with Potatoes and Green Beans", "a-wed": "Lentil Bolognese over Whole Wheat Pasta", "b-fri": "Salmon Patties with Sweet Potato Wedges and Slaw", "b-mon": "Sheet Pan Chicken with Chickpeas, Carrots, and Potatoes", "b-sat": "Chicken Burrito Bowl Bar", "b-sun": "Chicken, Wild Rice, and Mushroom Hotdish", "b-tue": "Lemon Garlic Cod with Brown Rice and Broccoli", "b-wed": "Lentil Shepherd's Pie", "c-fri": "Blackened Wild Shrimp with Black Bean Corn Salsa and Brown Rice", "c-mon": "Minestrone with White Beans and Sprouted Toast", "c-sat": "Cookout Burgers with Sweet Potato Wedges and Corn", "c-sun": "White Chicken Chili", "c-tue": "Salmon Grain Bowls with Quinoa and Dill Yogurt Sauce", "c-wed": "Shrimp and Broccoli Stir Fry with Brown Rice", "d-fri": "Pecan Crusted Wild Cod with Roasted Potatoes and Green Beans", "d-mon": "Lean Beef and Black Bean Tacos", "d-sat": "Breakfast for Dinner with Whole Wheat Pancakes and Sausage", "d-sun": "Pork Carnitas Bowls with Pinto Beans", "d-tue": "Sheet Pan Salmon with Sweet Potatoes and Broccoli", "d-wed": "Chicken, Barley, and Vegetable Soup"};
+let BKN = null;
+function bookNamed(a){
+  if (!a || !a.dinners || !a.dinners.weeks) return a; if (BKN && BKN.a === a) return BKN.out;
+  const W = a.dinners.weeks, weeks = {};
+  Object.keys(W).forEach(k => { const w = W[k]; weeks[k] = w && Array.isArray(w.dinners) ? Object.assign({}, w, {dinners: w.dinners.map(d => d && BOOKN[d.id] && d.name !== BOOKN[d.id] ? Object.assign({}, d, {name: BOOKN[d.id], planName: d.name}) : d)}) : w; });
+  const out = Object.assign({}, a, {dinners: Object.assign({}, a.dinners, {weeks})}); BKN = {a, out}; return out;
+}
+const APP = () => { if (PUB() && !START()) return pubApp(); const l = FLDH(), a = l && l.app && typeof l.app === 'object' ? l.app : null; return a ? libApp(bookNamed(a)) : null; };
 // BLD 921d: a plan moved from the Field Guide into The Grounded Way (BLD 867) plays the library's four food weeks. In a Family
 // Kitchen its weeks turn to the kitchen's start (kitOff), dinners and shopping lists together, the way a public plan's ids turn.
 let LAPP = null;
@@ -4550,8 +4561,11 @@ const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
 const DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
 // BLD 910: a dinner tile with no night painting takes the next one in this rotation.
 const DIN_ROT = ['dinner-chili-sq', 'dinner-curry-sq', 'dinner-fish-sq', 'dinner-stirfry-sq', 'meal-lunch-sq', 'todays-plate-sq'];
-const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
-const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([, re]) => re.test(t)); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
+const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew|minestrone/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
+// BLD 968: a meat-led dinner with beans (Sheet Pan Chicken with Chickpeas) skips the curry picture, and a burrito or carnitas
+// bowl skips the stir fry picture; each takes the general food pictures instead.
+const DIN_SKIP = {curry: /chicken|turkey|beef|pork|burger|sausage/i, stirfry: /burrito|carnitas|taco/i};
+const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([k, re]) => re.test(t) && !(DIN_SKIP[k] && DIN_SKIP[k].test(t))); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
 function moveKind(id, ses, lvl){
   id = String(id || ''); const t = String((ses && ses.title) || '');
   if ((lvl || (PUB() ? H().set.level || 'root' : '')) === 'gentle') return /walk/i.test(t) ? 'walk' : /balance/i.test(t) ? 'taichi' : 'gentle';
