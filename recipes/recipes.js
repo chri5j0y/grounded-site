@@ -46,7 +46,7 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b979';   // BLD 966: On Your Week; BLD 967: Share My Plate
+  var VER = 'b981';   // BLD 966: On Your Week; BLD 967: Share My Plate
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
@@ -572,7 +572,7 @@
        its own page (recipes/r/<id>.html, with its painting in the link preview); any recipe outside the public file shares the
        Recipes page, and never its content. */
     // BLD 967 Share My Plate (shared/gg-plates.js): a photo and a few words after cooking, kept with the recipe and shared as a card.
-    var PLATES_JS = '/shared/gg-plates.js?v=b979';
+    var PLATES_JS = '/shared/gg-plates.js?v=b981';
     function plateBtn(id) { return '<button type="button" class="btn btn-secondary rc-plate-btn" data-rc-plate="' + esc(id) + '">' + SHARE_ICON + 'Share My Plate</button>'; }
     function platesLoad() { if (window.GGPlates) return Promise.resolve(true); if (platesLoad.p) return platesLoad.p;
       return (platesLoad.p = new Promise(function (ok) { var s = document.createElement('script'); s.src = PLATES_JS; s.onload = function () { ok(!!window.GGPlates); }; s.onerror = function () { platesLoad.p = null; ok(false); }; document.head.appendChild(s); })); }
