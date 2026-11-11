@@ -40,7 +40,7 @@
     var veteran = function (c, p) { return c.id === 'memories' || /military|served|service/i.test(p.t) ? '<p class="ggnb-care">Veterans: call 988 and press 1, or text 838255, any time.</p>' : ''; };
     return N.mount(ctx, {
       key: 'lg', book: LEG, rec: rec, save: function () { return GGP.save(ctx.id); }, rows: 7, openedDate: iso,
-      art: { src: '/shared/heroes/sequoia-wide.webp', alt: '', title: 'Your Legacy Book', sub: 'Your stories, kept for the people you love' },
+      art: { src: '/shared/heroes/p/legacy-book-wide.webp', alt: '', title: 'Your Legacy Book', sub: 'Your stories, kept for the people you love' },
       T: function (c, k) { return c[k] || ''; }, P: function (p) { return p.t; }, H: function (p) { return p.help || ''; }, written: written,
       chapters: function () { return LEG.chapters || []; },
       home: function () {

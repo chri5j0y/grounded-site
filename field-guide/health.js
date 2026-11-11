@@ -148,7 +148,7 @@ const GOALS = [['ldl', 'Lower my LDL'], ['strong', 'Build strength and muscle'],
 const kick = t => `<div class="hj-kick">${esc(t)}</div>`;
 const chip = (sec, label) => `<button type="button" class="chip${S.sec === sec ? ' on' : ''}" aria-pressed="${S.sec === sec}" data-hja="sec" data-hjv="${sec}">${esc(label)}</button>`;
 function hero(lib){
-  const h = (lib && lib.hero) || {}, w = h.wide || '../shared/heroes/page-growth-wide.webp', n = h.narrow || '../shared/heroes/page-growth-narrow.webp';
+  const h = (lib && lib.hero) || {}, w = h.wide || '../shared/heroes/p/health-hero-wide.webp', n = h.narrow || '../shared/heroes/p/health-hero-narrow.webp';
   return `<div class="hj-hero"><picture><source media="(max-width:700px)" srcset="${esc(n)}"><img src="${esc(w)}" alt="" loading="lazy"></picture>
     <div class="hj-hin"><div class="hj-eb">Grow With Grounded</div><h2>${esc((lib && lib.title) || 'Tending')}</h2><p>${esc((lib && lib.tagline) || 'Whole food, steady strength, and a strong heart, one week at a time.')}</p></div></div>`;
 }
@@ -1085,15 +1085,25 @@ function vOv(){
 // every player plays over its own painting, softened under a scrim in the page's own colors so the figure, timers, and words read.
 // The stage's sky stays as the card around the figure; a player with no painting keeps the scene as before. On a phone the square
 // crop (-sq), on a wide screen the wide one. The drift continues across redraws (its delay counts from when the player opened).
-const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'drinks', sauce: 'prep-together'}; // BLD 903: Sauces and Dressings
+// BLD 970: each meal kind has its own painting now.
+const ART_KITCHEN = {lunch: 'p:kitchen-lunch', breakfast: 'p:kitchen-breakfast', snack: 'p:kitchen-snack', batch: 'p:kitchen-batch', prep: 'p:kitchen-prep', head: 'p:kitchen-head-start', dinner: 'p:kitchen-dinner', party: 'p:kitchen-party', drink: 'p:kitchen-drink', sauce: 'p:kitchen-sauce'}; // BLD 903: Sauces and Dressings
+// BLD 970: a workout's start painting (MOVE_ART) shows on its start screen and its own done painting on the done screen. The screens
+// in between keep the painting they had before (MOVE_RUN), so the moving figure gets nothing new behind it.
+const MOVE_DONE = {build: 'p:move-build-done', peak: 'p:move-peak-done', cardio: 'p:move-cardio-done', walk: 'p:move-walk-done', daily: 'p:move-daily-done',
+  yoga: 'p:move-yoga-done', taichi: 'p:move-taichi-done', stretch: 'p:move-stretch-done', gentle: 'p:move-gentle-done'};
+const MOVE_RUN = {build: 'move-build', peak: 'move-peak', cardio: 'move-cardio', walk: 'move-walk', daily: 'move-flow', yoga: 'move-yoga', taichi: 'move-balance', stretch: 'move-stretch'};
+const moveStage = (o, kind, n) => o.fin && MOVE_DONE[kind] ? MOVE_DONE[kind] : o.stage === 'start' || o.fin || !MOVE_RUN[kind] ? n : MOVE_RUN[kind];
+// BLD 970: meditation days 6 and 7 have new paintings (a card square, -sq, and the larger -lg for the candle stage).
+const MED_P = {m6: 'p:med-day-6', m7: 'p:med-day-7'};
+const medBase = j => MED_P['m' + (j + 1)] || 'med-m' + (j + 1), medSq = n => /^p:/.test(n) ? n + '-sq' : n, isMedArt = n => /^(med-m|p:med-day-)\d$/.test(n);
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';
   if (o.k === 'quiet') return 'quiet-morning';
-  if (o.med || o.k === 'med'){ const m = MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : 'quiet-meditation'; }
-  if (o.prac) return flowArtName(arr((PR() || {}).sessions).find(z => z.id === o.s)).replace(/-sq$/, '');
+  if (o.med || o.k === 'med'){ const m = MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? medBase(j) : 'quiet-meditation'; }
+  if (o.prac){ const x = arr((PR() || {}).sessions).find(z => z.id === o.s); return moveStage(o, (x && x.style) || 'daily', flowArtName(x).replace(/-sq$/, '')); }
   if (o.k === 'work'){ const p = String(o.key || '').split(':'), lvl = p[0] === 'wl' ? p[1] : '';
-    const ses = lvl ? (levelSes(lvl, o.s) || {}).ses : sesById(o.s); return moveArtName(o.s, ses, lvl).replace(/-sq$/, ''); }
+    const ses = lvl ? (levelSes(lvl, o.s) || {}).ses : sesById(o.s); return moveStage(o, moveKind(o.s, ses, lvl), moveArtName(o.s, ses, lvl).replace(/-sq$/, '')); }
   if (o.k === 'prep') return /^prep:batch:/.test(o.key || '') ? ART_KITCHEN.batch : ART_KITCHEN.prep;
   if (o.hol) return (o.data && o.data.art) || ART_KITCHEN.dinner; // BLD 896: Today's Plate, or the Weekly Batch table on a make-ahead day
   if (o.k === 'cook'){ if (o.peek) return ART_KITCHEN.head; const k = String(o.key || ''), x = o.data || {}, meal = /^idea:/.test(k) && !/^idea:recipe:/.test(k) ? k.split(':')[1] : String(x.meal || 'dinner').toLowerCase();
@@ -1104,7 +1114,7 @@ function ovArtName(o){
 }
 function ovArt(o){
   const n = ovArtName(o); if (!n) return ''; if (!o.artT) o.artT = Date.now();
-  const med = /^med-m\d$/.test(n), wide = WAY(med ? n + '-lg' : n), sq = WAY(med || ART_ONE.includes(n) ? n : n + '-sq'), d = -((Date.now() - o.artT) / 1000).toFixed(1);
+  const med = isMedArt(n), wide = WAY(med ? n + '-lg' : n), sq = WAY(med ? medSq(n) : ART_ONE.includes(n) ? n : n + '-sq'), d = -((Date.now() - o.artT) / 1000).toFixed(1);
   return `<div class="hj-paint" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="${esc(sq)}"><img src="${esc(wide)}" alt="" decoding="async" style="animation-delay:${d}s"></picture></div>`;
 }
 function openKey(key){
@@ -1373,8 +1383,8 @@ function candle(){ return `<div class="hj-candle" aria-hidden="true"><svg viewBo
 // BLD 899 (Chris, October 31, 2026, option 1): every meditation plays on its day's painting (the same one as its card) with a
 // candle's flicker and breathing glow, drawn by the stage (GGStage.med, set by shared/med-stage.json). The drawn candle above
 // stays for a page without the stage.
-function medPaint(o){ const n = ovArtName(o) || 'quiet-meditation', m = /^med-m\d$/.test(n); if (!o.artT) o.artT = Date.now();
-  return {art: n, src: WAY(n), lg: m ? WAY(n + '-lg') : '', since: o.artT}; }
+function medPaint(o){ const n = ovArtName(o) || 'quiet-meditation', m = isMedArt(n); if (!o.artT) o.artT = Date.now();
+  return {art: n, src: WAY(m ? medSq(n) : n), lg: m ? WAY(n + '-lg') : '', since: o.artT}; }
 const medOp = o => window.GGStage && GGStage.med ? {fig: '', med: medPaint(o)} : {fig: candle()};
 // Andrew's kitchen: a simple pot with steam for the stage.
 const POT = `<svg viewBox="0 0 240 240" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M52 118h136v54a28 28 0 0 1-28 28H80a28 28 0 0 1-28-28z"/><path d="M40 118h160M52 132H30M188 132h22"/><path class="hj-steam" d="M92 96c-10-12 10-20 0-34M120 96c-10-12 10-20 0-34M148 96c-10-12 10-20 0-34" opacity=".55"/></g></svg>`;
@@ -2658,20 +2668,22 @@ const tsw = (a, v, on, label) => `<button type="button" class="tn-sw" role="swit
 const tpt = p => p ? `<span class="tn-pt ${PCLS[p] || 'p-leaves'}">${esc(p)}</span>` : '';
 // BLD 910 (Chris, November 3, 2026: "all cards get high quality images"): every card's badge is one of Grounded's own paintings,
 // chosen by the card's subject; a third argument names a painting for one card so cards side by side never share one.
-const BADGE_ART = {bell: 'candle-alcove-sq', book: 'library-learn-sq', capsule: 'supplements-sq', compass: 'way-plan-sq', flask: 'progress-sq', flame: 'tend-spirit',
-  gear: 'tending-sq', kitchen: 'kitchen-room-sq', leaf: 'meal-lunch-sq', link: 'grounded-way-square', lotus: 'tend-mind', move: 'tend-move', numbers: 'progress-sq',
-  people: 'tend-people', plate: 'todays-plate-sq', shield: 'move-gentle-sq', sprout: 'welcome-narrow', star: 'tend-fruit', today: 'tending-sq', week: 'growth-plan-sq', wind: 'quiet-meditation-sq'};
+// BLD 970: every badge has its own painting now (shared/heroes/p/badge-*-sq.webp).
+const BADGE_ART = {bell: 'p:badge-bell-sq', book: 'p:badge-book-sq', capsule: 'p:badge-capsule-sq', compass: 'p:badge-compass-sq', flask: 'p:badge-flask-sq', flame: 'p:badge-flame-sq',
+  gear: 'p:badge-gear-sq', kitchen: 'p:badge-kitchen-sq', leaf: 'p:badge-leaf-sq', link: 'p:badge-link-sq', lotus: 'p:badge-lotus-sq', move: 'p:badge-move-sq', numbers: 'p:badge-numbers-sq',
+  people: 'p:badge-people-sq', plate: 'p:badge-plate-sq', shield: 'p:badge-shield-sq', sprout: 'p:badge-sprout-sq', star: 'p:badge-star-sq', today: 'p:badge-today-sq', week: 'p:badge-week-sq', wind: 'p:badge-wind-sq'};
 const badge = (n, cls, art) => `<span class="tn-badge tn-bimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(WAY(art || BADGE_ART[n] || 'tending-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>`;
 // BLD 866: each Today section wears its painting (shared/heroes/way/tend-*.webp), for the Field Guide and public Tending alike.
-const TIMG = {body: 'tend-body', move: 'tend-move', mind: 'tend-mind', spirit: 'tend-spirit', people: 'tend-people', fruit: 'tend-fruit'};
-const paint = (id, cls) => TIMG[id] ? `<span class="tn-gimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(asset('shared/heroes/way/' + TIMG[id] + '.webp'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>` : '';
+// BLD 970: each section head has its own painting now (shared/heroes/p/section-*-sq.webp).
+const TIMG = {body: 'p:section-body-sq', move: 'p:section-move-sq', mind: 'p:section-mind-sq', spirit: 'p:section-spirit-sq', people: 'p:section-people-sq', fruit: 'p:section-fruit-sq'};
+const paint = (id, cls) => TIMG[id] ? `<span class="tn-gimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(WAY(TIMG[id]))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>` : '';
 const grpHead = (id, title, icn, cls, part) => `<div class="tn-grp ${cls}" id="tn-${id}">${TIMG[id] ? paint(id) : badge(icn)}<h2>${esc(title)}</h2>${tpt(part)}<span class="sp"></span></div>`;
 // BLD 910: a section head wears a different painting from the first card beneath it.
 const SEC_ART = {plate: 'meal-lunch-sq', numbers: 'way-plan-sq'};
 function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${TIMG[icn] ? paint(icn, 'big') : badge(icn, '', SEC_ART[icn])}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
 // A plan card: scene tile, time kicker, title, one line, actions with a check.
 // BLD 910: a plan card with no painting of its own takes the painting for its scene, never a drawn one.
-const SCENE_ART = {work: 'move-strength-sq', practice: 'move-flow-sq', cook: 'kitchen-headstart-sq', bowl: 'shop-sq', dawn: 'quiet-morning-sq', night: 'supplements-sq'};
+const SCENE_ART = {work: 'p:plancard-work-sq', practice: 'p:plancard-practice-sq', cook: 'p:plancard-cook-sq', bowl: 'p:plancard-bowl-sq', dawn: 'p:plancard-dawn-sq', night: 'p:plancard-night-sq'}; // BLD 970
 function planCard(o){
   const img = o.img || WAY(SCENE_ART[o.scene] || 'tending-sq');
   return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene"><img src="${esc(img)}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
@@ -2916,7 +2928,7 @@ function vKitchen(){
   const d = new Date(), fw = foodWeek(d), L = letter(fw), din = (APP() || {}).dinners || {}, w = (din.weeks || {})[L] || {}, tn = dinnerFor(d), log = H().log[today()] || {};
   const nut = x => nOk(x.nutHeart) && !KIT() ? nSf(x.nutHeart) + ' on the heart-health plate' : nSf(x.nut);
   const feat = tn ? (() => { const key = 'cook:' + tn.wk + ':' + tn.id, on = !!log[key];
-    return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene"><img src="${esc(WAY(dinnerArtName(tn) || 'kitchen-headstart'))}" alt="" loading="lazy" decoding="async"></div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
+    return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene"><img src="${esc(WAY(dinnerArtName(tn) || 'p:kitchen-tonight'))}" alt="" loading="lazy" decoding="async"></div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
       ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<p class="tn-sub">Step by step, with a voice to guide you.</p><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Grounded Cooking</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
   const rest = arr(w.dinners).filter(x => !tn || x.id !== tn.id);
   return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(fwlOf(L))}. Dinners guided step by step.`)}${kitTabs('kitchen')}
@@ -4174,7 +4186,7 @@ const OWN_PN = {roots: 'Roots', trunk: 'Trunk', bark: 'Bark', branches: 'Branche
 // Tending's own parts for Today's Rhythm, from the tree part an item tends.
 const OWN_TP = {roots: 'spirit', bark: 'mind', branches: 'people', leaves: 'move', fruit: 'labs'};
 const OWN_SLOT = {roots: 6.9, leaves: 7.6, trunk: 11.8, bark: 13.2, branches: 18, fruit: 19.8};
-const OWN_ART = {roots: 'tend-spirit', trunk: 'tend-fruit', bark: 'tend-mind', branches: 'tend-people', leaves: 'tend-move', fruit: 'tend-fruit'};
+const OWN_ART = {roots: 'p:own-roots-sq', trunk: 'p:own-trunk-sq', bark: 'p:own-bark-sq', branches: 'p:own-branches-sq', leaves: 'p:own-leaves-sq', fruit: 'p:own-fruit-sq'}; // BLD 970
 const OWN_FREQ = [['d', 'Every Day'], ['days', 'Chosen Days'], ['w', 'Once a Week'], ['m', 'Once a Month']];
 const OWN_SFREQ = [['once', 'Once'], ['w', 'Every Week'], ['2w', 'Every 2 Weeks'], ['m', 'Every Month']];
 const OWN_WK = [1, 2, 3, 4, 5, 6, 0];
@@ -4545,27 +4557,33 @@ function houseCard(){
 // ---------- every workout at every level, with art (BLD 881) ----------
 // Chris, October 28, 2026: "make sure we use our custom images for all cards ... we need to stay on brand". Every card picture is one
 // of Grounded's own paintings (shared/heroes/way, shared/cards); the animated stage stays inside the guided players only.
-const WAY = n => asset(/\//.test(n) ? 'shared/' + n : 'shared/heroes/way/' + n + '.webp');
-const ART_MOVE = ['tend-move', 'home-morning-narrow', 'tend-spirit', 'welcome-wide', 'tend-people', 'home-evening-narrow', 'tend-mind'];
-const ART_QUIET = ['tend-mind', 'tend-spirit', 'cards/meditation.webp', 'home-morning-narrow', 'home-evening-narrow', 'welcome-wide', 'tend-people'];
+// BLD 970: a name that starts with p: is one of the new paintings in shared/heroes/p/ (p:item-quiet-sq is shared/heroes/p/item-quiet-sq.webp).
+const WAY = n => asset(/^p:/.test(n) ? 'shared/heroes/p/' + n.slice(2) + '.webp' : /\//.test(n) ? 'shared/' + n : 'shared/heroes/way/' + n + '.webp');
+// BLD 970: both rotations have their own paintings now, square crops for the 600 by 600 tiles.
+const ART_MOVE = ['p:artmove-kayak-sq', 'p:artmove-dance-sq', 'p:artmove-garden-dig-sq', 'p:artmove-hike-sq', 'p:artmove-skate-sq', 'p:artmove-hoops-sq', 'p:artmove-swim-sq'];
+const ART_QUIET = ['p:quiet-focus-sq', 'p:quiet-worry-sq', 'p:quiet-grief-sq', 'p:quiet-garden-morning-sq', 'p:quiet-fireside-sq', 'p:quiet-break-sq', 'p:quiet-together-sq'];
 // BLD 895 (Chris's Grok paintings, October 30, 2026): each card shows its own painting, square crops (-sq) for the small tiles.
-const ITEM_ART = {quiet: 'quiet-morning-sq', meditation: 'quiet-meditation-sq', workout: 'move-strength-sq', practice: 'move-flow-sq', mark: 'progress-sq', cook: 'tend-body', meal: 'meal-lunch-sq',
-  headstart: 'kitchen-headstart-sq', shop: 'shop-sq', prep: 'prep-together-sq', batch: 'weekly-batch-sq', supplements: 'supplements-sq', setup: 'tending-sq'};
+// BLD 970: every Today card kind has its own painting now (shared/heroes/p/item-*-sq.webp).
+const ITEM_ART = {quiet: 'p:item-quiet-sq', meditation: 'p:item-meditation-sq', workout: 'p:item-workout-sq', practice: 'p:item-practice-sq', mark: 'p:item-mark-sq', cook: 'p:item-cook-sq', meal: 'p:item-meal-sq',
+  headstart: 'p:item-headstart-sq', shop: 'p:item-shop-sq', prep: 'p:item-prep-sq', batch: 'p:item-batch-sq', supplements: 'p:item-supplements-sq', setup: 'p:item-setup-sq'};
 // BLD 895: every workout by its kind: Strength by phase (Foundation, Build, Peak), Cardio, Walk, Gentle, and each Flow style.
-const MOVE_ART = {foundation: 'move-strength-sq', build: 'move-build-sq', peak: 'move-peak-sq', cardio: 'move-cardio-sq', walk: 'move-walk-sq', gentle: 'move-gentle-sq',
-  daily: 'move-flow-sq', yoga: 'move-yoga-sq', taichi: 'move-balance-sq', stretch: 'move-stretch-sq'};
+// BLD 970: each kind's card and start screen show its new start painting (Foundation and Gentle keep theirs; MOVE_DONE has the done screens).
+const MOVE_ART = {foundation: 'move-strength-sq', build: 'p:move-build-start-sq', peak: 'p:move-peak-start-sq', cardio: 'p:move-cardio-start-sq', walk: 'p:move-walk-start-sq', gentle: 'move-gentle-sq',
+  daily: 'p:move-daily-start-sq', yoga: 'p:move-yoga-start-sq', taichi: 'p:move-taichi-start-sq', stretch: 'p:move-stretch-start-sq'};
 // The meditation tiles Chris has made so far (m1 Monday to m7 Sunday, by position); install895.py rewrites this line. The rest keep ART_QUIET.
 const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
 // Dinner nights by recipe type (fish, chili and soup, lentil and bean, stir fry and bowl); install895.py rewrites this line with the
 // paintings present. A dinner with no night painting yet keeps the rotation (home.js FOOD_ROT, ITEM_ART.cook).
 const DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
+// BLD 970: the four dinner nights' new paintings (card square and cook backdrop).
+const DINNER_P = {fish: 'p:dinner-night-fish-sq', chili: 'p:dinner-night-chili-sq', curry: 'p:dinner-night-curry-sq', stirfry: 'p:dinner-night-stirfry-sq'};
 // BLD 910: a dinner tile with no night painting takes the next one in this rotation.
-const DIN_ROT = ['dinner-chili-sq', 'dinner-curry-sq', 'dinner-fish-sq', 'dinner-stirfry-sq', 'meal-lunch-sq', 'todays-plate-sq'];
+const DIN_ROT = ['p:dinner-tacos-sq', 'p:dinner-soup-sq', 'p:dinner-pasta-sq', 'p:dinner-sheet-pan-sq', 'p:dinner-grain-bowls-sq', 'p:dinner-flatbread-sq']; // BLD 970
 const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew|minestrone/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
 // BLD 968: a meat-led dinner with beans (Sheet Pan Chicken with Chickpeas) skips the curry picture, and a burrito or carnitas
 // bowl skips the stir fry picture; each takes the general food pictures instead.
 const DIN_SKIP = {curry: /chicken|turkey|beef|pork|burger|sausage/i, stirfry: /burrito|carnitas|taco/i};
-const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([k, re]) => re.test(t) && !(DIN_SKIP[k] && DIN_SKIP[k].test(t))); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
+const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([k, re]) => re.test(t) && !(DIN_SKIP[k] && DIN_SKIP[k].test(t))); return m && DINNER_ART.includes(m[0]) ? DINNER_P[m[0]] || 'dinner-' + m[0] + '-sq' : ''; };
 function moveKind(id, ses, lvl){
   id = String(id || ''); const t = String((ses && ses.title) || '');
   if ((lvl || (PUB() ? H().set.level || 'root' : '')) === 'gentle') return /walk/i.test(t) ? 'walk' : /balance/i.test(t) ? 'taichi' : 'gentle';
@@ -4578,8 +4596,8 @@ function moveKind(id, ses, lvl){
 const moveArtName = (id, ses, lvl) => MOVE_ART[moveKind(id, ses, lvl)] || ITEM_ART.workout;
 const moveArt = (id, ses, lvl) => { id = String(id || '').split(':').pop(); return WAY(moveArtName(id, ses || sesById(id), lvl)); };
 const flowArtName = x => MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
-const medArtName = j => j >= 0 && MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : ART_QUIET[Math.max(0, j) % ART_QUIET.length];
-const medArtFor = d => { const m = MED(), x = m && medFor(d), j = x ? arr(m.sessions).indexOf(x) : -1; return MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : ITEM_ART.meditation; };
+const medArtName = j => j >= 0 && MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ART_QUIET[Math.max(0, j) % ART_QUIET.length];
+const medArtFor = d => { const m = MED(), x = m && medFor(d), j = x ? arr(m.sessions).indexOf(x) : -1; return MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ITEM_ART.meditation; };
 // set: a rotation (an array) or one painting's name (a string).
 const artImg = (i, set) => { const L = set || ART_MOVE, n = typeof L === 'string' ? L : L[i % L.length]; return `<img src="${esc(WAY(n))}" alt="" loading="lazy" decoding="async" width="600" height="600">`; };
 const artCard = (i, key, kick, title, sub, cls, set) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(i, set)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span>${sub ? `<span class="tn-meta">${esc(sub)}</span>` : ''}</span></button>`;
@@ -4764,7 +4782,7 @@ function apiWeek(n){
   const SL = U('food') ? shopList(fw) : null, sItems = SL ? arr(SL.items) : [];
   return {hol: holCards(), ownWeek: ownWeekList(mon), shopWeek: fwl(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() && progLabel(mon) ? 'Fitness: ' + progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
     food: U('food') ? 'Meals: Food Week ' + fwl(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + fwl(fw),
-    shopImage: WAY('shop-wide'), prepImage: sp ? WAY('prep-together') : null, bulkImage: bt ? WAY(ITEM_ART.batch) : null,
+    shopImage: WAY('p:week-shop'), prepImage: sp ? WAY('p:week-prep') : null, bulkImage: bt ? WAY('p:week-batch-sq') : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
     bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, bulkLabel: bt ? bt.title || 'Weekly Batch' : null, bulkSub: bt ? batchSub(bt) : null, days};
 }

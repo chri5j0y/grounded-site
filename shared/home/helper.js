@@ -183,7 +183,7 @@
     css('ggscr-helper-css', CSS);
     root.className = 'gghp'; ctx.host.appendChild(root);
     var p = (forId && GGP.get && GGP.get(forId)) || {}, n = esc(p.name || 'them'), nm = NAME[tree] || 'tree';
-    var h = '<figure class="gghp-art"><img src="/shared/heroes/' + (NAME[tree] ? tree : 'oak') + '-wide.webp" alt="" loading="lazy"><figcaption><small>Helping ' + esc(p.name || '') + '</small><b>' + esc(p.name || 'Their') + '\'s ' + esc(nm) + '</b></figcaption></figure>';
+    var h = '<figure class="gghp-art"><img src="/shared/heroes/p/helper-figure-wide.webp" alt="" loading="lazy"><figcaption><small>Helping ' + esc(p.name || '') + '</small><b>' + esc(p.name || 'Their') + '\'s ' + esc(nm) + '</b></figcaption></figure>';
     if (!can(ctx.id, forId, tree)) {
       root.innerHTML = h + '<section class="gghp-card" data-gghp="closed"><p>' + n + ' chooses who helps, in their own ' + esc(nm) + ' settings. When ' + n + ' adds you as a helper and turns on Let Helpers Open My ' + esc(nm) + ', ' + n + '\'s tree opens here with your own passcode.</p></section>';
       return { close: function () { root.remove(); } };
