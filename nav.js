@@ -155,7 +155,7 @@
     return '@media (prefers-color-scheme: dark){' + scope(':root:not([data-theme="light"])') + '}' + scope(':root[data-theme="dark"]');
   }
 
-  /* The Services menu (BLD 932: Speaking and Training lists each talk and training page; BLD 931, Chris, firm: one plain name, "Services"; BLD 930 called it Ceremonies and Talks; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
+  /* The Services menu (BLD 972, Chris, "1": the six ceremonies, then For Groups with Speaking, Trainings, and For Organizations; each talk lives on Speaking and Training. BLD 932: Speaking and Training lists each talk and training page; BLD 931, Chris, firm: one plain name, "Services"; BLD 930 called it Ceremonies and Talks; was Ceremonies and Support, BLD 907; Services, GWG BLD 772):
      life ceremonies first, then honoring a life, then Speaking and Training and For Organizations. Each row opens its own page;
      See all ceremonies stays at the foot. It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_GROUPS = [
@@ -166,11 +166,8 @@
       ['Milestones and New Beginnings', 'Sober years, a fresh start, a new chapter', 'milestones'],
       ['Celebrations of Life', 'A day that sounds like the one you love', 'celebrations-of-life'],
       ['Funerals and Memorials', 'Honest, personal services for the one you love', 'funerals-memorials']] },
-    { name: 'Speaking and Training', href: 'speaking-training', items: [
-      ['The Grounded Way', 'A talk on whole person health', 'talk-grounded-way'],
-      ['Living Sober', 'A talk on a clear mind and a healthy body', 'talk-living-sober'],
-      ["Ritual for Life's Milestones", 'Why people need ceremony', 'talk-ritual'],
-      ['Compassion That Lasts', 'Keep caring, and keep your cup full', 'talk-compassion'],
+    { name: 'For Groups', items: [
+      ['Speaking', 'Talks for your event or gathering', 'speaking-training'],
       ['Trainings for Your Team', 'Half day, full day, keynote, or virtual', 'trainings'],
       ['For Organizations', 'Membership packs for your people', 'organizations']] }
   ];
