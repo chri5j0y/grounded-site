@@ -103,6 +103,10 @@
     celebration: 'Celebrations', daily: 'Every Day', gratitude: 'Gratitude', healing: 'Healing', home: 'Home', nature: 'Nature', hope: 'Hope', peace: 'Peace',
     forgiveness: 'Forgiveness', morning: 'Morning', evening: 'Evening', season: 'The Seasons' };
   var OCCS = ['funeral', 'dying', 'grief', 'comfort', 'wedding', 'birth', 'blessing', 'celebration', 'daily', 'gratitude', 'healing', 'home', 'nature', 'hope', 'peace', 'forgiveness', 'morning', 'evening', 'season'];
+  // BLD 973: the Readings Library page shows kind tabs, each with its own color (opts.tabs); a tab can hold several kinds.
+  var KTABS = [['prayer', 'Prayers', ['prayer', 'litany', 'chant']], ['scripture', 'Scripture', ['scripture']], ['blessing', 'Blessings', ['blessing']], ['poem', 'Poems', ['poem']],
+    ['hymn', 'Hymns and Songs', ['hymn', 'song']], ['reflection', 'Reflections', ['reflection']], ['story', 'Stories', ['story']]];
+  var KOF = {}; KTABS.forEach(function (k) { k[2].forEach(function (t) { KOF[t] = k[0]; }); });
   var RIGHTS = { pd: 'Public domain', grounded: 'Written by Grow With Grounded', cc: 'Shared under Creative Commons', permitted: 'Used with permission' };
   function tradName(k) { return TRAD[k] || cap(k); }
   function denomName(k) { return DENOM[k] || cap(k); }
@@ -170,6 +174,7 @@
       if (!tradHit(x, o.trad)) return false;
       if (o.denom && x.denom.indexOf(o.denom) < 0) return false;
       if (o.type && x.type !== o.type) return false;
+      if (o.kind && KOF[x.type] !== o.kind) return false;
       if (o.occasion && x.occasion.indexOf(o.occasion) < 0) return false;
       if (!ws.length) return true;
       var h = hay(x); return ws.every(function (w) { return h.indexOf(w) >= 0; });
@@ -335,6 +340,31 @@
     '.ggr-card{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;font:inherit;color:var(--ggr-ink);background:var(--ggr-card);border:1px solid var(--ggr-line);border-left:4px solid var(--ggr-gold);border-radius:14px;padding:14px 16px;cursor:pointer;min-width:0;}' +
     '.ggr-card:hover,.ggr-card:focus-visible{border-color:var(--ggr-gold);}' +
     '.ggr-card b{font-family:"Cormorant Garamond",Georgia,serif;font-size:21px;line-height:1.2;}.ggr-card small{font-size:14.5px;color:var(--ggr-soft);}' +
+    /* BLD 973: kind tabs, kind colors, and painted moment tiles (the Readings Library page) */
+    '.ggr{--k-prayer:#7A5BA6;--k-scripture:#8B5E1A;--k-blessing:#C27C2C;--k-poem:#3F7FA0;--k-hymn:#5F7D48;--k-reflection:#B4654A;--k-story:#A0526E;}' +
+    ':root[data-theme="dark"] .ggr{--k-prayer:#B9A2E0;--k-scripture:#E3B46A;--k-blessing:#F0B56B;--k-poem:#86BEDB;--k-hymn:#A9CC8C;--k-reflection:#E9A086;--k-story:#E39BB7;}' +
+    '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ggr{--k-prayer:#B9A2E0;--k-scripture:#E3B46A;--k-blessing:#F0B56B;--k-poem:#86BEDB;--k-hymn:#A9CC8C;--k-reflection:#E9A086;--k-story:#E39BB7;}}' +
+    '.ggr-k-prayer{--k:var(--k-prayer);}.ggr-k-scripture{--k:var(--k-scripture);}.ggr-k-blessing{--k:var(--k-blessing);}.ggr-k-poem{--k:var(--k-poem);}.ggr-k-hymn{--k:var(--k-hymn);}.ggr-k-reflection{--k:var(--k-reflection);}.ggr-k-story{--k:var(--k-story);}' +
+    '.ggr-tabs{display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 0 16px;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;}.ggr-tabs::-webkit-scrollbar{display:none;}' +
+    '.ggr-tab{--k:var(--ggr-gold);flex:none;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:15px;letter-spacing:.8px;text-transform:uppercase;color:var(--ggr-ink);background:var(--ggr-card);border:2px solid var(--ggr-line);border-top:4px solid var(--k);border-radius:12px;padding:9px 12px;min-height:46px;cursor:pointer;}' +
+    '.ggr-tab:hover{border-color:var(--k);}.ggr-tab[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:#fff;}' +
+    ':root[data-theme="dark"] .ggr-tab[aria-pressed="true"]{color:#1F1A14;}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ggr-tab[aria-pressed="true"]{color:#1F1A14;}}' +
+    '.ggr-filters.ggr-f2{grid-template-columns:repeat(2,minmax(0,1fr));}' +
+    '.ggr-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}' +
+    '.ggr-tile{position:relative;display:block;padding:0;border:0;border-radius:16px;overflow:hidden;cursor:pointer;background:#2A1C10;aspect-ratio:4/3;box-shadow:0 4px 14px rgba(40,25,10,.16);transition:transform .2s ease,box-shadow .2s ease;}' +
+    '.ggr-tile.ggr-wide{grid-column:span 2;aspect-ratio:2.78/1;}' +
+    '.ggr-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}' +
+    '.ggr-tile span{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:28px 14px 11px;text-align:left;background:linear-gradient(to top,rgba(20,12,4,.82),rgba(20,12,4,0));color:#fff;}' +
+    '.ggr-tile b{font-family:"Cormorant Garamond",Georgia,serif;font-size:23px;line-height:1.1;text-shadow:0 1px 4px rgba(0,0,0,.6);}.ggr-tile small{font-size:14px;color:#FFE7BD;}' +
+    '.ggr-tile:hover,.ggr-tile:focus-visible{transform:translateY(-2px);box-shadow:0 10px 24px rgba(40,25,10,.25);}.ggr-tile:hover img{transform:scale(1.04);}' +
+    '.ggr-mhead{display:flex;align-items:center;gap:16px;margin:4px 0 14px;padding:10px;background:var(--ggr-card);border:1px solid var(--ggr-line);border-radius:18px;}' +
+    '.ggr-mhead img{width:132px;height:99px;object-fit:cover;border-radius:12px;flex:none;}.ggr-mhead span{display:block;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--ggr-sage);}' +
+    '.ggr-mhead b{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:32px;line-height:1.1;}' +
+    '.ggr-item[class*="ggr-k-"]{border-left:5px solid var(--k);}' +
+    '.ggr-pill{float:right;margin:2px 0 4px 10px;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--k);border:1.5px solid var(--k);border-radius:999px;padding:2px 10px;}' +
+    '@media(max-width:760px){.ggr-filters.ggr-f2 .ggr-f:first-child{grid-column:auto;}}' +
+    '@media(max-width:900px){.ggr-tiles{grid-template-columns:repeat(3,minmax(0,1fr));}.ggr-tile.ggr-wide{grid-column:span 3;aspect-ratio:8/3;}}' +
+    '@media(max-width:600px){.ggr-tabs{flex-wrap:nowrap;}.ggr-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}.ggr-tile.ggr-wide{grid-column:span 2;aspect-ratio:2/1;}.ggr-tile b{font-size:20px;}.ggr-mhead img{width:96px;height:72px;}.ggr-mhead b{font-size:26px;}}' +
     '.ggr-list{display:flex;flex-direction:column;gap:10px;}' +
     '.ggr-item{display:block;width:100%;text-align:left;font:inherit;color:var(--ggr-ink);background:var(--ggr-card);border:1px solid var(--ggr-line);border-radius:14px;padding:14px 18px;cursor:pointer;min-width:0;}' +
     '.ggr-item:hover,.ggr-item:focus-visible{border-color:var(--ggr-gold);}' +
@@ -413,16 +443,16 @@
     opts = opts || {};
     style();
     var pick = typeof opts.onPick === 'function', usesHash = opts.mode === 'page';
-    var st = { q: opts.q || '', trad: opts.trad || '', denom: opts.denom || '', type: opts.type || '', occasion: opts.occasion || '', open: opts.id || null, shown: PAGE, deep: false };
+    var st = { q: opts.q || '', trad: opts.trad || '', denom: opts.denom || '', type: opts.type || '', occasion: opts.occasion || '', kind: opts.kind || '', open: opts.id || null, shown: PAGE, deep: false };
     var root = document.createElement('div'); root.className = 'ggr'; el.appendChild(root);
     var listY = 0;
     function fromHash() {
       var h = {}; String(location.hash || '').replace(/^#/, '').split('&').forEach(function (kv) { var i = kv.indexOf('='); if (i > 0) { try { h[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' ')); } catch (e) {} } });
-      st.q = h.q || ''; st.trad = h.t || ''; st.denom = h.d || ''; st.type = h.y || ''; st.occasion = h.o || ''; st.open = h.r || null;
+      st.q = h.q || ''; st.trad = h.t || ''; st.denom = h.d || ''; st.type = h.y || ''; st.occasion = h.o || ''; st.kind = h.k || ''; st.open = h.r || null;
     }
     function hashOf() {
       if (st.open) return '#r=' + encodeURIComponent(st.open);
-      var a = []; if (st.q) a.push('q=' + encodeURIComponent(st.q)); if (st.trad) a.push('t=' + st.trad); if (st.denom) a.push('d=' + st.denom); if (st.type) a.push('y=' + st.type); if (st.occasion) a.push('o=' + st.occasion);
+      var a = []; if (st.q) a.push('q=' + encodeURIComponent(st.q)); if (st.trad) a.push('t=' + st.trad); if (st.denom) a.push('d=' + st.denom); if (st.type) a.push('y=' + st.type); if (st.occasion) a.push('o=' + st.occasion); if (st.kind) a.push('k=' + st.kind);
       return a.length ? '#' + a.join('&') : '';
     }
     function setHash(push) {
@@ -464,16 +494,22 @@
       var denoms = {};
       if (st.trad) ix.items.forEach(function (x) { if (x.trad.indexOf(st.trad) >= 0) x.denom.forEach(function (d) { denoms[d] = (denoms[d] || 0) + 1; }); });
       var dk = Object.keys(denoms).sort(function (a, b) { return denomName(a).localeCompare(denomName(b)); });
-      var landing = !st.q && !st.trad && !st.type && !st.occasion;
-      var h = '<div class="ggr-searchrow">' + IC.search + '<input class="ggr-q" type="search" placeholder="Search: shepherd, hearth, river, peace, Rumi..." aria-label="Search the readings" value="' + esc(st.q) + '" enterkeyhint="search"></div>' +
-        '<div class="ggr-filters"><label class="ggr-f"><span>Tradition</span><select data-k="trad">' + tradOpts + '</select></label>' +
-        '<label class="ggr-f"><span>Kind</span><select data-k="type">' + typeOpts + '</select></label>' +
+      var landing = !st.q && !st.trad && !st.type && !st.occasion && !st.kind;
+      var tabs = !!opts.tabs, mom = opts.moments || [], momOf = {}; mom.forEach(function (m) { momOf[m[0]] = m; });
+      var h = (tabs ? '<div class="ggr-tabs" role="group" aria-label="Kinds of readings"><button type="button" class="ggr-tab" data-kind="" aria-pressed="' + !st.kind + '">All</button>' +
+        KTABS.map(function (k) { return '<button type="button" class="ggr-tab ggr-k-' + k[0] + '" data-kind="' + k[0] + '" aria-pressed="' + (st.kind === k[0]) + '">' + esc(k[1]) + '</button>'; }).join('') + '</div>' : '') +
+        '<div class="ggr-searchrow">' + IC.search + '<input class="ggr-q" type="search" placeholder="Search: shepherd, hearth, river, peace, Rumi..." aria-label="Search the readings" value="' + esc(st.q) + '" enterkeyhint="search"></div>' +
+        '<div class="ggr-filters' + (tabs ? ' ggr-f2' : '') + '"><label class="ggr-f"><span>Tradition</span><select data-k="trad">' + tradOpts + '</select></label>' +
+        (tabs ? '' : '<label class="ggr-f"><span>Kind</span><select data-k="type">' + typeOpts + '</select></label>') +
         '<label class="ggr-f"><span>Moment</span><select data-k="occasion">' + occOpts + '</select></label></div>' +
         (dk.length ? '<div class="ggr-chips" role="group" aria-label="Within ' + esc(tradName(st.trad)) + '"><button type="button" class="ggr-chip" data-denom="" aria-pressed="' + !st.denom + '">All ' + esc(tradName(st.trad)) + '</button>' +
           dk.map(function (d) { return '<button type="button" class="ggr-chip" data-denom="' + esc(d) + '" aria-pressed="' + (st.denom === d) + '">' + esc(denomName(d)) + '</button>'; }).join('') + '</div>' : '');
       if (landing) {
         h += '<p class="ggr-status" role="status">' + ix.items.length + ' readings, and growing.</p>';
-        h += '<h3 class="ggr-h">For a Moment</h3><div class="ggr-chips">' + OCCS.filter(function (o) { return occ[o]; }).map(function (o) { return '<button type="button" class="ggr-chip" data-occ="' + o + '">' + esc(OCC[o]) + '</button>'; }).join('') + '</div>';
+        if (mom.length) h += '<h3 class="ggr-h">Find Words For</h3><div class="ggr-tiles">' + mom.filter(function (m) { return occ[m[0]]; }).map(function (m) {
+          return '<button type="button" class="ggr-tile' + (m[3] ? ' ggr-wide' : '') + '" data-occ="' + m[0] + '"><img src="' + esc(m[3] || m[2]) + '" alt="" loading="lazy" decoding="async" width="' + (m[3] ? 1280 : 640) + '" height="480"><span><b>' + esc(m[1]) + '</b><small>' + occ[m[0]] + ' readings</small></span></button>';
+        }).join('') + '</div>';
+        h += '<h3 class="ggr-h">' + (mom.length ? 'More Moments' : 'For a Moment') + '</h3><div class="ggr-chips">' + OCCS.filter(function (o) { return occ[o] && !momOf[o]; }).map(function (o) { return '<button type="button" class="ggr-chip" data-occ="' + o + '">' + esc(OCC[o]) + '</button>'; }).join('') + '</div>';
         GROUPS.forEach(function (g) {
           var cards = g[1].filter(have).map(function (t) {
             var n = tradCount(ix, t);
@@ -482,13 +518,15 @@
           if (cards) h += '<h3 class="ggr-h">' + esc(g[0]) + '</h3><div class="ggr-cards">' + cards + '</div>';
         });
       } else {
+        var mm = momOf[st.occasion];
+        if (mm) h += '<div class="ggr-mhead"><img src="' + esc(mm[2]) + '" alt="" width="640" height="480"><div><span>Find Words For</span><b>' + esc(mm[1]) + '</b></div></div>';
         var more = st.q && !st.deep && Object.keys(ix.groups).some(function (g) { return !DATA[g]; });
         h += '<div class="ggr-status"><span role="status">' + (list.length ? list.length + (list.length === 1 ? ' reading' : ' readings') : 'Nothing here yet. Try another word, or fewer choices.') + '</span>' +
           (more ? '<button type="button" class="ggr-link" data-act="deep">Search inside every reading</button>' : '') +
           '<button type="button" class="ggr-link" data-act="clear">Start Over</button></div>';
         h += '<div class="ggr-list">' + list.slice(0, st.shown).map(function (x) {
           var meta = [x.by, TYPE[x.type] || '', x.trad.filter(function (t) { return t !== 'all'; }).slice(0, 2).map(tradName).join(', ')].filter(Boolean).join(' · ');
-          return '<button type="button" class="ggr-item" data-id="' + esc(x.id) + '"><b>' + esc(x.title) + '</b><span class="ggr-meta">' + esc(meta) + '</span>' + (x.first ? '<i>' + esc(x.first) + '</i>' : '') + '</button>';
+          return '<button type="button" class="ggr-item' + (tabs ? ' ggr-k-' + (KOF[x.type] || 'poem') : '') + '" data-id="' + esc(x.id) + '">' + (tabs ? '<span class="ggr-pill">' + esc(TYPE[x.type] || '') + '</span>' : '') + '<b>' + esc(x.title) + '</b><span class="ggr-meta">' + esc(meta) + '</span>' + (x.first ? '<i>' + esc(x.first) + '</i>' : '') + '</button>';
         }).join('') + '</div>';
         if (list.length > st.shown) h += '<div class="ggr-more"><button type="button" class="ggr-btn" data-act="more">Show More (' + (list.length - st.shown) + ')</button></div>';
       }
@@ -529,6 +567,7 @@
       var act = t.getAttribute('data-act');
       if (t.classList.contains('ggr-item')) { listY = window.pageYOffset; st.open = t.getAttribute('data-id'); setHash(true); draw(); scrollTop(); return; }
       if (t.hasAttribute('data-trad')) { st.trad = t.getAttribute('data-trad'); st.denom = ''; st.shown = PAGE; setHash(false); draw(); return; }
+      if (t.hasAttribute('data-kind')) { st.kind = t.getAttribute('data-kind'); st.type = ''; st.shown = PAGE; setHash(false); draw(); return; }
       if (t.hasAttribute('data-occ')) { st.occasion = t.getAttribute('data-occ'); st.shown = PAGE; setHash(false); draw(); return; }
       if (t.hasAttribute('data-denom')) { st.denom = t.getAttribute('data-denom'); st.shown = PAGE; setHash(false); draw(); return; }
       if (t.classList.contains('ggr-lplay')) {
@@ -546,7 +585,7 @@
         st.open = null; setHash(false); draw(); if (usesHash) setTimeout(function () { window.scrollTo(0, listY); }, 0); return;
       }
       if (act === 'more') { st.shown += PAGE; draw(); return; }
-      if (act === 'clear') { st.q = st.trad = st.denom = st.type = st.occasion = ''; st.shown = PAGE; setHash(false); draw(); return; }
+      if (act === 'clear') { st.q = st.trad = st.denom = st.type = st.occasion = st.kind = ''; st.shown = PAGE; setHash(false); draw(); return; }
       if (act === 'retry') { draw(); return; }
       if (act === 'deep') { st.deep = true; t.textContent = 'Searching every reading...'; loadAll().then(draw); return; }
       if (act === 'copy' && root._r) { copyText(plain(root._r), say); return; }
