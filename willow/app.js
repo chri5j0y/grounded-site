@@ -273,7 +273,13 @@ function go(v, force) {
 // read in the Grounded voice (Brian, BLD 796); nothing a person writes carries it.
 function addRead(el) {
   const R = window.GGRead; if (!R || !R.control || el.querySelector('.gg-rbar')) return;
-  try { el.insertBefore(R.control({ root: el, label: el.dataset.read || 'Read Aloud', recorded: el.hasAttribute('data-read-rec') ? 'willow' : '' }), el.firstChild); } catch (e) {}
+  // Chris, November 13, 2026 ("the old read this practice button is still on Willow Today"): a card with a button row gets one
+  // Listen button in that row, in the new look; other regions keep the bar at the top, also labeled Listen.
+  try {
+    const bar = R.control({ root: el, label: 'Listen', recordedLabel: 'Listen', recorded: el.hasAttribute('data-read-rec') ? 'willow' : '' });
+    const row = el.querySelector(':scope > .btn-row');
+    if (row) { bar.classList.add('w-listen'); row.appendChild(bar); } else el.insertBefore(bar, el.firstChild);
+  } catch (e) {}
 }
 
 /* ---------- who's here ---------- */
