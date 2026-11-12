@@ -376,7 +376,7 @@ function practiceCard(r, role) {
   const o = offer(r, role), it = o.it, d = (r.days || {})[today()] || {}, done = (d.done || []).includes(o.part + ':' + it[0]);
   const p = PART[o.part];
   return `<div class="w-card w-practice" style="--pc:${p.color}" data-read="Read this practice aloud" data-read-rec>
-    <img class="w-pimg" src="/shared/heroes/p/willow-${role === 'helper' ? 'helpers' : 'today'}-card.webp" alt="" width="800" height="450" loading="lazy">
+    <img class="w-pimg" src="/shared/heroes/p/willow-${role === 'helper' ? 'helpers2' : 'today'}-card.webp" alt="" width="800" height="450" loading="lazy">
     <p class="w-eyebrow">One gentle thing for today${role === 'person' ? ' &middot; ' + p.part : ''}</p>
     <h3>${esc(it[1])}</h3>
     <p>${esc(it[2])}</p>

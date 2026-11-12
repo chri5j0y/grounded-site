@@ -23,23 +23,24 @@ window.WILLOW_FAREWELL = {
   art: {
     today: ['today', 'A grandfather resting in a sunny chair by the window, his grandson breathing along beside him'],
     wishes: ['wishes', 'A grandmother sharing her wishes on the porch while her granddaughter writes them down'],
-    matters: ['wishes', 'A grandmother sharing her wishes on the porch while her granddaughter writes them down'],
-    faithpage: ['readings', 'An older man reading aloud under a rose arbor while his family listens'],
+    matters: ['matters2', 'A grandfather sharing what matters on a garden bench while his granddaughter writes it down'],
+    faithpage: ['faith2', 'A grandmother resting in quiet prayer by a sunny window, her son beside her'],
     vigil: ['vigil', 'A family keeping an evening vigil by candlelight, a friend bringing tea'],
     service: ['celebration', 'A backyard celebration of life with memory cards on a line, flowers, a dog, and a cat'],
     stories: ['stories', 'A grandfather telling a story from the photo album, his granddaughter beside him and his son writing it down'],
-    cuttings: ['stories', 'A grandfather telling a story from the photo album, his granddaughter beside him and his son writing it down'],
-    legacy: ['stories', 'A grandfather telling a story from the photo album, his granddaughter beside him and his son writing it down'],
+    cuttings: ['cuttings2', 'A grandmother laughing over an old recipe card while her grandson copies it down'],
+    legacy: ['legacy2', 'Three generations paging through a handmade book of photos and letters'],
     bedside: ['bedside', 'A daughter holding her mother\'s hand at a sunny window, a grandson bringing flowers'],
     farewell: ['farewell', 'A family planning at the kitchen table with his photo, a notebook, readings, and a candle'],
-    plan: ['farewell', 'A family planning at the kitchen table with his photo, a notebook, readings, and a candle'],
+    plan: ['plan2', 'A brother and sister planning together at a sunny table with a notebook and tulips'],
     obituary: ['obituary', 'A woman writing at a sunlit desk, her father laughing in a framed photo'],
     eulogy: ['eulogy', 'A woman sharing a eulogy under an oak in a meadow, family gathered in a half circle'],
     readings: ['readings', 'An older man reading aloud under a rose arbor while his family listens'],
-    send: ['farewell', 'A family planning at the kitchen table with his photo, a notebook, readings, and a candle'],
-    learn: ['helpers', 'A caregiver on the back steps with a neighbor bringing a warm dish and his daughter bringing chai'],
-    guides: ['helpers', 'A caregiver on the back steps with a neighbor bringing a warm dish and his daughter bringing chai'],
-    about: ['hero', 'A family gathered under a weeping willow by the lake at golden hour']
+    send: ['send2', 'A daughter on the porch steps holding a folder with a relieved smile, her husband bringing tea'],
+    learn: ['learn2', 'A son and his mother reading a short guide together on a sofa in a sunroom'],
+    guides: ['guides2', 'A hospice nurse talking gently with a father and his two grown daughters'],
+    videos: ['videos2', 'A grandfather resting peacefully in bed, listening, his wife holding his hand'],
+    about: ['hero2', 'A family gathered on a quilt under a weeping willow by the lake at golden hour']
   },
 
   /* The top of each page: [eyebrow, title, a line under it] */
