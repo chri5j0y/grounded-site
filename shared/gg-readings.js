@@ -345,8 +345,8 @@
     ':root[data-theme="dark"] .ggr{--k-prayer:#B9A2E0;--k-scripture:#E3B46A;--k-blessing:#F0B56B;--k-poem:#86BEDB;--k-hymn:#A9CC8C;--k-reflection:#E9A086;--k-story:#E39BB7;}' +
     '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ggr{--k-prayer:#B9A2E0;--k-scripture:#E3B46A;--k-blessing:#F0B56B;--k-poem:#86BEDB;--k-hymn:#A9CC8C;--k-reflection:#E9A086;--k-story:#E39BB7;}}' +
     '.ggr-k-prayer{--k:var(--k-prayer);}.ggr-k-scripture{--k:var(--k-scripture);}.ggr-k-blessing{--k:var(--k-blessing);}.ggr-k-poem{--k:var(--k-poem);}.ggr-k-hymn{--k:var(--k-hymn);}.ggr-k-reflection{--k:var(--k-reflection);}.ggr-k-story{--k:var(--k-story);}' +
-    '.ggr-tabs{display:flex;flex-wrap:wrap;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 0 16px;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;}.ggr-tabs::-webkit-scrollbar{display:none;}' +
-    '.ggr-tab{--k:var(--ggr-gold);flex:none;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:var(--ggr-ink);background:var(--ggr-card);border:2px solid var(--ggr-line);border-top:4px solid var(--k);border-radius:12px;padding:9px 16px;min-height:46px;cursor:pointer;}' +
+    '.ggr-tabs{display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 0 16px;padding:2px 2px 6px;-webkit-overflow-scrolling:touch;}.ggr-tabs::-webkit-scrollbar{display:none;}' +
+    '.ggr-tab{--k:var(--ggr-gold);flex:none;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:15px;letter-spacing:.8px;text-transform:uppercase;color:var(--ggr-ink);background:var(--ggr-card);border:2px solid var(--ggr-line);border-top:4px solid var(--k);border-radius:12px;padding:9px 12px;min-height:46px;cursor:pointer;}' +
     '.ggr-tab:hover{border-color:var(--k);}.ggr-tab[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:#fff;}' +
     ':root[data-theme="dark"] .ggr-tab[aria-pressed="true"]{color:#1F1A14;}@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ggr-tab[aria-pressed="true"]{color:#1F1A14;}}' +
     '.ggr-filters.ggr-f2{grid-template-columns:repeat(2,minmax(0,1fr));}' +
