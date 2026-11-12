@@ -73,7 +73,7 @@ const STORY = {
   'Enlightenment': 'https://chri5j0y.substack.com/p/enlightenment'
 };
 const storyUrl = t => STORY[t] || 'https://growwithgrounded.com/stories.html';
-// One story per part on results (three touches max: this, Subscribe, the footer).
+// One story per part on results (two touches max: this and the footer).
 const PART_STORY = {
   roots: ['He Was Praying Too', 'When you were praying for me, I was praying too.'],
   trunk: ['Birth Plan', 'You get a say in how it goes.'],
