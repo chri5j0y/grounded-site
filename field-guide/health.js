@@ -1093,9 +1093,10 @@ const MOVE_DONE = {build: 'p:move-build-done', peak: 'p:move-peak-done', cardio:
   yoga: 'p:move-yoga-done', taichi: 'p:move-taichi-done', stretch: 'p:move-stretch-done', gentle: 'p:move-gentle-done'};
 const MOVE_RUN = {build: 'move-build', peak: 'move-peak', cardio: 'move-cardio', walk: 'move-walk', daily: 'move-flow', yoga: 'move-yoga', taichi: 'move-balance', stretch: 'move-stretch'};
 const moveStage = (o, kind, n) => o.fin && MOVE_DONE[kind] ? MOVE_DONE[kind] : o.stage === 'start' || o.fin || !MOVE_RUN[kind] ? n : MOVE_RUN[kind];
-// BLD 970: meditation days 6 and 7 have new paintings (a card square, -sq, and the larger -lg for the candle stage).
-const MED_P = {m6: 'p:med-day-6', m7: 'p:med-day-7'};
-const medBase = j => MED_P['m' + (j + 1)] || 'med-m' + (j + 1), medSq = n => /^p:/.test(n) ? n + '-sq' : n, isMedArt = n => /^(med-m|p:med-day-)\d$/.test(n);
+// BLD 970: every meditation day has its own painting (a card square, -sq, and the larger -lg). Days 2, 6, and 7 hold a candle
+// and are their own stage; days 1, 3, 4, and 5 keep the candle stage they had (shared/med-stage.json use).
+const MED_P = {m1: 'p:med-breath-kids', m2: 'p:med-body-scan', m3: 'p:med-prayer', m4: 'p:med-sleep', m5: 'p:med-walking', m6: 'p:med-day-6', m7: 'p:med-day-7'};
+const medBase = j => MED_P['m' + (j + 1)] || 'med-m' + (j + 1), medSq = n => /^p:/.test(n) ? n + '-sq' : n, isMedArt = n => /^(med-m\d|p:med-[a-z0-9-]+)$/.test(n);
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';

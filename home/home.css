@@ -745,7 +745,7 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 .hm-gpic{display:block;width:100%;border-radius:16px;overflow:hidden;margin-bottom:4px;}
 .hm-gpic img{display:block;width:100%;height:220px;object-fit:cover;}
 .hm-shelf{isolation:isolate;}
-.hm-shelf .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;}
+.hm-shelf .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;z-index:-2;}
 .hm-shelf::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,color-mix(in srgb,var(--sh) 96%,transparent) 0%,color-mix(in srgb,var(--sh) 82%,transparent) 50%,color-mix(in srgb,var(--sh) 30%,transparent) 100%);}
 .hm-shelf::after{display:none;}
 .hm-shelf{min-height:150px;}
