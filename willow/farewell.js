@@ -21,12 +21,12 @@ window.WILLOW_FAREWELL = {
 
   /* The painting for each page: [file name in /shared/heroes/p/willow-NAME-*.webp, a short description for screen readers] */
   art: {
-    today: ['today', 'A grandfather resting in a sunny chair by the window, his grandson breathing along beside him'],
+    today: ['today2', 'A grandfather resting in a sunny chair by the window, his grandson breathing along beside him'],
     wishes: ['wishes', 'A grandmother sharing her wishes on the porch while her granddaughter writes them down'],
     matters: ['matters2', 'A grandfather sharing what matters on a garden bench while his granddaughter writes it down'],
     faithpage: ['faith2', 'A grandmother resting in quiet prayer by a sunny window, her son beside her'],
     vigil: ['vigil', 'A family keeping an evening vigil by candlelight, a friend bringing tea'],
-    service: ['celebration', 'A backyard celebration of life with memory cards on a line, flowers, a dog, and a cat'],
+    service: ['celebration2', 'A backyard celebration of life: two women sharing a long hug on the lawn, memory cards on a line, flowers, and a dog'],
     stories: ['stories', 'A grandfather telling a story from the photo album, his granddaughter beside him and his son writing it down'],
     cuttings: ['cuttings2', 'A grandmother laughing over an old recipe card while her grandson copies it down'],
     legacy: ['legacy2', 'Three generations paging through a handmade book of photos and letters'],
