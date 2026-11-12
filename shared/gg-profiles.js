@@ -629,7 +629,7 @@
       function step3(d) {
         var minor = isMinor(st.age);
         d.show('<h2 id="ggp-title">Almost There</h2>' +
-          '<p>Grounded tools are for reflection and growth. For therapy, medical care, or crisis support, reach a licensed professional or a crisis line. If you or someone you love is in crisis, call or text 988 any time.</p>' +
+          '<p>Grounded tools are for reflection and growth, alongside the doctors, therapists, and other professionals in your life.</p>' +
           '<p class="ggp-small">Everything saved in this profile is locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + ', so only you can open it.</p>' +
           (minor ? grownBlock(st.name, st.age)
             : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
