@@ -25,6 +25,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=b792c">
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
 <link rel="stylesheet" href="style.css?v=b956">
+<link rel="stylesheet" href="/shared/hero-fit.css?v=c015">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"What Is The Grounded Way?","url":"https://growwithgrounded.com/the-grounded-way","description":"A daily path for your whole life: tend your mind, body, spirit, and relationships, and grow in meaning, hope, and resilience.","publisher":{"@type":"Organization","name":"Grow With Grounded","url":"https://growwithgrounded.com/"}}</script>
 <style>
 /* The Grounded Way page (GWG BLD 866) */
@@ -41,7 +42,8 @@
 .gw-four .card p{margin:0;color:var(--ink-soft);font-size:17px;line-height:1.6;}
 .gw-tend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:22px;}
 .gw .gw-tc{padding:0;overflow:hidden;display:flex;flex-direction:column;min-width:0;}
-.gw-tc img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:var(--bg-deep,#F2ECE0);}
+.gw-tc img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--bg-deep,#F2ECE0);}
+.gw-tc img[width="600"]{object-position:50% 20%;}   /* BLD 976 crops: the wide cards show whole at 16:9; the square ones keep the heads near their top */
 .gw-tc .gw-tb{padding:16px 22px 22px;}
 .gw-tc h3{font-size:25px;margin:0 0 6px;}
 .gw-tc p{margin:0;color:var(--ink-soft);font-size:17px;line-height:1.6;}
@@ -175,7 +177,7 @@
   <nav class="site-menu" id="site-menu" aria-label="Main"><a href="index.html">Home</a><a href="tools.html" class="current" aria-current="page">Resources</a><a href="services.html">Services</a><a href="stories.html">Stories</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
 </div></header>
 <main id="main" class="gw">
-<section class="pg-hero gw-hero pp" style="--img:url(/shared/heroes/people/grounded-way-wide.webp);--img-n:url(/shared/heroes/people/grounded-way-narrow.webp)">
+<section class="pg-hero gw-hero pp pwx" style="--img:url(/shared/heroes/people/grounded-way-wide.webp);--img-n:url(/shared/heroes/people/grounded-way-narrow.webp);--ar:16/9;--arn:2/3">
   <div class="wrap pg-hero-in">
     <div class="eyebrow">The Grounded Way</div>
     <h1>What Is The Grounded Way?</h1>
