@@ -17,7 +17,7 @@
   'use strict';
   if (window.GGNow) return;
   var V = 'b913';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=c017', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=c018', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
@@ -40,6 +40,8 @@
   function pairOf(l) { if (!l) return null; var want = l.length === 'now' ? 'after' : 'now'; return data().filter(function (x) { return x.practice === l.practice && x.audience === l.audience && x.length === want; })[0] || null; }
   function sighId() { var k = byId(S.kids ? 'gg-k-candle-sigh-now' : 'gg-sigh-now'); if (k) return k.id; var f = doorList('slow')[0]; return f ? f.id : ''; }
   function mins(l) { return l && l.mins ? Math.max(1, Math.round(l.mins)) : 2; }
+  // The blurb with the length said once: a blurb that already gives it ("About one minute", "Five minutes") stands as it is.
+  function lenLine(l) { var b = (l && l.blurb) || '', m = mins(l); return /\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)[ -]minutes?\b/i.test(b) ? b : (b ? b + ' ' : '') + 'About ' + m + (m === 1 ? ' minute.' : ' minutes.'); }
 
   function css() {
     if (document.getElementById('ggn-css')) return;
@@ -161,7 +163,7 @@
       root.className = 'ggl ggl-app ggn-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
       root.style.setProperty('--ggl-acc', '#5F7D48'); root.style.setProperty('--ggl-bar', '#24301F'); root.style.setProperty('--ggl-lite', '#CFE0BF');
       root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>' + esc(tName) + '</b><button type="button" class="ggl-x" data-ggn-x="1" aria-label="' + esc(bName) + '"><span class="ggl-xf">' + esc(bName) + '</span><span class="ggl-xs">Back</span></button></div>'
-        + '<div class="ggl-in"><div class="ggl-eb">' + esc(o.title ? o.title : l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div></div>';
+        + '<div class="ggl-in"><div class="ggl-eb">' + esc(o.title ? o.title : l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(lenLine(l)) + '</p><div class="ggn-host"></div></div>';
       document.body.appendChild(root);
       S.open = { root: root, from: keepFrom, overflow: S.open ? S.open.overflow : document.body.style.overflow, queue: queue || [id], id: id };
       document.body.style.overflow = 'hidden';
