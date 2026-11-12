@@ -120,7 +120,7 @@ const S = { tab: 'today', sub: null, pid: null, ck: null, guide: { q: '', ring: 
 
 function blankRec() {
   return { v: 1, started: '', role: '', faith: null, checkins: [], matters: {}, cuttings: [], log: [], days: {}, visits: [], line: { name: '', phone: '' },
-    share: { tree: true, matters: true, cuttings: true, log: true, faith: false, answers: false, grove: true } };
+    share: { tree: true, matters: true, cuttings: true, log: true, faith: false, answers: false, grove: true, farewell: true }, farewell: {} };
 }
 function rec(id) {
   if (!GP() || !id || !GGP.isOpen(id)) return null;
@@ -211,7 +211,13 @@ function publish(id) {
 }
 
 /* ---------- views ---------- */
-const TAB_OF = { today: 'today', about: 'today', setup: 'today', checkin: 'today', results: 'today', history: 'today', matters: 'matters', share: 'today', visitin: 'today', cuttings: 'cuttings', bedside: 'bedside', guides: 'guides', readings: 'readings' };
+// The six tabs (GWG BLD 971) and the pages each one holds; the old pages keep their names, so #matters, #cuttings,
+// #guides, #readings, and #about still open where they live now.
+const TAB_OF = { today: 'today', setup: 'today', checkin: 'today', results: 'today', history: 'today', share: 'today', visitin: 'today',
+  wishes: 'wishes', matters: 'wishes', faithpage: 'wishes', vigil: 'wishes', service: 'wishes',
+  stories: 'stories', cuttings: 'stories', legacy: 'stories', bedside: 'bedside',
+  farewell: 'farewell', plan: 'farewell', obituary: 'farewell', eulogy: 'farewell', readings: 'farewell', send: 'farewell',
+  learn: 'learn', guides: 'learn', about: 'learn' };
 const VIEWS = {};
 function paintNav() {
   const tab = TAB_OF[S.tab] || 'today';
@@ -243,10 +249,19 @@ function render() {
   const a0 = me(); if (a0 && target() === a0.id) carrySequoia(a0.id);
   paintNav(); renderBar();
   const v = $('#w-view'); if (!v) return;
-  v.innerHTML = (VIEWS[S.tab] || VIEWS.today)();
+  document.body.setAttribute('data-wtab', TAB_OF[S.tab] || 'today'); heroActs();
+  v.innerHTML = topOf(S.tab) + (VIEWS[S.tab] || VIEWS.today)();
   if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: W_SCENE });
   v.querySelectorAll('[data-read]').forEach(el => addRead(el));
   if (S.tab === 'guides' && !S.guide.open && S.guide.find) { const i = v.querySelector('.lc-search'); if (i) gFind(i); }
+}
+// The Today hero: Begin with Willow at first; once Willow is started, the check-in and the farewell plans.
+function heroActs() {
+  const a = me(), r = a ? rec(a.id) : null, on = !!(a && ((r && r.started) || helped().length));
+  const g = $('#w-hero-go'), two = $('#w-hero-two'), pro = $('#w-hero-pro'); if (!g || !two) return;
+  g.textContent = on ? 'Quick Check-in' : 'Begin with Willow'; g.setAttribute('onclick', on ? 'W.checkin(true)' : 'W.begin()');
+  two.textContent = on ? 'Plan the Farewell' : 'How It Works'; two.setAttribute('onclick', on ? "W.go('farewell')" : "W.go('about')");
+  if (pro) pro.hidden = on;
 }
 function go(v, force) {
   if (window.GGRead && GGRead.stop) GGRead.stop();
@@ -361,6 +376,7 @@ function practiceCard(r, role) {
   const o = offer(r, role), it = o.it, d = (r.days || {})[today()] || {}, done = (d.done || []).includes(o.part + ':' + it[0]);
   const p = PART[o.part];
   return `<div class="w-card w-practice" style="--pc:${p.color}" data-read="Read this practice aloud" data-read-rec>
+    <img class="w-pimg" src="/shared/heroes/p/willow-${role === 'helper' ? 'helpers' : 'today'}-card.webp" alt="" width="800" height="450" loading="lazy">
     <p class="w-eyebrow">One gentle thing for today${role === 'person' ? ' &middot; ' + p.part : ''}</p>
     <h3>${esc(it[1])}</h3>
     <p>${esc(it[2])}</p>
@@ -478,9 +494,9 @@ VIEWS.today = () => {
   let h = `<div class="w-head"><p class="w-eyebrow">${longDate(today())}</p><h2>${self ? (role === 'helper' ? 'Today, for you' : 'Today') : 'Today with ' + esc(nameOf(t))}</h2></div>`;
   h += lineHtml();
   h += visitInCard();
+  h += practiceCard(r, role);
   h += treeCard(r, t, role);
   h += fromVisitCard(r, t);
-  h += practiceCard(r, role);
   if (!self || role === 'person') h += logCard(t);
   if (!self) h += bedsidePick();
   h += supportCard();
@@ -500,14 +516,14 @@ function rememberedHtml(t) {
       ${after ? `<div data-read="Read this aloud"><p class="w-eyebrow">${esc(after.title)}</p>${after.lines.map(l => `<p class="w-line-read">${esc(l)}</p>`).join('')}</div>` : ''}</div></div>
     <div class="w-card"><p class="w-eyebrow">The next few days</p>
       <div class="w-links"><button type="button" onclick="W.guide('firsthour')">The first hour after</button><button type="button" onclick="W.guide('official')">Making it official</button><button type="button" onclick="W.guide('relief')">Relief, and the guilt that follows</button><button type="button" onclick="W.go('cuttings')">Their Cuttings</button></div>
-      <p class="w-small">For the days ahead: <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>, the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>, and the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a>.</p>
+      <div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.go('plan')">The Farewell Checklist</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('obituary')">The Obituary</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('eulogy')">The Eulogy</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('send')">Send to the Grounded Team</button></div>
       <p class="w-small">Your hospice keeps caring for the family. Most offer bereavement support for about 13 months after a death. Ask for it by name.</p></div>
     ${supportCard(true)}
     ${logCard(t)}
     <div class="w-card"><p class="w-eyebrow">Your own tree</p><p>Grief is part of your tree now. Your check-ins keep growing it.</p><div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.view('${(me() || {}).id}')">Go to my own tree</button></div></div>`;
 }
 function aboutShort() {
-  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on every part of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings and faith cards for all faith traditions and everything in-between, what to do at the bedside, and short videos in Learn.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
+  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on every part of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings, gathered into a Legacy Book. Plan the farewell in one place: Service Wishes, a checklist, the Obituary, and the Eulogy, with one tap to send it all to the Grounded team. Find words for hard conversations in When Life Changes, readings and faith cards for all faith traditions and everything in-between, what to do at the bedside, and short videos in Learn.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
 }
 VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h2>A tree for the last part of the path</h2></div>
   <div data-read="Read this aloud">
@@ -524,7 +540,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <h3 class="section-title">Faith comes first</h3>
   <p class="lead">Willow asks about faith on the second screen, every time, because a chaplain always asks. Every answer is welcome, including none, and a person can choose more than one tradition. Each person answers for themselves.</p>
   <h3 class="section-title">What's inside</h3>
-  <p class="lead">Gentle guided check-ins on every part of the tree, one question at a time: one that speaks to the person in hospice care, and Your Caregiver Check-in for the people beside them. What Matters to Me, Cuttings for stories and letters, and help at the Bedside are here too. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and under every check-in.</p>
+  <p class="lead">Gentle guided check-ins on every part of the tree, one question at a time: one that speaks to the person in hospice care, and Your Caregiver Check-in for the people beside them. What Matters to Me, Vigil Wishes, and Service Wishes; Cuttings for stories and letters, gathered into the Legacy Book; and help at the Bedside are here too. The Farewell tab holds the Farewell Checklist, the Obituary, the Eulogy, readings, and Send to the Grounded Team, so the people preparing the service have everything in one place. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and under every check-in.</p>
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
@@ -939,12 +955,9 @@ VIEWS.matters = () => {
   return `<div class="w-head"><p class="w-eyebrow">${self ? 'In your words' : 'In ' + n + '\'s words'}</p><h2>What Matters to ${self ? 'me' : esc(nameOf(t))}</h2>
     <p class="lead">${self ? 'So the people caring for you know who you are, not just what you have. Write a little or a lot. A helper can type while you talk.' : 'Write it with ' + n + ', in their words. Read it aloud to new nurses, aides, and visitors so they know who they\'re caring for.'}</p></div>
     ${m.updated ? `<p class="w-small">Last changed ${nice(m.updated)}${m.by ? ' by ' + esc(m.by) : ''}.</p>` : ''}
-    ${sees('faith') && r.faith ? `<div class="w-card w-faithsum"><p class="w-eyebrow">Faith, spirit, or something else</p><p>${faithSummary(r.faith)}</p>${r.faith.call ? `<p><b>Call:</b> ${esc(r.faith.call)}</p>` : ''}<p class="w-small">Asked in each check-in, ${self ? 'in your' : 'in their'} own words.</p></div>` : ''}
-    <div class="w-matters">${MATTERS.map(x => field(x[0], x[1], x[2])).join('')}</div>
-    <h3 class="section-title">When the time comes</h3>
-    <p class="lead">Some people like to say how they want the last days to feel. Skip anything that doesn't fit.</p>
-    <div class="w-matters">${VIGIL.map(x => field(x[0], x[1], x[2])).join('')}</div>
-    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.saveMatters()">Save</button><button type="button" class="btn btn-secondary" onclick="W.readMatters()">Read it aloud</button><button type="button" class="btn btn-secondary" onclick="W.printMatters()">Save or Print</button></div>`;
+    <div class="w-card"><div class="w-matters">${MATTERS.map(x => field(x[0], x[1], x[2])).join('')}</div>
+    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.saveMatters()">Save</button><button type="button" class="btn btn-secondary" onclick="W.readMatters()">Read it aloud</button><button type="button" class="btn btn-secondary" onclick="W.printMatters()">Save or Print</button></div></div>
+    <p class="w-small">What Matters fills in <button type="button" class="text-btn" onclick="W.go('service')">Service Wishes</button>. How the last days should feel lives in <button type="button" class="text-btn" onclick="W.go('vigil')">Vigil Wishes</button>.</p>`;
 };
 function saveMatters() {
   const t = target(), r = rec(t); if (!r) return;
@@ -1065,7 +1078,7 @@ VIEWS.bedside = () => {
     <details class="w-det"><summary>Mixed-faith families</summary><div>${F.mixed.map(x => `<p><b>${esc(x[0])}</b> ${esc(x[1])}</p>`).join('')}</div></details>
     <details class="w-det"><summary>Children and faith</summary><div><p>${esc(F.kids)}</p></div></details>
     <p class="w-small">Tradition cards are drafts until a reviewer from each tradition reads them. If something is wrong for your family, trust your family.</p>`;
-  h += `<h3 class="section-title">When the time comes</h3><div class="w-card"><p>Gentle helps for the family, kept on your device: <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>, a checklist for the first hours and days; the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>; and the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a>.</p></div>`;
+  h += `<h3 class="section-title">When the time comes</h3><div class="w-card"><p>Gentle helps for the family, kept in Willow: the Farewell Checklist for the first hours and days, Service Wishes, the Obituary, and the Eulogy.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('plan')">The Farewell Checklist</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('farewell')">Farewell Planning</button></div></div>`;
   return h;
 };
 
@@ -1280,11 +1293,530 @@ function printReading(id) {
   printHtml(x.title, (x.tr ? `<p><i>${esc(x.tr)}</i></p>` : '') + linesOf(x).map(l => l ? `<p>${esc(l)}</p>` : '<br>').join('') + `<p><small>${esc(byOf(x))}</small></p>` + bp + (note ? `<p><small>${esc(note)}</small></p>` : ''));
 }
 
+/* ---------- the Willow Hub (GWG BLD 971) ----------
+   Six tabs in The Grounded Way's look: Today, Wishes, Stories, Bedside, Farewell, Learn. Each tab has its own page with
+   painted cards, and its pages sit in a row of chips. Write once, use everywhere: Cuttings fill the Eulogy's stories and the
+   Legacy Book, What Matters fills Service Wishes, and Life Facts fill the Obituary and the Eulogy. Everything saves in the
+   person's own locked profile (rec.farewell), and nothing leaves this device until someone taps Send. Wording: willow/farewell.js. */
+const FW = window.WILLOW_FAREWELL;
+const TABS = FW.tabs;
+const artSrc = (n, kind) => '/shared/heroes/p/willow-' + n + '-' + kind + '.webp';
+const HUBS = TABS.map(t => t[0]).filter(k => FW.hub[k]);
+function theadHtml(v) {
+  const h = FW.heads[v], a = FW.art[v]; if (!h || !a) return '';
+  const hub = HUBS.includes(v) || v === 'bedside';
+  return `<header class="w-thero${hub ? '' : ' sub'}"><picture><source media="(max-width:700px)" srcset="${artSrc(a[0], hub ? 'narrow' : 'card')}"><img src="${artSrc(a[0], hub ? 'wide' : 'card')}" alt="${esc(a[1])}" width="1600" height="900"></picture>
+    <div class="tx"><p class="w-eyebrow">${esc(h[0])}</p><h2>${esc(h[1])}</h2><p>${esc(h[2])}</p></div></header>`;
+}
+function subHtml(v) {
+  const T = TABS.find(t => t[0] === TAB_OF[v]); if (!T || !T[3].length) return '';
+  return `<nav class="w-sub no-print" aria-label="${esc(T[1])}">${T[3].map(p => `<button type="button" class="w-subb" aria-pressed="${p[0] === v}" onclick="W.go('${p[0]}')">${esc(p[1])}</button>`).join('')}${T[0] === 'learn' ? `<button type="button" class="w-subb" onclick="window.GGLearn&&GGLearn.open('willow')">Learn Videos</button>` : ''}</nav>`;
+}
+// The top of a page: the painted head, then the chips (a guide or a reading that is open keeps only the chips).
+function topOf(v) {
+  if (!FW.heads[v]) return '';
+  if ((v === 'guides' && S.guide.open) || (v === 'readings' && S.read.open)) return subHtml(v);
+  return theadHtml(v) + subHtml(v);
+}
+function hubHtml(tab) {
+  return `<div class="w-hub">${(FW.hub[tab] || []).map(c => {
+    const a = FW.art[c[0]] || FW.art[tab], go = c[0] === 'videos' ? `window.GGLearn&&GGLearn.open('willow')` : `W.go('${c[0]}')`, st = hubStatus(c[0]);
+    return `<button type="button" class="w-pc" onclick="${go}"><img src="${artSrc(a[0], 'card')}" alt="" width="800" height="450" loading="lazy"><span class="tx"><b>${esc(c[1])}</b><span>${esc(c[2])}</span>${st ? `<i>${esc(st)}</i>` : ''}</span></button>`;
+  }).join('')}</div>`;
+}
+// A short line on a card: how far along each piece is.
+function hubStatus(k) {
+  const t = target(), r = t ? rec(t) : null; if (!r || !r.started) return '';
+  const f = fwOf(r), m = r.matters || {};
+  if (k === 'matters') { const n = MATTERS.filter(x => m[x[0]]).length; return n ? n + ' of ' + MATTERS.length + ' written' : ''; }
+  if (k === 'vigil') { const n = VIGIL.filter(x => m[x[0]]).length; return n ? n + ' of ' + VIGIL.length + ' written' : ''; }
+  if (k === 'faithpage') return r.faith && sees('faith') ? 'Answered' : '';
+  if (k === 'service') { const n = Object.keys(f.wishes).filter(x => wishFilled(f.wishes[x])).length; return n ? n + (n === 1 ? ' wish' : ' wishes') + ' written' : ''; }
+  if (k === 'cuttings' || k === 'legacy') { const n = (r.cuttings || []).length; return n ? n + (n === 1 ? ' Cutting' : ' Cuttings') + ' kept' : ''; }
+  if (k === 'plan') { const all = FW.checklist.secs.reduce((s, x) => s + x.items.length, 0), n = Object.keys(f.plan.c).length; return n ? n + ' of ' + all + ' done' : ''; }
+  if (k === 'obituary') return FW.obituary.shapes.some(s => String(f.obit.d[s.id] || '').trim()) ? 'Drafts ready' : '';
+  if (k === 'eulogy') return String(f.eulogy.d || '').trim() ? 'Outline ready' : '';
+  if (k === 'send') return f.sent.length ? 'Last sent ' + nice(f.sent[f.sent.length - 1].d) : '';
+  return '';
+}
+const wishFilled = v => Array.isArray(v) ? v.length > 0 : !!String(v || '').trim();
+
+/* the person's farewell record, inside their locked Willow */
+function fwOf(r) {
+  r.farewell = r.farewell || {}; const f = r.farewell;
+  f.facts = f.facts || {}; f.wishes = f.wishes || {}; f.plan = f.plan || {}; f.plan.c = f.plan.c || {};
+  f.obit = f.obit || {}; f.obit.a = f.obit.a || {}; f.obit.d = f.obit.d || {}; f.obit.e = f.obit.e || {};
+  f.eulogy = f.eulogy || {}; f.eulogy.a = f.eulogy.a || {}; f.eulogy.d = f.eulogy.d || ''; f.sent = f.sent || []; f.send = f.send || {};
+  return f;
+}
+// Everything on the Farewell and Wishes pages saves itself a moment after typing stops.
+let FW_T = null;
+function fwKeep() { const t = target(); clearTimeout(FW_T); FW_T = setTimeout(() => { persist(t); }, 500); }
+function fwSet(path, v) {
+  const r = T(); if (!r) return; const f = fwOf(r), p = path.split('.'); let o = f;
+  for (let i = 0; i < p.length - 1; i++) { o[p[i]] = o[p[i]] || {}; o = o[p[i]]; }
+  o[p[p.length - 1]] = v; fwKeep();
+}
+function fwIn(el) {
+  fwSet(el.dataset.k, el.value);
+  const k = el.dataset.k;
+  if (k.startsWith('obit.d.')) { const id = k.split('.')[2]; fwSet('obit.e.' + id, 1); const sh = FW.obituary.shapes.find(s => s.id === id), c = $('#w-on-' + id); if (sh && c) c.outerHTML = obCount(sh, el.value); }
+  if (k === 'eulogy.d') { fwSet('eulogy.edited', true); const c = $('#w-eu-time'); if (c) c.textContent = euTime(el.value); }
+  const n = el.parentNode && el.parentNode.querySelector('.w-fill'); if (n) n.remove();
+  if (k.startsWith('send.')) { const t = $('#w-send-text'); if (t) t.value = sendText(sendData()); }
+}
+function fwPick(el) {
+  const k = el.dataset.c, r = T(); if (!r) return; const f = fwOf(r);
+  if (el.type === 'radio') f.wishes[k] = el.value;
+  else { const v = (Array.isArray(f.wishes[k]) ? f.wishes[k] : []).filter(x => x !== el.value); if (el.checked) v.push(el.value); f.wishes[k] = v; }
+  fwKeep();
+}
+// Who may open the Farewell pages: the person, and helpers when the person shares Farewell plans.
+function fwGate(what, share, pages) {
+  const more = pages === false ? '' : fwPages();
+  const a = me(); if (!a) return needProfileHtml(what) + more;
+  const t = target(), r = rec(t); if (!r || !r.started) return needProfileHtml(what) + more;
+  if (roleOf(t) === 'helper' && t === a.id) return `<div class="w-card"><p class="w-eyebrow">${esc(what)}</p><h2 class="w-h3">This belongs to the person you care for</h2><p>Open their Willow to plan together, in their words.</p><div class="btn-row">${helped().map(p => `<button type="button" class="btn btn-primary" onclick="W.view('${p.id}');W.go('${S.tab}')">${esc(p.name)}'s ${esc(what)}</button>`).join('')}</div></div>`;
+  if (share && !sees(share)) return privateHtml(what);
+  return '';
+}
+const fwPages = () => `<p class="w-small" style="margin-top:-6px">Starting without a profile? <a class="text-link" href="/planning-a-farewell.html">Planning a Farewell</a>, the <a class="text-link" href="/obituary-helper.html">Obituary Helper</a>, and the <a class="text-link" href="/eulogy-helper.html">Eulogy Helper</a> also keep your words on this device.</p>`;
+const sourcesLine = L => `<p class="w-sources">Sources: ${L.map(x => `<a href="${esc(x[1])}" target="_blank" rel="noopener">${esc(x[0])}</a>`).join('; ')}.</p>`;
+function fField(k, kind, label, hint, ph, val, fill, full) {
+  const id = 'w-fw-' + k.replace(/\./g, '-');
+  return `<label class="w-f${full || kind === 'a' ? ' full' : ''}" for="${id}"><span class="l">${esc(label)}</span>${hint ? `<span class="h">${esc(hint)}</span>` : ''}${kind === 'a'
+    ? `<textarea id="${id}" data-k="${k}" rows="3" maxlength="6000" oninput="W.fwIn(this)"${ph ? ` placeholder="${esc(ph)}"` : ''}>${esc(val)}</textarea>`
+    : `<input type="text" id="${id}" data-k="${k}" maxlength="300" oninput="W.fwIn(this)" value="${esc(val)}"${ph ? ` placeholder="${esc(ph)}"` : ''}>`}${fill ? `<span class="w-fill">${esc(fill)}</span>` : ''}</label>`;
+}
+// A value, or what another page offers when this one is still empty (never written over what someone typed).
+const orFrom = (o, k, from) => o[k] == null ? (from || '') : o[k];
+const PRON = { he: { they: 'he', them: 'him', their: 'his' }, she: { they: 'she', them: 'her', their: 'her' }, they: { they: 'they', them: 'them', their: 'their' } };
+const pronOf = f => PRON[f.facts.pron] ? f.facts.pron : 'they';
+const pronSel = f => `<label class="w-f" for="w-fw-pron"><span class="l">Words for them</span><select id="w-fw-pron" onchange="W.fwPron(this.value)">${[['he', 'He, him, his'], ['she', 'She, her, hers'], ['they', 'They, them, their']].map(o => `<option value="${o[0]}"${pronOf(f) === o[0] ? ' selected' : ''}>${o[1]}</option>`).join('')}</select></label>`;
+function fwPron(v) { fwSet('facts.pron', v); render(); }
+
+/* ---------- Wishes ---------- */
+VIEWS.wishes = () => {
+  const g = fwGate('Wishes', 'matters', false);
+  return hubHtml('wishes') + (g || `<div class="w-card"><p class="w-eyebrow">${icon('heart', 16)} Write once, use everywhere</p><p>What Matters fills in Service Wishes, and Service Wishes travel with the farewell plans. Helpers read What Matters aloud to new nurses, aides, and visitors.</p></div>`);
+};
+VIEWS.vigil = () => {
+  const a = me(); if (!a) return needProfileHtml('Vigil Wishes');
+  const t = target(), r = rec(t); if (!r || !r.started) return needProfileHtml('Vigil Wishes');
+  if (!sees('matters')) return privateHtml('Vigil Wishes');
+  const m = r.matters || {};
+  return `<div class="w-head"><p class="lead">Some people like to say how they want the last days to feel. Skip anything that doesn't fit, and change it any time.</p></div>
+    <div class="w-card"><div class="w-matters">${VIGIL.map(x => `<div class="w-field"><label class="w-l" for="w-m-${x[0]}">${esc(x[1])}</label><textarea id="w-m-${x[0]}" rows="3" maxlength="2000" placeholder="${esc(x[2])}">${esc(m[x[0]] || '')}</textarea></div>`).join('')}</div>
+    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.saveMatters()">Save</button><button type="button" class="btn btn-secondary" onclick="W.readMatters()">Read it aloud</button><button type="button" class="btn btn-secondary" onclick="W.printMatters()">Save or Print</button></div></div>
+    <p class="w-small">These go to your chaplain or doula only when you share them, from Today.</p>`;
+};
+VIEWS.faithpage = () => {
+  const a = me(); if (!a) return needProfileHtml('Faith');
+  const t = target(), r = rec(t); if (!r || !r.started) return needProfileHtml('Faith');
+  if (!sees('faith')) return privateHtml('Faith');
+  const self = t === a.id, f = r.faith, n = esc(nameOf(t));
+  let h = '';
+  if (f) {
+    h += `<div class="w-card w-faithsum"><p class="w-eyebrow">${self ? 'In your words' : 'In ' + n + '\'s words'}</p><p>${faithSummary(f)}</p>${f.call ? `<p><b>Call:</b> ${esc(f.call)}</p>` : ''}${f.never ? `<p><b>Please keep in mind:</b> ${esc(f.never)}</p>` : ''}<p class="w-small">Asked on the second screen of each check-in${f.date ? ', last on ' + nice(f.date) : ''}.</p>
+      <div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.checkin(false)">Update in a Full Check-in</button></div></div>`;
+    tradsOf(f).filter(id => F.cards[id]).forEach(id => { h += cardHtml(id, (self ? 'Your' : n + '\'s') + ' tradition'); });
+  } else {
+    h += `<div class="w-card"><p>Willow asks about faith on the second screen of each check-in, because a chaplain always asks. Every answer is welcome, including none, and a person can choose more than one tradition.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.checkin(false)">Begin a Full Check-in</button></div></div>`;
+  }
+  h += `<div class="w-card"><p class="w-eyebrow">Faith at the bedside</p><p>Tradition cards, words for mixed-faith families, and readings for all faith traditions and everything in-between.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('bedside')">At the Bedside</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('readings')">Readings</button></div></div>`;
+  return h;
+};
+VIEWS.service = () => {
+  const g = fwGate('Service Wishes', 'farewell', false); if (g) return g;
+  const r = T(), f = fwOf(r), w = f.wishes, SV = FW.service, fromM = wishFrom(r);
+  const field = q => {
+    const k = q[0], kind = q[1];
+    if (kind === 'm' || kind === '1') {
+      const cur = w[k], many = kind === 'm';
+      return `<fieldset class="w-chipset full"><legend>${esc(q[2])}</legend><div class="w-cs">${SV.choices[k].map(o => { const on = many ? (Array.isArray(cur) && cur.includes(o[0])) : cur === o[0];
+        return `<label><input type="${many ? 'checkbox' : 'radio'}" name="w-sv-${k}" data-c="${k}" value="${o[0]}"${on ? ' checked' : ''} onchange="W.fwPick(this)"><span>${esc(o[1])}</span></label>`; }).join('')}</div></fieldset>`;
+    }
+    const filled = w[k] == null && fromM[k];
+    return fField('wishes.' + k, kind, q[2], '', q[3], orFrom(w, k, fromM[k]), filled ? (k === 'tradition' ? 'From the faith answers.' : SV.filled) : '', kind === 'a');
+  };
+  return `<p class="lead" style="margin:0 0 14px">${roleOf(target()) === 'person' && isSelf() ? 'Write what you hope the day holds. The people you love will be glad to know.' : 'Write it with ' + esc(nameOf(target())) + ', in their words, or from what you know they would want.'} It saves as you type.</p>
+    ${SV.groups.map(g => `<div class="w-card"><p class="w-eyebrow">${esc(g[0])}</p><div class="w-fwgrid">${g[1].map(field).join('')}</div></div>`).join('')}
+    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.fwSave()">Save</button><button type="button" class="btn btn-secondary" onclick="W.printWishes()">Save or Print</button><button type="button" class="btn btn-secondary" onclick="W.go('send')">Send to the Grounded Team</button></div>`;
+};
+// What Matters (and the faith answers) offer words for Service Wishes that are still empty.
+function wishFrom(r) {
+  const m = sees('matters') ? (r.matters || {}) : {}, out = {};
+  FW.service.fromMatters.forEach(x => { const v = x[1].map(k => String(m[k] || '').trim()).filter(Boolean).join('\n'); if (v) out[x[0]] = x[2] + v; });
+  const tr = r.faith && sees('faith') ? tradsOf(r.faith).filter(x => x !== 'private').map(faithName).join(', ') : '';
+  if (tr) out.tradition = tr;
+  return out;
+}
+// Service Wishes as lines: [label, words], with What Matters filling what is still empty.
+function wishLines(r) {
+  const f = fwOf(r), w = f.wishes, SV = FW.service, fromM = wishFrom(r), out = [];
+  const lab = (k, id) => ((SV.choices[k] || []).find(o => o[0] === id) || [0, id])[1];
+  SV.groups.forEach(g => g[1].forEach(q => {
+    let v = w[q[0]];
+    if (q[1] === 'm') { v = (Array.isArray(v) ? v : []).filter(x => x !== 'unsure').map(x => lab(q[0], x)).join(', '); }
+    else if (q[1] === '1') { v = v && v !== 'unsure' ? lab(q[0], v) : ''; }
+    else if (v == null) v = fromM[q[0]] || '';
+    v = String(v || '').trim(); if (v) out.push([q[2], v]);
+  }));
+  return out;
+}
+function fwSave() { const t = target(); clearTimeout(FW_T); persist(t).then(() => toast('Saved.')); }
+function printWishes() {
+  const r = T(); if (!r) return; fwSave();
+  printHtml('Service Wishes for ' + nameOf(target()), wishLines(r).map(x => `<h3>${esc(x[0])}</h3><p>${esc(x[1]).replace(/\n/g, '<br>')}</p>`).join('') || '<p>Ready when you are.</p>');
+}
+
+/* ---------- Stories ---------- */
+VIEWS.stories = () => {
+  const a = me(), t = target(), r = t ? rec(t) : null;
+  let h = hubHtml('stories');
+  if (r && r.started && sees('cuttings')) {
+    const last = (r.cuttings || []).slice(-3).reverse();
+    h += last.length ? `<div class="w-card"><p class="w-eyebrow">${icon('scroll', 16)} Kept lately</p><ul class="w-sum">${last.map(c => `<li><b>${esc(c.title || 'Untitled')}</b> &middot; ${esc((CUT[c.kind] || CUT.story)[1])}</li>`).join('')}</ul><div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.go('cuttings')">All Cuttings</button></div></div>`
+      : `<div class="w-card"><p>One story is enough to start. Type it, or have a helper type while ${a && t === a.id ? 'you talk' : 'they talk'}.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('cuttings');W.newCut('story')">Keep a First Story</button></div></div>`;
+    h += `<p class="w-small">Cuttings also fill the Eulogy's three stories and the Legacy Book.</p>`;
+  } else if (!a || !r || !r.started) h += needProfileHtml('Stories');
+  else h += privateHtml('Cuttings');
+  return h;
+};
+const legacyName = (r, t) => { const f = fwOf(r); return String(orFrom(f.facts, 'first', nameOf(t)) || '').trim() || String(f.facts.name || '').trim() || nameOf(t); };
+function legacyBody(r, t) {
+  const m = sees('matters') ? (r.matters || {}) : {}, cuts = r.cuttings || [];
+  let h = m.who ? `<h4>In ${esc(legacyName(r, t))}'s words</h4><p class="w-quote">${esc(m.who).replace(/\n/g, '<br>')}</p>` : '';
+  CUT_KINDS.forEach(k => { const L = cuts.filter(c => (CUT[c.kind] ? c.kind : 'story') === k[0]); if (!L.length) return;
+    h += `<h4>${esc(k[1].replace(/^A /, '').replace(/^One of the /, '').replace(/^./, s => s.toUpperCase()))}</h4>` + L.map(c => `<h3>${esc(c.title || 'Untitled')}</h3>${c.to ? `<p><i>${esc(c.to)}</i></p>` : ''}<div class="w-cuttext">${esc(c.text).replace(/\n/g, '<br>')}</div>`).join(''); });
+  return h;
+}
+VIEWS.legacy = () => {
+  const a = me(); if (!a) return needProfileHtml('The Legacy Book');
+  const t = target(), r = rec(t); if (!r || !r.started) return needProfileHtml('The Legacy Book');
+  if (!sees('cuttings')) return privateHtml('The Legacy Book');
+  const n = esc(legacyName(r, t)), cuts = r.cuttings || [];
+  if (!cuts.length) return `<div class="w-card"><p>The Legacy Book gathers every Cutting into one book. Keep a first story, and it starts here.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('cuttings');W.newCut('story')">Keep a First Story</button></div></div>`;
+  return `<div class="btn-row no-print" style="margin:0 0 14px"><button type="button" class="btn btn-primary" onclick="W.printLegacy()">Save or Print the Book</button><button type="button" class="btn btn-secondary" onclick="W.go('cuttings')">Add a Cutting</button></div>
+    <article class="w-card w-book" data-read="Read the book aloud"><div class="w-legacy-cover"><p class="w-eyebrow" style="justify-content:center">The Legacy Book</p><h3>${n}</h3><p class="w-small">${cuts.length} ${cuts.length === 1 ? 'Cutting' : 'Cuttings'}, kept in Willow</p></div>${legacyBody(r, t)}</article>`;
+};
+function printLegacy() {
+  const t = target(), r = rec(t); if (!r) return;
+  const html = `<p><i>${(r.cuttings || []).length} Cuttings, kept in Willow</i></p>` + legacyBody(r, t);
+  const title = 'The Legacy Book of ' + legacyName(r, t), now = () => printHtml(title, html);
+  if (!window.GGApp || !window.ggPdfFromHTML) { now(); return; }
+  GGApp.sheet({ title, file: 'legacy-book.pdf', print: now, blocks: () => ggPdfFromHTML(`<h1>${esc(title)}</h1>` + html, { eyebrow: 'Willow by Grow With Grounded', foot: 'Willow(TM) by Grow With Grounded. growwithgrounded.com/willow' }) });
+}
+
+/* ---------- Farewell ---------- */
+VIEWS.farewell = () => {
+  let h = hubHtml('farewell');
+  const t = target(), r = t ? rec(t) : null;
+  if (r && r.started && sees('farewell') && roleOf(t) === 'person') {
+    const L = wishLines(r);
+    h += `<div class="w-card"><div class="w-spread"><p class="w-eyebrow">${icon('candle', 16)} Service Wishes</p><button type="button" class="text-btn" onclick="W.go('service')">${L.length ? 'Change' : 'Write them'}</button></div>
+      ${L.length ? `<ul class="w-sum">${L.slice(0, 8).map(x => `<li><b>${esc(x[0])}:</b> ${esc(x[1]).replace(/\n/g, '; ')}</li>`).join('')}</ul>` : '<p>Music, readings, who speaks, burial or cremation, and the feel of the day. What Matters fills in what it can.</p>'}</div>`;
+  } else if (!me() || !r || !r.started) h += needProfileHtml('Farewell planning') + fwPages();
+  h += `<div class="w-card"><p class="w-eyebrow">${icon('hand', 16)} The Grounded team</p><p>We help families prepare a service that sounds like the person they love: a funeral, a memorial, a graveside, or a celebration of life, for all faith traditions and everything in-between. When you are ready, Send to the Grounded Team shares your plans in one tap.</p></div>`;
+  return h;
+};
+VIEWS.plan = () => {
+  const g = fwGate('The Farewell Checklist', 'farewell'); if (g) return g;
+  const f = fwOf(T()), C2 = FW.checklist;
+  const count = s => s.items.filter(it => f.plan.c[s.id + '.' + it.id]).length;
+  return lineHtml() + `<p class="lead" style="margin:0 0 14px">${esc(C2.lead)}</p>` + C2.secs.map(s => `<div class="w-card" id="w-fws-${s.id}"><div class="w-spread"><h3>${esc(s.name)}</h3><span class="w-count" id="w-fwn-${s.id}">${count(s)} of ${s.items.length} done</span></div><p class="w-small">${esc(s.lead)}</p>
+      <ul class="w-checks">${s.items.map(it => { const k = s.id + '.' + it.id, on = !!f.plan.c[k];
+        return `<li class="${on ? 'done' : ''}"><label><input type="checkbox" data-k="${k}"${on ? ' checked' : ''} onchange="W.fwCheck(this)"><span><b>${esc(it.t)}</b><span class="d">${esc(it.d)}</span></span></label>${it.go ? `<div class="w-go">${it.go.map(x => `<button type="button" onclick="W.go('${x[1]}')">${esc(x[0])}</button>`).join('')}</div>` : ''}</li>`; }).join('')}</ul></div>`).join('')
+    + `<div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.printPlan()">Print the Checklist</button><button type="button" class="btn btn-secondary" onclick="W.go('send')">Send to the Grounded Team</button></div>` + sourcesLine(C2.sources);
+};
+function fwCheck(el) {
+  const r = T(); if (!r) return; const f = fwOf(r), k = el.dataset.k;
+  if (el.checked) f.plan.c[k] = today(); else delete f.plan.c[k];
+  const li = el.closest('li'); if (li) li.classList.toggle('done', el.checked);
+  const s = FW.checklist.secs.find(x => x.id === k.split('.')[0]), n = s && $('#w-fwn-' + s.id);
+  if (n) n.textContent = s.items.filter(it => f.plan.c[s.id + '.' + it.id]).length + ' of ' + s.items.length + ' done';
+  fwKeep();
+}
+function printPlan() {
+  const r = T(); if (!r) return; const f = fwOf(r);
+  printHtml('Planning a Farewell', FW.checklist.secs.map(s => `<h3>${esc(s.name)}</h3><ul>${s.items.map(it => `<li>${f.plan.c[s.id + '.' + it.id] ? '&#10003; ' : '&#9744; '}<b>${esc(it.t)}</b>. ${esc(it.d)}</li>`).join('')}</ul>`).join('')
+    + `<p><small>With hospice, call the hospice's 24/7 line first. If a death was sudden or unexpected, call 911.</small></p><p><small>Sources: ${FW.checklist.sources.map(x => esc(x[0])).join('; ')}.</small></p>`);
+}
+
+/* the Obituary (the Obituary Helper's drafting, GWG BLD 748, inside Willow) */
+const OQ = []; FW.obituary.groups.forEach(g => g.qs.forEach(q => OQ.push(q.id)));
+const OB_FACTS = FW.facts.map(x => x[0]);
+function obVals(f) {
+  const p = PRON[pronOf(f)], name = String(f.facts.name || '').trim();
+  const first = String(orFrom(f.facts, 'first', nameOf(target())) || '').trim() || name.replace(/["“”].*?["“”]/g, ' ').trim().split(/\s+/)[0] || '';
+  return Object.assign({ Name: name || first || '[Name]', First: first || '[Name]' }, p);
+}
+function obFill(t, f, extra) {
+  const v = obVals(f);
+  return String(t || '').replace(/\{([A-Za-z]+)\}/g, (m0, k) => {
+    if (extra && Object.prototype.hasOwnProperty.call(extra, k)) return extra[k] || '';
+    if (Object.prototype.hasOwnProperty.call(v, k)) return v[k];
+    const lo = k.charAt(0).toLowerCase() + k.slice(1);
+    if (lo !== k && Object.prototype.hasOwnProperty.call(v, lo)) { const w = v[lo]; return w.charAt(0).toUpperCase() + w.slice(1); }
+    return m0;
+  });
+}
+// What Matters offers the words for a question that is still empty (q.from).
+function obFrom(r, q) { const m = sees('matters') ? (r.matters || {}) : {}; return (q.from || []).map(k => String(m[k] || '').trim()).filter(Boolean).join(' '); }
+function obAns(r) {
+  const f = fwOf(r), a = {};
+  OB_FACTS.forEach(k => { a[k] = k === 'first' ? '' : String(f.facts[k] || ''); });
+  FW.obituary.groups.forEach(g => g.qs.forEach(q => { a[q.id] = String(orFrom(f.obit.a, q.id, obFrom(r, q))); }));
+  return a;
+}
+// The same drafting rules as the Service Builder: a sentence drops out when its answers are empty, and a clause drops out when only its own answer is empty.
+function obDraft(r, shape) {
+  const f = fwOf(r), raw = obAns(r), ids = OB_FACTS.filter(k => k !== 'first').concat(OQ), ans = {};
+  ids.forEach(id => { ans[id] = String(raw[id] || '').trim().replace(/\s*\n+\s*/g, ' ').replace(/[.;,]\s*$/, ''); });
+  if (ans.loved) ans.loved = lc1(ans.loved);
+  ['early', 'work', 'married', 'remembered', 'faith'].forEach(id => { if (ans[id] && !/[.!?"”]$/.test(ans[id])) ans[id] += '.'; if (ans[id]) ans[id] = ans[id].charAt(0).toUpperCase() + ans[id].slice(1); });
+  const toks = t => (t.match(/\{([A-Za-z]+)\}/g) || []).map(x => x.slice(1, -1)).filter(k => ids.includes(k));
+  const tidy = t => obFill(t, f, ans).replace(/\s+([.,;:])/g, '$1').replace(/([.!?]["”]?)\./g, '$1').replace(/\.{2,}/g, '.').replace(/\s{2,}/g, ' ').trim();
+  const sentence = t => {
+    const used = toks(t); if (!used.length) return tidy(t);
+    if (used.every(k => !ans[k])) return '';
+    if (used.every(k => ans[k])) return tidy(t);
+    const parts = t.replace(/[.!?]\s*$/, '').split(/,\s+/).filter(c => toks(c).every(k => ans[k]));
+    if (!parts.length) return '';
+    let out = tidy(parts.join(', ')).replace(/^and\s+/i, ''); out = out.charAt(0).toUpperCase() + out.slice(1);
+    return out + '.';
+  };
+  const item = t => t.split(/(?<=[.!?])\s+(?=[{A-Z])/).map(sentence).filter(Boolean).join(' ');
+  const paras = shape.words > 120 ? shape.outline.map(item) : [shape.outline.map(item).filter(Boolean).join(' ')];
+  return paras.filter(Boolean).join('\n\n');
+}
+// Words that start a sentence on their own page read mid-sentence here ("Ruth loved coffee"); names and "I" keep their capital.
+const lc1 = t => /^[A-Z](?:[a-z]|\s)/.test(t) && !/^(I|I'm|I've|God)\b/.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t;
+const words = t => { const m = String(t || '').trim().match(/\S+/g); return m ? m.length : 0; };
+const obCount = (sh, t) => { const n = words(t); return `<span class="w-count${n > sh.words * 1.25 ? ' over' : ''}" id="w-on-${sh.id}">${n} words, aim for about ${sh.words}</span>`; };
+function factsCard(f) {
+  return `<div class="w-card"><div class="w-spread"><p class="w-eyebrow">Life Facts</p><span class="w-small">Written once. The Obituary, the Eulogy, and the Legacy Book use them.</span></div><div class="w-fwgrid">${FW.facts.map(x => fField('facts.' + x[0], 't', x[1], x[2], x[3], x[0] === 'first' ? orFrom(f.facts, 'first', nameOf(target())) : (f.facts[x[0]] || ''), '', x[0] === 'born' || x[0] === 'death')).join('')}${pronSel(f)}</div></div>`;
+}
+VIEWS.obituary = () => {
+  const g = fwGate('The Obituary', 'farewell'); if (g) return g;
+  const r = T(), f = fwOf(r), O = FW.obituary, any = O.shapes.some(s => String(f.obit.d[s.id] || '').trim());
+  let h = `<p class="lead" style="margin:0 0 14px">${esc(O.lead)}</p>
+    <div class="w-card"><p class="w-eyebrow">Before you share it</p><ul class="w-tips">${O.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` + factsCard(f);
+  h += O.groups.map(gr => `<div class="w-card"><p class="w-eyebrow">${esc(gr.name)}</p><div class="w-fwgrid">${gr.qs.map(q => { const from = f.obit.a[q.id] == null ? obFrom(r, q) : '';
+    return fField('obit.a.' + q.id, 'a', obFill(q.ask, f), obFill(q.hint || '', f), q.ph || '', orFrom(f.obit.a, q.id, from), from ? 'Filled in from What Matters.' : '', true); }).join('')}</div></div>`).join('');
+  h += `<div class="btn-row" style="margin:0 0 18px"><button type="button" class="btn btn-primary" onclick="W.obMake()">${any ? 'Make New Drafts' : 'Make the Drafts'}</button></div><div id="w-ob-drafts">`;
+  if (any) h += O.shapes.map(sh => { const t = f.obit.d[sh.id] || '';
+    return `<div class="w-card" id="w-obd-${sh.id}"><div class="w-spread"><h3>${esc(sh.name)}</h3>${obCount(sh, t)}</div><p class="w-small">${esc(sh.about)}</p>
+      <textarea class="w-draft" data-k="obit.d.${sh.id}" aria-label="${esc(sh.name)} draft" rows="${sh.words > 300 ? 14 : sh.words > 100 ? 10 : 6}" oninput="W.fwIn(this)">${esc(t)}</textarea>
+      <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.fwCopy('obit','${sh.id}')">Copy</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.obPrint('${sh.id}')">Save or Print</button></div></div>`; }).join('')
+    + `<div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.obPrint('all')">Save or Print All Three</button><button type="button" class="btn btn-secondary" onclick="W.go('send')">Send to the Grounded Team</button></div>`;
+  return h + `</div>` + sourcesLine(O.sources);
+};
+function obMake() {
+  const r = T(); if (!r) return; const f = fwOf(r), O = FW.obituary;
+  if (O.shapes.some(sh => f.obit.e[sh.id] && f.obit.d[sh.id]) && !confirm('Make new drafts? This replaces the changes you made to the drafts.')) return;
+  const a = obAns(r); if (!OQ.concat(OB_FACTS).some(k => String(a[k] || '').trim() && k !== 'first')) { toast('Answer a question or two first.'); return; }
+  O.shapes.forEach(sh => { f.obit.d[sh.id] = obDraft(r, sh); }); f.obit.e = {};
+  persist(target()).then(() => { render(); toast('Your drafts are ready below.'); const d = $('#w-obd-notice'); if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+}
+const paras = t => String(t || '').split(/\n\s*\n/).map(p => p.trim() ? `<p>${esc(p.trim()).replace(/\n/g, '<br>')}</p>` : '').join('');
+function obPrint(id) {
+  const r = T(); if (!r) return; const f = fwOf(r), v = obVals(f);
+  const L = FW.obituary.shapes.filter(sh => (id === 'all' || sh.id === id) && String(f.obit.d[sh.id] || '').trim());
+  if (!L.length) { toast('Make the drafts first.'); return; }
+  printHtml('Obituary for ' + v.Name, L.map(sh => `<h3>${esc(sh.name)}</h3>${paras(f.obit.d[sh.id])}`).join(''));
+}
+function fwCopy(kind, id) {
+  const r = T(); if (!r) return; const f = fwOf(r);
+  const text = kind === 'obit' ? f.obit.d[id] : kind === 'eulogy' ? f.eulogy.d : kind === 'send' ? sendText(sendData()) : kind === 'mail' ? TEAM() : '';
+  copyText(text);
+}
+function copyText(text) {
+  text = String(text || ''); if (!text.trim()) { toast('Nothing to copy yet.'); return; }
+  const old = () => { const t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.top = '-1000px'; document.body.appendChild(t); t.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} t.remove(); toast(ok ? 'Copied.' : 'Select the words and copy them by hand.'); };
+  try { if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(() => toast('Copied.'), old); return; } } catch (e) {}
+  old();
+}
+
+/* the Eulogy (the Eulogy Helper's outline, GWG BLD 748, inside Willow); Cuttings offer the stories */
+const EU = FW.eulogy;
+const clean = t => String(t || '').trim().replace(/[ \t]+/g, ' ');
+const sent = t => { t = clean(t); if (!t) return ''; t = t.charAt(0).toUpperCase() + t.slice(1); return /[.!?"”]$/.test(t) ? t : t + '.'; };
+const low = t => lc1(clean(t).replace(/[.]+$/, ''));
+function euAns(r) {
+  const f = fwOf(r), m = sees('matters') ? (r.matters || {}) : {}, a = {};
+  EU.groups.forEach(g => g[2].forEach(q => { a[q[0]] = String(f.eulogy.a[q[0]] == null ? (q[0] === 'name' ? obVals(f).First.replace('[Name]', '') : q[0] === 'who' ? (m.who || '') : '') : f.eulogy.a[q[0]]); }));
+  return a;
+}
+function euBuild(r) {
+  const f = fwOf(r), a = euAns(r), n = clean(a.name) || '[Name]', p = PRON[pronOf(f)];
+  const open = [a.me ? sent(a.me) : '[Who you are to them.]', a.who ? n + ' was ' + low(a.who) + '.' : n + ' was [one sentence that captures ' + p.them + '].'];
+  const stories = ['s1', 's2', 's3'].map((k, i) => clean(a[k]) ? sent(a[k]) : '[' + ['First', 'Second', 'Third'][i] + ' story]');
+  const gave = [a.taught ? n + ' taught me ' + low(a.taught) + '.' : 'What ' + n + ' taught me was [what ' + p.they + ' taught you].', a.carry ? 'And what we carry forward is ' + low(a.carry) + '.' : 'And what we carry forward is [what we carry].'];
+  return [open.join(' '), stories.join('\n\n'), gave.join(' '), a.close ? sent(a.close) : '[A closing line.]'].join('\n\n');
+}
+function euTime(t) {
+  const w = words(String(t || '').replace(/\[[^\]]*\]/g, ' ')), halves = Math.round(w / EU.wpm * 2), m = Math.floor(halves / 2), half = halves % 2;
+  return w + ' words, about ' + (halves < 2 ? 'under a minute' : m + (half ? ' and a half' : '') + (m === 1 && !half ? ' minute' : ' minutes')) + ' at an easy pace';
+}
+VIEWS.eulogy = () => {
+  const g = fwGate('The Eulogy', 'farewell'); if (g) return g;
+  const r = T(), f = fwOf(r), a = euAns(r), cuts = sees('cuttings') ? (r.cuttings || []) : [];
+  const uses = (k, kinds) => { const L = cuts.filter(c => kinds.includes(c.kind || 'story')); if (!L.length) return '';
+    return `<div class="w-uses"><span>${esc(EU.useCutting)}:</span>${L.slice(-6).reverse().map(c => `<button type="button" onclick="W.euUse('${k}','${c.id}')" title="${esc(c.title || 'Untitled')}">${esc(c.title || String(c.text).slice(0, 40))}</button>`).join('')}</div>`; };
+  let h = `<p class="lead" style="margin:0 0 14px">${esc(EU.lead)}</p>`;
+  h += EU.groups.map(gr => `<div class="w-card"><p class="w-eyebrow">${esc(gr[0])}</p>${gr[1] ? `<p class="w-small">${esc(gr[1])}</p>` : ''}<div class="w-fwgrid">${gr[2].map(q => {
+    const k = q[0], from = f.eulogy.a[k] == null && a[k] ? (k === 'who' ? 'Filled in from What Matters.' : 'From Life Facts.') : '';
+    let x = fField('eulogy.a.' + k, q[1], q[2], q[3], q[4], a[k], from, q[1] === 'a');
+    const u = /^s[123]$/.test(k) ? uses(k, ['story', 'letter', 'four', 'blessing', 'recipe']) : k === 'taught' ? uses(k, ['learned']) : '';
+    if (u) x = x.replace(/<\/label>$/, u + '</label>');
+    return x; }).join('')}${gr[0] === EU.groups[0][0] ? pronSel(f) : ''}</div></div>`).join('');
+  h += `<div class="btn-row" style="margin:0 0 18px"><button type="button" class="btn btn-primary" onclick="W.euMake()">${f.eulogy.d ? 'Build a New Outline' : 'Build My Outline'}</button></div>`;
+  if (f.eulogy.d) h += `<div class="w-card" id="w-eu-draft"><div class="w-spread"><h3>The Eulogy</h3><span class="w-count" id="w-eu-time">${esc(euTime(f.eulogy.d))}</span></div>
+    <p class="w-small">Opening, then the stories, then what ${esc(clean(a.name) || 'they')} gave us, then goodbye. Words in [brackets] are spots still waiting for you. Change anything; this is your voice.</p>
+    <textarea class="w-draft" data-k="eulogy.d" aria-label="The eulogy" rows="16" oninput="W.fwIn(this)">${esc(f.eulogy.d)}</textarea>
+    <p class="w-small">Reading time counts about ${EU.wpm} words a minute, an easy pace for a hard day.</p>
+    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.fwCopy('eulogy')">Copy</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.euPrint()">Print in Large Type</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('send')">Send to the Grounded Team</button></div></div>`;
+  h += `<div class="w-card"><p class="w-eyebrow">Speaking through tears</p><p>Tears are welcome. They mean you loved them, and the room is with you.</p><ul class="w-tips">${EU.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  return h;
+};
+function euUse(k, id) {
+  const r = T(); if (!r) return; const c = (r.cuttings || []).find(x => x.id === id); if (!c) return;
+  const el = $('#w-fw-eulogy-a-' + k), cur = el ? el.value.trim() : '';
+  const v = cur ? cur + '\n\n' + String(c.text).trim() : String(c.text).trim();
+  if (el) { el.value = v; } fwSet('eulogy.a.' + k, v); const n = el && el.parentNode.querySelector('.w-fill'); if (n) n.remove();
+  toast('Added from Cuttings.');
+}
+function euMake() {
+  const r = T(); if (!r) return; const f = fwOf(r);
+  if (f.eulogy.edited && f.eulogy.d && !confirm('Build a new outline? This replaces the changes you made to the eulogy.')) return;
+  f.eulogy.d = euBuild(r); f.eulogy.edited = false;
+  persist(target()).then(() => { render(); toast('Your outline is ready below.'); const d = $('#w-eu-draft'); if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+}
+function euPrint() {
+  const r = T(); if (!r) return; const f = fwOf(r); if (!f.eulogy.d) { toast('Build the outline first.'); return; }
+  document.body.classList.add('w-bigprint'); printHtml('Eulogy for ' + (clean(euAns(r).name) || nameOf(target())), paras(f.eulogy.d));
+  setTimeout(() => document.body.classList.remove('w-bigprint'), 3000);
+}
+
+/* ---------- Send to the Grounded Team ----------
+   A plain summary and a file (format GGFW1, kind farewell-start, the same one Planning a Farewell sends) that the team opens
+   into the Farewell Planning Session in the Field Guide. Through the phone's share sheet when it can carry a file; otherwise an
+   email to the team with the file saved to attach. Only what is checked goes, only what the person shares, only on Send. */
+const TEAM = () => 'hello' + '@' + 'growwithgrounded' + '.' + 'com';
+const SEND_ON = {}; FW.send.parts.forEach(p => { SEND_ON[p[0]] = p[3]; });
+function sendCan(k, r) {
+  if (k === 'matters') return sees('matters') && MATTERS.concat(VIGIL).some(x => (r.matters || {})[x[0]]);
+  if (k === 'cuttings') return sees('cuttings') && (r.cuttings || []).length > 0;
+  return sees('farewell');
+}
+function sendData() {
+  const t = target(), r = rec(t); if (!r) return null;
+  const f = fwOf(r), w = f.wishes, on = k => SEND_ON[k] && sendCan(k, r), ff = f.facts, d = { v: 1, kind: 'farewell-start', src: 'willow', made: today() };
+  const set = (o, k, v) => { v = typeof v === 'string' ? v.trim() : v; if (v && (!Array.isArray(v) || v.length)) o[k] = v; };
+  if (on('facts')) { const p = {}; set(p, 'called', String(orFrom(ff, 'first', nameOf(t)))); set(p, 'full', ff.name); set(p, 'born', ff.born); set(p, 'died', ff.death); if (Object.keys(p).length) d.person = p; }
+  const fr = f.send.from || {}, from = {}; set(from, 'name', fr.name); set(from, 'rel', fr.rel); set(from, 'phone', fr.phone); set(from, 'email', fr.email); if (Object.keys(from).length) d.from = from;
+  if (on('service')) {
+    const L = wishLines(r), val = k => { const x = FW.service.groups.flatMap(g => g[1]).find(q => q[0] === k); const l = x && L.find(y => y[0] === x[2]); return l ? l[1] : ''; };
+    const many = k => (Array.isArray(w[k]) ? w[k] : []).filter(x => x !== 'unsure');
+    set(d, 'gatherings', many('gatherings').concat(w.rest && w.rest !== 'unsure' ? (w.rest === 'scattering' ? ['cremation', 'scattering'] : [w.rest]) : []));
+    if (w.faithway) d.faithway = w.faithway;
+    set(d, 'tradition', val('tradition')); set(d, 'customs', many('customs')); set(d, 'honors', many('honors'));
+    set(d, 'readings', val('readings')); set(d, 'music', val('music')); set(d, 'funeralHome', val('funeralHome'));
+    const sp = val('speakers').split('\n').map(clean).filter(Boolean).map(x => ({ name: x.slice(0, 80) })); if (sp.length) d.speakers = sp;
+    set(d, 'when', [val('place') ? 'Place: ' + val('place') : '', val('when')].filter(Boolean).join('. '));
+    set(d, 'notes', [val('feel') ? 'The feel of the day: ' + val('feel') : '', val('lead') ? 'Who leads: ' + val('lead') : '', val('notes')].filter(Boolean).join('\n'));
+  }
+  const ob = on('obituary') ? obAns(r) : {};
+  if (on('obituary') || on('matters')) { const m = on('matters') ? (r.matters || {}) : {}, st = {};
+    set(st, 'loved', ob.loved || m.joy); set(st, 'who', m.who); set(st, 'work', ob.work); set(st, 'values', ob.remembered);
+    if (on('cuttings')) { const c = (r.cuttings || []).find(x => (x.kind || 'story') === 'story'); if (c) set(st, 'memory', String(c.text).slice(0, 1200)); }
+    if (Object.keys(st).length) d.story = st; }
+  if (on('plan')) { const c = Object.keys(f.plan.c); if (c.length) d.checked = c; }
+  const wl = {};
+  if (on('service')) { const L = wishLines(r); if (L.length) wl.wishes = L.map(x => ({ h: x[0], t: x[1] })); }
+  if (on('obituary')) { const o = FW.obituary.shapes.filter(s => String(f.obit.d[s.id] || '').trim()).map(s => ({ h: s.name, t: String(f.obit.d[s.id]).trim() })); if (o.length) wl.obituary = o; }
+  if (on('eulogy') && String(f.eulogy.d || '').trim()) wl.eulogy = String(f.eulogy.d).trim();
+  if (on('matters')) { const m = r.matters || {}, o = MATTERS.concat(VIGIL).filter(x => m[x[0]]).map(x => ({ h: x[1], t: String(m[x[0]]) })); if (o.length) wl.matters = o; }
+  if (on('cuttings')) wl.cuttings = (r.cuttings || []).map(c => ({ kind: (CUT[c.kind] || CUT.story)[1], title: c.title || '', to: c.to || '', t: String(c.text) }));
+  if (Object.keys(wl).length) d.willow = wl;
+  return d;
+}
+const sendName = d => { const p = (d && d.person) || {}; return p.full || p.called || nameOf(target()); };
+function sendText(d) {
+  if (!d) return '';
+  const L = [], p = d.person || {}, f = d.from || {}, add = (h, v) => { if (v) L.push(h + ': ' + v); };
+  L.push('Farewell plans for ' + sendName(d), 'To the Grounded team (' + TEAM() + ')');
+  add('From', [[f.name, f.rel ? '(' + f.rel + ')' : ''].filter(Boolean).join(' '), f.phone, f.email].filter(Boolean).join(', '));
+  L.push('Made in Willow at growwithgrounded.com/willow', '');
+  add('Born', p.born); add('Died', p.died);
+  const w = d.willow || {};
+  if (w.wishes) { L.push('', 'Service Wishes'); w.wishes.forEach(x => add(x.h, x.t.replace(/\n/g, '; '))); }
+  if (d.checked) L.push('', 'Checklist: ' + d.checked.length + ' done');
+  if (w.obituary) L.push('Obituary drafts: ' + w.obituary.map(x => x.h).join(', '));
+  if (w.eulogy) L.push('Eulogy: ' + euTime(w.eulogy));
+  if (w.matters) L.push('What Matters: ' + w.matters.length + (w.matters.length === 1 ? ' answer' : ' answers'));
+  if (w.cuttings) L.push('Cuttings: ' + w.cuttings.length);
+  L.push('', FW.send.fileNote);
+  return L.join('\n').replace(/\n{3,}/g, '\n\n');
+}
+const sendFileName = d => 'willow-farewell-' + (String(sendName(d)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'family') + '.json';
+VIEWS.send = () => {
+  const g = fwGate('Send to the Grounded Team', 'farewell'); if (g) return g;
+  const r = T(), f = fwOf(r), a = me(), fr = f.send.from = f.send.from || {};
+  if (fr.name == null) fr.name = a ? a.name : '';
+  const d = sendData(), last = f.sent[f.sent.length - 1];
+  return `<p class="lead" style="margin:0 0 14px">${esc(FW.send.lead)}</p>
+    <div class="w-card"><p class="w-eyebrow">What goes</p>${FW.send.parts.map(p => { const can = sendCan(p[0], r);
+      return `<label class="w-switch"><input type="checkbox" ${can && SEND_ON[p[0]] ? 'checked' : ''} ${can ? '' : 'disabled'} onchange="W.sendPart('${p[0]}',this.checked)"><span><b>${esc(p[1])}</b><small>${can ? esc(p[2]) : (p[0] === 'matters' || p[0] === 'cuttings') && !sees(p[0]) ? esc(nameOf(target())) + ' keeps this private.' : 'Ready when you are.'}</small></span></label>`; }).join('')}</div>
+    <div class="w-card"><p class="w-eyebrow">From you</p><div class="w-fwgrid">${fField('send.from.name', 't', 'Your name', '', '', fr.name || '')}${fField('send.from.rel', 't', 'Who you are to them', '', 'Daughter', fr.rel || '')}${fField('send.from.phone', 't', 'Your phone', '', '', fr.phone || '')}${fField('send.from.email', 't', 'Your email', '', '', fr.email || '')}</div>
+      <p class="w-small">So the Grounded team can reach you. It goes only with what you send.</p></div>
+    <div class="w-card"><div class="w-spread"><p class="w-eyebrow">Ready to send</p><button type="button" class="text-btn" onclick="W.render()">Refresh</button></div>
+      <textarea class="w-draft" id="w-send-text" readonly rows="10" aria-label="The summary, ready to send">${esc(sendText(d))}</textarea>
+      <p class="w-small">To the Grounded team: <span class="w-teammail">${esc(TEAM())}</span>. ${esc(FW.send.fileNote)}</p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.sendGo()">Send to the Grounded Team</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.sendMail()">Email It</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.sendFile()">Save the File</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.fwCopy('send')">Copy the Words</button></div>
+      ${last ? `<p class="w-sentnote">Last sent ${nice(last.d)}${last.by ? ' by ' + esc(last.by) : ''}.</p>` : ''}</div>`;
+};
+function sendPart(k, v) { SEND_ON[k] = !!v; const t = $('#w-send-text'); if (t) t.value = sendText(sendData()); }
+function sendBlob(d) { return new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' }); }
+function saveFile(d) {
+  try { const url = URL.createObjectURL(sendBlob(d)), a = document.createElement('a'); a.href = url; a.download = sendFileName(d); document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000); return true; } catch (e) { return false; }
+}
+function sendReady() {
+  clearTimeout(FW_T); const d = sendData();
+  if (!d || !(d.person || d.willow || d.checked || d.gatherings || d.story)) { toast('Write a little first: Life Facts, Service Wishes, or the Checklist.'); return null; }
+  return d;
+}
+function sentNow(how) { const r = T(); if (!r) return; const f = fwOf(r); f.sent.push({ d: today(), how, by: (me() || {}).name || '' }); persist(target()).then(() => { render(); toast(FW.send.after); }); }
+function sendMail(d) {
+  d = d || sendReady(); if (!d) return;
+  const saved = saveFile(d), note = saved ? '\n\nThe file ' + sendFileName(d) + ' is saved on this device. Please attach it to this email.' : '';
+  let body = sendText(d) + note; if (body.length > 1700) body = body.slice(0, 1600) + '\n...' + note;
+  try { window.location.href = 'mailto:' + TEAM() + '?subject=' + encodeURIComponent('Farewell plans for ' + sendName(d)) + '&body=' + encodeURIComponent(body); } catch (e) {}
+  sentNow('email');
+}
+function sendGo() {
+  const d = sendReady(); if (!d) return;
+  let file = null; try { file = new File([sendBlob(d)], sendFileName(d), { type: 'application/json' }); } catch (e) {}
+  const data = { title: 'Farewell plans for ' + sendName(d), text: sendText(d) };
+  if (file) data.files = [file];
+  if (navigator.share && (!file || (navigator.canShare && navigator.canShare(data)))) {
+    navigator.share(data).then(() => sentNow('share')).catch(e => { if (!e || e.name !== 'AbortError') sendMail(d); });
+    return;
+  }
+  sendMail(d);
+}
+function sendFile() { const d = sendReady(); if (!d) return; toast(saveFile(d) ? 'Saved. Attach the file to a text or email to the Grounded team.' : 'This browser could not save a file. Copy the words instead.'); }
+
+/* ---------- Learn ---------- */
+VIEWS.learn = () => hubHtml('learn') + supportCard();
+
 /* ---------- Settings ---------- */
 const SHARE_ROWS = [
   ['tree', 'How my tree is doing', 'The gentle words for each part, never the answers.'],
   ['matters', 'What Matters to Me', 'So helpers can read it to nurses, aides, and visitors.'],
   ['cuttings', 'Cuttings', 'Stories, letters, and blessings you\'re leaving.'],
+  ['farewell', 'Farewell plans', 'Service Wishes, the checklist, the Obituary, and the Eulogy, so helpers can plan with you.'],
   ['log', 'What helped today', 'The shift log helpers write in.'],
   ['faith', 'My faith answers', 'Your tradition, how you live it, and who to call.'],
   ['answers', 'Notes from my check-ins', 'Anything you wrote at the end of a check-in.']
@@ -1486,7 +2018,8 @@ let ts = 0; try { ts = parseInt(localStorage.getItem('willow:text-size') || '0',
 function applyTS() { document.documentElement.classList.remove('ts-1', 'ts-2'); if (TS[ts]) document.documentElement.classList.add(TS[ts]); const b = $('#size-btn'); if (b) { b.textContent = TL[ts]; b.setAttribute('aria-label', 'Text size: ' + ['normal', 'larger', 'largest'][ts] + '. Tap to change.'); } }
 window.cycleTextSize = () => { ts = (ts + 1) % TS.length; try { localStorage.setItem('willow:text-size', String(ts)); } catch (e) {} applyTS(); };
 
-/* ---------- links: #for=id, #checkin, #quick, #guides, #guide=id, #readings, #reading=id, #bedside, #matters, #cuttings, #about ---------- */
+/* ---------- links: #for=id, #checkin, #quick, #guides, #guide=id, #readings, #reading=id, #bedside, #matters, #cuttings, #about,
+   and the Willow Hub pages (#wishes, #service, #stories, #legacy, #farewell, #plan, #obituary, #eulogy, #send, #learn) ---------- */
 function fromHash() {
   const h = decodeURIComponent(location.hash || '').slice(1); if (!h) return false;
   const [k, v] = h.split('=');
@@ -1503,7 +2036,8 @@ function fromHash() {
 /* Back and Forward (GWG nav fix): tapping a tab or opening a guide or reading adds a history entry (#matters,
    #guide=id, #reading=id), so Back steps through Willow before it leaves. Reading the hash never adds one, and
    one-time links (#for=, cards from gg-bridge.js) are left exactly as they were. */
-const HASH_TABS = ['today', 'matters', 'cuttings', 'bedside', 'guides', 'readings', 'about'];
+const HASH_TABS = ['today', 'matters', 'cuttings', 'bedside', 'guides', 'readings', 'about',
+  'wishes', 'faithpage', 'vigil', 'service', 'stories', 'legacy', 'farewell', 'plan', 'obituary', 'eulogy', 'send', 'learn'];
 let HASH_SEEN = location.hash;
 const canonHash = h => (!h || h === '#') ? '#today' : h;
 function hashOf() {
@@ -1545,6 +2079,8 @@ Object.assign(window.W, {
   guide: openGuide, closeGuide, closeReading, lib: openLib, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
+  fwIn, fwPick, fwPron, fwSave, fwCheck, fwCopy, printWishes, printLegacy, printPlan, obMake, obPrint, euUse, euMake, euPrint,
+  sendPart, sendGo, sendMail, sendFile, _sendData: () => sendData(), _sendText: () => sendText(sendData()),
   _theyify: theyify
 });
 const yr = $('#copyright-year'); if (yr) yr.textContent = new Date().getFullYear();
