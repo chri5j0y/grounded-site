@@ -76,7 +76,7 @@ DOMAIN_DEFS.forEach(d => {
 // The first story in each part is the featured one on results.
 // =====================================================================
 const GROUNDED_URL = "https://chri5j0y.substack.com";
-const SUBSCRIBE_URL = GROUNDED_URL + "/subscribe";
+const SUBSCRIBE_URL = "https://growwithgrounded.com/the-grounded-way.html#ways"; // Chris, November 13, 2026: invites point to Membership, never a newsletter
 const STORIES = {
   roots: [
     { title: "Prayer.", url: "https://chri5j0y.substack.com/p/thank-god-for-sending-you", snippet: "The prayer stayed whole long after everything else had come apart." },
@@ -786,7 +786,7 @@ function generateGrowthPlanDoc(mode) {
       <button class="btn btn-secondary" onclick="printGrowthPlan('${sheetId}')">Save or Print My Plan</button>
       ${isClient ? '<button class="btn btn-secondary" onclick="savePersonalFile()">Save My Results</button>' : ''}
     </div>
-    ${isClient ? `<p class="soft-invite no-print">Want company while you keep this plan? <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Grounded.</a> sends a new story every Wednesday.</p>
+    ${isClient ? `<p class="soft-invite no-print">Want company while you keep this plan? <a class="text-link" href="${SUBSCRIBE_URL}">Grounded Membership</a> opens all of The Grounded Way.</p>
     <div class="grove-next no-print"><div><strong>Ready to put this plan into practice?</strong> ${PROF ? 'Your practices are waiting in Today, ready to check off.' : 'Open or create your profile, and your practices show up in Today, ready to check off.'}</div><button class="btn btn-primary" onclick="${PROF ? "showView('client-today')" : 'profCreateDialog()'}">${PROF ? 'Go to Today' : 'Create a profile'}</button></div>` : ''}`;
   document.getElementById(sheetId).scrollIntoView({ behavior: 'smooth', block: 'start' });
   showToast('Growth plan created below.');
@@ -838,7 +838,7 @@ function buildPersonalSections(scores, includeStories) {
 }
 
 function inviteHtml() {
-  return `<p class="quiet-sub">New Grounded Stories arrive every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
+  return `<p class="quiet-sub">Stories for this season of life are in <a class="text-link" href="https://growwithgrounded.com/stories.html">Grounded Stories</a>.</p>`;
 }
 
 
