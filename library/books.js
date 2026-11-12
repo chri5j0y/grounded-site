@@ -38,6 +38,9 @@ DY-013|Healing After Loss|Martha Whitmore Hickman|1994|1|Fruit|A short reading f
 DY-014|When Hello Means Goodbye|Pat Schwiebert and Paul Kirk|1981|1|Fruit,Branches|A gentle guide for parents whose baby dies at or near birth.|perinatal loss
 DY-015|The Memory Box|Joanna Rowland|2017|1|Fruit|A child keeps memories of someone who died in a special box.|children, grief
 DY-016|Cry, Heart, But Never Break|Glenn Ringtved|2001|1|Fruit|Death visits four children and tells them a story first.|children, grief
+DY-017|Healing Your Grieving Heart: 100 Practical Ideas|Alan D. Wolfelt|2001|1|Fruit,Leaves|One hundred small, practical ways to care for yourself while you grieve.|grief, practical ideas
+DY-018|Healing a Spouse's Grieving Heart: 100 Practical Ideas|Alan D. Wolfelt|2003|1|Fruit,Branches|Practical ideas for living through the death of a husband or wife.|grief, widowhood
+DY-019|A Time to Mourn, A Time to Dance: Help for the Losses in Life||||1|Fruit,Roots|Help for walking through the many losses of a life, and finding the dance again.|grief, loss
 CP-001|Professional Spiritual and Pastoral Care|Stephen B. Roberts|2011|1|Roots,Branches|A practical handbook for chaplains across settings and faiths.|chaplaincy, interfaith
 CP-002|Spiritual Care in Practice|George Fitchett and Steve Nolan|2015|1|Roots,Branches|Case studies in healthcare chaplaincy.|chaplaincy, case studies
 CP-003|How to Get the Most Out of Clinical Pastoral Education|Gordon J. Hilsman|2018|1|Branches|Learning from supervision and verbatims in CPE.|CPE, training
@@ -414,6 +417,15 @@ LT-051|Love Poems of Elizabeth and Robert Browning|Elizabeth Barrett and Robert 
 LT-052|One Hundred and One Poems of Romance|Contemporary Books||1|Branches|A short love poetry anthology.|poetry, love
 LT-053|Just Folks|Edgar A. Guest|1917|1|Branches|Homespun poems of everyday life.|poetry
 LT-054|The Singing Creek Where the Willows Grow|Opal Whiteley|1920|1|Roots|A child's nature diary from Oregon.|nature, childhood
+LT-055|Lifetimes|Bryan Mellonie and Robert Ingpen|1983|1|Fruit|Every living thing has a beginning, an ending, and its own lifetime in between.|children, death, nature
+LT-056|The Fall of Freddie the Leaf|Leo Buscaglia|1982|1|Fruit,Trunk|A leaf's seasons, from spring to letting go, as a gentle story about living and dying.|children, death, seasons
+LT-057|Jenny|Stephanie Jeffs and Jacqui Thomas||1|Fruit,Branches|A young girl's story of grief and remembering after a death in her family.|children, grief
+LT-058|If Nathan Were Here|Mary Bahr and Karen A. Jerome|2000|1|Fruit,Branches|A boy misses his best friend who died, and finds a way to remember him.|children, grief, friendship
+LT-059|Tear Soup|Pat Schwiebert and Chuck DeKlyen, illustrated by Taylor Bills|1999|1|Fruit,Bark|Grandy makes a pot of tear soup after a loss: grief in her own way and her own time.|grief, all ages
+LT-060|When Dinosaurs Die|Laurie Krasny Brown and Marc Brown|1996|1|Fruit|A plain, kind guide for children about death and the feelings around it.|children, death
+LT-061|The Invisible String|Patrice Karst and Joanne Lew-Vriethoff|2018|1|Branches,Fruit|An invisible string of love connects us to everyone we love, near or far.|children, love, separation
+LT-062|All the Ways I Love You|Hallmark||1|Branches|A recordable storybook a grown-up reads aloud and records for a child to hear again.|children, love, recordable
+LT-063|Under the Same Moon|Hallmark||1|Branches|A recordable storybook about staying close under the same moon when apart.|children, love, recordable
 OD-002|Listening for Coyote|William L. Sullivan|1988|1|Roots,Leaves|A solo trek across Oregon's wilderness.|wilderness
 OD-006|Exploring the Boundary Waters|Daniel Pauly|2005|1|Leaves|Routes and natural history of the BWCA.|Minnesota
 OD-007|Wildflowers of the Boundary Waters|Betty Vos Hemstad|2003|1|Leaves,Roots|Wildflowers of the north woods.|Minnesota, plants
