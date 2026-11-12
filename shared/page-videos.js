@@ -75,7 +75,7 @@ window.PAGE_VIDEOS = {
   // On a tap, read.js and the shared player (shared/gg-learn.js) load, then the video plays in the player's own
   // overlay styles (ggl ggl-app), with GGLearn.player doing all the playing, the closing scene, and Sources.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b997';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b998', ART = '/shared/learn-art.js?v=b998';
   var PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
@@ -157,7 +157,9 @@ window.PAGE_VIDEOS = {
   }
   function open(key, from) {
     var P = (window.PAGE_VIDEOS || {})[key]; if (!P) return;
-    need(READ, function () { return !!window.GGRead; }).then(function () { return need(LEARN, function () { return !!window.GGLearn; }); }).then(function () {
+    // BLD 970 Round 6: the art plan loads before the player starts, so the title scene opens on its own painting (the player
+    // starts on the tap that opened it, before the plan gg-learn.js asks for would otherwise be in).
+    need(READ, function () { return !!window.GGRead; }).then(function () { return need(LEARN, function () { return !!window.GGLearn; }); }).then(function () { return need(ART, function () { return !!window.GG_ART; }); }).then(function () {
       if (!window.GGLearn) return;
       var had = !!(OPEN && OPEN.hist); close(had); GGLearn.css();
       var v = P.video, acc = P.accent || '#8B5E1A';
