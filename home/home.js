@@ -1214,7 +1214,7 @@
     batch: IMG + 'weekly-batch-sq.webp', rest: IMG + 'p-rest-day-sq.webp', plan: IMG + 'p-growth-plan-sq.webp', med: IMG + 'quiet-meditation-sq.webp'
   };
   var FOOD_ROT = [IMG + 'tend-body.webp', IMG + 'tend-fruit.webp', IMG + 'p-tend-people.webp', IMG + 'recipes-narrow.webp'];
-  function treeArt(tree, wide) { if (tree === 'heartwood') return wide ? '/shared/heroes/p/heartwood-hero-wide.webp' : HERO + 'p/heartwood-card-sq.webp'; /* BLD 974: the couple under the two trees */ return HERO + (/^(oak|birch|sequoia|pine|maple|aspen|willow|grove)$/.test(tree) ? tree : 'oak') + (wide ? '-wide.webp' : '-phone.webp'); }
+  function treeArt(tree, wide) { if (tree === 'willow') return wide ? '/shared/heroes/p/willow-hero-wide.webp' : HERO + 'p/willow-hero-card.webp'; /* BLD 971 */ if (tree === 'heartwood') return wide ? '/shared/heroes/p/heartwood-hero-wide.webp' : HERO + 'p/heartwood-card-sq.webp'; /* BLD 974: the couple under the two trees */ return HERO + (/^(oak|birch|sequoia|pine|maple|aspen|willow|grove)$/.test(tree) ? tree : 'oak') + (wide ? '-wide.webp' : '-phone.webp'); }
   function artFor(x) {
     var k = String(x.kind || '') + ' ' + String(x.hkey || x.key || '');
     if (x.key === 'tree') return treeArt(S.tree);

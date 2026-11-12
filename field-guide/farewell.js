@@ -467,7 +467,7 @@ function pickInto(p, id, val, single){
   if (single) p.sel[id] = [it.id]; else { p.sel[id] = p.sel[id] || []; if (!p.sel[id].includes(it.id)) p.sel[id].push(it.id); }
   return true;
 }
-const addTo = (o, k, t) => { t = String(t || '').trim(); if (!t) return; o[k] = o[k] ? o[k] + '\n' + t : t; };
+const addTo = (o, k, t) => { t = String(t || '').trim(); if (!t || String(o[k] || '').includes(t)) return; o[k] = o[k] ? o[k] + '\n' + t : t; };
 const HERE_L = {spouse: 'Spouse', children: 'Children', grandchildren: 'Grandchildren', siblings: 'Siblings', friends: 'Friends'};
 const CUST_L = {hymns: 'Hymn Singing', candle: 'Lighting a Candle', memories: 'Sharing Memories Aloud', flowers: 'Flowers on the Casket', silence: 'A Moment of Silence'};
 const HON_L = {military: 'Military Honors', flag: 'Flag Folding', taps: 'Taps', fraternal: 'Fraternal or Service Group'};
@@ -499,8 +499,32 @@ function applyStart(p, d){
   p.famStart = {at: Date.now(), made: d.made || ''};
   return n;
 }
-// One paste box for everything: the family's start (whole or in QR parts), a eulogy, or an obituary.
+// A Willow file (GWG BLD 971): Willow's Send to the Grounded Team shares the same start as plain JSON, with the family's
+// own writing alongside in d.willow (Service Wishes, the Obituary drafts, the Eulogy, What Matters, and Cuttings).
+function readWillow(text){
+  const t = String(text || '').trim(); if (t.charAt(0) !== '{') return null;
+  const d = fwJSON(t); return d && typeof d === 'object' && d.kind === 'farewell-start' ? d : null;
+}
+function applyWillow(p, w, name, from){
+  let n = 0; const has = body => arr(p.writings).some(x => x.body === body);
+  const put = (kind, body, sections, nm) => { body = String(body || '').trim(); if (!body || has(body)) return; p.writings.push({id: uid(), kind, name: nm || name, from, body, sections: sections || [], at: Date.now()}); n++; };
+  const block = L => arr(L).map(x => (x.h || x.title || '') + '\n' + String(x.t || '')).join('\n\n');
+  if (w.eulogy) put('eulogy', w.eulogy);
+  if (arr(w.obituary).length) put('obituary', block(w.obituary), arr(w.obituary).map(x => ({h: String(x.h || ''), t: String(x.t || '')})));
+  if (arr(w.wishes).length) put('writing', 'Service Wishes\n\n' + arr(w.wishes).map(x => x.h + ': ' + x.t).join('\n'));
+  if (arr(w.matters).length) put('writing', 'What Matters\n\n' + block(w.matters));
+  if (arr(w.cuttings).length) put('writing', 'Cuttings\n\n' + arr(w.cuttings).map(c => (c.title || c.kind || 'A Cutting') + (c.to ? ' (' + c.to + ')' : '') + '\n' + String(c.t || '')).join('\n\n'), [], 'Stories from Willow');
+  return n;
+}
+// One paste box for everything: the family's start (whole or in QR parts), a Willow file, a eulogy, or an obituary.
 function loadText(p, text){
+  const wd = readWillow(text);
+  if (wd){
+    if (+wd.v > 1){ toast('This file was made by a newer version of Willow.'); return false; }
+    S.qr = null; const n = applyStart(p, wd), from = wd.from ? [wd.from.name, wd.from.rel ? '(' + wd.from.rel + ')' : ''].filter(Boolean).join(' ') : '';
+    const w = wd.willow ? applyWillow(p, wd.willow, (wd.person && (wd.person.full || wd.person.called)) || '', from) : 0; touch(p);
+    toast("The Willow file is in: " + n + (n === 1 ? ' answer' : ' answers') + (w ? ', and ' + w + (w === 1 ? ' piece' : ' pieces') + " of the family's writing." : '.')); return 'start';
+  }
   const st = readStart(text, S.qr || (S.qr = {p: {}, of: 0}));
   if (st){
     if (!st.ok && st.need){ toast('Part ' + st.have + ' of ' + st.of + ' is in. Add part ' + st.need.join(', ') + ' next.'); return 'part'; }
@@ -513,9 +537,9 @@ function loadText(p, text){
 }
 function loadBox(p, where){
   return `<details class="fw-load"${where === 'open' ? ' open' : ''}><summary>Paste or Load From the Family</summary>
-    <p class="fw-sub">Paste the message the family sent from Planning a Farewell, the Eulogy Helper, or the Obituary Helper. A file they sent works too, and so does the text a phone camera reads from their QR code.</p>
+    <p class="fw-sub">Paste the message the family sent from Planning a Farewell, the Eulogy Helper, or the Obituary Helper. A file they sent works too, a Willow file from Send to the Grounded Team opens everything into this plan, and so does the text a phone camera reads from their QR code.</p>
     <textarea rows="3" id="fw-paste" aria-label="Paste what the family sent" placeholder="Paste the whole message here"></textarea>
-    <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="load-paste">Add It</button><label class="btn btn-line btn-sm" style="cursor:pointer">Load a File<input type="file" accept=".txt,.json,text/plain,application/json" data-fwfile="1" hidden></label>${'BarcodeDetector' in window ? '<button type="button" class="btn btn-line btn-sm" data-fwa="scan">Scan Their QR Code</button>' : ''}</div>
+    <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="load-paste">Add It</button><label class="btn btn-line btn-sm" style="cursor:pointer">Load a File<input type="file" accept=".txt,.json,text/plain,application/json" data-fwfile="1" hidden></label><label class="btn btn-line btn-sm" style="cursor:pointer">Open a Willow File<input type="file" accept=".json,application/json" data-fwfile="1" hidden></label>${'BarcodeDetector' in window ? '<button type="button" class="btn btn-line btn-sm" data-fwa="scan">Scan Their QR Code</button>' : ''}</div>
     ${S.qr && S.qr.of ? `<p class="fw-sub">Part ${Object.keys(S.qr.p).length} of ${S.qr.of} is in. Add the next part.</p>` : ''}</details>`;
 }
 async function scanQR(){
