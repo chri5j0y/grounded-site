@@ -8,7 +8,7 @@
    ===================================================================== */
 (function () {
   'use strict';
-  var V = 'b992', BASE = '/heartwood/art/';
+  var V = 'b996', BASE = '/heartwood/art/';
   // [key words in the heading, painting]
   var CARDS = [
     [/talk about this/i, 'talk'], [/strengths|growing edge/i, 'strengths'], [/couple workbook|workbook/i, 'workbook'],
