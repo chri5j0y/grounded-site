@@ -1,0 +1,53 @@
+/* BLD 976 crops: a painted hero with people shows the whole painting, so no head is cut and no face sits under the words
+   (Chris, November 12, 2026: "so many of these!!"). Loaded only by pages whose hero uses these classes, after style.css.
+   pp: on a phone and a tablet the painting shows whole above the words (--arn: the phone painting's shape, --ar: the wide one's).
+   pw: on a computer the hero is as tall as the painting, so the whole scene shows; the words sit where the painting is open:
+   at the top (pw alone), on the left (pw pl), or on the right (pw pr).
+   ps: on a computer the painting shows whole above the words, as on a tablet.
+   pwx: pw on a wide screen (1500 and wider), ps on a smaller computer, where the words would reach the faces. */
+
+/* phones */
+@media (max-width:700px){
+.pg-hero.pp::before{aspect-ratio:var(--arn,4/3);background-position:var(--pos-n,center top);}
+}
+
+/* tablets: the painting whole above the words, like a phone */
+@media (min-width:701px) and (max-width:1100px){
+.pg-hero.pp,.pg-hero.pp.ph,.pg-hero.pp.strip{display:block;min-height:0;padding:0 0 34px;background-image:none !important;background-color:rgb(var(--shade-rgb,30,20,10));}
+.pg-hero.pp::before{content:"";position:relative;inset:auto;display:block;width:100%;aspect-ratio:var(--ar,16/9);margin:0 0 26px;background:var(--img) center top/cover no-repeat;}
+.pg-hero.pp .pg-hero-in{padding-top:0;}
+.pg-hero.pp.ph .cer-actions{margin-top:22px;padding-top:0;}
+}
+
+/* computers */
+@media (min-width:1101px){
+.pg-hero.pw{min-height:calc(100vw / (var(--ar,16/9))) !important;align-items:flex-start;background-size:100% auto !important;background-position:center top !important;padding-top:64px;}
+.pg-hero.pw.ph .cer-actions{margin-top:24px;padding-top:0;}
+.pg-hero.pw::before{background:linear-gradient(180deg,rgba(var(--shade-rgb,18,10,3),.66) 0%,rgba(var(--shade-rgb,18,10,3),.38) 26%,rgba(var(--shade-rgb,18,10,3),0) 46%);}
+.pg-hero.pw.pl,.pg-hero.pw.pr{align-items:center;padding-top:72px;}
+.pg-hero.pw.pl{text-align:left;}
+.pg-hero.pw.pr{text-align:left;}
+.pg-hero.pw.pl .pg-hero-in,.pg-hero.pw.pr .pg-hero-in{display:flex;flex-direction:column;align-items:flex-start;}
+.pg-hero.pw.pr .pg-hero-in{padding-left:max(22px,calc(min(100vw,1060px) - 462px));}
+.pg-hero.pw.pl .pg-hero-in>*,.pg-hero.pw.pr .pg-hero-in>*{max-width:440px;margin-left:0;margin-right:0;}
+.pg-hero.pw.pl .pg-hero-in .cer-actions,.pg-hero.pw.pl .pg-hero-in .card-actions,.pg-hero.pw.pr .pg-hero-in .cer-actions,.pg-hero.pw.pr .pg-hero-in .card-actions{justify-content:flex-start;margin-top:24px;}
+.pg-hero.pw.pl::before{background:linear-gradient(90deg,rgba(var(--shade-rgb,18,10,3),.72) 0%,rgba(var(--shade-rgb,18,10,3),.5) 34%,rgba(var(--shade-rgb,18,10,3),0) 58%);}
+.pg-hero.pw.pr::before{background:linear-gradient(270deg,rgba(var(--shade-rgb,18,10,3),.72) 0%,rgba(var(--shade-rgb,18,10,3),.5) 34%,rgba(var(--shade-rgb,18,10,3),0) 58%);}
+.pg-hero.ps,.pg-hero.ps.ph,.pg-hero.ps.strip{display:block;min-height:0;padding:0 0 40px;background-image:none !important;background-color:rgb(var(--shade-rgb,30,20,10));}
+.pg-hero.ps::before{content:"";position:relative;inset:auto;display:block;width:min(100%,calc(62vh * var(--ar,16/9)));aspect-ratio:var(--ar,16/9);margin:0 auto 30px;background:var(--img) center top/cover no-repeat;}
+.pg-hero.ps .pg-hero-in{padding-top:0;}
+.pg-hero.ps.ph .cer-actions{margin-top:22px;padding-top:0;}
+}
+
+/* pwx: the words over the painting on a wide screen, the painting above the words on a smaller computer */
+@media (min-width:1500px){
+.pg-hero.pwx{min-height:calc(100vw / (var(--ar,16/9))) !important;align-items:flex-start;background-size:100% auto !important;background-position:center top !important;padding-top:64px;}
+.pg-hero.pwx.ph .cer-actions{margin-top:24px;padding-top:0;}
+.pg-hero.pwx::before{background:linear-gradient(180deg,rgba(var(--shade-rgb,18,10,3),.66) 0%,rgba(var(--shade-rgb,18,10,3),.38) 26%,rgba(var(--shade-rgb,18,10,3),0) 46%);}
+}
+@media (min-width:1101px) and (max-width:1499px){
+.pg-hero.pwx,.pg-hero.pwx.ph,.pg-hero.pwx.strip{display:block;min-height:0;padding:0 0 40px;background-image:none !important;background-color:rgb(var(--shade-rgb,30,20,10));}
+.pg-hero.pwx::before{content:"";position:relative;inset:auto;display:block;width:min(100%,calc(62vh * var(--ar,16/9)));aspect-ratio:var(--ar,16/9);margin:0 auto 30px;background:var(--img) center top/cover no-repeat;}
+.pg-hero.pwx .pg-hero-in{padding-top:0;}
+.pg-hero.pwx.ph .cer-actions{margin-top:22px;padding-top:0;}
+}
