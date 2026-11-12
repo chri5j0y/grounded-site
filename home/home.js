@@ -4317,7 +4317,7 @@
     var grp = function (sec, label) {
       var L = progs(sec), all = L.filter(function (p) { return !p.tradition; }), trad = L.filter(function (p) { return p.tradition; });
       var li = function (p) { var s = arr(p.sessions)[0]; return s ? item(sec + '|' + s.id, s.title, p.title + (s.mins ? ' · About ' + s.mins + (+s.mins === 1 ? ' minute' : ' minutes') : '')) : ''; };
-      return L.length ? '<h3 class="hm-label">' + esc(label) + '</h3><ul class="hm-mlist">' + all.map(li).join('') + '</ul>' + (trad.length ? '<details class="hm-trad"><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p><ul class="hm-mlist">' + trad.map(li).join('') + '</ul></details>' : '') : '';
+      return L.length ? '<h3 class="hm-label">' + esc(label) + '</h3><ul class="hm-mlist">' + all.map(li).join('') + '</ul>' + (trad.length ? '<details class="hm-trad" open><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p><ul class="hm-mlist">' + trad.map(li).join('') + '</ul></details>' : '') : '';
     };
     var link = function (attr, title, sub, href) { return '<li>' + (href ? '<a href="' + href + '">' : '<button type="button" ' + attr + '>') + I('play') + '<span><b>' + esc(title) + '</b><small>' + seedChip() + esc(sub) + '</small></span>' + (href ? '</a>' : '</button>') + '</li>'; };
     return '<p class="hm-sub">A real piece of every part of Membership, yours to keep.</p>' +
@@ -4875,7 +4875,7 @@
     // Programs by tradition wait in their own list, opened and chosen by the person; never suggested or preselected.
     L.forEach(function (x) { var g = x.need || 'More', box = x.tradition ? trad : groups; (box[g] = box[g] || []).push(x); });
     var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3>' + pstartRow(id, g, md) + '<ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (member() ? '' : seedChip()) + (x.mins ? 'About ' + esc(x.mins) + (+x.mins === 1 ? ' minute' : ' minutes') : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
-    var body = (id === 'relationships' && L.length ? hhPickHtml() : '') + (L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad"><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
+    var body = (id === 'relationships' && L.length ? hhPickHtml() : '') + (L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad" open><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
       : '<p class="hm-sub">' + esc(s.name) + ' fills in here as soon as the Member library opens on this device.</p>');
     mDialog(s.name, (member() ? '' : '<p class="hm-sub">The first session of each program, a seed for you to keep.</p>') + body + (member() ? '' : seedLine()));
   }
@@ -4987,7 +4987,7 @@
         box.innerHTML = '<div class="hm-subbar"><button type="button" class="hm-backbtn" data-hm-tab="library">' + I('back') + '<span>Back to Library</span></button><h2 class="hm-h2">' + esc(SET_SECS[sec]) + '</h2></div>' +
           '<p class="hm-sub hm-setlead">' + esc(s ? s.line : '') + '</p>' + seed + hh +
           (G.length ? '<div class="hm-setgrid">' + gen.map(function (x) { return setCard(sec, x, md); }).join('') + '</div>' +
-            (trad.length ? '<details class="hm-trad hm-settrad"><summary>By Tradition</summary><p class="hm-sub">Sets from one tradition, labeled. Open the one you choose.</p><div class="hm-setgrid">' + trad.map(function (x) { return setCard(sec, x, md); }).join('') + '</div></details>' : '')
+            (trad.length ? '<details class="hm-trad hm-settrad" open><summary>By Tradition</summary><p class="hm-sub">Sets from one tradition, labeled. Open the one you choose.</p><div class="hm-setgrid">' + trad.map(function (x) { return setCard(sec, x, md); }).join('') + '</div></details>' : '')
             : '<p class="hm-sub">' + esc(SET_SECS[sec]) + ' fills in here as soon as the Member library opens on this device.</p>') + (member() ? '' : seedLine());
         return;
       }
