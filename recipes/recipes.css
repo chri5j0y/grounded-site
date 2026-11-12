@@ -273,7 +273,7 @@ html.rg-lock,html.rg-lock body{overflow:hidden;}
 @container rcm (max-width:760px){.rc-cols,.rc-notes,.rc-low,.rc-sprows,.rc-bkcols{grid-template-columns:1fr;}}
 @container rcm (max-width:620px){.rc-grid,.rc-hgrid{grid-template-columns:1fr;grid-auto-rows:auto;}.rc-cats{grid-template-columns:1fr 1fr;gap:12px;}.rc-cat{min-height:170px;}.rc-cat.rc-k-holidays{grid-column:1/-1;min-height:150px;}.rc-tools{padding:14px;}.rc-gf .rc-lab{width:100%;}.rc-sep{display:none;}.rc-holsec,.rc-drsec,.rc-bksec{padding:20px 14px 22px;margin-left:-6px;margin-right:-6px;}.rc-cat.rc-k-bulk{grid-column:auto;}.rc-stgrid{grid-template-columns:1fr;}.rc-sh img{width:52px;height:52px;}}
 /* BLD 917: Share, holiday recipes in search results, words to try, and the small recipe pages (recipes/r/<id>.html). */
-.rc-share-btn{display:inline-flex;align-items:center;gap:8px;min-height:50px;font-size:17px;cursor:pointer;}.rc-share-btn svg{width:20px;height:20px;flex:none;}
+.rc-share-btn,.rc-plate-btn{display:inline-flex;align-items:center;gap:8px;min-height:50px;font-size:17px;cursor:pointer;}.rc-share-btn svg,.rc-plate-btn svg{width:20px;height:20px;flex:none;}
 .rc-shnote{margin:10px 0 0;font-size:16px;font-weight:600;color:var(--rc-l);overflow-wrap:anywhere;}
 .rc-hdc .rc-band{--k:var(--rc-h);}
 .rc-hrec{scroll-margin-top:90px;}
