@@ -849,7 +849,7 @@ window.GG_LEARN_WELCOME = {
      "scenes": [
       {
        "k": "title",
-       "hero": "page-growth",
+       "hero": "ppl-page-growth",
        "eyebrow": "Welcome, Lesson 6",
        "h": "Grow: My Growth Plan",
        "sub": "One plan for your whole self",
@@ -973,11 +973,11 @@ window.GG_LEARN_WELCOME = {
         "Add it to your plan when you build it."
        ],
        "say": "One more question. Think of one practice that would help a Growing Edge of yours, small enough to do tomorrow. Add it to your plan when you build it.",
-       "bg": "page-growth"
+       "bg": "ppl-page-growth"
       },
       {
        "k": "paint",
-       "img": "page-growth",
+       "img": "ppl-page-growth",
        "eyebrow": "Up Next",
        "h": "Learn and Library",
        "sub": "Lesson 7",
@@ -1303,7 +1303,7 @@ window.GG_LEARN_WELCOME = {
      "scenes": [
       {
        "k": "title",
-       "hero": "living-sober",
+       "hero": "ppl-living-sober",
        "eyebrow": "Welcome, Lesson 9",
        "h": "Living Sober, a Gift",
        "sub": "Open to everyone, for life",
@@ -1311,7 +1311,7 @@ window.GG_LEARN_WELCOME = {
       },
       {
        "k": "demo",
-       "hero": "living-sober",
+       "hero": "ppl-living-sober",
        "eyebrow": "Settings",
        "h": "Turn on Living Sober",
        "shot": "b964/app-s-settings",
@@ -1336,7 +1336,7 @@ window.GG_LEARN_WELCOME = {
       },
       {
        "k": "demo",
-       "hero": "living-sober",
+       "hero": "ppl-living-sober",
        "eyebrow": "Today",
        "h": "Your day count",
        "shot": "b975/app-s-today",
@@ -1373,7 +1373,7 @@ window.GG_LEARN_WELCOME = {
       },
       {
        "k": "demo",
-       "hero": "living-sober",
+       "hero": "ppl-living-sober",
        "eyebrow": "Tools for Every Day",
        "h": "Write, walk, talk, pray",
        "shot": "b964/app-s-tools",
@@ -1415,7 +1415,7 @@ window.GG_LEARN_WELCOME = {
       },
       {
        "k": "demo",
-       "hero": "living-sober",
+       "hero": "ppl-living-sober",
        "eyebrow": "Seasons",
        "h": "Storm and Repair",
        "shot": "b964/app-s-storm",
@@ -1464,7 +1464,7 @@ window.GG_LEARN_WELCOME = {
       },
       {
        "k": "paint",
-       "img": "living-sober",
+       "img": "ppl-living-sober",
        "eyebrow": "Up Next",
        "h": "Settings and privacy",
        "sub": "Lesson 10",

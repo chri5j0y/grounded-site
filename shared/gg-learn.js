@@ -81,7 +81,7 @@
     'page-hard-seasons': { x: 0, s: 'l', w: 520 }, 'page-marriage': { x: 100, s: 'r', w: 420 }, 'page-teams': { x: 50, s: 't', w: 640 },
     'living-sober': { x: 0, s: 'l', w: 520 } // BLD 839: Living Sober's own painting, the tree to the right of the words
   };
-  var heroId = function (h) { return h === 'marriage' || HEROES.indexOf(h) >= 0 || /^(svc|page)-[a-z0-9-]+$/.test(h || '') ? h : 'home'; }; // BLD 823: any page or service painting
+  var heroId = function (h) { return h === 'marriage' || HEROES.indexOf(h) >= 0 || /^(ppl-)?(svc|page)-[a-z0-9-]+$/.test(h || '') || h === 'ppl-living-sober' ? h : 'home'; }; // BLD 823: any page or service painting; BLD 976: ppl- is its repaint with people in it
   var HERO = function (h) { h = heroId(h); return h === 'marriage' ? url('/heartwood/hero-wide.webp') : url('/shared/heroes/' + h + '-wide.webp'); };
   var COL = { maple: '#C4501E', aspen: '#1F6F74', pine: '#3A6B35', birch: '#7F6610', oak: '#3D5A73', sequoia: '#7A2E1C', willow: '#5D5A6E', grove: '#223829', field: '#2E2118', site: '#8B5E1A' };
   var APPS = {
@@ -126,7 +126,10 @@
   var CANDLE = { // the flame in each candle painting (x and y in percent, from shared/med-stage.json, BLD 899) and the words' side
     'way/candle-alcove': [69, 54, 'l'], 'way/candle-alcove-2': [60, 54, 'l'], 'way/candle-rain': [58, 38, 'l'],
     'way/candle-stones': [71, 51, 'l'], 'way/candle-cabin': [41, 47, 'r'], 'way/candle-cabin-2': [43, 50, 'r'],
-    'way/quiet-meditation': [70, 75, 'l'], 'way/tend-spirit': [52, 60, 'l']
+    'way/quiet-meditation': [70, 75, 'l'], 'way/tend-spirit': [52, 60, 'l'],
+    // BLD 976 people: the repaints with people in them (flames measured on the new site copies)
+    'way/ppl-candle-alcove': [92, 46, 'l'], 'way/ppl-candle-alcove-2': [61, 17, 'l'], 'way/ppl-candle-cabin': [22, 64, 'r'],
+    'way/ppl-candle-cabin-2': [25, 58, 'r'], 'way/ppl-candle-stones': [77, 59, 'l'], 'way/ppl-quiet-meditation': [79, 75, 'l']
   };
   function ART(im, app) {
     if (!im) return '';
@@ -144,7 +147,7 @@
      imgs[n] behind the scene (a title takes it as its own painting); pN that painting as a paint scene (big scenes);
      cN a candle scene on it (words, big, breathe, paint); fN or fN.move the figure leads on it (breathe, big, words).
      A scene's own img or look always wins. The plan loads with this file, so it is there by the time Play is tapped. */
-  var ARTP = { p: null }, ARTV = 'c017'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings)
+  var ARTP = { p: null }, ARTV = 'c021'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings)
   function artLoad() {
     if (window.GG_ART) return Promise.resolve(window.GG_ART);
     if (ARTP.p) return ARTP.p;
@@ -1670,7 +1673,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c018'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c021'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

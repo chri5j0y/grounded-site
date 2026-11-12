@@ -17,7 +17,7 @@
 
    Branding on every card: the Grounded logo (shared/marks/grounded-logo.svg), Grow With Grounded, a Living Sober tag,
    growwithgrounded.com/living-sober, Living Sober green #4E7D6A with gold, the site fonts, and Living Sober's own
-   painting (the tree by the stream, cut 4:5 from the tall version, shared/heroes/living-sober-card.webp, BLD 839) as the texture. Nothing personal leaves the device unless the person shares it.
+   painting (the tree by the stream, cut 4:5 from the tall version, shared/heroes/ppl-living-sober-card.webp, BLD 839) as the texture. Nothing personal leaves the device unless the person shares it.
    ===================================================================== */
 (function () {
   'use strict';
@@ -59,7 +59,7 @@
       var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + m[1] + '" width="640" height="707" color="' + CREAM + '">' + m[2] + '</svg>';
       return img('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
     }).catch(function () { return null; });
-    var paint = img(HOME + '/shared/heroes/living-sober-card.webp?v=b839');
+    var paint = img(HOME + '/shared/heroes/ppl-living-sober-card.webp?v=b839');
     ASSETS = Promise.all([fonts, logo, paint]).then(function (r) { return { logo: r[1], paint: r[2] }; });
     return ASSETS;
   }

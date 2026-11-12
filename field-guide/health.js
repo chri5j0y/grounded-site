@@ -535,7 +535,7 @@ function newestNew(){ const p = PROG(), L = arr(p && p.whatsNew); return L.lengt
 // Member, who saw an older note on this device, reads what changed.
 function whatsNew(){ const x = newestNew(); if (!x || !x.v || newSeen() === x.v || setupNeeded()) return null; if (!newSeen()){ markNew(); return null; } return x; }
 function newCard(){ const x = whatsNew(); if (!x) return ''; const pl = progLabel(new Date());
-  return `<div class="tn-card a-move tn-new" id="tn-new"><div class="tn-hd">${badge('star', 'a-move', 'this-season-narrow')}<div style="min-width:0;flex:1"><div class="tn-k a-move">${esc(x.title || 'What\'s New in Your Plan')}</div>${pl ? `<div class="tn-sub">You are in ${esc(pl)}.</div>` : ''}</div></div>
+  return `<div class="tn-card a-move tn-new" id="tn-new"><div class="tn-hd">${badge('star', 'a-move', 'ppl-this-season-narrow')}<div style="min-width:0;flex:1"><div class="tn-k a-move">${esc(x.title || 'What\'s New in Your Plan')}</div>${pl ? `<div class="tn-sub">You are in ${esc(pl)}.</div>` : ''}</div></div>
     <ul class="tn-newl">${arr(x.lines).map(l => `<li>${esc(l)}</li>`).join('')}</ul><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="newok">${ic('check')}Got It</button></div></div>`; }
 // After week 12: start again one level up (Root, Rise, Thrive; Thrive starts again at Thrive), or keep going at this level.
 function againCard(){ if (!progOn() || progWeek(new Date()) <= 12) return ''; const lv = H().set.level || 'root', up = PUB() ? {root: 'rise', rise: 'thrive'}[lv] : null;
@@ -2703,20 +2703,20 @@ const tpt = p => p ? `<span class="tn-pt ${PCLS[p] || 'p-leaves'}">${esc(p)}</sp
 const BADGE_ART = {bell: 'p:badge-bell-sq', book: 'p:badge-book-sq', capsule: 'p:badge-capsule-sq', compass: 'p:badge-compass-sq', flask: 'p:badge-flask-sq', flame: 'p:badge-flame-sq',
   gear: 'p:badge-gear-sq', kitchen: 'p:badge-kitchen-sq', leaf: 'p:badge-leaf-sq', link: 'p:badge-link-sq', lotus: 'p:badge-lotus-sq', move: 'p:badge-move-sq', numbers: 'p:badge-numbers-sq',
   people: 'p:badge-people-sq', plate: 'p:badge-plate-sq', shield: 'p:badge-shield-sq', sprout: 'p:badge-sprout-sq', star: 'p:badge-star-sq', today: 'p:badge-today-sq', week: 'p:badge-week-sq', wind: 'p:badge-wind-sq'};
-const badge = (n, cls, art) => `<span class="tn-badge tn-bimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(WAY(art || BADGE_ART[n] || 'tending-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>`;
+const badge = (n, cls, art) => `<span class="tn-badge tn-bimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(WAY(art || BADGE_ART[n] || 'ppl-tending-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>`;
 // BLD 866: each Today section wears its painting (shared/heroes/way/tend-*.webp), for the Field Guide and public Tending alike.
 // BLD 970: each section head has its own painting now (shared/heroes/p/section-*-sq.webp).
 const TIMG = {body: 'p:section-body-sq', move: 'p:section-move-sq', mind: 'p:section-mind-sq', spirit: 'p:section-spirit-sq', people: 'p:section-people-sq', fruit: 'p:section-fruit-sq'};
 const paint = (id, cls) => TIMG[id] ? `<span class="tn-gimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(WAY(TIMG[id]))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>` : '';
 const grpHead = (id, title, icn, cls, part) => `<div class="tn-grp ${cls}" id="tn-${id}">${TIMG[id] ? paint(id) : badge(icn)}<h2>${esc(title)}</h2>${tpt(part)}<span class="sp"></span></div>`;
 // BLD 910: a section head wears a different painting from the first card beneath it.
-const SEC_ART = {plate: 'meal-lunch-sq', numbers: 'way-plan-sq'};
+const SEC_ART = {plate: 'ppl-meal-lunch-sq', numbers: 'ppl-way-plan-sq'};
 function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${TIMG[icn] ? paint(icn, 'big') : badge(icn, '', SEC_ART[icn])}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
 // A plan card: scene tile, time kicker, title, one line, actions with a check.
 // BLD 910: a plan card with no painting of its own takes the painting for its scene, never a drawn one.
 const SCENE_ART = {work: 'p:plancard-work-sq', practice: 'p:plancard-practice-sq', cook: 'p:plancard-cook-sq', bowl: 'p:plancard-bowl-sq', dawn: 'p:plancard-dawn-sq', night: 'p:plancard-night-sq'}; // BLD 970
 function planCard(o){
-  const img = o.img || WAY(SCENE_ART[o.scene] || 'tending-sq');
+  const img = o.img || WAY(SCENE_ART[o.scene] || 'ppl-tending-sq');
   return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene"><img src="${esc(img)}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
     <div class="tn-time">${esc(o.time)}</div><h3>${esc(o.title)}</h3>${o.sub ? `<div class="tn-meta">${esc(o.sub)}</div>` : ''}
     <div class="tn-acts">${o.btn ? `<button type="button" class="tn-btn sm" data-hja="${o.ba || 'go'}" data-hjv="${esc(o.bv)}">${ic(o.bi || 'play')}${esc(o.btn)}</button>` : ''}${o.ck || ''}</div></div></div>${o.more || ''}</article>`;
@@ -2788,9 +2788,9 @@ const START_USE = {food: 'Grounded Recipes for your table and food needs, and A 
 function vSettings(bare){
   const h = H(), t = TD(), br = h.set.bridges || {}, kit = KIT(), on = remOn();
   const row = (cls, icn, title, sub, sw) => `<div class="tn-row ${cls}">${icn ? `<span class="ic2">${ic(icn)}</span>` : ''}<div class="tx"><b>${esc(title)}</b><small>${esc(sub)}</small></div>${sw}</div>`;
-  const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves', 'tending-sq') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
+  const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves', 'ppl-tending-sq') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
     <div class="tn-set">${t.choose.filter(c => !(c.id === 'supps' && PUB() && !h.set.pubDone && !U('supps')) && !(START() && c.id === 'labs')).map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, (START() && START_USE[c.id]) || c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
-  const why = kit ? '' : `<div class="tn-card p-trunk"><div class="tn-hd">${badge('compass', '', 'growth-plan-sq')}<div><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${h.set.why ? esc(h.set.why) : esc(t.why.prompt)}</div></div></div>
+  const why = kit ? '' : `<div class="tn-card p-trunk"><div class="tn-hd">${badge('compass', '', 'ppl-growth-plan-sq')}<div><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${h.set.why ? esc(h.set.why) : esc(t.why.prompt)}</div></div></div>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${h.set.why ? 'Change My Why' : esc(t.why.write)}</button>${h.set.whyHide && !h.set.why ? `<button type="button" class="linkbtn" data-hja="whyshow">Show the My Why Card on Today</button>` : ''}</div></div>`;
   const bridges = kit ? '' : `<div class="tn-card"><div class="tn-hd">${badge('link', 'p-trunk')}<div><div class="tn-k p-trunk">Bridges</div><div class="tn-sub">How Tending and your other Grounded tools connect. Your choices are saved now, and the bridges open in a coming update.</div></div></div>
     <div class="tn-set">${row('p-leaves', 'sprout', 'Quiet Offers', 'A small card when a tree and Tending can help each other', tsw('bridge', 'offers', br.offers !== false, 'Quiet Offers'))}
@@ -2856,16 +2856,16 @@ function fruitCards(){
   if (U('labs') && PUB()) out.push(pubLdlCard());
   else if (U('labs')){ const m = ldlModel();
     out.push(m ? `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers" aria-label="Open My LDL Path. Start ${r0(m.B)}, estimate now ${r0(m.now)}, the food plan path levels near ${r0(m.level)}.">
-      <div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
+      <div class="tn-hd">${badge('star', '', 'ppl-progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
       <div class="tn-nums"><div><b>${r0(m.B)}</b><small>Start, ${esc(short(m.base.date))}</small></div><div><b>${r0(m.now)}</b><small>Estimate now</small></div><div><b class="soft">${r0(m.level)}</b><small>Food plan path</small></div></div>
       ${ldlSpark(m)}<span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`
       : `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">My Numbers</div><div class="tn-sub">Add your lab numbers to see your path, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`); }
   const ms = milestonesT(), got = ms.filter(m => m.done), next = ms.filter(m => !m.done).sort((a, b) => (a.need - a.have) / a.need - (b.need - b.have) / b.need)[0];
-  out.push(`<div class="tn-card p-fruit" id="tn-ms"><div class="tn-hd">${badge('star', '', 'snack-fruit-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Milestones</div><div class="tn-sub">${got.length ? got.length + ' reached so far. ' : ''}${esc(TD().intro.quiet)}</div></div></div>
+  out.push(`<div class="tn-card p-fruit" id="tn-ms"><div class="tn-hd">${badge('star', '', 'ppl-snack-fruit-sq')}<div style="min-width:0;flex:1"><div class="tn-k">Milestones</div><div class="tn-sub">${got.length ? got.length + ' reached so far. ' : ''}${esc(TD().intro.quiet)}</div></div></div>
     <div class="tn-mile">${got.slice(-3).map(m => `<div><i>${ic('check')}</i><span><b>${esc(m.name)}</b><small>${esc(m.line || '')}</small></span></div>`).join('')}
     ${next ? `<div class="up"><i>${ic('star')}</i><span><b>${esc(next.name)}</b><small>${next.need > 1 ? `${Math.min(next.have, next.need)} of ${next.need}. ` : ''}${esc(next.line || '')}</small></span></div>` : ''}</div>
     ${ms.length > 4 ? `<details class="tn-more"${S.open['tnms'] ? ' open' : ''} data-hjd="tnms"><summary>See All Milestones</summary><div class="tn-mile">${ms.map(m => `<div class="${m.done ? '' : 'up'}"><i>${ic(m.done ? 'check' : 'star')}</i><span><b>${esc(m.name)}</b><small>${m.done ? 'Reached' : m.need > 1 ? Math.min(m.have, m.need) + ' of ' + m.need : 'Ahead'}</small></span></div>`).join('')}</div></details>` : ''}</div>`);
-  out.push(`<div class="tn-card p-fruit" id="tn-wk7"><div class="tn-hd">${badge('week', '', 'this-season-narrow')}<div><div class="tn-k">My Last 7 Days</div><div class="tn-sub">Things tended each day. Every one counts.</div></div></div>${tendWeek()}
+  out.push(`<div class="tn-card p-fruit" id="tn-wk7"><div class="tn-hd">${badge('week', '', 'ppl-this-season-narrow')}<div><div class="tn-k">My Last 7 Days</div><div class="tn-sub">Things tended each day. Every one counts.</div></div></div>${tendWeek()}
     <button type="button" class="tn-btn sm line" data-hja="fruittable" aria-pressed="${!!S.fruitTable}">${S.fruitTable ? 'View as Chart' : 'View as Table'}</button></div>`);
   return out.join('');
 }
@@ -2907,7 +2907,7 @@ function vTodayT(lib){
   const cardFor = x => { tally(partOf(x), x.done); const mark = x.k === 'mark';
     return planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: x.kick, title: x.title, sub: x.sub, btn: mark ? '' : x.k === 'cook' ? 'Grounded Cooking' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, mark ? x.btn : x.k === 'cook' ? 'Cooked' : 'Done')}); };
   if (U('move')){ const mv = ag.filter(x => partOf(x) === 'move'); mv.forEach(x => body.push(cardFor(x)));
-    if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move', '', 'rest-day-sq')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', PUB() ? 'A walk, a stretch, fresh air' : 'A walk, the dog, fresh air')}</div></div>`); } }
+    if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move', '', 'ppl-rest-day-sq')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', PUB() ? 'A walk, a stretch, fresh air' : 'A walk, the dog, fresh air')}</div></div>`); } }
   if (U('food')){ const pl = vPlate('today'); if (pl){ tally('food', arr(day.eat).length); body.push(pl); }
     ag.filter(x => partOf(x) === 'food').forEach(x => body.push(cardFor(x))); }
   if (sp.length){ sp.forEach(s => tally('supps', c[suppId(s)]));
@@ -2938,8 +2938,8 @@ function vTodayT(lib){
   let why = '';
   if (!kit){ const ex = t.why.examples, ph = ex[(d.getDate()) % Math.max(1, ex.length)] || '';
     if (S.whyEd) why = `<div class="tn-card p-trunk" id="tn-why"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${esc(t.why.prompt)}</div><label class="hj-fld"><span>My Why, one line</span><input id="tn-whyin" maxlength="160" value="${esc(h.set.why || '')}" placeholder="${esc(ph)}" autocomplete="off"></label><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="whysave">Save</button><button type="button" class="tn-btn sm line" data-hja="whyclose">Close</button></div></div>`;
-    else if (h.set.why) why = `<div class="tn-card p-trunk tn-whyc" id="tn-why">${badge('compass', '', 'growth-plan-sq')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-whyl">${esc(h.set.why)}</div></div>${tpt('Trunk')}</div>`;
-    else if (!h.set.whyHide) why = `<div class="tn-card p-trunk" id="tn-why"><div class="tn-whyc">${badge('compass', '', 'growth-plan-sq')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${esc(t.why.prompt)}</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${esc(t.why.write)}</button><button type="button" class="linkbtn" data-hja="whyhide">Maybe Later</button>${tpt('Trunk')}</div></div>`; }
+    else if (h.set.why) why = `<div class="tn-card p-trunk tn-whyc" id="tn-why">${badge('compass', '', 'ppl-growth-plan-sq')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-whyl">${esc(h.set.why)}</div></div>${tpt('Trunk')}</div>`;
+    else if (!h.set.whyHide) why = `<div class="tn-card p-trunk" id="tn-why"><div class="tn-whyc">${badge('compass', '', 'ppl-growth-plan-sq')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(t.why.h)}</div><div class="tn-sub">${esc(t.why.prompt)}</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="why">${ic('plus')}${esc(t.why.write)}</button><button type="button" class="linkbtn" data-hja="whyhide">Maybe Later</button>${tpt('Trunk')}</div></div>`; }
   const rem = U('food') ? remBlock(d) : '';
   const G = [];
   if (body.length) G.push(grpHead('body', 'Body', 'leaf', 'p-leaves', 'Leaves') + body.join(''));
@@ -2999,7 +2999,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b978'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=c021'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -3059,7 +3059,7 @@ function actRecipes(a, v){
 function vMove(){
   const d = new Date(), h = H(), ses = phaseSes(), pr = arr((PR() || {}).sessions), md = U('mind') ? arr((MED() || {}).sessions) : [], n = Math.max(1, weekNo(d));
   const ag = agenda(d).filter(x => partOf(x) === 'move').map(x => Object.assign({done: isDone(d, x.key)}, x));
-  const tile = (key, sc, kick, title, sub, cls, art) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(0, art || SCENE_ART[sc] || 'tending-sq')}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
+  const tile = (key, sc, kick, title, sub, cls, art) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(0, art || SCENE_ART[sc] || 'ppl-tending-sq')}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
   const lifts = Object.entries(h.lifts || {}).filter(([, v]) => v);
   return `<div class="tn-sec a-move">${secHead('move', 'a-move', 'Move', 'Workouts and Flow, with a calm voice coaching. Play any of them, any day.')}${PUB() ? pubMoveHead() : progCard()}
     ${ag.length ? `<div class="tn-kgrid">${ag.map(x => planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: 'Today · ' + x.kick, title: x.title, sub: x.sub, btn: x.k === 'mark' ? '' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, x.k === 'mark' ? x.btn : 'Done')})).join('')}</div>` : ''}
@@ -4054,7 +4054,7 @@ function vLdlP(){
 function pubLdlCard(){
   const e = ldlNow(), r = ldlCalc(), goal = num(H().set.goalLdl);
   if (!e) return `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">My Numbers</div><div class="tn-sub">Add your lab numbers to see them beside their recommended ranges, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`;
-  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star', '', 'progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
+  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star', '', 'ppl-progress-sq')}<div style="min-width:0;flex:1"><div class="tn-k">My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
     <div class="tn-nums"><div><b>${esc(e.ldl)}</b><small>LDL, ${esc(short(e.date))}</small></div>${goal ? `<div><b>${esc(goal)}</b><small>My goal</small></div>` : ''}${r && r.count ? `<div><b class="soft">${r.low} to ${r.high}</b><small>Where my choices may lead</small></div>` : ''}</div>
     <span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`;
 }
@@ -4599,7 +4599,7 @@ const ITEM_ART = {quiet: 'p:item-quiet-sq', meditation: 'p:item-meditation-sq', 
   headstart: 'p:item-headstart-sq', shop: 'p:item-shop-sq', prep: 'p:item-prep-sq', batch: 'p:item-batch-sq', supplements: 'p:item-supplements-sq', setup: 'p:item-setup-sq'};
 // BLD 895: every workout by its kind: Strength by phase (Foundation, Build, Peak), Cardio, Walk, Gentle, and each Flow style.
 // BLD 970: each kind's card and start screen show its new start painting (Foundation and Gentle keep theirs; MOVE_DONE has the done screens).
-const MOVE_ART = {foundation: 'move-strength-sq', build: 'p:move-build-start-sq', peak: 'p:move-peak-start-sq', cardio: 'p:move-cardio-start-sq', walk: 'p:move-walk-start-sq', gentle: 'move-gentle-sq',
+const MOVE_ART = {foundation: 'move-strength-sq', build: 'p:move-build-start-sq', peak: 'p:move-peak-start-sq', cardio: 'p:move-cardio-start-sq', walk: 'p:move-walk-start-sq', gentle: 'ppl-move-gentle-sq',
   daily: 'p:move-daily-start-sq', yoga: 'p:move-yoga-start-sq', taichi: 'p:move-taichi-start-sq', stretch: 'p:move-stretch-start-sq'};
 // The meditation tiles Chris has made so far (m1 Monday to m7 Sunday, by position); install895.py rewrites this line. The rest keep ART_QUIET.
 const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
@@ -6106,7 +6106,7 @@ function mmFor(x){ return x && x.mmx && x.mmx.for ? (x.for ? x.for + ', ' + x.mm
 // ---- Today, Week, and the Month ----
 const mmOwn = ref => { const [k, a, b] = String(ref || '').split(':'); return k === 'r' ? recOwnName(a) : k === 'h' && REC_HOL.has(a + '-' + b) ? 'p:rec-hol-' + a + '-' + b + '-sq' : ''; };
 const mmArt = e => mmOwn(e.ref) || mmRule(e);
-const mmRule = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : m === 'sauce' ? 'prep-together-sq' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
+const mmRule = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'ppl-meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : m === 'sauce' ? 'prep-together-sq' : dinnerArtName({name: e.name}) || 'ppl-todays-plate-sq'; };
 const mmSub = e => (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
 function mmAgenda(d){ if (!H() || !U('food')) return []; const k = ymd(d);
   return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Grounded Cooking', did: true})); }

@@ -39,7 +39,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 1",
      "h": "Day One",
      "sub": "Today is the whole job.",
@@ -131,7 +131,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 2",
      "h": "Water and Food",
      "sub": "Feed the body that is healing.",
@@ -222,7 +222,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 3",
      "h": "Sleep and Rest",
      "sub": "Rest is part of the work.",
@@ -314,7 +314,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 4",
      "h": "Your People",
      "sub": "Growing sober grows best together.",
@@ -408,7 +408,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 5",
      "h": "The First Hard Moment",
      "sub": "Every wave passes.",
@@ -501,7 +501,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 6",
      "h": "Hungry, Tired, or Lonely",
      "sub": "Check the basics first.",
@@ -601,7 +601,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-hard-seasons",
+     "hero": "ppl-page-hard-seasons",
      "eyebrow": "Early Days, Day 7",
      "h": "My Anchor Plan",
      "sub": "Decide now, so the hard hour is easier.",
@@ -702,7 +702,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 8",
      "h": "Thoughts Are Weather",
      "sub": "Mind: thoughts come and go.",
@@ -791,7 +791,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 9",
      "h": "Play It Forward",
      "sub": "Mind: see the whole picture.",
@@ -885,7 +885,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 10",
      "h": "Name the Feeling",
      "sub": "Mind and feelings: one word.",
@@ -979,7 +979,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 11",
      "h": "Write It Out",
      "sub": "Spirit and feelings: on the page.",
@@ -1070,7 +1070,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 12",
      "h": "Move It Out",
      "sub": "Body: move a little every day.",
@@ -1164,7 +1164,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 13",
      "h": "Slow, Low, and Long",
      "sub": "Body: your breath goes everywhere you go.",
@@ -1262,7 +1262,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 14",
      "h": "Two Weeks of Healing",
      "sub": "Body: notice what is growing.",
@@ -1353,7 +1353,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 15",
      "h": "Outside and Unplugged",
      "sub": "Body and spirit: time outdoors.",
@@ -1445,7 +1445,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 16",
      "h": "A Quiet Minute",
      "sub": "Spirit: a quiet start and finish.",
@@ -1536,7 +1536,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 17",
      "h": "Gratitude and the Good",
      "sub": "Spirit: let the good sink in.",
@@ -1629,7 +1629,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 18",
      "h": "Healing Underneath",
      "sub": "Spirit: tend the hurt underneath.",
@@ -1721,7 +1721,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 19",
      "h": "One True Sentence",
      "sub": "Relationships: honest talk.",
@@ -1812,7 +1812,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 20",
      "h": "Mending Slowly",
      "sub": "Relationships: small steady acts.",
@@ -1905,7 +1905,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 21",
      "h": "Sober Company",
      "sub": "Relationships: your circle.",
@@ -2813,7 +2813,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 31",
      "h": "A New Daily Rhythm",
      "sub": "Growing strong: month two begins.",
@@ -2905,7 +2905,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 32",
      "h": "Morning Anchor",
      "sub": "Growing strong: how the day begins.",
@@ -2997,7 +2997,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 33",
      "h": "The Evening Look Back",
      "sub": "Growing strong: how the day ends.",
@@ -3090,7 +3090,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 34",
      "h": "What Helped",
      "sub": "Growing strong: do more of what works.",
@@ -3185,7 +3185,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 35",
      "h": "People Who Lift You",
      "sub": "Growing strong: the people around you.",
@@ -3280,7 +3280,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 36",
      "h": "Good Company for Yourself",
      "sub": "Growing strong: strong on your own.",
@@ -3376,7 +3376,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 37",
      "h": "Saying No with Ease",
      "sub": "Growing strong: a simple answer.",
@@ -3468,7 +3468,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 38",
      "h": "Unwinding After Work",
      "sub": "Growing strong: shifting gears.",
@@ -3564,7 +3564,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 39",
      "h": "Moving for Joy",
      "sub": "Growing strong: movement you love.",
@@ -3658,7 +3658,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 40",
      "h": "Outdoors and Daylight",
      "sub": "Growing strong: light and air.",
@@ -3754,7 +3754,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 41",
      "h": "Food That Steadies",
      "sub": "Growing strong: steady food, steady mood.",
@@ -3845,7 +3845,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 42",
      "h": "Sleep Keeps Growing",
      "sub": "Growing strong: deeper rest.",
@@ -3941,7 +3941,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 43",
      "h": "Boredom Is an Opening",
      "sub": "Growing strong: open time.",
@@ -4038,7 +4038,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 44",
      "h": "Ride the Wave",
      "sub": "Growing strong: steady through the waves.",
@@ -4136,7 +4136,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 45",
      "h": "Weekends You Love",
      "sub": "Growing strong: the weekend.",
@@ -4231,7 +4231,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 46",
      "h": "Old Places and New Places",
      "sub": "Growing strong: where you spend your time.",
@@ -4326,7 +4326,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 47",
      "h": "Old Friends and New Ones",
      "sub": "Growing strong: friendships.",
@@ -4417,7 +4417,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 48",
      "h": "Honest Talks with Family",
      "sub": "Growing strong: family.",
@@ -4508,7 +4508,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 49",
      "h": "Living Sober with a Partner",
      "sub": "Growing strong: partners.",
@@ -4599,7 +4599,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 50",
      "h": "Work Events",
      "sub": "Growing strong: at work.",
@@ -4694,7 +4694,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 51",
      "h": "Letting Loose",
      "sub": "Growing strong: real fun.",
@@ -4790,7 +4790,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 52",
      "h": "Play and Hobbies",
      "sub": "Growing strong: something to love doing.",
@@ -4885,7 +4885,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 53",
      "h": "Your First Sober Celebration",
      "sub": "Growing strong: celebrate fully present.",
@@ -4980,7 +4980,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 54",
      "h": "Money Kept",
      "sub": "Growing strong: money with a purpose.",
@@ -5073,7 +5073,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 55",
      "h": "Begin Again Today",
      "sub": "Growing strong: begin again.",
@@ -5165,7 +5165,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 56",
      "h": "A Grateful Heart",
      "sub": "Growing strong: gratitude.",
@@ -5260,7 +5260,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 57",
      "h": "What Matters Most",
      "sub": "Growing strong: purpose.",
@@ -5356,7 +5356,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 58",
      "h": "Giving Back",
      "sub": "Growing strong: share what you have.",
@@ -5447,7 +5447,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 59",
      "h": "Toward Month Three",
      "sub": "Growing strong: the next stretch.",
@@ -5542,7 +5542,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "ppl-page-growth",
      "eyebrow": "Early Days, Day 60",
      "h": "Sixty Days",
      "sub": "Two months of growing strong.",
@@ -5634,7 +5634,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 61",
      "h": "A Life You Love",
      "sub": "A life you love: month three.",
@@ -5726,7 +5726,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 62",
      "h": "What Matters Most",
      "sub": "A life you love: your values.",
@@ -5817,7 +5817,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 63",
      "h": "Sober and Fully You",
      "sub": "A life you love: a sober self that fits.",
@@ -5908,7 +5908,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 64",
      "h": "Quiet Confidence",
      "sub": "A life you love: confidence.",
@@ -6000,7 +6000,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 65",
      "h": "Clear Mornings",
      "sub": "A life you love: mornings.",
@@ -6092,7 +6092,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 66",
      "h": "Deeper Rest",
      "sub": "A life you love: rest.",
@@ -6190,7 +6190,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 67",
      "h": "Energy for What Matters",
      "sub": "A life you love: energy.",
@@ -6281,7 +6281,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 68",
      "h": "Room to Create",
      "sub": "A life you love: making things.",
@@ -6372,7 +6372,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 69",
      "h": "Always Learning",
      "sub": "A life you love: learning.",
@@ -6463,7 +6463,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 70",
      "h": "A Goal for This Season",
      "sub": "A life you love: one goal.",
@@ -6554,7 +6554,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 71",
      "h": "Wonder Outdoors",
      "sub": "The life around you: wonder.",
@@ -6646,7 +6646,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 72",
      "h": "A Home That Helps",
      "sub": "The life around you: home.",
@@ -6737,7 +6737,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 73",
      "h": "Friendships That Grow",
      "sub": "The life around you: friends.",
@@ -6828,7 +6828,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 74",
      "h": "Love and Closeness",
      "sub": "The life around you: love.",
@@ -6919,7 +6919,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 75",
      "h": "A New Pattern",
      "sub": "The life around you: family.",
@@ -7010,7 +7010,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 76",
      "h": "Leading by Example",
      "sub": "The life around you: leading by living.",
@@ -7101,7 +7101,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 77",
      "h": "Kind on Hard Days",
      "sub": "Every season: hard days.",
@@ -7192,7 +7192,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 78",
      "h": "Hard Dates",
      "sub": "Every season: dates that carry weight.",
@@ -7283,7 +7283,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 79",
      "h": "Holidays Ahead",
      "sub": "Every season: holidays.",
@@ -7374,7 +7374,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 80",
      "h": "Traveling Well",
      "sub": "Every season: on the road.",
@@ -7465,7 +7465,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 81",
      "h": "Their Big Day, Your Way",
      "sub": "Every season: celebrating others.",
@@ -7556,7 +7556,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 82",
      "h": "When People Ask",
      "sub": "Every season: questions from others.",
@@ -7648,7 +7648,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 83",
      "h": "A Quiet Example",
      "sub": "Every season: let your life speak.",
@@ -7739,7 +7739,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 84",
      "h": "Giving Back",
      "sub": "Meaning: giving back.",
@@ -7830,7 +7830,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 85",
      "h": "Stillness",
      "sub": "Meaning: be still.",
@@ -7919,7 +7919,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 86",
      "h": "Purpose and Meaning",
      "sub": "Meaning: your why.",
@@ -8007,7 +8007,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 87",
      "h": "Looking Back",
      "sub": "Meaning: how far you have come.",
@@ -8098,7 +8098,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 88",
      "h": "What Works for You",
      "sub": "Meaning: keep what works.",
@@ -8189,7 +8189,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 89",
      "h": "The Next Ninety",
      "sub": "Meaning: the next season.",
@@ -8288,7 +8288,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "living-sober",
+     "hero": "ppl-living-sober",
      "eyebrow": "Early Days, Day 90",
      "h": "Ninety Days",
      "sub": "A life you love, and still growing.",
@@ -8545,7 +8545,7 @@
 };
   // Where the site lives, from this script's own address, so the apps (/oak/, /birch/, /sequoia/) and the page share one path.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=c018';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=c021';
   var ACC = '#4E7D6A';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }

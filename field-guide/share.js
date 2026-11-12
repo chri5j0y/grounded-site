@@ -66,7 +66,7 @@ const PSIZES = [
 const ORIENTS = [['tall', 'Tall'], ['wide', 'Wide']];
 // The Services as subjects: each family on the Services page and each service page, with its own painting.
 const SVC_FAM = [
-  {id: 'fam-ceremonies', name: 'Ceremonies', hero: 'page-services-gate', tagline: 'Ceremonies for life\'s biggest moments.', line: 'Weddings, blessings, milestones and new beginnings, and celebrations of life.', url: 'growwithgrounded.com/services'},
+  {id: 'fam-ceremonies', name: 'Ceremonies', hero: 'ppl-page-services-gate', tagline: 'Ceremonies for life\'s biggest moments.', line: 'Weddings, blessings, milestones and new beginnings, and celebrations of life.', url: 'growwithgrounded.com/services'},
   {id: 'fam-talks', name: 'Speaking and Training', hero: 'page-speaking', tagline: 'Talks and trainings for whole, healthy living.', line: 'Talks, trainings, and Membership packs for organizations.', url: 'growwithgrounded.com/speaking-training'}
 ];
 const SVC_PAGES = [
@@ -95,13 +95,13 @@ const ORG_AUD = [
   {id: 'org-special-education', name: 'Special Education Teams', hero: 'maple', focus: .37,
     headline: 'Support for every student.', tagline: 'Maple™, Aspen™, and Pine™ guides for a health condition at school, used with the family\'s yes.',
     lines: ['Maple™ for grades K to 5, Aspen™ for 6 to 8, Pine™ for 9 to 12', 'Guides for a 504 plan, an IEP, and planning what comes next', 'A private choice, kept locked on the student\'s own device', 'Guide training with scenarios and a Certificate of Completion']},
-  {id: 'org-hospitals', name: 'Pediatric and Rehabilitation Hospitals', hero: 'page-hard-seasons', focus: .5,
+  {id: 'org-hospitals', name: 'Pediatric and Rehabilitation Hospitals', hero: 'ppl-page-hard-seasons', focus: .5,
     headline: 'For the long road back.', tagline: 'Guides for a serious illness or long treatment, and for the whole family beside it.',
     lines: ['Health and Ability guides at every age, Maple\u2122 to Sequoia\u2122', 'Life after a brain injury or stroke', 'Guides for the brothers and sisters at home', 'Gentler ways of every practice for the hard days', 'Kept private on each person\'s own device']},
   {id: 'org-independent-living', name: 'Centers for Independent Living', hero: 'oak', focus: .72,
     headline: 'Start from what a person can do.', tagline: 'Tools that start from what a person can do and what the world around them can change.',
     lines: ['Each person chooses their own words', 'Guides, practices, and videos that fit each person, shown first', 'A private choice, kept locked on the person\'s own device', 'Every visit starts with the person\'s own yes']},
-  {id: 'org-chronic-illness', name: 'Chronic Illness Support Groups', hero: 'page-growth', focus: .5,
+  {id: 'org-chronic-illness', name: 'Chronic Illness Support Groups', hero: 'ppl-page-growth', focus: .5,
     headline: 'Rest without guilt.', tagline: 'Pacing, flare days, and rest, with gentler ways of every practice.',
     lines: ['Pacing and flare days, in plain words', 'Gentler ways of every practice', 'A Rest Week whenever it\'s needed', 'Guides for living with several conditions at once', 'Kept private on each person\'s own device']},
   {id: 'org-parish-nurses', name: 'Parish Nurses', hero: 'sequoia', focus: .22,
