@@ -1095,8 +1095,9 @@ const MOVE_RUN = {build: 'move-build', peak: 'move-peak', cardio: 'move-cardio',
 const moveStage = (o, kind, n) => o.fin && MOVE_DONE[kind] ? MOVE_DONE[kind] : o.stage === 'start' || o.fin || !MOVE_RUN[kind] ? n : MOVE_RUN[kind];
 // BLD 970: every meditation day has its own painting (a card square, -sq, and the larger -lg). Days 2, 6, and 7 hold a candle
 // and are their own stage; days 1, 3, 4, and 5 keep the candle stage they had (shared/med-stage.json use).
-const MED_P = {m1: 'p:med-breath-kids', m2: 'p:med-body-scan', m3: 'p:med-prayer', m4: 'p:med-sleep', m5: 'p:med-walking', m6: 'p:med-day-6', m7: 'p:med-day-7'};
-const medBase = j => MED_P['m' + (j + 1)] || 'med-m' + (j + 1), medSq = n => /^p:/.test(n) ? n + '-sq' : n, isMedArt = n => /^(med-m\d|p:med-[a-z0-9-]+)$/.test(n);
+// BLD 976: day 1 (Steady Breath, Steady Day) shows a grown-up's own painting (p:rep/med-steady-breath) in place of the kids one.
+const MED_P = {m1: 'p:rep/med-steady-breath', m2: 'p:med-body-scan', m3: 'p:med-prayer', m4: 'p:med-sleep', m5: 'p:med-walking', m6: 'p:med-day-6', m7: 'p:med-day-7'};
+const medBase = j => MED_P['m' + (j + 1)] || 'med-m' + (j + 1), medSq = n => /^p:/.test(n) ? n + '-sq' : n, isMedArt = n => /^(med-m\d|p:(rep\/)?med-[a-z0-9-]+)$/.test(n);
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';
@@ -4602,7 +4603,11 @@ function moveKind(id, ses, lvl){
   for (const ph of PH_IDS) if (trackIds('strength', ph).includes(id)) return ph;
   return STR_IDS.build.includes(id) ? 'build' : STR_IDS.peak.includes(id) ? 'peak' : 'foundation';
 }
-const moveArtName = (id, ses, lvl) => MOVE_ART[moveKind(id, ses, lvl)] || ITEM_ART.workout;
+// BLD 976: five of the eight Gentle sessions have their own painting (card square -sq and start screen 16:9); Chair Strength and the
+// rest keep MOVE_ART.gentle. By the session's title, the same in the public file and the Membership library.
+const GENTLE_ART = {'Steady at the Counter': 'p:rep/gentle-counter-sq', 'Easy Range of Motion': 'p:rep/gentle-range-sq', 'Breathe and Reach': 'p:rep/gentle-reach-sq',
+  'Stronger in the Chair': 'p:rep/gentle-stronger-sq', 'Gentle Whole Body': 'p:rep/gentle-whole-sq'};
+const moveArtName = (id, ses, lvl) => { const k = moveKind(id, ses, lvl); return (k === 'gentle' && GENTLE_ART[String((ses && ses.title) || '')]) || MOVE_ART[k] || ITEM_ART.workout; };
 const moveArt = (id, ses, lvl) => { id = String(id || '').split(':').pop(); return WAY(moveArtName(id, ses || sesById(id), lvl)); };
 const flowArtName = x => MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
 const medArtName = j => j >= 0 && MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ART_QUIET[Math.max(0, j) % ART_QUIET.length];
@@ -5735,6 +5740,10 @@ window.GGHealth = {
 const HOL_LEAD = 24;
 const HOL_OUT = 'Nicely done. That part is ready, and the big day just got easier.';
 const HOL_ART = {ahead: 'weekly-batch', day: 'todays-plate'};
+// BLD 976: each Holidays and Gatherings set's own card painting (Thanksgiving keeps Today's Plate), and the Holidays shelf card's.
+const HOL_SET = new Set(['christmas', 'new-years', 'easter', 'halloween', 'st-patricks', 'birthday-kid', 'birthday-adult', 'backyard-bbq', 'valentines',
+  'brunch', 'graduation', 'potluck', 'bringing-a-meal', 'after-service', 'winter-gathering', 'spring-feast']);
+const holArt = id => HOL_SET.has(id) ? 'p:rep/hol-' + id + '-sq' : HOL_ART.day + '-sq', HOL_SHELF = 'p:rep/cat-holidays-sq';
 function holUse(){ const G = window.GGHolidays || null; if (G && G.use && G._hc !== holSt){ G.use(() => { try { return C.data && D() ? holSt() : null; } catch(e){ return null; } }); G._hc = holSt; } return G; }
 function holSt(){ const h = H(); if (!h) return {on: [], plans: {}, skip: {}}; const x = h.set.hol = h.set.hol && typeof h.set.hol === 'object' ? h.set.hol : {};
   x.on = arr(x.on); x.plans = x.plans && typeof x.plans === 'object' ? x.plans : {}; x.skip = x.skip && typeof x.skip === 'object' ? x.skip : {}; return x; }
@@ -5788,7 +5797,7 @@ function holCards(){
   return out.sort((a, b) => a.days - b.days);
 }
 function holCardsHtml(){
-  return holCards().map(c => `<div class="tn-card a-kitchen hj-holc"><div class="tn-pc"><div class="tn-scene"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
+  return holCards().map(c => `<div class="tn-card a-kitchen hj-holc"><div class="tn-pc"><div class="tn-scene"><img src="${esc(WAY(holArt(c.id)))}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
     <div class="tn-time">${esc(c.kick)}</div><h3>${esc(c.line)}</h3>${c.planned ? `<div class="tn-meta">For ${c.guests}. Shopping, prep, and every recipe, step by step.</div>` : `<div class="tn-meta">The shopping on your list, the prep on your calendar, and a calm voice for every recipe.</div>`}
     <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(c.key)}">${ic(c.planned ? 'arrow' : 'plus')}${esc(c.btn)}</button>${c.planned ? '' : `<button type="button" class="linkbtn" data-hja="holskip" data-hjv="${esc(c.id + '|' + c.date)}">Skip This Year</button>`}</div></div></div></div>`).join('');
 }
@@ -5821,7 +5830,7 @@ function holToggle(id){ const st = holSt(), i = st.on.indexOf(id); if (i >= 0) s
 function holChips(){ const G = holUse(); if (!G) return ''; const on = holSt().on;
   return `<div class="hj-chips hj-holchips" role="group" aria-label="My Holidays">${G.sets.map(s => { const p = on.includes(s.id); return `<button type="button" class="chip${p ? ' on' : ''}" aria-pressed="${p}" data-hja="holtog" data-hjv="${esc(s.id)}">${esc(s.name)}</button>`; }).join('')}</div>`; }
 function holPick(){ return holUse() ? `<h3 style="margin-top:20px">My Holidays</h3><p class="hj-sub">Choose the days you celebrate. About three weeks before each one, a card offers to set it up: the shopping on your list, the prep on your calendar, and every recipe guided step by step. Every set stays in the recipe library too.</p>${holChips()}` : ''; }
-function holShelf(){ const G = holUse(); if (!G || KIT()) return ''; return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen hj-holshelf" data-hja="holall"><span class="ill"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${G.sets.length} sets</span><span class="h3">Holidays and Gatherings</span><span class="tn-meta">Thanksgiving to a backyard gathering: whole food menus, the shopping, the prep, and every recipe step by step.</span></span></button>`; }
+function holShelf(){ const G = holUse(); if (!G || KIT()) return ''; return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen hj-holshelf" data-hja="holall"><span class="ill"><img src="${esc(WAY(HOL_SHELF))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${G.sets.length} sets</span><span class="h3">Holidays and Gatherings</span><span class="tn-meta">Thanksgiving to a backyard gathering: whole food menus, the shopping, the prep, and every recipe step by step.</span></span></button>`; }
 function holSetCard(){ if (KIT() || !holUse()) return ''; const n = holSt().on.length;
   return `<div class="tn-card a-kitchen" id="tn-hol"><div class="tn-hd">${badge('star', 'a-kitchen', HOL_ART.day + '-sq')}<div><div class="tn-k a-kitchen">My Holidays</div><div class="tn-sub">${n ? n + ' chosen. ' : ''}A card about three weeks before each one offers to set it up.</div></div></div>${holChips()}
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holall">${ic('arrow')}Every Holiday Set</button></div></div>`; }
@@ -5835,7 +5844,7 @@ function vHol(){
   return `<div class="tn-sec a-kitchen hj-hol">${head}${cards ? `<div class="hj-holup">${cards}</div>` : ''}
     <div class="tn-card a-kitchen"><div class="tn-k">My Holidays</div><p class="tn-sub">Choose the days you celebrate. About three weeks before each one, a card on your Week offers to set it up.</p>${holChips()}</div>
     <div class="tn-kgrid hj-holgrid">${G.sets.map(s => { const p = holPlan(s.id), nx = holNext(s.id);
-      return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen" data-hja="go" data-hjv="holset:${esc(s.id)}"><span class="ill"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${esc(p && p.date >= today() ? 'Set for ' + holShort(p.date) : nx ? holShort(nx) : G.whenText(s.id))}</span><span class="h3">${esc(s.name)}</span><span class="tn-meta">${esc(s.menu.length + ' recipes · ' + s.lead)}</span></span></button>`; }).join('')}</div></div>`;
+      return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen" data-hja="go" data-hjv="holset:${esc(s.id)}"><span class="ill"><img src="${esc(WAY(holArt(s.id)))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${esc(p && p.date >= today() ? 'Set for ' + holShort(p.date) : nx ? holShort(nx) : G.whenText(s.id))}</span><span class="h3">${esc(s.name)}</span><span class="tn-meta">${esc(s.menu.length + ' recipes · ' + s.lead)}</span></span></button>`; }).join('')}</div></div>`;
 }
 function vHolSet(G, s){
   const id = s.id, p = holPlan(id), planned = !!(p && p.date >= today()), ready = !setupNeeded() && (U('food') || PUB()), ed = S.holEd && S.holEd.id === id ? S.holEd : null;

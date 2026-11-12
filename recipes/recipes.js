@@ -46,11 +46,11 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b983';   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting
+  var VER = 'b999';   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
-    ['/field-guide/stage.js?v=b931', 'GGStage'],
+    ['/field-guide/stage.js?v=b999', 'GGStage'],
     ['/field-guide/coach.js?v=b931', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=b919b', 'GGHolidays'],
@@ -63,6 +63,8 @@
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
   var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Sober Drinks', 'drinks-sq'], ['bulk', 'Bulk Foods', 'shop-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  // BLD 976: each category tile has its own painting (shared/heroes/p/rep/cat-<id>.webp, 16:9); the section headers keep CATS[i][2].
+  var CAT_ART = '/shared/heroes/p/rep/cat-';
   var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['snack-fruit', 'snack-fruit-sq'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
   // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
   var SHELF = { holidays: 1, drink: 1, bulk: 1 };
@@ -338,7 +340,7 @@
         var cnt = n + (hol ? (n === 1 ? ' set' : ' sets') : bk ? (n === 1 ? ' guide' : ' guides') : (n === 1 ? ' recipe' : ' recipes'));
         var extra = hol && nx && nx.date ? '<span class="rc-cx">Next: ' + esc(HOL.get(nx.id).name) + ', ' + esc(soonText(nx.date)) + '</span>' : c[0] === 'drink' ? '<span class="rc-cx">Sparkling, cozy, creamy, and pitchers for a crowd</span>' : bk ? '<span class="rc-cx">' + esc(BK.sub || '') + ': store it, put it up, and cook it</span>' : '';
         return '<button type="button" class="rc-cat rc-k-' + c[0] + '" data-cat="' + c[0] + '"' + (shelf ? '' : ' aria-pressed="' + (st.meal === c[0] ? 'true' : 'false') + '"') +
-          ' aria-label="' + esc(c[1] + ', ' + cnt + (shelf ? '' : (st.meal === c[0] ? ', showing now' : ''))) + '"><img src="' + W + c[2] + '.webp" alt="" decoding="async">' +
+          ' aria-label="' + esc(c[1] + ', ' + cnt + (shelf ? '' : (st.meal === c[0] ? ', showing now' : ''))) + '"><img src="' + CAT_ART + c[0] + '.webp" alt="" decoding="async">' +
           '<span class="rc-cat-in"><b>' + esc(c[1]) + '</b><span class="rc-cn">' + esc(cnt) + '</span>' + extra + '</span></button>';
       }).join('');
     }
