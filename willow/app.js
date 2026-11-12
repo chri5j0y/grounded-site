@@ -1591,7 +1591,9 @@ function obDraft(r, shape) {
   return paras.filter(Boolean).join('\n\n');
 }
 // Words that start a sentence on their own page read mid-sentence here ("Ruth loved coffee"); names and "I" keep their capital.
-const lc1 = t => /^[A-Z](?:[a-z]|\s)/.test(t) && !/^(I|I'm|I've|God)\b/.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t;
+// Lowercase only a common opening word, so a name at the start of a family's note keeps its capital (Mary, Grandpa Joe).
+const LC_WORDS = /^(The|A|An|And|Or|But|Her|His|Their|Our|My|Your|Its|This|That|These|Those|Being|Spending|Cooking|Gardening|Reading|Singing|Playing|Fishing|Walking|Teaching|Helping|Making|Watching|Listening|Time|Family|Friends|Music|Faith|Love|Laughing|Laughter|Sundays|Mornings|Evenings|Every|All|Long|Quiet|Simple|Good)\b/;
+const lc1 = t => LC_WORDS.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t;
 const words = t => { const m = String(t || '').trim().match(/\S+/g); return m ? m.length : 0; };
 const obCount = (sh, t) => { const n = words(t); return `<span class="w-count${n > sh.words * 1.25 ? ' over' : ''}" id="w-on-${sh.id}">${n} words, aim for about ${sh.words}</span>`; };
 function factsCard(f) {
