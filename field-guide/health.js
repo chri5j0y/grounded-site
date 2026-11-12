@@ -4607,9 +4607,19 @@ function moveKind(id, ses, lvl){
 // rest keep MOVE_ART.gentle. By the session's title, the same in the public file and the Membership library.
 const GENTLE_ART = {'Steady at the Counter': 'p:rep/gentle-counter-sq', 'Easy Range of Motion': 'p:rep/gentle-range-sq', 'Breathe and Reach': 'p:rep/gentle-reach-sq',
   'Stronger in the Chair': 'p:rep/gentle-stronger-sq', 'Gentle Whole Body': 'p:rep/gentle-whole-sq'};
-const moveArtName = (id, ses, lvl) => { const k = moveKind(id, ses, lvl); return (k === 'gentle' && GENTLE_ART[String((ses && ses.title) || '')]) || MOVE_ART[k] || ITEM_ART.workout; };
+// BLD 976 follow-on: every Grounded Fitness workout (by session id), every Flow, Yoga, Balance, and Stretch practice (by practice id),
+// the public daily flows (FIT_ART.pub), and the Gentle sessions that had none (by title) show their own painting: the card square (-sq) and the start screen 16:9, under
+// shared/heroes/p/fit/. The next line is written by grounded-workshop patches/bld976/fit/placefit.py from fit-nums.json; change a
+// number there and run it again. A session with no painting here keeps its kind's painting (GENTLE_ART, MOVE_ART).
+const FIT_ART = {"work": {"A": "p:fit/w-a-sq", "B": "p:fit/w-b-sq", "C": "p:fit/w-c-sq", "D": "p:fit/w-d-sq", "E": "p:fit/w-e-sq", "F": "p:fit/w-f-sq", "G": "p:fit/w-g-sq", "H": "p:fit/w-h-sq", "I": "p:fit/w-i-sq", "J": "p:fit/w-j-sq", "K": "p:fit/w-k-sq", "L": "p:fit/w-l-sq", "R1": "p:fit/w-r1-sq", "R2": "p:fit/w-r2-sq", "R3": "p:fit/w-r3-sq", "R4": "p:fit/w-r4-sq", "R5": "p:fit/w-r5-sq", "R6": "p:fit/w-r6-sq", "R7": "p:fit/w-r7-sq", "R8": "p:fit/w-r8-sq", "R9": "p:fit/w-r9-sq", "R10": "p:fit/w-r10-sq", "R11": "p:fit/w-r11-sq", "R12": "p:fit/w-r12-sq"}, "flow": {"f1": "p:fit/f-f1-sq", "f2": "p:fit/f-f2-sq", "f3": "p:fit/f-f3-sq", "f4": "p:fit/f-f4-sq", "f5": "p:fit/f-f5-sq", "f6": "p:fit/f-f6-sq", "f7": "p:fit/f-f7-sq", "f8": "p:fit/f-f8-sq", "f9": "p:fit/f-f9-sq", "f10": "p:fit/f-f10-sq", "f11": "p:fit/f-f11-sq", "f12": "p:fit/f-f12-sq", "f13": "p:fit/f-f13-sq", "f14": "p:fit/f-f14-sq", "p1": "p:fit/f-p1-sq", "p2": "p:fit/f-p2-sq", "p3": "p:fit/f-p3-sq", "p4": "p:fit/f-p4-sq", "p5": "p:fit/f-p5-sq", "p6": "p:fit/f-p6-sq", "p7": "p:fit/f-p7-sq"}, "pub": {"p1": "p:fit/pf-p1-sq", "p2": "p:fit/pf-p2-sq", "p3": "p:fit/pf-p3-sq", "p4": "p:fit/pf-p4-sq", "p5": "p:fit/pf-p5-sq", "p6": "p:fit/pf-p6-sq", "p7": "p:fit/pf-p7-sq"}, "gentle": {"Balance and Steps": "p:fit/g-balance-and-steps-sq", "Chair Strength": "p:fit/g-chair-strength-sq", "Walk a Little Farther": "p:fit/g-walk-a-little-farther-sq"}};
+const isGentleLvl = lvl => (lvl || (PUB() ? H().set.level || 'root' : '')) === 'gentle';
+const fitOwn = (id, ses, lvl) => { const t = String((ses && ses.title) || '');
+  if (isGentleLvl(lvl)) return FIT_ART.gentle[t] || '';
+  id = String(id || '').split(':').pop(); return /^([A-L]|R\d+)$/.test(id) ? FIT_ART.work[id] || '' : ''; };
+const moveArtName = (id, ses, lvl) => { const k = moveKind(id, ses, lvl); return fitOwn(id, ses, lvl) || (k === 'gentle' && GENTLE_ART[String((ses && ses.title) || '')]) || MOVE_ART[k] || ITEM_ART.workout; };
 const moveArt = (id, ses, lvl) => { id = String(id || '').split(':').pop(); return WAY(moveArtName(id, ses || sesById(id), lvl)); };
-const flowArtName = x => MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
+// The public Start and Membership daily flows reuse the ids p1 to p7 for their own sessions (FIT_ART.pub); f1 to f14 are the same everywhere.
+const flowArtName = x => (x && ((PUB() && FIT_ART.pub[x.id]) || (!PUB() || !/^p\d+$/.test(x.id)) && FIT_ART.flow[x.id])) || MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
 const medArtName = j => j >= 0 && MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ART_QUIET[Math.max(0, j) % ART_QUIET.length];
 const medArtFor = d => { const m = MED(), x = m && medFor(d), j = x ? arr(m.sessions).indexOf(x) : -1; return MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ITEM_ART.meditation; };
 // set: a rotation (an array) or one painting's name (a string).
