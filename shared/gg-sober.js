@@ -52,7 +52,7 @@
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function needWords() { return script('/shared/sober-words.js?v=' + V, function () { return !!window.GGSoberWords; }); }
   function needShare() { return script('/shared/gg-sharecard.js?v=' + V, function () { return !!window.GGShareCard; }); }
-  function need30() { return script('/shared/sober-30.js?v=c008', function () { return !!window.GGSober30; }); }
+  function need30() { return script('/shared/sober-30.js?v=c009', function () { return !!window.GGSober30; }); }
   function needMore() { return script('/shared/sober-more.js?v=' + V, function () { return !!window.GGSoberMore; }); }
 
   /* ---------- the count: one number, never the date ---------- */
