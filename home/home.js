@@ -1145,6 +1145,13 @@
 
   /* ---------- Kid Home: Maple and Aspen, playful, no numbers ---------- */
   var KP = { roots: '#FF6B6B', trunk: '#FF9F1C', bark: '#9B5DE5', branches: '#00B4D8', leaves: '#6CCB3A', fruit: '#D62839' };
+  /* BLD 976 (Chris, November 12, 2026: "what am i supposed to do next?"): one clear next step under Your Tree Is Growing.
+     Before the first check-in: check in with your grown-up. After it: tend today's practices (or choose them first). */
+  function kidNextHtml(ck, kitems) {
+    if (!ck) return '<p class="hm-knext">Next: check in with your grown-up.</p><button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</button>';
+    if (arr(kitems).length) return '<p class="hm-knext">Next: tend your tree today. Tap the circle when you do a practice.</p><button type="button" class="hm-kbtn" data-hm="kidnext" style="--c:#4FA82C">' + I('sprout') + 'Tend My Tree Today</button>';
+    return '<p class="hm-knext">Next: choose the practices that help your tree grow.</p><button type="button" class="hm-kbtn" data-hm-setup="roots" style="--c:#4FA82C">' + I('sprout') + 'Choose My Practices</button>';
+  }
   function kidHtml() {
     var t = TREES[S.tree], d = now(), hr = d.getHours(), eve = hr >= 17 || hr < 5, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), h = homeRec();
     var did = !!h.kid[today()];
@@ -1163,9 +1170,9 @@
     return '<div class="hm-wrap"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><div class="hm-lay kidlay"><div class="hm-kid">' +
       '<div class="hm-ksky"><img class="art" src="' + PIMG + (eve ? 'kids-sky-evening' : 'kids-sky-morning') + '-narrow.webp" alt=""><div class="hi"><span><b>Hi, ' + esc(S.p.name) + '!</b><small>' + DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '</small></span></div><img class="mark" src="' + mark(S.tree) + '" alt=""></div>' +
       '<div class="hm-kin">' +
-        '<div class="hm-kcard" style="--c:#FF9F1C"><h2 class="hm-kh">Your ' + t.n + ' Is Growing</h2><div class="hm-kparts">' + parts + '</div>' + grow + '<p style="margin-top:10px;font-weight:500">' + esc(line) + '</p></div>' +
+        '<div class="hm-kcard" style="--c:#FF9F1C"><h2 class="hm-kh">Your ' + t.n + ' Is Growing</h2><div class="hm-kparts">' + parts + '</div>' + grow + '<p style="margin-top:10px;font-weight:500">' + esc(line) + '</p>' + kidNextHtml(ck, kitems) + '</div>' +
         '<div class="hm-kcard" style="--c:#9B5DE5"><div class="hm-kprac"><button type="button" class="ill" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + (KP_ART[lead] ? PIMG + KP_ART[lead] : IMG + ART[lead]) + '.webp" alt=""><span>' + I('play') + '</span></button><div><h3 class="hm-kh">Today: ' + esc(v[0]) + '</h3><p>' + esc(v[2]) + '</p></div></div>' +
-          '<button class="hm-kbtn" type="button" style="margin-top:12px" data-hm="kiddid" aria-pressed="' + did + '">' + I('check') + (did ? 'You Did It!' : 'We Did It!') + '</button></div>' +
+          (did ? '<p class="hm-kdidok">' + I('check') + 'You did it! Your tree says thank you.</p>' : '<button class="hm-kbtn" type="button" style="margin-top:12px" data-hm="kiddid" aria-pressed="false">' + I('check') + 'We Did It!</button>') + '</div>' +
         kidPracHtml() + kidKitchenHtml() + kidPlannerHtml() +
         (did ? '<div class="hm-kcard hm-surprise" style="--c:#00B4D8"><svg viewBox="0 0 52 52" aria-hidden="true"><g class="bird"><ellipse cx="26" cy="30" rx="13" ry="10" fill="#00B4D8"/><circle cx="34" cy="22" r="7" fill="#00B4D8"/><circle cx="36" cy="21" r="1.6" fill="#2C1810"/><path d="M40 22l6 2-6 2z" fill="#FF9F1C"/><path d="M16 28c4-6 10-6 14-2-5 1-9 3-14 2z" fill="#0090B0"/></g><path d="M8 44h36" stroke="#8A5A36" stroke-width="4" stroke-linecap="round"/></svg><div><h3 class="hm-kh" style="font-size:20px">A visitor came to your tree!</h3><div style="font-size:15px;font-weight:500">A little bird stopped by because you tended your tree today.</div></div></div>' : '') +
         '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</button>' +
@@ -2650,7 +2657,9 @@
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-wkoff],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share],[data-hm-new]');
     if (!t || !t.closest('.hm')) return;
-    if (t.hasAttribute('data-hm-nav')) { var nv = t.getAttribute('data-hm-nav'); e.preventDefault(); goTo(nv === 'tree' ? 'tree' : 'today'); return; }
+    // BLD 976 (Chris, November 12, 2026: "no button do anything"): a kid's three tabs each go to their own place:
+    // My Tree to Today, Check-in opens the check-in, Watch opens the videos.
+    if (t.hasAttribute('data-hm-nav')) { var nv = t.getAttribute('data-hm-nav'); e.preventDefault(); if (nv === 'ck') { if (!openCheckin('full')) openTreeSheet('checkin'); return; } goTo(nv === 'tree' ? 'tree' : nv === 'watch' ? 'watch' : 'today'); return; }
     if (t.hasAttribute('data-hm-tab')) { e.preventDefault(); var tb = t.getAttribute('data-hm-tab'); if (document.getElementById('hm-sheet')) { S.sheetPushed = 0; closeSheet(true); } goTo(tb); return; }
     if (t.hasAttribute('data-hm-me')) {
       var ms = t.getAttribute('data-hm-me');
@@ -2708,6 +2717,7 @@
     else if (act === 'addlove') GGP.createDialog({ forOther: true, keepMe: true }).then(function (ok) { if (ok) goTo('today'); else render(); });
     else if (act === 'tour') howItWorks();
     else if (act === 'kiddid') { var hd = homeRec(); hd.kid[today()] = hd.kid[today()] ? 0 : 1; saveHome(); render(); }
+    else if (act === 'kidnext') { var kpl = document.querySelector('.hm-kpracs'); if (kpl) { kpl.scrollIntoView({ behavior: 'smooth', block: 'start' }); var kc = kpl.querySelector('.hm-kdc'); if (kc) setTimeout(function () { try { kc.focus({ preventScroll: true }); } catch (x) {} }, 500); } }
   });
 
   /* ---------- BLD 884: the welcome tour ----------
