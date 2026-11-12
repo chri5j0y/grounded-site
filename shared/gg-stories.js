@@ -438,7 +438,7 @@
   var BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>';
   var SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/></svg>';
   var ROOT = (function () { try { var s = root.document && document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return root.location ? location.origin : ''; })();
-  var READ_JS = '/read.js?v=b813', LEARN_JS = '/shared/gg-learn.js?v=b949';
+  var READ_JS = '/read.js?v=b813', LEARN_JS = '/shared/gg-learn.js?v=b988';
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function css() { if (document.getElementById('gs-css')) return; var s = document.createElement('style'); s.id = 'gs-css'; s.textContent = CSS; document.head.appendChild(s); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -472,15 +472,20 @@
   function newest(a) { return a.map(function (s, i) { return [s, i]; }).sort(function (x, y) { var tx = Date.parse(x[0].posted || '') || 0, ty = Date.parse(y[0].posted || '') || 0; return ty - tx || x[1] - y[1]; }).map(function (x) { return x[0]; }); }
   // Story pictures (BLD 787, public files): stories/img/<id>.webp, then <id>.jpg; the area goes when neither is there. IMG keeps
   // what this page learned, so a redraw (after an unlock) skips the ones already missing.
-  var IMG = {};
+  // BLD 970: each story's own painting (shared/heroes/p/story-<slug>.webp, 1200 by 800) leads; a story outside PIC, or a painting
+  // that cannot load, falls back to stories/img as before.
+  var IMG = {}, PIC = {s002: 'story-birth-plan', s004: 'story-drift-away', s005: 'story-enlightenment', s006: 'story-grief-debt', s008: 'story-he-came-to-collect', s009: 'story-he-deserves-that', s010: 'story-he-was-praying-too', s011: 'story-in-the-beginning', s012: 'story-if-she-is-still-here', s013: 'story-love', s014: 'story-my-boundaries-have-gates', s015: 'story-please-help-my-dad-die', s016: 'story-prayer', s017: 'story-the-atypical-atheist', s019: 'story-the-impossible-dance-of-particles', s020: 'story-the-recovery', s021: 'story-total-bliss', s022: 'story-welcome-home', s085: 'story-off-duty', s129: 'story-one-wish', s130: 'story-time-of-your-life', s007: 'story-grounded-in-coffee'};
   function imgBase(id) { return ROOT + '/stories/img/' + encodeURIComponent(id); }
+  function picSrc(id) { return PIC[id] ? ROOT + '/shared/heroes/p/' + PIC[id] + '.webp' : ''; }
+  function imgSrc(id) { var k = IMG[id] || (PIC[id] ? 'p' : 'webp'); return k === 'p' ? picSrc(id) : imgBase(id) + '.' + k; }
   function imgTag(s, cls) {
     if (!s || !s.id || s.kind || IMG[s.id] === 'none') return '';
-    return '<div class="' + cls + (IMG[s.id] ? ' gs-in' : '') + '" data-gsimg="' + esc(s.id) + '"><img src="' + imgBase(s.id) + '.' + (IMG[s.id] || 'webp') + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async" onload="GGStories._imgOk(this)" onerror="GGStories._imgErr(this)"></div>';
+    return '<div class="' + cls + (IMG[s.id] ? ' gs-in' : '') + '" data-gsimg="' + esc(s.id) + '"><img src="' + imgSrc(s.id) + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async" onload="GGStories._imgOk(this)" onerror="GGStories._imgErr(this)"></div>';
   }
-  function imgOk(el) { var w = el.parentNode; if (!w) return; IMG[w.getAttribute('data-gsimg')] = /\.jpg$/.test(el.getAttribute('src') || '') ? 'jpg' : 'webp'; w.classList.add('gs-in'); }
+  function imgOk(el) { var w = el.parentNode; if (!w) return; var src = el.getAttribute('src') || ''; IMG[w.getAttribute('data-gsimg')] = /\/heroes\/p\//.test(src) ? 'p' : /\.jpg$/.test(src) ? 'jpg' : 'webp'; w.classList.add('gs-in'); }
   function imgErr(el) {
     var w = el.parentNode; if (!w) return; var id = w.getAttribute('data-gsimg'), src = el.getAttribute('src') || '';
+    if (/\/heroes\/p\//.test(src)) { el.setAttribute('src', imgBase(id) + '.webp'); return; }
     if (/\.webp$/.test(src)) { el.setAttribute('src', imgBase(id) + '.jpg'); return; }
     IMG[id] = 'none'; var ban = w.closest && w.closest('.gs-ban-img'); if (ban) ban.classList.remove('gs-ban-img'); w.remove();
   }
@@ -789,7 +794,7 @@
     mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); },
     // BLD 787: the Supporter perks and story pictures
     perks: PERKS, monthLabel: monthLabel, note: noteOf, letter: letterParas, card: cardOf, cardModel: cardModel, noteLesson: noteLesson, letterLesson: letterLesson,
-    spokenNote: spokenNote, spokenLetter: spokenLetter, openLetter: openLetter, listenLetter: listenLetter, imgBase: imgBase, imgTag: imgTag, _imgOk: imgOk, _imgErr: imgErr
+    spokenNote: spokenNote, spokenLetter: spokenLetter, openLetter: openLetter, listenLetter: listenLetter, imgBase: imgBase, picSrc: picSrc, imgTag: imgTag, _imgOk: imgOk, _imgErr: imgErr
   };
   if (root.document) takeKey();
   if (typeof module !== 'undefined' && module.exports) module.exports = root.GGStories;

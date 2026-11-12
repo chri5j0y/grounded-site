@@ -178,13 +178,32 @@
     if (look === 'figure' && soft[k]) { k = 'figure'; o.move = sc.move || arg || (sc.k === 'breathe' ? 'stand-breath' : 'stand-breath'); if (!sc.breath && (sc.k === 'breathe' || /breath/.test(o.move))) o.breath = [4, 6]; }
     if (k === 'figure' && !o.move && !sc.move) o.move = 'stand-breath';
     if (k === 'figure' && !sc.breath && !o.breath && /breath/.test(o.move || sc.move || '')) o.breath = [4, 6];
+    // BLD 970 (Chris, November 12, 2026): the 3D figure leads only a real movement (a reach, a stretch, a twist, a yoga pose).
+    // A breath, a prayer, a seat, or rest is a still scene: a calm painting of a person at that practice (stillArt), with the
+    // breath ring and words beside the person on the same clock. So a new session plays a painting unless it names a movement.
+    if (k === 'figure' && !figMoves(o.move || sc.move)) { o._k0 = sc.k; k = 'still'; img = stillArt(l, sc); }
     if (k === 'candle' && !img) img = 'way/candle-alcove';
     if (k === 'figure' && !img) img = 'way/yoga-studio';
     if (k === 'paint' && !img) img = (l && l.img) || 'home';
     o.k = k; o.img = img; o._d = i % 4; o._app = app;
-    o._bd = !!img && k !== 'title' && k !== 'demo' && k !== 'paint' && k !== 'candle' && k !== 'figure' && k !== 'end' && k !== 'tale' && k !== 'screen' && k !== 'tabs';
+    o._bd = !!img && k !== 'title' && k !== 'demo' && k !== 'paint' && k !== 'candle' && k !== 'figure' && k !== 'still' && k !== 'end' && k !== 'tale' && k !== 'screen' && k !== 'tabs';
     if (o._bd && sc.bg) o.bg = ''; // the painting behind takes the place of an older blurred bg
     return Object.assign({}, sc, o);
+  }
+  /* BLD 970: still scenes. figMoves(move) is true for a movement the 3D figure shows (any move of shared/fig3d and
+     field-guide/moves.js beyond the resting poses: a breath, a seat, a cross-legged seat, lying down, standing still).
+     stillArt(lesson, scene) names the painting: a Breath Prayer (or a prayer session with breath in its name) the woman
+     praying by a sunlit window; any other prayer, faith, Grounded Spirit, or gratitude session the man in quiet prayer on
+     a meadow bench; every other session (breathing, meditation, calm, rest, relationships) the woman breathing with her
+     hands on her chest and belly. STILL places the words on the open side of each painting (s) in a panel w wide. */
+  var FIG_REST = { breath: 1, 'stand-breath': 1, seat: 1, 'cross-seat': 1, lie: 1, standing: 1, kneel: 1 };
+  function figMoves(m) { m = String(m || ''); return !!m && !FIG_REST[m] && !/(^|-)breath$/.test(m); }
+  var STILL = { 'p/spirit-breath-prayer': { s: 'r', w: 330 }, 'p/spirit-prayer': { s: 'l', w: 400 }, 'p/breathe-guided': { s: 'l', w: 290 } };
+  function stillArt(l, sc) {
+    l = l || {}; var name = String(l.title || '') + ' ' + String(l.practice || ''), id = String(l.id || '') + ' ' + String(l.program || '');
+    var spirit = l.door === 'prayer' || l.section === 'spirit' || /(^|\s)(sp|gg-p|sb-spirit)-/.test(id) || /\b(pray|prayer|psalm|shema|dhikr|dua|blessing|scripture|examen|sabbath|grace|worship|sacred|faith|spirit|modeh|om shanti|gratitude|thankful|thanks)\b/i.test(name);
+    if (/breath prayer/i.test(name + ' ' + String((sc && sc.h) || '')) || (spirit && /\bbreath/i.test(name))) return 'p/spirit-breath-prayer';
+    return spirit || /(^|\s)grat-|\bgood things\b/i.test(id + ' ' + name) ? 'p/spirit-prayer' : 'p/breathe-guided';
   }
   // BLD 911: a breath of three parts (breath: [in, sip, out], the Physiological Sigh) shows a third word for the sip;
   // brw names the words under the circle (kids: ['Sniff', 'One more sniff', 'Whoosh']).
@@ -201,7 +220,7 @@
   }
   // BLD 911 Round 2: a candle scene that carries a breath (a Grounded Meditation breathe scene with the candle look) keeps the
   // breath clock too: its lines start on their own parts, and the flame's glow brightens on the breath in and softens on the out.
-  function isBr(sc) { return !!sc && (sc.k === 'breathe' || ((sc.k === 'figure' || sc.k === 'candle') && Array.isArray(sc.breath))); }
+  function isBr(sc) { return !!sc && (sc.k === 'breathe' || ((sc.k === 'figure' || sc.k === 'candle' || sc.k === 'still') && Array.isArray(sc.breath))); }
   // BLD 928 (Chris, November 6, 2026): the breathing rings (shared/gg-breath-ring.js) take the circle's place in every breath
   // scene. The circle stays, unseen, as the breath clock the narration already follows (brEl), and the ring reads that same
   // clock (data-anim), so the ring, the words, and the voice turn together. Counts go up in a breathe scene; a breathing
@@ -321,6 +340,16 @@
           + '<div class="ln-fg3 ln-fg3-' + (fs === 'l' ? 'r' : 'l') + '" style="--k:' + acc + '"><div class="ln-fgb"><div class="ln-brc"></div>' + brRing(sc, '', 'dark') + '</div></div>'
           + '<div class="ln-pn ln-pn-' + fs + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '') + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '')
           + (Array.isArray(sc.breath) ? '<div class="ln-brt ln-fg-brt"><i>Breathe in</i><i>Breathe out</i></div>' : '') + '</div>';
+      }
+      // BLD 970: a still scene, the painting full and clear, the words in a panel on its open side, and the breath ring
+      // and its words under them when the scene carries a breath.
+      case 'still': {
+        var S = STILL[sc.img] || { s: 'l', w: 400 }, ss = S.s, si = Array.isArray(sc.items) ? sc.items : [];
+        return '<div class="ln-bd ln-bd-clear ln-bd-slow"><img src="' + ART(sc.img, sc._app) + '" alt=""></div><div class="ln-ps ln-sps-' + ss + '"></div>'
+          + '<div class="ln-pn ln-cd ln-sp ln-pn-' + ss + (si.length > 3 ? ' ln-cd-many' : '') + '" style="width:' + S.w + 'px">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '')
+          + si.map(function (x, j) { return '<p' + A(1.2 + j * (sc.gap || 1.2), 'ln-cd-l') + '>' + h(x) + '</p>'; }).join('')
+          + (sc.sub ? '<p' + A(1.5 + si.length * (sc.gap || 1.2), 'ln-cd-s') + '>' + h(sc.sub) + '</p>' : '')
+          + (Array.isArray(sc.breath) ? '<div class="ln-spb" style="--k:' + acc + '"><div class="ln-brc"></div>' + brRing(sc, sc._k0 === 'breathe' ? 'c' + (sc._brx ? ' h' : '') : '', 'dark') + '</div><div class="ln-brt ln-fg-brt">' + brWords(sc) + '</div>' : '') + '</div>';
       }
       case 'quiz': return '<div class="ln-qz"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>You\'ve Got It</div><h3' + A(.5) + '>' + h(sc.q) + '</h3></div>';
       case 'end': return '<div class="ln-end"><div' + A(.15, 'ln-endck', 'background:' + (sc.ok ? '#5F7D48' : acc)) + '>' + (sc.ok ? IC.check : IC.play) + '</div><div' + A(.5, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow) + '</div><h2' + A(.8) + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.3) + '>' + h(sc.sub) + '</p>' : '') + (sc.count ? '<small' + A(1.6) + '>' + h(sc.count) + '</small>' : '') + '</div>';
@@ -501,6 +530,9 @@
       '@keyframes lnFl{0%{opacity:.72;transform:scale(.96)}30%{opacity:1;transform:scale(1.03)}55%{opacity:.84;transform:scale(.99)}80%{opacity:.96;transform:scale(1.02)}100%{opacity:.8;transform:scale(.98)}}',
       '.ln-fg3{position:absolute;top:30px;bottom:30px;width:420px;display:flex;align-items:center;justify-content:center;}.ln-fg3-r{right:30px;}.ln-fg3-l{left:30px;}',
       '.ln-fgb{position:relative;width:300px;height:300px;}.ln-fg3 .ln-brc{background:radial-gradient(circle,rgba(255,236,200,.34) 0%,rgba(255,236,200,.2) 52%,rgba(255,242,218,.8) 62%,rgba(255,236,200,0) 71%);opacity:.95;}.ln-3d .ln-fgb{width:430px;height:430px;}.ln-3d .ln-fg3 .ln-brc{opacity:.8;}',
+      '.ln-sps-l{background:linear-gradient(90deg,rgba(20,13,7,.72) 0%,rgba(20,13,7,.5) 24%,rgba(20,13,7,.16) 40%,rgba(20,13,7,0) 50%);}.ln-sps-r{background:linear-gradient(270deg,rgba(20,13,7,.72) 0%,rgba(20,13,7,.5) 24%,rgba(20,13,7,.16) 40%,rgba(20,13,7,0) 50%);}.ln-sp.ln-pn-l{left:36px;top:40px;}.ln-sp.ln-pn-r{right:36px;top:40px;}.ln-sp h3{font-size:44px;}.ln-sp .ln-cd-l{font-size:28px;}.ln-sp.ln-cd-many .ln-cd-l{font-size:24px;}',
+      '.ln-spb{position:relative;width:150px;height:150px;margin-top:18px;}.ln-pn-r .ln-spb{margin-left:auto;}.ln-spb .ln-brc{opacity:0 !important;}.ln-spb svg.ggbr{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;opacity:.9;}.ln-sp .ln-fg-brt{margin-top:12px;font-size:34px;}',
+      '.ggl-small .ln-sp.ln-pn h3{font-size:52px;}.ggl-small .ln-sp.ln-pn .ln-cd-l{font-size:34px;}.ggl-small .ln-sp.ln-pn>p.ln-cd-s{font-size:28px;}.ggl-small .ln-sp.ln-pn .ln-fg-brt{font-size:44px;height:54px;}.ggl-small .ln-sp.ln-pn .ln-spb{width:170px;height:170px;}',
       '.ln-fg-brt{position:relative;height:50px;width:100%;margin-top:22px;font-family:\'Cormorant Garamond\',serif;font-size:40px;font-weight:600;color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.55);}.ln-pn-r .ln-fg-brt i{right:0;}',
       '.ln-fig3{position:absolute;top:3%;height:92%;width:46%;pointer-events:none;opacity:0;transition:opacity .9s ease;}.ln-fig3-r{right:1%;}.ln-fig3-l{left:1%;}.ln-3d .ln-fig3{opacity:1;}',
       '.ggl-small .ln-pn h3{font-size:62px;}.ggl-small .ln-pn>p{font-size:32px;}.ggl-small .ln-pn-l,.ggl-small .ln-pn-r{width:470px;}.ggl-small .ln-cd .ln-cd-l{font-size:42px;}.ggl-small .ln-cd-many .ln-cd-l{font-size:34px;}.ggl-small .ln-fg-brt{font-size:52px;height:62px;}.ggl-small .ln-pn-b h3{font-size:58px;}',
@@ -921,7 +953,7 @@
       stopTimers(); t = P.tok; hush();
       if (cfg.onAt) cfg.onAt(last ? 0 : P.i);
       if (last) { var e = endScene(); sc = { k: 'end', ok: e.ok, eyebrow: e.eyebrow, h: e.h, sub: e.sub, count: e.count, say: e.say }; sc._e = e; }
-      else { sc = stdScene(l.scenes[P.i], P.i, l, cfg.app); sc._brx = BRX && sc.k === 'breathe'; }
+      else { sc = stdScene(l.scenes[P.i], P.i, l, cfg.app); sc._brx = BRX && (sc.k === 'breathe' || sc._k0 === 'breathe'); }
       st.classList.remove('go');
       // BLD 911 Round 2: a breath scene that follows one on the same pace, as it plays, keeps the same breath clock, so the
       // breath carries on across the change of scene (a hold or a rest is never cut short).
@@ -930,7 +962,7 @@
       cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
       cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
       brPace(sc); figScene(sc);
-      st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
+      st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || sc.k === 'still' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
       var ctl = $('.ln-ctl', host); if (ctl) ctl.classList.toggle('ln-ctl-end', last);   // BLD 929 (L5): no Play or Next on the closing screen
@@ -1575,7 +1607,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b949'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b988'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

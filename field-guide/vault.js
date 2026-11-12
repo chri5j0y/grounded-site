@@ -244,14 +244,16 @@ function behindVoice(s){
 // shipped in BLD 787), so the Vault asks the site only for those (BLD 788); any other story shows Look for a Picture,
 // for a picture uploaded since.
 const PICS = new Set(['s002', 's003', 's004', 's005', 's006', 's007', 's008', 's009', 's010', 's011', 's012', 's013', 's014', 's015', 's016', 's017', 's019', 's020', 's021', 's022']);
-const picImg = s => `<div class="sv-pic"><img src="../stories/img/${esc(s.id)}.webp" alt="${esc(s.title)}" onerror="GGVault._picErr(this)" onload="this.parentNode.classList.add('sv-in')"></div>`;
+// BLD 970: a story with its own painting (GGStories.picSrc) shows it; the stories/img file stays the fallback.
+const picOf = id => (window.GGStories && GGStories.picSrc && GGStories.picSrc(id)) || '';
+const picImg = s => `<div class="sv-pic"><img src="${esc(picOf(s.id) || '../stories/img/' + s.id + '.webp')}" data-old="../stories/img/${esc(s.id)}.webp" alt="${esc(s.title)}" onerror="GGVault._picErr(this)" onload="this.parentNode.classList.add('sv-in')"></div>`;
 function picHTML(s){
-  const id = esc(s.id), has = PICS.has(s.id) || UI.pic === s.id;
+  const id = esc(s.id), own = !!picOf(s.id), has = own || PICS.has(s.id) || UI.pic === s.id;
   return `<div class="card" id="sv-pic"><h3>Picture</h3>${has ? picImg(s) : ''}
-   <p class="muted" style="font-size:14px;margin-top:8px">Picture: upload ${id}.jpg or ${id}.webp into the stories/img folder.</p>
+   <p class="muted" style="font-size:14px;margin-top:8px">${own ? 'Picture: this story\'s own painting, placed in BLD 970. A new painting comes in with a build.' : `Picture: upload ${id}.jpg or ${id}.webp into the stories/img folder.`}</p>
    ${has ? '' : `<div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-sva="piclook">Look for a Picture</button></div>`}</div>`;
 }
-function picErr(el){ const src = el.getAttribute('src') || ''; if (/\.webp$/.test(src)) el.setAttribute('src', src.replace(/\.webp$/, '.jpg')); else if (el.parentNode){ el.parentNode.hidden = true; if (UI.pic && el.closest('#sv-pic')){ const n = el.closest('#sv-pic').querySelector('.sv-pic + p'); if (n) n.textContent = 'The picture shows here once ' + UI.pic + '.jpg or ' + UI.pic + '.webp is in the stories/img folder on the site.'; } } }
+function picErr(el){ const src = el.getAttribute('src') || ''; if (/\/heroes\/p\//.test(src)){ el.setAttribute('src', el.getAttribute('data-old')); return; } if (/\.webp$/.test(src)) el.setAttribute('src', src.replace(/\.webp$/, '.jpg')); else if (el.parentNode){ el.parentNode.hidden = true; if (UI.pic && el.closest('#sv-pic')){ const n = el.closest('#sv-pic').querySelector('.sv-pic + p'); if (n) n.textContent = 'The picture shows here once ' + UI.pic + '.jpg or ' + UI.pic + '.webp is in the stories/img folder on the site.'; } } }
 
 // ---------- the Monthly Letter and Reflection Cards (BLD 787) ----------
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
