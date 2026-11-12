@@ -46,7 +46,7 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b981';   // BLD 966: On Your Week; BLD 967: Share My Plate
+  var VER = 'b983';   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
@@ -96,6 +96,13 @@
   var CARD_ART = { breakfast: ['weekly-batch-sq', 'snack-fruit-sq', 'kitchen-headstart-sq', 'prep-together-sq'], lunch: ['meal-lunch-sq', 'todays-plate-sq', 'prep-together-sq', 'weekly-batch-sq'],
     dinner: ['todays-plate-sq', 'kitchen-headstart-sq', 'dinner-stirfry-sq', 'meal-lunch-sq'], snack: ['snack-fruit-sq', 'meal-lunch-sq', 'supplements-sq', 'prep-together-sq'],
     party: ['kitchen-headstart-sq', 'todays-plate-sq', 'snack-fruit-sq'], sauce: ['prep-together-sq', 'kitchen-headstart-sq', 'weekly-batch-sq'], drink: ['drinks-sq', 'snack-fruit-sq'] };
+  // BLD 970 round 2: every recipe has its own painting in /shared/heroes/p/: rec-<id>.webp (1280 by 720, the detail hero on
+  // desktop and the recipe's own page) and rec-<id>-sq.webp (600 square, the card and the detail hero on phones). OWN lists the
+  // recipes that have one; a Holidays and Gatherings recipe is hol-<set>-<recipe>. Any recipe outside OWN keeps the rotation above.
+  var RP = '/shared/heroes/p/', OWN = {};
+  'd-sheet-pan-lemon-salmon d-honey-ginger-salmon-bowls d-herb-salmon-lentils d-cod-fish-tacos d-oven-fish-and-chips d-greek-shrimp-farro d-tuna-cakes d-maple-dijon-trout d-sardine-pasta d-chicken-fajitas d-chicken-stir-fry d-slow-cooker-turkey-chili d-lemon-chicken-soup d-turkey-burgers d-yogurt-spiced-chicken d-chicken-marinara-penne d-beef-lentil-shepherds-pie d-sirloin-kebabs d-p-red-lentil-curry d-p-tofu-broccoli-stir-fry d-p-burrito-bowls d-p-tempeh-tacos d-p-lentil-bolognese d-p-moroccan-stew d-p-black-bean-burgers d-p-sesame-noodle-bowls d-p-lentil-stuffed-peppers d-p-white-bean-shakshuka d-p-egg-edamame-rice d-p-roasted-chickpea-bowls d-p-stuffed-sweet-potatoes d-p-yogurt-pasta-primavera d-p-cod-chickpea-stew d-p-salmon-lentils-sheet-pan d-p-turkey-bean-chili d-p-lemon-chicken-bean-soup b-berry-overnight-oats b-savory-spinach-oats b-veggie-egg-cups b-garden-tofu-scramble b-yogurt-power-bowl b-banana-oat-pancakes b-strawberry-banana-smoothie b-black-bean-egg-burritos b-apple-cinnamon-baked-oatmeal b-sweet-potato-bean-hash l-chickpea-edamame-quinoa-bowl l-lemony-lentil-white-bean-soup l-tuna-white-bean-salad l-chicken-white-bean-wraps l-rainbow-pasta-salad l-chicken-white-bean-kale-soup l-salmon-brown-rice-bowl l-black-bean-quinoa-burrito-bowl l-turkey-veggie-meatballs l-tofu-broccoli-rice-bowl s-lemon-garlic-hummus s-crunchy-roasted-chickpeas s-lemon-edamame s-apple-almond-butter s-berry-yogurt-cups s-trail-mix s-oat-date-energy-bites s-herb-popcorn s-pita-chips-white-bean-dip s-egg-veggie-snack-box s-berry-yogurt-bark s-chocolate-chia-pudding p-fresh-guacamole p-baked-tortilla-chips p-fresh-pico-de-gallo p-black-bean-corn-salsa p-veggie-platter-ranch p-cucumber-tzatziki p-spinach-artichoke-dip p-stuffed-mini-peppers p-chicken-lettuce-wraps p-baked-falafel-bites p-fruit-skewers-yogurt-dip dr-cranberry-rosemary-spritz dr-cucumber-lime-fizz dr-blackberry-sage-sparkler dr-apple-ginger-spritz dr-strawberry-orange-basil-water dr-pineapple-ginger-mint-water dr-blueberry-lemon-thyme-water dr-golden-turmeric-latte dr-cinnamon-hot-cocoa dr-apple-chai-cider dr-mango-lassi dr-watermelon-lime-slush dr-orange-dream-shake dr-hibiscus-ginger-punch dr-berry-lemonade-honey dr-pomegranate-orange-punch dr-peach-mint-iced-tea sc-lemon-herb-vinaigrette sc-balsamic-dijon-vinaigrette sc-lemon-tahini-dressing sc-greek-yogurt-herb-dressing sc-fresh-basil-pesto sc-chimichurri sc-peanut-lime-sauce sc-quick-marinara sc-avocado-lime-crema sc-ginger-sesame-dressing d-sheet-pan-salmon-potatoes-green-beans d-lentil-bolognese d-shrimp-tacos-slaw-black-beans d-whole-wheat-pizza-night d-rotisserie-chicken-roasted-vegetables d-sheet-pan-chicken-chickpeas d-lemon-garlic-cod-brown-rice d-lentil-shepherds-pie d-salmon-patties d-chicken-burrito-bowls d-chicken-wild-rice-hotdish d-white-bean-minestrone d-salmon-quinoa-bowls d-shrimp-broccoli-stir-fry d-blackened-shrimp-salsa d-cookout-burgers d-white-chicken-chili d-beef-black-bean-tacos d-sheet-pan-salmon-sweet-potatoes d-chicken-barley-vegetable-soup d-pecan-crusted-cod d-breakfast-for-dinner d-pork-carnitas-bowls'.split(' ').forEach(function (k) { OWN[k] = 1; });
+  'thanksgiving-turkey thanksgiving-gravy thanksgiving-potatoes thanksgiving-green-beans thanksgiving-stuffing thanksgiving-cranberry thanksgiving-pie christmas-beef christmas-roots christmas-sprouts christmas-salad christmas-rolls christmas-crisp new-years-peas-greens new-years-shrimp new-years-mushrooms new-years-bean-dip new-years-berries new-years-sparkler easter-pork easter-asparagus easter-potato-salad easter-eggs easter-salad easter-cake halloween-chili halloween-muffins halloween-fruit-friends halloween-apple-nachos halloween-seeds halloween-bark st-patricks-brisket st-patricks-stew st-patricks-colcannon st-patricks-soda-bread st-patricks-cooler st-patricks-baked-apples birthday-kid-pita-pizzas birthday-kid-tenders birthday-kid-fruit-skewers birthday-kid-veggie-cups birthday-kid-cupcakes birthday-kid-sparkling-lemon birthday-adult-chicken birthday-adult-greek-salad birthday-adult-hummus birthday-adult-cake birthday-adult-spritzer backyard-bbq-burgers backyard-bbq-chicken backyard-bbq-veggie-skewers backyard-bbq-big-salad backyard-bbq-watermelon backyard-bbq-agua-fresca backyard-bbq-peaches valentines-v-spritzer valentines-v-salmon valentines-v-potatoes valentines-v-salad valentines-v-berries brunch-b-eggbake brunch-b-oatmeal brunch-b-potatoes brunch-b-parfait brunch-b-sparkler graduation-g-chicken graduation-g-beans graduation-g-rice graduation-g-toppings graduation-g-bars graduation-g-fruit graduation-g-water potluck-p-quinoa potluck-p-chili potluck-p-crisp bringing-a-meal-m-lasagna bringing-a-meal-m-salad bringing-a-meal-m-rolls bringing-a-meal-m-muffins bringing-a-meal-m-soup after-service-a-chicken after-service-a-soup after-service-a-pasta after-service-a-fruit after-service-a-bars after-service-a-drinks winter-gathering-w-soup winter-gathering-w-roots winter-gathering-w-salad winter-gathering-w-cornbread winter-gathering-w-pears winter-gathering-w-cider spring-feast-s-salmon spring-feast-s-asparagus spring-feast-s-farro spring-feast-s-potatoes spring-feast-s-crisp spring-feast-s-sparkler'.split(' ').forEach(function (k) { OWN['hol-' + k] = 1; });
+  function ownArt(id) { return id && OWN[id] ? RP + 'rec-' + id : ''; }
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function n1(v) { var x = Math.round(Number(v) * 10) / 10; return String(x); }
   function n0(v) { return String(Math.round(Number(v))); }
@@ -107,10 +114,11 @@
     return new Date(ymd + 'T12:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
   }
   function cardArt(r, i, prev) {
+    var own = ownArt(r.id); if (own) return own + '-sq';
     var t = String(r.name || ''), L = CARD_ART[r.meal] || CARD_ART.dinner, k = '';
     if (r.meal === 'dinner' || r.meal === 'lunch') k = /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t) ? 'dinner-fish-sq' : /chili|soup|stew/i.test(t) ? 'dinner-chili-sq' : /lentil|bean|chickpea|curry|dal\b/i.test(t) ? 'dinner-curry-sq' : /stir fry|noodle/i.test(t) ? 'dinner-stirfry-sq' : '';
-    if (!k || k === prev) { k = L[(i || 0) % L.length]; if (k === prev) k = L[((i || 0) + 1) % L.length]; }
-    return k;
+    if (!k || W + k === prev) { k = L[(i || 0) % L.length]; if (W + k === prev) k = L[((i || 0) + 1) % L.length]; }
+    return W + k;
   }
   // BLD 916, Living Sober Path: every drink is a Sober Drink (Grounded's word for alcohol-free), so a search for sober finds them all.
   /* BLD 917 (Chris: "tried to search pizza and I get nothing but I know we have a pizza recipe"): a wider search. Each recipe's
@@ -291,10 +299,10 @@
       return HD.filter(function (d) { return words.every(function (w) { return hit(d._h, w); }); });
     }
     function hdCard(d, i) {
-      var art = cardArt({ name: d.name, meal: COURSE_MEAL[d.m.course] || 'dinner' }, i, i > 0 ? lastArt : ''); lastArt = art;
+      var art = cardArt({ id: 'hol-' + d.set.id + '-' + d.m.id, name: d.name, meal: COURSE_MEAL[d.m.course] || 'dinner' }, i, i > 0 ? lastArt : ''); lastArt = art;
       var sv0 = HOL.recipe ? (HOL.recipe(d.set.id, d.m.id, serves) || {}).serves : d.m.serves;
       return '<button type="button" class="rc-card rc-k-holidays rc-hdc" data-hd="' + esc(d.id) + '">' +
-        '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + W + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">Holidays and Gatherings</span></span>' +
+        '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">Holidays and Gatherings</span></span>' +
         '<span class="rc-cb"><b>' + esc(d.name) + '</b>' +
         '<span class="rc-pills">' + (d.m.mins ? '<span class="rc-pill">' + CLOCK + esc(d.m.mins + ' min') + '</span>' : '') + (sv0 ? '<span class="rc-pill">' + PEOPLE + esc('Serves ' + sv0) + '</span>' : '') + '</span>' +
         '<span class="rc-n">' + esc('On the ' + d.set.name + ' menu') + '</span></span></button>';
@@ -348,7 +356,7 @@
     function card(r, i) {
       var art = cardArt(r, typeof i === 'number' ? i : 0, typeof i === 'number' && i > 0 ? lastArt : ''); lastArt = art;
       return '<button type="button" class="rc-card rc-k-' + esc(r.meal) + '" data-id="' + esc(r.id) + '">' +
-        '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + W + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
+        '<span class="rc-band"><span class="rc-ic rc-pic" aria-hidden="true"><img src="' + art + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
         '<span class="rc-cb"><b>' + esc(r.name) + '</b>' +
         '<span class="rc-pills">' + (onWk(r) ? '<span class="rc-pill rc-onwk" data-rc-onwk>On Your Week</span>' : '') + '<span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? sv(r) : r.serves)) + '</span></span>' +
         '<span class="rc-n" title="' + esc(nutLine(r)) + '">' + esc(shortNut(r)) + '</span></span></button>';
@@ -393,6 +401,8 @@
 
     // BLD 899: the recipe opens on its meal's painting (a dinner by its main: fish, chili and stews, or Today's Plate).
     function bandHTML(r) {
+      var own = ownArt(r.id);   // BLD 970: the recipe's own painting, wide on desktop and square on phones
+      if (own) return '<div class="rc-dhero" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + own + '-sq.webp"><img src="' + own + '.webp" alt="" decoding="async" width="1280" height="720"></picture></div>';
       var b = BAND[r.meal] || BAND.dinner, wide = b[0], sq = b[1];
       if (r.meal === 'dinner') { var t = String(r.name || ''); if (/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t)) { wide = 'dinner-fish'; sq = 'dinner-fish-sq'; } else if (/chili|soup|stew/i.test(t)) { wide = 'dinner-chili'; sq = 'dinner-chili-sq'; } else if (/lentil|bean|chickpea|curry|dal\b/i.test(t)) { wide = 'dinner-curry'; sq = 'dinner-curry-sq'; } else if (/stir fry|bowl|noodle/i.test(t)) { wide = 'dinner-stirfry'; sq = 'dinner-stirfry-sq'; } }
       return '<div class="rc-dhero" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + sq + '.webp"><img src="' + W + wide + '.webp" alt="" decoding="async"></picture></div>';
