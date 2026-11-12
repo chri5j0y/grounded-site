@@ -62,6 +62,11 @@
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
   var PIMG = '/shared/heroes/p/';   // BLD 970: the new app paintings, each card its own
+  // BLD 978: the painted set cards for Grounded Spirit, Relationships, and Seasons (home.js paintSets)
+  var SET_SECS = { spirit: 'Grounded Spirit', relationships: 'Grounded Relationships', seasons: 'Grounded Seasons' };
+  var SETS_ART = '/shared/heroes/p/sets/';
+  var SET_HAS = { 'sp-grace': 1, 'sp-still': 1, 'sp-hope': 1, 'sp-rest': 1, 'sp-christian': 1, 'sp-jewish': 1, 'sp-muslim': 1, 'sp-buddhist': 1, 'sp-hindu': 1, 'sp-spiritual': 1, 'rel-listen': 1, 'rel-repair': 1, 'rel-unplug': 1, 'rel-dinner': 1, 'rel-weekly': 1, 'season-grief': 1, 'season-newparent': 1, 'season-moving': 1, 'season-retirement': 1, 'season-parentcare': 1, 'season-diagnosis': 1 };
+  var SET_SAY = 'Take all the time you need. This is here whenever you need it.';   // the closing line these sessions already speak (recorded)
   var REP = '/shared/heroes/p/rep/';   // BLD 976: a painting for each place that showed one twice on a screen (grounded-workshop patches/bld976/place)
 
   /* ---------- BLD 921d: See It as a New Person (Chris said yes, November 5, 2026) ----------
@@ -1262,6 +1267,8 @@
     var mm = /^library=money(?:-([a-z]+(?::[a-z]+)?))?$/.exec(h); if (mm) return { tab: 'library', sub: 'money', money: mm[1] || '' };
     // BLD 950: the Family Planner and its places (#library=planner, #library=planner-wall, #library=planner-week)
     var pm = /^library=planner(?:-(wall|week))?$/.exec(h); if (pm) return { tab: 'library', sub: 'planner', planner: pm[1] || '' };
+    // BLD 978: Grounded Spirit, Relationships, and Seasons open on their painted set cards (#library=spirit), a set on its own page (#library=spirit:sp-grace).
+    var sm = /^library=(spirit|relationships|seasons)(?::([a-z0-9-]+))?$/.exec(h); if (sm) return { tab: 'library', sub: sm[1], set: sm[2] || '' };
     var m = /^([a-z]+)(?:=([a-z0-9-]+))?$/.exec(h) || [], k = m[1] || '', sub = m[2] || '';
     if (k === 'week') return { tab: 'week', sub: SUBS.week[sub] ? sub : '' };
     if (k === 'grow' || k === 'tree') return { tab: 'grow', sub: '' };
@@ -1277,7 +1284,7 @@
     if (k === 'tending') return { tab: 'today', sub: '' };
     return { tab: 'today', sub: '' };
   }
-  function viewOf() { var r = route(); return r.recipe ? 'recipe-' + r.recipe : r.tab + (r.sub ? '=' + r.sub : '') + (r.money ? '-' + r.money : '') + (r.planner ? '-' + r.planner : ''); }
+  function viewOf() { var r = route(); return r.recipe ? 'recipe-' + r.recipe : r.tab + (r.sub ? '=' + r.sub : '') + (r.money ? '-' + r.money : '') + (r.planner ? '-' + r.planner : '') + (r.set ? ':' + r.set : ''); }
   function goTo(v) {
     var hash = '#' + (v === 'home' ? 'today' : v);
     if (location.hash !== hash) location.hash = hash; else render();
@@ -1364,12 +1371,14 @@
     if (sub === 'planner' && tab === 'library' && !plannerFor()) { try { history.replaceState(null, '', location.pathname + location.search + '#library'); } catch (e) {} S.view = 'library'; sub = ''; r = { tab: 'library', sub: '' }; }
     if (sub === 'money' && tab === 'library') body = subbarHtml(tab, sub) + '<div id="hm-money" class="hm-money"><p class="hm-loading">Opening Grounded Money…</p></div>';
     else if (sub === 'planner' && tab === 'library') body = subbarHtml(tab, sub) + '<div id="hm-planner" class="hm-planner"><p class="hm-loading">Opening the Family Planner…</p></div>';
+    else if (tab === 'library' && SET_SECS[sub]) body = '<div id="hm-sets" class="hm-sets"><p class="hm-loading">Opening ' + esc(SET_SECS[sub]) + '…</p></div>';
     else if (sub) body = subbarHtml(tab, sub) + (sub === 'quiet' ? medTopHtml() : '') + '<div id="hm-tend" class="hm-sec" data-sec="' + sub + '"><div class="hm-loading">Opening ' + esc(SUBS[tab][sub]) + '…</div></div>';
     else body = tabHtml(tab);
     root.innerHTML = shellHtml(tab, body);
     paintTabbar(tab);
     if (sub === 'money' && tab === 'library') paintMoney(document.getElementById('hm-money'), r.money);
     else if (sub === 'planner' && tab === 'library') paintPlanner(document.getElementById('hm-planner'), r.planner);
+    else if (tab === 'library' && SET_SECS[sub]) paintSets(r);
     else if (sub) paintSection(document.getElementById('hm-tend'), sub);
     else afterTab(tab);
     if (r.tab === 'me') openSheet(r.sub); else closeSheet(true);
@@ -1390,7 +1399,8 @@
     var r = route(), tab = r.tab === 'me' ? (S.under || 'today') : r.tab, pane = document.getElementById('hm-pane'); if (!pane) return;
     var sub = r.tab === 'me' ? '' : r.sub;
     var at = document.querySelector('.hm-at'); if (at) at.textContent = headingOf(tab);
-    if (sub) { var box = document.getElementById('hm-tend'); if (box && !box.querySelector('#hj-root,#hj-bare')) paintSection(box, sub); }
+    if (sub && SET_SECS[sub] && tab === 'library') { /* BLD 978: a set view paints itself */ }
+    else if (sub) { var box = document.getElementById('hm-tend'); if (box && !box.querySelector('#hj-root,#hj-bare')) paintSection(box, sub); }
     else { var fk = focusKey(); pane.innerHTML = tabHtml(tab); afterTab(tab); focusBack(fk); }
     var mb = document.getElementById('hm-sheet-body'); if (mb && S.sheet && !mb.querySelector('#hj-root,#hj-bare') && (S.sheet === 'numbers' || S.sheet === 'settings')) fillSheet(S.sheet);
   }
@@ -2630,7 +2640,7 @@
   // BLD 935 (audit L1): Escape closes a Home window (#hm-mdlg) first, then the sheet; a player or frame on top keeps it.
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' || document.querySelector('.hm-frame') || document.getElementById('hj-ov0') || document.querySelector('.ggp-dlg') || document.querySelector('.ga-wrap')) return;
-    if (document.getElementById('hm-mdlg')) { if (document.fullscreenElement) return; mClose(); return; }
+    if (document.getElementById('hm-mdlg')) { if (document.fullscreenElement) return; vBack(); return; }
     if (document.getElementById('hm-sheet')) leaveSheet();
   });
   document.addEventListener('input', function (e) { if (e.target && e.target.id === 'hm-q') { loadLib().then(function () { search(e.target.value); }); } });
@@ -4469,7 +4479,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b982', next: '/shared/home/nextsteps.js?v=b982', legacy: '/shared/home/legacy.js?v=b982', guide: '/shared/home/grownup.js?v=b982', talk: '/shared/home/talk.js?v=c010', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b982', next: '/shared/home/nextsteps.js?v=b982', legacy: '/shared/home/legacy.js?v=b982', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c010', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4726,11 +4736,10 @@
     if (route().sub === 'money') return;   // Grounded Money is drawing, and brings the link in
     MIN_GO = true; goTo('library=money');
   }
-  /* The Library: Grounded Money beside Grounded Relationships (Branches), and for a Member, the Money Date for couples. */
+  /* The Library: Grounded Money beside Grounded Relationships (Branches). BLD 978 (Chris): the Money Date lives inside Grounded Money only. */
   function moneyShelves() {
     if (!moneyFor()) return '';
-    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your whole money plan on one page: money in, money out, and every line at a glance.', cls: 'hm-sh-life hm-sh-money', art: PEOPLE + 'money-sq.webp' }) +
-      (member() ? shelfHtml({ id: 'money-date', name: 'Money Date', count: 'Branches', line: 'Fifteen calm minutes a week, together, for your money plan.', cls: 'hm-sh-life hm-sh-money', art: PIMG + 'shelf-money-date.webp' }) : '');
+    return shelfHtml({ id: 'money', name: 'Grounded Money', count: 'Branches', line: 'Your whole money plan on one page: money in, money out, and every line at a glance.', cls: 'hm-sh-life hm-sh-money', art: PEOPLE + 'money-sq.webp' });
   }
   function moneySearch(has, out) {
     if (!moneyFor()) return;
@@ -4859,6 +4868,8 @@
   function openMShelf(id) {
     var s = MSHELVES.filter(function (x) { return x.id === id; })[0]; if (!s) return;
     if (isYoung(S.p) || (!member() && !seedsOn())) return;
+    if (SET_SECS[id] && setsOf(id).length) { mClose(); goTo('library=' + id); return; }   // BLD 978
+    if (SET_SECS[id]) { mClose(); goTo('library=' + id); return; }
     if (!member() && !seedsData()) { mDialog(s.name, '<p class="hm-loading">Opening ' + esc(s.name) + '…</p>'); loadSeeds().then(function () { if (document.getElementById('hm-mdlg')) openMShelf(id); }); return; }
     var L = mItems(id), groups = {}, trad = {}, md = obj(homeRec().mdone);
     // Programs by tradition wait in their own list, opened and chosen by the person; never suggested or preselected.
@@ -4898,29 +4909,126 @@
     if (t.hasAttribute('data-hm-psts')) {
       var v = (document.getElementById('hm-pst-in') || {}).value || '', pr = progOfTitle(sec, key.slice(sec.length + 1)); if (!parse(v)) { toast('Choose a date.'); return; }
       var h = homeRec(); h.pstart = obj(h.pstart); h.pstart[key] = pr && pr.monthly ? v.slice(0, 10) : monOfStr(v);
-      saveHome().then(function () { toast('Saved. The weeks ahead follow your new start date.'); openMShelf(sec); }); return;
+      saveHome().then(function () { toast('Saved. The weeks ahead follow your new start date.'); setRefresh(sec); }); return;
     }
-    openMShelf(sec);
+    setRefresh(sec);
   });
-  function mDialog(title, body) {
+  /* BLD 978 (Chris: "in willow.. when you choose a learn video, you go to a new screen.. i think this way is better", then "1"):
+     mDialog(title, body, {screen: 'Back to ...', kick}) opens a video on its own full screen view, with the back button on top.
+     A window it opens over (Seeds, the meditation library) waits under it and comes back when the screen closes. The screen
+     takes one step in the browser history, so the phone's Back closes it too. */
+  function mDialog(title, body, o) {
     if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null;
-    var old = document.getElementById('hm-mdlg'); if (old) old.remove();
-    var w = document.createElement('div'); w.id = 'hm-mdlg'; w.className = 'hm-sheetwrap';
-    w.innerHTML = '<div class="hm-sheet-bg" data-hm-mclose="1"></div><section class="hm-sheet tall" role="dialog" aria-modal="true" aria-labelledby="hm-mdlg-t" tabindex="-1"><div class="hm-sh-hd"><span></span><h2 class="hm-h2" id="hm-mdlg-t">' + esc(title) + '</h2><button type="button" class="hm-x" data-hm-mclose="1" aria-label="Close">' + I('plus') + '</button></div><div class="hm-sheet-body" id="hm-mdlg-b">' + body + '</div></section>';
+    var old = document.getElementById('hm-mdlg'), scr = !!(o && o.screen);
+    if (old && scr && !old.classList.contains('hm-vscr') && !document.getElementById('hm-mdlg-under')) { old.id = 'hm-mdlg-under'; old.hidden = true; ['hm-mdlg-b', 'hm-mdlg-t'].forEach(function (k) { var el = old.querySelector('#' + k); if (el) el.id = k + '-under'; }); }
+    else if (old) old.remove();
+    if (!scr) { var und = document.getElementById('hm-mdlg-under'); if (und) und.remove(); }
+    var w = document.createElement('div'); w.id = 'hm-mdlg';
+    if (scr) {
+      w.className = 'hm-vscr';
+      w.innerHTML = '<section class="hm-vin" role="dialog" aria-modal="true" aria-labelledby="hm-mdlg-t" tabindex="-1"><div class="hm-vbar"><button type="button" class="hm-backbtn" data-hm-vback="1">' + I('back') + '<span>' + esc(o.screen) + '</span></button></div>' +
+        (o.kick ? '<div class="hm-vk">' + esc(o.kick) + '</div>' : '') + '<h1 class="hm-vt" id="hm-mdlg-t">' + esc(title) + '</h1><div class="hm-vbody" id="hm-mdlg-b">' + body + '</div></section>';
+      try { if (history.state && history.state.hmVid) history.replaceState({ hmVid: 1 }, '', location.href); else history.pushState({ hmVid: 1 }, '', location.href); } catch (e) {}
+    } else {
+      w.className = 'hm-sheetwrap';
+      w.innerHTML = '<div class="hm-sheet-bg" data-hm-mclose="1"></div><section class="hm-sheet tall" role="dialog" aria-modal="true" aria-labelledby="hm-mdlg-t" tabindex="-1"><div class="hm-sh-hd"><span></span><h2 class="hm-h2" id="hm-mdlg-t">' + esc(title) + '</h2><button type="button" class="hm-x" data-hm-mclose="1" aria-label="Close">' + I('plus') + '</button></div><div class="hm-sheet-body" id="hm-mdlg-b">' + body + '</div></section>';
+    }
     (document.querySelector('main.hm') || document.body).appendChild(w);
     document.documentElement.classList.add('hm-sheeted');
-    setTimeout(function () { try { w.querySelector('.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
+    if (scr) w.scrollTop = 0;
+    setTimeout(function () { try { w.querySelector(scr ? '.hm-vin' : '.hm-sheet').focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
-  function mClose() { if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null; if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null; var w = document.getElementById('hm-mdlg'); if (w) { w.remove(); if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted'); if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} } } }
+  function mClose() {
+    if (SCR_CTL && typeof SCR_CTL.close === 'function') { try { SCR_CTL.close(); } catch (e) {} } SCR_CTL = null;
+    if (M_CTL && typeof M_CTL.stop === 'function') { try { M_CTL.stop(); } catch (e) {} } M_CTL = null;
+    var w = document.getElementById('hm-mdlg'); if (!w) return;
+    var wasScr = w.classList.contains('hm-vscr'); w.remove();
+    if (window.GGLearn && GGLearn.close) { try { GGLearn.close(true); } catch (e) {} }
+    var und = wasScr ? document.getElementById('hm-mdlg-under') : null;
+    if (und) { und.id = 'hm-mdlg'; und.hidden = false; ['hm-mdlg-b', 'hm-mdlg-t'].forEach(function (k) { var el = und.querySelector('#' + k + '-under'); if (el) el.id = k; }); return; }
+    if (!document.getElementById('hm-sheet')) document.documentElement.classList.remove('hm-sheeted');
+    if (wasScr) { var r = route(); if (r.tab === 'library' && SET_SECS[r.sub] && document.getElementById('hm-sets')) paintSets(r); }
+  }
+  // Back on the screen: one step back in the history (the popstate below closes it), or simply close.
+  function vBack() { var w = document.getElementById('hm-mdlg'); if (!w || !w.classList.contains('hm-vscr')) { mClose(); return; } if (history.state && history.state.hmVid) { try { history.back(); return; } catch (e) {} } mClose(); }
+  window.addEventListener('popstate', function () { var w = document.getElementById('hm-mdlg'); if (w && w.classList.contains('hm-vscr') && !(history.state && history.state.hmVid)) mClose(); });
+  function backLabel() { var r = route(), u = document.getElementById('hm-mdlg-t'), w = document.getElementById('hm-mdlg'); if (w && !w.classList.contains('hm-vscr') && u) return 'Back to ' + u.textContent; if (r.tab === 'library') return r.sub === 'quiet' ? 'Back to Grounded Meditation' : 'Back to Library'; return 'Back to ' + ({ today: 'Today', week: 'Week', grow: 'Grow', learn: 'Learn', checkin: 'Check-in' }[r.tab] || 'Today'); }
+
+  /* BLD 978 (Chris: "Grounded Spirit and Grounded Relationships.. should open up w nice bright custom cards for each set.. more
+     like the Fitness tab", "same idea for Grounded Seasons"): each shelf opens on a grid of painted set cards; a card opens
+     the set's own page with its sessions; a session plays on its own screen. Membership and Seeds decide what shows, as before:
+     a Member sees every session, Seeds the first session of each set. Sets by tradition wait in their own fold, chosen by the person. */
+  function setsOf(sec) {
+    var x = member() ? mSection(sec) : seedsOn() ? seedSection(sec) : null; if (!x || Array.isArray(x)) return [];
+    var by = {}; mItems(sec).forEach(function (i) { by[i.id] = i; });
+    return arr(x.programs).filter(function (p) { return p && p.id; }).map(function (p) { return { p: p, items: arr(p.items || p.sessions).map(function (i) { return i && by[i.id]; }).filter(Boolean) }; }).filter(function (g) { return g.items.length; });
+  }
+  function setArt(sec, id) { return SET_HAS[id] ? SETS_ART + id + '.webp' : (MSHELVES.filter(function (m) { return m.id === sec; })[0] || {}).art; }
+  function setLine(p) { var t = String(p.tagline || p.blurb || ''); return t; }
+  function setCard(sec, g, md) {
+    var p = g.p, n = g.items.length, dn = g.items.filter(function (x) { return md[sec + '|' + x.id]; }).length, total = arr(p.items || p.sessions).length || n;
+    var k = member() ? total + (total === 1 ? ' session' : ' sessions') + (dn ? ' · ' + dn + ' finished' : '') : 'Seed: the first session';
+    return '<button type="button" class="hm-setc hm-setc-' + sec + '" data-hm-set="' + esc(sec + ':' + p.id) + '"><span class="art"><img src="' + esc(setArt(sec, p.id)) + '" alt="" loading="lazy" decoding="async"></span>' +
+      '<span class="tx"><span class="k">' + esc(k) + '</span><b>' + esc(p.title || p.id) + '</b>' + (setLine(p) ? '<small>' + esc(setLine(p)) + '</small>' : '') + '</span></button>';
+  }
+  function paintSets(r) {
+    var box = document.getElementById('hm-sets'); if (!box) return;
+    var sec = r.sub, s = MSHELVES.filter(function (m) { return m.id === sec; })[0];
+    var leave = function () { try { history.replaceState(null, '', location.pathname + location.search + '#library'); } catch (e) {} S.view = 'library'; render(); };
+    var rdy = window.GGMember && GGMember.ready && typeof GGMember.ready.then === 'function' ? GGMember.ready : Promise.resolve();
+    rdy.then(function () { return !member() && seedsOn() && !seedsData() ? loadSeeds() : null; }).then(function () {
+      if (!box.isConnected) return;
+      if (isYoung(S.p) || (!member() && !seedsOn())) { leave(); return; }
+      var G = setsOf(sec), md = obj(homeRec().mdone), hh = sec === 'relationships' ? hhPickHtml() : '', seed = member() ? '' : '<p class="hm-sub">The first session of each set, a seed for you to keep.</p>';
+      var g = r.set ? G.filter(function (x) { return x.p.id === r.set; })[0] : null;
+      if (r.set && !g) { try { history.replaceState(null, '', location.pathname + location.search + '#library=' + sec); } catch (e) {} r = { tab: 'library', sub: sec, set: '' }; }
+      if (!g) {
+        var gen = G.filter(function (x) { return !x.p.tradition; }), trad = G.filter(function (x) { return x.p.tradition; });
+        box.innerHTML = '<div class="hm-subbar"><button type="button" class="hm-backbtn" data-hm-tab="library">' + I('back') + '<span>Back to Library</span></button><h2 class="hm-h2">' + esc(SET_SECS[sec]) + '</h2></div>' +
+          '<p class="hm-sub hm-setlead">' + esc(s ? s.line : '') + '</p>' + seed + hh +
+          (G.length ? '<div class="hm-setgrid">' + gen.map(function (x) { return setCard(sec, x, md); }).join('') + '</div>' +
+            (trad.length ? '<details class="hm-trad hm-settrad"><summary>By Tradition</summary><p class="hm-sub">Sets from one tradition, labeled. Open the one you choose.</p><div class="hm-setgrid">' + trad.map(function (x) { return setCard(sec, x, md); }).join('') + '</div></details>' : '')
+            : '<p class="hm-sub">' + esc(SET_SECS[sec]) + ' fills in here as soon as the Member library opens on this device.</p>') + (member() ? '' : seedLine());
+        return;
+      }
+      var p = g.p, title = p.title || p.id;
+      box.innerHTML = '<div class="hm-subbar"><button type="button" class="hm-backbtn" data-hm-tab="library=' + esc(sec) + '">' + I('back') + '<span>Back to ' + esc(SET_SECS[sec]) + '</span></button></div>' +
+        '<figure class="hm-setband"><img src="' + esc(setArt(sec, p.id)) + '" alt="" decoding="async"></figure>' +
+        '<div class="hm-setk">' + esc(SET_SECS[sec]) + (p.label ? ' · ' + esc(p.label) : '') + '</div><h2 class="hm-h2 hm-sett">' + esc(title) + '</h2>' +
+        (p.blurb ? '<p class="hm-sub">' + esc(p.blurb) + '</p>' : p.tagline ? '<p class="hm-sub">' + esc(p.tagline) + '</p>' : '') + seed + hh + pstartRow(sec, title, md) +
+        '<ul class="hm-mlist hm-setlist">' + g.items.map(function (x, i) { return setRow(sec, x, i, md); }).join('') + '</ul>' + (member() ? '' : seedLine());
+    });
+  }
+  function setRow(sec, x, i, md, cur) {
+    var dn = !!md[sec + '|' + x.id];
+    return '<li><button type="button" data-hm-mplay="' + esc(sec + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + (cur ? ' aria-current="true"' : '') + '><span class="n">' + (dn ? I('check') : i + 1) + '</span><span><b>' + esc(x.title) + '</b><small>' + (member() ? '' : seedChip()) + (x.mins ? 'About ' + esc(x.mins) + (+x.mins === 1 ? ' minute' : ' minutes') : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + (cur ? ' · Playing now' : '') + '</small></span>' + I('play') + '</button></li>';
+  }
+  function setRefresh(sec) { var r = route(); if (r.tab === 'library' && r.sub === sec && document.getElementById('hm-sets')) paintSets(r); else openMShelf(sec); }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-set],[data-hm-vback]'); if (!t) return;
+    if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
+    goTo('library=' + t.getAttribute('data-hm-set'));
+  });
   var LEARN_JS = '/shared/gg-learn.js?v=c010';
   function mPlay(key) {
-    var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), x = mItems(sec).filter(function (i) { return i.id === id; })[0]; if (!x) return;
+    var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
-    var b = document.getElementById('hm-mdlg-b'); if (!b) return;
-    b.innerHTML = '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div>' + (member() ? '' : seedLine());
+    // The set this session belongs to (a program, or a meditation need), in order; Next is the one after it, else the first unfinished.
+    var G = all.filter(function (i) { return i.need === x.need; }), at = 0; G.forEach(function (i, j) { if (i.id === x.id) at = j; });
+    var md0 = obj(homeRec().mdone), nx = G[at + 1] || G.filter(function (i, j) { return j !== at && !md0[sec + '|' + i.id]; })[0] || null;
+    var setName = x.need ? x.need.charAt(0).toUpperCase() + x.need.slice(1) : (SET_SECS[sec] || 'This Set');
+    var back = document.getElementById('hm-mdlg') && !document.getElementById('hm-mdlg').classList.contains('hm-vscr') ? backLabel() : 'Back to ' + setName;
+    var moreHtml = function () { var md = obj(homeRec().mdone); return '<h2 class="hm-label">More in This Set</h2><ul class="hm-mlist hm-setlist">' + G.map(function (i, j) { return setRow(sec, i, j, md, j === at); }).join('') + '</ul>'; };
+    mDialog(x.title, '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div>' + (member() ? '' : seedLine()) + '<section class="hm-vmore" id="hm-vmore" hidden></section>',
+      { screen: back, kick: setName + (G.length > 1 ? ' · ' + (at + 1) + ' of ' + G.length : '') });
     load(LEARN_JS).then(function () {
       var host = document.getElementById('hm-mplayer'); if (!host || !window.GGLearn || !GGLearn.player) return;
-      playLesson(host, Object.assign({ id: x.id, title: x.title, scenes: arr(x.scenes) }, x.item), function () { var h = homeRec(); if (!h.mdone || typeof h.mdone !== 'object') h.mdone = {}; h.mdone[key] = today(); saveHome(); });
+      var ending = { eyebrow: 'Session Complete', h: 'Take all the time you need.', sub: nx ? 'Next in this set: ' + nx.title : 'That is every session in ' + setName + '. Well done.', say: SET_SAY,
+        buttons: (nx ? [['next', 'Next in This Set', 'pri']] : []).concat([['back', back, nx ? '' : 'pri'], ['again', 'Watch Again', 'quiet']]) };
+      playLesson(host, Object.assign({ id: x.id, title: x.title, scenes: arr(x.scenes) }, x.item), function () {
+        var h = homeRec(); if (!h.mdone || typeof h.mdone !== 'object') h.mdone = {}; h.mdone[key] = today(); saveHome();
+        var mo = document.getElementById('hm-vmore'); if (mo && G.length > 1) { mo.innerHTML = moreHtml(); mo.hidden = false; }
+      }, null, { ending: ending, onEnd: function (b, ctl) { try { ctl.stop(); } catch (e) {} if (b === 'next' && nx) mPlay(sec + '|' + nx.id); else if (b === 'back') vBack(); } });
     });
   }
   /* Relationships: scenes carry alt wording per household kind ({group: {beats, say, h, sub, items}}, sometimes couple);
@@ -4937,7 +5045,7 @@
   /* One lesson in the shared player (STD's call: a one-lesson support track). */
   // BLD 911 (Chris: "close the box with the x it no longer stops playing"): the dialog's player stops when the dialog closes.
   var M_CTL = null;
-  function playLesson(host, lesson, onDone, track) {
+  function playLesson(host, lesson, onDone, track, extra) {
     var tr = track || { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] }, app = ROOM_TREES.test(S.tree) ? S.tree : 'site';
     // BLD 911: the voice the tree recorded this lesson in (Jenny or Brian), so every line plays its recording.
     var vo = lesson.voice || (track && app !== 'site' && GGLearn.recVoice ? GGLearn.recVoice({ app: app, lesson: lesson, track: tr }, true) : '') || 'brian';
@@ -4947,11 +5055,12 @@
     if (hl && (!hl.ldone || typeof hl.ldone !== 'object')) hl.ldone = {};
     var cfg = { app: app, lesson: lesson, track: tr, tracks: [tr], voice: vo, clip: !track && window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: hl ? hl.ldone : {}, onDone: onDone || null };
     // Back to Learn (a guide or a lesson) returns to Learn; a single session's closing button simply closes its window.
-    cfg.home = function () { mClose(); if (track) goTo(isKid(S.p) ? 'watch' : 'learn'); };
+    cfg.home = function () { var w = document.getElementById('hm-mdlg'); if (w && w.classList.contains('hm-vscr') && !track) { vBack(); return; } mClose(); if (track) goTo(isKid(S.p) ? 'watch' : 'learn'); };
     if (series) {
       cfg.onDone = function (lid) { if (!hl.ldone[lid]) { hl.ldone[lid] = today(); saveHome(); } if (onDone) onDone(lid); };
       cfg.open = function (lid) { mClose(); playTreeLesson(lid); };
     }
+    if (extra) Object.keys(extra).forEach(function (k) { cfg[k] = extra[k]; });
     try { M_CTL = GGLearn.player(host, cfg); }
     catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
   }
@@ -4997,7 +5106,7 @@
     if (tm) { mClose(); itemGo(tm.key); return; }
     load(START_JS).then(function () {
       var x = dailyMed(sec); if (!x) { openGGN(); return; }
-      mDialog(sec === 'spirit' ? 'Today\'s Spirit Practice' : 'Today\'s Meditation', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div><p class="hm-sub" style="margin-top:12px">Calm in a minute or two: <a class="hm-linkbtn" href="/get-grounded-now.html">Get Grounded Now</a></p>');
+      mDialog(x.title, '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div><p class="hm-sub" style="margin-top:12px">Calm in a minute or two: <a class="hm-linkbtn" href="/get-grounded-now.html">Get Grounded Now</a></p>', { screen: backLabel(), kick: sec === 'spirit' ? 'Today\'s Spirit Practice' : 'Today\'s Meditation' });
       load(LEARN_JS).then(function () { var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, x); });
     });
   }
@@ -5007,7 +5116,7 @@
     var t = e.target.closest && e.target.closest('[data-hm-hh],[data-hm-dmed],[data-hm-mcode],[data-hm-tool],[data-hm-look],[data-hm-remind],[data-hm-cdel],[data-hm-mclose],[data-hm-mplay],[data-hm-mshelf]');
     if (!t) return;
     if (t.hasAttribute('data-hm-dmed')) { openDailyMed(t.getAttribute('data-hm-dmed') === 'spirit' ? 'spirit' : ''); return; }
-    if (t.hasAttribute('data-hm-hh')) { homeRec().hhKind = t.getAttribute('data-hm-hh'); saveHome(); openMShelf('relationships'); return; }
+    if (t.hasAttribute('data-hm-hh')) { homeRec().hhKind = t.getAttribute('data-hm-hh'); saveHome(); setRefresh('relationships'); return; }
     if (t.hasAttribute('data-hm-mcode')) { e.preventDefault(); mCode(); return; }
     if (t.hasAttribute('data-hm-tool')) { openTool(t.getAttribute('data-hm-tool')); return; }
     if (t.hasAttribute('data-hm-remind')) { saveReminders(); return; }
@@ -5158,7 +5267,7 @@
     var f = findLesson(S.tree, id); if (!f) { openLearn(id); return; }
     var l = f.l;
     load(LEARN_JS).then(function () {
-      mDialog(l.title || 'Learn', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(l.title || '') + '…</p></div>');
+      mDialog(l.title || 'Learn', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(l.title || '') + '…</p></div>', { screen: backLabel(), kick: f.t && f.t.title ? f.t.title : 'Learn' });
       var host = document.getElementById('hm-mplayer'); if (host && window.GGLearn && GGLearn.player) playLesson(host, l, null, f.t); else { mClose(); openLearn(id); }
     });
   }
@@ -5168,7 +5277,7 @@
   function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
   function playGuide(id, side, tree0) {
     var tree = tree0 && GUIDE_JS[tree0] ? tree0 : S.tree, src = GUIDE_JS[tree]; if (!src) { toast('This guide waits in Learn.'); goTo('learn'); return; }
-    mDialog('When Life Changes', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening the guide…</p></div>');
+    mDialog('When Life Changes', '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening the guide…</p></div>', { screen: backLabel(), kick: 'When Life Changes' });
     Promise.all([load(LEARN_JS), load(src)]).then(function () {
       var g = guideVideos(tree, id), x = g && (g[side || 'you'] || g.you);
       var box = document.getElementById('hm-mdlg-b'); if (!box) return;
