@@ -144,7 +144,7 @@
      imgs[n] behind the scene (a title takes it as its own painting); pN that painting as a paint scene (big scenes);
      cN a candle scene on it (words, big, breathe, paint); fN or fN.move the figure leads on it (breathe, big, words).
      A scene's own img or look always wins. The plan loads with this file, so it is there by the time Play is tapped. */
-  var ARTP = { p: null }, ARTV = 'b997'; // BLD 970 Round 5: the plan has its own version (the Pine and Birch video openings)
+  var ARTP = { p: null }, ARTV = 'b998'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings)
   function artLoad() {
     if (window.GG_ART) return Promise.resolve(window.GG_ART);
     if (ARTP.p) return ARTP.p;
@@ -1607,7 +1607,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b997'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b998'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
