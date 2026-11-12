@@ -424,6 +424,8 @@
       '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app{background:#1B1714;--ggl-line:#3D352D;--ggl-card:#26211C;--ggl-ink:#F2EADC;--ggl-soft:#C4B8A6;--ggl-deep:#332B24;}}',
       '.ggl-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:var(--ggl-bar);color:#FFF8EC;}',
       '.ggl-top img{width:36px;height:36px;border-radius:9px;}.ggl-top b{font-family:\'Cormorant Garamond\',serif;font-size:24px;font-weight:600;flex:1;min-width:0;}',
+      // Chris, November 13, 2026 (a phone showed the Back button over the title): the title stays on one line and the button keeps its size; on a phone the button reads Back.
+      '.ggl-top b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.ggl-x{flex:none;white-space:nowrap;}.ggl-xs{display:none;}@media (max-width:560px){.ggl-xf{display:none;}.ggl-xs{display:inline;}}',
       '.ggl-x{min-height:44px;padding:8px 14px;border-radius:10px;border:1.5px solid rgba(255,248,236,.7);background:transparent;color:#FFF8EC;font:inherit;font-weight:600;cursor:pointer;}',
       '.ggl-in{max-width:880px;margin:0 auto;padding:22px 16px calc(60px + env(safe-area-inset-bottom,0px));}',
       '.ggl-in h1{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:36px;line-height:1.1;margin:6px 0 8px;}.ggl-in h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:26px;margin:0;}',
@@ -501,7 +503,9 @@
       '.ln-dm-mk.on{opacity:1;transform:none;animation:lnDmPulse 2.4s ease-in-out .6s infinite;}@keyframes lnDmPulse{50%{box-shadow:0 0 0 2.5px #E7A93B,0 0 0 13px rgba(231,169,59,.16),0 0 34px rgba(231,169,59,.4)}}',
       '.ggl-small .ln-dm-list{display:none;}.ggl-small .ln-dm-tx{top:80px;width:440px;}.ggl-small .ln-dm-tx h3{font-size:58px;}.ggl-small .ln-dm-tx .ln-eb{font-size:28px;}.ggl-small .ln-dm-ph2{display:none;}',
       '@media (prefers-reduced-motion:reduce){.go .ln-dm-bg,.ln-dm-mk.on{animation:none !important;}.ln-dm-cam,.ln-dm-cam img,.ln-dm-mk{transition:none !important;}}',
-      '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}.ln-brt i.ln-brr{display:none;}.ln-brt i:nth-child(3):nth-last-child(2){opacity:1;top:22px;}}',
+      // Reduce Motion (Chris, November 13, 2026, a phone with Reduce Motion on showed a frozen circle and both words): the breath
+      // circle keeps breathing, because following it is the exercise; its slow size change and the soft word fades stay on.
+      '',
       /* BLD 908, the content standard: paintings behind every scene, drifting slowly; paint, candle, and figure scenes */
       '.ln-bd{position:absolute;inset:0;overflow:hidden;z-index:-1;}.ln-bd-sh{z-index:-1;}.ln-bd img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;will-change:transform;}',
       '.ln-bd-soft img{left:-24px;top:-24px;width:calc(100% + 48px);height:calc(100% + 48px);filter:blur(4px) saturate(1.08);}',
@@ -1607,7 +1611,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b998'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c005'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

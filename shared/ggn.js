@@ -17,7 +17,7 @@
   'use strict';
   if (window.GGNow) return;
   var V = 'b913';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b998', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=c005', DATA = '/shared/ggn-videos.js?v=b916', LESSONS = '/shared/learn-lessons.js?v=' + V;
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
@@ -160,7 +160,7 @@
       var root = document.createElement('div');
       root.className = 'ggl ggl-app ggn-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
       root.style.setProperty('--ggl-acc', '#5F7D48'); root.style.setProperty('--ggl-bar', '#24301F'); root.style.setProperty('--ggl-lite', '#CFE0BF');
-      root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>' + esc(tName) + '</b><button type="button" class="ggl-x" data-ggn-x="1">' + esc(bName) + '</button></div>'
+      root.innerHTML = '<div class="ggl-top"><img src="/favicon.svg" alt=""><b>' + esc(tName) + '</b><button type="button" class="ggl-x" data-ggn-x="1" aria-label="' + esc(bName) + '"><span class="ggl-xf">' + esc(bName) + '</span><span class="ggl-xs">Back</span></button></div>'
         + '<div class="ggl-in"><div class="ggl-eb">' + esc(o.title ? o.title : l.door === 'prayer' ? 'Rest in Prayer' : l.door === 'mindful' ? 'Mindful Moments' : 'Get Grounded Now') + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || '') + ' About ' + mins(l) + ' minutes.</p><div class="ggn-host"></div></div>';
       document.body.appendChild(root);
       S.open = { root: root, from: keepFrom, overflow: S.open ? S.open.overflow : document.body.style.overflow, queue: queue || [id], id: id };
