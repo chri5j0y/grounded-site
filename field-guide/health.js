@@ -1503,8 +1503,9 @@ function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return p
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function estLeft(o){ let s = planSecs(o.steps, o.i, o.between ? 1 : o.set, o); const left = o.run && o.end ? Math.max(0, o.end - Date.now()) / 1000 : 0;
   if (o.between) s += left; else if (o.run) s -= Math.max(0, (o.tot || 0) / 1000 - left); return Math.max(0, s) * 1000; }
-async function speak(o, text, pre){ const V = VO(); if (!V || !text || o.dead) return; if (!pre && preBusy(o)) return; const nx = o.steps[o.i + 1]; o.spk = (o.spk || 0) + 1;
-  try { await V.say(o.voice || AVA, text); } finally { o.spk--; }
+// onstart (November 12, 2026): runs when the line's sound really starts, so a breath circle can begin with the voice.
+async function speak(o, text, pre, onstart){ const V = VO(); if (!V || !text || o.dead) return; if (!pre && preBusy(o)) return; const nx = o.steps[o.i + 1]; o.spk = (o.spk || 0) + 1;
+  try { await V.say(o.voice || AVA, text, onstart ? {onstart} : undefined); } finally { o.spk--; }
   if (nx && V.prefetch) V.prefetch(o.voice || AVA, nx.t === 'time' ? tLine(o, nx) : LN.ex(nx)); }
 // BLD 915 (Chris's workout notes: "less wordy instructions before all exercises"): a warm-up or cooldown item with a form
 // line is called by name, then its form line (and with the count, its breath line); its how stays on the screen.
@@ -1653,17 +1654,42 @@ function figRep(st, r){ const M = window.GGMoves, two = !!(st && (st.alt || st.w
 // (Chris, October 31, 2026: "the count, the breath and the movements were way out of sync".) o.clk.t0 is when the loop began
 // (Date.now() time). Every planned figure and breath ring on the stage (svg[data-dur]) is held to it: clkSync seeks any that
 // drift past 40 ms (after a redraw, a pause, a slow tab), holds them while paused, and slides t0 forward by the pause.
-const clkKey = o => [o.i, o.set, o.side || '', o.rest ? 1 : 0, o.between ? 1 : 0, o.sw ? 1 : 0, o.run ? 1 : 0, o.bk || 0].join('|');
+// A step whose breath circle shows while its line is spoken keeps one clock from the voice through its timer (run is left out).
+const clkKey = o => [o.i, o.set, o.side || '', o.rest ? 1 : 0, o.between ? 1 : 0, o.sw ? 1 : 0, o.run && !preRing(o, o.steps[o.i]) ? 1 : 0, o.bk || 0].join('|');
 function clkOn(o, t0){ o.clk = {key: clkKey(o), t0: t0 == null ? Date.now() : t0, p: null, beat: false}; return o.clk; }
 function clkSync(o){
-  if (!o || !o.clk) return; const c = o.clk, now = Date.now();
-  if (o.paused && c.p == null) c.p = now; else if (!o.paused && c.p != null){ c.t0 += now - c.p; c.p = null; }
-  const el = ((c.p != null ? c.p : now) - c.t0) / 1000, hold = c.p != null || el < 0; c.s = now; c.el = el; c.tl = document.timeline ? document.timeline.currentTime : null;
+  if (!o || !o.clk) return; const c = o.clk, now = Date.now(), wait = !!o.brH && !c.beat;
+  if (wait){ c.t0 = now; c.p = o.paused ? now : null; }   // the breath waits at its start for the voice (brHold)
+  else if (o.paused && c.p == null) c.p = now; else if (!o.paused && c.p != null){ c.t0 += now - c.p; c.p = null; }
+  const el = wait ? 0 : ((c.p != null ? c.p : now) - c.t0) / 1000, hold = wait || c.p != null || el < 0; c.s = now; c.el = el; c.tl = document.timeline ? document.timeline.currentTime : null;
   document.querySelectorAll('.hj-stagebox svg[data-dur]').forEach(s => { const d = +s.getAttribute('data-dur'); if (!(d > 0) || !s.setCurrentTime) return;
     try { const want = el <= 0 ? 0 : el % d, x = (((s.getCurrentTime() - want) % d) + d) % d; if (Math.min(x, d - x) > 0.04) s.setCurrentTime(want);
       if (hold && !s.animationsPaused()) s.pauseAnimations(); else if (!hold && s.animationsPaused()) s.unpauseAnimations(); } catch(e){} });
 }
 setInterval(() => { const o = S.ov; if (o && o.clk && o.mode === 'auto' && !o.fin) clkSync(o); }, 100);
+// Chris, November 12, 2026: "make sure all breathe work videos sync voice and breathe graphics": the voice leads the breath
+// circle. A step whose circle shows while its line is spoken (every Flow step, a breathing cooldown) holds the circle, the
+// figure, and the Breathe In word at the start of the breath until the line's recording or device voice really starts; then
+// the breath begins with the voice and runs on through the step's timer on the same clock. A timed warm-up item with a short
+// form line does the same as its timer starts. With Voice Off nothing waits (the timer path is as it was); a voice that has
+// not started in 4 seconds lets the circle go on by itself (or, while paused, on the next Resume).
+const preRing = (o, st) => !!(o && st && st.t === 'time' && !st.lines && !st.candle && (o.prac || (st.part === 'Cooldown' && /breath/i.test(st.name || ''))));
+function brHold(o, later){
+  const V = VO(); if (!V || !V.on() || o.dead) return false;
+  clearTimeout(o.brT); o.brH = {at: Date.now(), i: o.i}; if (!later) brArm(o); return true;
+}
+// The 4 seconds count from when the line is asked for (a step can hold through Cooldown's opening line first).
+function brArm(o){ if (!o.brH) return; clearTimeout(o.brT); o.brT = setTimeout(() => { if (o.paused) return brArm(o); brGo(o, 'wait'); }, 4000); }
+function brGo(o, why){
+  if (!o || !o.brH) return; clearTimeout(o.brT); o.brH = null; const now = Date.now();
+  if (o.clk && !o.clk.beat){ o.clk.t0 = now; o.clk.p = o.paused ? now : null; }
+  lg(o, {e: 'breath0', why, t0: now}); clkSync(o);
+}
+// The phone took the sound mid line (GGVoice.onlost): the whole player pauses on that line, and Resume picks up from it.
+function soundLost(){
+  const o = S.ov; if (!o || o.dead || o.fin || o.mode !== 'auto') return false; if (o.paused) return true;
+  o.paused = true; o.lost = true; const V = VO(); if (V) V.pause(); clkSync(o); lg(o, {e: 'lost'}); rerender(true); return true;
+}
 // Count n reps of t seconds on that clock. The first beat comes a moment after the call (BEAT_LEAD), so Ava's One can be
 // scheduled exactly. Before each beat the count is handed to the voice for that instant (GGVoice.at: a decoded clip starts
 // past its lead in silence; a clip still downloading is left out rather than said late); at the beat the number shows.
@@ -1723,24 +1749,25 @@ let MOVE_OK = null;
 async function moveMusic(){ if (MOVE_OK == null){ try { const c = new AbortController(), t = setTimeout(() => c.abort(), 2500); const r = await fetch('/audio/music/move-1.mp3', {method: 'HEAD', signal: c.signal}); clearTimeout(t); MOVE_OK = !!r.ok; } catch(e){ MOVE_OK = false; } } return MOVE_OK; }
 async function runSession(o){
   const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = []; o.tips = tipPlan(o);
-  if (V) V.unlock();
+  if (V){ V.unlock(); V.onlost = soundLost; }
   // BLD 898: Ava's counts download and decode now, so every count is ready for its beat.
   if (V && V.prime && !o.prac) V.prime(o.voice || AVA, Array.from({length: 20}, (x, k) => LN.count(k + 1)));
   if (!o.music && !o.prac) o.music = (await moveMusic()) ? '/audio/music/move-' + (1 + (new Date().getDay() + o.title.length) % 7) + '.mp3' : '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3';
   if (V) V.music(o.music);
   rerender(true);
+  if (preRing(o, o.steps[0])) brHold(o, true);   // the first step's breath waits through the opening lines for its own line
   if (!o.med && !o.prac){ await speak(o, LN.focus); await speak(o, LN.safe); }   // BLD 931: breathe and form first; BLD 965: the safety line
   await speak(o, o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
   if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
   while (!o.dead && o.i < o.steps.length){
-    const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; rerender(true);
+    const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; const bh = preRing(o, st) && brHold(o, true); rerender(true);
     if (st.t === 'time'){ o.preOn = false;
       if (!o.prac && st.part === 'Cooldown' && o.steps[o.i - 1] && o.steps[o.i - 1].part !== 'Cooldown') await speak(o, LN.cool);
       if (st.lines){ for (const ln of st.lines){ if (o.dead || o.skip) break; o.line = ln; rerender(true); await hold(o); await speak(o, ln); if (!(VO() && VO().on())) await snooze(o, Math.min(4000, lineSecs(ln) * 1000)); await snooze(o, 800); } o.line = ''; }
-      else await speak(o, tLine(o, st));
+      else { if (bh) brArm(o); await speak(o, tLine(o, st), false, bh ? () => brGo(o, 'voice') : null); if (bh) brGo(o, 'end'); }
       await hold(o); if (o.dead) break;
-      if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else { if (tShort(o, st)) speak(o, st.form); await runTimer(o, st.secs * 1000, '', st.half); } }
+      if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else { if (tShort(o, st)){ const fb = !preRing(o, st) && brHold(o); speak(o, st.form, false, fb ? () => brGo(o, 'voice') : null).then(() => { if (fb) brGo(o, 'end'); }); } await runTimer(o, st.secs * 1000, '', st.half); } }
       o.done.push(o.i); o.i++; o.set = 1; o.skip = false;
       const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, GET_READY);
       continue;
@@ -2145,7 +2172,9 @@ function vAuto(o, top){
   else if (ringNow && (st.t === 'ex' || (o.rep && +st.tempo > 0))){ const t = tempoOf(st); if (pl && t >= 2) phases = pl.phases; else if (pl) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = repBreath(st); }
   // BLD 928: a timed warm-up or cooldown item breathes too (its figure's own plan, or a slow breath on a hold).
   else if (!br && st.t === 'time' && o.run && !still && !o.sw && !o.prac && !st.candle && !st.lines){ const t = +st.tempo; if (pl && t >= 2) phases = pl.phases; else if (pl && t > 0) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = BREATH.slow; }
-  if (pl && (!o.clk || (o.clk.key !== clkKey(o) && !o.clk.beat))) clkOn(o);
+  // November 12, 2026: a plain breath (with or without a moving figure) rides the same clock too (data-dur), so it waits for the voice and holds on Pause.
+  if (!phases && br && !st.candle) phases = [{k: 'in', d: br[0]}, {k: 'out', d: br[1]}];
+  if ((pl || phases) && (!o.clk || (o.clk.key !== clkKey(o) && !o.clk.beat))) clkOn(o);
   // BLD 928 (note 3): a timed rest between sets or moves shows the Break banner, with what comes next under its ring.
   const brkOn = !!(o.run && (o.rest || o.between) && !o.sw), nextSub = st.t === 'ex' ? (o.between ? 'Next Up: ' + (o.swap && st.swap ? st.swap : st.name) : o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : '';
   const flip = o.side === 'L', pill = brkOn ? '' : st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
@@ -2171,7 +2200,7 @@ function vAuto(o, top){
   <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}"><div class="hj-kick hj-stk">${esc(label)}</div><h2 class="hj-exn">${esc(o.swap && st.swap ? st.swap : st.name)}</h2>${st.t === 'ex' && !o.between ? dots(o.rest ? o.set + 1 : o.set, st.sets) : ''}${big}${st.t === 'ex' && !o.between && !o.rest && !o.sw ? recLine(st) : ''}
     ${detail}
     ${o.wait ? `<button type="button" class="btn btn-gold hj-go" data-hja="tapdone">${o.side && o.side !== (st.first === 'R' ? 'L' : 'R') ? (o.side === 'L' ? 'Left' : 'Right') + (st.arm ? ' Arm Done' : ' Side Done') : 'Set Done'}</button>` : ''}
-    <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">${o.between ? 'Start Now' : o.rest || o.sw ? 'Ready Now' : o.hf ? 'Set Done' : 'Skip'}</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest && !o.between ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>
+    <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">${o.between ? 'Start Now' : o.rest || o.sw ? 'Ready Now' : o.hf ? 'Set Done' : 'Skip'}</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest && !o.between ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>${o.lost && o.paused ? '<p class="hj-tap" role="status">Tap Resume to keep going.</p>' : ''}
     <div class="hj-links">${st.t === 'ex' && !o.between ? `<button type="button" class="linkbtn hj-skip" data-hja="askipmove">Skip This Move</button>` : ''}<button type="button" class="linkbtn hj-fsb" data-hja="fs">Full Screen</button></div>
     ${toggles(o)}</div>`;
 }
@@ -2236,7 +2265,7 @@ function actCoach(a, v){
     case 'wadj': if (h && W_ADJ.includes(+v)){ h.set.wadj = +v; h.set.u = Date.now(); save(); toast('Saved. Every recommended weight follows it.'); } rerender(true); return true;
     case 'manual': if (o){ o.stage = 'run'; o.mode = 'manual'; if (V) V.unlock(); } rerender(true); return true;
     case 'didit': if (o){ markDone(o.key || ('work:' + o.s)); checkOn(o.prac ? 'still' : 'move'); toast('Marked done. Well done.'); closeOv(); } return true;
-    case 'apause': if (o){ o.paused = !o.paused; if (V){ o.paused ? V.pause() : V.resume(); } clkSync(o); } rerender(true); return true;
+    case 'apause': if (o){ o.paused = !o.paused; if (!o.paused) o.lost = false; if (V){ o.paused ? V.pause() : V.resume(); } clkSync(o); } rerender(true); return true;
     case 'askip': if (o){ preCut(o); o.skip = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
     case 'askipmove': if (o){ preCut(o); o.skip = true; o.skipMove = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
     case 'amore': if (o && o.run){ preCut(o); o.end += 15000; o.tot = (o.tot || 0) + 15000; } return true;
@@ -5098,6 +5127,7 @@ const CSS = `
 .hj-sess{display:flex;justify-content:space-between;color:var(--ink-soft);font-size:14px;margin-top:6px;font-variant-numeric:tabular-nums;}.hj-sess span:first-child{font-weight:700;color:var(--ink);}
 .hj-fig{width:min(190px,48vw);margin:0 auto -4px;color:var(--hj);}.hj-fig svg{width:100%;height:auto;display:block;}
 .hj-ctl .btn{min-width:110px;}
+.hj-tap{text-align:center;font-size:15px;font-weight:600;margin:8px 0 0;}
 .hj-kstep{font-size:clamp(22px,5.5vw,28px);line-height:1.35;font-weight:600;max-width:32ch;margin:10px auto 16px;}
 .hj-ktimers{display:grid;gap:6px;margin:10px 0;}.hj-ktimers>div{display:flex;align-items:center;gap:8px;background:var(--bg-deep);border-radius:12px;padding:6px 10px;min-width:0;}.hj-ktimers small{flex:1;min-width:0;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .hj-rang{background:var(--hj);color:#fff;border-radius:12px;padding:10px 12px;margin:10px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}.hj-rang .linkbtn{color:#fff;margin-left:auto;}

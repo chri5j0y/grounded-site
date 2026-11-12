@@ -46,12 +46,12 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'b999';   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
+  var VER = 'c019';   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
     ['/field-guide/stage.js?v=b999', 'GGStage'],
-    ['/field-guide/coach.js?v=b931', 'GGVoice'],
+    ['/field-guide/coach.js?v=c019', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=b919b', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=b906', 'GGBulk'],
