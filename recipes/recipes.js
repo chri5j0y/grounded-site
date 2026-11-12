@@ -49,7 +49,7 @@
   var VER = 'c019';   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
-    ['/shared/tending-public.js?v=b978', 'GGTendPublic'],
+    ['/shared/tending-public.js?v=c021', 'GGTendPublic'],
     ['/field-guide/stage.js?v=b999', 'GGStage'],
     ['/field-guide/coach.js?v=c019', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
@@ -62,10 +62,10 @@
 
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
-  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Sober Drinks', 'drinks-sq'], ['bulk', 'Bulk Foods', 'shop-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'ppl-meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'ppl-snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Sober Drinks', 'drinks-sq'], ['bulk', 'Bulk Foods', 'shop-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
   // BLD 976: each category tile has its own painting (shared/heroes/p/rep/cat-<id>.webp, 16:9); the section headers keep CATS[i][2].
   var CAT_ART = '/shared/heroes/p/rep/cat-';
-  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['snack-fruit', 'snack-fruit-sq'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
+  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['ppl-meal-lunch', 'ppl-meal-lunch-sq'], dinner: ['ppl-todays-plate', 'ppl-todays-plate-sq'], snack: ['ppl-snack-fruit', 'ppl-snack-fruit-sq'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
   // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
   var SHELF = { holidays: 1, drink: 1, bulk: 1 };
   var CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
@@ -95,9 +95,9 @@
   // BLD 910 (Chris, November 3, 2026: "all cards get high quality images"): each recipe card shows one of Grounded's own
   // paintings: for lunch and dinner, the main of the dish when its name says (fish, chili and stews, beans and lentils, stir fry and bowls), and
   // otherwise its meal's set in turn, so cards side by side wear different paintings.
-  var CARD_ART = { breakfast: ['weekly-batch-sq', 'snack-fruit-sq', 'kitchen-headstart-sq', 'prep-together-sq'], lunch: ['meal-lunch-sq', 'todays-plate-sq', 'prep-together-sq', 'weekly-batch-sq'],
-    dinner: ['todays-plate-sq', 'kitchen-headstart-sq', 'dinner-stirfry-sq', 'meal-lunch-sq'], snack: ['snack-fruit-sq', 'meal-lunch-sq', 'supplements-sq', 'prep-together-sq'],
-    party: ['kitchen-headstart-sq', 'todays-plate-sq', 'snack-fruit-sq'], sauce: ['prep-together-sq', 'kitchen-headstart-sq', 'weekly-batch-sq'], drink: ['drinks-sq', 'snack-fruit-sq'] };
+  var CARD_ART = { breakfast: ['weekly-batch-sq', 'ppl-snack-fruit-sq', 'kitchen-headstart-sq', 'prep-together-sq'], lunch: ['ppl-meal-lunch-sq', 'ppl-todays-plate-sq', 'prep-together-sq', 'weekly-batch-sq'],
+    dinner: ['ppl-todays-plate-sq', 'kitchen-headstart-sq', 'dinner-stirfry-sq', 'ppl-meal-lunch-sq'], snack: ['ppl-snack-fruit-sq', 'ppl-meal-lunch-sq', 'supplements-sq', 'prep-together-sq'],
+    party: ['kitchen-headstart-sq', 'ppl-todays-plate-sq', 'ppl-snack-fruit-sq'], sauce: ['prep-together-sq', 'kitchen-headstart-sq', 'weekly-batch-sq'], drink: ['drinks-sq', 'ppl-snack-fruit-sq'] };
   // BLD 970 round 2: every recipe has its own painting in /shared/heroes/p/: rec-<id>.webp (1280 by 720, the detail hero on
   // desktop and the recipe's own page) and rec-<id>-sq.webp (600 square, the card and the detail hero on phones). OWN lists the
   // recipes that have one; a Holidays and Gatherings recipe is hol-<set>-<recipe>. Any recipe outside OWN keeps the rotation above.
@@ -838,7 +838,7 @@
          show Today's Plate. Breakfasts and snacks show the Weekly Batch table, lunches the lunch painting. */
       var DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
       var DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
-      var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', sauce: 'prep-together', drink: 'drinks' };
+      var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'ppl-meal-lunch', dinner: 'ppl-todays-plate', party: 'kitchen-headstart', sauce: 'prep-together', drink: 'drinks' };
       var ONE_ART = { 'tend-people': 1 }; // one square painting serves both sizes
       function artName(r) {
         var m = String(r.meal || 'dinner').toLowerCase();

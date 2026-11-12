@@ -55,9 +55,9 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c019', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=b978', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c021', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c018';
+  var GGN_SRC = '/shared/ggn.js?v=c021';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -435,7 +435,7 @@
     fruit: ['gg-k-kind-wishes-now', 'gg-k-senses-detective-now'],
     none: ['gg-k-calm-place-now', 'gg-k-balloon-belly-now', 'gg-k-tree-roots-now']
   };
-  var ART = { bark: 'p-tend-mind', leaves: 'p-tend-move', roots: 'tend-spirit', trunk: 'tend-spirit', branches: 'p-tend-people', fruit: 'tend-fruit', none: 'p-tend-mind', calm: 'p-tend-mind' };
+  var ART = { bark: 'p-tend-mind', leaves: 'p-tend-move', roots: 'ppl-tend-spirit', trunk: 'ppl-tend-spirit', branches: 'p-tend-people', fruit: 'tend-fruit', none: 'p-tend-mind', calm: 'p-tend-mind' };
   // BLD 970: the For You video card and the kids' practice card each have their own paintings by part now.
   var FY_ART = { bark: 'foryou-bark', leaves: 'foryou-leaves', roots: 'foryou-roots', trunk: 'foryou-trunk', branches: 'foryou-branches', fruit: 'foryou-fruit', calm: 'foryou-calm' };
   var KP_ART = { roots: 'kids-practice-roots-sq', trunk: 'kids-practice-trunk-sq', bark: 'kids-practice-bark-sq', branches: 'kids-practice-branches-sq', leaves: 'kids-practice-leaves-sq', fruit: 'kids-practice-fruit-sq' };
@@ -1016,12 +1016,12 @@
   function shareCard(kind) {
     if (kind === 'mile') {
       var m = S.mile; if (!m) return;
-      load('/shared/gg-sharecard.js?v=b839').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: 'milestone', star: 'gold', count: m.count, text: m.text }); else toast('Sharing opens on Living Sober.'); });
+      load('/shared/gg-sharecard.js?v=c021').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: 'milestone', star: 'gold', count: m.count, text: m.text }); else toast('Sharing opens on Living Sober.'); });
       return;
     }
     var text = kind === 'mantra' ? (S.mantra || '') : ((document.getElementById('hm-words') || {}).textContent || '');
     if (!text) return;
-    load('/shared/gg-sharecard.js?v=b839').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: kind, text: text }); else toast('Sharing opens on Living Sober.'); });
+    load('/shared/gg-sharecard.js?v=c021').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: kind, text: text }); else toast('Sharing opens on Living Sober.'); });
   }
   function fillWords() {
     var el = document.getElementById('hm-words'); if (!el) return;
@@ -1216,10 +1216,10 @@
   var HERO = '/shared/heroes/';
   /* BLD 895: Chris's Grok paintings, each card its own; -sq files are the square crops for small tiles, the others are wide. */
   var ART2 = {
-    quiet: IMG + 'p-quiet-morning-sq.webp', move: IMG + 'move-strength-sq.webp', meal: IMG + 'meal-lunch-sq.webp', cook: IMG + 'tend-body.webp',
+    quiet: IMG + 'p-quiet-morning-sq.webp', move: IMG + 'move-strength-sq.webp', meal: IMG + 'ppl-meal-lunch-sq.webp', cook: IMG + 'tend-body.webp',
     head: IMG + 'kitchen-headstart-sq.webp', shop: IMG + 'shop-wide.webp', shopSq: IMG + 'shop-sq.webp', prep: IMG + 'prep-together-sq.webp', supp: IMG + 'supplements-sq.webp',
-    spirit: IMG + 'tend-spirit.webp', people: IMG + 'p-tend-people.webp', start: IMG + 'p-tending-sq.webp', startWide: IMG + 'p-tending-wide.webp', growth: IMG + 'p-growth-narrow.webp',
-    batch: IMG + 'weekly-batch-sq.webp', rest: IMG + 'p-rest-day-sq.webp', plan: IMG + 'p-growth-plan-sq.webp', med: IMG + 'quiet-meditation-sq.webp'
+    spirit: IMG + 'ppl-tend-spirit.webp', people: IMG + 'p-tend-people.webp', start: IMG + 'p-tending-sq.webp', startWide: IMG + 'p-tending-wide.webp', growth: IMG + 'p-growth-narrow.webp',
+    batch: IMG + 'weekly-batch-sq.webp', rest: IMG + 'p-rest-day-sq.webp', plan: IMG + 'p-growth-plan-sq.webp', med: IMG + 'ppl-quiet-meditation-sq.webp'
   };
   var FOOD_ROT = [IMG + 'tend-body.webp', IMG + 'tend-fruit.webp', IMG + 'p-tend-people.webp', IMG + 'recipes-narrow.webp'];
   function treeArt(tree, wide) { if (tree === 'willow') return wide ? '/shared/heroes/p/willow-hero2-wide.webp' : HERO + 'p/willow-hero2-card.webp'; /* BLD 971 */ if (tree === 'heartwood') return wide ? '/shared/heroes/p/heartwood-hero-wide.webp' : HERO + 'p/heartwood-card-sq.webp'; /* BLD 974: the couple under the two trees */ return HERO + (/^(oak|birch|sequoia|pine|maple|aspen|willow|grove)$/.test(tree) ? tree : 'oak') + (wide ? '-wide.webp' : '-phone.webp'); }
@@ -1308,7 +1308,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c018';
+  var PV_SRC = '/shared/page-videos.js?v=c021';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2370,7 +2370,7 @@
     else if (wk >= 12) rows.push('<div class="up"><i>' + I('tree') + '</i>Your season check-in is ready: a full check-in adds a ring</div>');
     var ldl = ldlHtml();
     if (!rows.length && !ldl) rows.push('<div class="up"><i>' + I('sprout') + '</i>Your progress fills in as you check in and tend.</div>');
-    return '<article class="hm-card hm-p-fruit o6" id="hm-progress"><div class="hm-hd">' + pb(IMG + 'progress-sq.webp') + '<div><div class="hm-k">Your Progress</div><div class="hm-sub">What you have grown, counted with joy</div></div></div><div class="hm-mile">' + rows.join('') + '</div>' + ldl + '</article>';
+    return '<article class="hm-card hm-p-fruit o6" id="hm-progress"><div class="hm-hd">' + pb(IMG + 'ppl-progress-sq.webp') + '<div><div class="hm-k">Your Progress</div><div class="hm-sub">What you have grown, counted with joy</div></div></div><div class="hm-mile">' + rows.join('') + '</div>' + ldl + '</article>';
   }
   function ldlHtml() {
     var w = tdata(S.id), hh = obj(w && w.health);
@@ -2414,7 +2414,7 @@
       if (a != null && b != null) trend = a - b >= 0.3 ? ' Growing since your last check-in.' : b - a >= 0.3 ? ' A little lower than last time: your Growing Edge shows where to tend.' : ' Holding steady since your last check-in.';
     }
     var rings = arr(tend.rings).length;
-    var season = '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'this-season-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
+    var season = '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'ppl-this-season-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
       (ck ? ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '.' : 'Your season begins with your first full check-in.') + (rings ? ' ' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree.' : '') + esc(trend) + '</p>' +
       (ck ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tree="history">' + I('clock') + 'History</button></div>' : '') + '</div></div></article>';
     var pc = planList(S.id, S.tree).length;
@@ -2434,7 +2434,7 @@
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b949';
-  var WELCOME_SRC = '/shared/learn-welcome.js?v=c006'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
+  var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=b930', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b949', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b924', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
@@ -2458,18 +2458,18 @@
     var t = TREES[S.tree] || TREES.oak, c = hCall('counts') || {}, learn = learnOf(S.tree), lc = guidesOf(S.tree), rc = window.GGTendPublic ? arr(window.GGTendPublic.recipes).length : 0;
     var cnt = function (n, one, many) { return typeof n === 'number' && n > 0 ? n + ' ' + (n === 1 ? one : many) : ''; };
     return [
-      { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: IMG + 'library-learn.webp' },
-      { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
+      { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: IMG + 'ppl-library-learn.webp' },
+      { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'ppl-page-hard-seasons-narrow.webp' },
       // BLD 899 (Chris: "holiday gatherings [needs no] card in library just put this in the recipes"): Holidays and Gatherings lives inside Grounded Recipes.
       { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, party food, sauces and dressings, sober drinks, and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: PIMG + 'recipes-shelf-band.webp' },
       // BLD 919: the 8 Gentle sessions are open to everyone; on Start they have their own shelf (a Member finds them in Grounded Fitness).
       // BLD 935 (audit H1): the shelf opens with Today's Flow too, so Start's daily Flow has a home in the Library.
-      !member() && hCall('gentleOpen') ? { id: 'gentle', name: 'Flow and Gentle', count: 'Flow and 8 sessions', plain: 'Gentle Movement', line: 'Today\'s Flow, and eight guided Gentle sessions for strength, balance, and easier movement, with Ava coaching every move.', cls: 'hm-sh-work', art: IMG + 'move-gentle.webp' } : null,
+      !member() && hCall('gentleOpen') ? { id: 'gentle', name: 'Flow and Gentle', count: 'Flow and 8 sessions', plain: 'Gentle Movement', line: 'Today\'s Flow, and eight guided Gentle sessions for strength, balance, and easier movement, with Ava coaching every move.', cls: 'hm-sh-work', art: IMG + 'ppl-move-gentle.webp' } : null,
       member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout, by category, with a coach, and the 12-week program.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
       // BLD 911 (Chris: "we have 2 meditation sets too.. join or rename", then "1"): one Grounded Meditation: today's pick, your
       // week of seven (Tending's), and the full library by need (Membership), on one shelf.
-      member() ? { id: 'quiet', name: 'Grounded Meditation', count: cnt((num(c.meditations) || 0) + mItems('meditation').length, 'meditation', 'meditations'), plain: 'Today, your week, and the library', line: 'Today\'s meditation, your week of seven, and the full library for sleep, worry, grief, focus, and more.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
-        : { id: 'quiet', name: 'Grounded Meditation', count: '', plain: 'Today\'s meditation', line: seedsOn() ? 'Today\'s meditation, two from the library, Morning Quiet, and Get Grounded Now: calm in a minute or two.' : 'Today\'s meditation, Morning Quiet, and Get Grounded Now: calm in a minute or two.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
+      member() ? { id: 'quiet', name: 'Grounded Meditation', count: cnt((num(c.meditations) || 0) + mItems('meditation').length, 'meditation', 'meditations'), plain: 'Today, your week, and the library', line: 'Today\'s meditation, your week of seven, and the full library for sleep, worry, grief, focus, and more.', cls: 'hm-sh-quiet', art: IMG + 'ppl-quiet-meditation.webp' }
+        : { id: 'quiet', name: 'Grounded Meditation', count: '', plain: 'Today\'s meditation', line: seedsOn() ? 'Today\'s meditation, two from the library, Morning Quiet, and Get Grounded Now: calm in a minute or two.' : 'Today\'s meditation, Morning Quiet, and Get Grounded Now: calm in a minute or two.', cls: 'hm-sh-quiet', art: IMG + 'ppl-quiet-meditation.webp' }
     ].filter(Boolean);
   }
   // BLD 911 (Chris: "1"): a small Grounded over the short name on the Library shelves; the full name everywhere else (and in search).
@@ -2477,7 +2477,7 @@
     return '<button type="button" class="hm-shelf ' + s.cls + '" data-hm-shelf="' + s.id + '"><img class="bg" src="' + s.art + '" alt="" loading="lazy" decoding="async"><span class="ct" data-hm-count="' + s.id + '">' + esc(s.count || s.plain) + '</span>' + (/^Grounded /.test(s.name) ? '<span class="nm"><small class="br">Grounded</small>' + esc(s.name.slice(9)) + '</span>' : '<span class="nm">' + esc(s.name) + '</span>') + '<span class="ln">' + esc(s.line) + '</span></button>';
   }
   function libraryHtml() {
-    var more = [['/get-grounded-now.html', HERO + 'page-get-grounded-now-narrow.webp', 'Get Grounded Now', 'Calm in a minute or two'], ['/readings.html', HERO + 'page-readings-narrow.webp', 'Readings Library', 'Prayers, poems, and blessings'], ['/stories.html', PIMG + 'stories-card-sq.webp', 'Grounded Stories', member() ? 'Every story, read aloud' : 'Stories from the bedside and the road'], ['/library/', REP + 'book-library-sq.webp', 'Book Library', 'Books and studies we draw from'],
+    var more = [['/get-grounded-now.html', HERO + 'ppl-page-get-grounded-now-narrow.webp', 'Get Grounded Now', 'Calm in a minute or two'], ['/readings.html', HERO + 'page-readings-narrow.webp', 'Readings Library', 'Prayers, poems, and blessings'], ['/stories.html', PIMG + 'stories-card-sq.webp', 'Grounded Stories', member() ? 'Every story, read aloud' : 'Stories from the bedside and the road'], ['/library/', REP + 'book-library-sq.webp', 'Book Library', 'Books and studies we draw from'],
       ['/grove/', treeArt('grove'), 'The Grove', 'Families and groups, growing together'], ['/willow/', treeArt('willow'), 'Willow', 'For the last season of life'], ['/heartwood/', treeArt('heartwood'), 'Heartwood', 'Couples, for the first years together']];
     // BLD 935 (audit M13): a teen's More to Explore keeps the everyday ones and The Grove (no Willow, no Heartwood).
     if (isYoung(S.p)) more = more.filter(function (m) { return m[0] !== '/willow/' && m[0] !== '/heartwood/'; });
@@ -2519,7 +2519,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c019';
+  var RECIPES_JS = '/recipes/recipes.js?v=c021';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -4274,7 +4274,7 @@
      profile's first 14 days. Each carries a small Seed chip and is followed by one quiet line, "This was a seed. Membership
      grows the whole tree." with See Membership and I Have a Code, never a pop up. The Library's Seeds shelf gathers them all.
      Never on a kid's screen; Members see their own library, unchanged. */
-  var SEEDS_JS = '/shared/seeds-public.js?v=b939';
+  var SEEDS_JS = '/shared/seeds-public.js?v=c021';
   var SEED_STORIES = [['time-of-your-life', 'Time of Your Life'], ['the-recovery', 'The Recovery'], ['grounded-in-coffee', 'Grounded in Coffee']];
   var SEED_DAYS = 14;
   function seedsOn() { return !member() && !isYoung(S.p); }
@@ -4479,7 +4479,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b982', next: '/shared/home/nextsteps.js?v=b982', legacy: '/shared/home/legacy.js?v=b982', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c018', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=b982', next: '/shared/home/nextsteps.js?v=b982', legacy: '/shared/home/legacy.js?v=b982', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c021', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4581,7 +4581,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c018'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c021'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -4843,7 +4843,7 @@
 
   /* ---------- Member content shelves (Library): read from GGMember.get(section) ---------- */
   var MSHELVES = [
-    { id: 'meditation', name: 'Grounded Meditation', line: 'Guided meditations for sleep, worry, grief, focus, and more.', art: IMG + 'quiet-meditation.webp', cls: 'hm-sh-quiet' },
+    { id: 'meditation', name: 'Grounded Meditation', line: 'Guided meditations for sleep, worry, grief, focus, and more.', art: IMG + 'ppl-quiet-meditation.webp', cls: 'hm-sh-quiet' },
     { id: 'spirit', name: 'Grounded Spirit', line: 'Deeper guided programs for what grounds you, in your own tradition or your own way.', art: PIMG + 'shelf-spirit-sq.webp', cls: 'hm-sh-learn' },
     { id: 'relationships', name: 'Grounded Relationships', line: 'Listening, repair, unplugged time, family dinner, and a weekly connection plan.', art: PIMG + 'shelf-relationships-band.webp', cls: 'hm-sh-life' },
     { id: 'seasons', name: 'Grounded Seasons', line: 'Guided programs for the seasons of life: a grief year, a new baby, a move, retirement, caring for a parent, and a new diagnosis.', art: PIMG + 'shelf-seasons-narrow.webp', cls: 'hm-sh-life' }
@@ -5009,7 +5009,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c018';
+  var LEARN_JS = '/shared/gg-learn.js?v=c021';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5066,7 +5066,7 @@
   }
 
   /* The one daily meditation (Start and Member alike): the day's pick from the Start rotation (shared/start-videos.js). */
-  var START_JS = '/shared/start-videos.js?v=b911r';
+  var START_JS = '/shared/start-videos.js?v=c021';
   function dailyMed(sec) { var V0 = window.GG_START_VIDEOS, L = arr(obj(obj(obj(V0).sections)[sec || 'meditation']).lessons).filter(function (l) { return l && l.rotate; }); if (!L.length) return null; var n = L.length, want = (dayIndex() % n) + 1; return L.filter(function (l) { return +l.rotate === want; })[0] || pick(L, dayIndex()); }
   /* BLD 935 (audit M2): one meditation pick a day. When Tending brings a meditation to Today, that one is today's meditation
      everywhere (Today, the Grounded Meditation shelf, the Seeds window); otherwise the daily one from shared/start-videos.js. */
@@ -5150,7 +5150,7 @@
      and guides; each tree screen opens as a sheet with the app's own header, never as a second app. Every picture here
      is one of Grounded's own paintings (Chris: "do NOT go back to these graphics! i woked hard to make graphics we have").
      ===================================================================== */
-  var ART_JS = '/shared/learn-art.js?v=c017';
+  var ART_JS = '/shared/learn-art.js?v=c021';
   function heroSrc(im) { return /\//.test(im) ? HERO + im + '.webp' : im === 'marriage' ? '/heartwood/hero-wide.webp' : HERO + im + '-wide.webp'; }
   // A lesson's painting: the first painting in its art plan (shared/learn-art.js), or the tree's own painting.
   // A lesson card's painting by its topic (BLD 911: the art plans spread paintings across scenes, so the first one can miss
@@ -5300,7 +5300,7 @@
   /* The Check-in tab: the tree painting with each part's level, Check In and Quick Check-in, this season, and trends. */
   function seasonCardHtml() {
     var ck = lastCheckin(S.id, S.tree), tend = tendOf(S.id, S.tree), wk = weekNo(tend), rings = arr(tend.rings).length;
-    return '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'this-season-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
+    return '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'ppl-this-season-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
       (ck ? ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '.' : 'Your season begins with your first full check-in.') + (rings ? ' ' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree.' : '') + '</p>' +
       (ck ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tree="history">' + I('clock') + 'Season and Rings</button></div>' : '') + '</div></div></article>';
   }
