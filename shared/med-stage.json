@@ -1,6 +1,6 @@
 {
  "version": 1,
- "about": "BLD 899: the meditation stage, read by field-guide/stage.js. Per painting (the name medArtFor picks, or quiet-meditation): src and lg (under base; lg is the larger file of the same picture, same framing), ar (width over height), focal [x, y] (the part of the painting kept in view and kept clear of the drawn candle), tone (0 to 1, how far the painting settles toward candlelit evening), and either flame or flames (a painting with its own light: [x, y] where the painted flame meets its wick, as a share of the painting's width and height, with size, the flame's height as a share of the painting's height, and kind 'candle' or 'lantern') or candle (a painting with no candle of its own: [x, y] where the drawn candle's dish sits, as a share of the stage panel, with dish 'stone' or 'wood'). use maps a day's painting to a different stage painting, so a new candle painting can stand in for any day by adding one line. default is the stage for a name with no entry. BLD 970: p:med-day-6 and p:med-day-7 are the new day 6 and day 7 paintings (shared/heroes/p/), each with its own candle. BLD 970 round 4: days 1 to 5 have new card paintings (p:med-breath-kids, p:med-body-scan, p:med-prayer, p:med-sleep, p:med-walking). p:med-body-scan holds a jar candle and is its own stage; the other four map in use to the stage each day had before.",
+ "about": "BLD 899: the meditation stage, read by field-guide/stage.js. Per painting (the name medArtFor picks, or quiet-meditation): src and lg (under base; lg is the larger file of the same picture, same framing), ar (width over height), focal [x, y] (the part of the painting kept in view and kept clear of the drawn candle), tone (0 to 1, how far the painting settles toward candlelit evening), and either flame or flames (a painting with its own light: [x, y] where the painted flame meets its wick, as a share of the painting's width and height, with size, the flame's height as a share of the painting's height, and kind 'candle' or 'lantern') or candle (a painting with no candle of its own: [x, y] where the drawn candle's dish sits, as a share of the stage panel, with dish 'stone' or 'wood'). use maps a day's painting to a different stage painting, so a new candle painting can stand in for any day by adding one line. default is the stage for a name with no entry. BLD 970: p:med-day-6 and p:med-day-7 are the new day 6 and day 7 paintings (shared/heroes/p/), each with its own candle. BLD 970 round 4: days 1 to 5 have new card paintings (p:med-breath-kids, p:med-body-scan, p:med-prayer, p:med-sleep, p:med-walking). p:med-body-scan holds a jar candle and is its own stage; the other four map in use to the stage each day had before. BLD 976: day 1 shows p:rep/med-steady-breath (shared/heroes/p/rep/), a grown-up painting, on the same candle-alcove stage.",
  "base": "heroes/way/",
  "default": "quiet-meditation",
  "use": {
@@ -11,6 +11,7 @@
   "med-m7": "candle-cabin",
   "med-m4": "candle-cabin-2",
   "p:med-breath-kids": "candle-alcove",
+  "p:rep/med-steady-breath": "candle-alcove",
   "p:med-prayer": "med-m3",
   "p:med-sleep": "candle-cabin-2",
   "p:med-walking": "candle-alcove-2"
