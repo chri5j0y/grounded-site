@@ -377,6 +377,7 @@
       '.ln-on-cover .ln-wm{color:#FFFFFF;}.ln-on-end .ln-wm-br{display:none;}.ln-on-demo .ln-wm-br{display:none;}',
       '.ggl-small .ln-wm span{display:none;}.ggl-small .ln-wm img{width:15px;height:15px;border-radius:4px;}.ggl-small .ln-wm-tl{left:5px;top:5px;}.ggl-small .ln-wm-br{right:5px;bottom:5px;}.ggl-small .ln-tt{top:86px;}.ggl-small .ln-six{padding-top:84px;}',
       '.ln-prog{display:flex;gap:5px;margin:10px 0;}.ln-prog span{flex:1;height:5px;border-radius:3px;background:var(--ggl-line);}.ln-prog span.on{background:var(--ggl-acc);}',
+      '.ln-tap{font-size:14px;color:var(--ggl-ink);margin-left:6px;}',
       '.ln-cap{font-size:calc(19px * var(--ggl-scale));line-height:1.5;min-height:3em;margin:6px 0;color:var(--ggl-ink);}.ln-cap .w.on{color:var(--ggl-acc);}',
       /* beats: items wait for their sentence; a pause-and-do ring */
       '.go .ln-canvas .a.hold{opacity:0;transform:translateY(14px);}',
@@ -551,7 +552,7 @@
      The same engine and figure data as the workout player (shared/fig3d, BLD 897), loaded only when a figure scene
      shows, and the same rules for when it draws: WebGL, not Save Data, not Simple Figure (gg-fig3d 'off'), and a real
      graphics chip unless the person turned 3D Figure on (gg-fig3d 'on'). */
-  var FIGV = 'b931', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files
+  var FIGV = 'c018', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files
   function fig3Dark() { var t = document.documentElement.getAttribute('data-theme'); if (t) return t === 'dark'; try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; } }
   function fig3Able() {
     if (F3.bad) return false;
@@ -665,7 +666,8 @@
     for (var i = 44; i < b.length; i++) b[i] = 128;
     return (SILENT = 'data:audio/wav;base64,' + btoa(String.fromCharCode.apply(null, b)));
   }
-  function speak(t, onend) { try { if (window.GGRead && GGRead.available) { GGRead.say(t, onend ? { onend: onend } : undefined); return true; } } catch (e) {} return false; }
+  // onstart (November 12, 2026) runs when the device voice really starts the line, so a breath circle can begin with it.
+  function speak(t, onend, onstart) { try { if (window.GGRead && GGRead.available) { var o = {}; if (onend) o.onend = onend; if (onstart) o.onstart = onstart; GGRead.say(t, onend || onstart ? o : undefined); return true; } } catch (e) {} return false; }
   /* ---------------- beats (Learn Voice build, October 2026) ----------------
      Narration is spoken one sentence at a time with a real pause between, and each bullet, step, or card
      shows as its sentence starts. A scene can tune this with cue (the words never change):
@@ -710,7 +712,9 @@
     });
     return map;
   }
-  function hush() { try { if (window.GGRead) GGRead.stop(); else if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {} }
+  // Only when the device voice has something to stop: on an iPhone, cancelling an idle device voice can take the sound
+  // away from the recorded clips and the music (November 12, 2026).
+  function hush() { try { var ss = window.speechSynthesis; if (ss && !ss.speaking && !ss.pending) return; if (window.GGRead) GGRead.stop(); else if (ss) ss.cancel(); } catch (e) {} }
   function allLessons(tracks) { var f = []; (tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) { f.push({ t: t, l: l }); }); }); return f; }
   function certable(t) { return !!t && t.kind !== 'support' && t.kind !== 'guide' && t.kind !== 'forguides' && t.cert !== false && (t.cert === true || (t.lessons || []).length >= 3); }
   function trackDone(t, done) { return !!t && (t.lessons || []).length > 0 && t.lessons.every(function (l) { return done[l.id]; }); }
@@ -846,6 +850,7 @@
         if (AC) { try { BG.ctx = new AC(); BG.gain = BG.ctx.createGain(); BG.gain.gain.value = 0; BG.ctx.createMediaElementSource(BG.el).connect(BG.gain); BG.gain.connect(BG.ctx.destination); } catch (e) { BG.ctx = BG.gain = null; } }
       }
       var go = function () {
+        BG.want = true; bgWatch();
         if (BG.src !== src) { BG.el.src = src; BG.src = src; bgVol(0); }
         if (BG.ctx && BG.ctx.state === 'suspended') BG.ctx.resume();
         var pr = BG.el.play(); if (pr && pr.catch) pr.catch(function () {});
@@ -854,7 +859,18 @@
       if (BG.src && BG.src !== src && !BG.el.paused) bgFade(0, 400, go); else go(); // a new track fades the old one out first
     } catch (e) {}
   }
-  function bgStop(ms) { if (!BG.el) return; bgFade(0, ms || 700, function () { try { BG.el.pause(); } catch (e) {} }); }
+  // The music comes back on its own if the phone pauses it or puts its sound to sleep while a video plays.
+  function bgWatch() {
+    if (BG.w || !BG.el) return; BG.w = 1;
+    BG.el.addEventListener('pause', function () { if (BG.want) setTimeout(bgNudge, 300); });
+    if (BG.ctx) BG.ctx.onstatechange = function () { if (BG.want && BG.ctx.state !== 'running' && BG.ctx.state !== 'closed') setTimeout(bgNudge, 300); };
+  }
+  function bgNudge() {
+    if (!BG.want || !BG.el || !musicOn()) return;
+    try { if (BG.ctx && BG.ctx.state !== 'running' && BG.ctx.state !== 'closed' && BG.ctx.resume) { var r = BG.ctx.resume(); if (r && r.catch) r.catch(function () {}); } } catch (e) {}
+    try { if (BG.el.paused && BG.src) { var p = BG.el.play(); if (p && p.catch) p.catch(function () {}); } } catch (e) {}
+  }
+  function bgStop(ms) { BG.want = false; if (!BG.el) return; bgFade(0, ms || 700, function () { try { BG.el.pause(); } catch (e) {} }); }
   function musicCredit(cfg) { var m = musicPick(cfg); return m && m.src && m.credit && musicOn() ? '<small class="gg-src-line"><span class="gg-src-k">Music:</span> ' + esc(m.credit) + '</small>' : ''; }
   // Music settings beside Voice and Speed: Volume (Off, Soft, Medium), Mood (Automatic or one mood), Another Track.
   function musicSwitch(host, cfg, P) {
@@ -913,7 +929,7 @@
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
-    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); clearInterval(P.tl); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = P.audio.onplaying = P.audio.onratechange = P.audio.onseeked = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
+    function stopTimers() { brGo(); P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); clearInterval(P.tl); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = P.audio.onplaying = P.audio.onratechange = P.audio.onseeked = P.audio.onpause = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
     function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(cfg); }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
@@ -1036,8 +1052,10 @@
         var b = B[i], ended = false, began = Date.now(), seen = false;
         var fin = function () { if (ended || t !== P.tok) return; ended = true; clearInterval(P.tick); after(i); };
         var est = Math.max(1400, b.t.split(/\s+/).length * 60000 / (165 * sp));
+        brHold(i);
         if (clip(i, fin)) return;
-        var spoke = speak(b.t, fin);
+        var spoke = speak(b.t, fin, function () { brVoiced(t); });
+        if (!spoke) brVoiced(t);
         clearInterval(P.tick);
         P.tick = setInterval(function () {
           if (t !== P.tok) return clearInterval(P.tick);
@@ -1109,7 +1127,7 @@
       var sc = P.sc; if (!FG.stage || !sc || sc.k !== 'figure') return;
       var u;
       if (Array.isArray(sc.breath)) {
-        var el = ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
+        var el = P.brPz != null ? P.brPz : ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
         u = el < BR_OUT ? .4 * el / BR_OUT : .4 + .6 * (el - BR_OUT) / (BR_CYC - BR_OUT);
       } else { var ld = 0; try { ld = FG.stage.loopDur(); } catch (e) {} u = (Date.now() - FG.t0) / 1000 / (ld > 0 ? ld : 4); }
       try { if (FG.stage.seek) FG.stage.seek(u, { t: performance.now() }); } catch (e) {}
@@ -1218,6 +1236,7 @@
     // Where the breath is now: read from the circle's (or the candle glow's) own animation when it runs on this pace, so the
     // voice follows exactly what the viewer sees even when a busy device starts the animation a moment late.
     function brEl() {
+      if (P.brPz != null) return P.brPz;
       var el = ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
       try {
         var c = cv.querySelector('.ln-brc') || cv.querySelector('.ln-cd-glow, .ln-cd-all'), a = c && c.getAnimations ? c.getAnimations()[0] : null, tm = a && a.effect ? a.effect.getTiming() : null;
@@ -1241,6 +1260,31 @@
       // starts at once, inside its part, instead of waiting a whole breath.
       return d > BR_CYC - (BR_SIP || BR_HOLD ? 700 : 120) ? 0 : d;
     }
+    // Chris, November 12, 2026: "make sure all breathe work videos sync voice and breathe graphics": the voice leads the circle. When a
+    // breath line is due, the circle (and its words, the candle glow, and the figure) waits at the turn of the breath, a hair
+    // before its part, until that line's clip or device voice really starts; then the part begins with the voice and runs
+    // for the length the practice gives. With no voice at all the line starts at once, so the timer path stays as it was.
+    // A voice that has not started in 4 seconds lets the circle go on by itself.
+    var BR_PZ = '.ln-brc, .ln-brt i, .ln-cd-glow, .ln-cd-all';
+    function brPlay(on) { Array.prototype.forEach.call(cv.querySelectorAll(BR_PZ), function (e) { e.style.animationPlayState = on ? '' : 'paused'; }); }
+    function brHold(i) {
+      var sc = P.sc; if (!sc || !isBr(sc) || !P.brLock || brReduced() || !P.B[i]) return;
+      var k = brKindOf(P.B[i]); if (!k) return;
+      var off = ((brOff(k) - 20) % BR_CYC + BR_CYC) % BR_CYC;
+      clearTimeout(P.bz); brAnim(cv, off); brPlay(false); P.brPz = off; P.brLn = { off: off, tok: P.tok, i: i };
+      var t = P.tok; P.bz = setTimeout(function () { if (t === P.tok) brGo(true); }, 4000);
+    }
+    // A voice that starts after the circle went on by itself still sets the circle to its part.
+    function brVoiced(t) {
+      if (t !== P.tok) return;
+      if (P.brPz != null) return brGo();
+      var L = P.brLn; if (L && L.tok === t && L.i === P.b) { P.brLn = null; brAnim(cv, L.off); P.brT0 = Date.now() - L.off; }
+    }
+    function brGo(keep) {
+      clearTimeout(P.bz); if (!keep) P.brLn = null; if (P.brPz == null) return;
+      var off = P.brPz; P.brPz = null; P.brT0 = Date.now() - off; brPlay(true);
+      if (window.CustomEvent) try { host.dispatchEvent(new CustomEvent('ggl-breath', { detail: { off: off, t: Date.now() } })); } catch (e) {}
+    }
     // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
     // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
     // Silence each voice's recordings carry before and after the words (measured October 13, 2026: Brian about 0.14 and 0.36
@@ -1253,26 +1297,39 @@
       var a = P.el || (P.el = new Audio()), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ok = false;
       var est = Math.max(1400, text.split(/\s+/).length * 60000 / (165 * sp));
       function guard(ms) { clearTimeout(P.cw); P.cw = setTimeout(function () { if (t === P.tok) fin(); }, ms); }
-      function voice() { if (ok || t !== P.tok) return; ok = true; clearInterval(P.tl); a.onended = a.onerror = a.onloadedmetadata = a.onplaying = a.onratechange = a.onseeked = null; speak(text, fin); guard(est * 2.4 + 2500); }
+      function voice() { if (ok || t !== P.tok) return; ok = true; clearInterval(P.tl); a.onended = a.onerror = a.onloadedmetadata = a.onplaying = a.onratechange = a.onseeked = a.onpause = null; if (!speak(text, fin, function () { brVoiced(t); })) brVoiced(t); guard(est * 2.4 + 2500); }
       P.audio = a;
       // Each recording carries about 0.2 seconds of silence before the voice and 0.9 after; skip most of both.
       var once = false, done1 = function () { if (once) return; once = true; clearTimeout(P.cw); clearInterval(P.tl); fin(); };
+      var armed = false;
       a.onplaying = function () {
-        clearInterval(P.tl);
+        armed = true; brVoiced(t); clearInterval(P.tl);
         if (!TAIL || !isFinite(a.duration) || a.duration < LEAD + TAIL + 0.4) return;
         var end = a.duration - TAIL;
         // watch the play position itself, so the finish lands just after the last word on every device
-        P.tl = setInterval(function () { if (t !== P.tok) return clearInterval(P.tl); if (!a.paused && a.currentTime >= end) { clearInterval(P.tl); try { a.pause(); } catch (e) {} done1(); } }, 25);
+        P.tl = setInterval(function () { if (t !== P.tok) return clearInterval(P.tl); if (!a.paused && a.currentTime >= end) { clearInterval(P.tl); a.onpause = null; try { a.pause(); } catch (e) {} done1(); } }, 25);
       };
       a.onended = done1;
       a.onerror = voice;
+      // A pause the player did not ask for (an iPhone hands the sound to something else mid line) waits for a tap.
+      a.onpause = function () { if (!armed || once || a.ended || t !== P.tok || (isFinite(a.duration) && a.currentTime >= a.duration - 0.1)) return; ok = true; lost(t); };
+      bgNudge();
       a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) { guard(a.duration * 1000 / sp + 3000); } };
       a.src = LEAD ? src + '#t=' + LEAD : src; // start just before the first word
       // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
       try { a.defaultPlaybackRate = sp; a.playbackRate = sp; } catch (e) {}
       guard(est * 2.4 + 6000);
-      var pr = a.play(); if (pr && pr.then) pr.then(function () { ok = true; }).catch(function (e) { if (!e || e.name !== 'AbortError') voice(); });
+      var pr = a.play(); if (pr && pr.then) pr.then(function () { ok = true; }).catch(function (e) { if (e && e.name === 'NotAllowedError' && !ok) { ok = true; return lost(t); } if (!e || e.name !== 'AbortError') voice(); });
       return true;
+    }
+    // Sound and pictures keep one clock (November 12, 2026, an iPhone went quiet while the circle kept going): when the
+    // phone stops the player's sound, the whole video pauses on that line, circle and all, and the next tap on Play picks
+    // up from the same line with the sound unlocked again.
+    function lost(t) {
+      if (t !== P.tok || !P.playing) return;
+      setPlay(false); brPlay(false); P.brLost = true;
+      var c = $('.ln-ctl', host), n = c && c.querySelector('.ln-tap');
+      if (c && !n) { n = document.createElement('span'); n.className = 'ln-tap'; n.setAttribute('role', 'status'); n.textContent = 'Tap Play to keep going.'; c.appendChild(n); }
     }
     // A quiz's "That's it." and its why, sentence by sentence in the lesson's recorded voice.
     function recSay(text, t, fin) {
@@ -1293,7 +1350,7 @@
       var sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, est = Math.max(1400, text.split(/\s+/).length * 60000 / (165 * sp)), gone = false;
       function voice() {
         if (gone || t !== P.tok) return; gone = true; clearTimeout(P.cw);
-        var spoke = speak(text, fin);
+        var spoke = speak(text, fin, function () { brVoiced(t); }); if (!spoke) brVoiced(t);
         P.cw = setTimeout(function () { if (t === P.tok) fin(); }, spoke ? est * 2.4 + 2500 : est);
       }
       // A clip that has not arrived in 8 seconds gives way to the device voice for this sentence.
@@ -1366,6 +1423,8 @@
       var b = ev.target.closest('[data-g]'); if (!b || !host.contains(b)) return;
       var g = b.getAttribute('data-g');
       unlock(); if (BRX && window.GGBreathRing) GGBreathRing.unlock();
+      var tp = host.querySelector('.ln-tap'); if (tp) tp.remove();
+      if (P.brLost) { P.brLost = false; brPlay(true); }
       if (g === 'play') {
         if (P.playing) setPlay(false);
         else {
@@ -1611,7 +1670,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c017'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c018'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
