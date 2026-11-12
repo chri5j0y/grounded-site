@@ -15,7 +15,7 @@
     [/money map/i, 'moneymap'], [/practices for two/i, 'practices'], [/monthly check-in/i, 'monthly'],
     [/first-year|first year/i, 'firstyear'], [/your tree|your grove/i, 'grove'], [/week card/i, 'week'],
     [/after the vows/i, 'after'], [/read together|learn/i, 'learn'], [/your check-in|check-in for two/i, 'before'],
-    [/welcome/i, 'hero'], [/thank you/i, 'firstyear']
+    [/welcome|heartwood opens|sample/i, 'hero'], [/thank you/i, 'firstyear']
   ];
   var AREAS = [
     [/communicat|talking|listen/i, 'communication'], [/conflict|repair|disagree/i, 'conflict'], [/money|financ/i, 'money'],
