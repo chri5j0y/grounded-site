@@ -238,7 +238,7 @@
       '<li><a href="https://chri5j0y.substack.com/p/my-boundaries-have-gates" target="_blank" rel="noopener">My Boundaries Have Gates</a>: caring for others without losing yourself.</li>' +
       '<li><a href="https://chri5j0y.substack.com/p/if-she-is-still-here" target="_blank" rel="noopener">If She Is Still Here</a>: on not waiting for tomorrow.</li>' +
       '<li><a href="https://chri5j0y.substack.com/p/welcome-home" target="_blank" rel="noopener">Welcome Home</a>: a quiet moment at the end of a life.</li></ul>' +
-      '<div class="ggg-row"><a class="hm-btn sm hm-pill" href="https://growwithgrounded.com/stories.html">Open Grounded Stories</a><a class="hm-btn sm line hm-pill" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a></div></div>' +
+      '<div class="ggg-row"><a class="hm-btn sm hm-pill" href="https://growwithgrounded.com/stories.html">Open Grounded Stories</a><a class="hm-btn sm line hm-pill" href="https://growwithgrounded.com/the-grounded-way.html#ways">Become a Member</a></div></div>' +
       '<div class="panel"><h3>When Life Changes</h3><p>64 guides for talking with a middle schooler about hard things, from grief and divorce to group chats, AI chatbots, scary news, and health and ability, in group cards with tabs and search on top. Each has a quick card, a full "Talking It Through" guide with trusted sources, and two short videos: For You, for the student, and For the Grown-up.</p><button type="button" class="hm-btn sm hm-pill" data-ggg="life">Open When Life Changes</button></div>' +
       '</div>';
   }
