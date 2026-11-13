@@ -55,16 +55,20 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c032', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c072', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c021';
+  var GGN_SRC = '/shared/ggn.js?v=c051';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
   var PIMG = '/shared/heroes/p/';   // BLD 970: the new app paintings, each card its own
   // BLD 978: the painted set cards for Grounded Spirit, Relationships, and Seasons (home.js paintSets)
-  var SET_SECS = { spirit: 'Grounded Spirit', relationships: 'Grounded Relationships', seasons: 'Grounded Seasons' };
+  // BLD 981 Round 2: Cooking Together, the kids and teens kitchen shelf (sets like Spirit, Relationships, and Seasons)
+  var SET_SECS = { spirit: 'Grounded Spirit', relationships: 'Grounded Relationships', seasons: 'Grounded Seasons', kitchen: 'Cooking Together' };
   var SETS_ART = '/shared/heroes/p/sets/';
+  // BLD 981 Round 2: the kids, teens, and Together sets on every shelf, each with its own painted card
+  var SET_HAS_Y = { 'sp-kids-little': 1, 'sp-kids-wonder': 1, 'sp-teens-roots': 1, 'sp-together': 1, 'rel-kids-kind': 1, 'rel-kids-friends': 1, 'rel-teens': 1, 'rel-together': 1,
+    'season-kids-change': 1, 'season-teens-change': 1, 'season-year': 1, 'kit-little': 1, 'kit-kids': 1, 'kit-teens': 1, 'kit-lunch': 1, 'kit-family': 1 };
   var SET_HAS = { 'sp-grace': 1, 'sp-still': 1, 'sp-hope': 1, 'sp-rest': 1, 'sp-christian': 1, 'sp-jewish': 1, 'sp-muslim': 1, 'sp-buddhist': 1, 'sp-hindu': 1, 'sp-spiritual': 1, 'rel-listen': 1, 'rel-repair': 1, 'rel-unplug': 1, 'rel-dinner': 1, 'rel-weekly': 1, 'season-grief': 1, 'season-newparent': 1, 'season-moving': 1, 'season-retirement': 1, 'season-parentcare': 1, 'season-diagnosis': 1 };
   var SET_SAY = 'Take all the time you need. This is here whenever you need it.';   // the closing line these sessions already speak (recorded)
   var REP = '/shared/heroes/p/rep/';   // BLD 976: a painting for each place that showed one twice on a screen (grounded-workshop patches/bld976/place)
@@ -1293,7 +1297,7 @@
     // BLD 950: the Family Planner and its places (#library=planner, #library=planner-wall, #library=planner-week)
     var pm = /^library=planner(?:-(wall|week))?$/.exec(h); if (pm) return { tab: 'library', sub: 'planner', planner: pm[1] || '' };
     // BLD 978: Grounded Spirit, Relationships, and Seasons open on their painted set cards (#library=spirit), a set on its own page (#library=spirit:sp-grace).
-    var sm = /^library=(spirit|relationships|seasons)(?::([a-z0-9-]+))?$/.exec(h); if (sm) return { tab: 'library', sub: sm[1], set: sm[2] || '' };
+    var sm = /^library=(spirit|relationships|seasons|kitchen)(?::([a-z0-9-]+))?$/.exec(h); if (sm) return { tab: 'library', sub: sm[1], set: sm[2] || '' };
     var m = /^([a-z]+)(?:=([a-z0-9-]+))?$/.exec(h) || [], k = m[1] || '', sub = m[2] || '';
     if (k === 'week') return { tab: 'week', sub: SUBS.week[sub] ? sub : '' };
     if (k === 'grow' || k === 'tree') return { tab: 'grow', sub: '' };
@@ -1333,7 +1337,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c030';
+  var PV_SRC = '/shared/page-videos.js?v=c051';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -4956,7 +4960,9 @@
     { id: 'meditation', name: 'Grounded Meditation', line: 'Guided meditations for sleep, worry, grief, focus, and more.', art: IMG + 'ppl-quiet-meditation.webp', cls: 'hm-sh-quiet' },
     { id: 'spirit', name: 'Grounded Spirit', line: 'Deeper guided programs for what grounds you, in your own tradition or your own way.', art: PIMG + 'shelf-spirit-sq.webp', cls: 'hm-sh-learn' },
     { id: 'relationships', name: 'Grounded Relationships', line: 'Listening, repair, unplugged time, family dinner, and a weekly connection plan.', art: PIMG + 'shelf-relationships-band.webp', cls: 'hm-sh-life' },
-    { id: 'seasons', name: 'Grounded Seasons', line: 'Guided programs for the seasons of life: a grief year, a new baby, a move, retirement, caring for a parent, and a new diagnosis.', art: PIMG + 'shelf-seasons-narrow.webp', cls: 'hm-sh-life' }
+    { id: 'seasons', name: 'Grounded Seasons', line: 'Guided programs for the seasons of life: a grief year, a new baby, a move, retirement, caring for a parent, and a new diagnosis.', art: PIMG + 'shelf-seasons-narrow.webp', cls: 'hm-sh-life' },
+    // BLD 981 Round 2: kids and teens in the kitchen with a grown-up, by age, plus lunchboxes, snacks, and family kitchen nights
+    { id: 'kitchen', name: 'Cooking Together', line: 'Kids and teens in the kitchen with a grown-up: safe jobs by age, lunchboxes and snacks, and family kitchen nights.', art: SETS_ART + 'kit-family.webp', cls: 'hm-sh-rec', member: true }
   ];
   /* A section may be a list of items, {items: [...]}, or {programs: [{title, items or sessions}]}; items carry scenes. */
   function mItems(name) {
@@ -4972,8 +4978,19 @@
   }
   function mShelfHtml() {
     if (isYoung(S.p) && !member()) return '';   // BLD 981: a young Member opens every shelf; a young profile on Start sees no Seeds (BLD 935 H3)
-    if (!member()) return seedsOn() ? [{ id: 'seeds', name: 'Seeds', count: 'Yours to keep', line: 'A real piece of every part of Membership: meditation, Spirit, Relationships, Seasons, stories read aloud, Gentle, meals, and My Heart Risk.', cls: 'hm-sh-life hm-sh-seeds', art: PIMG + 'shelf-seeds.webp' }].concat(MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { return { id: 'm-' + s.id, name: s.name, count: 'Seed: each first session', line: s.line, cls: s.cls, art: s.art }; })).map(shelfHtml).join('') : '';
-    return MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { var n = mItems(s.id).length; return shelfHtml({ id: 'm-' + s.id, name: s.name, count: n ? n + (n === 1 ? ' session' : ' sessions') : 'Membership', plain: 'Membership', line: s.line, cls: s.cls, art: s.art }); }).join('');
+    if (!member()) return seedsOn() ? [{ id: 'seeds', name: 'Seeds', count: 'Yours to keep', line: 'A real piece of every part of Membership: meditation, Spirit, Relationships, Seasons, stories read aloud, Gentle, meals, and My Heart Risk.', cls: 'hm-sh-life hm-sh-seeds', art: PIMG + 'shelf-seeds.webp' }].concat(MSHELVES.filter(function (s) { return s.id !== 'meditation' && !s.member; }).map(function (s) { return { id: 'm-' + s.id, name: s.name, count: 'Seed: each first session', line: s.line, cls: s.cls, art: s.art }; })).map(shelfHtml).join('') : '';
+    // BLD 981 Round 2: a Member only shelf (Cooking Together) shows once the Member library on this device holds it
+    return MSHELVES.filter(function (s) { return s.id !== 'meditation' && !(s.member && !mItems(s.id).length); }).map(function (s) { var n = mItems(s.id).length; return shelfHtml({ id: 'm-' + s.id, name: s.name, count: n ? n + (n === 1 ? ' session' : ' sessions') : 'Membership', plain: 'Membership', line: s.line, cls: s.cls, art: s.art }); }).join('');
+  }
+  // BLD 981 Round 2: Grounded Meditation's groups carry their own names (Kids, Ages 4 to 6; Together, for a Family or Group),
+  // and a profile sees its own age's groups first, then Together, then the rest in their order.
+  function needsOf(sec) { var x = member() ? mSection(sec) : seedsOn() ? seedSection(sec) : null; return x && !Array.isArray(x) ? arr(x.needs) : []; }
+  function needName(sec, g) { var n = needsOf(sec).filter(function (d) { return d && d.id === g; })[0]; return n && n.name ? n.name : g.charAt(0).toUpperCase() + g.slice(1); }
+  function needOrder(G) {
+    var me = myAge(), ag = {}; needsOf('meditation').forEach(function (d) { if (d && d.id) ag[d.id] = d.age || 'grown'; });
+    var rank = function (g) { var a = ag[g] || 'grown'; return a === me ? 0 : a === 'all' ? 1 : 2; }, out = {};
+    Object.keys(G).map(function (g, j) { return [g, j]; }).sort(function (x, y) { return rank(x[0]) - rank(y[0]) || x[1] - y[1]; }).forEach(function (x) { out[x[0]] = G[x[0]]; });
+    return out;
   }
   function openMShelf(id) {
     var s = MSHELVES.filter(function (x) { return x.id === id; })[0]; if (!s) return;
@@ -4984,7 +5001,8 @@
     var L = mItems(id), groups = {}, trad = {}, md = obj(homeRec().mdone);
     // Programs by tradition wait in their own list, opened and chosen by the person; never suggested or preselected.
     L.forEach(function (x) { var g = x.need || 'More', box = x.tradition ? trad : groups; (box[g] = box[g] || []).push(x); });
-    var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</h3>' + pstartRow(id, g, md) + '<ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (member() ? '' : seedChip()) + (x.mins ? 'About ' + esc(x.mins) + (+x.mins === 1 ? ' minute' : ' minutes') : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
+    if (id === 'meditation') groups = needOrder(groups);   // BLD 981 Round 2: own age first
+    var grp = function (G) { return Object.keys(G).map(function (g) { return '<h3 class="hm-label">' + esc(needName(id, g)) + '</h3>' + pstartRow(id, g, md) + '<ul class="hm-mlist">' + G[g].map(function (x) { var dn = !!md[id + '|' + x.id]; return '<li><button type="button" data-hm-mplay="' + esc(id + '|' + x.id) + '"' + (dn ? ' class="done"' : '') + '>' + I(dn ? 'check' : 'play') + '<span><b>' + esc(x.title) + '</b><small>' + (member() ? '' : seedChip()) + (x.mins ? 'About ' + esc(x.mins) + (+x.mins === 1 ? ' minute' : ' minutes') : '') + (dn ? (x.mins ? ' · ' : '') + 'Finished' : '') + '</small></span></button></li>'; }).join('') + '</ul>'; }).join(''); };
     var body = (id === 'relationships' && L.length ? hhPickHtml() : '') + (L.length ? grp(groups) + (Object.keys(trad).length ? '<details class="hm-trad" open><summary>By Tradition</summary><p class="hm-sub">Programs from one tradition, labeled. Open the one you choose.</p>' + grp(trad) + '</details>' : '')
       : '<p class="hm-sub">' + esc(s.name) + ' fills in here as soon as the Member library opens on this device.</p>');
     mDialog(s.name, (member() ? '' : '<p class="hm-sub">The first session of each program, a seed for you to keep.</p>') + body + (member() ? '' : seedLine()));
@@ -5087,13 +5105,15 @@
     return G.filter(function (g) { return !(me === 'kids' && (ageOfSet(g.p) === 'grown' || g.p.tradition)); }).map(function (g, j) { return [g, j]; })
       .sort(function (x, y) { return rank(ageOfSet(x[0].p)) - rank(ageOfSet(y[0].p)) || x[1] - y[1]; }).map(function (x) { return x[0]; });
   }
-  function setArt(sec, id) { return SET_HAS[id] ? SETS_ART + id + '.webp' : (MSHELVES.filter(function (m) { return m.id === sec; })[0] || {}).art; }
+  function setArt(sec, id) { return SET_HAS[id] || SET_HAS_Y[id] ? SETS_ART + id + '.webp' : (MSHELVES.filter(function (m) { return m.id === sec; })[0] || {}).art; }
+  // BLD 981 Round 2: a kids or teens set names its age band on its card (For Kids, Ages 4 to 6); a Together set says so
+  function setTag(p) { var a = ageOfSet(p); return p.group ? 'All Ages, Together' : AGE_TAGS[a] + (p.band && a !== 'all' ? ', ' + p.band : ''); }
   function setLine(p) { var t = String(p.tagline || p.blurb || ''); return t; }
   function setCard(sec, g, md) {
     var p = g.p, n = g.items.length, dn = g.items.filter(function (x) { return md[sec + '|' + x.id]; }).length, total = arr(p.items || p.sessions).length || n;
     var k = member() ? total + (total === 1 ? ' session' : ' sessions') + (dn ? ' · ' + dn + ' finished' : '') : 'Seed: the first session';
     return '<button type="button" class="hm-setc hm-setc-' + sec + '" data-hm-set="' + esc(sec + ':' + p.id) + '"><span class="art"><img src="' + esc(setArt(sec, p.id)) + '" alt="" loading="lazy" decoding="async"></span>' +
-      '<span class="tx"><span class="k">' + esc(k) + (isYoung(S.p) || ageOfSet(p) !== 'all' ? ' · ' + esc(AGE_TAGS[ageOfSet(p)]) : '') + '</span><b>' + esc(p.title || p.id) + '</b>' + (setLine(p) ? '<small>' + esc(setLine(p)) + '</small>' : '') + '</span></button>';
+      '<span class="tx"><span class="k">' + esc(k) + (isYoung(S.p) || ageOfSet(p) !== 'all' || p.group ? ' · ' + esc(setTag(p)) : '') + '</span><b>' + esc(p.title || p.id) + '</b>' + (setLine(p) ? '<small>' + esc(setLine(p)) + '</small>' : '') + '</span></button>';
   }
   function paintSets(r) {
     var box = document.getElementById('hm-sets'); if (!box) return;
@@ -5133,14 +5153,15 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c033';
+  var LEARN_JS = '/shared/gg-learn.js?v=c051';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
+    else if (sec === 'spirit' && plainNow()) x = altFor(x, 'plain');   // BLD 981 Round 2: Plain wording where the set carries it (the kids' faith rules)
     // The set this session belongs to (a program, or a meditation need), in order; Next is the one after it, else the first unfinished.
     var G = all.filter(function (i) { return i.need === x.need; }), at = 0; G.forEach(function (i, j) { if (i.id === x.id) at = j; });
     var md0 = obj(homeRec().mdone), nx = G[at + 1] || G.filter(function (i, j) { return j !== at && !md0[sec + '|' + i.id]; })[0] || null;
-    var setName = x.need ? x.need.charAt(0).toUpperCase() + x.need.slice(1) : (SET_SECS[sec] || 'This Set');
+    var setName = x.need ? needName(sec, x.need) : (SET_SECS[sec] || 'This Set');
     var back = document.getElementById('hm-mdlg') && !document.getElementById('hm-mdlg').classList.contains('hm-vscr') ? backLabel() : 'Back to ' + setName;
     var moreHtml = function () { var md = obj(homeRec().mdone); return '<h2 class="hm-label">More in This Set</h2><ul class="hm-mlist hm-setlist">' + G.map(function (i, j) { return setRow(sec, i, j, md, j === at); }).join('') + '</ul>'; };
     mDialog(x.title, '<div class="hm-mplayer" id="hm-mplayer"><p class="hm-loading">Opening ' + esc(x.title) + '…</p></div>' + (member() ? '' : seedLine()) + '<section class="hm-vmore" id="hm-vmore" hidden></section>',
@@ -5273,7 +5294,7 @@
      and guides; each tree screen opens as a sheet with the app's own header, never as a second app. Every picture here
      is one of Grounded's own paintings (Chris: "do NOT go back to these graphics! i woked hard to make graphics we have").
      ===================================================================== */
-  var ART_JS = '/shared/learn-art.js?v=c021';
+  var ART_JS = '/shared/learn-art.js?v=c051';
   function heroSrc(im) { return /\//.test(im) ? HERO + im + '.webp' : im === 'marriage' ? '/heartwood/hero-wide.webp' : HERO + im + '-wide.webp'; }
   // A lesson's painting: the first painting in its art plan (shared/learn-art.js), or the tree's own painting.
   // A lesson card's painting by its topic (BLD 911: the art plans spread paintings across scenes, so the first one can miss

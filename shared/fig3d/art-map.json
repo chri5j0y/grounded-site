@@ -684,6 +684,402 @@
     ]
    ],
    "room": "Chris's Quiet Lawn painting (November 1, 2026): a level clearing under two trees, a path on the right, hills beyond. BLD 905: open floor widened to the left lawn and the floor line raised a little, so the mat stays on the grass."
+  },
+  "p:fit/yb-k4-1": {
+   "src": "../p/fit/yb-k4-1.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a bright playroom, the open green floor in the middle; grandmother and girl at the far left",
+   "vivid": true
+  },
+  "p:fit/yb-k4-2": {
+   "src": "../p/fit/yb-k4-2.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a sunny backyard lawn; father and toddler at the far left, the playhouse at the far right",
+   "vivid": true
+  },
+  "p:fit/yb-k4-3": {
+   "src": "../p/fit/yb-k4-3.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a kindergarten room, the round rug in the middle; teacher and children at the right",
+   "vivid": true
+  },
+  "p:fit/yb-k4-4": {
+   "src": "../p/fit/yb-k4-4.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a park meadow; grandmother and boy on a blanket at the right, the pond at the far left",
+   "vivid": true
+  },
+  "p:fit/yb-k4-5": {
+   "src": "../p/fit/yb-k4-5.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a family living room with a big rug; mother and girl on the sofa at the left",
+   "vivid": true
+  },
+  "p:fit/yb-k4-6": {
+   "src": "../p/fit/yb-k4-6.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a preschool play yard, open turf; teacher and boy at the far left, the slide at the far right",
+   "vivid": true
+  },
+  "p:fit/yb-k7-1": {
+   "src": "../p/fit/yb-k7-1.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a school field; the climbing structure and two kids at the far right",
+   "vivid": true
+  },
+  "p:fit/yb-k7-2": {
+   "src": "../p/fit/yb-k7-2.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a school gym floor; the teacher and a girl at the far right",
+   "vivid": true
+  },
+  "p:fit/yb-k7-3": {
+   "src": "../p/fit/yb-k7-3.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a backyard with a tree; the tire swing at the far left, a father raking at the right",
+   "vivid": true
+  },
+  "p:fit/yb-k7-4": {
+   "src": "../p/fit/yb-k7-4.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a city park lawn; a girl and her grandfather with a kite at the right",
+   "vivid": true
+  },
+  "p:fit/yb-k7-5": {
+   "src": "../p/fit/yb-k7-5.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a family room with a big blue rug; two kids with blocks at the left",
+   "vivid": true
+  },
+  "p:fit/yb-k7-6": {
+   "src": "../p/fit/yb-k7-6.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.15,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a school blacktop; a teacher and a girl at the far left, a boy at the hoop at the far right",
+   "vivid": true
+  },
+  "p:fit/yb-t11-1": {
+   "src": "../p/fit/yb-t11-1.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a rec center floor; the coach and a boy at the right, rolled mats at the left"
+  },
+  "p:fit/yb-t11-2": {
+   "src": "../p/fit/yb-t11-2.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a school gym; a coach and a girl at the far left"
+  },
+  "p:fit/yb-t11-3": {
+   "src": "../p/fit/yb-t11-3.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a backyard deck; a mother and son on the steps at the right"
+  },
+  "p:fit/yb-t11-4": {
+   "src": "../p/fit/yb-t11-4.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a park soccer field; two kids with a ball at the right"
+  },
+  "p:fit/yb-t11-5": {
+   "src": "../p/fit/yb-t11-5.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a teen bedroom with open floor; a dad waving from the doorway at the far left"
+  },
+  "p:fit/yb-t11-6": {
+   "src": "../p/fit/yb-t11-6.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a school track and field; two teens at the far left and far right"
+  },
+  "p:fit/yb-t14-1": {
+   "src": "../p/fit/yb-t14-1.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a school weight room; a girl planking at the far left, a boy jumping rope at the far right"
+  },
+  "p:fit/yb-t14-2": {
+   "src": "../p/fit/yb-t14-2.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a home garage gym with the door open; a teen rolling out a mat at the right"
+  },
+  "p:fit/yb-t14-3": {
+   "src": "../p/fit/yb-t14-3.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a park fitness area; a runner at the far left and a teen at the bars at the right"
+  },
+  "p:fit/yb-t14-4": {
+   "src": "../p/fit/yb-t14-4.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a high school gym court; teens and a coach at the far left"
+  },
+  "p:fit/yb-t14-5": {
+   "src": "../p/fit/yb-t14-5.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a backyard patio; a teen stretching at the right"
+  },
+  "p:fit/yb-t14-6": {
+   "src": "../p/fit/yb-t14-6.webp",
+   "focal": [
+    0.5,
+    0.86
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mat": false,
+   "scale": 0.8,
+   "room": "BLD 985: a living room with open floor; a mother reading at the far left, a little brother at the far right"
   }
  },
  "workouts": {},

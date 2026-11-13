@@ -1116,12 +1116,21 @@ const moveStage = (o, kind, n) => o.fin && MOVE_DONE[kind] ? MOVE_DONE[kind] : o
 const MED_P = {m1: 'p:rep/med-steady-breath', m2: 'p:med-body-scan', m3: 'p:med-prayer', m4: 'p:med-sleep', m5: 'p:med-walking', m6: 'p:med-day-6', m7: 'p:med-day-7'};
 const medBase = j => MED_P['m' + (j + 1)] || 'med-m' + (j + 1), medSq = n => /^p:/.test(n) ? n + '-sq' : n, isMedArt = n => /^(med-m\d|p:(rep\/)?med-[a-z0-9-]+)$/.test(n);
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
+// BLD 985 (Chris, November 13, 2026: "we need to paint better work out backgrounds for our new videos.. should be age appropriate"):
+// every For Kids and For Teens session moves in front of one of its age's six painted backgrounds (shared/heroes/p/fit/yb-<band>-<n>,
+// home, school, park, and yard, indoors and out, the middle left open for the figure), opens on its own start painting, and ends on
+// its finish painting (the same kid cheering, y-<id>-done). Each session's background, by session id:
+const YART = {l1: 'k4-4', l2: 'k4-3', l3: 'k4-6', l4: 'k4-2', l5: 'k4-1', l6: 'k4-5',
+  k1: 'k7-4', k2: 'k7-2', k3: 'k7-3', k4: 'k7-6', k5: 'k7-5', k6: 'k7-1', kd1: 'k7-5', kd2: 'k7-3', kd3: 'k7-2', kd4: 'k7-5',
+  m1: 't11-1', m2: 't11-4', m3: 't11-2', m4: 't11-6', m5: 't11-3', m6: 't11-1', md1: 't11-5', md2: 't11-3',
+  t1: 't14-2', t2: 't14-3', t3: 't14-1', t4: 't14-4', t5: 't14-3', t6: 't14-5', t7: 't14-1', td1: 't14-6', td2: 't14-5', td3: 't14-2', td4: 't14-6'};
 function ovArtName(o){
   if (!o) return '';
   if (o.k === 'quiet') return 'quiet-morning';
   if (o.med || o.k === 'med'){ const m = o.mlib ? ((MLIB() || {}).app || {}).meditations : MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? medBase(j) : 'quiet-meditation'; }
   if (o.prac){ const x = o.mlib ? MFLOW().find(z => z.id === o.s) : arr((PR() || {}).sessions).find(z => z.id === o.s); return moveStage(o, (x && x.style) || 'daily', flowArtName(x).replace(/-sq$/, '')); }
   if (o.k === 'work'){ const p = String(o.key || '').split(':'), lvl = p[0] === 'wl' ? p[1] : '';
+    if (o.young && YART[o.s]) return o.fin ? 'p:fit/y-' + o.s + '-done' : o.stage === 'start' ? 'p:fit/y-' + o.s : 'p:fit/yb-' + YART[o.s];   // BLD 985
     const ses = lvl ? (levelSes(lvl, o.s) || {}).ses : sesById(o.s); return moveStage(o, moveKind(o.s, ses, lvl), moveArtName(o.s, ses, lvl).replace(/-sq$/, '')); }
   if (o.k === 'prep') return /^prep:batch:/.test(o.key || '') ? ART_KITCHEN.batch : ART_KITCHEN.prep;
   if (o.hol) return (o.data && o.data.art) || ART_KITCHEN.dinner; // BLD 896: Today's Plate, or the Weekly Batch table on a make-ahead day
@@ -1562,6 +1571,7 @@ async function runTimer(o, ms, kind, half, onTick){
     if (onTick) onTick(left);
     if (s <= 3 && s !== last){ last = s; if (!preBusy(o)) VO() && VO().tick(); }   // BLD 931: Ava's instructions carry the last seconds
     document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
+    ystarTick(o, left);
     stageUpd(Math.max(0, Math.min(1, left / (o.tot || ms))), s);
     await sleep(Math.max(10, Math.min(100, o.end - Date.now())));
   }
@@ -1859,7 +1869,35 @@ function stagePanel(state, op){ op = Object.assign({hour: HOUR()}, op || {}); le
   const fb = !inner; if (fb) inner = stageFallback(state, op);
   // BLD 900: a figure that the 3D stage will draw waits on the painting with a calm placeholder (no simple figure first).
   const wait = !fb && /gg-move/.test(String(op.fig || '')) && fig3dWait();
-  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}${wait ? ' g3-wait' : ''}" aria-hidden="true">${inner}</div>`; }
+  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}${wait ? ' g3-wait' : ''}" aria-hidden="true">${inner}${op.kid || ''}</div>`; }
+// BLD 985: kid touches on a For Kids or For Teens stage: an animal for an animal move, a star for each rep counted (and a star for
+// each move finished), and a short shower of stars when the session ends (it holds still for reduced motion).
+const ANIMALS = [[/\b(bird dog|pup|puppy|dog)\b/i, '🐶'], [/\bbear\b/i, '🐻'], [/\bcrab\b/i, '🦀'], [/\bfrog\b/i, '🐸'], [/\b(bunny|rabbit)\b/i, '🐰'],
+  [/\bflamingo\b/i, '🦩'], [/\bgiraffe\b/i, '🦒'], [/\bturtle\b/i, '🐢'], [/\b(cat|kitty)\b/i, '🐱'], [/\bcow\b/i, '🐮'], [/\bbug\b/i, '🐞'],
+  [/\b(snake|cobra)\b/i, '🐍'], [/\bduck\b/i, '🦆'], [/\belephant\b/i, '🐘'], [/\bpenguin\b/i, '🐧'], [/\bkangaroo\b/i, '🦘'],
+  [/\bbutterfly\b/i, '🦋'], [/\b(monkey|gorilla)\b/i, '🐒'], [/\blion\b/i, '🦁'], [/\b(horse|pony)\b/i, '🐴'], [/\binchworm\b/i, '🐛'],
+  [/\bbird\b/i, '🐦'], [/\bowl\b/i, '🦉'], [/\b(lizard|gecko)\b/i, '🦎'], [/\btiger\b/i, '🐯'], [/\banimal/i, '🐾']];
+const animalOf = name => { const n = String(name || ''); for (const [re, e] of ANIMALS) if (re.test(n)) return e; return ''; };
+function kidTouch(o, st, cnt, still){
+  if (!o.young || !st) return '';
+  const an = !still && st.t !== 'cool' ? animalOf((o.swap && st.swap) || st.name) : '', won = arr(o.done).length;
+  // (counted by the voice: a star lights on each count; a timed set of reps: the stars light as its time runs, ystarTick)
+  const n = Math.min(cnt || (st.t === 'ex' && st.kind !== 'time' ? repN(st) : 0), 20), lit = o.rep || 0;
+  const stars = n && !still ?`<span class="hj-ystars" data-hjystars>${Array.from({length: n}, (_, i) => `<i${i < lit ? ' class="on"' : ''}>★</i>`).join('')}</span>` : '';
+  return `<div class="hj-ykid">${an ? `<span class="hj-yani">${an}</span>` : ''}${stars}${won ? `<span class="hj-ytally">★ ${won}</span>` : ''}</div>`;
+}
+// A timed set of reps on a kid or teen stage: its stars light one by one as the set's time runs.
+function ystarTick(o, left){ if (!o.young || o.rest || o.between || o.sw) return; const el = document.querySelector('[data-hjystars]'); if (!el) return;
+  const s = el.children, k = Math.min(s.length, Math.floor((1 - left / (o.tot || 1)) * s.length + .02));
+  for (let i = 0; i < s.length; i++) s[i].classList.toggle('on', i < k); }
+// A set the one clock paces (Auto Flow, rep by rep with the figure): a star lights as each rep's time passes on that clock.
+// A counted set (the voice counts): the star of each count lights.
+setInterval(() => { const o = S.ov; if (!o || !o.young || o.run || o.fin || !(o.rep > 0 || (o.clk && o.clk.el > 0))) return; const el = document.querySelector('[data-hjystars]'), st = arr(o.steps)[o.i]; if (!el || !st) return;
+  const s = el.children, k = Math.min(s.length, o.rep > 0 ? o.rep : Math.floor(o.clk.el / Math.max(.5, tempoOf(st)) + .05)); for (let i = 0; i < s.length; i++) s[i].classList.toggle('on', i < k); }, 200);
+// The finish screen of a For Kids or For Teens session: its finish painting (the same kid cheering) on the stage, with the stars.
+const yDone = o => `<div class="hj-stagebox hj-ydone" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="${esc(WAY('p:fit/y-' + o.s + '-done-sq'))}"><img src="${esc(WAY('p:fit/y-' + o.s + '-done'))}" alt="" decoding="async"></picture>${kidCheer(o)}</div>`;
+function kidCheer(o){ if (!o.young) return ''; if (!o.cheerT) o.cheerT = Date.now(); const t = (Date.now() - o.cheerT) / 1000; if (t > 3.6) return '';   // (once: a redraw on the done screen picks up where it was)
+  return `<div class="hj-ycheer">${Array.from({length: 18}, (_, i) => `<i style="--x:${(i * 37 + 11) % 96 + 2}%;--y:${(i * 53 + 7) % 70 + 8}%;--d:${((i % 6) * .18 - t).toFixed(2)}s;--r:${(i * 47) % 360}deg">${i % 3 ? '★' : '✦'}</i>`).join('')}</div>`; }
 function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'); if (!el) return;
   if (window.GGStage && GGStage.update){ try { GGStage.update(el, {pct, secs}); } catch(e){} return; }
   const r = el.querySelector('.hj-ring'); if (r){ r.style.setProperty('--p', pct.toFixed(3)); const b = r.querySelector('b'); if (b && secs != null) b.textContent = secs; } }
@@ -1867,11 +1905,13 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c018';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c071';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
-  return {art, kind: 'move', category: cat, workout: o.s || '', name: (o.swap && st.swap) || st.name || '', side: o.stage === 'start' ? '' : o.side || ''}; }
+  return {art, kind: 'move', category: cat, workout: o.s || '', name: (o.swap && st.swap) || st.name || '', side: o.stage === 'start' ? '' : o.side || '', age: youngAge(o), fig: o.young ? st.fig || '' : ''}; }
+// BLD 985: a session for kids (ages 4 to 10) plays with the kid 3D figure, a session for teens (11 to 17) with the teen figure.
+const youngAge = o => o && o.young ? (KID_BANDS.includes(o.young) ? 'kid' : 'teen') : '';
 function fig3d(){
   const o = S.ov, G = window.GGFig3D;
   if (!o || !document.querySelector('.hj-stagebox svg.gg-move')){ if (G) G.detach(); return; }
@@ -1935,7 +1975,7 @@ function figChips(){
   const off = !G.ok();
   const b = G.body();
   return `<button type="button" class="chip${off ? '' : ' on'}" aria-pressed="${!off}" data-hja="tfig3d">${off ? 'Simple Figure' : '3D Figure'}</button>` +
-    (off ? '' : `<button type="button" class="chip on" aria-pressed="true" data-hja="tfigbody">${b === 'woman' ? 'Figure: Woman' : 'Figure: Man'}</button>`);
+    (off ? '' : `<button type="button" class="chip on" aria-pressed="true" data-hja="tfigbody">${S.ov && S.ov.young ? (b === 'woman' ? 'Figure: Girl' : 'Figure: Boy') : b === 'woman' ? 'Figure: Woman' : 'Figure: Man'}</button>`);
 }
 // Which state the open player is in.
 function stState(o){
@@ -2158,7 +2198,7 @@ function logWork(o, more){ const h = H(); let e = o.logId ? h.wlog.find(x => x.i
   if (!e){ e = {id: uid(), date: today(), s: o.s, title: o.title, moves: o.done.length, mins: o.active ? Math.round(o.active / 60000) : undefined, u: Date.now()}; h.wlog.push(e); o.logId = e.id; markDone(o.key || 'work:' + o.s); checkOn(o.prac ? 'still' : 'move'); }
   Object.assign(e, more || {}, {u: Date.now()}); return e; }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
-  return `${stagePanel('done', o.med ? medOp(o) : {fig: ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
+  return `${o.young && YART[o.s] ? yDone(o) : stagePanel('done', o.med ? medOp(o) : {fig: ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
     ${!o.prac && !o.med ? feelBlock(o) + wqBlock(o) : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}${wr ? `<p class="hj-sub">${esc(wr)}</p>` : ''}
     <label class="hj-fld" style="text-align:left"><span>${o.prac || o.med ? 'How did it feel? (optional)' : 'A word about it (optional)'}</span><input id="hj-wnote" placeholder="${o.prac ? 'Calm, loose, clear...' : 'Felt strong, knees easy...'}"></label>
     <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button>${o.gentle && o.start && !o.med && !o.prac ? memMore() : ''}</div>`; }
@@ -2213,7 +2253,7 @@ function vAuto(o, top){
   const flip = o.side === 'L', pill = brkOn ? '' : st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
   const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
-  const sop = Object.assign({fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
+  const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
     breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined,
     ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep && cntOf ? (st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : '') : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
@@ -4694,7 +4734,7 @@ const GENTLE_ART = {'Steady at the Counter': 'p:rep/gentle-counter-sq', 'Easy Ra
 // number there and run it again. A session with no painting here keeps its kind's painting (GENTLE_ART, MOVE_ART).
 const FIT_ART = {"work": {"A": "p:fit/w-a-sq", "B": "p:fit/w-b-sq", "C": "p:fit/w-c-sq", "D": "p:fit/w-d-sq", "E": "p:fit/w-e-sq", "F": "p:fit/w-f-sq", "G": "p:fit/w-g-sq", "H": "p:fit/w-h-sq", "I": "p:fit/w-i-sq", "J": "p:fit/w-j-sq", "K": "p:fit/w-k-sq", "L": "p:fit/w-l-sq", "R1": "p:fit/w-r1-sq", "R2": "p:fit/w-r2-sq", "R3": "p:fit/w-r3-sq", "R4": "p:fit/w-r4-sq", "R5": "p:fit/w-r5-sq", "R6": "p:fit/w-r6-sq", "R7": "p:fit/w-r7-sq", "R8": "p:fit/w-r8-sq", "R9": "p:fit/w-r9-sq", "R10": "p:fit/w-r10-sq", "R11": "p:fit/w-r11-sq", "R12": "p:fit/w-r12-sq"}, "flow": {"f1": "p:fit/f-f1-sq", "f2": "p:fit/f-f2-sq", "f3": "p:fit/f-f3-sq", "f4": "p:fit/f-f4-sq", "f5": "p:fit/f-f5-sq", "f6": "p:fit/f-f6-sq", "f7": "p:fit/f-f7-sq", "f8": "p:fit/f-f8-sq", "f9": "p:fit/f-f9-sq", "f10": "p:fit/f-f10-sq", "f11": "p:fit/f-f11-sq", "f12": "p:fit/f-f12-sq", "f13": "p:fit/f-f13-sq", "f14": "p:fit/f-f14-sq", "p1": "p:fit/f-p1-sq", "p2": "p:fit/f-p2-sq", "p3": "p:fit/f-p3-sq", "p4": "p:fit/f-p4-sq", "p5": "p:fit/f-p5-sq", "p6": "p:fit/f-p6-sq", "p7": "p:fit/f-p7-sq"}, "pub": {"p1": "p:fit/pf-p1-sq", "p2": "p:fit/pf-p2-sq", "p3": "p:fit/pf-p3-sq", "p4": "p:fit/pf-p4-sq", "p5": "p:fit/pf-p5-sq", "p6": "p:fit/pf-p6-sq", "p7": "p:fit/pf-p7-sq"}, "gentle": {"Balance and Steps": "p:fit/g-balance-and-steps-sq", "Chair Strength": "p:fit/g-chair-strength-sq", "Walk a Little Farther": "p:fit/g-walk-a-little-farther-sq"}};
 // BLD 981: every For Kids and For Teens session's own painting (written by grounded-workshop patches/bld981/art/fileyoung.py place).
-const FIT_ART_Y = {"k1": "p:fit/y-k1-sq", "k2": "p:fit/y-k2-sq", "k3": "p:fit/y-k3-sq", "k4": "p:fit/y-k4-sq", "k5": "p:fit/y-k5-sq", "k6": "p:fit/y-k6-sq", "kd1": "p:fit/y-kd1-sq", "kd2": "p:fit/y-kd2-sq", "kd3": "p:fit/y-kd3-sq", "kd4": "p:fit/y-kd4-sq", "l1": "p:fit/y-l1-sq", "l2": "p:fit/y-l2-sq", "l3": "p:fit/y-l3-sq", "l4": "p:fit/y-l4-sq", "l5": "p:fit/y-l5-sq", "l6": "p:fit/y-l6-sq", "m1": "p:fit/y-m1-sq", "m2": "p:fit/y-m2-sq", "m3": "p:fit/y-m3-sq", "m4": "p:fit/y-m4-sq", "m5": "p:fit/y-m5-sq", "m6": "p:fit/y-m6-sq", "md1": "p:fit/y-md1-sq", "md2": "p:fit/y-md2-sq", "t1": "p:fit/y-t1-sq", "t2": "p:fit/y-t2-sq", "t3": "p:fit/y-t3-sq", "t4": "p:fit/y-t4-sq", "t5": "p:fit/y-t5-sq", "t6": "p:fit/y-t6-sq", "t7": "p:fit/y-t7-sq", "td1": "p:fit/y-td1-sq", "td2": "p:fit/y-td2-sq", "td3": "p:fit/y-td3-sq", "td4": "p:fit/y-td4-sq"};
+const FIT_ART_Y = {"lg1": "p:fit/y-lg1-sq", "kg1": "p:fit/y-kg1-sq", "mg1": "p:fit/y-mg1-sq", "tg1": "p:fit/y-tg1-sq", "k1": "p:fit/y-k1-sq", "k2": "p:fit/y-k2-sq", "k3": "p:fit/y-k3-sq", "k4": "p:fit/y-k4-sq", "k5": "p:fit/y-k5-sq", "k6": "p:fit/y-k6-sq", "kd1": "p:fit/y-kd1-sq", "kd2": "p:fit/y-kd2-sq", "kd3": "p:fit/y-kd3-sq", "kd4": "p:fit/y-kd4-sq", "l1": "p:fit/y-l1-sq", "l2": "p:fit/y-l2-sq", "l3": "p:fit/y-l3-sq", "l4": "p:fit/y-l4-sq", "l5": "p:fit/y-l5-sq", "l6": "p:fit/y-l6-sq", "m1": "p:fit/y-m1-sq", "m2": "p:fit/y-m2-sq", "m3": "p:fit/y-m3-sq", "m4": "p:fit/y-m4-sq", "m5": "p:fit/y-m5-sq", "m6": "p:fit/y-m6-sq", "md1": "p:fit/y-md1-sq", "md2": "p:fit/y-md2-sq", "t1": "p:fit/y-t1-sq", "t2": "p:fit/y-t2-sq", "t3": "p:fit/y-t3-sq", "t4": "p:fit/y-t4-sq", "t5": "p:fit/y-t5-sq", "t6": "p:fit/y-t6-sq", "t7": "p:fit/y-t7-sq", "td1": "p:fit/y-td1-sq", "td2": "p:fit/y-td2-sq", "td3": "p:fit/y-td3-sq", "td4": "p:fit/y-td4-sq"};
 const isGentleLvl = lvl => (lvl || (PUB() ? H().set.level || 'root' : '')) === 'gentle';
 const fitOwn = (id, ses, lvl) => { const t = String((ses && ses.title) || '');
   if (isGentleLvl(lvl)) return FIT_ART.gentle[t] || '';
@@ -5248,6 +5288,20 @@ const CSS = `
 .hj-st .hj-prog span{background:var(--st);}.hj-st .hj-reps{color:var(--st);}.hj-st .hj-stk{color:var(--st);}
 .hj-st .hj-ovtop .hj-kick{color:var(--st);}
 .hj-stagebox{position:relative;margin:10px 0 0;}
+.hj-ykid{position:absolute;inset:0;z-index:10001;pointer-events:none;}
+.hj-ydone{border-radius:22px;overflow:hidden;aspect-ratio:16/9;max-height:min(440px,52vh);margin-left:auto;margin-right:auto;box-shadow:0 10px 30px rgba(40,24,10,.22);}
+.hj-ydone img{display:block;width:100%;height:100%;object-fit:cover;}
+@media (max-width:699px){.hj-ydone{aspect-ratio:1/1;max-height:none;}}
+.hj-yani{position:absolute;left:12px;bottom:14px;width:1.6em;height:1.6em;display:grid;place-items:center;font-size:clamp(26px,6vw,40px);line-height:1;border-radius:50%;background:rgba(255,250,238,.82);box-shadow:0 2px 10px rgba(40,24,10,.22);}
+.hj-ystars{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;max-width:56%;gap:1px 3px;font-size:clamp(15px,3.6vw,22px);line-height:1.1;color:rgba(255,255,255,.62);text-shadow:0 1px 3px rgba(40,24,10,.55);}
+.hj-ystars i{font-style:normal;transition:color .3s,transform .3s;}
+.hj-ystars i.on{color:#ffc53a;transform:scale(1.18);}
+.hj-ytally{position:absolute;right:12px;bottom:14px;padding:4px 10px;border-radius:999px;font-weight:800;font-size:clamp(14px,3.4vw,18px);color:#5a3a06;background:rgba(255,226,140,.92);box-shadow:0 2px 8px rgba(40,24,10,.2);}
+.hj-ycheer{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none;}
+.hj-ycheer i{position:absolute;left:var(--x);top:-12%;font-style:normal;font-size:clamp(18px,4vw,28px);color:#ffc53a;text-shadow:0 1px 3px rgba(80,40,0,.4);animation:hjyc 2.6s cubic-bezier(.3,.1,.6,1) var(--d) both;}
+.hj-ycheer i:nth-child(3n){color:#ff7a59;}.hj-ycheer i:nth-child(4n){color:#4fb3ff;}
+@keyframes hjyc{0%{top:-12%;opacity:0;transform:rotate(0);}12%{opacity:1;}80%{opacity:1;}100%{top:104%;opacity:0;transform:rotate(var(--r));}}
+@media (prefers-reduced-motion: reduce){.hj-ycheer i{animation:none;top:var(--y);opacity:.9;}.hj-ystars i{transition:none;}}
 .hj-stagebox.g3-wait .ggs{--H:clamp(300px,92vw,440px);}
 .hj-stagebox.g3-wait:not(.g3-on) .ggs-fig{opacity:0;}
 .hj-stagebox.g3-wait:not(.g3-on)::after{content:"";position:absolute;left:50%;bottom:9%;width:min(46%,260px);height:16%;transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(closest-side,rgba(255,232,180,.55),rgba(255,232,180,.18) 60%,rgba(255,232,180,0));animation:hjg3w 4.4s ease-in-out infinite;}
