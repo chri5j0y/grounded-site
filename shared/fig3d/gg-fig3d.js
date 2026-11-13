@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'c018';
+const V = 'c071';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -101,15 +101,38 @@ const L = {el: null, cv: null, gc: null, paint: null, stage: null, box: null, ra
 function layer(){
   if (L.el) return L.el;
   const el = document.createElement('div'); el.className = 'g3'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><div class="g3-band"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
+  el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><div class="g3-band"></div><div class="g3-shade"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
   try { new ResizeObserver(() => { L.dirty = true; L.place = 0; L.gr = null; if (L.stage) kick(); else placeArt(); }).observe(el); } catch(e){}
-  L.el = el; L.paint = el.querySelector('.g3-paint'); L.band = el.querySelector('.g3-band'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
+  L.el = el; L.shade = el.querySelector('.g3-shade'); L.paint = el.querySelector('.g3-paint'); L.band = el.querySelector('.g3-band'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
   return el;
 }
-function bodyPref(){
+function basePref(){
   const b = ls.get('gg-fig-body'); if (b === 'man' || b === 'woman') return b;
   try { const p = window.GGFig3D && GGFig3D.profileBody && GGFig3D.profileBody(); if (p === 'man' || p === 'woman') return p; } catch(e){}
   return 'man';
+}
+// BLD 985 (Chris, November 13, 2026: "1", a different 3D figure for each age; "dont make too small, kids are sensitive to being
+// portrayed as small"): a session for kids (ages 4 to 10) plays with the kid figure and a session for teens (11 to 17) with the
+// teen figure (figure-kidm, kidw, teenm, teenw.bin, made by grounded-workshop patches/bld985/fig/kidfig.py). The man or woman
+// setting picks the boy or the girl. The camera frames every body the same way, so a kid fills the stage like the grown-up figure.
+const AGEF = a => a === 'kid' || a === 'teen' ? a : '';
+function bodyPref(){ const b = basePref(), a = AGEF(L.ctx && L.ctx.age); return a ? a + (b === 'woman' ? 'w' : 'm') : b; }
+// BLD 985: kid clothes are bright, teen clothes sporty, each picked to sit in its painting (the art map's kit, else the age's own).
+const KIT = {kid: {shirt: ['#f2b01e', '#2f8fe0', '#e4573d', '#8b5fc9', '#2fae66', '#ff8a3d'], shorts: ['#2c3f74', '#3b2f6e', '#24506b']},
+  teen: {shirt: ['#2a9d8f', '#e76f51', '#3d7ea6', '#c8553d', '#5b8c5a'], shorts: ['#2f3640', '#283845', '#3a3330']}};
+const hx = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), toHx = c => '#' + c.map(v => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('');
+const mixC = (a, b, k) => { const A = hx(a), B = hx(b); return toHx(A.map((v, i) => v + (B[i] - v) * k)); };
+const tones = (c, dark) => dark ? [mixC(c, '#000000', .72), mixC(c, '#000000', .3), mixC(c, '#fff4e0', .45)] : [mixC(c, '#2a1a10', .58), c, mixC(c, '#fff8ea', .62)];
+function kitFor(age, a){
+  const K = KIT[age], id = (a && a.id) || '', n = [...id].reduce((s, ch) => s + ch.charCodeAt(0), 0), k = (a && a.kit) || {};
+  return {shirt: k.shirt || K.shirt[n % K.shirt.length], shorts: k.shorts || K.shorts[n % K.shorts.length]};
+}
+function applyKit(){
+  const st = L.stage; if (!st || !st.U) return; const age = AGEF(L.ctx && L.ctx.age), dark = isDark(), key = age ? [age, L.art && L.art.id, dark].join('|') : '';
+  if (key === (L.kitKey || '')) return;
+  if (!key){ L.kitKey = ''; try { st.theme(dark); } catch(e){} return; }
+  L.kitKey = key; const k = kitFor(age, L.art), U = st.U;
+  try { [['Shirt', k.shirt], ['Shorts', k.shorts]].forEach(([n, c]) => tones(c, dark).forEach((v, i) => U['u' + n + i].value.set(v))); } catch(e){}
 }
 function makeStage(first){
   if (L.stage) return L.stage;
@@ -129,6 +152,9 @@ const has = id => { try { if (L.stage && L.stage.has) return !!L.stage.has(id); 
 // that 3D pattern is in the bundle, else the SVG figure's own pattern id.
 function pick3d(svgId){
   const name = String(L.ctx.name || ''), map = window.GG3D && Array.isArray(window.GG3D.names) ? window.GG3D.names : null;
+  // BLD 985: a kid or teen move names its own 3D pattern (fig: Bear Walk is bear-crawl, Tiptoe Giraffe is calf-raise), used when the
+  // simple figure has no drawing of that move.
+  if (AGEF(L.ctx.age) && L.ctx.fig && has(L.ctx.fig)) return L.ctx.fig;
   if (name && map) for (const [re, id] of map){ try { if ((re instanceof RegExp ? re : new RegExp(re, 'i')).test(name) && has(id)) return id; } catch(e){} }
   return svgId;
 }
@@ -295,8 +321,10 @@ function setArt(){
 }
 function tone(){
   const a = L.art; if (!a || !L.el) return; const m = LUM[a.id] != null ? LUM[a.id] : .6, t = a.tone != null ? a.tone : .5, dark = isDark();
-  const veil = dark ? .5 + .35 * m : Math.max(.12, Math.min(.55, (m - .35) * .9 + t * .2));
+  // BLD 985: a kid painting (vivid) keeps its bright colors: a lighter veil and no sepia.
+  const veil = a.vivid ? (dark ? .3 + .2 * m : .04) : dark ? .5 + .35 * m : Math.max(.12, Math.min(.55, (m - .35) * .9 + t * .2));
   L.el.style.setProperty('--g3-veil', veil.toFixed(3)); L.el.style.setProperty('--g3-sepia', (.25 + .35 * t).toFixed(3));
+  L.el.classList.toggle('g3-vivid', !!a.vivid); L.el.classList.toggle('g3-young', !!AGEF(L.ctx && L.ctx.age));
 }
 // BLD 899 (Chris: "the guy looks like a miniature in a big world", "front plank he has feet on the wall"): the painting is
 // sized so a person standing on its floor line is the figure's own height (scale: a 1.73 m person's height there, as a
@@ -348,6 +376,10 @@ function placeArt(){
   } else { ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)); oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; L.grow = 1; }
   const st = L.paint.style; st.backgroundSize = `${pw.toFixed(0)}px ${ph.toFixed(0)}px`; st.backgroundPosition = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`;
   const tf = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`; L.cv.style.transform = tf + (L.mir ? ' scaleX(-1)' : ''); L.gc.style.transform = tf;
+  // BLD 985: a soft contact shadow on the painting's floor under the figure (as wide as the move's points on the floor), so the
+  // figure sits in the painting.
+  if (L.shade){ const fx = G.floor.length ? G.floor.map(q => q[0]) : [G.fx], lo = Math.min(G.fx, ...fx), hi = Math.max(G.fx, ...fx), w = Math.max(G.hp * .42, hi - lo + G.hp * .22);
+    const ss = L.shade.style; ss.left = ((lo + hi) / 2 + dx - w / 2).toFixed(0) + 'px'; ss.top = (G.fy + dy - G.hp * .045).toFixed(0) + 'px'; ss.width = w.toFixed(0) + 'px'; ss.height = (G.hp * .09).toFixed(0) + 'px'; }
   // For the room check (tests): the painting's box, the figure's move box, and its floor points, in painting units (0 to 1).
   const P = (x, y) => [(x + dx - ox) / pw, (y + dy - oy) / ph];
   L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: G.hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
@@ -362,8 +394,9 @@ function frame(){
   const svg = master(); if (!svg){ detach(); return; }
   const sd = L.force && has(L.force) ? {id: L.force, pair: true} : sided(pick3d(svg.getAttribute('data-move'))), id = sd.id, st = L.stage;
   if (id !== L.move){ if (!has(id)){ unhide(); return; } st.move(id); L.move = id; L.dirty = true; L.place = 0; L.gk = 0; }
-  const dk = isDark(); if (dk !== L.dark){ L.dark = dk; st.theme(dk); setInk(); tone(); L.dirty = true; }
-  const bp = bodyPref(); if (bp !== L.body){ L.body = bp; Promise.resolve(st.body(bp)).then(() => { L.dirty = true; L.place = 0; kick(); }).catch(() => {}); }
+  const dk = isDark(); if (dk !== L.dark){ L.dark = dk; st.theme(dk); L.kitKey = null; setInk(); tone(); L.dirty = true; }
+  const bp = bodyPref(); if (bp !== L.body){ L.body = bp; Promise.resolve(st.body(bp)).then(() => { L.dirty = true; L.place = 0; L.geo = null; kick(); }).catch(() => {}); }
+  applyKit();
   const mir = !sd.pair && svg.classList.contains('gg-flip'); if (mir !== L.mir){ L.mir = mir; L.place = 0; L.cv.style.transform = (L.cv.style.transform || '').replace(/ ?scaleX\(-1\)/, '') + (mir ? ' scaleX(-1)' : ''); }
   const Q = probe(st, id), anim = svg.querySelector('animate');
   let dur = +svg.getAttribute('data-dur') || 0, tau = 0, w;
@@ -456,6 +489,11 @@ const CSS = `
 .g3-paint::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 55%,rgba(255,244,222,0) 40%,rgba(80,50,20,.28));}
 .g3-veil{position:absolute;inset:0;background:#f6ead2;opacity:var(--g3-veil,.3);}
 .g3-fig,.g3-guides{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.g3-shade{position:absolute;display:none;border-radius:50%;background:radial-gradient(closest-side,rgba(40,24,10,.34),rgba(40,24,10,.16) 55%,rgba(40,24,10,0));}
+.g3.g3-young .g3-shade{display:block;}
+.g3.g3-vivid .g3-paint{filter:saturate(1.04);}
+.g3.g3-vivid .g3-paint::after{background:radial-gradient(120% 90% at 50% 55%,rgba(255,244,222,0) 55%,rgba(80,50,20,.14));}
+@media (min-width: 701px) and (pointer: fine){.g3.g3-young .g3-fig{filter:drop-shadow(0 0 1.2px rgba(255,250,236,.9)) drop-shadow(0 0 5px rgba(255,238,200,.4));}}
 .g3-band{position:absolute;left:0;right:0;bottom:0;top:80%;display:none;background:linear-gradient(180deg,rgba(214,186,140,0),rgba(214,186,140,.92) 22px,#cfae7c);}
 .g3.g3-study .g3-band{display:block;}
 .g3.g3-study .g3-paint{filter:sepia(var(--g3-sepia,.4)) saturate(.7) contrast(.9) blur(5px);transform:scale(1.04);-webkit-mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);}
@@ -482,7 +520,7 @@ ${dk('& .g3-veil{background:#120c08;}& .g3-paint{background-color:#2a2018;}& .g3
 (function(){ try { if (document.getElementById('g3-css')) return; const s = document.createElement('style'); s.id = 'g3-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); } catch(e){} })();
 
 window.GGFig3D = {sync, detach, ok, able, load, artFor, has: id => F.ready && L.stage ? has(id) : null,
-  body: bodyPref, setBody(b){ if (b === 'man' || b === 'woman'){ ls.set('gg-fig-body', b); L.dirty = true; kick(); } },
+  body: basePref, figure: bodyPref, setBody(b){ if (b === 'man' || b === 'woman'){ ls.set('gg-fig-body', b); L.dirty = true; kick(); } },
   state(){ return Object.assign({ready: F.ready, failed: F.failed, frames: L.frames, lite: L.stage && L.stage.mode ? L.stage.mode().lite : null}, L.st, {fit: L.fit || null}); },
   // For tests (the room check): show this 3D pattern and this painting whatever the step is; null to go back.
   probe(id, art, exact){ L.force = id || null; L.ctx = Object.assign({}, L.ctx, {art: art || undefined, exact: !!(art && exact)}); L.geo = null; L.place = 0; L.dirty = true; if (L.box){ setArt(); kick(); } },

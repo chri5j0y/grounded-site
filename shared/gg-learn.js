@@ -147,7 +147,7 @@
      imgs[n] behind the scene (a title takes it as its own painting); pN that painting as a paint scene (big scenes);
      cN a candle scene on it (words, big, breathe, paint); fN or fN.move the figure leads on it (breathe, big, words).
      A scene's own img or look always wins. The plan loads with this file, so it is there by the time Play is tapped. */
-  var ARTP = { p: null }, ARTV = 'c021'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings)
+  var ARTP = { p: null }, ARTV = 'c051'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings); BLD 977 c051 (the Maple picture book paintings)
   function artLoad() {
     if (window.GG_ART) return Promise.resolve(window.GG_ART);
     if (ARTP.p) return ARTP.p;
