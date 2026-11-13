@@ -483,7 +483,10 @@
     if (!w.deleted.health || typeof w.deleted.health !== 'object') w.deleted.health = {};
     return w;
   }
-  function tendStarted() { var w = tdata(S.id); return !!(w && (w.lib || (w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)))); }
+  /* Kids and teens keep their own age's Tending (Grounded Fitness for Kids and Teens): a library taken from the Household kitchen
+     stays with the grown-ups (Chris, November 13, 2026: a Maple in the Household opened the grown-up Field Guide workouts). */
+  function wLib(w) { return w && w.lib && !(w.kitLib && !w.movedOnce && isYoung(S.p)) ? w.lib : null; }
+  function tendStarted() { var w = tdata(S.id); return !!(w && (wLib(w) || (w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)))); }
   function tendOn(h) { return h.parts.some(function (k) { return HEALTH_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
   function anyTend(h) { return h.parts.some(function (k) { return TEND_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
 
@@ -498,9 +501,9 @@
     window.GGHealth.init({
       data: function () { return S.id ? tendWrap(S.id) : null; },
       // BLD 867: a plan moved from the Field Guide runs as itself (its own library copy, kept in this vault).
-      fld: function () { var w = tendWrap(S.id); return (w && w.lib) || window.GGTendPublic || null; },
-      fdr: function () { var w = tendWrap(S.id); return (w && w.lib && w.fdr) || null; },
-      tier: function () { var w = tendWrap(S.id); return w && w.lib ? (w.tier || 'guide') : 'public'; },
+      fld: function () { var w = tendWrap(S.id); return wLib(w) || window.GGTendPublic || null; },
+      fdr: function () { var w = tendWrap(S.id); return (wLib(w) && w.fdr) || null; },
+      tier: function () { var w = tendWrap(S.id); return wLib(w) ? (w.tier || 'guide') : 'public'; },
       host: 'home',
       save: function () { saveHome(); },
       // BLD 881: Tending redraws the tab or section showing, and shows itself (go) as Today's Tending section.
@@ -523,7 +526,7 @@
     S.tendInit = S.id;
     return true;
   }
-  function tendReady() { var w = S.id && window.GGP ? tdata(S.id) : null; return !!(window.GGHealth && (window.GGTendPublic || (w && w.lib))); }
+  function tendReady() { var w = S.id && window.GGP ? tdata(S.id) : null; return !!(window.GGHealth && (window.GGTendPublic || wLib(w))); }
   function summary() {
     if (!tendReady() || typeof window.GGHealth.summary !== 'function') return null;
     if (S.tendInit !== S.id) initTending();
@@ -3986,7 +3989,7 @@
       // (Chris and Kayti, November 9, 2026: the same kitchen, different dinners).
       var lsig = o.lib && o.lib.healthJourney ? kitHash(o.lib) : '';
       if (lsig && !homeRec().kitSawLib) { homeRec().kitSawLib = Date.now(); saveHome(); }
-      if (lsig && w && !kitLead(w) && w.kitLibSig !== lsig) {
+      if (lsig && w && !kitLead(w) && !isYoung(S.p) && w.kitLibSig !== lsig) {
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending();
       }
@@ -3997,7 +4000,7 @@
       if (!took && (o.c === cur || (hh.in === o.c && hh.out === cur && !hh.err))) return;
       var info = hasFn('kitchenInfo') ? hCall('kitchenInfo', o.c) : null;
       // BLD 957: the kitchen's recipes are ones this phone does not hold: take the library the kitchen carries.
-      if (!took && info && info.missing && o.lib && o.lib.healthJourney && w && !kitLead(w)) {
+      if (!took && info && info.missing && o.lib && o.lib.healthJourney && w && !kitLead(w) && !isYoung(S.p)) {
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending(); info = hCall('kitchenInfo', o.c);
       }
@@ -4386,7 +4389,7 @@
   var SEED_DAYS = 14;
   function seedsOn() { return !member() && !isYoung(S.p); }
   // A plan moved from the Field Guide runs its own library, so its meals and numbers are its own (no Tending Seeds there).
-  function seedMoved() { var w = S.id ? tdata(S.id) : null; return !!(w && w.lib); }
+  function seedMoved() { var w = S.id ? tdata(S.id) : null; return !!wLib(w); }
   function seedsData() { return window.GGSeedsPublic || null; }
   function loadSeeds() { return window.GGSeedsPublic ? Promise.resolve() : load(SEEDS_JS).catch(function () {}); }
   function seedChip() { return '<span class="hm-seedchip">Seed</span>'; }
