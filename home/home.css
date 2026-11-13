@@ -290,7 +290,7 @@ body.hm-bn .site-footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0
 
 /* For You Today */
 .hm-foryou{padding:0;}
-.hm-foryou .art{height:160px;position:relative;display:block;width:100%;border:0;padding:0;background:var(--cs);overflow:hidden;}
+.hm-foryou .art{height:auto;aspect-ratio:16/9;position:relative;display:block;width:100%;border:0;padding:0;background:var(--cs);overflow:hidden;}   /* BLD 976: the whole 16:9 painting, no head cut */
 .hm-foryou .art img{width:100%;height:100%;object-fit:cover;display:block;}
 .hm-foryou .art .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.94);color:#2C1810;font-size:26px;box-shadow:0 6px 18px rgba(0,0,0,.25);}
 .hm-foryou .body{padding:16px 18px 18px;}
@@ -771,6 +771,10 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 .hm-shelf::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,color-mix(in srgb,var(--sh) 96%,transparent) 0%,color-mix(in srgb,var(--sh) 82%,transparent) 50%,color-mix(in srgb,var(--sh) 30%,transparent) 100%);}
 .hm-shelf::after{display:none;}
 .hm-shelf{min-height:150px;}
+/* BLD 976: each shelf's painting sits above its words, never under them, and shows its people whole */
+.hm-shelf{min-height:0;justify-content:flex-start;}
+.hm-shelf .bg{position:relative;inset:auto;z-index:auto;display:block;flex:none;width:calc(100% + 40px);height:auto;aspect-ratio:16/9;max-height:230px;margin:-18px -20px 8px;object-position:50% 25%;}
+.hm-shelf::before{display:none;}
 .hm-mtool .hm-art{border-radius:12px;}
 .hm-sh-band{display:block;margin:-18px -18px 12px;height:110px;overflow:hidden;border-radius:24px 24px 0 0;}
 .hm-sh-band img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 55%;}
@@ -847,6 +851,26 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
   .hm-thero img.art{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-position:50% 50%;}
 }
 @media (min-width:700px){ .hm-thero{min-height:420px;} .hm-thero .in{padding:36px 44px 34px;} .hm-hcount{right:28px;bottom:28px;} .hm-thero .hm-me{top:22px;right:22px;} }
+/* BLD 976: Today's painting shows whole at every size, never under the day's words, the count, or Settings (the audit found
+   faces under "Tuesday" and cut heads in 12 of the 14 paintings at 820 to 1920). Tablet: the phone's band of words, then the
+   whole wide painting. Computer: the words, the count, and Settings in a column beside the whole painting. */
+@media (min-width:700px){
+  .hm-thero{min-height:0;display:flex;flex-direction:column;background:#33261A;}
+  .hm-thero.eve{background:#1E1C2E;}
+  .hm-thero::after{display:none;}
+  .hm .hm-thero .in{order:1;position:relative;padding:28px 32px 12px;max-width:none;}
+  .hm-thero .hm-hcount{order:2;position:static;align-self:flex-start;margin:0 32px 20px;flex-direction:row;padding:8px 16px 8px 8px;gap:12px;background:rgba(255,247,232,.10);}
+  .hm-thero picture{order:3;position:relative;inset:auto;display:block;width:100%;height:auto;aspect-ratio:5 / 2;}
+  .hm-thero img.art{position:absolute;inset:0;width:100%;height:100%;object-position:50% 50%;}
+}
+@media (min-width:1100px){
+  .hm-thero{display:grid;grid-template-columns:minmax(0,37fr) minmax(0,63fr);grid-template-rows:auto auto 1fr;align-items:start;}
+  .hm .hm-thero .in{grid-column:1;grid-row:1;padding:30px 28px 10px 36px;}
+  .hm-thero .hm-hcount{grid-column:1;grid-row:2;justify-self:start;margin:4px 28px 16px 36px;}
+  .hm-thero .hm-me{grid-column:1;grid-row:3;position:static;justify-self:start;align-self:start;margin:0 0 24px 36px;}
+  .hm-thero picture{grid-column:2;grid-row:1 / 4;align-self:center;}
+  .hm-thero .hm-day{font-size:clamp(64px,6vw,96px);}
+}
 /* the day and the panels beside it */
 .hm-tgrid{display:grid;gap:18px;align-items:start;}
 .hm-tgrid .hm-list{gap:14px;}
@@ -854,6 +878,8 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 /* Right Now: a bold color block over the item's painting */
 .hm-now{position:relative;overflow:hidden;isolation:isolate;border-radius:24px;min-height:200px;padding:22px 22px 20px;color:#FFFCF6;background:var(--c,#4E7D4A);box-shadow:var(--shadow-up);}
 .hm-now .bg{position:absolute;right:0;top:0;width:62%;height:100%;object-fit:cover;z-index:-2;}
+/* BLD 976: the square painting shows whole at the right (no head cut by the card's wide shape) */
+.hm-now .bg{width:auto;max-width:62%;aspect-ratio:1/1;object-position:50% 22%;}
 .hm-now::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--nowc) 0%,var(--nowc) 40%,color-mix(in srgb,var(--nowc) 60%,transparent) 70%,color-mix(in srgb,var(--nowc) 18%,transparent) 100%);}
 .hm-now{--nowc:color-mix(in srgb,var(--c,#4E7D4A) 92%,#1C120A);}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hm-now{--nowc:color-mix(in srgb,var(--c,#9CCB8A) 50%,#1C120A);}}
@@ -866,7 +892,8 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 .hm-now .hm-btn.big{width:auto;min-width:200px;background:#FFFCF6;color:#2C1810;box-shadow:0 8px 22px rgba(0,0,0,.25);}
 .hm-btn.pulse{animation:hmpulse 2.4s ease-in-out infinite;}
 @keyframes hmpulse{0%,100%{box-shadow:0 8px 22px rgba(0,0,0,.25),0 0 0 0 rgba(255,252,246,.55);}50%{box-shadow:0 8px 22px rgba(0,0,0,.25),0 0 0 12px rgba(255,252,246,0);}}
-@media (max-width:599px){ .hm-now .bg{width:100%;opacity:.45;} .hm-now::before{background:linear-gradient(180deg,color-mix(in srgb,var(--nowc) 70%,transparent) 0%,var(--nowc) 70%);} }
+/* BLD 976: on a phone the painting sits above the words, never faded under them */
+@media (max-width:599px){ .hm-now .bg{position:relative;display:block;z-index:auto;width:calc(100% + 44px);max-width:none;height:auto;aspect-ratio:4/3;margin:-22px -22px 16px;object-position:50% 22%;} .hm-now::before{display:none;} }
 /* each thing in the day, the pre-881 card */
 .hm-titem .hm-pc .scene{width:96px;height:96px;}
 .hm-titem .tx{display:flex;flex-direction:column;gap:2px;min-width:0;}
@@ -894,6 +921,31 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 .hm-asub{margin:4px 0 0;font-size:15.5px;color:#F4EBDD;}
 .hm-banner .hm-me{align-self:flex-start;background:rgba(255,252,246,.92);color:#2C1810;}
 @media (min-width:700px){ .hm-banner{min-height:230px;padding:30px 36px;} }
+/* BLD 976: the Week banner keeps every head in view (computer), and on a phone the whole painting sits above the words */
+.hm-app[data-tab="week"] .hm-banner .bg img{object-position:50% 38%;}
+.hm-start .hm-art.wide img{object-position:50% 5%;}
+/* BLD 976: the wide Learn shelf on a computer: the whole painting beside its words */
+@media (min-width:700px){
+  .hm-shelf:first-child{display:grid;grid-template-columns:min(44%,440px) minmax(0,1fr);grid-auto-rows:min-content;align-content:center;column-gap:24px;row-gap:6px;}
+  .hm-shelf:first-child .bg{grid-column:1;grid-row:1 / span 8;width:calc(100% + 20px);max-height:none;margin:-18px 0 -18px -20px;align-self:stretch;aspect-ratio:16/9;height:auto;}
+  .hm-shelf:first-child > :not(.bg){grid-column:2;}
+}
+@media (max-width:699px){
+  .hm-app[data-tab="week"] .hm-banner{flex-direction:column;align-items:stretch;padding:0 0 18px;min-height:0;background:#2C1F14;}
+  .hm-app[data-tab="week"] .hm-banner .bg{position:relative;inset:auto;display:block;z-index:auto;height:auto;aspect-ratio:16/9;}
+  .hm-app[data-tab="week"] .hm-banner .bg img{position:absolute;inset:0;object-position:50% 35%;}
+  .hm-app[data-tab="week"] .hm-banner::after{display:none;}
+  .hm-app[data-tab="week"] .hm-banner .hm-ahl{padding:12px 18px 0;}
+  .hm-app[data-tab="week"] .hm-banner .hm-me{align-self:flex-start;margin:12px 18px 0;}
+  .hm-start .hm-art.wide img{object-position:50% 50%;}
+  /* the Check-in tab's tree painting, whole above the words (Willow's card put a face under "Check-in") */
+  .hm-app[data-tab="checkin"] .hm-banner{flex-direction:column;align-items:stretch;padding:0 0 18px;min-height:0;background:#2C1F14;}
+  .hm-app[data-tab="checkin"] .hm-banner .bg{position:relative;inset:auto;display:block;z-index:auto;height:auto;}
+  .hm-app[data-tab="checkin"] .hm-banner .bg img{position:static;display:block;width:100%;height:auto;max-height:60vh;object-fit:cover;object-position:50% 30%;}
+  .hm-app[data-tab="checkin"] .hm-banner::after{display:none;}
+  .hm-app[data-tab="checkin"] .hm-banner .hm-ahl{padding:12px 18px 0;}
+  .hm-app[data-tab="checkin"] .hm-banner .hm-me{align-self:flex-start;margin:12px 18px 0;}
+}
 /* Living Sober: today's words, the mantra, and the share cards */
 .hm-sk{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:var(--c);margin-top:14px;}
 .hm-sober .hm-sk+.words{margin-top:6px;}
@@ -1523,7 +1575,7 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
 .hm-wp-seedmv .hm-wp-seednut{display:inline-flex;align-items:center;gap:6px;cursor:default;opacity:.75;}
 
 /* BLD 937: Grounded Money. Its Library shelf (Branches), the quiet This Month line on Today, and the room it opens in. */
-.hm-sh-money .bg{object-position:center 45%;}
+.hm-sh-money .bg{object-position:50% 10%;}   /* BLD 976: the faces in view above the words */
 .hm-money{min-width:0;margin-top:4px;}
 .hm-moneyline{display:flex;align-items:center;gap:14px;width:100%;min-width:0;margin:12px 0;padding:12px 14px;border:1px solid var(--line);border-radius:18px;background:var(--card-2);color:var(--ink);text-align:left;font:inherit;cursor:pointer;}
 .hm-moneyline:hover{border-color:color-mix(in srgb,#6E9C6B 45%,var(--line));}
