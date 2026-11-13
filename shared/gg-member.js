@@ -430,6 +430,8 @@
   // A Member clip: name = hex of the first 16 bytes of HMAC SHA-256(clip key, voice + '|' + sentence); file = 12-byte IV
   // plus AES-GCM of the mp3 at <round>/<folder>/<name>.bin. Resolves a blob URL, or null when it is missing.
   var CK = null, CACHE = {};
+  // BLD 983 (folder m and the public check alike): the female voice ('jenny' in code) plays Ashley's clips; FEMALE = 'jenny' plays the kept Jenny clips (shared/gg-learn.js, patches/bld983/JENNY-KEPT.md).
+  var FEMALE = 'ashley';
   function clipKeys() {
     var a = audio(); if (!a || !subtle) return Promise.resolve(null);
     if (CK && CK.raw === a.key) return CK.p;
@@ -440,7 +442,7 @@
   function clipName(voice, text) {
     return clipKeys().then(function (ks) {
       if (!ks) return null;
-      return subtle.sign('HMAC', ks.h, enc.encode(voice + '|' + text)).then(function (sig) { return Array.prototype.map.call(new Uint8Array(sig).slice(0, 16), function (b) { return pad(b.toString(16)); }).join(''); });
+      return subtle.sign('HMAC', ks.h, enc.encode((voice === 'jenny' ? FEMALE : voice) + '|' + text)).then(function (sig) { return Array.prototype.map.call(new Uint8Array(sig).slice(0, 16), function (b) { return pad(b.toString(16)); }).join(''); });
     });
   }
   // Public first (lead, BLD 908): many Member sentences are already recorded as public v1 clips (the Readings Library, Willow,
@@ -450,6 +452,7 @@
   // goes straight to folder m. Known answers are kept for this visit.
   function pubName(voice, text) {
     if (window.GGLearn && typeof GGLearn.clipName === 'function') return GGLearn.clipName(voice, text);
+    if (voice === 'jenny') voice = FEMALE;
     var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
     for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
     h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);

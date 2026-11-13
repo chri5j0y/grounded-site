@@ -60,8 +60,11 @@
     return out;
   }
   function chunksOf(r) { return chunkInfo(r).map(function (c) { return c.t; }); }
+  // BLD 983: the female voice ('jenny' in code) plays Ashley's clips; FEMALE = 'jenny' plays the kept Jenny clips (shared/gg-learn.js, patches/bld983/JENNY-KEPT.md).
+  var FEMALE = 'ashley';
   // cyrb53 (a public domain 53-bit string hash, by bryc), the same as GGLearn.clipName in shared/gg-learn.js, byte for byte.
   function clipName(voice, text) {
+    if (voice === 'jenny') voice = FEMALE;
     var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
     for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
     h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
@@ -224,7 +227,7 @@
   function clipUrl(v, t) { return REC.base + REC.round + '/' + nameOf(v, t) + '.mp3'; }
   var SPEEDS = [['0.8', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']], SPEED_KEY = 'gg_voice_speed';
   function speed() { var v = 1; try { v = parseFloat(localStorage.getItem(SPEED_KEY)) || 1; } catch (e) {} return Math.min(1.5, Math.max(0.6, v)); }
-  var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] }, REST = 450;
+  var TRIM = { brian: [0.10, 0.28], jenny: FEMALE === 'ashley' ? [0.15, 0.74] : [0.15, 0.78] }, REST = 450;  // Ashley about 0.21 and 0.83 (BLD 983)
   // The Reader (GWG BLD 799): one shared key for every reading player on the site.
   var READER_KEY = 'gg_voice_reader';
   var MEM = null; // this visit's choice, for a device where storage is blocked

@@ -82,8 +82,11 @@
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
   /* ---------- clip names: the same as GGLearn.clipName and GGRead.clipName, byte for byte ---------- */
+  // BLD 983: the female voice ('jenny' in code) plays Ashley's clips; FEMALE = 'jenny' plays the kept Jenny clips (shared/gg-learn.js, patches/bld983/JENNY-KEPT.md).
+  var FEMALE = 'ashley';
   // cyrb53 (a public domain 53-bit string hash, by bryc)
   function ownClipName(voice, text) {
+    if (voice === 'jenny') voice = FEMALE;
     var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
     for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
     h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
@@ -281,7 +284,7 @@
     /* the voice: one audio element, started on the tap that opened the player, reused for every sentence */
     var AU = window.Audio ? new Audio() : null;
     if (AU) { AU.preload = 'auto'; if (S.voiceOn) { try { AU.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAACAgICA'; var pp = AU.play(); if (pp && pp.catch) pp.catch(function () {}); } catch (e) {} } }
-    var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] }; // the silence each voice's recordings carry before and after the words
+    var TRIM = { brian: [0.10, 0.28], jenny: FEMALE === 'ashley' ? [0.15, 0.74] : [0.15, 0.78] }; // the silence each voice's recordings carry before and after the words (Ashley about 0.21 and 0.83, BLD 983)
     function speed() { try { return window.GGRead && GGRead.speed ? GGRead.speed() : 1; } catch (e) { return 1; } }
     function est(t) { return Math.max(1400, String(t).split(/\s+/).length * 60000 / (165 * speed())); }
     function hush() {

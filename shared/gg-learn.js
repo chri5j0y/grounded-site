@@ -614,8 +614,16 @@
     if (V.helper && /-helper$/.test(l.id)) return V.helper;
     return (V.tracks || {})[t.id] || V.all;
   }
+  /* BLD 983, Ashley Joins the Cast: the female voice is Ashley (Azure en-US-AshleyNeural, standard, plain, as Jenny was).
+     Lessons, apps, and sealed libraries still call that voice 'jenny'; FEMALE names the clips it plays: public
+     v1/ashley/<cyrb53 of "ashley" and the sentence>, locked HMAC(key, "ashley|" + sentence). Every Jenny clip is kept in R2
+     (patches/bld983/JENNY-KEPT.md), so FEMALE = 'jenny' here and in read.js, gg-readings.js, gg-guided.js, and gg-member.js
+     plays them again. KEEP_JENNY: Heartwood's locked clips (folder h) stay Jenny until they are recorded with its key. */
+  var FEMALE = 'ashley', KEEP_JENNY = { h: 1 };
+  function clipVoice(v) { return v === 'jenny' ? FEMALE : v; }
   // cyrb53 (a public domain 53-bit string hash, by bryc): the same sentence always gets the same name.
   function clipName(voice, text) {
+    voice = clipVoice(voice);
     var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
     for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
     h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
@@ -647,7 +655,8 @@
     return SKEYS[k.key];
   }
   function sealedName(k, voice, text) {
-    return sealedKeys(k).then(function (ks) { return crypto.subtle.sign('HMAC', ks[1], new TextEncoder().encode(voice + '|' + text)); }).then(function (sig) {
+    var v = voice === 'jenny' && KEEP_JENNY[k.folder] ? 'jenny' : clipVoice(voice);
+    return sealedKeys(k).then(function (ks) { return crypto.subtle.sign('HMAC', ks[1], new TextEncoder().encode(v + '|' + text)); }).then(function (sig) {
       return Array.prototype.map.call(new Uint8Array(sig).slice(0, 16), function (b) { return (b < 16 ? '0' : '') + b.toString(16); }).join('');
     });
   }
@@ -1293,7 +1302,8 @@
     // Silence each voice's recordings carry before and after the words (measured October 13, 2026: Brian about 0.14 and 0.36
     // seconds, Jenny about 0.21 and 0.87). The player skips most of it, so the rest between sentences is the rest we choose.
     // Page video clips (audio: 'pv') were trimmed in the files themselves, so they play whole.
-    var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] };
+    // BLD 983: Ashley carries about 0.21 and 0.83 seconds (16 sentences measured November 13, 2026).
+    var TRIM = { brian: [0.10, 0.28], jenny: FEMALE === 'ashley' ? [0.15, 0.74] : [0.15, 0.78] };
     function play(src, text, t, fin, who) {
       var cut = TRIM[who] || [0, 0], LEAD = cut[0], TAIL = cut[1];
       if (!src || !window.Audio) return false;
