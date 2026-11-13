@@ -15,9 +15,9 @@
 (function () {
   var synth = window.speechSynthesis;
   var NOVELTY = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|organ|superstar|trinoids|whisper|wobble|zarvox|junior|grandma|grandpa|kathy|shelley|sandy|flo\b|rocko|eddy|reed|ralph|fred/i;
-  var GOOD = /\b(andrew|brian|guy|christopher|eric|roger|steffan|evan|nathan|tom|aaron|arthur|jamie|oliver|daniel|ryan|thomas|davis|tony|jason|jenny|aria|ava|emma|michelle|samantha|allison|susan|serena|karen|moira|tessa|zoe|nicky|sonia|libby)\b/i;
+  var GOOD = /\b(andrew|brian|ashley|guy|christopher|eric|roger|steffan|evan|nathan|tom|aaron|arthur|jamie|oliver|daniel|ryan|thomas|davis|tony|jason|jenny|aria|ava|emma|michelle|samantha|allison|susan|serena|karen|moira|tessa|zoe|nicky|sonia|libby)\b/i;
   var MALE = /\b(andrew|brian|guy|christopher|eric|roger|steffan|evan|nathan|tom|aaron|arthur|jamie|oliver|daniel|ryan|thomas|davis|tony|jason|george|william|james|matthew|male)\b/i;
-  var FEMALE = /\b(jenny|aria|ava|emma|michelle|samantha|allison|susan|serena|karen|moira|tessa|zoe|nicky|sonia|libby|victoria|kate|fiona|joanna|salli|kimberly|ivy|natasha|martha|female)\b/i;
+  var FEMALE_DEVICE = /\b(ashley|jenny|aria|ava|emma|michelle|samantha|allison|susan|serena|karen|moira|tessa|zoe|nicky|sonia|libby|victoria|kate|fiona|joanna|salli|kimberly|ivy|natasha|martha|female)\b/i;
   var P = { pref: null, rate: 0.95, pitch: 1, key: 'gg_voice' };
   var SPEEDS = [['0.8', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']], SPEED_KEY = 'gg_voice_speed';
   function speed() { var v = 1; try { v = parseFloat(localStorage.getItem(SPEED_KEY)) || 1; } catch (e) {} return Math.min(1.5, Math.max(0.6, v)); }
@@ -28,8 +28,11 @@
   function pageTree() { var m = /^\/(maple|aspen|pine|birch|oak|sequoia|willow|grove)(\/|$)/.exec(location.pathname || ''); return m ? m[1] : ''; }
   // The recorded voice for a tree name (or true for this page's tree); '' when there is none.
   function treeVoice(t) { return TREE_VOICE[t === true || !t ? pageTree() : t] || ''; }
+  // BLD 983: the female voice ('jenny' in code) plays Ashley's clips (ashley/<cyrb53 of "ashley" and the text>); FEMALE = 'jenny' plays the kept Jenny clips (shared/gg-learn.js, patches/bld983/JENNY-KEPT.md).
+  var FEMALE = 'ashley';
   // cyrb53 (a public domain 53-bit string hash, by bryc), the same as GGLearn.clipName in shared/gg-learn.js, byte for byte.
   function clipName(voice, text) {
+    if (voice === 'jenny') voice = FEMALE;
     var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
     for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
     h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
@@ -61,7 +64,7 @@
     return q;
   }
   function score(v) {
-    var s = quality(v), m = MALE.test(v.name), f = FEMALE.test(v.name);
+    var s = quality(v), m = MALE.test(v.name), f = FEMALE_DEVICE.test(v.name);
     if (P.pref === 'male') s += m ? 25 : (f ? -10 : 0);
     if (P.pref === 'female') s += f ? 25 : (m ? -10 : 0);
     return s;
@@ -175,7 +178,7 @@
   /* Even rests (BLD 797, Chris, October 13, 2026, matching the videos): each voice's recordings carry silence before and
      after the words (Brian about 0.14 and 0.36 seconds, Jenny 0.21 and 0.87); most of it is skipped, then a 0.45 second
      rest, and the next chunk downloads while one plays. */
-  var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] }, REST = 450, pre = null;
+  var TRIM = { brian: [0.10, 0.28], jenny: FEMALE === 'ashley' ? [0.15, 0.74] : [0.15, 0.78] }, REST = 450, pre = null;  // Ashley about 0.21 and 0.83 (BLD 983)
   function ahead(k) {
     var it = q[k]; if (!it || !runVoice || !window.Audio) return;
     if (runLocked) { if (!miss[missKey(it.t)]) srcFor(it.t); return; }   // unlocks the next clip while this one plays

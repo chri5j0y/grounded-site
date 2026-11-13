@@ -38,7 +38,7 @@
     '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
     '/shared/gg-life.js?v=b907',     // Health and Ability: the example and tip lines under a question
     '/aspen/life.js?v=b907',         // window.ASPEN_LIFE notes, read by those lines
-    '/shared/gg-guided.js?v=b907',   // the shared player (it loads gg-guided.css itself)
+    '/shared/gg-guided.js?v=c030',   // the shared player (it loads gg-guided.css itself)
     '/shared/guided/aspen.js?v=b907' // window.GG_GUIDED.aspen, every spoken line
   ];
   var PARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // aspen/index.html PARTS 1130, in order
