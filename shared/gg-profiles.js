@@ -105,6 +105,20 @@
      places that one record in another profile on this device: a child a
      grown-up opens already, or a teen or another grown-up who types their own
      passcode right there. It writes only that record and reads nothing back.
+
+   Household on One Device (GWG BLD 980, shared/gg-house.js, loaded when needed)
+   - Profiles on one device can form a household that shares the Family Kitchen, Grounded Money, and the Family
+     Planner. Either side adds, and the other says yes: a grown-up adds a profile (it sees Join This Household? the
+     next time it opens), or a new profile asks during setup (a household grown-up says yes).
+   - Each profile gets a key pair the first time it opens here: the public half in the open list (p.pub), the
+     private half inside the locked vault (vault.hkey). A household key is passed to a new member locked to that
+     public half, so no passcode is ever shared and no profile's private data is ever read by another.
+   - The household's shared things live in one box (gg-house:<id>) locked with the household key, which each member
+     keeps inside their own vault (vault.house). Check-ins, journal, and growth plan never enter it.
+     GGP.house.load()                 promise of GGHouse (shared/gg-house.js)
+     GGP.house.from(id, pass)         a household grown-up types their passcode here: their vault.house only
+     GGP.house.made(id)               what a new profile's setup knows (who made it, the grown-up's vault.house)
+     GGP.onSave(fn)                   fn(ids) after a profile open here saves
    ===================================================================== */
 (function () {
   if (window.GGP) return;
@@ -217,6 +231,40 @@
     });
   }
 
+  /* ---------- Household on One Device (GWG BLD 980) ---------- */
+  var HOUSE_SRC = '/shared/gg-house.js?v=c026', houseP = null, MADE = {}, saveHooks = [];
+  function houseHere() { try { var j = JSON.parse(localStorage.getItem('gg-house-v1')); return !!(j && Array.isArray(j.list) && j.list.length); } catch (e) { return false; } }
+  function needHouse() {
+    if (window.GGHouse) return Promise.resolve(window.GGHouse);
+    if (!houseP) houseP = new Promise(function (ok, no) {
+      var s = document.createElement('script'); s.src = HOME + HOUSE_SRC;
+      s.onload = function () { if (window.GGHouse) ok(window.GGHouse); else { houseP = null; no(new Error('Household could not load. Check the connection and try again.')); } };
+      s.onerror = function () { houseP = null; s.remove(); no(new Error('Household could not load. Check the connection and try again.')); };
+      document.head.appendChild(s);
+    });
+    return houseP;
+  }
+  // The profile's own key pair: the public half in the open list, the private half locked in its vault.
+  function pubMake(id, raw, data) {
+    var p = getP(id); if (!p || p.pub || !subtle || !raw || !data) return Promise.resolve(false);
+    var A = { name: 'ECDH', namedCurve: 'P-256' };
+    return subtle.generateKey(A, true, ['deriveBits']).then(function (kp) {
+      return Promise.all([subtle.exportKey('jwk', kp.publicKey), subtle.exportKey('jwk', kp.privateKey)]);
+    }).then(function (j) {
+      var q = getP(id); if (!q || q.pub) return false;
+      data.hkey = { x: j[1].x, y: j[1].y, d: j[1].d, at: todayStr() };
+      return writeVault(id, raw, data).then(function () { var q2 = getP(id); if (!q2) return false; q2.pub = { x: j[0].x, y: j[0].y }; putP(q2); return true; });
+    }).catch(function () { return false; });
+  }
+  // Every profile open here gets its key pair, one after another, soon after a switch settles.
+  function pubsSoon() {
+    setTimeout(function () {
+      Object.keys(open).reduce(function (pr, id) { return pr.then(function () { var o = open[id], p = getP(id); return o && p && !p.pub ? pubMake(id, o.raw, o.data) : null; }); }, Promise.resolve()).then(function () {
+        if (cur && houseHere()) needHouse().catch(function () {});
+      });
+    }, 900);
+  }
+
   /* ---------- session (survives page loads for 1, 8, or 24 hours) ---------- */
   function idb() { return new Promise(function (res, rej) { var r = indexedDB.open('gg-session', 1); r.onupgradeneeded = function () { r.result.createObjectStore('s'); }; r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; }); }
   function sessPut(v) { return idb().then(function (db) { return new Promise(function (res) { var t = db.transaction('s', 'readwrite'); t.objectStore('s').put(v, 'cur'); t.oncomplete = res; t.onerror = res; }); }).catch(function () {}); }
@@ -254,6 +302,7 @@
         if (!silent) { try { localStorage.setItem(PING_OPEN, String(Date.now())); } catch (e) {} }
         emit('change');
         if (data.moveCarry) carryIn(id);
+        pubsSoon();   // BLD 980
       });
     });
   }
@@ -284,7 +333,10 @@
   function save(id) {
     var ids = id ? [id] : Object.keys(open);
     if (cur && ids.indexOf(cur.id) > -1) keepSafeCheck();
-    return Promise.all(ids.map(function (i) { return open[i] ? writeVault(i, open[i].raw, open[i].data) : null; }));
+    return Promise.all(ids.map(function (i) { return open[i] ? writeVault(i, open[i].raw, open[i].data) : null; })).then(function (r) {
+      saveHooks.slice().forEach(function (fn) { try { fn(ids); } catch (e) {} });   // BLD 980
+      return r;
+    });
   }
 
   /* ---------- creating a profile ---------- */
@@ -316,6 +368,10 @@
         return (rootOk(p) ? rootMake(p, raw, vault).catch(function () { return null; }) : Promise.resolve(null)).then(function () {
           putP(p);
           return writeVault(id, raw, vault);
+        }).then(function () {
+          // BLD 980: the key pair from the start, and what the household step may need (the grown-up's household key)
+          MADE[id] = { by: cur ? cur.id : '', grownId: grown ? grown.id : '', helperOf: helperOf || '', gHouse: g && g.data && g.data.house ? JSON.parse(JSON.stringify(g.data.house)) : null };
+          return pubMake(id, raw, vault);
         }).then(function () {
           if (g && grownOpens(o.age)) { g.data.keys = g.data.keys || {}; g.data.keys[id] = b64(raw); return writeVault(grown.id, g.raw, g.data); }
           if (helperOf) { var h = open[helperOf]; h.data.keys = h.data.keys || {}; h.data.keys[id] = b64(raw); return writeVault(helperOf, h.raw, h.data); }
@@ -651,9 +707,12 @@
               try { window.dispatchEvent(new CustomEvent('ggp-created', { detail: { id: id, name: st.name } })); } catch (e) {}
             };
             var rw = open[id] && open[id].data && open[id].data.rootWords;
-            if (rw) after = rootShow(id, rw.split(' '), false).catch(function () {}).then(fin);
+            // BLD 980: a new profile meets one more step, Join a Household on This Device?, when a household is here
+            var hs = houseHere() ? function () { return needHouse().then(function (H) { return H.setup(id); }).catch(function () {}); } : null;
+            if (rw) after = rootShow(id, rw.split(' '), false).catch(function () {}).then(hs).then(fin);
+            else if (hs) after = Promise.resolve().then(hs).then(fin);
             d.close(true);
-            if (!rw) fin();
+            if (!rw && !hs) fin();
           }).catch(function () {});
         };
       }
@@ -853,6 +912,7 @@
     var wasActive = cur && cur.id === id;
     dropP(id); delete open[id];
     if (window.GGGrowth && GGGrowth.forget) GGGrowth.forget(id);
+    if (window.GGHouse && GGHouse.forget) GGHouse.forget(id);   // BLD 980
     return wasActive ? lock() : Promise.resolve(emit('change'));
   }
   function manage(id) {
@@ -1534,7 +1594,7 @@
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
   var ACCT_SRC = ['/shared/gg-account.js?v=b971', '/shared/gg-sync.js?v=b979'], CARRY = 'gg-acct-carry';
-  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created'];
+  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub'];
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
   function carryLoad() {
@@ -1712,7 +1772,14 @@
       profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); }
     },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
-    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} } : null; },
+    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {}, pub: p.pub || null } : null; },
+    // BLD 980: Household on One Device (shared/gg-house.js)
+    house: {
+      load: needHouse, here: houseHere,
+      from: function (id, pass) { var p = getP(id); if (!p || p.age !== 'adult') return Promise.reject(new Error('Choose a grown-up in the household.')); if (open[id]) return Promise.resolve(JSON.parse(JSON.stringify(open[id].data.house || {}))); return rawFromPass(p, pass || '').then(function (raw) { return readVault(id, raw); }).then(function (d) { return JSON.parse(JSON.stringify(d.house || {})); }); },
+      made: function (id) { var m = MADE[id] || null; delete MADE[id]; return m; }
+    },
+    onSave: function (fn) { saveHooks.push(fn); },
     tree: function (id) { return treeOf(getP(id)); },
     setTree: function (id, t) { var p = getP(id); if (!p || p.age !== 'adult' || !open[id]) return false; if (t === 'sequoia' || t === 'birch') p.tree = t; else delete p.tree; putP(p); emit('change'); return true; },
     helpers: function (id) { var p = getP(id); return p ? (p.helpers || []).slice() : []; },
@@ -1739,7 +1806,7 @@
     },
     ready: null
   };
-  readyP = (subtle ? resume() : Promise.resolve()).then(function () { emit('ready'); if (cur) keepSafeCheck(); });
+  readyP = (subtle ? resume() : Promise.resolve()).then(function () { emit('ready'); if (cur) { keepSafeCheck(); pubsSoon(); } });
   window.GGP.ready = readyP;
 
   function boot() { addCSS(); loadAvatars(); mountNav(); paintAll(); if (BRING) { BRING = false; readyP.then(function () { setTimeout(bringIn, 200); }); } }

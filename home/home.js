@@ -55,7 +55,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c021', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c026', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c021';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -1208,6 +1208,8 @@
   function tendPubDone() { var w = tdata(S.id); return !!(w && w.health && obj(w.health.set).pubDone); }
   function tendIsReady() { var sm = summary(); return !!(sm && sm.ready !== false); }
   function tableOf() {
+    // BLD 980: a joined Family Kitchen (a household's) sets the table
+    var kj = S.id && tendReady() && hasFn('kitchen') ? hCall('kitchen') : null; if (kj && kj.joined && kj.table > 0 && kj.table < 30) return Math.round(kj.table);
     var s = tendSet(), house = obj(s.house), n = (+house.adults || 0) + arr(house.kids).length || num(s.household) || 0;
     return n > 0 && n < 30 ? Math.round(n) : 0;   // BLD 935 (audit M4): a table of 1 reads 1 on every screen
   }
@@ -1345,7 +1347,9 @@
     if (tab === 'week' && !member()) b = isYoung(S.p) ? BANNER.weekTeen : BANNER.weekStart;   // BLD 935 (audit M1)
     if (b[0] === 'mytree' || b[0] === 'learn') return bannerArt(tab, b, b[0] === 'mytree' ? treeArt(S.tree, true) : PIMG + 'learn-banner-wide.webp', b[0] === 'mytree' ? treeArt(S.tree) : PIMG + 'learn-banner-wide.webp');
     var wide = b[0] === 'tree' ? IMG + 'p-growth-wide.webp' : b[0] === 'recipes' ? PIMG + 'recipes-banner-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? IMG + 'p-growth-banner-narrow.webp' : b[0] === 'recipes' ? PIMG + 'recipes-banner-narrow.webp' : HERO + 'library-phone.webp';
-    return '<header class="hm-ah hm-banner"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + narrow + '"><img src="' + wide + '" alt="" fetchpriority="high"></picture>' +
+    // BLD 976: the Week banner's kitchen painting shows whole above the words on a phone (the tall one put a face under the title)
+    if (b[0] === 'recipes') narrow = wide;
+    return '<header class="hm-ah hm-banner hm-ban-' + b[0] + '"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + narrow + '"><img src="' + wide + '" alt="" fetchpriority="high"></picture>' +
       '<div class="hm-ahl"><div class="hm-ak">The Grounded Way</div><h1 class="hm-at">' + esc(headingOf(tab)) + '</h1><p class="hm-asub">' + esc(b[1]) + '</p></div>' + meBtn() + '</header>';
   }
   function bannerArt(tab, b, wide, narrow) {
@@ -2608,7 +2612,9 @@
       var hh = tableOf(), fam = familyHtml(h);
       // BLD 963 (Kaden could not find Household): Our Household on a Grounded Account leads this sheet for a grown-up.
       var ourH = acctFor() ? '<article class="hm-card hm-p-branches hm-ourh"><div class="hm-hd">' + pb(PEOPLE + 'household-sq.webp') + '<div><div class="hm-k">Our Household</div><div class="hm-sub">Up to 6 people, each with their own private account, sharing the Family Kitchen, Grounded Money, and the Family Planner.</div></div></div><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-branches" data-hm-acct="household">' + I('people') + (acctIn() ? 'Open Our Household' : 'Sign In to Start a Household') + '</button></div></article>' : '';
-      b.innerHTML = ourH + '<article class="hm-wcard hm-tn-p">' + tile(PIMG + 'your-table-sq.webp') + '<div class="tx"><span class="ey">Your Table</span><b>' + (hh ? hh + (hh === 1 ? ' person at your table' : ' people at your table') : 'The people at your table') + '</b><small>Recipes and the shopping list follow this number. Change it in Tending setup.</small></div><button type="button" class="hm-pill" data-hm-me="settings">Change</button></article>' +
+      // BLD 980: Our Household on this device, the local version (shared/gg-house.js)
+      var devH = window.GGHouse ? GGHouse.card({ pic: pb(PEOPLE + 'household-sq.webp'), I: I }) : '';
+      b.innerHTML = ourH + devH + '<article class="hm-wcard hm-tn-p">' + tile(PIMG + 'your-table-sq.webp') + '<div class="tx"><span class="ey">Your Table</span><b>' + (hh ? hh + (hh === 1 ? ' person at your table' : ' people at your table') : 'The people at your table') + '</b><small>Recipes and the shopping list follow this number. Change it in Tending setup.</small></div><button type="button" class="hm-pill" data-hm-me="settings">Change</button></article>' +
         (fam || '<article class="hm-card hm-p-branches"><div class="hm-hd">' + pb(PEOPLE + 'household-sq.webp') + '<div><div class="hm-k">Your Family</div><div class="hm-sub">Add the people you tend with. Each one has a tree of their own.</div></div></div><div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm="addkid">' + I('plus') + 'Add a Family Member</button><button type="button" class="hm-btn line hm-p-branches" data-hm="addlove">' + I('love') + 'Someone I Love</button></div></article>');
       return;
     }
@@ -4068,6 +4074,76 @@
       if (S.view === 'welcome') render(); else acctPaint();
     });
   }
+  /* ---------- BLD 980: Household on One Device (shared/gg-house.js) ----------
+     The local version of the Household: profiles on this device share the Family Kitchen (with the table count),
+     Grounded Money's plan and logs, and the Family Planner through one locked box, each member holding the key in
+     their own vault. Home gives it two adapters, the same reads and writes the account spaces use, keyed to this
+     device (homeRec().dhKit and dhMon), and puts the kitchen and money back when a person leaves. */
+  var HOUSE_JS = '/shared/gg-house.js?v=c026';
+  var DKIT = {
+    get: function () {
+      if (PREVIEW || !S.id || !S.p || S.p.age !== 'adult' || !GGP.isOpen(S.id)) return null;
+      if (!tendReady()) return loadTending().then(function () { return tendReady() ? DKIT.get() : null; });
+      if (S.tendInit !== S.id) initTending();
+      var c = hasFn('kitchenCode') ? hCall('kitchenCode') : null; if (!c) return null;
+      var w = tendWrap(S.id), k = hasFn('kitchen') ? hCall('kitchen') : null, o = { c: c, t: k && k.table ? k.table : 0 };
+      if (w && w.lib && w.lib.healthJourney) o.lib = { healthJourney: w.lib.healthJourney, audio: w.lib.audio || null };
+      return o;
+    },
+    put: function (o) {
+      if (PREVIEW || !o || typeof o.c !== 'string' || !S.id || !GGP.isOpen(S.id)) return;
+      if (!tendReady()) return loadTending().then(function () { return tendReady() ? DKIT.put(o) : undefined; });
+      if (S.tendInit !== S.id) initTending();
+      var w = tendWrap(S.id), h = homeRec(), c = o.c;
+      if (kitLead(w)) return;   // a profile with its own moved library leads its kitchen, as on the account
+      if (c === (hCall('kitchenCode') || '')) { h.dhKit = c; return saveHome(); }
+      if (o.lib && o.lib.healthJourney && w && w.kitLibSig !== kitHash(o.lib)) {
+        w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = kitHash(o.lib);
+        S.tendInit = null; initTending(); c = kitAlign(c);
+      }
+      var info = hCall('kitchenInfo', c);
+      if (!info || info.missing || !hCall('kitchenJoin', c)) return;
+      h.dhKit = hCall('kitchenCode') || c;
+      return saveHome().then(function () { toast('Your Family Kitchen matches your household.'); render(); });
+    }
+  };
+  var DMON = {
+    get: function () {
+      if (PREVIEW || !S.id || !S.p || S.p.age !== 'adult' || !GGP.isOpen(S.id)) return null;
+      var m = GGP.data(S.id, 'money'), hh = obj(homeRec().dhMon), o = {};
+      if (!m || !m.pid) return null;
+      if (hh.pid && m.pid !== hh.pid) return null;   // Return to My Own Plan: this plan stays private
+      MKEYS.forEach(function (k) { if (m[k] !== undefined) o[k] = m[k]; });
+      return o;
+    },
+    put: function (o) {
+      if (PREVIEW || !o || !o.pid || !S.id || !S.p || S.p.age !== 'adult' || !GGP.isOpen(S.id)) return;
+      var m = GGP.data(S.id, 'money'), live = function (l) { return Array.isArray(l) && l.some(function (x) { return x && !x.x; }); };
+      if (m.pid && o.pid !== m.pid && !m.own && (live(m.lines) || live(m.income))) m.own = { pid: m.pid, lines: m.lines, income: m.income, ideas: m.ideas };
+      MKEYS.forEach(function (k) { if (o[k] !== undefined) m[k] = o[k]; });
+      m.u = Date.now(); homeRec().dhMon = { pid: o.pid };
+      return saveHome().then(function () { if (MN.ctl && MN.ctl.refresh) MN.ctl.refresh(); });
+    }
+  };
+  // Leaving: the kitchen and money this device household gave go back to the person's own
+  function dhLeave() {
+    if (!S.id || !GGP.isOpen(S.id)) return;
+    var h = homeRec(), m = GGP.data(S.id, 'money'), mh = obj(h.dhMon);
+    if (mh.pid && m && m.pid === mh.pid) { if (m.own) { ['pid', 'lines', 'income', 'ideas'].forEach(function (k) { m[k] = m.own[k]; }); delete m.own; } else m.pid = 'm' + Date.now().toString(36); m.u = Date.now(); }
+    delete h.dhMon;
+    var kit = h.dhKit; delete h.dhKit;
+    var job = kit ? loadTending().then(function () { if (!tendReady()) return; if (S.tendInit !== S.id) initTending(); var k = hCall('kitchen'); if (k && k.joined && hasFn('kitchenLeave')) hCall('kitchenLeave'); }) : Promise.resolve();
+    return job.then(saveHome).then(function () { render(); });
+  }
+  function houseHome() {
+    if (PREVIEW) return;
+    load(HOUSE_JS).then(function (ok) {
+      if (!ok || !window.GGHouse) return;
+      GGHouse.host({ kinds: { kitchen: DKIT, money: DMON }, leave: dhLeave, toast: toast,
+        refresh: function (why) { if (S.sheet === 'household') fillSheet('household'); if (why && why.some(function (w) { return w === 'planner' || w === 'join'; })) render(); } });
+      if (S.sheet === 'household') fillSheet('household');
+    });
+  }
   function acctWelcome() {
     if (!acctOn()) return '';
     if (acctIn()) return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span><b>Signed in as ' + esc(GGAccount.info().email) + '.</b> ' + (hasProfiles() ? 'Open your profile with its own passcode, and its tree comes in.' : 'Your profiles are coming in now.') + '</span></div>';
@@ -4086,7 +4162,7 @@
     GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
     // BLD 908: the door and Membership are read once this whole file has run (its later parts set their names).
     setTimeout(memberBoot, 0);
-    GGP.ready.then(function () { render(); walkDoor(); walkGo(); acctHome(); });
+    GGP.ready.then(function () { render(); walkDoor(); walkGo(); acctHome(); houseHome(); });
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
