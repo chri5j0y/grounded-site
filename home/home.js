@@ -55,7 +55,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c027', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c032', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c021';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -2312,7 +2312,7 @@
   function weekBody(door) {
     door = door || '';
     if (!tendReady()) return door + (S.tendLoadDone ? tendSoonHtml() : '<p class="hm-loading">Opening your week…</p>');
-    if (!tendIsReady() && isYoung(S.p)) return door + '<article class="hm-start">' + tile(ART2.startWide, 'wide') + '<div class="tx"><span class="ey">' + yw('Moving', 'Move and Play', 'Workouts') + '</span><b>' + yw('Grounded Fitness', 'Play a Workout', 'Grounded Fitness for Teens') + '</b><small>' + yw('', 'Play Workouts and Daily Play made for kids, with Ava cheering you on. Your practices for the week are right here too.', 'Teen Workouts and Daily Practices, with Ava coaching every rep. Your practices for the week are right here too.') + '</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="library=workouts">' + yw('Open', 'Let\'s Play', 'Open') + '</button></div></article>';   // BLD 981
+    if (!tendIsReady() && isYoung(S.p)) return door + '<article class="hm-start">' + tile(ART2.startWide, 'wide') + '<div class="tx"><span class="ey">' + yw('Moving', 'Move and Play', 'Workouts') + '</span><b>' + yw('Grounded Fitness', 'Play a Workout', 'Grounded Fitness for Teens') + '</b><small>' + yw('', 'Play Workouts and Daily Play made for kids, with a coach cheering you on. Your practices for the week are right here too.', 'Teen Workouts and Daily Practices, with a coach guiding every rep. Your practices for the week are right here too.') + '</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="library=workouts">' + yw('Open', 'Let\'s Play', 'Open') + '</button></div></article>';   // BLD 981
     if (!tendIsReady()) return door + '<article class="hm-start">' + tile(ART2.startWide, 'wide') + '<div class="tx"><span class="ey">Tending</span><b>Start Tending</b><small>Your week fills in here: dinners to cook, workouts for your level, one shopping list, and Sunday Together Prep.</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="today=tending">Start</button></div></article>';
     var w = weekData();
     if (!w) return door + '<div id="hm-tend" class="hm-sec" data-sec="week"></div>';
@@ -2495,8 +2495,8 @@
       { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, party food, sauces and dressings, sober drinks, and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: PIMG + 'recipes-shelf-band.webp' },
       // BLD 919: the 8 Gentle sessions are open to everyone; on Start they have their own shelf (a Member finds them in Grounded Fitness).
       // BLD 935 (audit H1): the shelf opens with Today's Flow too, so Start's daily Flow has a home in the Library.
-      !member() && hCall('gentleOpen') ? { id: 'gentle', name: 'Flow and Gentle', count: 'Flow and 8 sessions', plain: 'Gentle Movement', line: 'Today\'s Flow, and eight guided Gentle sessions for strength, balance, and easier movement, with Ava coaching every move.', cls: 'hm-sh-work', art: IMG + 'ppl-move-gentle.webp' } : null,
-      member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: yw('Every workout, by category, with a coach, and the 12-week program.', 'Play Workouts and Daily Play made for kids, then every workout, with Ava coaching.', 'Teen Workouts and Daily Practices first, then every workout, with Ava coaching.'), cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
+      !member() && hCall('gentleOpen') ? { id: 'gentle', name: 'Flow and Gentle', count: 'Flow and 8 sessions', plain: 'Gentle Movement', line: 'Today\'s Flow, and eight guided Gentle sessions for strength, balance, and easier movement, with a coach guiding every move.', cls: 'hm-sh-work', art: IMG + 'ppl-move-gentle.webp' } : null,
+      member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: yw('Every workout, by category, with a coach, and the 12-week program.', 'Play Workouts and Daily Play made for kids, then every workout, with a coach guiding you.', 'Teen Workouts and Daily Practices first, then every workout, with a coach guiding you.'), cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
       // BLD 911 (Chris: "we have 2 meditation sets too.. join or rename", then "1"): one Grounded Meditation: today's pick, your
       // week of seven (Tending's), and the full library by need (Membership), on one shelf.
       member() ? { id: 'quiet', name: 'Grounded Meditation', count: cnt((num(c.meditations) || 0) + mItems('meditation').length, 'meditation', 'meditations'), plain: 'Today, your week, and the library', line: 'Today\'s meditation, your week of seven, and the full library for sleep, worry, grief, focus, and more.', cls: 'hm-sh-quiet', art: IMG + 'ppl-quiet-meditation.webp' }
@@ -4434,7 +4434,7 @@
       '<h3 class="hm-label">Grounded Meditation</h3>' + seedMedHtml() +
       grp('spirit', 'Grounded Spirit') + grp('relationships', 'Grounded Relationships') + grp('seasons', 'Grounded Seasons') +
       '<h3 class="hm-label">Grounded Stories, Read Aloud</h3><ul class="hm-mlist">' + SEED_STORIES.map(function (s) { return link('', s[1], 'A story by Chris Joy', '/stories.html#' + s[0]); }).join('') + '</ul>' +
-      (seedMoved() ? '' : '<h3 class="hm-label">Tending</h3><ul class="hm-mlist">' + link('data-hm-seed="gentle"', 'Gentle', 'Eight guided sessions with Ava') + link('data-hm-seed="meals"', 'A Sample Week of Meals', 'Seven dinners and the shopping list') + link('data-hm-seed="numbers"', 'My Heart Risk', 'PREVENT, from the American Heart Association') + '</ul>') +
+      (seedMoved() ? '' : '<h3 class="hm-label">Tending</h3><ul class="hm-mlist">' + link('data-hm-seed="gentle"', 'Gentle', 'Eight guided sessions with a coach') + link('data-hm-seed="meals"', 'A Sample Week of Meals', 'Seven dinners and the shopping list') + link('data-hm-seed="numbers"', 'My Heart Risk', 'PREVENT, from the American Heart Association') + '</ul>') +
       '<h3 class="hm-label">Growth Plan</h3><ul class="hm-mlist">' + link('data-hm-seed="plan"', 'Your Full Growth Plan', seedPlanOpen() ? 'Day ' + seedPlanDay() + ' of ' + SEED_DAYS : 'Your first 14 days') + '</ul>' + seedLine();
   }
   function openSeeds() {
