@@ -1148,7 +1148,7 @@
   /* BLD 976 (Chris, November 12, 2026: "what am i supposed to do next?"): one clear next step under Your Tree Is Growing.
      Before the first check-in: check in with your grown-up. After it: tend today's practices (or choose them first). */
   function kidNextHtml(ck, kitems) {
-    if (!ck) return '<p class="hm-knext">Next: check in with your grown-up.</p><button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</button>';
+    if (!ck) return '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C;margin-top:12px">' + I('people') + 'Check In With My Grown-up</button>';
     if (arr(kitems).length) return '<p class="hm-knext">Next: tend your tree today. Tap the circle when you do a practice.</p><button type="button" class="hm-kbtn" data-hm="kidnext" style="--c:#4FA82C">' + I('sprout') + 'Tend My Tree Today</button>';
     return '<p class="hm-knext">Next: choose the practices that help your tree grow.</p><button type="button" class="hm-kbtn" data-hm-setup="roots" style="--c:#4FA82C">' + I('sprout') + 'Choose My Practices</button>';
   }
@@ -2748,7 +2748,8 @@
     { k: 'watch', art: 'p-tend-mind', ey: 'Watch', t: 'Watch', d: 'Short videos to breathe, feel calm and strong, and learn about your tree.', tr: 'Try Birthday Candle Sigh: sniff, sniff, whoosh!' }
   ];
   // BLD 970: each tour slide has its own painting now.
-  var TOUR_ART = { learn: [PIMG + 'tour-learn-wide.webp', PIMG + 'tour-learn-wide.webp'], 'p-home-morning': [PIMG + 'tour-today-wide.webp', PIMG + 'tour-today-narrow.webp'], recipes: [PIMG + 'tour-week-wide.webp', PIMG + 'tour-week-narrow.webp'], 'tend-fruit': [PIMG + 'tour-kids-sq.webp', PIMG + 'tour-kids-sq.webp'], 'p-tend-mind': [PIMG + 'tour-checkin-sq.webp', PIMG + 'tour-checkin-sq.webp'], growth: [PIMG + 'tour-grow-wide.webp', PIMG + 'tour-grow-wide.webp'], library: [PIMG + 'tour-library-wide.webp', PIMG + 'tour-library-wide.webp'] };
+  var TOUR_AR = { 'tour-checkin-sq.webp': '1/1', 'tour-kids-sq.webp': '1/1', 'tour-grow-wide.webp': '2160/926', 'tour-learn-wide.webp': '16/9', 'tour-library-wide.webp': '5/2', 'tour-today-wide.webp': '5/2', 'tour-today-narrow.webp': '4/3', 'tour-week-wide.webp': '16/9', 'tour-week-narrow.webp': '2/3' };
+  var TOUR_ART = { learn: [PIMG + 'tour-learn-wide.webp', PIMG + 'tour-learn-wide.webp'], 'p-home-morning': [PIMG + 'tour-today-wide.webp', PIMG + 'tour-today-narrow.webp'], recipes: [PIMG + 'tour-week-wide.webp', PIMG + 'tour-week-wide.webp'], 'tend-fruit': [PIMG + 'tour-kids-sq.webp', PIMG + 'tour-kids-sq.webp'], 'p-tend-mind': [PIMG + 'tour-checkin-sq.webp', PIMG + 'tour-checkin-sq.webp'], growth: [PIMG + 'tour-grow-wide.webp', PIMG + 'tour-grow-wide.webp'], library: [PIMG + 'tour-library-wide.webp', PIMG + 'tour-library-wide.webp'] };
   var T = { open: false, i: 0, list: TOUR, asked: {}, tries: 0, back: null };
   function tourSeen() { var h = homeRec(); return !!h.tour; }
   function maybeTour() {
@@ -2767,8 +2768,11 @@
   }
   function tourCardHtml() {
     var c = T.list[T.i], n = T.list.length, last = T.i === n - 1, a = TOUR_ART[c.art] || TOUR_ART['p-home-morning'];
-    return '<div class="hm-tour-pic"><picture aria-hidden="true"><source media="(max-width:699px)" srcset="' + a[1] + '"><img src="' + a[0] + '" alt="" decoding="async"></picture>' +
-        '<div class="hm-tour-hd"><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2>' + '' + '</div></div>' +
+    // BLD 976 (Chris, November 12, 2026: "tab 3 of 6 on first check in cuts off head of image"): each painting shows whole,
+    // in its own shape, with the words under it, never over a face.
+    var ar = function (u) { return TOUR_AR[String(u).split('/').pop()] || '16/9'; };
+    return '<div class="hm-tour-pic" style="--tarw:' + ar(a[0]) + ';--tarn:' + ar(a[1]) + '"><picture aria-hidden="true"><source media="(max-width:699px)" srcset="' + a[1] + '"><img src="' + a[0] + '" alt="" decoding="async"></picture></div>' +
+        '<div class="hm-tour-hd"><button type="button" class="hm-tour-skip" data-hm-tour="skip">Skip</button><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2></div>' +
       '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') +
         // BLD 893: the last card opens My Grounded Way Plan.
         (last && !isKid(S.p) && planOK() ? '<button type="button" class="hm-tour-plan" data-hm-tour="plan">' + I('sprout') + '<span>' + (waySaved() ? 'Change My Plan' : 'Build My Growth Plan') + '</span></button>' : '') + '</div>' +
@@ -2783,7 +2787,7 @@
     T.list = isKid(S.p) ? KTOUR : tourList(); T.i = 0; T.open = true; T.back = document.activeElement;
     var wrap = document.createElement('div'); wrap.id = 'hm-tour'; wrap.className = 'hm-tourwrap' + (isKid(S.p) ? ' kid' : '');
     wrap.innerHTML = '<div class="hm-tour-bg" aria-hidden="true"></div><section class="hm-tour" role="dialog" aria-modal="true" aria-labelledby="hm-tour-t" aria-describedby="hm-tour-d" tabindex="-1">' +
-      '<button type="button" class="hm-tour-skip" data-hm-tour="skip">Skip</button><div class="hm-tour-in" id="hm-tour-in">' + tourCardHtml() + '</div></section>';
+      '<div class="hm-tour-in" id="hm-tour-in">' + tourCardHtml() + '</div></section>';
     (document.querySelector('main.hm') || document.body).appendChild(wrap);
     document.documentElement.classList.add('hm-toured');
     setTimeout(function () { var b = wrap.querySelector('.hm-tour-b.next'); try { (b || wrap.querySelector('.hm-tour')).focus({ preventScroll: true }); } catch (e) {} }, 30);
