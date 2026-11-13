@@ -2172,13 +2172,16 @@ const FEEL = [['easy', 'Too Easy'], ['right', 'Just Right'], ['hard', 'Too Hard'
 // BLD 957 (Chris's workout notes: "more feedback questions at the end, kept in the journal to track the journey"): three quick
 // taps after a workout, saved with it and shown in the workout journal.
 const WQ = [['energy', 'Energy now', [['low', 'Low'], ['steady', 'Steady'], ['strong', 'Strong']]], ['form', 'My form', [['learning', 'Still Learning'], ['smoother', 'Getting Smoother'], ['solid', 'Solid']]], ['sleep', 'Sleep last night', [['short', 'Short'], ['okay', 'Okay'], ['rested', 'Rested']]]];
+// BLD 986: the same three questions in kid words for ages 4 to 10 (the answers save the same way).
+const WQK = {energy: ['How My Body Feels', {low: 'Calm and Slow', steady: 'Feeling Good', strong: 'Super Strong'}], form: ['My Moves', {learning: 'Still Learning', smoother: 'Getting Better', solid: "I've Got It!"}], sleep: ['My Sleep Last Night', {short: 'A Little', okay: 'Okay', rested: 'Lots of Rest'}]};
+const wqRows = kid => kid ? WQ.map(([k, l, opts]) => [k, WQK[k][0], opts.map(([v]) => [v, WQK[k][1][v]])]) : WQ;
 function wqBlock(o){ const q = o.wq || {};
-  return `<div class="hj-wq">${WQ.map(([k, l, opts]) => `<p class="hj-feelq">${esc(l)}</p><div class="hj-feelc" role="group" aria-label="${esc(l)}">${opts.map(([v, t]) => `<button type="button" class="chip${q[k] === v ? ' on' : ''}" aria-pressed="${q[k] === v}" data-hja="wq" data-hjv="${k}:${v}">${esc(t)}</button>`).join('')}</div>`).join('')}</div>`; }
+  return `<div class="hj-wq">${wqRows(youngAge(o) === 'kid').map(([k, l, opts]) => `<p class="hj-feelq">${esc(l)}</p><div class="hj-feelc" role="group" aria-label="${esc(l)}">${opts.map(([v, t]) => `<button type="button" class="chip${q[k] === v ? ' on' : ''}" aria-pressed="${q[k] === v}" data-hja="wq" data-hjv="${k}:${v}">${esc(t)}</button>`).join('')}</div>`).join('')}</div>`; }
 function wqSave(o, v){ const [k, x] = String(v || '').split(':'), row = WQ.find(r => r[0] === k); if (!row || !row[2].some(y => y[0] === x)) return;
   o.wq = Object.assign({}, o.wq, {[k]: o.wq && o.wq[k] === x ? undefined : x}); logWork(o, {wq: o.wq}); save(); rerender(true); }
 // One line for the journal: how it felt, the three answers, and the note.
 function wlogLine(w){ const f = FEEL.find(x => x[0] === w.feel), q = w.wq || {}, bits = [];
-  if (f) bits.push(f[1]); WQ.forEach(([k, l, opts]) => { const y = opts.find(z => z[0] === q[k]); if (y) bits.push(l + ': ' + y[1]); });
+  if (f) bits.push(f[1]); wqRows(w.kid).forEach(([k, l, opts]) => { const y = opts.find(z => z[0] === q[k]); if (y) bits.push(l + ': ' + y[1]); });
   return (bits.length ? `<p class="hj-sub">${esc(bits.join(' · '))}</p>` : '') + (w.note ? `<p>${esc(w.note)}</p>` : ''); }
 function feelBlock(o){ const f = o.feel;
   return `<div class="hj-feel" data-hjfeel${f ? ` data-hjfelt="${esc(f)}"` : ''}><p class="hj-feelq">How did that feel?</p><div class="hj-feelc" role="group" aria-label="How did that feel?">${FEEL.map(([k, l]) => `<button type="button" class="chip${f === k ? ' on' : ''}" aria-pressed="${f === k}" data-hja="wfeel" data-hjv="${k}">${l}</button>`).join('')}</div>${o.feelMsg ? `<p class="hj-feelm" role="status">${esc(o.feelMsg)}</p>` : ''}</div>`; }
@@ -2195,7 +2198,7 @@ function feelSave(o, k){ const h = H(); if (!h || !FEEL.some(x => x[0] === k)) r
   logWork(o, {feel: k}); save(); rerender(true); }
 // The workout's log entry (one per finished workout): made by the first tap or by Save, then kept up to date.
 function logWork(o, more){ const h = H(); let e = o.logId ? h.wlog.find(x => x.id === o.logId) : null;
-  if (!e){ e = {id: uid(), date: today(), s: o.s, title: o.title, moves: o.done.length, mins: o.active ? Math.round(o.active / 60000) : undefined, u: Date.now()}; h.wlog.push(e); o.logId = e.id; markDone(o.key || 'work:' + o.s); checkOn(o.prac ? 'still' : 'move'); }
+  if (!e){ e = {id: uid(), date: today(), s: o.s, title: o.title, kid: youngAge(o) === 'kid' || undefined, moves: o.done.length, mins: o.active ? Math.round(o.active / 60000) : undefined, u: Date.now()}; h.wlog.push(e); o.logId = e.id; markDone(o.key || 'work:' + o.s); checkOn(o.prac ? 'still' : 'move'); }
   Object.assign(e, more || {}, {u: Date.now()}); return e; }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
   return `${o.young && YART[o.s] ? yDone(o) : stagePanel('done', o.med ? medOp(o) : {fig: ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
