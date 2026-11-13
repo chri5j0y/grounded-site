@@ -17,9 +17,17 @@
     org50: '',    // Organization Membership, 50 People ($2,100)
     org100: '',   // Organization Membership, 100 People ($3,600)
     gift: '',     // Gift Membership, 12 months ($64)
-    giftHousehold: ''   // Household Gift, 12 months for a whole home, up to six people ($128) (BLD 952)
+    giftHousehold: '',  // Household Gift, 12 months for a whole home, up to six people ($128) (BLD 952)
+    // BLD 982: The Grove for Classrooms, and sponsors who pay for a classroom or a school
+    classPilot: '',     // 4-Week Classroom Pilot ($49, credited toward the year)
+    classYear: '',      // The Grove for Classrooms, one classroom for a year ($199)
+    schoolSmall: '',    // Whole School, up to 10 classrooms, a year ($1,250)
+    schoolMedium: '',   // Whole School, 11 to 25 classrooms, a year ($1,950)
+    schoolLarge: '',    // Whole School, 26 or more classrooms, a year ($2,750)
+    sponsorClass: '',   // Sponsor a Classroom, a year ($199)
+    sponsorSchoolSmall: '', sponsorSchoolMedium: '', sponsorSchoolLarge: ''   // Sponsor a School by size ($1,250, $1,950, $2,750)
   };
-  var GROUPS = { org: ['org25', 'org50', 'org100'], gift: ['gift', 'giftHousehold'] };
+  var GROUPS = { org: ['org25', 'org50', 'org100'], gift: ['gift', 'giftHousehold'], class: ['classPilot', 'classYear', 'schoolSmall', 'schoolMedium', 'schoolLarge'], sponsor: ['sponsorClass', 'sponsorSchoolSmall', 'sponsorSchoolMedium', 'sponsorSchoolLarge'] };
   var OK = /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_]+(\?[A-Za-z0-9_=&%.\-]*)?$/;
   function link(k) { var v = LINKS[k]; return typeof v === 'string' && OK.test(v) ? v : ''; }
   function any(g) { return (GROUPS[g] || [g]).some(function (k) { return !!link(k); }); }
