@@ -288,6 +288,9 @@ body:not([data-wtab="today"]) .w-hero{display:none;}
 .w-thero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--w-shadow);margin:0 0 14px;}
 .w-thero picture{order:2;display:block;min-width:0;}
 .w-thero img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;aspect-ratio:16 / 9;}
+/* BLD 976: the painting shows whole in its 16:9 shape, centered beside the words (a tall card cut heads at 820) */
+.w-thero picture{align-self:center;}
+.w-thero img{height:auto;}
 .w-thero .tx{order:1;padding:26px 28px;display:flex;flex-direction:column;justify-content:center;min-width:0;}
 .w-thero h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(32px,3.6vw,44px);line-height:1.05;margin:2px 0 10px;}
 .w-thero p:not(.w-eyebrow){font-size:17px;line-height:1.55;color:var(--ink-soft);margin:0;}
@@ -392,7 +395,7 @@ body:not([data-wtab="today"]) .w-hero{display:none;}
 /* BLD 971 fix (Chris, November 12, 2026: "square box w small green line above"): the practice painting fills the top of its card, the part color sits under it */
 .w-practice{border-top:1px solid var(--line);overflow:hidden;}
 .w-practice .w-pimg{margin:-20px -22px 16px;width:calc(100% + 44px);aspect-ratio:16 / 9;height:auto;object-fit:cover;border-bottom:4px solid var(--pc);border-radius:0;}
-@media (min-width:701px){.w-practice .w-pimg{aspect-ratio:5 / 2;object-position:50% 45%;}}
+@media (min-width:701px){.w-practice .w-pimg{aspect-ratio:5 / 2;object-position:50% 30%;}}   /* BLD 976: 30% keeps every head whole */
 /* Listen in a card's button row (Chris, November 13, 2026): the new pill look, beside the card's own buttons */
 .btn-row .gg-rbar.w-listen{display:inline-flex;margin:0;gap:8px;}
 .btn-row .gg-rbar.w-listen .gg-rbtn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;min-height:44px;padding:10px 18px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);}

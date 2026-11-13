@@ -290,7 +290,7 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
 .ff-card.hw-has-art{overflow:hidden;padding-top:0;}
 .hw-art{margin:0 -26px 18px;aspect-ratio:5/2;overflow:hidden;background:var(--alt);}
 .hw-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%;}
-@media(max-width:700px){ .hw-art{margin:0 -18px 16px;aspect-ratio:16/9;} }
+@media(max-width:700px){ .hw-art{margin:0 -18px 16px;} }   /* BLD 976: the whole 5:2 painting on a phone too (16:9 cut heads at the sides) */
 .btv-tabs{gap:8px;border-bottom:0;margin:0 0 10px;flex-wrap:wrap;}
 .btv-tabs button{--k:var(--gold);font:700 16px 'Barlow Condensed',sans-serif;letter-spacing:.8px;text-transform:uppercase;color:var(--ink);background:var(--card);border:2px solid var(--line);border-top:4px solid var(--k);border-radius:12px;padding:10px 16px;min-height:46px;}
 .btv-tabs button[data-tab="before"]{--k:#C2577A;}.btv-tabs button[data-tab="after"]{--k:#3F7FA0;}.btv-tabs button[data-tab="learn"]{--k:#5F7D48;}
