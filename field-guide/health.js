@@ -1204,6 +1204,7 @@ function actTool(a, v){
       try { navigator.clipboard.writeText(txt).then(() => toast('Copied. Paste it into a text.'), show); } catch(e){ show(); } return true; }
     case 'shopreset': { if (!S.sureReset){ S.sureReset = true; rerender(true); setTimeout(() => { if (S.sureReset){ S.sureReset = false; rerender(true); } }, 3500); return true; }
       S.sureReset = false; const n = S.shopWk || foodWeek(new Date()), L = shopList(n); L.items.forEach(x => { x.done = false; delete x.got; }); keepShop(n, L); toast('All boxes cleared.'); rerender(true); return true; }
+    case 'fitband': { const h = H(); if (h && YG(v)){ h.set.fitBand = v; save(); S.ewOpen = v; toast((YG(v).name || 'Age') + ' first.'); rerender(true); } return true; }   // BLD 981 Round 1b
     case 'ovclose': { if (o && o.k === 'work' && !o.fin && o.done.length && !o.sure){ o.sure = true; toast('Tap the X again to end this workout.'); return true; } closeOv(); return true; }
     case 'tstart': { const st = o.steps[o.i]; startTimer(o, (o.left && o.left < st.secs * 1000 ? o.left : st.secs * 1000) / 1000); rerender(true); return true; }
     case 'pause': o.left = Math.max(0, o.end - Date.now()); o.run = false; rerender(true); return true;
@@ -1471,6 +1472,13 @@ function allLinesPub(){
   (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
     sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); }); });
+  // BLD 981: For Kids and For Teens, at the one phase they play (no light weeks)
+  BANDS().forEach(g => { const w0 = youngWo(g), G = w0.G || {}; add(AVA, G.focus); add(AVA, G.safe);
+    Object.entries(w0.sessions).forEach(([id, ses]) => { if (ses.intro) add(AVA, ses.intro); else add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins)); add(AVA, ses.open); add(AVA, ses.close);
+      const S2 = stepsFor(ses, '1', false, w0); S2.forEach((st, i) => { const nx = S2[i + 1];
+        if (st.t === 'time'){ add(AVA, st.form && !st.lines ? LN.tname(st) : LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
+        else { add(AVA, LN.ex(st)); if (!st.form && !st.breathLine) add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
+          if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); }); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
   [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
@@ -1726,7 +1734,7 @@ async function wuCount(o, st){
 // second a weight line for a move with a weight, otherwise a motivation line.
 function restLines(o, st){
   if (o.set === 1 && (st.easier || st.harder)) return [st.easier ? LN.hard(st) : '', st.harder ? LN.easy(st) : ''].filter(Boolean);
-  if (o.set === 2 && loaded(st)) return [LN.weight[(o.wi = (o.wi == null ? 0 : o.wi + 1)) % LN.weight.length]];
+  if (o.set === 2 && loaded(st) && !o.young) return [LN.weight[(o.wi = (o.wi == null ? 0 : o.wi + 1)) % LN.weight.length]];
   const m = motLine(o); return m ? [m] : [];
 }
 // The rest before a move: Next up (its tips and recommended weight show on the screen, BLD 915), and a draining ring.
@@ -1756,8 +1764,8 @@ async function runSession(o){
   if (V) V.music(o.music);
   rerender(true);
   if (preRing(o, o.steps[0])) brHold(o, true);   // the first step's breath waits through the opening lines for its own line
-  if (!o.med && !o.prac){ await speak(o, LN.focus); await speak(o, LN.safe); }   // BLD 931: breathe and form first; BLD 965: the safety line
-  await speak(o, o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
+  if (!o.med && !o.prac){ await speak(o, o.focus || LN.focus); await speak(o, o.safe || LN.safe); }   // BLD 981: a young session's own lines   // BLD 931: breathe and form first; BLD 965: the safety line
+  await speak(o, o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
   if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
   while (!o.dead && o.i < o.steps.length){
@@ -2080,9 +2088,10 @@ function vStart(o, top){
   const pl = !o.prac && !o.med && progOn() ? progLabel(new Date()) : '';
   return `${top(o.title, o.med ? 'Daily Meditation' : o.prac ? 'Flow' : 'Today\'s Session', null)}${stagePanel(stState(o), o.med ? medOp(o) : {fig: moveFig(st0)})}<div class="hj-ovb">
     ${pl ? `<p class="hj-prog">${esc(pl)}</p>` : ''}${o.prac && o.from ? `<p class="hj-from">${esc(o.from)}</p>` : ''}<div class="hj-big2" style="margin-top:6px">${esc(String(mins))} minutes</div>
-    <p class="hj-sub">${o.prac ? esc(o.lead || '') : `${moves.length} moves, with a warm-up and a cooldown, and a rest between moves.`}${kit.length ? ' Have ready: ' + esc(kit.join(', ')) + '.' : ''}</p>
-    ${!o.prac && !o.med ? `<p class="hj-focus" data-hjfocus>${esc(LN.focus)}</p><p class="hj-focus" data-hjsafe1>${esc(LN.safe)}</p>` : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
+    <p class="hj-sub">${o.prac || (o.young && !moves.length) ? esc(o.lead || '') : `${moves.length} moves, with a warm-up and a cooldown, and a rest between moves.`}${kit.length ? ' Have ready: ' + esc(kit.join(', ')) + '.' : ''}</p>
+    ${!o.prac && !o.med ? `<p class="hj-focus" data-hjfocus>${esc(o.focus || LN.focus)}</p><p class="hj-focus" data-hjsafe1>${esc(o.safe || LN.safe)}</p>` : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
     ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
+    ${o.young && (YG(o.young) || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(YG(o.young).safety)}</p>` : ''}
     ${o.gentle && ((PLIB() || {}).gentle || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PLIB().gentle.safety)}</p>` : ''}
     ${toggles(o)}
     ${bwAsk(o) ? bwCard(o) : ''}
@@ -2090,7 +2099,7 @@ function vStart(o, top){
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
     ${!o.prac && !o.med ? moveWell() : ''}
-    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(o.gentle ? arr(((PLIB() || {}).gentle || {}).sources) : progSrc(o.s))}</div></details></div>`;
+    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : o.young ? youngSrc(o.young) : coachSrc() + srcLine(o.gentle ? arr(((PLIB() || {}).gentle || {}).sources) : progSrc(o.s))}</div></details></div>`;
 }
 // BLD 915 (Chris's workout notes: "one quick question with tap choices about how it felt"): How did that feel? One tap
 // saves the workout's log on this device with the answer. Too Easy and Too Hard move the personal adjustment 5 lb for
@@ -3738,6 +3747,25 @@ function gentleWo(L, wk){
     c.mins = (c.minsByPhase || {})[String(phaseOf(wk))] || c.mins; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
   return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
 }
+// BLD 981 (Chris, November 13, 2026: "every age gets full library", "3, we will build fitness for kids"): Grounded Fitness for
+// Kids (Maple) and for Teens (Aspen and Pine), from the Member library's youngFit (grounded-workshop patches/bld981/fit981.py).
+// Each group plays like Gentle: its own sessions, warm-up, and cooldown, at one fixed phase (no light weeks). AGE() is the
+// profile's age group: kids, teens, or grown.
+// BLD 981 Round 1b (Chris: "good fitness program age specific"): one program for each age band, each with its own week.
+let YOUNG_IDS = ['k4', 'k7', 't11', 't14'];
+const BANDS = () => { const b = arr((YF() || {}).bands).filter(x => YF()[x]); if (b.length) YOUNG_IDS = b; return YOUNG_IDS; };
+const KID_BANDS = ['k4', 'k7'];
+// The profile's band: the grown-up's pick, else the kid's grade (K: 4 to 6; grades 1 to 5: 7 to 10), else the tree; '' asks.
+const BAND = () => { const a = AGE(); if (a === 'grown') return ''; const pick = (H() && H().set || {}).fitBand; if (pick && YG(pick)) return pick;
+  let g = ''; try { g = C.grade ? String(C.grade() || '') : ''; } catch(e){}
+  if (a === 'kids') return g === 'K' ? 'k4' : /^[1-5]$/.test(g) ? 'k7' : '';
+  let t = ''; try { t = C.age ? String(C.age() || '') : ''; } catch(e){} return t === 'aspen' ? 't11' : 't14'; };
+const AGE = () => { try { const a = C.age ? String(C.age() || '') : ''; return a === 'maple' ? 'kids' : /^(aspen|pine)$/.test(a) ? 'teens' : 'grown'; } catch(e){ return 'grown'; } };
+const YF = () => { const y = (PLIB() || {}).youngFit; return y && typeof y === 'object' ? y : null; };
+const YG = g => ((YF() || {})[g]) || null;
+function youngWo(g){ const G = YG(g) || {}, ses = {}; arr(G.sessions).forEach(x => { if (x && x.id) ses[x.id] = JSON.parse(JSON.stringify(x)); }); return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown), G}; }
+const youngKick = (g, x) => ({k4: ['Play Game', 'Play Game'], k7: ['Play Workout', 'Daily Play'], t11: ['Strength', 'Mobility'], t14: ['Teen Workout', 'Daily Practice']}[g] || ['Workout', 'Practice'])[x.kind === 'daily' ? 1 : 0] + (x.mins ? ' · ' + x.mins + ' min' : '');
+const youngSrc = g => { const L = arr((YG(g) || {}).sources).filter(x => x && x.t); return L.length ? `<p class="hj-src">${L.length > 1 ? 'Sources' : 'Source'}: ${L.map(x => `<a href="${esc(x.url || '')}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}`).join('; ')}</p>` : ''; };
 function pubApp(){
   const L = PLIB(), h = H(), P = TP(); if (!L || !h) return null;
   const s = h.set, wk = Math.max(1, weekNo(new Date())), plan = P ? ensurePlan() : null;
@@ -4537,7 +4565,7 @@ function bareBody(b){
   if (VO()) VO().setKey(((FX()) || {}).audio);
   const sec = String(b.section || ''), base = sec.split(':')[0], box = (cls, html) => `<div class="tn-sec ${cls}">${html}</div>`;
   if (base === 'holidays'){ if (sec.length > 9) S.holId = sec.slice(9); return vHol(); } // BLD 896: open to anyone
-  if (base !== 'setup' && setupNeeded()) return vSetupBare(b);
+  if (base !== 'setup' && !(base === 'workouts' && AGE() !== 'grown' && YF()) && setupNeeded()) return vSetupBare(b);   // BLD 981: kids and teens open Grounded Fitness straight away
   switch (base){
     case 'shop': return box('a-kitchen', vShop());
     case 'prep': return box('a-kitchen', vPrep());
@@ -4641,9 +4669,12 @@ const GENTLE_ART = {'Steady at the Counter': 'p:rep/gentle-counter-sq', 'Easy Ra
 // shared/heroes/p/fit/. The next line is written by grounded-workshop patches/bld976/fit/placefit.py from fit-nums.json; change a
 // number there and run it again. A session with no painting here keeps its kind's painting (GENTLE_ART, MOVE_ART).
 const FIT_ART = {"work": {"A": "p:fit/w-a-sq", "B": "p:fit/w-b-sq", "C": "p:fit/w-c-sq", "D": "p:fit/w-d-sq", "E": "p:fit/w-e-sq", "F": "p:fit/w-f-sq", "G": "p:fit/w-g-sq", "H": "p:fit/w-h-sq", "I": "p:fit/w-i-sq", "J": "p:fit/w-j-sq", "K": "p:fit/w-k-sq", "L": "p:fit/w-l-sq", "R1": "p:fit/w-r1-sq", "R2": "p:fit/w-r2-sq", "R3": "p:fit/w-r3-sq", "R4": "p:fit/w-r4-sq", "R5": "p:fit/w-r5-sq", "R6": "p:fit/w-r6-sq", "R7": "p:fit/w-r7-sq", "R8": "p:fit/w-r8-sq", "R9": "p:fit/w-r9-sq", "R10": "p:fit/w-r10-sq", "R11": "p:fit/w-r11-sq", "R12": "p:fit/w-r12-sq"}, "flow": {"f1": "p:fit/f-f1-sq", "f2": "p:fit/f-f2-sq", "f3": "p:fit/f-f3-sq", "f4": "p:fit/f-f4-sq", "f5": "p:fit/f-f5-sq", "f6": "p:fit/f-f6-sq", "f7": "p:fit/f-f7-sq", "f8": "p:fit/f-f8-sq", "f9": "p:fit/f-f9-sq", "f10": "p:fit/f-f10-sq", "f11": "p:fit/f-f11-sq", "f12": "p:fit/f-f12-sq", "f13": "p:fit/f-f13-sq", "f14": "p:fit/f-f14-sq", "p1": "p:fit/f-p1-sq", "p2": "p:fit/f-p2-sq", "p3": "p:fit/f-p3-sq", "p4": "p:fit/f-p4-sq", "p5": "p:fit/f-p5-sq", "p6": "p:fit/f-p6-sq", "p7": "p:fit/f-p7-sq"}, "pub": {"p1": "p:fit/pf-p1-sq", "p2": "p:fit/pf-p2-sq", "p3": "p:fit/pf-p3-sq", "p4": "p:fit/pf-p4-sq", "p5": "p:fit/pf-p5-sq", "p6": "p:fit/pf-p6-sq", "p7": "p:fit/pf-p7-sq"}, "gentle": {"Balance and Steps": "p:fit/g-balance-and-steps-sq", "Chair Strength": "p:fit/g-chair-strength-sq", "Walk a Little Farther": "p:fit/g-walk-a-little-farther-sq"}};
+// BLD 981: every For Kids and For Teens session's own painting (written by grounded-workshop patches/bld981/art/fileyoung.py place).
+const FIT_ART_Y = {"k1": "p:fit/y-k1-sq", "k2": "p:fit/y-k2-sq", "k3": "p:fit/y-k3-sq", "k4": "p:fit/y-k4-sq", "k5": "p:fit/y-k5-sq", "k6": "p:fit/y-k6-sq", "kd1": "p:fit/y-kd1-sq", "kd2": "p:fit/y-kd2-sq", "kd3": "p:fit/y-kd3-sq", "kd4": "p:fit/y-kd4-sq", "l1": "p:fit/y-l1-sq", "l2": "p:fit/y-l2-sq", "l3": "p:fit/y-l3-sq", "l4": "p:fit/y-l4-sq", "l5": "p:fit/y-l5-sq", "l6": "p:fit/y-l6-sq", "m1": "p:fit/y-m1-sq", "m2": "p:fit/y-m2-sq", "m3": "p:fit/y-m3-sq", "m4": "p:fit/y-m4-sq", "m5": "p:fit/y-m5-sq", "m6": "p:fit/y-m6-sq", "md1": "p:fit/y-md1-sq", "md2": "p:fit/y-md2-sq", "t1": "p:fit/y-t1-sq", "t2": "p:fit/y-t2-sq", "t3": "p:fit/y-t3-sq", "t4": "p:fit/y-t4-sq", "t5": "p:fit/y-t5-sq", "t6": "p:fit/y-t6-sq", "t7": "p:fit/y-t7-sq", "td1": "p:fit/y-td1-sq", "td2": "p:fit/y-td2-sq", "td3": "p:fit/y-td3-sq", "td4": "p:fit/y-td4-sq"};
 const isGentleLvl = lvl => (lvl || (PUB() ? H().set.level || 'root' : '')) === 'gentle';
 const fitOwn = (id, ses, lvl) => { const t = String((ses && ses.title) || '');
   if (isGentleLvl(lvl)) return FIT_ART.gentle[t] || '';
+  if (BANDS().includes(lvl)) return FIT_ART_Y[String(id || '').split(':').pop()] || '';
   id = String(id || '').split(':').pop(); return /^([A-L]|R\d+)$/.test(id) ? FIT_ART.work[id] || '' : ''; };
 const moveArtName = (id, ses, lvl) => { const k = moveKind(id, ses, lvl); return fitOwn(id, ses, lvl) || (k === 'gentle' && GENTLE_ART[String((ses && ses.title) || '')]) || MOVE_ART[k] || ITEM_ART.workout; };
 const moveArt = (id, ses, lvl) => { id = String(id || '').split(':').pop(); return WAY(moveArtName(id, ses || sesById(id), lvl)); };
@@ -4671,6 +4702,8 @@ function levelSets(){
 }
 // BLD 896: a level's workout by id, from any phase (public Tending builds the phase it belongs to at that level).
 function levelSes(lvl, id){
+  // BLD 981: For Kids and For Teens (Membership)
+  if (BANDS().includes(lvl)){ if (START()) return null; const g = youngWo(lvl), ses = g.sessions[id]; return ses ? {ses, w0: g, mine: false} : null; }
   // BLD 919: on Start, only the open Gentle sessions play here (built straight from the Gentle path).
   if (START()){ if (lvl !== 'gentle' || !GENTLE_START()) return null; const g = gentleWo(PLIB(), Math.max(1, weekNo(new Date()))), ses = g.sessions[id]; return ses ? {ses, w0: g, mine: false} : null; }
   const L = levelSets().find(x => x.id === lvl), ph = lvl === 'gentle' ? '' : sesPh(id);
@@ -4682,25 +4715,47 @@ function levelSes(lvl, id){
 function buildLevelWork(lvl, id){
   const X = levelSes(lvl, id); if (!X) return null; const ses = X.ses;
   if (X.mine) return buildWork(id);
-  const t0 = new Date(), pk = phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
+  const young = BANDS().includes(lvl), G = young ? X.w0.G || {} : {};
+  const t0 = new Date(), pk = young ? {ph: '1', light: false} : phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
+  // BLD 981: a Daily session's moves flow as one timer each, named for what they are
+  if (young && ses.kind === 'daily') steps.forEach(st => { if (st.part === 'Warm-up') st.part = lvl === 'k4' ? 'Play' : KID_BANDS.includes(lvl) ? 'Daily Play' : 'Daily Practice'; });
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
-  return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn(),
+  return {young: young ? lvl : '', intro: young ? ses.intro || '' : '', focus: G.focus || '', safe: G.safe || '', lead: ses.lead || '', k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn(),
     // BLD 919: a session's own opening and closing lines (the open Gentle sessions), its sources, and on Start the quiet Membership line.
     open: ses.open || '', close: ses.close || '', gentle: lvl === 'gentle', start: START()};
 }
+// BLD 981: a kid's or teen's Grounded Fitness opens on its own age (no grown-up path card, no grown-up This Week).
+const WKD = {Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 0}, WKN = {Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday'};
+function bandPick(cur){ const B = BANDS(); return `<div class="hj-chips tn-band" role="group" aria-label="Age band">${B.map(b => `<button type="button" class="chip${cur === b ? ' on' : ''}" aria-pressed="${cur === b}" data-hja="fitband" data-hjv="${b}">${esc((YG(b) || {}).name || b)}</button>`).join('')}</div>`; }
+function youngWeek(g){ const G = YG(g); if (!G || !arr(G.week).length) return ''; const today = new Date().getDay(), ses = youngWo(g).sessions;
+  return `<div class="tn-ywk"><h4 class="tn-h4" style="margin:14px 0 4px">This Week</h4>${G.weekLead ? `<p class="tn-sub" style="margin:0 0 8px">${esc(G.weekLead)}</p>` : ''}<ul style="list-style:none;margin:0;padding:0;display:grid;gap:6px">${arr(G.week).map(d => { const on = WKD[d.day] === today;
+    return `<li style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 10px;border-radius:12px;border:1px solid var(--line,rgba(0,0,0,.12));${on ? 'border-width:2px;font-weight:600;' : ''}"><b style="min-width:6.5em">${esc(WKN[d.day] || d.day)}${on ? ' (Today)' : ''}</b>${arr(d.do).filter(id => ses[id]).map(id => `<button type="button" class="tn-btn sm${on ? '' : ' line'}" data-hja="go" data-hjv="wl:${g}:${esc(id)}">${ic('play')}${esc(ses[id].title)}</button>`).join('')}<small style="flex:1 1 12em">${esc(d.note || '')}</small></li>`; }).join('')}</ul></div>`; }
+function youngHead(g){ const G = YG(g), kid = AGE() === 'kids', cur = BAND();
+  if (!G) return `<div class="tn-card a-move tn-path tn-young"><div class="tn-k">Grounded Fitness</div><h3>${kid ? 'How Old Are You?' : 'Choose Your Age'}</h3><p class="tn-sub">${kid ? 'Ask your grown-up to pick your age, and your own games and week show up first.' : 'Pick an age, and its program and week show up first.'}</p>${bandPick(cur)}</div>`;
+  return `<div class="tn-card a-move tn-path tn-young"><div class="tn-k">Grounded Fitness</div><h3>${esc(G.name || '')}</h3><p class="tn-sub">${esc(G.lead || '')}</p>${G.grownUp ? `<p class="tn-sub"><b>For grown-ups:</b> ${esc(G.grownUp)}</p>` : ''}${G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}
+    <p class="tn-sub" style="margin-top:10px"><b>Age:</b> ${kid ? 'a grown-up can change it here.' : 'change it here anytime.'}</p>${bandPick(cur)}${youngWeek(g)}</div>`; }
 function vWorkouts(){
-  const h = H(), sets = levelSets().filter(L => L.mine); let i = 0;
+  BANDS(); const h = H(), young = AGE() !== 'grown' && PUB() && !!YF(), ya = young ? BAND() : '', sets = young ? [] : levelSets().filter(L => L.mine); let i = 0;
   const lv = sets.map(L => { const ses = Object.entries(L.sessions || {}); if (!ses.length) return '';
     return `<h3 class="tn-h3">${progOn() ? 'This Week' : esc(L.name)}${progOn() ? ` <small class="tn-mine">${esc(phName(phaseId(Math.max(1, progWeek(new Date())))))}</small>` : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
   const every = everyHtml((key, kick, title, sub, art) => artCard(i++, key, kick, title, sub, 'a-move', art));
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${wlogLine(w)}</div>`).join('')}</div>` : '';
-  return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : progCard()}${lv}${every}${recent}</div>`;
+  return `<div class="tn-sec a-move">${young ? youngHead(ya) : PUB() ? pubMoveHead() : progCard()}${lv}${every}${recent}</div>`;
 }
 // BLD 896 (Chris, October 30, 2026): the Every Workout shelf. This Week (the phase the person is in) stays on top; then every workout
 // by category: Strength, Cardio, Flow, Yoga, Balance, Stretch, and in public Tending Gentle; Strength and Cardio by phase (Foundation,
 // Build, Peak), each tile with its place, like "Build 2 · 56 min". A workout from another phase plays with that phase's sets and reps.
 // Public Tending shows the person's level first, with Root, Rise, and Thrive chips to look at the others.
-const EW_CATS = {strength: 'Strength', cardio: 'Cardio', daily: 'Flow', yoga: 'Yoga', taichi: 'Balance', stretch: 'Stretch', gentle: 'Gentle'};
+const EW_CATS = {strength: 'Strength', cardio: 'Cardio', daily: 'Flow', yoga: 'Yoga', taichi: 'Balance', stretch: 'Stretch', gentle: 'Gentle', kids: 'For Kids', teens: 'For Teens'};
+// BLD 981: each set's age tag. Each profile sees its own age first, then the rest; Maple sees no grown-up Strength or Cardio
+// (weights and machines; the Kids sets are the child's own body).
+const EW_AGE = {strength: 'grown', cardio: 'grown', k4: 'kids', k7: 'kids', t11: 'teens', t14: 'teens'};
+const AGE_TAG = {kids: 'For Kids', teens: 'For Teens', grown: 'For Grown-ups', all: 'All Ages'};
+// Own band first, then the All Ages sets, then the nearest bands; grown-ups see their own sets first, then the bands from oldest.
+function ageOrder(G){ const me = AGE(), band = BAND(), B = BANDS(), bi = B.indexOf(band), mi = me === 'kids' ? (bi >= 0 ? bi : 1) : me === 'teens' ? (bi >= 0 ? bi : B.length - 1) : B.length;
+  const rank = c => { const a = EW_AGE[c.cat] || 'all', j = B.indexOf(c.cat); if (me === 'grown') return a === 'grown' ? 0 : a === 'all' ? 1 : 2 + (B.length - j);
+    if (c.cat === band) return 0; if (a === 'all') return 1; if (j >= 0) return 2 + Math.abs(j - mi); return 50; };
+  return G.filter(c => !(me === 'kids' && EW_AGE[c.cat] === 'grown')).map((c, j) => [c, j]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]); }
 const EW_LVLS = [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive']];
 const curLvl = () => PUB() ? (H().set.level || 'root') : '';
 function everyLvl(){ if (!PUB()) return ''; const v = S.ewLvl || curLvl(); return EW_LVLS.some(x => x[0] === v) ? v : 'root'; }
@@ -4711,23 +4766,25 @@ function everyGroups(lvl){
     if (g.length) out.push({cat: tr, groups: g}); });
   else if (!PUB()){ const all = Object.entries(WK().sessions || {}); if (all.length) out.push({cat: 'strength', groups: [{name: '', list: all}]}); }
   FLOW_IDS.forEach(st => { const L = pr.filter(x => (x.style || 'daily') === st || (st === 'daily' && !FLOW_IDS.includes(x.style || 'daily'))); if (L.length) out.push({cat: st, groups: [{name: '', list: L.map(x => [x.id, x])}]}); });
+  if (PUB() && PLIB() && !START()) BANDS().forEach(g => { const list = Object.entries(youngWo(g).sessions); if (list.length) out.push({cat: g, groups: [{name: '', list}]}); });   // BLD 981
   if (PUB() && PLIB()){ const g = cur === 'gentle' ? WK().sessions || {} : gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}, list = Object.entries(g); if (list.length) out.push({cat: 'gentle', groups: [{name: '', list}]}); }
-  return out;
+  return ageOrder(out);
 }
 function everyHtml(card){
   const lvl = everyLvl(), cur = curLvl(), G = everyGroups(lvl); if (!G.length) return '';
-  const chips = PUB() && PROG() ? `<div class="hj-chips tn-ewl" role="group" aria-label="Level">${EW_LVLS.map(([v, l]) => `<button type="button" class="chip${lvl === v ? ' on' : ''}" aria-pressed="${lvl === v}" data-hja="ewlvl" data-hjv="${v}">${esc(l)}${v === cur ? ' <small>My Level</small>' : ''}</button>`).join('')}</div>` : '';
+  const chips = PUB() && PROG() && G.some(c => EW_AGE[c.cat] === 'grown') ? `<div class="hj-chips tn-ewl" role="group" aria-label="Level">${EW_LVLS.map(([v, l]) => `<button type="button" class="chip${lvl === v ? ' on' : ''}" aria-pressed="${lvl === v}" data-hja="ewlvl" data-hjv="${v}">${esc(l)}${v === cur ? ' <small>My Level</small>' : ''}</button>`).join('')}</div>` : '';
   const tiles = (c, g) => g.list.map(([id, x], j) => c === 'strength' || c === 'cardio' ? card(PUB() && lvl !== cur ? 'wl:' + lvl + ':' + id : 'work:' + id, (g.name ? g.name + ' ' + (j + 1) + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, PUB() ? lvl : ''))
+    : BANDS().includes(c) ? card('wl:' + c + ':' + id, youngKick(c, x), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, c))
     : c === 'gentle' ? card(cur === 'gentle' ? 'work:' + id : 'wl:gentle:' + id, (x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, 'gentle'))
     : card('pracid:' + x.id, flowKick(x), x.title || 'Flow', x.focus || '', flowArtName(x))).join('');
-  return `<h3 class="tn-h3" id="tn-every">Every Workout</h3><p class="tn-ews">Every workout we have built, by category.${PROG() ? ' A workout from another phase plays with that phase\'s sets and reps.' : ''}</p>${chips}` +
-    G.map((c, k) => { const n = c.groups.reduce((a, g) => a + g.list.length, 0); return `<details class="tn-ew" data-ew="${esc(c.cat)}"${k === 0 || S.ewOpen === c.cat ? ' open' : ''}><summary><b>${esc(EW_CATS[c.cat] || c.cat)}</b><small>${n} ${n === 1 ? 'workout' : 'workouts'}</small></summary>${c.groups.map(g => `${g.name ? `<p class="tn-fst"><b>${esc(g.name)}</b></p>` : ''}<div class="tn-kgrid">${tiles(c.cat, g)}</div>`).join('')}</details>`; }).join('');
+  return `<h3 class="tn-h3" id="tn-every">Every Workout</h3><p class="tn-ews">Every workout we have built, by category${AGE() !== 'grown' ? ', with your age first' : ''}.${PROG() && G.some(c => EW_AGE[c.cat] === 'grown') ? ' A workout from another phase plays with that phase\'s sets and reps.' : ''}</p>${chips}` +
+    G.map((c, k) => { const n = c.groups.reduce((a, g) => a + g.list.length, 0); return `<details class="tn-ew" data-ew="${esc(c.cat)}"${k === 0 || S.ewOpen === c.cat || (c.cat === BAND() && c.cat) ? ' open' : ''}><summary><b>${esc(EW_CATS[c.cat] || (YG(c.cat) || {}).name || c.cat)}</b><small>${BANDS().includes(c.cat) ? '' : `<span class="tn-agetag">${esc(AGE_TAG[EW_AGE[c.cat] || 'all'])}</span> `}${n} ${n === 1 ? 'workout' : 'workouts'}</small></summary>${c.groups.map(g => `${g.name ? `<p class="tn-fst"><b>${esc(g.name)}</b></p>` : ''}<div class="tn-kgrid">${tiles(c.cat, g)}</div>`).join('')}</details>`; }).join('');
 }
 // The Library's count: every playable workout (public Tending: each level's Strength and Cardio, plus Gentle and the Flow family).
 function everyCount(){
   const pr = arr((PR() || {}).sessions).length, tc = src => ['strength', 'cardio'].reduce((n, tr) => n + PH_IDS.reduce((m, ph) => m + trackIds(tr, ph).filter(src).length, 0), 0);
   if (!PUB()){ const all = WK().sessions || {}; return (PROG() ? tc(id => !!all[id]) : Object.keys(all).length) + pr; }
-  const gn = arr(((PLIB() || {}).gentle || {}).sessions).length; return (PROG() ? EW_LVLS.length * tc(() => true) : levelSets().filter(L => L.id !== 'gentle').reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0)) + gn + pr;
+  const gn = arr(((PLIB() || {}).gentle || {}).sessions).length + (START() ? 0 : BANDS().reduce((n, g) => n + arr((YG(g) || {}).sessions).length, 0)); return (PROG() ? EW_LVLS.length * tc(() => true) : levelSets().filter(L => L.id !== 'gentle').reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0)) + gn + pr;
 }
 function vQuietShelf(){
   const t = TD(), h = H(), c = (h.days[today()] || {}).checks || {}, md = arr((MED() || {}).sessions), n = Math.max(1, weekNo(new Date())), qm = +h.set.quietMins || t.spirit.minutes[0]; let i = 0;

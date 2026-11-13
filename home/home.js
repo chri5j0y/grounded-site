@@ -55,7 +55,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c026', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c027', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c021';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -250,6 +250,8 @@
   function treeOfProfile(p) { if (!p) return 'oak'; if (p.age === 'maple' || p.age === 'aspen' || p.age === 'pine') return p.age; return (window.GGP && GGP.tree) ? GGP.tree(p.id) : 'oak'; }
   function isKid(p) { return p && (p.age === 'maple' || p.age === 'aspen'); }
   /* BLD 935 (audit H3): a young tree (Maple, Aspen, or Pine) sees no Seeds and no Membership shelves, lines, or cards. */
+  // BLD 981: the same app for every age, in kid words for Maple and teen words for Aspen (g: grown-up, k: kid, t: teen).
+  function yw(g, k, t) { var a = S.p && S.p.age; return a === 'maple' ? k : a === 'aspen' ? (t == null ? g : t) : g; }
   function isYoung(p) { return !!(p && (isKid(p) || p.age === 'pine')); }
   function levelKey(sc) { return sc == null ? 'unsure' : sc >= 8 ? 'strong' : sc >= 5 ? 'steady' : 'edge'; }
 
@@ -512,6 +514,8 @@
       openPage: function (path) { var u; try { u = new URL(path, location.href); } catch (e) { return false; } if (u.origin !== location.origin) return false; if (/^\/recipes\/?$/.test(u.pathname)) { openRecipe(decodeURIComponent(u.hash.slice(1))); return true; } openFrame(u); return true; },
       toast: toast,
       age: function () { return S.p ? S.p.age : 'adult'; },
+      // BLD 981 Round 1b: a Maple kid's grade (asked once at the first check-in), so Grounded Fitness opens on the right age band
+      grade: function () { if (!S.p || S.p.age !== 'maple' || !S.id) return ''; var v = obj(obj(obj(GGP.data(S.id) || {}).maple).kid); return String(v.grade || ''); },
       name: function () { return S.p ? S.p.name : ''; },
       // BLD 927: the welcome's Who Is This For? (Me, My Family), so Tending asks it once.
       who: function () { return S.id ? homeRec().who || 'me' : 'me'; }
@@ -553,16 +557,11 @@
     if (!window.GGVisit && !VISIT_LOADING) { VISIT_LOADING = true; load(SCR_MOD.visit).then(function () { if (window.GGVisit && S.view === 'today') render(); }); }
     // BLD 907: a new profile sets up its four first; Change My Setup opens the same screens.
     if ((SU.open && SU.id === S.id) || suPending()) { renderSetup(); return; }
-    // Kid profiles keep their Today and My Tree (BLD 869).
+    // BLD 981 (Chris, November 13, 2026: "i think all ages can handle similar format", then "3"): Maple and Aspen open the same
+    // app as every tree (Today, Week, Check-in, Grow, Learn, Library) in kid and teen words. Their old addresses still land.
     if (isKid(S.p)) {
-      closeSheet(true); S.view = location.hash === '#watch' ? 'watch' : 'today';
-      var kck = location.hash === '#checkin', kgu = location.hash === '#grownups';
-      if (kck || kgu || location.hash === '#tree') { try { history.replaceState(null, '', location.pathname + '#today'); } catch (e) {} }
-      if (S.view === 'watch') { root.innerHTML = kidWatchHtml(); paintNav('kidwatch'); fillLearn(); maybeTour(); return; }
-      var kf = focusKey(); root.innerHTML = kidHtml(); paintNav('kid'); focusBack(kf); maybeTour(); fillKidPlanner();
-      if (kck) openTreeSheet('checkin'); else if (kgu) openTool('guide');
-      kitSoon();
-      return;
+      var kh = location.hash, kmap = { '#tree': '#today', '#watch': '#learn', '#grownups': '#today' };
+      if (kmap[kh]) { try { history.replaceState(null, '', location.pathname + location.search + kmap[kh]); } catch (e) {} S.view = viewOf(); if (kh === '#grownups') setTimeout(function () { openTool('guide'); }, 0); }
     }
     var wantPlan = location.hash === '#plan';
     if (wantPlan) { try { history.replaceState(null, '', location.pathname + '#today'); } catch (e) {} }
@@ -1043,7 +1042,7 @@
     var part = ed && ed.lead ? ed.lead : 'none', ids = MATCH[part], id = pick(ids, dayIndex()), v = GGN[id];
     var tag = part === 'none' ? '<span>A good place to begin</span>' : '<span class="hm-pt hm-p-' + part + '">' + esc(plabel(part)) + '</span><span>' + (ed.edges.indexOf(part) >= 0 ? 'Matched to your Growing Edge' : 'Leaning toward your ' + PART[part].n) + '</span>';
     return '<article class="hm-card hm-foryou ' + (part === 'none' ? 'hm-p-leaves' : 'hm-p-' + part) + ' o5"><button type="button" class="art" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + (FY_ART[part] ? PIMG + FY_ART[part] : IMG + ART[part]) + '.webp" alt="" loading="lazy"><span class="play">' + I('play') + '</span></button>' +
-      '<div class="body"><div class="hm-k">For You Today</div><h3 class="hm-h3">' + esc(v[0]) + '</h3><div class="hm-sub">A ' + (v[1] === 1 ? 'one' : v[1] === 3 ? 'three' : 'two') + ' minute practice from Get Grounded Now. ' + esc(v[2]) + '</div>' +
+      '<div class="body"><div class="hm-k">' + yw('For You Today', 'Try This Today') + '</div><h3 class="hm-h3">' + esc(v[0]) + '</h3><div class="hm-sub">A ' + (v[1] === 1 ? 'one' : v[1] === 3 ? 'three' : 'two') + ' minute practice from Get Grounded Now. ' + esc(v[2]) + '</div>' +
       '<div class="hm-match">' + tag + '</div><div class="hm-also" id="hm-also" data-part="' + part + '"></div></div></article>';
   }
   /* BLD 916: after an Evening Look Back with a big wave or rough sleep, For You Today picks from the calm and urge list that
@@ -1051,7 +1050,7 @@
   function forYouCalmHtml() {
     var id = pick(MATCH.calm, dayIndex()), v = GGN[id], F = lsFour();
     return '<article class="hm-card hm-foryou hm-p-bark o5"><button type="button" class="art" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + PIMG + FY_ART.calm + '.webp" alt="" loading="lazy"><span class="play">' + I('play') + '</span></button>' +
-      '<div class="body"><div class="hm-k">For You Today</div><h3 class="hm-h3">' + esc(v[0]) + '</h3><div class="hm-sub">A ' + (v[1] === 1 ? 'one' : v[1] === 3 ? 'three' : 'two') + ' minute practice from Get Grounded Now. ' + esc(v[2]) + '</div>' +
+      '<div class="body"><div class="hm-k">' + yw('For You Today', 'Try This Today') + '</div><h3 class="hm-h3">' + esc(v[0]) + '</h3><div class="hm-sub">A ' + (v[1] === 1 ? 'one' : v[1] === 3 ? 'three' : 'two') + ' minute practice from Get Grounded Now. ' + esc(v[2]) + '</div>' +
       '<div class="hm-match"><span class="hm-pt hm-p-bark">' + esc(plabel('bark')) + '</span><span>Picked from your Evening Look Back</span></div>' +
       (F ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-ls="four">' + I('feather') + 'Write, Walk, Talk, Pray</button></div>' : '') + '</div></article>';
   }
@@ -1150,9 +1149,21 @@
   /* BLD 976 (Chris, November 12, 2026: "what am i supposed to do next?"): one clear next step under Your Tree Is Growing.
      Before the first check-in: check in with your grown-up. After it: tend today's practices (or choose them first). */
   function kidNextHtml(ck, kitems) {
-    if (!ck) return '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C;margin-top:12px">' + I('people') + 'Check In With My Grown-up</button>';
-    if (arr(kitems).length) return '<p class="hm-knext">Next: tend your tree today. Tap the circle when you do a practice.</p><button type="button" class="hm-kbtn" data-hm="kidnext" style="--c:#4FA82C">' + I('sprout') + 'Tend My Tree Today</button>';
-    return '<p class="hm-knext">Next: choose the practices that help your tree grow.</p><button type="button" class="hm-kbtn" data-hm-setup="roots" style="--c:#4FA82C">' + I('sprout') + 'Choose My Practices</button>';
+    if (!ck) return '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#357F1F;margin-top:12px">' + I('people') + yw('Check In', 'Check In With My Grown-up', 'Check In') + '</button>';
+    if (arr(kitems).length) return '<p class="hm-knext">' + yw('', 'Next: tend your tree today. Tap the circle when you do a practice.', 'Next: tend your tree today. Tap Done when you finish a practice.') + '</p><button type="button" class="hm-kbtn" data-hm="kidnext" style="--c:#357F1F">' + I('sprout') + yw('Tend My Tree Today', 'Tend My Tree Today', 'Tend Today') + '</button>';
+    return '<p class="hm-knext">' + yw('', 'Next: choose the practices that help your tree grow.', 'Next: choose the practices that help your tree grow.') + '</p><button type="button" class="hm-kbtn" data-hm-setup="roots" style="--c:#357F1F">' + I('sprout') + 'Choose My Practices</button>';
+  }
+  /* BLD 981: the tree card with its one green next-step button, at the top of a kid's or teen's Today (Maple and Aspen). */
+  function kidTreeHtml() {
+    if (!isKid(S.p)) return '';
+    var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), kitems = planItems(true);
+    var parts = TEND4.map(function (k) {
+      var lv = ck ? ed.lv[k] : 'unsure', love = ck && lv === 'edge', has = kitems.some(function (x) { return x.part === k; });
+      var dim = love || !ck, mk = dim ? 'var(--ki)' : k === 'bark' ? '#FFFFFF' : '#14213D';   // BLD 981: every mark readable (AA) on its circle, light and dark
+      return '<div class="' + (dim ? 'dim' : '') + '" style="--kp:' + (k === 'bark' ? '#8A4FD6' : KP[k]) + '"><i style="color:' + mk + '">' + (love ? '+' : ck && lv !== 'unsure' ? '\u2713' : '\u2022') + '</i>' + esc(plabel(k)) + (has ? '' : '<small class="hm-kready">' + yw('', 'Ready for tending', 'Ready to tend') + '</small>') + '</div>';
+    }).join('');
+    var line = !ck ? yw('', 'Check in with your grown-up to wake up your tree.', 'Check in to see how your tree is growing.') : ed.edges.filter(isTend).length ? yw('', 'The + part could use a little love today.', 'The + part is your Growing Edge. Give it a little care today.') : yw('', 'Your whole tree is growing. Great tending!', 'Your whole tree is growing. Keep it up.');
+    return '<div class="hm-ktree hm-kid-' + S.tree + '" style="--kc:var(--card,#fff);--ki:var(--ink,#3A2A18);font-family:Fredoka,Barlow,sans-serif;margin:0 0 16px"><div class="hm-kcard" style="--c:#FF9F1C;box-shadow:var(--shadow-up)"><h2 class="hm-kh" style="font-family:Fredoka,sans-serif;font-weight:600;font-size:23px;margin:0;line-height:1.2">' + yw('', 'Your ' + t.n + ' Is Growing', 'Your ' + t.n + ' Is Growing') + '</h2><div class="hm-kparts">' + parts + '</div><p style="margin-top:10px;font-weight:500">' + esc(line) + '</p>' + kidNextHtml(ck, kitems) + '</div></div>';
   }
   function kidHtml() {
     var t = TREES[S.tree], d = now(), hr = d.getHours(), eve = hr >= 17 || hr < 5, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), h = homeRec();
@@ -1344,9 +1355,12 @@
   /* BLD 882 (Chris: "bring back UI and UX"): the pre-881 Home's look is the base again. Today opens on the big bright hero
      with the day and date; Week, Grow, and Library open on a painted banner with the tab's name. */
   var BANNER = { week: ['recipes', 'Every day of your week: meals, movement, practices, and family plans'], weekStart: ['recipes', 'Your practices, and A Sample Week of Meals'], weekTeen: ['recipes', 'Your practices for the week'], grow: ['tree', 'Tend four, grow two: your growth plan, your season, and your family'], library: ['library', 'Recipes, movement, quiet, and stories, all in one place'], checkin: ['mytree', 'How each part of your tree is growing'], learn: ['learn', 'Lessons and guides chosen for your tree'] };
+  var KBANNER = { week: ['My practices and play for the whole week', 'Your practices and workouts for the week'], grow: ['Tend four, grow two: my growth plan and my season', 'Tend four, grow two: your growth plan and your season'],
+    library: ['Recipes, moving and playing, calm, and stories, all for me', 'Recipes, workouts, calm, and stories, all in one place'], checkin: ['How each part of my tree is growing', 'How each part of your tree is growing'], learn: ['Short videos and lessons picked for me', 'Lessons and guides picked for your age'] };
   function bannerHtml(tab) {
     var b = BANNER[tab] || BANNER.grow;
     if (tab === 'week' && !member()) b = isYoung(S.p) ? BANNER.weekTeen : BANNER.weekStart;   // BLD 935 (audit M1)
+    if (isKid(S.p) && KBANNER[tab]) b = [b[0], yw('', KBANNER[tab][0], KBANNER[tab][1])];   // BLD 981
     if (b[0] === 'mytree' || b[0] === 'learn') return bannerArt(tab, b, b[0] === 'mytree' ? treeArt(S.tree, true) : PIMG + 'learn-banner-wide.webp', b[0] === 'mytree' ? treeArt(S.tree) : PIMG + 'learn-banner-wide.webp');
     var wide = b[0] === 'tree' ? IMG + 'p-growth-wide.webp' : b[0] === 'recipes' ? PIMG + 'recipes-banner-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? IMG + 'p-growth-banner-narrow.webp' : b[0] === 'recipes' ? PIMG + 'recipes-banner-narrow.webp' : HERO + 'library-phone.webp';
     // BLD 976: the Week banner's kitchen painting shows whole above the words on a phone (the tall one put a face under the title)
@@ -2111,7 +2125,7 @@
       var l = ck ? lv[k] : '', lb = plabel(k);
       return '<li class="hm-four-r grow" style="--c:var(--' + k + ');--cs:var(--' + k + '-s)"><span class="dot" aria-hidden="true"></span><div class="tx"><b>' + esc(lb) + '</b><small>Grows from your tending</small></div><span class="hm-four-lv' + (l ? ' lv-' + l : '') + '">' + esc(l ? LV[l][0] : 'After your first check-in') + '</span></li>';
     }).join('');
-    return '<article class="hm-card hm-p-leaves hm-four o2" id="hm-four" aria-labelledby="hm-four-h"><div class="hm-hd">' + pb(REP + 'your-four-sq.webp') + '<div><div class="hm-k" id="hm-four-h">Your Four</div><div class="hm-sub">' + esc(promise()) + '</div></div></div>' +
+    return '<article class="hm-card hm-p-leaves hm-four o2" id="hm-four" aria-labelledby="hm-four-h"><div class="hm-hd">' + pb(REP + 'your-four-sq.webp') + '<div><div class="hm-k" id="hm-four-h">' + yw('Your Four', 'My Four', 'Your Four') + '</div><div class="hm-sub">' + esc(promise()) + '</div></div></div>' +
       '<ul class="hm-four-l" aria-label="The four parts you tend">' + rows + '</ul><h3 class="hm-four-k">Tend four, grow two</h3><ul class="hm-four-l" aria-label="The two parts that grow from your tending">' + grow + '</ul></article>';
   }
   /* BLD 882: each thing in the day wears the pre-881 Home's card: a painting, the time in Barlow Condensed, the name in
@@ -2210,19 +2224,19 @@
     var wide = wideToday(), wkb = (wide ? thisWeekHtml(T.plan, 'today') : thisWeekFold(T.plan)) + nudgeHtml(T.plan);
     var lead = '';
     if (T.loading) lead = '<p class="hm-loading">Opening your Tending…</p>';
-    else if (!T.ready && !h.hidden.tend && !(tendStart() && tendPubDone()) && !suTeen()) {   // BLD 929 (M10): the grown-up sets food at home
+    else if (!T.ready && !h.hidden.tend && !(tendStart() && tendPubDone()) && !isYoung(S.p)) {   // BLD 981: a kid's or teen's food is set up by a grown-up   // BLD 929 (M10): the grown-up sets food at home
       lead = '<article class="hm-startc hm-card edge lift hm-p-leaves"><div class="hm-pc"><div class="scene"><img src="' + REP + 'begin-tending-sq.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-k">Tending</div><h3 class="hm-h3">' + (tendStarted() ? 'Your Tending Plan' : 'Begin Your Tending') + '</h3><p class="hm-sub" style="margin-top:4px">' + (tendStart() ? 'A short start-up check: who is at your table and any food needs, so recipes and A Sample Week of Meals fit you.' : tendStarted() ? 'Finish a short start-up check and your meals, movement, and quiet fill your day.' : 'A short start-up check shapes it to you: your goals, the people at your table, and movement for your level.') + '</p>' +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="today=tending">' + I('sprout') + (tendStarted() ? 'Continue' : 'Start Tending') + '</button><button type="button" class="hm-linkbtn" data-hm="hidetend">Hide this card</button></div></div></div></article>';
     }
     lead = wayNoteHtml() + lead;
     var list = items.filter(function (x) { return !x.side; });
-    var head = '<div class="hm-grp hm-p-leaves">' + pb(IMG + 'p-tending-sq.webp') + '<h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
+    var head = '<div class="hm-grp hm-p-leaves">' + pb(IMG + 'p-tending-sq.webp') + '<h2 class="hm-h2">' + yw('Today\'s Tending', 'My Tree Today') + '</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
     /* BLD 896 (Chris, note E: "not sure why we have the random green +"): the Plate card's + Log a Plate button is the one way in.
        With no Plate card, a labeled Log a Note button stands in its place, never a bare plus. */
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     var ls = soberOn() ? soberHtml(soberDate()) : !isKid(S.p) && h.parts.indexOf('sober') >= 0 && !soberDate() ? soberInviteHtml() : ''; if (ls && soberOn()) lsPre();
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + kidTreeHtml() + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml(T) + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -2295,6 +2309,7 @@
   function weekBody(door) {
     door = door || '';
     if (!tendReady()) return door + (S.tendLoadDone ? tendSoonHtml() : '<p class="hm-loading">Opening your week…</p>');
+    if (!tendIsReady() && isYoung(S.p)) return door + '<article class="hm-start">' + tile(ART2.startWide, 'wide') + '<div class="tx"><span class="ey">' + yw('Moving', 'Move and Play', 'Workouts') + '</span><b>' + yw('Grounded Fitness', 'Play a Workout', 'Grounded Fitness for Teens') + '</b><small>' + yw('', 'Play Workouts and Daily Play made for kids, with Ava cheering you on. Your practices for the week are right here too.', 'Teen Workouts and Daily Practices, with Ava coaching every rep. Your practices for the week are right here too.') + '</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="library=workouts">' + yw('Open', 'Let\'s Play', 'Open') + '</button></div></article>';   // BLD 981
     if (!tendIsReady()) return door + '<article class="hm-start">' + tile(ART2.startWide, 'wide') + '<div class="tx"><span class="ey">Tending</span><b>Start Tending</b><small>Your week fills in here: dinners to cook, workouts for your level, one shopping list, and Sunday Together Prep.</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="today=tending">Start</button></div></article>';
     var w = weekData();
     if (!w) return door + '<div id="hm-tend" class="hm-sec" data-sec="week"></div>';
@@ -2383,7 +2398,7 @@
     else if (wk >= 12) rows.push('<div class="up"><i>' + I('tree') + '</i>Your season check-in is ready: a full check-in adds a ring</div>');
     var ldl = ldlHtml();
     if (!rows.length && !ldl) rows.push('<div class="up"><i>' + I('sprout') + '</i>Your progress fills in as you check in and tend.</div>');
-    return '<article class="hm-card hm-p-fruit o6" id="hm-progress"><div class="hm-hd">' + pb(IMG + 'ppl-progress-sq.webp') + '<div><div class="hm-k">Your Progress</div><div class="hm-sub">What you have grown, counted with joy</div></div></div><div class="hm-mile">' + rows.join('') + '</div>' + ldl + '</article>';
+    return '<article class="hm-card hm-p-fruit o6" id="hm-progress"><div class="hm-hd">' + pb(IMG + 'ppl-progress-sq.webp') + '<div><div class="hm-k">' + yw('Your Progress', 'Look How I Am Growing', 'My Progress') + '</div><div class="hm-sub">' + yw('What you have grown, counted with joy', 'Everything I have grown, counted with joy', 'What you have grown, counted with joy') + '</div></div></div><div class="hm-mile">' + rows.join('') + '</div>' + ldl + '</article>';
   }
   function ldlHtml() {
     var w = tdata(S.id), hh = obj(w && w.health);
@@ -2478,7 +2493,7 @@
       // BLD 919: the 8 Gentle sessions are open to everyone; on Start they have their own shelf (a Member finds them in Grounded Fitness).
       // BLD 935 (audit H1): the shelf opens with Today's Flow too, so Start's daily Flow has a home in the Library.
       !member() && hCall('gentleOpen') ? { id: 'gentle', name: 'Flow and Gentle', count: 'Flow and 8 sessions', plain: 'Gentle Movement', line: 'Today\'s Flow, and eight guided Gentle sessions for strength, balance, and easier movement, with Ava coaching every move.', cls: 'hm-sh-work', art: IMG + 'ppl-move-gentle.webp' } : null,
-      member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout, by category, with a coach, and the 12-week program.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
+      member() ? { id: 'workouts', name: 'Grounded Fitness', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: yw('Every workout, by category, with a coach, and the 12-week program.', 'Play Workouts and Daily Play made for kids, then every workout, with Ava coaching.', 'Teen Workouts and Daily Practices first, then every workout, with Ava coaching.'), cls: 'hm-sh-work', art: IMG + 'move-strength.webp' } : null,
       // BLD 911 (Chris: "we have 2 meditation sets too.. join or rename", then "1"): one Grounded Meditation: today's pick, your
       // week of seven (Tending's), and the full library by need (Membership), on one shelf.
       member() ? { id: 'quiet', name: 'Grounded Meditation', count: cnt((num(c.meditations) || 0) + mItems('meditation').length, 'meditation', 'meditations'), plain: 'Today, your week, and the library', line: 'Today\'s meditation, your week of seven, and the full library for sleep, worry, grief, focus, and more.', cls: 'hm-sh-quiet', art: IMG + 'ppl-quiet-meditation.webp' }
@@ -2725,7 +2740,7 @@
     else if (act === 'addlove') GGP.createDialog({ forOther: true, keepMe: true }).then(function (ok) { if (ok) goTo('today'); else render(); });
     else if (act === 'tour') howItWorks();
     else if (act === 'kiddid') { var hd = homeRec(); hd.kid[today()] = hd.kid[today()] ? 0 : 1; saveHome(); render(); }
-    else if (act === 'kidnext') { var kpl = document.querySelector('.hm-kpracs'); if (kpl) { kpl.scrollIntoView({ behavior: 'smooth', block: 'start' }); var kc = kpl.querySelector('.hm-kdc'); if (kc) setTimeout(function () { try { kc.focus({ preventScroll: true }); } catch (x) {} }, 500); } }
+    else if (act === 'kidnext') { var kpl = document.querySelector('.hm-kpracs') || document.getElementById('hm-today'); if (kpl) { kpl.scrollIntoView({ behavior: 'smooth', block: 'start' }); var kc = kpl.querySelector('.hm-kdc'); if (kc) setTimeout(function () { try { kc.focus({ preventScroll: true }); } catch (x) {} }, 500); } }
   });
 
   /* ---------- BLD 884: the welcome tour ----------
@@ -4704,7 +4719,7 @@
     if (!a) { var b = document.querySelector('[data-hm-stage="' + d.tree + '"]'); if (b) b.setAttribute('aria-pressed', 'true'); return; }
     var mine = d.tree === S.tree;
     if (mine && guided && !h) { openTreeSheet(guided[2]); return; }
-    if (mine && !d.q && (!h || h === '#')) { if (isKid(S.p)) goTo('tree'); return; }
+    if (mine && !d.q && (!h || h === '#')) { if (isKid(S.p)) goTo('today'); return; }
     if (mine && !d.q && DOOR_SHEET[h] && !isKid(S.p)) { openTool(DOOR_SHEET[h] === 'today' ? 'today' : DOOR_SHEET[h]); return; }
     roomGo(d.tree, d.q, d.hash);
   }
@@ -4953,13 +4968,13 @@
     return out;
   }
   function mShelfHtml() {
-    if (isYoung(S.p)) return '';
+    if (isYoung(S.p) && !member()) return '';   // BLD 981: a young Member opens every shelf; a young profile on Start sees no Seeds (BLD 935 H3)
     if (!member()) return seedsOn() ? [{ id: 'seeds', name: 'Seeds', count: 'Yours to keep', line: 'A real piece of every part of Membership: meditation, Spirit, Relationships, Seasons, stories read aloud, Gentle, meals, and My Heart Risk.', cls: 'hm-sh-life hm-sh-seeds', art: PIMG + 'shelf-seeds.webp' }].concat(MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { return { id: 'm-' + s.id, name: s.name, count: 'Seed: each first session', line: s.line, cls: s.cls, art: s.art }; })).map(shelfHtml).join('') : '';
     return MSHELVES.filter(function (s) { return s.id !== 'meditation'; }).map(function (s) { var n = mItems(s.id).length; return shelfHtml({ id: 'm-' + s.id, name: s.name, count: n ? n + (n === 1 ? ' session' : ' sessions') : 'Membership', plain: 'Membership', line: s.line, cls: s.cls, art: s.art }); }).join('');
   }
   function openMShelf(id) {
     var s = MSHELVES.filter(function (x) { return x.id === id; })[0]; if (!s) return;
-    if (isYoung(S.p) || (!member() && !seedsOn())) return;
+    if ((isYoung(S.p) && !member()) || (!member() && !seedsOn())) return;
     if (SET_SECS[id] && setsOf(id).length) { mClose(); goTo('library=' + id); return; }   // BLD 978
     if (SET_SECS[id]) { mClose(); goTo('library=' + id); return; }
     if (!member() && !seedsData()) { mDialog(s.name, '<p class="hm-loading">Opening ' + esc(s.name) + '…</p>'); loadSeeds().then(function () { if (document.getElementById('hm-mdlg')) openMShelf(id); }); return; }
@@ -5055,13 +5070,27 @@
     var by = {}; mItems(sec).forEach(function (i) { by[i.id] = i; });
     return arr(x.programs).filter(function (p) { return p && p.id; }).map(function (p) { return { p: p, items: arr(p.items || p.sessions).map(function (i) { return i && by[i.id]; }).filter(Boolean) }; }).filter(function (g) { return g.items.length; });
   }
+  /* BLD 981 (Chris, November 13, 2026: "every age gets full library"): each set's age (kids, teens, all, grown). A profile sees its
+     own age's sets first, then the rest; a kid's view leaves out the grown-up sets (a new baby, retirement, caring for a parent,
+     a new diagnosis, a grief year written for grown-ups, the weekly connection plan) and the sets by tradition, which a grown-up
+     can open together with them (the kids' faith rules: start from family, one door among several). Kid and teen sets join
+     these shelves in later rounds. */
+  var SET_AGE = { 'rel-weekly': 'grown', 'season-grief': 'grown', 'season-newparent': 'grown', 'season-retirement': 'grown', 'season-parentcare': 'grown', 'season-diagnosis': 'grown' };
+  var AGE_TAGS = { kids: 'For Kids', teens: 'For Teens', all: 'All Ages', grown: 'For Grown-ups' };
+  function ageOfSet(p) { return (p && (p.age || SET_AGE[p.id] || (p.tradition ? 'teens' : ''))) || 'all'; }
+  function myAge() { var a = S.p && S.p.age; return a === 'maple' ? 'kids' : a === 'aspen' || a === 'pine' ? 'teens' : 'grown'; }
+  function ageSets(G) {
+    var me = myAge(), rank = function (a) { return a === me ? 0 : a === 'all' ? 1 : me === 'teens' ? (a === 'grown' ? 2 : 3) : me === 'grown' ? (a === 'teens' ? 2 : 3) : 2; };
+    return G.filter(function (g) { return !(me === 'kids' && (ageOfSet(g.p) === 'grown' || g.p.tradition)); }).map(function (g, j) { return [g, j]; })
+      .sort(function (x, y) { return rank(ageOfSet(x[0].p)) - rank(ageOfSet(y[0].p)) || x[1] - y[1]; }).map(function (x) { return x[0]; });
+  }
   function setArt(sec, id) { return SET_HAS[id] ? SETS_ART + id + '.webp' : (MSHELVES.filter(function (m) { return m.id === sec; })[0] || {}).art; }
   function setLine(p) { var t = String(p.tagline || p.blurb || ''); return t; }
   function setCard(sec, g, md) {
     var p = g.p, n = g.items.length, dn = g.items.filter(function (x) { return md[sec + '|' + x.id]; }).length, total = arr(p.items || p.sessions).length || n;
     var k = member() ? total + (total === 1 ? ' session' : ' sessions') + (dn ? ' · ' + dn + ' finished' : '') : 'Seed: the first session';
     return '<button type="button" class="hm-setc hm-setc-' + sec + '" data-hm-set="' + esc(sec + ':' + p.id) + '"><span class="art"><img src="' + esc(setArt(sec, p.id)) + '" alt="" loading="lazy" decoding="async"></span>' +
-      '<span class="tx"><span class="k">' + esc(k) + '</span><b>' + esc(p.title || p.id) + '</b>' + (setLine(p) ? '<small>' + esc(setLine(p)) + '</small>' : '') + '</span></button>';
+      '<span class="tx"><span class="k">' + esc(k) + (isYoung(S.p) || ageOfSet(p) !== 'all' ? ' · ' + esc(AGE_TAGS[ageOfSet(p)]) : '') + '</span><b>' + esc(p.title || p.id) + '</b>' + (setLine(p) ? '<small>' + esc(setLine(p)) + '</small>' : '') + '</span></button>';
   }
   function paintSets(r) {
     var box = document.getElementById('hm-sets'); if (!box) return;
@@ -5070,8 +5099,8 @@
     var rdy = window.GGMember && GGMember.ready && typeof GGMember.ready.then === 'function' ? GGMember.ready : Promise.resolve();
     rdy.then(function () { return !member() && seedsOn() && !seedsData() ? loadSeeds() : null; }).then(function () {
       if (!box.isConnected) return;
-      if (isYoung(S.p) || (!member() && !seedsOn())) { leave(); return; }
-      var G = setsOf(sec), md = obj(homeRec().mdone), hh = sec === 'relationships' ? hhPickHtml() : '', seed = member() ? '' : '<p class="hm-sub">The first session of each set, a seed for you to keep.</p>';
+      if ((isYoung(S.p) && !member()) || (!member() && !seedsOn())) { leave(); return; }
+      var G = ageSets(setsOf(sec)), md = obj(homeRec().mdone), hh = sec === 'relationships' ? hhPickHtml() : '', seed = member() ? '' : '<p class="hm-sub">The first session of each set, a seed for you to keep.</p>';
       var g = r.set ? G.filter(function (x) { return x.p.id === r.set; })[0] : null;
       if (r.set && !g) { try { history.replaceState(null, '', location.pathname + location.search + '#library=' + sec); } catch (e) {} r = { tab: 'library', sub: sec, set: '' }; }
       if (!g) {
@@ -5163,14 +5192,13 @@
   /* BLD 935 (audit M2): one meditation pick a day. When Tending brings a meditation to Today, that one is today's meditation
      everywhere (Today, the Grounded Meditation shelf, the Seeds window); otherwise the daily one from shared/start-videos.js. */
   function tendMedOf(T) {
-    if (!S.id || isKid(S.p) || !tendReady()) return null;
+    if (!S.id || !tendReady()) return null;   // BLD 981: every age
     try { T = T || todayItems(); } catch (e) { return null; }
     var all = []; arr(T && T.items).forEach(function (x) { all.push(x); arr(x.then).forEach(function (y) { all.push(y); }); });
     return all.filter(function (x) { return x && x.src === 'tend' && x.kind === 'meditation'; })[0] || null;
   }
   function medName(x) { return (x.fill && x.fill.title) || x.ftitle || x.title; }
   function dailyMedHtml(T) {
-    if (isKid(S.p)) return '';
     var tm = tendMedOf(T);
     // On Today, the day's own meditation card already holds it, so the side card keeps the Spirit practice only.
     if (tm && T) return dailySpiritHtml();
@@ -5183,7 +5211,7 @@
   }
   /* Core Spirit (Start): the day's Spirit session when shared/start-videos.js carries a spirit section; never in Plain wording. */
   function dailySpiritHtml() {
-    var x = window.GG_START_VIDEOS && !plainNow() ? dailyMed('spirit') : null; if (!x) return '';
+    var x = window.GG_START_VIDEOS && !plainNow() && !(S.p && S.p.age === 'maple') ? dailyMed('spirit') : null; if (!x) return '';   // BLD 981: the kids' faith rules (Maple's grown-up guide carries the depth)
     return '<article class="hm-card hm-p-roots hm-dmed"><div class="hm-hd">' + pb(PIMG + 'todays-spirit-card-sq.webp') + '<div style="min-width:0"><div class="hm-k">Today\'s Spirit Practice</div><h3 class="hm-h3">' + esc(x.title) + '</h3></div></div><p class="hm-sub">' + esc((x.mins ? 'About ' + x.mins + ' minutes. ' : '') + (x.blurb || '')) + '</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-dmed="spirit">' + I('play') + 'Begin</button></div></article>';
   }
   /* Grounded Meditation's top (BLD 911): today's pick, then the full library by need; Tending's week of seven follows. */
