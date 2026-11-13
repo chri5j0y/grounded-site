@@ -65,6 +65,20 @@ const PUB = () => { const f = FX(); return !!(f && f.public); };
 // BLD 919: the open Gentle sessions on Start, for grown-ups (a teen profile and the Family Kitchen keep their own views).
 const GENTLE_START = () => START() && !TEEN() && !KIT() && !!(FX() || {}).gentleOpen;
 const PLIB = () => { const f = FX(); return f && f.public ? f : null; };
+// BLD 984 (Chris, November 13, 2026: "i of coure want access to the entire library from all profiles"): a plan moved from the
+// Field Guide (BLD 867) runs on its own library, and on a device that holds Membership it also opens the whole Member library
+// beside it: Grounded Fitness for Kids and Teens, Gentle, and the Member Flow and meditations (Grounded Recipes, Meditations by Need,
+// Spirit, Relationships, and Seasons already open from the Home for every Member profile). MLIB() is
+// that Member library (the Start file with the Member Tending folded in, as a Member profile sees it), only in The Grounded Way
+// and never in a Family Kitchen. Its sessions play with its own clip key (o.mlib, AKEY), the moved plan's with the plan's key.
+const MLIB = () => { if (C.host !== 'home' || KIT() || PUB()) return null; const b = window.GGTendPublic, M = window.GGMember;
+  if (!b || !M || typeof M.has !== 'function' || typeof M.tend !== 'function') return null;
+  let m = null; try { m = M.has() ? M.tend(b) : null; } catch(e){ m = null; } return m && m !== b && m.member ? m : null; };
+const GLIB = () => PLIB() || MLIB();
+const mKey = x => String(x && x.id) + '|' + String((x && x.title) || '').trim().toLowerCase();
+// The Member Flow sessions and meditations the moved plan does not already hold (the same id and title count as one).
+const MFLOW = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((PR() || {}).sessions).map(mKey)); return arr(((M.app || {}).practice || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))).map(x => Object.assign({}, x, {_m: 1})); };
+const MMEDS = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((MED() || {}).sessions).map(mKey)); return arr(((M.app || {}).meditations || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))); };
 const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
 // BLD 916, Living Sober Path: Living Sober is on when this profile holds a sober date (vault life.soberDate, read the way Home
 // reads it; Someone I Love keeps its own path) or the Field Guide's Living Sober on Today bridge is on. SOBER_DAY(): the day
@@ -1011,8 +1025,11 @@ function buildWork(s){
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 // BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
-function keyVoice(){ if (VO()) VO().setKey(((FX()) || {}).audio); }
-function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } keyVoice(); S.ov = o; wake(true); tick(); rerender(true); }
+// BLD 984: a Member session opened beside a moved plan plays with the Member clip key; everything else with the library's own.
+// Each paint sets it again from the session showing.
+const AKEY = o => { const M = o && o.mlib && !PUB() ? MLIB() : null; return ((M && M.audio ? M : FX()) || {}).audio; };
+function keyVoice(o){ if (VO()) VO().setKey(AKEY(o === undefined ? S.ov : o)); }
+function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } keyVoice(o); S.ov = o; wake(true); tick(); rerender(true); }
 function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } if (FS.on) fsSet(false); const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
 let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL) navigator.wakeLock.request('screen').then(l => { WL = l; }).catch(() => {}); if (!on && WL){ WL.release(); WL = null; } } catch(e){} }
 // BLD 857 (note 2, "says 3 sets, only does 2 sets"): this tick also ended Play Session's rests, so when it fired between the end
@@ -1102,8 +1119,8 @@ const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both siz
 function ovArtName(o){
   if (!o) return '';
   if (o.k === 'quiet') return 'quiet-morning';
-  if (o.med || o.k === 'med'){ const m = MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? medBase(j) : 'quiet-meditation'; }
-  if (o.prac){ const x = arr((PR() || {}).sessions).find(z => z.id === o.s); return moveStage(o, (x && x.style) || 'daily', flowArtName(x).replace(/-sq$/, '')); }
+  if (o.med || o.k === 'med'){ const m = o.mlib ? ((MLIB() || {}).app || {}).meditations : MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? medBase(j) : 'quiet-meditation'; }
+  if (o.prac){ const x = o.mlib ? MFLOW().find(z => z.id === o.s) : arr((PR() || {}).sessions).find(z => z.id === o.s); return moveStage(o, (x && x.style) || 'daily', flowArtName(x).replace(/-sq$/, '')); }
   if (o.k === 'work'){ const p = String(o.key || '').split(':'), lvl = p[0] === 'wl' ? p[1] : '';
     const ses = lvl ? (levelSes(lvl, o.s) || {}).ses : sesById(o.s); return moveStage(o, moveKind(o.s, ses, lvl), moveArtName(o.s, ses, lvl).replace(/-sq$/, '')); }
   if (o.k === 'prep') return /^prep:batch:/.test(o.key || '') ? ART_KITCHEN.batch : ART_KITCHEN.prep;
@@ -1126,6 +1143,8 @@ function openKey(key){
   if (k === 'med' && MED()) return openOv(buildMed());
   if (k === 'pracid') return openOv(buildPractice(a));
   if (k === 'medid') return openOv(buildMed(a));
+  if (k === 'mprac') return openOv(buildMPrac(a));   // BLD 984
+  if (k === 'mmed') return openOv(buildMMed(a));
   if (k === 'med') return openOv({k: 'med', title: 'Meditation', mins: medMins(weekNo(new Date())), left: 0, run: false});
   if (k === 'shop'){ S.shopWk = +a; S.shopEd = null; if (bareOn() || C.host === 'home') return want('shop'); S.sec = 'shop'; rerender(false); window.scrollTo(0, 0); return; }
   if (k === 'quiet') return openQuiet();
@@ -1369,12 +1388,14 @@ const MED = () => { const m = (APP() || {}).meditations; if (!(m && arr(m.sessio
 const BRIAN = 'brian';
 const lineSecs = t => 1.4 + String(t).split(/\s+/).length / 2.4;
 // Morning light (workouts.light: {start, end}; an array or a string also works).
-function lightLine(which){ const l = WK().light; if (!l) return ''; if (typeof l === 'string') return which === 'start' ? l : ''; if (Array.isArray(l)) return l[which === 'start' ? 0 : 1] || ''; return l[which] || ''; }
-const MOT = () => arr(WK().motivation).filter(Boolean);
+// BLD 984: MOV(), a Member session is showing beside a moved plan.
+const MOV = () => !!(S.ov && S.ov.mlib && !PUB());
+function lightLine(which){ const l = MOV() ? null : WK().light; if (!l) return ''; if (typeof l === 'string') return which === 'start' ? l : ''; if (Array.isArray(l)) return l[which === 'start' ? 0 : 1] || ''; return l[which] || ''; }
+const MOT = () => arr(MOV() ? (MLIB() || {}).motivation : WK().motivation).filter(Boolean);
 // A meditation fills the person's minutes (10, growing to 20): Brian's lines, then quiet sized by each segment's weight.
-function buildMed(id){
-  const m = MED(); if (!m) return null; const dow = DOW[new Date().getDay()];
-  const ss = arr(m.sessions).find(x => x.id === id) || arr(m.sessions).find(x => x.day === dow) || m.sessions[0];
+function buildMed(id, m0){
+  const m = m0 || MED(); if (!m) return null; const dow = DOW[new Date().getDay()];
+  const ss = arr(m.sessions).find(x => x.id === id) || (m0 ? null : arr(m.sessions).find(x => x.day === dow) || m.sessions[0]); if (!ss) return null;
   const mins = medMins(weekNo(new Date())), segs = arr(ss.segments), talk = segs.reduce((a, g) => a + arr(g.lines).reduce((b, l) => b + lineSecs(l) + 0.8, 0), 0) + 8;
   const quiet = Math.max(60, mins * 60 - talk), wsum = segs.reduce((a, g) => a + (+g.quiet || 0), 0) || segs.length;
   const steps = segs.map(g => ({t: 'time', name: g.name, lines: arr(g.lines), secs: Math.round(quiet * ((wsum === segs.length && !segs.some(x => +x.quiet)) ? 1 : (+g.quiet || 0)) / wsum), part: ss.title, candle: true}));
@@ -1413,11 +1434,14 @@ function flowPick(d){
 const flowStyleList = () => { const pr = arr((PR() || {}).sessions), st = arr((PR() || {}).styles).length ? PR().styles : FLOW_STYLES; return st.filter(x => FLOW_IDS.includes(x.id) && pr.some(y => (y.style || 'daily') === x.id)).map(x => ({id: x.id, name: x.name, line: x.line || '', n: pr.filter(y => (y.style || 'daily') === x.id).length})); };
 const flowOnOf = s => Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowStyles.includes(x)) : (s.flow || s.track === 'both') ? ['daily'] : [];
 function practiceFor(d){ const fp = flowPick(d); if (fp) return fp; const p = PR(); if (!p || !arr(p.sessions).length) return null; const L = p.sessions.filter(x => !x.style || x.style === 'daily'), D0 = L.length ? L : p.sessions; return D0[(d.getDay() + 6) % 7 % D0.length]; }
-function buildPractice(s){
-  const p = PR(), ss = arr(p && p.sessions).find(x => x.id === s) || practiceFor(new Date()); if (!ss) return null;
+function buildPractice(s, p0){
+  const p = p0 || PR(), ss = arr(p && p.sessions).find(x => x.id === s) || (p0 ? null : practiceFor(new Date())); if (!ss) return null;
   const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
   return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, music: '/audio/music/calm-' + (1 + (new Date().getDay() % 7)) + '.mp3', key: 'prac'};
 }
+// BLD 984: a Member Flow session or meditation beside a moved plan (its own clip key).
+function buildMPrac(id){ const M = MLIB(), o = M ? buildPractice(id, (M.app || {}).practice) : null; if (o) o.mlib = 1; return o; }
+function buildMMed(id){ const M = MLIB(), md = M && (M.app || {}).meditations, o = md && arr(md.sessions).length ? buildMed(id, md) : null; if (o){ o.mlib = 1; o.mj = arr(md.sessions).findIndex(x => x.id === id); } return o; }
 // Every line, for recording and for tests.
 function allLines(){
   if (PUB()) return allLinesPub();
@@ -1967,9 +1991,9 @@ function recW(st, bw, adj){ if (!st || st.t !== 'ex' || !recOK(st)) return null;
 // What the screen shows for a move's weight: the recommendation; else the Founder's starting suggestion; else the library's line.
 function weightTip(st){ if (!st || st.t !== 'ex') return '';
   const r = recW(st); if (r) return r.line;
-  const m = MINE(), w = m && m.weights && (m.weights[st.name] || m.weights[st.id]); if (w) return 'Suggested: ' + w + '.';
+  const m = MOV() ? null : MINE(), w = m && m.weights && (m.weights[st.name] || m.weights[st.id]); if (w) return 'Suggested: ' + w + '.';
   return st.load || ''; }
-const weightRule = () => { const m = MINE(); return (m && m.weightsRule) || ''; };
+const weightRule = () => { const m = MOV() ? null : MINE(); return (m && m.weightsRule) || ''; };
 // The main exercise screen: the recommended weight right under the reps (a body weight move shows its own line lower down).
 function recLine(st){ const r = recW(st); if (r) return `<p class="hj-recw" data-hjrec="${r.lb}"><span>Recommended Weight</span><b>${esc(r.line)}</b></p>`;
   const t = st && st.t === 'ex' ? weightTip(st) : ''; return t ? `<p class="hj-wtl"><b>Weight:</b> ${esc(t)}</p>` : ''; }
@@ -2092,14 +2116,14 @@ function vStart(o, top){
     ${!o.prac && !o.med ? `<p class="hj-focus" data-hjfocus>${esc(o.focus || LN.focus)}</p><p class="hj-focus" data-hjsafe1>${esc(o.safe || LN.safe)}</p>` : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
     ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
     ${o.young && (YG(o.young) || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(YG(o.young).safety)}</p>` : ''}
-    ${o.gentle && ((PLIB() || {}).gentle || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PLIB().gentle.safety)}</p>` : ''}
+    ${o.gentle && ((GLIB() || {}).gentle || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(GLIB().gentle.safety)}</p>` : ''}
     ${toggles(o)}
     ${bwAsk(o) ? bwCard(o) : ''}
     ${!o.prac && o.hands !== false ? `<p class="hj-note hj-hfnote">Auto Flow: the session moves on its own, start to finish, with every set counted or timed for you. Need more time? Tap Pause anytime.</p>` : ''}
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
     ${!o.prac && !o.med ? moveWell() : ''}
-    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : o.young ? youngSrc(o.young) : coachSrc() + srcLine(o.gentle ? arr(((PLIB() || {}).gentle || {}).sources) : progSrc(o.s))}</div></details></div>`;
+    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : o.young ? youngSrc(o.young) : coachSrc() + srcLine(o.gentle ? arr(((GLIB() || {}).gentle || {}).sources) : progSrc(o.s))}</div></details></div>`;
 }
 // BLD 915 (Chris's workout notes: "one quick question with tap choices about how it felt"): How did that feel? One tap
 // saves the workout's log on this device with the answer. Too Easy and Too Hard move the personal adjustment 5 lb for
@@ -3090,7 +3114,7 @@ function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2
 function view(){
   const lib = FLDH(); if (!lib || !H()) return '';
   if (workOn()) fig3dWarm();
-  if (VO()) VO().setKey(((FX()) || {}).audio);
+  keyVoice();
   const h = H(), mine = MINE(), an = S.anim; S.anim = false;
   // Keep the start date once the plan is running, so it never drifts (BLD 857b).
   if (!KIT() && !h.set.start && firstMon()){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; save(); }
@@ -3454,7 +3478,7 @@ function startGentle(page){
   const G = PLIB().gentle || {}, ses = Object.entries(gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}); if (!ses.length) return '';
   // BLD 935 (audit H1): Home's Library shelf on Start opens with Today's Flow, then the eight Gentle sessions.
   const fl = page ? startPicks().flow : null;
-  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page && fl ? secHead('move', 'a-move', 'Flow and Gentle', 'Today\'s Flow, a new one each day of the week, and eight Gentle sessions anytime, with Ava coaching every move.') + `<h3 class="tn-h3">Today's Flow</h3><div class="tn-kgrid">${artCard(0, 'pracid:' + fl.id, 'Today\'s Flow' + (fl.mins ? ' · ' + fl.mins + ' min' : ''), fl.title || 'Flow', fl.focus || '', 'a-move', flowArtName(fl))}</div><h3 class="tn-h3" style="margin-top:18px">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>` : page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}${page && SEEDS_ON() ? `<p class="hj-sub">${seedChipH()}Eight Gentle sessions, yours to keep.</p>` : ''}
+  return `<div class="tn-start-gentle${page ? ' tn-sec a-move' : ''}" style="margin-top:${page ? 0 : 18}px">${page && fl ? secHead('move', 'a-move', 'Flow and Gentle', 'Today\'s Flow, a new one each day of the week, and eight Gentle sessions anytime, with a coach guiding every move.') + `<h3 class="tn-h3">Today's Flow</h3><div class="tn-kgrid">${artCard(0, 'pracid:' + fl.id, 'Today\'s Flow' + (fl.mins ? ' · ' + fl.mins + ' min' : ''), fl.title || 'Flow', fl.focus || '', 'a-move', flowArtName(fl))}</div><h3 class="tn-h3" style="margin-top:18px">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>` : page ? secHead('move', 'a-move', 'Gentle', esc(G.lead || '')) : `<h3 class="tn-h3">Gentle</h3><p class="tn-sub">${esc(G.lead || '')}</p>`}${page && SEEDS_ON() ? `<p class="hj-sub">${seedChipH()}Eight Gentle sessions, yours to keep.</p>` : ''}
     <div class="tn-kgrid">${ses.map(([id, x], i) => artCard(i, 'wl:gentle:' + id, (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Gentle', x.lead || '', 'a-move', moveArtName(id, x, 'gentle'))).join('')}</div>
     ${G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${page ? seedLineH() : ''}</div>`;
 }
@@ -3761,7 +3785,7 @@ const BAND = () => { const a = AGE(); if (a === 'grown') return ''; const pick =
   if (a === 'kids') return g === 'K' ? 'k4' : /^[1-5]$/.test(g) ? 'k7' : '';
   let t = ''; try { t = C.age ? String(C.age() || '') : ''; } catch(e){} return t === 'aspen' ? 't11' : 't14'; };
 const AGE = () => { try { const a = C.age ? String(C.age() || '') : ''; return a === 'maple' ? 'kids' : /^(aspen|pine)$/.test(a) ? 'teens' : 'grown'; } catch(e){ return 'grown'; } };
-const YF = () => { const y = (PLIB() || {}).youngFit; return y && typeof y === 'object' ? y : null; };
+const YF = () => { const y = (GLIB() || {}).youngFit; return y && typeof y === 'object' ? y : null; };
 const YG = g => ((YF() || {})[g]) || null;
 function youngWo(g){ const G = YG(g) || {}, ses = {}; arr(G.sessions).forEach(x => { if (x && x.id) ses[x.id] = JSON.parse(JSON.stringify(x)); }); return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown), G}; }
 const youngKick = (g, x) => ({k4: ['Play Game', 'Play Game'], k7: ['Play Workout', 'Daily Play'], t11: ['Strength', 'Mobility'], t14: ['Teen Workout', 'Daily Practice']}[g] || ['Workout', 'Practice'])[x.kind === 'daily' ? 1 : 0] + (x.mins ? ' · ' + x.mins + ' min' : '');
@@ -4562,7 +4586,7 @@ const setupNeeded = () => { const h = H(); return !h || (START() ? false : PUB()
 function bareClose(b, why){ if (b.closed) return; b.closed = true; const cb = b.opts && b.opts.onClose; if (typeof cb === 'function') setTimeout(() => { try { cb(why || b.section); } catch(e){} }, 0); }
 function bareBody(b){
   const lib = FLDH(), h = H(); if (!lib || !h) return '';
-  if (VO()) VO().setKey(((FX()) || {}).audio);
+  keyVoice();
   const sec = String(b.section || ''), base = sec.split(':')[0], box = (cls, html) => `<div class="tn-sec ${cls}">${html}</div>`;
   if (base === 'holidays'){ if (sec.length > 9) S.holId = sec.slice(9); return vHol(); } // BLD 896: open to anyone
   if (base !== 'setup' && !(base === 'workouts' && AGE() !== 'grown' && YF()) && setupNeeded()) return vSetupBare(b);   // BLD 981: kids and teens open Grounded Fitness straight away
@@ -4679,7 +4703,7 @@ const fitOwn = (id, ses, lvl) => { const t = String((ses && ses.title) || '');
 const moveArtName = (id, ses, lvl) => { const k = moveKind(id, ses, lvl); return fitOwn(id, ses, lvl) || (k === 'gentle' && GENTLE_ART[String((ses && ses.title) || '')]) || MOVE_ART[k] || ITEM_ART.workout; };
 const moveArt = (id, ses, lvl) => { id = String(id || '').split(':').pop(); return WAY(moveArtName(id, ses || sesById(id), lvl)); };
 // The public Start and Membership daily flows reuse the ids p1 to p7 for their own sessions (FIT_ART.pub); f1 to f14 are the same everywhere.
-const flowArtName = x => (x && ((PUB() && FIT_ART.pub[x.id]) || (!PUB() || !/^p\d+$/.test(x.id)) && FIT_ART.flow[x.id])) || MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
+const flowArtName = x => (x && (((PUB() || x._m) && FIT_ART.pub[x.id]) || ((!PUB() && !x._m) || !/^p\d+$/.test(x.id)) && FIT_ART.flow[x.id])) || MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
 const medArtName = j => j >= 0 && MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ART_QUIET[Math.max(0, j) % ART_QUIET.length];
 const medArtFor = d => { const m = MED(), x = m && medFor(d), j = x ? arr(m.sessions).indexOf(x) : -1; return MED_ART.includes('m' + (j + 1)) ? medSq(medBase(j)) : ITEM_ART.meditation; };
 // set: a rotation (an array) or one painting's name (a string).
@@ -4706,6 +4730,8 @@ function levelSes(lvl, id){
   if (BANDS().includes(lvl)){ if (START()) return null; const g = youngWo(lvl), ses = g.sessions[id]; return ses ? {ses, w0: g, mine: false} : null; }
   // BLD 919: on Start, only the open Gentle sessions play here (built straight from the Gentle path).
   if (START()){ if (lvl !== 'gentle' || !GENTLE_START()) return null; const g = gentleWo(PLIB(), Math.max(1, weekNo(new Date()))), ses = g.sessions[id]; return ses ? {ses, w0: g, mine: false} : null; }
+  // BLD 984: Gentle from the Member library beside a moved plan
+  if (!PUB() && lvl === 'gentle'){ const M = MLIB(); if (!M) return null; const g = gentleWo(M, Math.max(1, weekNo(new Date()))), ses = g.sessions[id]; return ses ? {ses, w0: g, mine: false} : null; }
   const L = levelSets().find(x => x.id === lvl), ph = lvl === 'gentle' ? '' : sesPh(id);
   if (!ph || !PUB()){ const ses = L && (L.sessions || {})[id]; return ses ? {ses, w0: L, mine: !!L.mine} : null; }
   const ses = pubPhaseSes(ph, lvl)[id]; if (!ses) return null;
@@ -4722,7 +4748,7 @@ function buildLevelWork(lvl, id){
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {young: young ? lvl : '', intro: young ? ses.intro || '' : '', focus: G.focus || '', safe: G.safe || '', lead: ses.lead || '', k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn(),
     // BLD 919: a session's own opening and closing lines (the open Gentle sessions), its sources, and on Start the quiet Membership line.
-    open: ses.open || '', close: ses.close || '', gentle: lvl === 'gentle', start: START()};
+    open: ses.open || '', close: ses.close || '', gentle: lvl === 'gentle', start: START(), mlib: !PUB() && (young || lvl === 'gentle') ? 1 : 0};
 }
 // BLD 981: a kid's or teen's Grounded Fitness opens on its own age (no grown-up path card, no grown-up This Week).
 const WKD = {Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 0}, WKN = {Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday'};
@@ -4760,7 +4786,7 @@ const EW_LVLS = [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive']];
 const curLvl = () => PUB() ? (H().set.level || 'root') : '';
 function everyLvl(){ if (!PUB()) return ''; const v = S.ewLvl || curLvl(); return EW_LVLS.some(x => x[0] === v) ? v : 'root'; }
 function everyGroups(lvl){
-  const out = [], pr = arr((PR() || {}).sessions), cur = curLvl();
+  const out = [], pr = arr((PR() || {}).sessions).concat(MFLOW()), cur = curLvl();
   if (PROG()) ['strength', 'cardio'].forEach(tr => { const g = PH_IDS.map(ph => { const ids = trackIds(tr, ph); if (!ids.length) return null;
       const src = PUB() ? pubPhaseSes(ph, lvl) : WK().sessions || {}, list = ids.map(id => [id, src[id]]).filter(x => x[1]); return list.length ? {name: phName(ph), list} : null; }).filter(Boolean);
     if (g.length) out.push({cat: tr, groups: g}); });
@@ -4768,6 +4794,9 @@ function everyGroups(lvl){
   FLOW_IDS.forEach(st => { const L = pr.filter(x => (x.style || 'daily') === st || (st === 'daily' && !FLOW_IDS.includes(x.style || 'daily'))); if (L.length) out.push({cat: st, groups: [{name: '', list: L.map(x => [x.id, x])}]}); });
   if (PUB() && PLIB() && !START()) BANDS().forEach(g => { const list = Object.entries(youngWo(g).sessions); if (list.length) out.push({cat: g, groups: [{name: '', list}]}); });   // BLD 981
   if (PUB() && PLIB()){ const g = cur === 'gentle' ? WK().sessions || {} : gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}, list = Object.entries(g); if (list.length) out.push({cat: 'gentle', groups: [{name: '', list}]}); }
+  // BLD 984: beside a moved plan, the Member library's age bands and Gentle
+  const M = MLIB(); if (M){ BANDS().forEach(g => { const list = Object.entries(youngWo(g).sessions); if (list.length) out.push({cat: g, groups: [{name: '', list}]}); });
+    const list = Object.entries(gentleWo(M, Math.max(1, weekNo(new Date()))).sessions || {}); if (list.length) out.push({cat: 'gentle', groups: [{name: '', list}]}); }
   return ageOrder(out);
 }
 function everyHtml(card){
@@ -4776,21 +4805,24 @@ function everyHtml(card){
   const tiles = (c, g) => g.list.map(([id, x], j) => c === 'strength' || c === 'cardio' ? card(PUB() && lvl !== cur ? 'wl:' + lvl + ':' + id : 'work:' + id, (g.name ? g.name + ' ' + (j + 1) + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, PUB() ? lvl : ''))
     : BANDS().includes(c) ? card('wl:' + c + ':' + id, youngKick(c, x), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, c))
     : c === 'gentle' ? card(cur === 'gentle' ? 'work:' + id : 'wl:gentle:' + id, (x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, 'gentle'))
-    : card('pracid:' + x.id, flowKick(x), x.title || 'Flow', x.focus || '', flowArtName(x))).join('');
+    : card((x._m ? 'mprac:' : 'pracid:') + x.id, flowKick(x), x.title || 'Flow', x.focus || '', flowArtName(x))).join('');
   return `<h3 class="tn-h3" id="tn-every">Every Workout</h3><p class="tn-ews">Every workout we have built, by category${AGE() !== 'grown' ? ', with your age first' : ''}.${PROG() && G.some(c => EW_AGE[c.cat] === 'grown') ? ' A workout from another phase plays with that phase\'s sets and reps.' : ''}</p>${chips}` +
     G.map((c, k) => { const n = c.groups.reduce((a, g) => a + g.list.length, 0); return `<details class="tn-ew" data-ew="${esc(c.cat)}"${k === 0 || S.ewOpen === c.cat || (c.cat === BAND() && c.cat) ? ' open' : ''}><summary><b>${esc(EW_CATS[c.cat] || (YG(c.cat) || {}).name || c.cat)}</b><small>${BANDS().includes(c.cat) ? '' : `<span class="tn-agetag">${esc(AGE_TAG[EW_AGE[c.cat] || 'all'])}</span> `}${n} ${n === 1 ? 'workout' : 'workouts'}</small></summary>${c.groups.map(g => `${g.name ? `<p class="tn-fst"><b>${esc(g.name)}</b></p>` : ''}<div class="tn-kgrid">${tiles(c.cat, g)}</div>`).join('')}</details>`; }).join('');
 }
 // The Library's count: every playable workout (public Tending: each level's Strength and Cardio, plus Gentle and the Flow family).
 function everyCount(){
   const pr = arr((PR() || {}).sessions).length, tc = src => ['strength', 'cardio'].reduce((n, tr) => n + PH_IDS.reduce((m, ph) => m + trackIds(tr, ph).filter(src).length, 0), 0);
-  if (!PUB()){ const all = WK().sessions || {}; return (PROG() ? tc(id => !!all[id]) : Object.keys(all).length) + pr; }
+  if (!PUB()){ const all = WK().sessions || {}, M = MLIB(), mn = M ? arr((M.gentle || {}).sessions).length + BANDS().reduce((n, g) => n + arr((YG(g) || {}).sessions).length, 0) + MFLOW().length : 0; return (PROG() ? tc(id => !!all[id]) : Object.keys(all).length) + pr + mn; }   // BLD 984
   const gn = arr(((PLIB() || {}).gentle || {}).sessions).length + (START() ? 0 : BANDS().reduce((n, g) => n + arr((YG(g) || {}).sessions).length, 0)); return (PROG() ? EW_LVLS.length * tc(() => true) : levelSets().filter(L => L.id !== 'gentle').reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0)) + gn + pr;
 }
 function vQuietShelf(){
   const t = TD(), h = H(), c = (h.days[today()] || {}).checks || {}, md = arr((MED() || {}).sessions), n = Math.max(1, weekNo(new Date())), qm = +h.set.quietMins || t.spirit.minutes[0]; let i = 0;
   return `<div class="tn-sec p-bark">${planCard({cls: 'p-roots', img: WAY(ITEM_ART.quiet), done: !!c.quiet, scene: 'dawn', hour: 6.3, time: 'Morning · ' + qm + ' min', title: t.spirit.h, sub: t.spirit.invite, btn: 'Quiet Timer', ba: 'quiet', bv: '', bi: 'clock', ck: tck('check', 'quiet', c.quiet, 'Done')})}
-    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map((x, j) => artCard(i++, 'medid:' + x.id, (x.day ? x.day + ' · ' : '') + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', medArtName(j))).join('')}</div>` : ''}</div>`;
+    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map((x, j) => artCard(i++, 'medid:' + x.id, (x.day ? x.day + ' · ' : '') + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', medArtName(j))).join('')}</div>` : ''}${mmedHtml(() => i++, n)}</div>`;
 }
+// BLD 984: beside a moved plan, the Member library's daily meditations, each on its own day's painting.
+function mmedHtml(ix, n){ const mm = MMEDS(), all = arr((((MLIB() || {}).app || {}).meditations || {}).sessions); if (!mm.length) return '';
+  return `<h3 class="tn-h3">More Meditations</h3><div class="tn-kgrid">${mm.map(x => artCard(ix(), 'mmed:' + x.id, (x.day ? x.day + ' · ' : '') + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', medArtName(all.indexOf(x)))).join('')}</div>`; }
 // ---------- the guides, built without opening ----------
 function ovFor(key){
   const [k, a, b] = String(key || '').split(':');
@@ -4798,6 +4830,8 @@ function ovFor(key){
   if (k === 'wl') return buildLevelWork(a, b);
   if (k === 'prac') return buildPractice();
   if (k === 'pracid') return buildPractice(a);
+  if (k === 'mprac') return buildMPrac(a);   // BLD 984
+  if (k === 'mmed') return buildMMed(a);
   if (k === 'med') return MED() ? buildMed() : null;
   if (k === 'medid') return MED() ? buildMed(a) : null;
   if (k === 'quiet') return quietOv();
@@ -4811,8 +4845,8 @@ function ovFor(key){
 function endInline(){ const o = S.ov; if (o && o.inline){ o.dead = true; o.skip = true; const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); } }
 function openInline(b){
   const sec = String(b.section || ''), cook = /^cook:/.test(sec), key = sec.replace(/^(cook|move):/, '');
-  const o = ovFor(cook ? (/^cook:/.test(key) ? key : 'cook:' + key) : (/^(work|wl|prac|pracid|med|medid|quiet)(:|$)/.test(key) ? key : 'work:' + key));
-  b.closed = false; if (!o) return false; o.inline = true; S.ov = o; wake(true); tick(); return true;
+  const o = ovFor(cook ? (/^cook:/.test(key) ? key : 'cook:' + key) : (/^(work|wl|prac|pracid|mprac|med|medid|mmed|quiet)(:|$)/.test(key) ? key : 'work:' + key));
+  b.closed = false; if (!o) return false; o.inline = true; S.ov = o; keyVoice(o); wake(true); tick(); return true;
 }
 // ---------- Today, one list in day order ----------
 function dayOf(date){ if (date instanceof Date && !isNaN(date)) return new Date(date); const p = parseD(date); if (p){ const n = new Date(); p.setHours(n.getHours(), n.getMinutes()); return p; } return new Date(); }
@@ -4958,7 +4992,7 @@ function apiPlan(o){
 }
 function apiCounts(){
   if (!FLDH() || !H()) return {recipes: 0, workouts: 0, meditations: 0, practices: 0};
-  return {recipes: recipesAll().length, workouts: everyCount(), meditations: arr((MED() || {}).sessions).length, practices: arr((PR() || {}).sessions).length};
+  return {recipes: recipesAll().length, workouts: everyCount(), meditations: arr((MED() || {}).sessions).length + MMEDS().length, practices: arr((PR() || {}).sessions).length + MFLOW().length};
 }
 // BLD 892, one card, two credits (shared/gg-fills.js): what a Today item plays, and every guided session the Home can offer
 // as Play a Guided One. Each is {key (for act), done (the log key its finish writes), kind, id, title, style, mins}.
