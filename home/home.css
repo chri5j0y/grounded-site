@@ -1674,7 +1674,7 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
    yellow, sky blue, grass green, coral, and berry. Every word color passes AA on its ground (patches/bld976/crops/app/
    maple-contrast.mjs). home.js names the open tree on the page (html data-tree), so only Maple changes.
    ===================================================================== */
-html[data-tree="maple"] body.hm-page,html[data-tree="maple"] .hm{
+html[data-tree="maple"] .hm{
   --bg:#FFF6D6; --bg-deep:#FFE9A8; --card:#FFFFFF; --card-2:#FFFAEB; --ink:#1B2547; --ink-soft:#46527A; --line:#F2D98C;
   --gold:#D3203A; --gold-deep:#A8172C; --gold-soft:#FF7A59; --gold-bright:#FFB000;
   --today:#A93A0B; --today-s:#FFE6C7;
@@ -1688,7 +1688,7 @@ html[data-tree="maple"] body.hm-page,html[data-tree="maple"] .hm{
   --shadow:0 1px 2px rgba(27,37,71,.06),0 8px 24px rgba(27,37,71,.10);
   --shadow-up:0 2px 4px rgba(27,37,71,.08),0 18px 40px rgba(27,37,71,.16);
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"])[data-tree="maple"] body.hm-page,:root:not([data-theme="light"])[data-tree="maple"] .hm{
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"])[data-tree="maple"] .hm{
   --bg:#0F1A38; --bg-deep:#0A1229; --card:#1A2750; --card-2:#213060; --ink:#F5F7FF; --ink-soft:#C3CCEA; --line:#33457A;
   --gold:#FF7085; --gold-deep:#FF8C9D; --gold-soft:#FF9F6B; --gold-bright:#FFD23F;
   --today:#FFB347; --today-s:#3A2E12;
@@ -1702,7 +1702,7 @@ html[data-tree="maple"] body.hm-page,html[data-tree="maple"] .hm{
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.3);
   --shadow-up:0 2px 6px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.42);
 }}
-:root[data-theme="dark"][data-tree="maple"] body.hm-page,:root[data-theme="dark"][data-tree="maple"] .hm{
+:root[data-theme="dark"][data-tree="maple"] .hm{
   --bg:#0F1A38; --bg-deep:#0A1229; --card:#1A2750; --card-2:#213060; --ink:#F5F7FF; --ink-soft:#C3CCEA; --line:#33457A;
   --gold:#FF7085; --gold-deep:#FF8C9D; --gold-soft:#FF9F6B; --gold-bright:#FFD23F;
   --today:#FFB347; --today-s:#3A2E12;
@@ -1716,7 +1716,10 @@ html[data-tree="maple"] body.hm-page,html[data-tree="maple"] .hm{
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.3);
   --shadow-up:0 2px 6px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.42);
 }
-html[data-tree="maple"] body.hm-page{background:var(--bg);}
+/* Maple colors stay inside the app (.hm): the site header, logo, and footer keep the Grounded colors; the page behind takes Maple's sunny yellow (deep blue at night). */
+html[data-tree="maple"] body.hm-page{background:#FFF6D6;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"])[data-tree="maple"] body.hm-page{background:#0F1A38;}}
+:root[data-theme="dark"][data-tree="maple"] body.hm-page{background:#0F1A38;}
 /* the bands that held mocha brown: Today's words, the phone banners, the kids' card */
 html[data-tree="maple"] .hm-thero{background:#1D4ED8;}
 html[data-tree="maple"] .hm-thero.eve{background:#3B2A8F;}
