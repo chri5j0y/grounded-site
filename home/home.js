@@ -55,7 +55,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c072', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=b999', '/field-guide/coach.js?v=c019', '/field-guide/health.js?v=c081', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c051';
   var MONEY_SRC = '/shared/gg-money.js?v=b949';
@@ -5311,6 +5311,8 @@
     'gw-t-welcome gw-t-checkin gw-t-today gw-t-grow gw-t-learn gw-t-private gw-k-hello gw-k-mytree gw-k-checkin gw-k-watch gw-k-grownups').split(' ');
   function lessonArt(app, id, i, title) {
     if (GW_ART.indexOf(String(id || '')) >= 0) return REP + id + '.webp';
+    // BLD 986: a video with its own painted scenes shows its own first painting on the card.
+    var own = planArt(app + ':' + id); if (own && !/\/(maple|aspen|pine|birch|oak|sequoia|willow|heartwood|grove)(-[a-z0-9]+)?\.webp/.test(own)) return own.replace(/(\/p\/vid\/[a-z0-9-]+)\.webp$/, '$1-card.webp');
     void i; var s = String(title || '');
     for (var k = 0; k < TOPIC_ART.length; k++) if (TOPIC_ART[k][0].test(s)) return TOPIC_ART[k][1];
     void id; return treeArt(app);
