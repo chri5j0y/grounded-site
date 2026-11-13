@@ -536,11 +536,22 @@ let LAST_SCENE = '';
 // The hero strip follows this grove's wording: Plain shows Roots: What grounds us (GWG BLD 907).
 function gvStripWords() {
   const li = document.querySelector('.gg-parts [data-part="roots"]'); if (!li) return;
-  const b = li.querySelector('b'), sp = li.querySelector('span'), plain = (() => { try { return !!G && plainMode(); } catch (e) { return false; } })();
+  const b = li.querySelector('b'), sp = li.querySelector('span'), plain = (() => { try { return !G || !!S.setup || plainMode(); } catch (e) { return true; } })(); // BLD 982: Plain until a grove picks Faith words
   if (b) b.textContent = plain ? 'Roots: What grounds us' : 'Roots: Spirit'; if (sp) sp.textContent = plain ? 'Calm, values, wonder, and gratitude' : 'Your connection with God and the sacred';
 }
+// BLD 982: a hero painting for each kind of grove (shared/heroes/grove/kinds/), the picnic before a grove is picked.
+const KIND_HERO = { classroom: 1, family: 1, faith: 1, group: 1, team: 1 };
+function gvHero() {
+  const h = document.querySelector('.gg-hero.gg-photo'); if (!h) return;
+  const k = G && !S.setup && KIND_HERO[G.kind] ? G.kind : '';
+  h.style.setProperty('--pw', k ? `url('/shared/heroes/grove/kinds/${k}-wide.webp?v=c041')` : "url('/shared/heroes/p/site-grove-hero-wide.webp')");
+  h.style.setProperty('--pn', k ? `url('/shared/heroes/grove/kinds/${k}-phone.webp?v=c041')` : "url('/shared/heroes/p/site-grove-hero-phone.webp')");
+}
+if (window.GGClass) GGClass.provide(id => TP[id] ? Object.assign(pv(TP[id]), { id }) : null);
 function render() {
   gvStripWords();
+  gvHero();
+  if (window.GGClass) GGClass.plain(!G || plainMode());
   renderTabs();
   const v = $('#view');
   window.GROVE_PLAIN = plainMode();
@@ -583,6 +594,7 @@ function viewSetup() {
     h += `<p class="gv-err" id="gv-serr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create-grove">Plant This Grove</button>${G ? '<button class="btn btn-line btn-sm" data-act="cancel-setup">Cancel</button>' : ''}</div></div>`;
   }
   if (!G) h += `<div class="card"><h3>From Your Guide's Visit</h3><p>Did a Grove Guide visit your family and send your check-in and plan? Open them here with the link or message and the 8-letter code.</p><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>`;
+  if (!G) h += `<div class="card gv-next"><h3>The Grove for Classrooms</h3><p>Calm, connected classrooms in a few minutes a day: Class Resets, a Class Screen for the smartboard, Teacher's Day, and painted practice cards. Start with a 4-Week Pilot, or sponsor a classroom for a teacher you know.</p><div class="tools-row" style="justify-content:flex-start"><a class="btn btn-gold btn-sm" href="/classrooms/">See The Grove for Classrooms</a><a class="btn btn-line btn-sm" href="/classrooms/sponsor.html">Sponsor a Classroom</a><button type="button" class="btn btn-line btn-sm" data-gc-video="teachers">Watch: For Teachers</button></div></div>`; // BLD 982
   if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in The Grounded Way, at Home. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
   return h + helpCardHtml();
 }
@@ -671,6 +683,8 @@ function viewGrove() {
     ? '<b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in The Grounded Way: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Check in together, make a plan together, and watch the grove grow.'
     : `<b>This grove belongs to ${esc(K.we)}.</b> Check in together with one shared answer for each question, make a Growth Plan together, and do a few practices side by side. Nothing about any one person is ever asked or kept.`}</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
   h += groveTodayHtml();
+  if (G.kind === 'classroom' && window.GGClass) h += GGClass.dayHtml() + `<div class="section-head"><h2>Class Resets</h2><p>Short guided videos for the whole class, one to three minutes, with a calm voice leading. Tap one and it plays full screen.</p></div>` + GGClass.resetsHtml() + `<p class="no-print"><button type="button" class="btn btn-line btn-sm" data-gc-video="teachers">${icon('play')} Watch: For Teachers</button></p>`;
+  if (window.GGGroveShare) h += GGGroveShare.cardHtml(G);
   h += nextStepHtml();
   h += lcHomeHtml();
   if (hasTrees()) {
@@ -803,6 +817,7 @@ function quietInner() {
   const hos = isFamily() && G && G.hard ? (G.line && G.line.phone
     ? `Call ${esc(G.line.name || 'your hospice 24/7 line')} first, day or night: <a class="text-link" href="tel:${esc(String(G.line.phone).replace(/[^0-9+]/g, ''))}">${esc(G.line.phone)}</a>. `
     : 'Call your hospice\'s 24/7 line first, day or night. ') : '';
+  if (G && G.kind === 'classroom') return 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.'; // BLD 982: a class sees the kids' line
   return `${hos}If you ever feel like hurting yourself, call or text 988. In danger now, call 911.`;
 }
 function quietHtml() { return `<p class="muted gv-quiet">${quietInner()}</p>`; }
@@ -877,9 +892,9 @@ function doneToday(id) { return !!(G.done[today()] || {})[id]; }
 function practiceCard(pr0, featured, extra) {
   const pr = pv(pr0), open = S.open === pr.id, done = doneToday(pr.id), part = PARTS6.find(x => x.key === pr.part) || {};
   const showKid = pr.kid && (isFamily() || kidsOn());
-  const fit = fitsCircle(pr0);
-  return `<div class="${featured ? 'card gv-featured' : 'gv-prac'}" style="--pc:${part.color}"><div class="gv-prac-top"><b>${esc(pr.name)}</b><small>${esc(part.name || '')}</small></div>${extra || ''}<p>${esc(pr.text)}</p>${showKid ? `<p class="muted gv-kid">For little ones: ${esc(pr.kid)}</p>` : ''}${fit ? `<p class="gv-join"><b>Fits Our Circle.</b> ${esc(pr.adapt || '')}</p>` : G.joinFirst && pr.adapt ? `<p class="gv-join"><b>Everyone can join.</b> ${esc(pr.adapt)}</p>` : ''}
-    <div class="gv-acts"><button type="button" class="btn ${done ? 'btn-line' : 'btn-gold'} btn-sm" aria-pressed="${done}" data-act="did" data-id="${pr.id}">${done ? 'Done today. Undo' : 'We did this today'}</button><button type="button" class="text-btn" aria-expanded="${open}" data-act="how" data-id="${pr.id}">${open ? 'Hide how' : 'Show me how'}</button></div>
+  const fit = fitsCircle(pr0), cls = G && G.kind === 'classroom' && window.GGClass, img = cls && GGClass.art(pr.id);
+  return `<div class="${featured ? 'card gv-featured' : 'gv-prac'}" style="--pc:${part.color}">${img ? `<span class="gc-cimg" role="img" aria-label="${esc(pr.name)}" style="background-image:url('${img}')"></span>` : ''}<div class="gv-prac-top"><b>${esc(pr.name)}</b><small>${esc(part.name || '')}</small></div>${extra || ''}<p>${esc(pr.text)}</p>${showKid ? `<p class="muted gv-kid">For little ones: ${esc(pr.kid)}</p>` : ''}${fit ? `<p class="gv-join"><b>Fits Our Circle.</b> ${esc(pr.adapt || '')}</p>` : G.joinFirst && pr.adapt ? `<p class="gv-join"><b>Everyone can join.</b> ${esc(pr.adapt)}</p>` : ''}
+    <div class="gv-acts"><button type="button" class="btn ${done ? 'btn-line' : 'btn-gold'} btn-sm" aria-pressed="${done}" data-act="did" data-id="${pr.id}">${done ? 'Done today. Undo' : 'We did this today'}</button>${cls ? `<button type="button" class="btn btn-line btn-sm" data-gc-screen="${pr.id}">Class Screen</button>` : ''}<button type="button" class="text-btn" aria-expanded="${open}" data-act="how" data-id="${pr.id}">${open ? 'Hide how' : 'Show me how'}</button></div>
     ${open ? `<ol class="gv-steps">${String(pr.steps || '').split('|').filter(Boolean).map(s => `<li>${esc(s)}</li>`).join('')}</ol>${srcLine(pr0)}` : ''}</div>`;
 }
 // Sources (shared/gg-sources.js): "Adapted from" under a practice's steps, and a Sources line under the check-in, results, and plan.
@@ -894,13 +909,15 @@ function viewTogether() {
   let h = `<div class="section-head"><h2>Together</h2><p>Things ${esc(K.we)} does side by side. Each one grows the grove. Suggestions only: do one, do several, or skip a week.</p></div>`;
   if (planItems.length) h += `<p class="gv-kicker">From ${esc(K.plan)}</p>` + planItems.map(p => { const it = plan.items.find(x => x.pid === p.id) || {}; return practiceCard(p, true, it.anchor ? `<p class="muted">When: ${esc(it.anchor)}</p>` : ''); }).join('');
   else if (feat) h += `<p class="gv-kicker">This week's theme: ${esc(T.themes[w] || '')}</p>` + practiceCard(feat, true);
+  if (G.kind === 'classroom' && window.GGClass) h += `<p class="gv-kicker">Class Resets</p>` + GGClass.resetsHtml() + `<p class="muted">Every practice below opens on the Class Screen: big words, one step at a time, a timer, and a calm voice. Use Full Screen on a smartboard or projector.</p>`;
   if (G.lockOn && !vaultOpen()) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} Unlock the grove to see your plan's practices first. <button class="text-btn" data-act="unlock">Unlock</button></p>`;
   h += `<div class="gv-chips"><button type="button" class="chip${!S.part ? ' on' : ''}" aria-pressed="${!S.part}" data-act="part" data-id="">All parts</button>${TEND6.map(p => `<button type="button" class="chip${S.part === p.key ? ' on' : ''}" aria-pressed="${S.part === p.key}" data-act="part" data-id="${p.key}">${p.name}</button>`).join('')}</div>`;
   h += switchHtml('joinfirst', G.joinFirst, 'Show Ways Everyone Can Join First', G.joinFirst ? 'On. Seated and gentle ways come first, with a way for everyone to join.' : 'Off. Turn it on to put seated and gentle ways first.');
   if (circleTags()) h += `<p class="muted">Practices that fit Who's in Our Circle come first, marked Fits Our Circle.</p>`;
   TEND6.filter(p => !S.part || S.part === p.key).forEach(p => {
     const list = joinOrder(kindPractices(p.key)); if (!list.length) return;
-    h += `<section class="gv-partsec" style="--pc:${p.color}"><h3>${icon(p.key)}${esc(gvLabel(p))}</h3>${list.map(x => practiceCard(x, false)).join('')}</section>`;
+    const grid = G.kind === 'classroom' && window.GGClass; // BLD 982: painted cards in a grid for a class
+    h += `<section class="gv-partsec" style="--pc:${p.color}"><h3>${icon(p.key)}${esc(gvLabel(p))}</h3>${grid ? '<div class="gc-grid">' : ''}${list.map(x => practiceCard(x, false)).join('')}${grid ? '</div>' : ''}</section>`;
   });
   return h;
 }
@@ -1009,7 +1026,8 @@ function lcListHtml() {
   const back = st.q ? '' : `<button type="button" class="text-btn gv-lc-allg no-print" id="gv-lc-allg" data-act="lc-ring" data-id="all">${icon('back', 'gv-ic-inline')} All Groups</button>`;
   (st.q ? [SOBER_RING].concat(LC_RINGS) : lcRingsShown()).filter(r => st.q || r.key === st.ring).forEach(r => { // a search looks in every ring, Living Sober too
     const ts = LC.filter(t => (st.q ? t.ring === r.key : lcInRing(t, r)) && lcMatches(t, st.q)); if (!ts.length) return; // a search lists each guide once, in its own ring
-    const ord = ts.filter(lcFits).concat(ts.filter(t => !lcFits(t)));
+    const ord0 = ts.filter(lcFits).concat(ts.filter(t => !lcFits(t))), bf = ord0.findIndex(t => t.id === 'big-feelings-class'); // BLD 982: Big Feelings in the Classroom leads its ring
+    const ord = bf > 0 ? [ord0[bf]].concat(ord0.filter((t, i) => i !== bf)) : ord0;
     n += ts.length;
     h += `<div class="gv-lc-ring" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="gv-lc-grid">${ord.map(lcCard).join('')}</div></div>`;
   });
@@ -1446,7 +1464,8 @@ function moveOnHtml(all) {
   if (kind === 'faith' || kind === 'group') h += `<p><b>Take The Grove Home.</b> ${esc(moW('takeHome', 'Members can start a Family grove of their own at home. Print a card to hand out.'))}</p><button class="btn btn-line btn-sm" data-act="print" data-id="home">Print the Take Home Card</button>`;
   if (kind === 'classroom' && all) h += `<p><b>Close Our Class Grove.</b> ${esc(moW('closeClass', 'At the end of the year: a goodbye circle, the certificate, and then the class grove is cleared from this device.'))}</p><button class="btn btn-line btn-sm" data-act="closeclass">Close Our Class Grove</button>`;
   if (isFamily() && G.hard) h += `<p><b>Willow.</b> ${esc(moW('hardSeason', 'For the person in hospice and the people who love them. A remembered willow stays in the grove.'))}</p><a class="btn btn-line btn-sm" href="/willow/">Open Willow</a>`;
-  h += `<p><b>Start Your Own Tree.</b> ${esc(moW('ownTree', 'Everyone can tend their own tree, private to them, in The Grounded Way.'))}</p><div class="tools-row" style="justify-content:flex-start">${ownTreeChips()}</div>`;
+  if (kind === 'classroom') h += `<p><b>For You, the Teacher.</b> Tend your own tree too, private to you, in The Grounded Way: a few minutes for your own mind, body, spirit, and relationships.</p><div class="tools-row" style="justify-content:flex-start">${ownTreeChips()}<a class="btn btn-line btn-sm" href="/classrooms/pilot.html">The 4-Week Classroom Pilot</a></div>`; // BLD 982: a class grove speaks to the teacher only
+  else h += `<p><b>Start Your Own Tree.</b> ${esc(moW('ownTree', 'Everyone can tend their own tree, private to them, in The Grounded Way.'))}</p><div class="tools-row" style="justify-content:flex-start">${ownTreeChips()}</div>`;
   return h + `</div>`;
 }
 
