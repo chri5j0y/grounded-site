@@ -1667,3 +1667,77 @@ html:has(#hm-su) .ggp-toast{top:calc(16px + env(safe-area-inset-top,0px)) !impor
 .hm-vbody{display:grid;gap:12px;min-width:0;}
 .hm-vmore{margin-top:18px;}
 @media (min-width:700px){.hm-vt{font-size:40px;}.hm-sett{font-size:40px;}}
+
+/* =====================================================================
+   BLD 976: Maple's own colors (Chris, November 13, 2026: "we want bright color on maple.. not the mocha warm.. bright bold
+   fun kid colors"). Sunny cream, bright white cards, and navy words in light; deep navy in dark. Maple red leads, with sunny
+   yellow, sky blue, grass green, coral, and berry. Every word color passes AA on its ground (patches/bld976/crops/app/
+   maple-contrast.mjs). home.js names the open tree on the page (html data-tree), so only Maple changes.
+   ===================================================================== */
+html[data-tree="maple"] body.hm-page,html[data-tree="maple"] .hm{
+  --bg:#FFF6D6; --bg-deep:#FFE9A8; --card:#FFFFFF; --card-2:#FFFAEB; --ink:#1B2547; --ink-soft:#46527A; --line:#F2D98C;
+  --gold:#D3203A; --gold-deep:#A8172C; --gold-soft:#FF7A59; --gold-bright:#FFB000;
+  --today:#A93A0B; --today-s:#FFE6C7;
+  --plate:#137535; --plate-s:#D9F7E2; --move:#A93A0B; --move-s:#FFE2D3; --numbers:#6D28D9; --numbers-s:#EDE5FF;
+  --sober:#0369A1; --sober-s:#D6EEFF;
+  --roots:#BB1A32; --roots-s:#FFE0E5; --trunk:#9A4A08; --trunk-s:#FFEBC7; --bark:#6D28D9; --bark-s:#EDE5FF;
+  --branches:#0369A1; --branches-s:#D6EEFF; --leaves:#137535; --leaves-s:#D9F7E2; --fruit:#BE185D; --fruit-s:#FFDDEB;
+  --soil:#FFE9A8; --soil-2:#FFD86B; --strong:#137535; --steady:#9A4A08; --on:#FFFFFF;
+  --hero:#1D4ED8; --hero-ink:#FFFFFF; --hero-soft:#DCE6FF; --tabbar:#FFFFFF; --fab:#137535;
+  --sh-learn:#1D4ED8; --sh-life:#137535; --sh-rec:#A93A0B; --sh-work:#0369A1; --sh-quiet:#6D28D9;
+  --shadow:0 1px 2px rgba(27,37,71,.06),0 8px 24px rgba(27,37,71,.10);
+  --shadow-up:0 2px 4px rgba(27,37,71,.08),0 18px 40px rgba(27,37,71,.16);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"])[data-tree="maple"] body.hm-page,:root:not([data-theme="light"])[data-tree="maple"] .hm{
+  --bg:#0F1A38; --bg-deep:#0A1229; --card:#1A2750; --card-2:#213060; --ink:#F5F7FF; --ink-soft:#C3CCEA; --line:#33457A;
+  --gold:#FF7085; --gold-deep:#FF8C9D; --gold-soft:#FF9F6B; --gold-bright:#FFD23F;
+  --today:#FFB347; --today-s:#3A2E12;
+  --plate:#7EE08F; --plate-s:#163F2A; --move:#FF9F6B; --move-s:#4A2416; --numbers:#C4A1FF; --numbers-s:#33235E;
+  --sober:#5CC8F5; --sober-s:#12385A;
+  --roots:#FF7085; --roots-s:#4A1C29; --trunk:#FFB347; --trunk-s:#45320F; --bark:#C4A1FF; --bark-s:#33235E;
+  --branches:#5CC8F5; --branches-s:#12385A; --leaves:#7EE08F; --leaves-s:#163F2A; --fruit:#FF7AB6; --fruit-s:#4A1838;
+  --soil:#213060; --soil-2:#1A2750; --strong:#7EE08F; --steady:#FFB347; --on:#0F1A38;
+  --hero:#1E3A8A; --hero-ink:#FFFFFF; --hero-soft:#C9D6FF; --tabbar:#132044; --fab:#2F9E55;
+  --sh-learn:#1E3A8A; --sh-life:#166534; --sh-rec:#9A3412; --sh-work:#075985; --sh-quiet:#5B21B6;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.3);
+  --shadow-up:0 2px 6px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.42);
+}}
+:root[data-theme="dark"][data-tree="maple"] body.hm-page,:root[data-theme="dark"][data-tree="maple"] .hm{
+  --bg:#0F1A38; --bg-deep:#0A1229; --card:#1A2750; --card-2:#213060; --ink:#F5F7FF; --ink-soft:#C3CCEA; --line:#33457A;
+  --gold:#FF7085; --gold-deep:#FF8C9D; --gold-soft:#FF9F6B; --gold-bright:#FFD23F;
+  --today:#FFB347; --today-s:#3A2E12;
+  --plate:#7EE08F; --plate-s:#163F2A; --move:#FF9F6B; --move-s:#4A2416; --numbers:#C4A1FF; --numbers-s:#33235E;
+  --sober:#5CC8F5; --sober-s:#12385A;
+  --roots:#FF7085; --roots-s:#4A1C29; --trunk:#FFB347; --trunk-s:#45320F; --bark:#C4A1FF; --bark-s:#33235E;
+  --branches:#5CC8F5; --branches-s:#12385A; --leaves:#7EE08F; --leaves-s:#163F2A; --fruit:#FF7AB6; --fruit-s:#4A1838;
+  --soil:#213060; --soil-2:#1A2750; --strong:#7EE08F; --steady:#FFB347; --on:#0F1A38;
+  --hero:#1E3A8A; --hero-ink:#FFFFFF; --hero-soft:#C9D6FF; --tabbar:#132044; --fab:#2F9E55;
+  --sh-learn:#1E3A8A; --sh-life:#166534; --sh-rec:#9A3412; --sh-work:#075985; --sh-quiet:#5B21B6;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.3);
+  --shadow-up:0 2px 6px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.42);
+}
+html[data-tree="maple"] body.hm-page{background:var(--bg);}
+/* the bands that held mocha brown: Today's words, the phone banners, the kids' card */
+html[data-tree="maple"] .hm-thero{background:#1D4ED8;}
+html[data-tree="maple"] .hm-thero.eve{background:#3B2A8F;}
+html[data-tree="maple"] .hm-app[data-tab="week"] .hm-banner,html[data-tree="maple"] .hm-app[data-tab="checkin"] .hm-banner{background:#1D4ED8;}
+html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;--kc:#FFFFFF;--ki:#1B2547;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"])[data-tree="maple"] .hm-thero{background:#1E3A8A;}:root:not([data-theme="light"])[data-tree="maple"] .hm-kid,:root:not([data-theme="light"])[data-tree="maple"] .hm-ktree{--kb:#0F1A38;--kc:#1A2750;--ki:#F5F7FF;}}
+:root[data-theme="dark"][data-tree="maple"] .hm-thero{background:#1E3A8A;}
+:root[data-theme="dark"][data-tree="maple"] .hm-kid,:root[data-theme="dark"][data-tree="maple"] .hm-ktree{--kb:#0F1A38;--kc:#1A2750;--ki:#F5F7FF;}
+/* Maple's check-in window */
+.ggd.ggd-t-maple{
+  --bg:#FFF6D6; --card:#FFFFFF; --card2:#FFFAEB; --ink:#1B2547; --soft:#46527A; --line:#F2D98C;
+  --gold:#D3203A; --gold2:#A8172C; --golds:#FFE0E5; --on:#FFFFFF; --edge:#A93A0B;
+  --wash:linear-gradient(180deg,rgba(255,246,214,.25) 0%,rgba(255,246,214,.6) 42%,rgba(255,246,214,.88) 100%);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ggd.ggd-t-maple{
+  --bg:#0F1A38; --card:#1A2750; --card2:#213060; --ink:#F5F7FF; --soft:#C3CCEA; --line:#33457A;
+  --gold:#FF7085; --gold2:#FF8C9D; --golds:#4A1C29; --on:#0F1A38; --edge:#FFB347;
+  --wash:linear-gradient(180deg,rgba(15,26,56,.42) 0%,rgba(15,26,56,.7) 42%,rgba(15,26,56,.9) 100%);
+}}
+:root[data-theme="dark"] .ggd.ggd-t-maple{
+  --bg:#0F1A38; --card:#1A2750; --card2:#213060; --ink:#F5F7FF; --soft:#C3CCEA; --line:#33457A;
+  --gold:#FF7085; --gold2:#FF8C9D; --golds:#4A1C29; --on:#0F1A38; --edge:#FFB347;
+  --wash:linear-gradient(180deg,rgba(15,26,56,.42) 0%,rgba(15,26,56,.7) 42%,rgba(15,26,56,.9) 100%);
+}

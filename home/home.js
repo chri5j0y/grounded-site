@@ -540,9 +540,11 @@
     moneyOff(); plannerOff();
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
-    if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
+    if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; document.documentElement.removeAttribute('data-tree'); closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
     var changed = S.id !== a.id;
     S.id = a.id; S.p = GGP.get ? GGP.get(a.id) : a; S.tree = treeOfProfile(S.p);
+    // BLD 976 (Chris, November 13, 2026: "bright bold fun kid colors"): the open tree names the page, so a tree can carry its own colors (Maple).
+    try { document.documentElement.setAttribute('data-tree', S.tree || ''); } catch (e) {}
     if (changed) { S.tendInit = false; S.words = null; S.paintedFor = null; LIB.load = null; if (SU.id !== a.id) SU.open = false; if (window.GGPlanner) GGPlanner.load(); }
     // BLD 907: the Home's own records follow re-filed practices (once a profile opens; a second pass changes nothing).
     if (changed && GGP.isOpen && GGP.isOpen(a.id)) { var hr0 = GGP.data(a.id, 'home'); if (hr0 && aliasHome(hr0)) saveHome(); }
