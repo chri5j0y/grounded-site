@@ -1148,7 +1148,7 @@
   /* BLD 976 (Chris, November 12, 2026: "what am i supposed to do next?"): one clear next step under Your Tree Is Growing.
      Before the first check-in: check in with your grown-up. After it: tend today's practices (or choose them first). */
   function kidNextHtml(ck, kitems) {
-    if (!ck) return '<p class="hm-knext">Next: check in with your grown-up.</p><button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</button>';
+    if (!ck) return '<button type="button" class="hm-kbtn" data-hm-tree="checkin" style="--c:#4FA82C;margin-top:12px">' + I('people') + 'Check In With My Grown-up</button>';
     if (arr(kitems).length) return '<p class="hm-knext">Next: tend your tree today. Tap the circle when you do a practice.</p><button type="button" class="hm-kbtn" data-hm="kidnext" style="--c:#4FA82C">' + I('sprout') + 'Tend My Tree Today</button>';
     return '<p class="hm-knext">Next: choose the practices that help your tree grow.</p><button type="button" class="hm-kbtn" data-hm-setup="roots" style="--c:#4FA82C">' + I('sprout') + 'Choose My Practices</button>';
   }
