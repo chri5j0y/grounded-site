@@ -980,6 +980,15 @@
       bar.classList.add('on'); place();
       bar._next = e.next;
     }
+    // Chris, November 13, 2026 ("glitches every few seconds"): each scene's painting loads ahead of time, so a change of
+    // scene swaps straight to the next painting with no empty frame while it loads.
+    var AHEAD = {};
+    function artAhead(i) {
+      for (var j = i; j < Math.min(N - 1, i + 3); j++) {
+        try { var s2 = stdScene(l.scenes[j], j, l, cfg.app); if (!s2 || !s2.img) continue; var u = ART(s2.img, cfg.app); if (!u || AHEAD[u]) continue;
+          var im = new Image(); im.decoding = 'async'; im.src = u; AHEAD[u] = im; if (im.decode) im.decode().catch(function () {}); } catch (e) {}
+      }
+    }
     function show(n) {
       P.i = Math.max(0, Math.min(N - 1, n)); var last = P.i === N - 1, sc, t;
       stopTimers(); t = P.tok; hush();
@@ -994,6 +1003,7 @@
       cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
       cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
       brPace(sc); figScene(sc);
+      artAhead(P.i);
       st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || sc.k === 'still' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
       bar.classList.remove('on', 'over'); bar.innerHTML = ''; if (bar.parentNode !== st) st.appendChild(bar);
       if (last) endButtons(sc._e);
