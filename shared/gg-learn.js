@@ -147,7 +147,7 @@
      imgs[n] behind the scene (a title takes it as its own painting); pN that painting as a paint scene (big scenes);
      cN a candle scene on it (words, big, breathe, paint); fN or fN.move the figure leads on it (breathe, big, words).
      A scene's own img or look always wins. The plan loads with this file, so it is there by the time Play is tapped. */
-  var ARTP = { p: null }, ARTV = 'c112'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings); BLD 977 c051 (the Maple picture book paintings)
+  var ARTP = { p: null }, ARTV = 'c114'; // BLD 990: the 3D figure leads the real stretches and moves (fN.move tokens); // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings); BLD 977 c051 (the Maple picture book paintings)
   function artLoad() {
     if (window.GG_ART) return Promise.resolve(window.GG_ART);
     if (ARTP.p) return ARTP.p;
@@ -174,7 +174,11 @@
      (in, hold, out, rest a box; in, hold, out a triangle; in, sip, out the sigh hill). Everything else is a panel drawn by
      shared/gg-gfx.js (loaded on demand) on the open side of the scene, with the words narrowed beside it; it moves to each
      step as that sentence starts. The words, cues, and recordings never change. */
-  var GFXP = { p: null }, GFXV = 'c113', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
+  // BLD 990 Video Graphics Round 2: the painted tree of each app, and the talking circle, weather, day arc, water glass and
+  // battery, kind wishes rings, good things on a branch, the conversation turn, growth rings, the repair bridge, the Name It
+  // dial, the circle of support, and a hand on the heart or roots on the body outline. The plan is c114; gg-gfx.js has its own
+  // version (GFXJS), so a change to the drawings alone needs no new plan.
+  var GFXP = { p: null }, GFXV = 'c114', GFXJS = 'g990', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
   function gfxLoad() {
     if (window.GG_GFX) return Promise.resolve(window.GG_GFX);
     if (GFXP.p) return GFXP.p;
@@ -211,6 +215,9 @@
     if (look === 'candle' && soft[k]) k = 'candle';
     // BLD 911: a breath of three or four parts (the sip, the holds) leads with the circle, so the figure look steps aside.
     if (look === 'figure' && sc.k === 'breathe' && Array.isArray(sc.breath) && sc.breath.length > 2) { look = 'image'; }
+    // BLD 990: a plain card (a title and a line, no fields or buttons) can let the figure lead a move; its title and line
+    // show in the figure's panel, so the words on screen stay the same.
+    if (look === 'figure' && k === 'card' && !(sc.fields || []).length && !(sc.btns || []).length && sc.tap == null && figMoves(arg)) { k = 'big'; if (!sc.h) o.h = sc.title || ''; if (!sc.sub) o.sub = sc.body || ''; }
     if (look === 'figure' && soft[k]) { k = 'figure'; o.move = sc.move || arg || (sc.k === 'breathe' ? 'stand-breath' : 'stand-breath'); if (!sc.breath && (sc.k === 'breathe' || /breath/.test(o.move))) o.breath = [4, 6]; }
     if (k === 'figure' && !o.move && !sc.move) o.move = 'stand-breath';
     if (k === 'figure' && !sc.breath && !o.breath && /breath/.test(o.move || sc.move || '')) o.breath = [4, 6];
@@ -284,7 +291,7 @@
   }
   function brRing(sc, opt, tone) { ringNeed(); var sh = brShape(sc); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"' + (sh ? ' data-shape="' + sh + '" data-sw="' + esc(brWordList(sc).join('|')) + '"' : '') + '></svg>'; }
   function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=b989'); el.async = true; document.head.appendChild(el); } catch (e) {} }
-  function gfxNeed() { if (window.GGGfx || gfxNeed.on) return; gfxNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-gfx.js?v=' + GFXV); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  function gfxNeed() { if (window.GGGfx || gfxNeed.on) return; gfxNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-gfx.js?v=' + GFXJS); el.async = true; document.head.appendChild(el); } catch (e) {} }
   // A breathing exercise: a lesson whose own name is a breath (Box Breathing, Long Exhale Breathing, Physiological Sigh, Slow Bubble
   // Breath), never a prayer. A lesson can say so itself with breathEx.
   function breathEx(l) {
@@ -390,7 +397,7 @@
         var fs = sc.side === 'r' ? 'r' : 'l';
         return '<div class="ln-bd ln-bd-clear ln-bd-slow" data-d="' + (sc._d || 0) + '"><img src="' + ART(sc.img, sc._app) + '" alt=""></div>'
           + '<div class="ln-ps ln-ps-' + fs + '"></div>'
-          + '<div class="ln-fg3 ln-fg3-' + (fs === 'l' ? 'r' : 'l') + '" style="--k:' + acc + '"><div class="ln-fgb"><div class="ln-brc"></div>' + brRing(sc, '', 'dark') + '</div></div>'
+          + '<div class="ln-fg3 ln-fg3-' + (fs === 'l' ? 'r' : 'l') + '" style="--k:' + acc + '"><div class="ln-fgb">' + (Array.isArray(sc.breath) ? '<div class="ln-brc"></div>' + brRing(sc, '', 'dark') : '') + '</div></div>'  // BLD 990: a move with no breath shows no ring
           + '<div class="ln-pn ln-pn-' + fs + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '') + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '')
           + (Array.isArray(sc.breath) ? '<div class="ln-brt ln-fg-brt"><i>Breathe in</i><i>Breathe out</i></div>' : '') + '</div>';
       }
@@ -600,6 +607,7 @@
       '.ln-gfx{position:absolute;top:56px;width:270px;height:400px;z-index:2;pointer-events:none;box-sizing:border-box;opacity:0;transition:opacity .9s ease .25s;}.go .ln-gfx{opacity:1;}',
       '.ln-gfx-r{right:34px;}.ln-gfx-l{left:34px;}.ln-gfx-fl{left:56px;top:292px;width:230px;height:210px;}.ln-gfx-fr{right:56px;top:292px;width:230px;height:210px;}',
       '.ln-gfx-card{background:rgba(20,13,7,.5);border-radius:26px;padding:16px 14px;box-shadow:0 10px 34px rgba(0,0,0,.28);}',
+      '.ln-gfx-card[data-g="tree"]{background:rgba(20,13,7,.66);}',
       '.ln-gfx[data-g="wave"],.ln-gfx[data-g="tap"]{top:96px;height:330px;}.ln-gfx svg.gx-br{display:block;width:100%;height:100%;overflow:visible;}',
       '.ggl-small .ln-gfx{top:34px;height:356px;}.ggl-small .ln-gfx[data-g="wave"],.ggl-small .ln-gfx[data-g="tap"]{top:52px;height:320px;}.ggl-small .ln-gfx-fl,.ggl-small .ln-gfx-fr{top:300px;height:190px;}',
       '.ln-gx-r .ln-wd{padding-right:340px;}.ln-gx-r .ln-big{padding:0 336px 0 64px;}.ln-gx-r .ln-pts{padding-right:326px;}.ln-gx .ln-pt{font-size:25px;}.ln-gx .ln-pt small{font-size:19px;}',
@@ -1119,7 +1127,7 @@
     function gfxPlace(sc) {
       P.gx = null; var G = sc._gfx; if (!G || sc.k === 'end') return;
       var side = gfxSide(sc), dk = !!sc._bd || !!GFX_CLEAR[sc.k] || (sc.k === 'big' && !!sc.bg), w = document.createElement('div');
-      w.className = 'ln-gfx ln-gfx-' + side + (GFX_CLEAR[sc.k] ? ' ln-gfx-card' : '');
+      w.className = 'ln-gfx ln-gfx-' + side + (GFX_CLEAR[sc.k] || (dk && G.g === 'tree') ? ' ln-gfx-card' : ''); // BLD 990: the painted tree sits on a soft card over any painting
       w.setAttribute('aria-hidden', 'true'); w.setAttribute('data-g', G.g); w.setAttribute('data-tok', G.tok);
       w.__gfx = { g: G.g, def: G.def, steps: G.steps, dk: dk, app: cfg.app, br: isBr(sc) ? brParts(sc) : '' };
       cv.appendChild(w); cv.classList.add('ln-gx', 'ln-gx-' + side.slice(-1));
@@ -1785,7 +1793,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c113'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c114'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
