@@ -25,7 +25,7 @@
     return new Promise(function (res) { var s = document.createElement('script'); s.src = src; s.onload = s.onerror = function () { res(); }; document.head.appendChild(s); });
   }
   function ready() {
-    return need('/read.js?v=c030', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=c111', function () { return !!window.GGLearn; }); });
+    return need('/read.js?v=c030', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=c112', function () { return !!window.GGLearn; }); });
   }
 
   /* ---------- practices for the Class Screen ----------
