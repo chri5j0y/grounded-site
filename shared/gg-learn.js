@@ -147,7 +147,7 @@
      imgs[n] behind the scene (a title takes it as its own painting); pN that painting as a paint scene (big scenes);
      cN a candle scene on it (words, big, breathe, paint); fN or fN.move the figure leads on it (breathe, big, words).
      A scene's own img or look always wins. The plan loads with this file, so it is there by the time Play is tapped. */
-  var ARTP = { p: null }, ARTV = 'c101'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings); BLD 977 c051 (the Maple picture book paintings)
+  var ARTP = { p: null }, ARTV = 'c112'; // BLD 970 Rounds 5 and 6: the plan has its own version (the video opening paintings); BLD 977 c051 (the Maple picture book paintings)
   function artLoad() {
     if (window.GG_ART) return Promise.resolve(window.GG_ART);
     if (ARTP.p) return ARTP.p;
@@ -511,12 +511,13 @@
       // circle keeps breathing, because following it is the exercise; its slow size change and the soft word fades stay on.
       '',
       /* BLD 908, the content standard: paintings behind every scene, drifting slowly; paint, candle, and figure scenes */
-      '.ln-bd{position:absolute;inset:0;overflow:hidden;z-index:-1;}.ln-bd-sh{z-index:-1;}.ln-bd img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;will-change:transform;}',
+      '.ln-bd{position:absolute;inset:0;overflow:hidden;z-index:-1;}.ln-bd-sh{z-index:-1;}.ln-bd img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 12%;will-change:transform;}',
       '.ln-bd-soft img{left:-24px;top:-24px;width:calc(100% + 48px);height:calc(100% + 48px);filter:blur(4px) saturate(1.08);}',
       '.ln-bd-sh{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(20,13,7,.4) 0%,rgba(20,13,7,.62) 100%);}',
       '.go .ln-bd img{animation:lnDr0 32s ease-out both;}.go .ln-bd[data-d="1"] img{animation-name:lnDr1;}.go .ln-bd[data-d="2"] img{animation-name:lnDr2;}.go .ln-bd[data-d="3"] img{animation-name:lnDr3;}.go .ln-bd-slow img{animation:lnDrS 60s ease-out both !important;}',
-      '@keyframes lnDr0{from{transform:scale(1.04)}to{transform:scale(1.14) translate(-1.6%,-.8%)}}@keyframes lnDr1{from{transform:scale(1.04)}to{transform:scale(1.14) translate(1.6%,-.8%)}}',
-      '@keyframes lnDr2{from{transform:scale(1.15) translate(0,-1%)}to{transform:scale(1.04)}}@keyframes lnDr3{from{transform:scale(1.06) translate(0,1.4%)}to{transform:scale(1.13) translate(0,-1.2%)}}@keyframes lnDrS{from{transform:scale(1.01)}to{transform:scale(1.07)}}',
+      // BLD 988 (Chris: "scene 2 image crop a bit of their heads"): a gentler drift that holds the top of the painting.
+      '@keyframes lnDr0{from{transform:scale(1.02)}to{transform:scale(1.08) translate(-1%,0)}}@keyframes lnDr1{from{transform:scale(1.02)}to{transform:scale(1.08) translate(1%,0)}}',
+      '@keyframes lnDr2{from{transform:scale(1.08)}to{transform:scale(1.02)}}@keyframes lnDr3{from{transform:scale(1.03)}to{transform:scale(1.08)}}@keyframes lnDrS{from{transform:scale(1.01)}to{transform:scale(1.07)}}',
       // light words on a painting
       '.ln-bdon{color:#F6EFE2;}.ln-bdon h3,.ln-bdon .ln-big p{color:#FFF8EC;text-shadow:0 2px 14px rgba(0,0,0,.5);}',
       '.ln-bdon .ln-big small,.ln-bdon .ln-pt small,.ln-bdon .ln-wd small,.ln-bdon .ln-br small{color:#EBD9B6 !important;text-shadow:0 1px 8px rgba(0,0,0,.5);}',
@@ -1693,7 +1694,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c101'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c112'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
