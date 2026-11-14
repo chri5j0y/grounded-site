@@ -164,6 +164,39 @@
     var im = (G.imgs || [])[parseInt(m[2], 36)]; if (!im) return null;
     return { img: im, look: m[1] === 'p' ? 'paint' : m[1] === 'c' ? 'candle' : m[1] === 'f' ? 'figure' + (m[3] ? ':' + m[3] : '') : 'image' };
   }
+  /* BLD 989 Video Graphics: the graphics plan (shared/learn-gfx.js, window.GG_GFX, made by patches/bld989/gen-gfx.mjs in
+     grounded-workshop from gfx-plan.json), kept beside the data like the art plan: GG_GFX = {v, defs: {name: {g, ...}},
+     m: {lessonId or 'app:lessonId': 'tok tok ...'}}, one token per scene, '-' for none. A token is a graphic (tree, body, wave,
+     senses, tap, rail, or a Breath Shape: box, tri, sigh, ring) or a def's name, then after a dot its steps for the scene's
+     sentences, split by |, each step 'value' (the next sentence) or 'sentence:value' (tree.roots, body.0:feet|2:legs,
+     wave.2:ride, senses.1:0|2:1, tap.1.2, rail.0, box). A scene's own gfx field wins over the plan ('-' for none). On a breath
+     scene a shape token sets the ring's own shape (shared/gg-breath-ring.js); with no token the shape follows the breath
+     (in, hold, out, rest a box; in, hold, out a triangle; in, sip, out the sigh hill). Everything else is a panel drawn by
+     shared/gg-gfx.js (loaded on demand) on the open side of the scene, with the words narrowed beside it; it moves to each
+     step as that sentence starts. The words, cues, and recordings never change. */
+  var GFXP = { p: null }, GFXV = 'c113', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
+  function gfxLoad() {
+    if (window.GG_GFX) return Promise.resolve(window.GG_GFX);
+    if (GFXP.p) return GFXP.p;
+    GFXP.p = new Promise(function (res) {
+      try { var sc = document.createElement('script'); sc.src = url('/shared/learn-gfx.js?v=' + GFXV); sc.async = true; sc.onload = sc.onerror = function () { res(window.GG_GFX || null); }; document.head.appendChild(sc); } catch (e) { res(null); }
+    });
+    return GFXP.p;
+  }
+  function gfxTok(sc, l, app, i) {
+    if (sc && sc.gfx != null) return sc.gfx && sc.gfx !== '-' ? String(sc.gfx) : null;
+    var G = window.GG_GFX; if (!G || !G.m || !l || !l.id) return null;
+    var row = G.m[(app || '') + ':' + l.id] || G.m[l.id]; if (!row) return null;
+    var t = String(row).split(' ')[i]; return t && t !== '-' ? t : null;
+  }
+  function gfxSpec(tok) {
+    if (!tok) return null;
+    var D = (window.GG_GFX || {}).defs || {}, j = tok.indexOf('.'), name = j < 0 ? tok : tok.slice(0, j), rest = j < 0 ? '' : tok.slice(j + 1);
+    var def = D[name] || null, g = def ? def.g : name, steps = [], pos = 0;
+    if (GFX_KINDS.indexOf(g) < 0) return null;
+    if (rest) rest.split('|').forEach(function (x) { var m = /^(\d+):(.*)$/.exec(x); if (m) { steps.push({ b: +m[1], v: m[2] }); pos = +m[1] + 1; } else { if (x !== '' && x !== '_') steps.push({ b: pos, v: x }); pos++; } });
+    return { g: g, def: def || {}, steps: steps, tok: tok };
+  }
   // The scene as it plays: look and img resolved (the words, beats, and cues stay exactly as written).
   function stdScene(sc, i, l, app) {
     if (!sc) return sc;
@@ -189,6 +222,10 @@
     if (k === 'figure' && !img) img = 'way/yoga-studio';
     if (k === 'paint' && !img) img = (l && l.img) || 'home';
     o.k = k; o.img = img; o._d = i % 4; o._app = app;
+    // BLD 989: the scene's graphic (a Breath Shape for its own ring, or a panel beside the words)
+    var gs = gfxSpec(gfxTok(sc, l, app, i));
+    if (gs && GFX_SHAPES[gs.g] && isBr(Object.assign({}, sc, { k: k })) && !gs.steps.length && !gs.def.ph) o._shape = gs.g;
+    else if (gs && gs.g !== 'ring') o._gfx = gs;
     o._bd = !!img && k !== 'title' && k !== 'demo' && k !== 'paint' && k !== 'candle' && k !== 'figure' && k !== 'still' && k !== 'end' && k !== 'tale' && k !== 'screen' && k !== 'tabs';
     if (o._bd && sc.bg) o.bg = ''; // the painting behind takes the place of an older blurred bg
     return Object.assign({}, sc, o);
@@ -216,6 +253,11 @@
   function chimeIs() { try { return localStorage.getItem('gg-breath-chime') !== 'off'; } catch (e) { return true; } }
   function chimeBtn() { var on = chimeIs(); return '<button class="ggl-btn quiet" data-g="chime" aria-pressed="' + on + '">' + (on ? 'Chime On' : 'Chime Off') + '</button>'; }
   function brHolds(sc) { var b = sc && sc.breath; return Array.isArray(b) && (b.length >= 4 || (b.length === 3 && !!sc.bh)); }
+  function brWordList(sc) {
+    var n = Array.isArray(sc.breath) ? sc.breath.length : 2, three = n >= 3, four = n >= 4, hd = brHolds(sc);
+    var w = Array.isArray(sc.brw) ? sc.brw : four ? ['Breathe in', 'Hold', 'Breathe out', 'Rest'] : hd ? ['Breathe in', 'Hold', 'Breathe out'] : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
+    return four ? [w[0], w[1], w[2], w[3] || 'Rest'] : three ? [w[0], w[1], w[w.length - 1]] : [w[0], w[w.length - 1]];
+  }
   function brWords(sc) {
     var n = Array.isArray(sc.breath) ? sc.breath.length : 2, three = n >= 3, four = n >= 4, hd = brHolds(sc);
     var w = Array.isArray(sc.brw) ? sc.brw : four ? ['Breathe in', 'Hold', 'Breathe out', 'Rest'] : hd ? ['Breathe in', 'Hold', 'Breathe out'] : three ? ['Breathe in', 'One more sip', 'Breathe out'] : ['Breathe in', 'Breathe out'];
@@ -233,8 +275,16 @@
     var s3 = b.length >= 3 && +b[1] > 0 ? +b[1] : 0, r4 = four && +b[3] > 0 ? +b[3] : 0, hd = sc.k === 'breathe' && brHolds(sc);
     return 'in:' + a + (s3 ? (hd ? ' hold:' : ' sip:') + s3 : '') + ' out:' + o + (r4 ? ' rest:' + r4 : '');
   }
-  function brRing(sc, opt, tone) { ringNeed(); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"></svg>'; }
-  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=b928'); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  // BLD 989 Breath Shapes: the shape that fits the breath (sc._shape, from a gfx token, can choose it or keep the ring), and
+  // the scene's own words for its sides.
+  function brShape(sc) {
+    if (sc._shape) return sc._shape === 'ring' ? '' : sc._shape;
+    var p = brParts(sc).replace(/:[0-9.]+/g, '');
+    return p === 'in hold out rest' ? 'box' : p === 'in hold out' ? 'tri' : p === 'in sip out' ? 'sigh' : '';
+  }
+  function brRing(sc, opt, tone) { ringNeed(); var sh = brShape(sc); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"' + (sh ? ' data-shape="' + sh + '" data-sw="' + esc(brWordList(sc).join('|')) + '"' : '') + '></svg>'; }
+  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=b989'); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  function gfxNeed() { if (window.GGGfx || gfxNeed.on) return; gfxNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-gfx.js?v=' + GFXV); el.async = true; document.head.appendChild(el); } catch (e) {} }
   // A breathing exercise: a lesson whose own name is a breath (Box Breathing, Long Exhale Breathing, Physiological Sigh, Slow Bubble
   // Breath), never a prayer. A lesson can say so itself with breathEx.
   function breathEx(l) {
@@ -546,6 +596,19 @@
       '.ln-fig3{position:absolute;top:3%;height:92%;width:46%;pointer-events:none;opacity:0;transition:opacity .9s ease;}.ln-fig3-r{right:1%;}.ln-fig3-l{left:1%;}.ln-3d .ln-fig3{opacity:1;}',
       '.ggl-small .ln-pn h3{font-size:62px;}.ggl-small .ln-pn>p{font-size:32px;}.ggl-small .ln-pn-l,.ggl-small .ln-pn-r{width:470px;}.ggl-small .ln-cd .ln-cd-l{font-size:42px;}.ggl-small .ln-cd-many .ln-cd-l{font-size:34px;}.ggl-small .ln-fg-brt{font-size:52px;height:62px;}.ggl-small .ln-pn-b h3{font-size:58px;}',
       '@media (prefers-reduced-motion:reduce){.go .ln-bd img,.ln-cd-glow,.ln-cd-all{animation:none !important;}.ln-fig3{transition:none;}}',
+      // BLD 989 Video Graphics: the graphic's panel on the open side, and the words narrowed beside it
+      '.ln-gfx{position:absolute;top:56px;width:270px;height:400px;z-index:2;pointer-events:none;box-sizing:border-box;opacity:0;transition:opacity .9s ease .25s;}.go .ln-gfx{opacity:1;}',
+      '.ln-gfx-r{right:34px;}.ln-gfx-l{left:34px;}.ln-gfx-fl{left:56px;top:292px;width:230px;height:210px;}.ln-gfx-fr{right:56px;top:292px;width:230px;height:210px;}',
+      '.ln-gfx-card{background:rgba(20,13,7,.5);border-radius:26px;padding:16px 14px;box-shadow:0 10px 34px rgba(0,0,0,.28);}',
+      '.ln-gfx[data-g="wave"],.ln-gfx[data-g="tap"]{top:96px;height:330px;}.ln-gfx svg.gx-br{display:block;width:100%;height:100%;overflow:visible;}',
+      '.ggl-small .ln-gfx{top:34px;height:356px;}.ggl-small .ln-gfx[data-g="wave"],.ggl-small .ln-gfx[data-g="tap"]{top:52px;height:320px;}.ggl-small .ln-gfx-fl,.ggl-small .ln-gfx-fr{top:300px;height:190px;}',
+      '.ln-gx-r .ln-wd{padding-right:340px;}.ln-gx-r .ln-big{padding:0 336px 0 64px;}.ln-gx-r .ln-pts{padding-right:326px;}.ln-gx .ln-pt{font-size:25px;}.ln-gx .ln-pt small{font-size:19px;}',
+      '.ln-gx-r .ln-br{padding-right:310px;}.ln-gx .ln-br small{max-width:560px;}.ln-gx-r .ln-qz{padding-right:340px;}',
+      '.ln-gx-r .ln-card{box-sizing:border-box;width:560px;}',
+      '.ln-gx-r .ln-flow{padding-right:326px;}.ln-gx .ln-flow h3{font-size:40px;margin-bottom:22px;}.ln-gx .ln-frow{display:grid;grid-template-columns:repeat(var(--gc,2),1fr);gap:12px;}.ln-gx .ln-arr{display:none;}',
+      '.ln-gx .ln-step{min-height:0;padding:12px 14px;box-sizing:border-box;}.ln-gx .ln-sn{width:32px;height:32px;font-size:16px;}.ln-gx .ln-step b{font-size:24px;margin-top:6px;}.ln-gx .ln-step small{font-size:17px;margin-top:5px;}',
+      '.ln-gx-r .ln-pn-b,.ln-gx-r .ln-pn-t{right:336px;}.ln-gx-l .ln-pn-b,.ln-gx-l .ln-pn-t{left:336px;}',
+      '.ln-gx-l .ln-wd{padding-left:340px;}.ln-gx-l .ln-big{padding:0 64px 0 336px;}.ln-gx-l .ln-pts{padding-left:326px;}.ln-gx-l .ln-br{padding-left:310px;}',
       '@media (prefers-reduced-motion:reduce){.ln-canvas .a,.ln-ptr,.ln-ring,.ln-panel,.ln-note,.ln-res,.ln-tgt{transition:none !important;}}',
       ".ln-canvas{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;font-family:Barlow,system-ui,sans-serif;color:#2C1810;--ln-gold:#8B5E1A;}\n.ln-canvas .a{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}.go .ln-canvas .a{opacity:1;transform:none;}\n.ln-hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}\n.ln-shade{position:absolute;inset:0;pointer-events:none;}\n.ln-sh-l{background:linear-gradient(180deg,rgba(20,13,7,.34) 0%,rgba(20,13,7,0) 24%,rgba(20,13,7,0) 80%,rgba(20,13,7,.3) 100%),linear-gradient(90deg,rgba(20,13,7,.66) 0%,rgba(20,13,7,.48) 34%,rgba(20,13,7,.14) 58%,rgba(20,13,7,0) 72%);}\n.ln-sh-r{background:linear-gradient(180deg,rgba(20,13,7,.34) 0%,rgba(20,13,7,0) 24%,rgba(20,13,7,0) 80%,rgba(20,13,7,.3) 100%),linear-gradient(270deg,rgba(20,13,7,.66) 0%,rgba(20,13,7,.48) 34%,rgba(20,13,7,.14) 58%,rgba(20,13,7,0) 72%);}\n.ln-sh-t{background:linear-gradient(180deg,rgba(20,13,7,.7) 0%,rgba(20,13,7,.52) 32%,rgba(20,13,7,.14) 56%,rgba(20,13,7,0) 66%,rgba(20,13,7,0) 82%,rgba(20,13,7,.3) 100%);}\n.ln-tt.ln-tt-r{left:auto;right:48px;}.ggl-small .ln-tt.ln-tt-t{top:48px;}.ln-tt .ln-eb,.ln-tt p,.ln-tt .ln-by{text-shadow:0 1px 8px rgba(0,0,0,.45);}\n.ln-tt h2.ln-h2{font-size:52px;}.ln-tt h2.ln-h3{font-size:46px;}.ln-tt h2.ln-h4{font-size:40px;}\n.ln-tt{position:absolute;left:56px;top:48px;color:#F6EFE2;max-width:520px;}.ln-tt h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:60px;line-height:1.02;margin:6px 0 0;text-shadow:0 2px 14px rgba(0,0,0,.45);}\n.ln-tt p{font-size:24px;margin:12px 0 0;color:#F2DDB5;}.ln-eb{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:20px;color:#F2C46A;}\n.ln-by{font-family:'Barlow Condensed',sans-serif;letter-spacing:2.4px;font-size:16px;margin-top:14px;opacity:.9;}\n.ln-big{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:0 90px;}.ln-big p{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:52px;line-height:1.15;margin:0;}.ln-big small{display:block;font-size:26px;color:#6B5A4D;margin-top:20px;}\n.ln-pts{padding:48px 70px;}.ln-pts h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:46px;margin:0 0 22px;}\n.ln-pt{display:flex;gap:16px;align-items:flex-start;margin:0 0 18px;font-size:28px;line-height:1.25;}.ln-pt small{display:block;font-size:21px;color:#6B5A4D;margin-top:2px;}\n.ln-dot{width:16px;height:16px;border-radius:50%;flex:none;margin-top:10px;}\n.ln-trees h3{position:absolute;top:56px;left:0;right:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0;}\n.ln-trow{position:absolute;left:30px;right:30px;bottom:90px;display:flex;justify-content:center;gap:18px;}\n.ln-tr{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:130px;}.ln-tr img{width:110px;height:110px;border-radius:24px;}\n.ln-tr b{font-family:'Cormorant Garamond',serif;font-size:30px;margin-top:8px;}.ln-tr small{font-size:17px;color:#6B5A4D;}\n.ln-trow.ln-t8{gap:12px;left:20px;right:20px;}.ln-t8 .ln-tr img{width:92px;height:92px;border-radius:20px;}.ln-t8 .ln-tr b{font-size:26px;}.ln-t8 .ln-tr small{font-size:15px;}\n.ln-lv{position:absolute;inset:0;display:flex;gap:36px;align-items:center;justify-content:center;padding:0 60px;}\n.ln-lc{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-top:8px solid var(--k);border-radius:20px;padding:44px 20px;text-align:center;}\n.ln-lc b{display:block;font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--k);}.ln-lc small{font-size:22px;color:#6B5A4D;}\n.ln-flow{padding:50px 50px;}.ln-flow h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;margin:0 0 40px;}\n.ln-frow{display:flex;align-items:center;gap:14px;}.ln-step{flex:1;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 18px;min-height:200px;}\n.ln-step b{display:block;font-size:26px;line-height:1.2;margin-top:10px;}.ln-step small{display:block;font-size:19px;color:#6B5A4D;margin-top:8px;line-height:1.3;}\n.ln-sn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#8B5E1A;color:#FFF8EC;font-weight:700;font-size:20px;}\n.ln-arr{font-size:36px;color:#8B5E1A;flex:none;}\n.ln-phone{position:absolute;left:56px;top:34px;width:380px;height:472px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:30px;overflow:hidden;font-size:21px;}\n.ln-ptop{display:flex;align-items:center;gap:10px;padding:14px 16px;color:#F6EFE2;}.ln-ptop img{width:36px;height:36px;border-radius:9px;}.ln-ptop b{font-family:'Cormorant Garamond',serif;font-size:28px;}.ln-ptop span{margin-left:auto;font-size:17px;opacity:.9;}\n.ln-prow{display:flex;justify-content:space-between;padding:13px 18px;border-top:1px solid #EFE6D4;}\n.ln-tgt{transition:background .3s ease 2.6s,box-shadow .3s ease 2.6s;}.go .ln-tgt{background:#F6EEDB;box-shadow:inset 0 0 0 2px #8B5E1A;}\n.ln-panel{position:absolute;right:56px;top:70px;width:400px;background:#FFFCF6;border:1px solid #DDD0B8;border-left:8px solid #8B5E1A;padding:22px 24px;transform:translateX(560px);transition:transform .7s ease 3s;}\n.go .ln-panel{transform:none;}.ln-panel h4{font-family:'Cormorant Garamond',serif;font-size:32px;margin:0;}.ln-panel p{font-size:19px;color:#6B5A4D;margin:6px 0 10px;}.ln-panel li{font-size:22px;line-height:1.6;}\n.ln-ptr{position:absolute;left:820px;top:520px;width:56px;z-index:5;transition:left 1.3s ease 1.1s,top 1.3s ease 1.1s;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}\n.go .ln-ptr{left:var(--px,600px);top:var(--py,300px);}\n.ln-ring{position:absolute;width:48px;height:48px;border-radius:50%;border:4px solid #8B5E1A;opacity:0;transform:scale(.3);transition:all .5s ease 2.5s;z-index:4;}.go .ln-ring{opacity:.85;transform:scale(1.5);}\n.ln-fg{position:absolute;inset:30px 40px;background:#F6F0E4;border:1px solid #DDD0B8;border-radius:22px;overflow:hidden;}\n.ln-fgtop{background:#2E2118;color:#D9A847;padding:16px 22px;font-family:'Cormorant Garamond',serif;font-size:28px;}\n.ln-fgtabs{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid #DDD0B8;flex-wrap:wrap;}.ln-fgtabs span{padding:10px 14px;border-radius:12px;font-size:20px;font-weight:600;color:#6B5A4D;}\n.ln-note{margin:26px 26px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:18px;padding:22px 24px;opacity:0;transform:translateY(16px);transition:all .7s ease 3s;}.go .ln-note{opacity:1;transform:none;}\n.ln-note h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-note p{font-size:22px;color:#6B5A4D;margin:0;line-height:1.35;}\n.ln-card{position:absolute;left:70px;top:40px;width:540px;background:#FFFCF6;border:1px solid #DDD0B8;border-radius:22px;padding:24px 28px;}\n.ln-card h4{font-family:'Cormorant Garamond',serif;font-size:34px;margin:0 0 6px;}.ln-card p{font-size:19px;color:#6B5A4D;margin:0 0 10px;line-height:1.35;}\n.ln-card label{display:block;font-size:17px;font-weight:600;margin-top:10px;}.ln-in{border:1px solid #DDD0B8;border-radius:10px;padding:9px 12px;font-size:19px;margin-top:4px;background:#fff;min-height:42px;}\n.ln-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}.ln-b{border:1px solid #8B5E1A;color:#8B5E1A;border-radius:999px;padding:10px 18px;font-weight:600;font-size:18px;}.ln-b.pri{background:#8B5E1A;color:#FFF8EC;}\n.ln-res{position:absolute;right:60px;bottom:60px;max-width:300px;background:#2E2118;color:#FFF8EC;border-radius:18px;padding:16px 20px;font-size:20px;line-height:1.3;opacity:0;transform:translateY(14px);transition:all .6s ease 3.1s;}.go .ln-res{opacity:1;transform:none;}\n.ln-qz{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 80px;}.ln-qz .ln-eb{color:#8B5E1A;}.ln-qz h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:48px;line-height:1.1;margin:10px 0 0;}\n"
     ].join('\n');
@@ -584,7 +647,7 @@
     return F3.p;
   }
 
-  try { artLoad(); } catch (e) {}
+  try { artLoad(); gfxLoad(); } catch (e) {}
 
   /* ---------------- the player ---------------- */
   var CUR = null; // the player on screen
@@ -1003,6 +1066,7 @@
       // BLD 908: a painting behind the scene (the content standard), blurred a little under a warm shade, words in light ink.
       cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
       cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
+      cv.style.removeProperty('--gc'); gfxPlace(sc);
       brPace(sc); figScene(sc);
       artAhead(P.i);
       st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || sc.k === 'still' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
@@ -1026,6 +1090,7 @@
       var sel = REV[sc.k], items = sel ? Array.prototype.slice.call(cv.querySelectorAll(sel)) : [];
       P.items = items; P.map = revealMap(sc, items, B);
       if (P.playing || last) items.forEach(function (el) { el.classList.add('hold'); var pv = el.previousElementSibling; if (sc.k === 'flow' && pv && pv.classList.contains('ln-arr')) pv.classList.add('hold'); });
+      gfxAt(P.playing ? -1 : Infinity);
       requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); if (carry && P.brT0 === carry) brAnim(cv, ((Date.now() - carry) % BR_CYC + BR_CYC) % BR_CYC); else P.brT0 = Date.now(); }); });
       // The closing scene always speaks once, even when the lesson was stepped through by hand.
       if (!P.playing && !last) return;
@@ -1039,6 +1104,31 @@
       var mk = cam.querySelector('.ln-dm-mk[data-j="' + el.getAttribute('data-j') + '"]');
       Array.prototype.forEach.call(cam.querySelectorAll('.ln-dm-mk'), function (m) { m.classList.toggle('on', m === mk); });
     }
+    /* BLD 989: the scene's graphic panel. It sits on the open side of the scene (the side away from the words of a painting
+       scene, the right of any other), the words narrow beside it (CSS, ln-gx), and it steps with the sentences (gfxAt). */
+    var GFX_CLEAR = { paint: 1, candle: 1, still: 1, figure: 1, title: 1, demo: 1 };
+    function gfxSide(sc) {
+      var o = function (x) { return x === 'r' ? 'l' : 'r'; };
+      if (sc.k === 'paint') return o(SIDES[sc.side] ? sc.side : 'b');
+      if (sc.k === 'candle') return o(SIDES[sc.side] ? sc.side : ((CANDLE[sc.img] || [])[2] || 'l'));
+      if (sc.k === 'still') return o((STILL[sc.img] || { s: 'l' }).s);
+      if (sc.k === 'figure') return sc.side === 'r' ? 'fr' : 'fl';
+      if (sc.k === 'title') { var F = FRAME[heroId(sc.hero || 'oak')] || { s: 'l' }; return sc.img && sc.img !== 'tree' ? o(SIDES[sc.side] && sc.side !== 'b' ? sc.side : 'l') : o(F.s); }
+      return 'r';
+    }
+    function gfxPlace(sc) {
+      P.gx = null; var G = sc._gfx; if (!G || sc.k === 'end') return;
+      var side = gfxSide(sc), dk = !!sc._bd || !!GFX_CLEAR[sc.k] || (sc.k === 'big' && !!sc.bg), w = document.createElement('div');
+      w.className = 'ln-gfx ln-gfx-' + side + (GFX_CLEAR[sc.k] ? ' ln-gfx-card' : '');
+      w.setAttribute('aria-hidden', 'true'); w.setAttribute('data-g', G.g); w.setAttribute('data-tok', G.tok);
+      w.__gfx = { g: G.g, def: G.def, steps: G.steps, dk: dk, app: cfg.app, br: isBr(sc) ? brParts(sc) : '' };
+      cv.appendChild(w); cv.classList.add('ln-gx', 'ln-gx-' + side.slice(-1));
+      if (sc.k === 'flow') { var n = (sc.steps || []).length; cv.style.setProperty('--gc', String(n <= 3 ? n : n === 4 ? 2 : 3)); }
+      P.gx = w;
+      if (GFX_SHAPES[G.g]) ringNeed();
+      if (window.GGGfx) GGGfx.draw(w); else gfxNeed();
+    }
+    function gfxAt(i) { var w = P.gx; if (!w) return; w.__gfxAt = i; if (window.GGGfx) { if (!w.__gfx.$) GGGfx.draw(w); else GGGfx.at(w, i); } }
     function reveal(i) {
       (P.items || []).forEach(function (el, j) { if (P.map[j] <= i && el.classList.contains('hold')) { if (P.sc && P.sc.k === 'demo') demoGo(el); el.style.transitionDelay = '0s'; el.classList.remove('hold'); var pv = el.previousElementSibling; if (pv && pv.classList.contains('ln-arr')) { pv.style.transitionDelay = '0s'; pv.classList.remove('hold'); } } });
     }
@@ -1071,7 +1161,7 @@
         var i = P.b;
         if (i >= B.length) return done();
         var bw = brWait(i); if (bw > 0) { P.nx = setTimeout(function () { if (t === P.tok) step(); }, bw); return; }
-        reveal(i); capOn(i); P.ph = 'say';
+        reveal(i); capOn(i); gfxAt(i); P.ph = 'say';
         var b = B[i], ended = false, began = Date.now(), seen = false;
         var fin = function () { if (ended || t !== P.tok) return; ended = true; clearInterval(P.tick); after(i); };
         var est = Math.max(1400, b.t.split(/\s+/).length * 60000 / (165 * sp));
@@ -1116,7 +1206,7 @@
         ahead(i);
         return play(src, B[i].t, t, fin, l.audio ? '' : rec);
       }
-      if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
+      if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); gfxAt(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
       step();
     }
     /* BLD 908: the 3D figure in a figure scene. One WebGL canvas per player, laid over the stage (outside the scaled
@@ -1484,6 +1574,7 @@
     var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); sealedFree(); figOff(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
     CUR = ctl;
     if (!window.GG_ART) artLoad().then(function (G) { if (G && CUR === ctl && !P.playing && P.i >= 0 && P.i < N - 1) show(P.i); });
+    if (!window.GG_GFX) gfxLoad().then(function (G) { if (G && CUR === ctl && !P.playing && P.i >= 0 && P.i < N - 1) show(P.i); });
     fit();
     var at = Math.max(0, Math.min((cfg.at || 0), N - 2));
     if ((cfg.done || {})[l.id]) answered = true;
@@ -1694,7 +1785,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c112'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c113'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

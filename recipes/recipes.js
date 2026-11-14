@@ -50,7 +50,7 @@
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=c021', 'GGTendPublic'],
-    ['/field-guide/stage.js?v=b999', 'GGStage'],
+    ['/field-guide/stage.js?v=c113', 'GGStage'],
     ['/field-guide/coach.js?v=c019', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=b919b', 'GGHolidays'],
