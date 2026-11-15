@@ -53,7 +53,7 @@
     ['/field-guide/stage.js?v=c114', 'GGStage'],
     ['/field-guide/coach.js?v=c019', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
-    ['/shared/gg-holidays.js?v=b919b', 'GGHolidays'],
+    ['/shared/gg-holidays.js?v=b993', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=b906', 'GGBulk'],
     ['/recipes/recipes.js?v=' + VER, 'GGRecipes']
   ];

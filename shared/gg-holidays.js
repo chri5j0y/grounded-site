@@ -80,11 +80,11 @@
     var sg = (w.suggest || []).map(function (x) { return x.name; }).filter(Boolean);
     return sg.length ? sg.join(' or ') + ', or a day you choose' : 'A day you choose';
   }
-  var FR = [[0.125, '1/8'], [0.25, '1/4'], [1 / 3, '1/3'], [0.5, '1/2'], [2 / 3, '2/3'], [0.75, '3/4']];
+  var FR = [[0.125, '1/8'], [0.25, '1/4'], [1 / 3, '1/3'], [0.375, '3/8'], [0.5, '1/2'], [0.625, '5/8'], [2 / 3, '2/3'], [0.75, '3/4'], [0.875, '7/8']];
   var COUNT = /^(|whole|each|large|medium|small|can|cans|jar|jars|bunch|bunches|head|heads|bag|bags|box|boxes|package|packages|pkg|bottle|bottles|loaf|loaves|dozen|clove|cloves|sprig|sprigs|stalk|stalks|carton|cartons|pint|pints|block|blocks|pie|pies|sheet|sheets|piece|pieces)$/i;
   function scale(q, f, unit) {
     if (q == null || !isFinite(+q)) return q; var v = +q * (f || 1);
-    if (COUNT.test(String(unit || '').trim())) return Math.max(1, Math.ceil(v - 0.15));
+    if (COUNT.test(String(unit || '').trim().split(/[\s(]/)[0])) return Math.max(1, Math.ceil(v - 0.15));
     if (/^(lb|lbs|pound|pounds|oz|ounce|ounces|cup|cups|qt|quart|quarts|gal|gallon|gallons)$/i.test(String(unit || ''))) return Math.max(0.25, Math.round(v * 4) / 4);
     return Math.max(0.125, Math.round(v * 8) / 8);
   }

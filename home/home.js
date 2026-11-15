@@ -600,7 +600,7 @@
     return '<div class="hm-promise">' +
       '<div class="hm-card hm-prom hm-p-leaves">' + pb(PIMG + 'promise-private-sq.webp') + '<div><h3 class="hm-h3">Private</h3><div class="hm-sub">The Grounded Way is yours alone. Begin with just a name and a passcode.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-branches">' + pb(PIMG + 'promise-device-sq.webp') + '<div><h3 class="hm-h3">On Your Device</h3><div class="hm-sub">Everything is saved right here, on this phone or computer, locked so only you can open it.</div></div></div>' +
-      '<div class="hm-card hm-prom hm-p-trunk">' + pb(PIMG + 'promise-lock-sq.webp') + '<div><h3 class="hm-h3">Locked With Your Passcode</h3><div class="hm-sub">Only your passcode, or your Root Words, opens it.</div></div></div>' +
+      '<div class="hm-card hm-prom hm-p-trunk">' + pb(PIMG + 'promise-lock-sq.webp') + '<div><h3 class="hm-h3">Locked with Your Passcode</h3><div class="hm-sub">Only your passcode, or your Root Words, opens it.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-bark">' + pb(PIMG + 'promise-shape-sq.webp') + '<div><h3 class="hm-h3">Yours to Shape</h3><div class="hm-sub">Choose how you tend each of the four. Change it any time in Settings.</div></div></div>' +
     '</div>';
   }
@@ -1119,7 +1119,7 @@
       (open ? '<div class="hm-acts"><button class="hm-btn hm-p-leaves" type="button" data-hm="backup">' + I('save') + 'Save a Backup</button><button class="hm-btn line hm-p-leaves" type="button" data-hm="restore">' + I('open') + 'Load a Backup</button><button class="hm-btn line hm-p-bark" type="button" data-hm="move">' + I('swap') + 'Move to Another Device</button></div>' +
         '<div class="hm-acts">' + (GGP.rootState && GGP.rootState(S.id) ? '<button class="hm-btn line hm-p-trunk" type="button" data-hm="rootwords">' + I('key') + 'See My Root Words</button>' : '') + '<button class="hm-btn line hm-p-fruit" type="button" data-hm="manage">' + I('gear') + 'Manage My Profile</button><button class="hm-btn line hm-p-branches" type="button" data-hm="lock">' + I('lock') + 'Lock</button></div>' : '') +
       '</article><div class="hm-col">' +
-        '<article class="hm-card hm-a-numbers"><div class="hm-hd">' + pb(PIMG + 'health-numbers-sq.webp') + '<div><div class="hm-k">A Note on Health Numbers</div><h3 class="hm-h3">Talk It Over With Your Doctor</h3></div></div><div class="hm-sub">Plate rings, lab lines, and progress paths are research-informed estimates. They are here to help you notice and plan, and to bring to your doctor. Grounded offers guidance and support, and your doctor guides your medical choices.</div></article>' +
+        '<article class="hm-card hm-a-numbers"><div class="hm-hd">' + pb(PIMG + 'health-numbers-sq.webp') + '<div><div class="hm-k">A Note on Health Numbers</div><h3 class="hm-h3">Talk It Over with Your Doctor</h3></div></div><div class="hm-sub">Plate rings, lab lines, and progress paths are research-informed estimates. They are here to help you notice and plan, and to bring to your doctor. Grounded offers guidance and support, and your doctor guides your medical choices.</div></article>' +
         '<article class="hm-card hm-p-trunk"><div class="hm-hd">' + pb(PIMG + 'kids-and-helpers-sq.webp') + '<div><div class="hm-k">Kids and Helpers</div><h3 class="hm-h3">A Key for Those Who Help</h3></div></div><div class="hm-sub">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode. In Birch, Sequoia, and Willow, a helper sees only what the person chooses to share.</div></article>' +
         '<article class="hm-card hm-p-leaves"><div class="hm-hd">' + pb(PIMG + 'locked-tight-sq.webp') + '<div><div class="hm-k">Locked Tight</div><h3 class="hm-h3">How the Lock Works</h3></div></div><div class="hm-sub">Your saved data is sealed with its own key (AES 256). That key is locked with your passcode, and again with your Root Words, so either one opens it.</div><div class="hm-quiet" style="margin-top:10px"><a href="/privacy.html">Read the full Privacy Policy</a></div></article>' +
       '</div></div>';
@@ -2554,7 +2554,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c114';
+  var RECIPES_JS = '/recipes/recipes.js?v=b993';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -5485,7 +5485,7 @@
     }).join('');
     mDialog('Who Is Tending?', '<picture class="hm-whoband" aria-hidden="true"><img src="' + PIMG + 'who-is-tending-narrow.webp" alt=""></picture><p class="hm-sub" style="margin:10px 2px 12px">One app for the whole family. Each person\'s tree comes from their age and grows with them.</p>' +
       '<ul class="hm-wholist">' + rows + '</ul><button type="button" class="hm-btn line hm-pill hm-whoadd" data-hm-padd="1">' + I('plus') + 'Add a Person</button>' +
-      '<h3 class="hm-label">Trees Grow With You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
+      '<h3 class="hm-label">Trees Grow with You</h3><ul class="hm-treerow">' + AGE_TREES.map(function (x) { return '<li><img src="' + treeArt(x[0]) + '" alt=""><b>' + TREES[x[0]].n + '</b><small>' + x[1] + '</small></li>'; }).join('') + '</ul>');
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-gpersp],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober],[data-hm-helpfor]');
