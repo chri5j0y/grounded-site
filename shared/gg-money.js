@@ -42,7 +42,9 @@
       checks: {Monday YYYY-MM-DD: {well, steady 1 to 5, step, at}},
       tools:  {debt, goals, pay, fund, grocery, car, side, subs, calls, date, give, kids, tips} each tool's own answers (stage 1b,
               shared/gg-money-tools.js); they stay on this phone (a Family share carries the plan, ideas, and logs)
-      own:    {lines, income, ideas, pid} this phone's own plan, kept while it follows a Family plan}
+      own:    {lines, income, ideas, pid} this phone's own plan, kept while it follows a Family plan,
+      funds:  [{id, n, kind (bill, jic), amt, due, mon, cap, bal, last, la, pm, hol, tag (fixed, varies), hold (YYYY-MM), u, x}],
+      holidays: {days, people, u} (BLD 942)}
    Removing sets x and u (so a removal travels in a share); Undo clears it.
 
    BLD 939 (Chris: "better flow more color, variety.. bigger titles.. cards that collaps.. giving, generosity, investing,
@@ -91,12 +93,25 @@
    the steady amount, and on the first open after the build every fund is counted again once (d.sa999), so a stuck month
    comes unstuck. Pay From This Fund pays up to what is saved; the rest logs as ordinary spending this month.
 
+   BLD 1000 Set-Asides as Expense Lines (Chris: "add it as a line on the budget to say fixed, on hold, varies like others..
+   this way i can say on hold for a month i am very short"): on One Page each set-aside (every fund in money.funds, the
+   Holidays and Birthdays fund too) is its own line at the end of Expenses, under a small Set-Asides heading, with this
+   month's amount (fundMonth, the steady amount) and a tag that cycles Fixed, Varies, and On Hold. The Expenses total is now
+   Money Out (lines plus set-asides, counted once; On Hold and Before Taxes lines stay out as before). Fixed or Varies is the
+   fund's normal tag (f.tag). On Hold lasts this month only (f.hold, the month key YYYY-MM): the fund counts $0 in Money Out,
+   the Set-Asides total, the Move line, This Month, Close the Gap, and the Standards; its frozen amount (f.la) is $0, so
+   roll() adds nothing to its balance for that month; next month it counts again on its own, and the gentle note (fundBehind)
+   shows what the skipped month needs. tagFund() sets the tag (with u, so a family member's newer edit still wins), and f.hold
+   and f.tag ride the Family share (an older phone reads past them and counts the held month's frozen $0). The name, the
+   amount, and the dots on a fund's Expenses line open that fund in the Set-Asides box, the one place to change it; the box
+   keeps the balances, due months, kinds, Add to Balance, and Pay From This Fund, and a held fund reads "On hold this month".
+
    No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMoney) return;
-  var V = 'c120';
+  var V = 'c121';
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
   var SHARE_BASE = 'https://growwithgrounded.com/home/#money=';
 
@@ -199,8 +214,14 @@
     f.due = arr(f.due).map(function (m) { return +m; }).filter(function (m, i, a) { return m >= 0 && m < 12 && Math.floor(m) === m && a.indexOf(m) === i; }).sort(function (a, b) { return a - b; });
     if (f.last != null && !/^\d{4}-\d{2}$/.test(String(f.last))) delete f.last; if (f.la != null) f.la = r2(+f.la || 0);
     if (f.pm && (typeof f.pm !== 'object' || !/^\d{4}-\d{2}$/.test(String(f.pm.m)))) delete f.pm;
+    if (f.hold != null && !/^\d{4}-\d{2}$/.test(String(f.hold))) delete f.hold; if (f.tag != null && !FUND_TAG[f.tag]) delete f.tag;
     return f;
   }
+  // BLD 1000: a fund's tag on its Expenses line. Fixed and Varies are its normal tag (f.tag); On Hold is for one month only
+  // (f.hold, the month key), so the next month it returns to its normal tag on its own.
+  var FUND_TAG = { fixed: 1, varies: 1 }, FUND_CYCLE = ['fixed', 'varies', 'hold'];
+  function fundHeld(f, mk) { return !!f && f.hold === (mk || monthKey()); }
+  function fundTag(f, mk) { return fundHeld(f, mk) ? 'hold' : FUND_TAG[f.tag] ? f.tag : 'fixed'; }
   function freqOf(f) { return FREQ[f] || FREQ.m; }
   function monthly(l) { return r2((+l.a || 0) * freqOf(l.f).k); }
   // BLD 941: Money Out counts every line except On Hold and Before Taxes (Before Taxes leaves before pay, so it never
@@ -349,8 +370,8 @@
   function fundBehind(d, f, mk) {
     if (f.kind === 'jic' && !f.hol) return null;
     mk = mk || monthKey(); var m = mIdx(mk), ev = fundEvents(d, f), st = fundSteady(d, f), paid = f.pm && f.pm.m === mk ? +f.pm.a || 0 : 0;
-    var held = Math.max(0, ev[m] - paid), have = Math.max(0, (+f.bal || 0) - held), A = 0;
-    for (var j = 1; j <= 12; j++) { var e = ev[(m + j) % 12]; if (!e) continue; A += e; var short = A - (have + st * j); if (short > 0.005) return { m: (m + j) % 12, j: j, add: Math.ceil(short - 1e-6) }; }
+    var held = Math.max(0, ev[m] - paid), have = Math.max(0, (+f.bal || 0) - held), A = 0, skip = fundHeld(f, mk) ? st : 0;
+    for (var j = 1; j <= 12; j++) { var e = ev[(m + j) % 12]; if (!e) continue; A += e; var short = A - (have + st * j - skip); if (short > 0.005) return { m: (m + j) % 12, j: j, add: Math.ceil(short - 1e-6) }; }
     return null;
   }
   // A fund's numbers for month mk: a (the steady amount this month counts), held (a due amount this month still to pay),
@@ -363,7 +384,9 @@
     return { a: a, held: r2(held), now: ev[m], avail: r2(bal - held), next: next, target: held > 0 ? ev[m] : next ? next.a : 0, full: false, behind: fundBehind(d, f, mk) };
   }
   // The amount a fund counts this month: frozen once the month is counted (always the steady amount since BLD 999).
-  function fundMonth(d, f, mk) { mk = mk || monthKey(); return d.sa999 && f.last === mk && f.la != null ? +f.la || 0 : fundSteady(d, f); }
+  // BLD 1000: a fund On Hold this month counts $0, and nothing joins its balance for this month.
+  function fundNow(d, f, mk) { return fundHeld(f, mk) ? 0 : fundSteady(d, f); }
+  function fundMonth(d, f, mk) { mk = mk || monthKey(); if (fundHeld(f, mk)) return 0; return d.sa999 && f.last === mk && f.la != null ? +f.la || 0 : fundSteady(d, f); }
   function setAsideSum(d, mk) { return r2(live(d.funds).reduce(function (s, f) { return s + fundMonth(d, f, mk); }, 0)); }
   function fundSavings(d) { return r2(live(d.funds).reduce(function (s, f) { return s + (+f.bal || 0); }, 0)); }
   // Each new month: last month's set-aside joins the balance, and this month's is counted (the steady amount). Missed months
@@ -372,18 +395,24 @@
   // (the steady amount), so a month stuck on a big catch up amount comes unstuck; d.sa999 marks it done.
   function roll(d, mk) {
     mk = mk || monthKey(); var n = 0;
-    if (!d.sa999) { live(d.funds).forEach(function (f) { if (f.last && f.last <= mk) { var s = fundSteady(d, f); if (f.la !== s) { f.la = s; n++; } } }); d.sa999 = 1; n++; }
+    if (!d.sa999) { live(d.funds).forEach(function (f) { if (f.last && f.last <= mk) { var s = fundNow(d, f, f.last); if (f.la !== s) { f.la = s; n++; } } }); d.sa999 = 1; n++; }
     live(d.funds).forEach(function (f) {
-      if (!f.last) { f.last = mk; f.la = fundSteady(d, f); n++; return; }
+      if (!f.last) { f.last = mk; f.la = fundNow(d, f, mk); n++; return; }
       var k = 0;
-      while (f.last < mk && k < 24) { f.bal = r2((+f.bal || 0) + (+f.la || 0)); f.last = mkAdd(f.last, 1); f.la = fundSteady(d, f); k++; n++; }
-      if (f.last < mk) { f.last = mk; f.la = fundSteady(d, f); }
+      while (f.last < mk && k < 24) { f.bal = r2((+f.bal || 0) + (fundHeld(f, f.last) ? 0 : +f.la || 0)); f.last = mkAdd(f.last, 1); f.la = fundNow(d, f, f.last); k++; n++; }
+      if (f.last < mk) { f.last = mk; f.la = fundNow(d, f, mk); }
     });
     if (n) touch(d);
     return n;
   }
   // After a change to a fund's amounts, due months, cap, or balance: this month's amount is counted again (the steady amount).
-  function rec(d, f) { var mk = monthKey(); if (!f.last || f.last <= mk) { f.last = mk; f.la = fundSteady(d, f); } }
+  function rec(d, f) { var mk = monthKey(); if (!f.last || f.last <= mk) { f.last = mk; f.la = fundNow(d, f, mk); } }
+  // BLD 1000: the tag on a fund's Expenses line. On Hold holds this month only (f.hold); Fixed or Varies is its normal tag.
+  function tagFund(d, f, tag) {
+    var mk = monthKey();
+    if (tag === 'hold') f.hold = mk; else { if (f.hold === mk) delete f.hold; if (FUND_TAG[tag]) f.tag = tag; }
+    f.u = Date.now(); rec(d, f); touch(d); return f;
+  }
   function recAll(d) { live(d.funds).forEach(function (f) { if (f.hol) rec(d, f); }); }
   function addFund(d, o) {
     var f = normFund(Object.assign({ id: uid(), n: '', kind: 'jic', amt: 0, due: [], mon: 0, cap: 0, bal: 0 }, o || {}, { u: Date.now() }));
@@ -669,7 +698,7 @@
       g: d.logs.filter(function (g) { return String(g.d || '').slice(0, 7) >= since; }).map(function (g) { var r = [g.id, String(g.d).replace(/-/g, ''), g.a, g.c || '', g.c ? '' : g.n || '', U(g.u), g.x ? 1 : 0]; if (g.f) r.push(g.f); return r; }),
       k: { d: Object.keys(I2.done), e: I2.edit, o: Object.keys(I2.off), m: I2.mine.map(function (m) { return [m.id, m.n, m.a, m.k, m.o || '', U(m.u), m.x ? 1 : 0]; }), u: I2.u },
       // BLD 942: set-aside funds and the Holidays and Birthdays planner (an older phone reads past them)
-      f: arr(d.funds).map(function (f) { return [f.id, f.n, f.kind, f.amt, arr(f.due).join('.'), f.mon, f.cap, f.bal, f.last || '', f.la == null ? '' : f.la, f.pm ? [f.pm.m, f.pm.a, f.pm.auto ? 1 : 0] : 0, f.hol ? 1 : 0, U(f.u), f.x ? 1 : 0]; }),
+      f: arr(d.funds).map(function (f) { return [f.id, f.n, f.kind, f.amt, arr(f.due).join('.'), f.mon, f.cap, f.bal, f.last || '', f.la == null ? '' : f.la, f.pm ? [f.pm.m, f.pm.a, f.pm.auto ? 1 : 0] : 0, f.hol ? 1 : 0, U(f.u), f.x ? 1 : 0, f.hold || '', f.tag || '']; }),
       h: { d: Object.keys(hd).reduce(function (o, k) { var x = hd[k]; o[k] = [x.on ? 1 : 0, +x.m, +x.amt || 0, U(x.u)]; return o; }, {}), p: arr(H.people).map(function (x) { return [x.id, x.n, x.kind, +x.m, +x.amt || 0, U(x.u), x.x ? 1 : 0]; }) }
     };
   }
@@ -696,7 +725,7 @@
       logs: arr(j.g).map(function (r) { var g = fx({ id: String(r[0]), d: ymd8(r[1]), a: +r[2] || 0, c: String(r[3] || ''), n: String(r[4] || ''), u: U(r[5]) }, r[6]); if (r[7]) g.f = String(r[7]); return g; }),
       funds: Array.isArray(j.f) ? j.f.map(function (r) { var pm = Array.isArray(r[10]) ? { m: String(r[10][0]), a: +r[10][1] || 0 } : null; if (pm && Array.isArray(r[10]) && r[10][2]) pm.auto = 1;
         var f = fx({ id: String(r[0]), n: String(r[1] || ''), kind: r[2] === 'jic' ? 'jic' : 'bill', amt: +r[3] || 0, due: String(r[4] || '').split('.').filter(Boolean).map(Number), mon: +r[5] || 0, cap: +r[6] || 0, bal: +r[7] || 0, u: U(r[12]) }, r[13]);
-        if (r[8]) f.last = String(r[8]); if (r[9] !== '' && r[9] != null) f.la = +r[9] || 0; if (pm) f.pm = pm; if (r[11]) f.hol = 1; return normFund(f); }) : null,
+        if (r[8]) f.last = String(r[8]); if (r[9] !== '' && r[9] != null) f.la = +r[9] || 0; if (pm) f.pm = pm; if (r[11]) f.hol = 1; if (r[14]) f.hold = String(r[14]); if (r[15]) f.tag = String(r[15]); return normFund(f); }) : null,
       holidays: j.h && typeof j.h === 'object' ? { days: Object.keys(obj(j.h.d)).reduce(function (o, k) { var r = j.h.d[k]; if (Array.isArray(r) && HOL[k]) o[k] = { on: r[0] ? 1 : 0, m: +r[1] || 0, amt: +r[2] || 0, u: U(r[3]) }; return o; }, {}),
         people: arr(j.h.p).map(function (r) { return fx({ id: String(r[0]), n: String(r[1] || ''), kind: r[2] === 'anniv' ? 'anniv' : 'bday', m: +r[3] || 0, amt: +r[4] || 0, u: U(r[5]) }, r[6]); }) } : null,
       ideas: { done: arr(k.d).reduce(function (o, x) { o[x] = 1; return o; }, {}), edit: obj(k.e), off: arr(k.o).reduce(function (o, x) { o[x] = 1; return o; }, {}),
@@ -1192,7 +1221,9 @@
       // BLD 999: the host's bar already names Grounded Money, so the sheet keeps only its month line.
       var top = '<header class="gm-stop"><span class="gm-smonth">' + esc(MONTHS[new Date().getMonth()]) + ' Plan · tap any number to change it</span></header>';
       var empty = !all.length && !N.length ? '<div class="gm-acts gm-sstart"><button type="button" class="gm-btn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button><button type="button" class="gm-btn line" data-gm="common">Start With Common Lines</button></div>' : '';
-      var exp = panel('out', 'Expenses', t.lineOut, L.map(function (l) { return sRow(l, 'line'); }).join(''),
+      // BLD 1000: each set-aside is its own Expenses line under a small Set-Asides heading, so Expenses equals Money Out.
+      var XF = live(d.funds), xf = XF.length ? '<div class="gm-xfh" data-gm-xfh><span class="gm-k">Set-Asides</span><b data-gm-total="xf">' + money(t.setaside) + '</b></div>' + XF.map(function (f) { return xRow(d, f); }).join('') : '';
+      var exp = panel('out', 'Expenses', t.spend, L.map(function (l) { return sRow(l, 'line'); }).join('') + xf,
         '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:line">' + I('plus') + 'Add a Line</button><button type="button" class="gm-linkbtn" data-gm="go:import">' + I('up') + 'Bring In a Spreadsheet</button></div>',
         L.length > 1 ? '<button type="button" class="gm-ssort" data-gm="ssort" aria-pressed="' + big + '" aria-label="Order: ' + (big ? 'Largest First' : 'Order Added') + '. Tap to change">' + I('sort') + (big ? 'Largest First' : 'Order Added') + '</button>' : '');
       var inc = panel('in', 'Income', t.income, N.map(function (s) { return sRow(s, 'income'); }).join(''), '<div class="gm-sadd"><button type="button" class="gm-addb" data-gm="sadd:income">' + I('plus') + 'Add Income</button></div>');
@@ -1211,7 +1242,8 @@
        BLD 999: the amount is always the steady amount; a fund that is behind shows a gentle note on its own row only
        ("To be ready for December, add $1,100 when you can.") with Add to Balance, never counted in Money Out. */
     var MON3 = MONTHS.map(function (m) { return m.slice(0, 3); });
-    function fundLine(d, f) {
+    function fundLine(d, f) { var ln = fundLine0(d, f); if (fundHeld(f)) { ln.t = 'On hold this month · ' + ln.t; ln.held = 1; } return ln; }
+    function fundLine0(d, f) {
       var mk = monthKey(), need = fundNeed(d, f, mk), bal = +f.bal || 0, a = fundMonth(d, f, mk);
       if (f.kind === 'jic' && !f.hol) {
         if (need.full) return { t: 'Full · ' + money(a) + ' this month', pct: 100, full: 1 };
@@ -1225,7 +1257,7 @@
       }
       if (!need.next) return { t: f.hol ? 'Plan your days in Holidays and Birthdays' : 'Choose its due months', pct: 0 };
       var tg = need.next.a, bh = need.behind;
-      return { t: money(bal) + ' of ' + money(tg) + ' · due ' + MONTHS[need.next.m] + ', ' + money(a) + ' a month', pct: tg > 0 ? Math.max(0, Math.min(100, Math.round(bal / tg * 100))) : 0, full: bal >= tg - 0.005,
+      return { t: money(bal) + ' of ' + money(tg) + ' · due ' + MONTHS[need.next.m] + ', ' + money(fundHeld(f, mk) ? fundSteady(d, f) : a) + ' a month', pct: tg > 0 ? Math.max(0, Math.min(100, Math.round(bal / tg * 100))) : 0, full: bal >= tg - 0.005,
         note: bh ? 'To be ready for ' + MONTHS[bh.m] + ', add ' + money(bh.add) + ' when you can.' : '', add: bh ? bh.add : 0 };
     }
     // The gentle note on a fund's own row (never in Money Out), with Add to Balance.
@@ -1243,7 +1275,7 @@
     }
     function fRow(d, f) {
       var open = S.rowOpen === f.id, ln = fundLine(d, f), a = fundMonth(d, f), nm = f.n || 'A set-aside';
-      return '<div class="gm-sr gm-fr nt' + (open ? ' open' : '') + '" data-id="' + f.id + '" data-kind="fund" data-fk="' + (f.hol ? 'hol' : f.kind) + '">' +
+      return '<div class="gm-sr gm-fr nt' + (open ? ' open' : '') + (fundHeld(f) ? ' hold' : '') + '" data-id="' + f.id + '" data-kind="fund" data-fk="' + (f.hol ? 'hol' : f.kind) + '">' +
         '<span class="gm-scn">' + cellHtml(f, 'fund', 'n') + '</span>' +
         '<span class="gm-sc gm-sca" data-cell="fa"><button type="button" class="gm-sv" data-gm="srow:' + f.id + '" aria-label="' + esc(nm + ': ' + money(a) + ' this month. Tap for more') + '">' + money(a) + '</button></span>' +
         '<button type="button" class="gm-smore" data-gm="srow:' + f.id + '" aria-expanded="' + open + '" aria-label="' + esc('More for ' + nm) + '">' + I('dots') + '</button>' +
@@ -1251,6 +1283,21 @@
         '<small class="gm-fline" data-gm-fline>' + esc(ln.t) + '</small>' +
         '<div class="gm-fnote" data-gm-fnote' + (ln.note ? '' : ' hidden') + '>' + fnoteHtml(f, ln) + '</div>' +
         (open ? fundMore(d, f, ln) : '') + '</div>';
+    }
+    /* BLD 1000 (Chris: "add it as a line on the budget to say fixed, on hold, varies like others"): a set-aside's line in
+       Expenses. Its amount is this month's (the steady amount, or $0 On Hold); the tag cycles Fixed, Varies, On Hold, and
+       On Hold lasts this month only. The name, the amount, and the dots open the fund in the Set-Asides box, the one place
+       to change it. */
+    var FUND_KIND = { bill: 'Known Bill', jic: 'Just in Case' };
+    function xSub(d, f) { return fundHeld(f) ? 'On hold this month · ' + money(fundSteady(d, f)) + ' a month' : f.hol ? 'Holidays and Birthdays' : FUND_KIND[f.kind]; }
+    function xRow(d, f) {
+      var tg = fundTag(f), a = fundMonth(d, f), nm = f.n || 'A set-aside';
+      return '<div class="gm-sr gm-xf' + (tg === 'hold' ? ' hold' : '') + '" data-id="' + f.id + '" data-kind="xfund" data-s="' + tg + '">' +
+        '<span class="gm-scn"><span class="gm-sc" data-cell="xn"><button type="button" class="gm-sv' + (f.n ? '' : ' ph') + '" data-gm="fopen:' + f.id + '" aria-label="' + esc(nm + '. Tap to open it in Set-Asides') + '">' + esc(f.n || PH.fund) + '</button></span>' +
+        '<small class="gm-ssub" data-gm-xsub>' + esc(xSub(d, f)) + '</small></span>' +
+        '<span class="gm-sc gm-sca" data-cell="xa"><button type="button" class="gm-sv" data-gm="fopen:' + f.id + '" aria-label="' + esc(nm + ': ' + money(a) + ' this month. Tap to open it in Set-Asides') + '">' + money(a) + '</button></span>' +
+        '<button type="button" class="gm-tag t-' + tg + '" data-gm="ftag:' + f.id + '" aria-label="' + esc(nm + ': ' + STATUS[tg] + (tg === 'hold' ? ' this month' : '') + '. Tap for the next status') + '">' + esc(STATUS[tg]) + '</button>' +
+        '<button type="button" class="gm-smore" data-gm="fopen:' + f.id + '" aria-label="' + esc('Open ' + nm + ' in Set-Asides') + '">' + I('dots') + '</button></div>';
     }
     function ffld(f, k, lbl, v, ph) { return '<label class="gm-f"><span>' + esc(lbl) + '</span><input class="gm-in" data-gmfd="' + k + '" data-fid="' + f.id + '" inputmode="decimal" value="' + (v ? plain(v) : '') + '" placeholder="' + esc(ph || '0') + '"></label>'; }
     function fundMore(d, f, ln) {
@@ -1269,6 +1316,8 @@
     }
     // A fund row's numbers, redrawn in place after a change (so the next tap lands).
     function fundNumbers(d, f) {
+      var xr = root.querySelector('.gm-xf[data-id="' + f.id + '"]');
+      if (xr) { var xa = xr.querySelector('[data-cell="xa"] .gm-sv'), xs = xr.querySelector('[data-gm-xsub]'), xn = xr.querySelector('[data-cell="xn"] .gm-sv'); if (xa) xa.textContent = money(fundMonth(d, f)); if (xs) xs.textContent = xSub(d, f); if (xn) { xn.textContent = f.n || PH.fund; xn.classList.toggle('ph', !f.n); } }
       var row = root.querySelector('.gm-fr[data-id="' + f.id + '"]'); if (!row) return;
       var ln = fundLine(d, f), a = fundMonth(d, f), b = row.querySelector('[data-cell="fa"] .gm-sv'), bar = row.querySelector('.gm-fbar'), fl = row.querySelector('[data-gm-fline]');
       if (b) b.textContent = money(a); if (fl) fl.textContent = ln.t; if (bar) { bar.classList.toggle('full', !!ln.full); bar.firstChild.style.width = ln.pct + '%'; }
@@ -1334,7 +1383,7 @@
     function sheetNumbers(d) {
       var t = totals(d), b = root.querySelector('[data-gm-sums]'), c = root.querySelector('[data-gm-chips]');
       if (b) b.outerHTML = sheetBoxes(t); if (c) c.outerHTML = sheetChips(d, t);
-      [['out', t.lineOut], ['pre', t.pretax], ['in', t.income], ['fund', t.setaside]].forEach(function (x) { var e = root.querySelector('[data-gm-total="' + x[0] + '"]'); if (e) e.textContent = money(x[1]); });
+      [['out', t.spend], ['xf', t.setaside], ['pre', t.pretax], ['in', t.income], ['fund', t.setaside]].forEach(function (x) { var e = root.querySelector('[data-gm-total="' + x[0] + '"]'); if (e) e.textContent = money(x[1]); });
       var sv = root.querySelector('[data-gm-savings] b'); if (sv) sv.textContent = money(t.savings);
       var mv = root.querySelector('[data-gm-move]'); if (mv) mv.textContent = 'Move ' + money(t.setaside) + ' to your set-aside savings this month.';
     }
@@ -1354,7 +1403,8 @@
       }
       var cell = inp.closest('[data-cell]'), row = inp.closest('.gm-sr');
       if (cell) { var w = document.createElement('div'); w.innerHTML = cellHtml(item, e.k, e.f); cell.replaceWith(w.firstChild); }
-      if (row) { var sb = row.querySelector('.gm-ssub'), sx = subOf(item, e.k); if (sb) { sb.textContent = sx; sb.hidden = !sx; } }
+      if (row && e.k !== 'fund') { var sb = row.querySelector('.gm-ssub'), sx = subOf(item, e.k); if (sb) { sb.textContent = sx; sb.hidden = !sx; } }
+      if (e.k === 'fund') fundNumbers(d, item);
       sheetNumbers(d);
       return e;
     }
@@ -1369,6 +1419,16 @@
           var i = TAG_CYCLE.indexOf(item.s); edit(item, { s: TAG_CYCLE[(i + 1) % TAG_CYCLE.length] }, d); save(); paint(); window.scrollTo(0, y);
           var tg = root.querySelector('[data-id="' + item.id + '"] .gm-tag'); if (tg) tg.focus({ preventScroll: true }); return;
         case 'srow': S.rowOpen = S.rowOpen === p[1] ? null : p[1]; paint(); window.scrollTo(0, y); return;
+        /* BLD 1000: a set-aside's Expenses line */
+        case 'ftag':
+          item = find(d.funds, p[1]); if (!item) return;
+          var was = fundTag(item), fc = FUND_CYCLE.indexOf(was), nt = FUND_CYCLE[(fc + 1) % FUND_CYCLE.length]; tagFund(d, item, nt); save(); paint(); window.scrollTo(0, y);
+          var ft = root.querySelector('.gm-xf[data-id="' + item.id + '"] .gm-tag'); if (ft) ft.focus({ preventScroll: true });
+          if (nt === 'hold') { S.undo = function () { tagFund(d, item, was); }; say((item.n || 'This set-aside') + ' rests this month. It comes back on its own next month.', true); } return;
+        case 'fopen':
+          item = find(d.funds, p[1]); if (!item) return; S.rowOpen = item.id; S.ed = null; paint();
+          var fr = root.querySelector('.gm-fr[data-id="' + item.id + '"]'); if (fr) try { fr.scrollIntoView({ block: 'center' }); var fb = fr.querySelector('.gm-smore'); if (fb) fb.focus({ preventScroll: true }); } catch (e) {}
+          return;
         case 'sfreq': item = find(d.lines, p[1]); if (item && FREQ[p[2]]) { edit(item, { f: p[2] }, d); save(); paint(); window.scrollTo(0, y); } return;
         case 'sst': item = find(d.lines, p[1]); if (item && STATUS[p[2]]) { edit(item, { s: p[2] }, d); save(); paint(); window.scrollTo(0, y); } return;
         case 'ssort': var st = tstate(d, 'sheet'); st.sort = st.sort === 'big' ? 'mine' : 'big'; touch(d); save(); paint(); window.scrollTo(0, y); return;
@@ -1612,7 +1672,7 @@
           var cx = tctx(d, p[1]); if (TT.init) TT.init(cx.t, cx); if (TT.act(p[2], p.slice(3).join(':'), cx)) { touch(d); save(); var y0 = window.scrollY; paint(); window.scrollTo(0, y0); watchTool(d, p[1]); }
           return;
         case 'mem': if (opts.onMembership) opts.onMembership(p[1]); return;
-        case 'ed': case 'tag': case 'srow': case 'sfreq': case 'sst': case 'ssort': case 'sadd': case 'fkind': case 'fdue': case 'fpay': case 'fadd': case 'fnote': case 'tofund': case 'sap': sheetAct(p, d); return;
+        case 'ed': case 'tag': case 'srow': case 'sfreq': case 'sst': case 'ssort': case 'sadd': case 'fkind': case 'fdue': case 'fpay': case 'fadd': case 'fnote': case 'tofund': case 'sap': case 'ftag': case 'fopen': sheetAct(p, d); return;
         case 'back': back(); return;
         case 'common': COMMON.forEach(function (c) { addLine(d, c); }); save(); if (S.view !== 'sheet') go('plan'); else paint(); say('Twelve common lines are ready. Add your amounts, and rename or remove any.'); focusFirstEmpty(); return;
         case 'add':
@@ -1817,7 +1877,7 @@
     model: { blank: blank, norm: norm, monthly: monthly, totals: totals, ideas: ideaList, ideaSet: ideaSet, month: month, addLine: addLine, addIncome: addIncome, edit: edit, remove: remove, restore: restore, logAdd: logAdd, checkSave: checkSave, weekKey: weekKey, FREQ: FREQ, STATUS: STATUS, STEADY: STEADY,
       // BLD 942: Set-Asides
       fundNeed: fundNeed, fundMonth: fundMonth, fundEvents: fundEvents, setAsideSum: setAsideSum, roll: roll, rec: rec, addFund: addFund, editFund: editFund, payFund: payFund, unpay: unpay, addToFund: addToFund,
-      fundSteady: fundSteady, fundBehind: fundBehind, unpayAll: unpayAll,
+      fundSteady: fundSteady, fundBehind: fundBehind, unpayAll: unpayAll, tagFund: tagFund, fundTag: fundTag, fundHeld: fundHeld,
       toFund: toFund, fundable: fundable, holMonths: holMonths, holSuggest: holSuggest, holFund: holFund, HOLS: HOLS, mkAdd: mkAdd },
     parse: { xlsx: readXlsx, csv: readCsv, file: readFile, guess: guessMap, rows: fromSheet, pick: pickSheet, apply: applyImport, inflate: inflate, unzip: unzip },
     share: { encode: encode, decode: decode, unpack: unpack, merge: merge, leave: leave, code: codeFrom, base: SHARE_BASE },
