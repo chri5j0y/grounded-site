@@ -273,7 +273,11 @@ function go(v, force) {
    recorded line by line Listen (shared/gg-listen.js); what a person writes is never read aloud. */
 const PV = () => window.WILLOW_PV || { cards: {}, bedside: {}, faith: {} };
 const heroSrc = p => '/shared/heroes/' + p + '.webp';
-function playVid(id) { if (window.GGLearn) GGLearn.open('willow', id); }
+// One click (GWG BLD 997): a Watch button plays its video, and Back comes straight home to this page.
+function playVid(id) { if (window.GGLearn) GGLearn.open('willow', id, { solo: true }); }
+// Learn's lists open alone in the shared player (no second Learn menu); Back returns to the page that opened them.
+const LEARN_CAT = { sup: { cat: 'sup', skip: ['willow-gentle'] }, gentle: { cat: 'sup', tracks: ['willow-gentle'] }, steps: { cat: 'les' } };
+function learnCat(k, back) { const o = LEARN_CAT[k]; if (o && window.GGLearn) GGLearn.open('willow', null, Object.assign({ solo: true, back: back || 'Back to Learn' }, o)); }
 // A Watch button for one video, with a quiet check once it has been watched (kept by gg-learn.js in the vault).
 function watchBtn(id, label, cls, mins) {
   const w = vidWatched(id);
@@ -501,7 +505,7 @@ function supportCard(after) {
     : [['wl-s-breathe', 'Breathe at the Bedside'], ['wl-s-say', "When You Don't Know What to Say"], ['wl-s-vigil', 'The Vigil Hours'], ['wl-s-tonight', 'Caring for Yourself Tonight']];
   return `<div class="w-card"><p class="w-eyebrow">${icon('play', 16)} Support for Right Now</p><p>Short videos, narrated aloud, for the hard hours. Open one anytime.</p>
     <div class="w-vids">${vids.map(v => vidCard(v[0], v[1], '/shared/heroes/p/vid/' + SUPPORT_ART[v[0]] + '-card.webp')).join('')}</div>
-    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="window.GGLearn&&GGLearn.open('willow')">All Support Videos</button></div></div>`;
+    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.learnCat('sup','Back to Willow')">All Support Videos</button></div></div>`;
 }
 // A painted video card (Learn's look): the painting with a play mark, the title, and a quiet Watched once seen.
 function vidCard(id, title, img, line) {
@@ -1351,7 +1355,9 @@ function theadHtml(v) {
 }
 function subHtml(v) {
   const T = TABS.find(t => t[0] === TAB_OF[v]); if (!T || !T[3].length) return '';
-  return `<nav class="w-sub no-print" aria-label="${esc(T[1])}">${T[3].map(p => `<button type="button" class="w-subb" aria-pressed="${p[0] === v}" onclick="W.go('${p[0]}')">${esc(p[1])}</button>`).join('')}${T[0] === 'learn' ? `<button type="button" class="w-subb" onclick="window.GGLearn&&GGLearn.open('willow')">Learn Videos</button>` : ''}</nav>`;
+  // Learn (GWG BLD 997): no chips; its pages carry one way back to Learn (an open guide keeps its own Back to All Guides).
+  if (T[0] === 'learn') return v === 'learn' || (v === 'guides' && S.guide.open) ? '' : `<nav class="w-sub no-print" aria-label="${esc(T[1])}"><button type="button" class="w-subb w-backb" onclick="W.go('learn')">&larr; Back to Learn</button></nav>`;
+  return `<nav class="w-sub no-print" aria-label="${esc(T[1])}">${T[3].map(p => `<button type="button" class="w-subb" aria-pressed="${p[0] === v}" onclick="W.go('${p[0]}')">${esc(p[1])}</button>`).join('')}</nav>`;
 }
 // The top of a page: the painted head, then the chips (a guide or a reading that is open keeps only the chips).
 function topOf(v) {
@@ -1363,7 +1369,7 @@ const HUB_VID = { wishes: ['wl-u-matters', 'Watch: What Matters', 'A short video
 function hubHtml(tab) {
   const hv = HUB_VID[tab], vid = hv ? `<button type="button" class="w-pc w-pc-vid" onclick="W.pv('${hv[0]}')"><span class="w-vc-img"><img src="/shared/heroes/p/vid/${hv[3]}-card.webp" alt="" width="800" height="450" loading="lazy"><i>${icon(vidWatched(hv[0]) ? 'check' : 'play', 22)}</i></span><span class="tx"><b>${esc(hv[1])}</b><span>${esc(hv[2])}</span>${vidWatched(hv[0]) ? '<i>Watched</i>' : ''}</span></button>` : '';
   return `<div class="w-hub">${vid}${(FW.hub[tab] || []).map(c => {
-    const a = FW.art[c[0]] || FW.art[tab], go = c[0] === 'videos' ? `window.GGLearn&&GGLearn.open('willow')` : `W.go('${c[0]}')`, st = hubStatus(c[0]);
+    const a = FW.art[c[0]] || FW.art[tab], go = `W.go('${c[0]}')`, st = hubStatus(c[0]);
     return `<button type="button" class="w-pc" onclick="${go}"><img src="${artSrc(a[0], 'card')}" alt="" width="800" height="450" loading="lazy"><span class="tx"><b>${esc(c[1])}</b><span>${esc(c[2])}</span>${st ? `<i>${esc(st)}</i>` : ''}</span></button>`;
   }).join('')}</div>`;
 }
@@ -1854,7 +1860,13 @@ function sendGo() {
 function sendFile() { const d = sendReady(); if (!d) return; toast(saveFile(d) ? 'Saved. Attach the file to a text or email to the Grounded team.' : 'This browser could not save a file. Copy the words instead.'); }
 
 /* ---------- Learn ---------- */
-VIEWS.learn = () => hubHtml('learn') + supportCard();
+/* One click (GWG BLD 997, Chris: "make it clean smooth one click nav"): one Learn page, five painted cards in the Bedside
+   card look. When Life Changes and How Willow Works open here; the three video lists open alone in the shared player. */
+VIEWS.learn = () => `<div class="w-tgrid w-lgrid">${FW.hub.learn.map(c => {
+  const a = FW.art[c[0]] || FW.art.learn, go = LEARN_CAT[c[0]] ? `W.learnCat('${c[0]}')` : `W.go('${c[0]}')`;
+  return `<button type="button" class="w-tcard w-lcard" onclick="${go}"><img src="${artSrc(a[0], 'card')}" alt="" width="800" height="450" loading="lazy" decoding="async">
+    <span class="tx"><b>${esc(c[1])}</b><span class="w-lline">${esc(c[2])}</span><span class="btn btn-primary w-lgo">${icon(LEARN_CAT[c[0]] ? 'play' : 'book', 18)} ${esc(c[3])}</span></span></button>`;
+}).join('')}</div>`;
 
 /* ---------- Settings ---------- */
 const SHARE_ROWS = [
@@ -2119,7 +2131,7 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'w
 window.W = window.W || {};
 Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
-  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog, pv: playVid, how: howToggle, guided, guidedLines, classic: quick => startCheckin(quick, true),
+  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog, pv: playVid, learnCat, how: howToggle, guided, guidedLines, classic: quick => startCheckin(quick, true),
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
   guide: openGuide, closeGuide, closeReading, lib: openLib, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,

@@ -15,6 +15,48 @@ const BASE = 'https://audio.growwithgrounded.com/';
 let KEY = null, HK = null, AK = null, keyRaw = '';
 const cache = new Map();
 let el = null, cur = null, musicEl = null;
+// BLD 991 Sound and Music: shared/gg-sound.js gives one AudioContext for the voice's counts, the music, and the cues, and a
+// bus that dips the music under Ava's lines (4 dB, 3 under her counts). Workout music plays as a playlist of its group
+// (field-guide/health.js musicFor), crossfading over 4 seconds, through a Web Audio gain (phones ignore an audio volume).
+const SND_JS = (() => { try { const s = document.currentScript && document.currentScript.src; if (s) return new URL('../shared/gg-sound.js?v=c117', s).href; } catch(e){} return '/shared/gg-sound.js?v=c117'; })();
+let sndP = null;
+function needSnd(){ if (window.GGSound) return Promise.resolve(window.GGSound); if (sndP) return sndP; sndP = new Promise(ok => { const s = document.createElement('script'); s.src = SND_JS; s.onload = () => ok(window.GGSound || null); s.onerror = () => { sndP = null; ok(null); }; document.head.appendChild(s); }); return sndP; }
+const G = () => window.GGSound || null;
+const CUE_FILES = ['fit-countdown-4.mp3', 'fit-round-bell.mp3', 'fit-finish.mp3', 'bell-1.mp3', 'bell-3.mp3'];
+const MU_LEVEL = 0.14, MU_X = 4;
+const PL = {key: '', list: [], i: 0, k: 0, E: [], on: false, played: new Set(), x: false};
+function plEl(){
+  const a = new Audio(); a.crossOrigin = 'anonymous'; a.preload = 'auto'; const e = {a, g: null};
+  const S = G(), c = S && S.ctx();
+  if (c){ try { const n = c.createMediaElementSource(a); e.g = c.createGain(); e.g.gain.value = 0; n.connect(e.g); e.g.connect(S.bus()); } catch(x){ e.g = null; } }
+  if (!e.g) a.volume = 0;
+  a.addEventListener('timeupdate', () => plTime(e));
+  a.addEventListener('ended', () => { if (PL.E[PL.k] === e && PL.on && !PL.x) plNext(); });
+  return e;
+}
+function plLevel(e, to, sec){
+  if (e.g){ const c = e.g.context, t = c.currentTime; try { e.g.gain.cancelScheduledValues(t); e.g.gain.setValueAtTime(e.g.gain.value, t); e.g.gain.linearRampToValueAtTime(to, t + Math.max(0.01, sec)); } catch(x){ e.g.gain.value = to; } return; }
+  const a = e.a, from = a.volume, t0 = Date.now(); clearInterval(e.fi); e.fi = setInterval(() => { const k = Math.min(1, (Date.now() - t0) / (sec * 1000 || 1)); try { a.volume = from + (to - from) * k; } catch(x){} if (k >= 1) clearInterval(e.fi); }, 60);
+}
+function plStart(e, src, sec){ e.a.src = src; PL.played.add(src); const p = e.a.play(); if (p) p.catch(() => {}); plLevel(e, MU_LEVEL, sec); }
+function plTime(e){ if (PL.E[PL.k] !== e || !PL.on || PL.x) return; const a = e.a; if (isFinite(a.duration) && a.duration > MU_X * 3 && a.duration - a.currentTime <= MU_X) plNext(); }
+function plNext(){
+  if (!PL.list.length) return; PL.x = true;
+  const old = PL.E[PL.k]; PL.k = 1 - PL.k; PL.i = (PL.i + 1) % PL.list.length;
+  if (!PL.E[PL.k]) PL.E[PL.k] = plEl();
+  plStart(PL.E[PL.k], PL.list[PL.i], MU_X);
+  if (old){ plLevel(old, 0, MU_X); setTimeout(() => { try { if (PL.E[PL.k] !== old) old.a.pause(); } catch(x){} PL.x = false; }, MU_X * 1000 + 200); } else PL.x = false;
+}
+function plPlay(list, start){
+  const key = list.join('|');
+  if (PL.on && PL.key === key){ const e = PL.E[PL.k]; if (e){ const p = e.a.play(); if (p) p.catch(() => {}); plLevel(e, MU_LEVEL, 1); } return; }
+  plStop(0.4); PL.key = key; PL.list = list.slice(); PL.i = Math.max(0, +start || 0) % list.length; PL.on = true; PL.x = false;
+  if (!PL.E[PL.k]) PL.E[PL.k] = plEl();
+  plStart(PL.E[PL.k], PL.list[PL.i], 2);
+}
+function plStop(sec){ PL.on = false; PL.key = ''; PL.E.forEach(e => { if (!e) return; plLevel(e, 0, sec || 0.6); setTimeout(() => { if (!PL.on || PL.E[PL.k] !== e) try { e.a.pause(); } catch(x){} }, (sec || 0.6) * 1000 + 100); }); }
+function plPause(){ PL.E.forEach(e => { try { e && e.a.pause(); } catch(x){} }); }
+function plResume(){ if (!PL.on) return; const e = PL.E[PL.k]; if (e){ const p = e.a.play(); if (p) p.catch(() => {}); } }
 const pref = (k, d) => { try { const v = localStorage.getItem('gg-health-' + k); return v == null ? d : v === '1'; } catch(e){ return d; } };
 const setPref = (k, v) => { try { localStorage.setItem('gg-health-' + k, v ? '1' : '0'); } catch(e){} };
 async function keys(){
@@ -84,12 +126,13 @@ const V = window.GGVoice = {
   musicOn: () => pref('music', true), setMusic(v){ setPref('music', v); if (!v) V.music(null); },
   chimeOn: () => pref('chime', true), setChime(v){ setPref('chime', v); },
   nameOf: async (voice, text) => (await keys()) ? nameOf(voice, text) : null,
-  unlock(){ V._held = false; if (!el){ el = new Audio(); el.preload = 'auto'; } try { el.src = silent(); const p = el.play(); if (p) p.catch(() => {}); } catch(e){} try { const A = window.AudioContext || window.webkitAudioContext; V._c = V._c || new A(); V._c.resume && V._c.resume(); } catch(e){} },
+  unlock(){ V._held = false; if (!el){ el = new Audio(); el.preload = 'auto'; } try { el.src = silent(); const p = el.play(); if (p) p.catch(() => {}); } catch(e){} try { const A = window.AudioContext || window.webkitAudioContext; V._c = V._c || (G() && G().ctx()) || new A(); V._c.resume && V._c.resume(); } catch(e){}
+    needSnd().then(S => { if (!S) return; S.unlock(); CUE_FILES.forEach(f => S.load(f).catch(() => {})); }); },
   prefetch(voice, text){ if (V.on() && text) fetchClip(voice, text); },
   stop(){ if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } if (cur){ const c = cur; cur = null; c.stop(); } },
   // Pause and Resume (and a pause the phone made): _held tells a line's pause apart from one the player asked for.
-  pause(){ V._held = true; if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } try { el && el.pause(); musicEl && musicEl.pause(); const s = window.speechSynthesis; if (s && s.speaking) s.pause(); } catch(e){} },
-  resume(){ V._held = false; try { if (el && el.src && !el.ended && (el.currentTime > 0 || (cur && cur.clip))) el.play().catch(e => { if (e && e.name === 'NotAllowedError' && cur && cur.clip && V.onlost) try { V.onlost(); } catch(x){} }); if (V._c && V._c.state !== 'running' && V._c.resume) V._c.resume(); musicEl && V.musicOn() && musicEl.play().catch(() => {}); const s = window.speechSynthesis; if (s && s.paused) s.resume(); } catch(e){} },
+  pause(){ V._held = true; if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } plPause(); if (G()) G().duck(false); try { el && el.pause(); musicEl && musicEl.pause(); const s = window.speechSynthesis; if (s && s.speaking) s.pause(); } catch(e){} },
+  resume(){ V._held = false; try { if (el && el.src && !el.ended && (el.currentTime > 0 || (cur && cur.clip))) el.play().catch(e => { if (e && e.name === 'NotAllowedError' && cur && cur.clip && V.onlost) try { V.onlost(); } catch(x){} }); if (V._c && V._c.state !== 'running' && V._c.resume) V._c.resume(); musicEl && V.musicOn() && musicEl.play().catch(() => {}); V.musicOn() && plResume(); const s = window.speechSynthesis; if (s && s.paused) s.resume(); } catch(e){} },
   // Speak one line; resolves when it ends (or right away with Voice Off). o.onstart runs when the line's sound really starts
   // (the recording plays, or the device voice begins), so the breath circle can start with the voice (November 12, 2026).
   // Sound and pictures keep one clock: when the phone stops the sound mid line (an outside pause, or a refused play), the line
@@ -104,6 +147,7 @@ const V = window.GGVoice = {
     if (!url) return device(text, onstart);
     if (!el){ el = new Audio(); }
     let me = null;
+    if (G()) G().duck(true, -4);
     await new Promise(res => {
       let done = false, began = false, g = 0;
       const fin = () => { if (done) return; done = true; clearTimeout(g); el.onplaying = el.onpause = el.onloadedmetadata = null; res(); };
@@ -120,6 +164,7 @@ const V = window.GGVoice = {
       el.onloadedmetadata = () => { if (!began) arm((el.duration || 20) * 1000 + 3000); };
     });
     if (cur === me) cur = null;
+    if (G()) G().duck(false);
   },
   // BLD 898: words on the beat. prime() downloads and decodes short lines (the counts) ahead of time and measures the
   // silence each recording carries before the voice (about 0.08 to 0.14 seconds). at(voice, text, when) then starts the
@@ -142,21 +187,44 @@ const V = window.GGVoice = {
     if (ok){
       try { const s = c.createBufferSource(); s.buffer = b.v.buf; s.connect(c.destination); const at = c.currentTime + wait / 1000;
         if (SCH.length){ SCH.forEach(x => { try { x.stop(at); } catch(e){} }); SCH.length = 0; }
-        s.start(at, b.v.lead); SCH.push(s); if (V.trace) V.trace.push({text, when: +when, how: 'clip', lead: b.v.lead}); return 'clip'; } catch(e){}
+        s.start(at, b.v.lead); SCH.push(s); if (G()) setTimeout(() => G() && G().duckFor(Math.max(0.3, b.v.buf.duration - b.v.lead), -3), wait); if (V.trace) V.trace.push({text, when: +when, how: 'clip', lead: b.v.lead}); return 'clip'; } catch(e){}
     }
     if (b && !b.done && V._c){ decoded(voice, text); if (V.trace) V.trace.push({text, when: +when, how: 'drop'}); return 'drop'; }
     setTimeout(() => { if (V.on()) self.say(voice, text); }, wait);
     if (V.trace) V.trace.push({text, when: +when, how: 'device'}); return 'device';
   },
   // Soft music under the voice; null stops it.
-  music(src){
+  // BLD 991: an array is a playlist (its group's tracks, from list[start]), crossfading over 4 seconds.
+  music(src, start){
     try {
-      if (!src || !V.musicOn()){ if (musicEl){ musicEl.pause(); musicEl = null; } return; }
+      if (!src || !V.musicOn()){ if (musicEl){ musicEl.pause(); musicEl = null; } plStop(0.6); return; }
+      if (Array.isArray(src)){ if (musicEl){ musicEl.pause(); musicEl = null; } if (!src.length) return; needSnd().then(() => { if (V.musicOn()) plPlay(src, start); }); return; }
+      plStop(0.4);
       if (musicEl && musicEl.dataset.src === src){ musicEl.play().catch(() => {}); return; }
       if (musicEl) musicEl.pause();
       musicEl = new Audio(src); musicEl.dataset.src = src; musicEl.loop = true; musicEl.volume = 0.14; musicEl.play().catch(() => {});
     } catch(e){}
   },
+  // BLD 991: the tracks this session played (their credits show on the finish screen).
+  musicPlayed(){ return Array.from(PL.played); },
+  musicReset(){ PL.played = new Set(); },
+  busy: () => !!cur,
+  // BLD 991 cues (made in code by Grow With Grounded): a Promise that resolves after `wait` seconds (or the cue's length).
+  // It never holds a session: a cue that cannot load in time is skipped.
+  cue(file, o){ o = o || {}; const wait = Math.max(0, o.wait != null ? +o.wait : 1.5);
+    return new Promise(r => { let done = false; const fin = h => { if (!done){ done = true; r(h); } };
+      setTimeout(() => fin(null), (wait + 2) * 1000);
+      needSnd().then(S => S ? S.cue(file, {gain: o.gain == null ? 0.7 : o.gain}) : null).then(h => setTimeout(() => fin(h), wait * 1000), () => fin(null)); }); },
+  // The countdown (decision 8): three beeps and a go beep (fit-countdown-4, beeps at 0, 1, 2, and 3 s), placed on the Web Audio
+  // clock so the go beep lands as the clock reaches zero. Returns a handle with stop(), or null (Beeps off, or not ready yet).
+  countdown(leftMs){
+    if (!V.chimeOn()) return null; const S = G(); if (!S || !S.cueReady('fit-countdown-4.mp3')) return null;
+    const c = S.ctx(); if (!c || c.state !== 'running') return null;
+    const L = Math.max(0, +leftMs || 0) / 1000;
+    return S.cueNow('fit-countdown-4.mp3', L >= 3 ? {at: c.currentTime + (L - 3), gain: 0.7} : {offset: 3 - L, gain: 0.7});
+  },
   tick(){ if (!V.chimeOn()) return; try { const A = window.AudioContext || window.webkitAudioContext; const c = V._c = V._c || new A(), o = c.createOscillator(), g = c.createGain(); o.frequency.value = 880; g.gain.setValueAtTime(0.0001, c.currentTime); g.gain.exponentialRampToValueAtTime(0.2, c.currentTime + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.12); o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + 0.14); } catch(e){} }
 };
+// BLD 991: the sound engine loads with the coach, so the first tap finds one shared AudioContext.
+needSnd();
 })();
