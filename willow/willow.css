@@ -138,12 +138,9 @@ html,body{overflow-x:clip;}
 
 /* bedside */
 .w-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
-.w-grid .gg-rbar{grid-column:1 / -1;}
 .w-tip{margin:0;display:flex;flex-direction:column;}
 .w-tip h4{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;margin:0 0 6px;}
 .w-tip p{font-size:16px !important;flex:1;}
-.w-ev{align-self:flex-start;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.8px;text-transform:uppercase;border-radius:999px;padding:2px 10px;background:var(--bg-deep);color:var(--ink-soft);margin-top:8px;}
-.w-ev-well{background:var(--w-sage-soft);color:var(--gold-deep,var(--gold));}
 .w-faithcard{border-left:5px solid var(--p-roots);}
 .w-end{font-style:italic;color:var(--ink-soft);}
 .w-never{border:1.5px solid var(--crisis-border);background:var(--crisis-bg);}
@@ -397,7 +394,46 @@ body:not([data-wtab="today"]) .w-hero{display:none;}
 .w-practice .w-pimg{margin:-20px -22px 16px;width:calc(100% + 44px);aspect-ratio:16 / 9;height:auto;object-fit:cover;border-bottom:4px solid var(--pc);border-radius:0;}
 @media (min-width:701px){.w-practice .w-pimg{aspect-ratio:5 / 2;object-position:50% 30%;}}   /* BLD 976: 30% keeps every head whole */
 /* Listen in a card's button row (Chris, November 13, 2026): the new pill look, beside the card's own buttons */
-.btn-row .gg-rbar.w-listen{display:inline-flex;margin:0;gap:8px;}
-.btn-row .gg-rbar.w-listen .gg-rbtn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;min-height:44px;padding:10px 18px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);}
-.btn-row .gg-rbar.w-listen .gg-rbtn:hover{border-color:var(--gold,#8B5E1A);}
-.btn-row .gg-rbar.w-listen select{min-height:44px;}
+
+/* BLD 996 Willow in the Player: the painted cards of Today and Bedside (the Home and The Grounded Way look), each with Watch */
+.w-pcard{border-top:5px solid var(--pc);}
+.w-pc2{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start;}
+.w-pscene{width:112px;height:112px;border-radius:18px;overflow:hidden;background:var(--bg-deep);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
+.w-pscene img{display:block;width:100%;height:100%;object-fit:cover;}
+.w-ptx{min-width:0;}
+.w-ptx h3{margin-top:2px;}
+.w-pcard .btn-row{margin-top:12px;}
+.w-watch .icon{vertical-align:-4px;margin-right:2px;}
+.w-howp{background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:10px 16px 10px 36px;margin:12px 0 4px;}
+.w-howp ol{margin:0;padding:0;}
+.w-howp li{font-size:16px;line-height:1.55;margin:4px 0;}
+.w-minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:4px 0 12px;}
+.w-mini{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;align-items:start;background:var(--card-2);border:1px solid var(--line);border-radius:16px;padding:10px;}
+.w-mini img{width:84px;height:84px;border-radius:14px;object-fit:cover;display:block;}
+.w-mini b{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:21px;line-height:1.15;}
+.w-mini span{display:block;font-size:15px;line-height:1.45;color:var(--ink-soft);margin:2px 0 8px;}
+.w-vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:8px 0 12px;}
+.w-vids-1{grid-template-columns:minmax(0,420px);}
+.w-vc,.w-pc-vid{display:flex;flex-direction:column;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;padding:0;cursor:pointer;min-width:0;transition:transform .25s ease,box-shadow .25s ease;}
+.w-vc:hover{transform:translateY(-2px);box-shadow:var(--w-shadow-up,0 6px 18px rgba(0,0,0,.12));}
+.w-vc-img{position:relative;display:block;}
+.w-vc-img img{display:block;width:100%;height:auto;aspect-ratio:16 / 9;object-fit:cover;}
+.w-vc-img i{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,252,246,.92);color:#2C1810;box-shadow:0 2px 8px rgba(0,0,0,.25);}
+.w-vc .tx{display:flex;flex-direction:column;gap:2px;padding:10px 14px 12px;}
+.w-vc b{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;line-height:1.15;}
+.w-vc .tx span{font-size:14.5px;color:var(--ink-soft);line-height:1.4;}
+.w-vc em{font-style:normal;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:12.5px;color:var(--gold);}
+.w-tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:0 0 18px;}
+.w-tgrid-1{grid-template-columns:minmax(0,1fr);}
+.w-tcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--w-r,16px);overflow:hidden;box-shadow:var(--w-shadow);min-width:0;}
+.w-tcard > img{display:block;width:100%;height:auto;aspect-ratio:16 / 9;object-fit:cover;object-position:50% 30%;}
+.w-tcard .tx{display:flex;flex-direction:column;flex:1;padding:14px 16px 16px;}
+.w-tcard h4{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:24px;line-height:1.1;margin:0 0 6px;}
+.w-tcard p{font-size:16px;line-height:1.55;margin:0 0 10px;}
+.w-tcard .btn-row{margin:auto 0 0;}
+@media (min-width:701px){.w-tcard-wide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);}.w-tcard-wide > img{height:100%;aspect-ratio:auto;}}
+.w-readit{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;}
+.w-readit summary{cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:14px;color:var(--gold);min-height:32px;display:flex;align-items:center;}
+.w-readit p{margin:8px 0 0;}
+.w-pc-vid .tx i{font-style:normal;}
+@media (max-width:420px){.w-pscene{width:84px;height:84px;}.w-pc2{gap:12px;}.w-mini{grid-template-columns:72px minmax(0,1fr);}.w-mini img{width:72px;height:72px;}}

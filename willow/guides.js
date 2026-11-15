@@ -186,7 +186,7 @@ const G = [
   { id: 'kids', ring: 'last', title: `Talking with children`, story: ``,
     keys: `kids, children, grandkids, explain to child, tell my kids`,
     parts: [
-      ['say', `"Grandma is dying. Her body is very sick and it's stopping working." Use the word "died," not "sleeping" or "lost." Children take words literally.`],
+      ['say', `"Grandma is dying. Her body is very sick, and it's wearing out." Use the word "died," not "sleeping" or "lost." Children take words literally.`],
       ['helps', `Honest, short answers, repeated as often as they ask. Letting them help: drawing, choosing music, telling a story. Letting them choose whether to visit. Dougy Center tip sheets; Maple and Aspen guides for kids.`],
       ['helper', `If you're helping the grown-up who has to tell the kids: remind them that short and honest is enough, and "I don't know" is okay. Be there for the talk if they want you. Give the kids a job (drawing, music, a story), and expect the same questions again and again; that is how kids understand.`],
       ['pro', `Ask the grown-ups what the children already know and what words their family uses, then help them say "died" plainly. Offer each child a small job at the bedside and a real choice about being there.`],
