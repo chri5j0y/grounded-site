@@ -610,6 +610,13 @@
       '.ggl-small .ln-sp.ln-pn h3{font-size:52px;}.ggl-small .ln-sp.ln-pn .ln-cd-l{font-size:34px;}.ggl-small .ln-sp.ln-pn>p.ln-cd-s{font-size:28px;}.ggl-small .ln-sp.ln-pn.ln-cd-long .ln-cd-l{font-size:28px;}.ggl-small .ln-sp.ln-pn .ln-fg-brt{font-size:44px;height:54px;}.ggl-small .ln-sp.ln-pn .ln-spb{width:120px;height:120px;margin-top:10px;}.ggl-small .ln-sp.ln-pn .ln-fg-brt{margin-top:8px;}',
       '.ln-fg-brt{position:relative;height:50px;width:100%;margin-top:22px;font-family:\'Cormorant Garamond\',serif;font-size:40px;font-weight:600;color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.55);}.ln-pn-r .ln-fg-brt i{right:0;}',
       '.ln-fig3{position:absolute;top:3%;height:92%;width:46%;pointer-events:none;opacity:0;transition:opacity .9s ease;}.ln-fig3-r{right:1%;}.ln-fig3-l{left:1%;}.ln-3d .ln-fig3{opacity:1;}',
+      // BLD 998 Body Graphic: the body scan figure rests in its own painting (b3bg), the words on a soft shade beside it;
+      // the outline graphic stays drawn underneath as the fallback. ln-b3on shows the figure once it is placed.
+      '.ln-b3bg{position:absolute;inset:0;overflow:hidden;z-index:-1;}.ln-b3bg img{position:absolute;max-width:none;}.ln-b3 .ln-bd,.ln-b3 .ln-bd-sh,.ln-b3 .ln-gfx{display:none;}',
+      '.ln-b3sh{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(20,13,7,.3) 0%,rgba(20,13,7,0) 22%),linear-gradient(90deg,rgba(20,13,7,.76) 0%,rgba(20,13,7,.64) 40%,rgba(20,13,7,.4) 56%,rgba(20,13,7,.12) 64%,rgba(20,13,7,0) 70%);}',
+      '.ln-b3-lie .ln-b3sh{background:linear-gradient(180deg,rgba(20,13,7,.74) 0%,rgba(20,13,7,.6) 30%,rgba(20,13,7,.22) 46%,rgba(20,13,7,0) 54%);}',
+      '.ln-b3-lie.ln-gx-r .ln-pts{padding:34px 64px 0;display:grid;grid-template-columns:1fr 1fr;column-gap:40px;align-content:start;}.ln-b3-lie .ln-pts h3{grid-column:1/-1;margin-bottom:16px;}.ln-b3-lie .ln-pt{margin-bottom:12px;}',
+      '.ln-b3w{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .9s ease;}.ln-b3on .ln-b3w{opacity:1;}.ln-b3w canvas{position:absolute;display:block;pointer-events:none;}.ln-b3w .ln-b3h,.ln-b3w .ln-b3r{mix-blend-mode:screen;}.ln-b3w .ln-fig3{opacity:1;transition:none;}',
       '.ggl-small .ln-pn h3{font-size:62px;}.ggl-small .ln-pn>p{font-size:32px;}.ggl-small .ln-pn-l,.ggl-small .ln-pn-r{width:470px;}.ggl-small .ln-cd .ln-cd-l{font-size:42px;}.ggl-small .ln-cd-many .ln-cd-l{font-size:34px;}.ggl-small .ln-cd-long h3{font-size:46px;}.ggl-small .ln-cd-long .ln-cd-l{font-size:28px;margin-top:6px;}.ggl-small .ln-cd-long>p.ln-cd-s{font-size:26px;margin-top:8px;}.ggl-small .ln-fg-brt{font-size:52px;height:62px;}.ggl-small .ln-pn-b h3{font-size:58px;}',
       // BLD 994: on a phone the headline is larger and climbs higher, so the bottom shade is taller and a little darker.
       '.ggl-small .ln-ps-b{background:linear-gradient(0deg,rgba(20,13,7,.86) 0%,rgba(20,13,7,.64) 32%,rgba(20,13,7,.3) 52%,rgba(20,13,7,0) 72%);}',
@@ -638,7 +645,7 @@
      The same engine and figure data as the workout player (shared/fig3d, BLD 897), loaded only when a figure scene
      shows, and the same rules for when it draws: WebGL, not Save Data, not Simple Figure (gg-fig3d 'off'), and a real
      graphics chip unless the person turned 3D Figure on (gg-fig3d 'on'). */
-  var FIGV = 'c018', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files
+  var FIGV = 'c122', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files; BLD 998 c122: the body scan poses (bs-seat, bs-seat-f, bs-heart, bs-belly, bs-lie)
   function fig3Dark() { var t = document.documentElement.getAttribute('data-theme'); if (t) return t === 'dark'; try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; } }
   function fig3Able() {
     if (F3.bad) return false;
@@ -1113,7 +1120,7 @@
     }
     function bedNext() { var G = window.GGSound; if (!G || !G.natureOn()) return; var nx = G.at(l.id, P.i + 1); if (nx) G.preload(nx[0]); }
     function bell(f) { var G = window.GGSound; if (!G || !musicOn() || !medOf(l)) return; G.cue(f, { gain: 0.55 }); }
-    function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
+    function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); if (typeof FG !== 'undefined' && FG && FG.b3) b3Layout(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
     function stopTimers() { brGo(); P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); clearInterval(P.tl); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = P.audio.onplaying = P.audio.onratechange = P.audio.onseeked = P.audio.onpause = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
     function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); if (window.GGSound) { GGSound.bedPause(); GGSound.duck(false); } } else if (!P.last) { if (window.GGSound) GGSound.unlock(); bgPlay(cfg); bedAt(); } }
@@ -1184,7 +1191,7 @@
       // BLD 908: a painting behind the scene (the content standard), blurred a little under a warm shade, words in light ink.
       cv.innerHTML = (sc._bd ? '<div class="ln-bd ln-bd-soft" data-d="' + sc._d + '"><img src="' + ART(sc.img, cfg.app) + '" alt=""></div><div class="ln-bd-sh"></div>' : '') + scene(sc, acc);
       cv.className = 'ln-canvas ln-k-' + sc.k + (sc._bd ? ' ln-bdon' : '');
-      cv.style.removeProperty('--gc'); gfxPlace(sc);
+      cv.style.removeProperty('--gc'); gfxPlace(sc); b3Set(sc);   // BLD 998: the body scan figure, or the outline graphic
       brPace(sc); figScene(sc);
       artAhead(P.i);
       st.classList.toggle('ln-on-cover', sc.k === 'title' || sc.k === 'parts' || sc.k === 'demo' || sc.k === 'paint' || sc.k === 'candle' || sc.k === 'figure' || sc.k === 'still' || !!sc._bd || (sc.k === 'big' && !!sc.bg)); st.classList.toggle('ln-on-demo', sc.k === 'demo'); st.classList.toggle('ln-on-end', last);
@@ -1249,7 +1256,7 @@
       if (GFX_SHAPES[G.g]) ringNeed();
       if (window.GGGfx) GGGfx.draw(w); else gfxNeed();
     }
-    function gfxAt(i) { var w = P.gx; if (!w) return; w.__gfxAt = i; if (window.GGGfx) { if (!w.__gfx.$) GGGfx.draw(w); else GGGfx.at(w, i); } }
+    function gfxAt(i) { b3At(i); var w = P.gx; if (!w) return; w.__gfxAt = i; if (window.GGGfx) { if (!w.__gfx.$) GGGfx.draw(w); else GGGfx.at(w, i); } }
     function reveal(i) {
       (P.items || []).forEach(function (el, j) { if (P.map[j] <= i && el.classList.contains('hold')) { if (P.sc && P.sc.k === 'demo') demoGo(el); el.style.transitionDelay = '0s'; el.classList.remove('hold'); var pv = el.previousElementSibling; if (pv && pv.classList.contains('ln-arr')) { pv.style.transitionDelay = '0s'; pv.classList.remove('hold'); } } });
     }
@@ -1333,13 +1340,20 @@
     }
     /* BLD 908: the 3D figure in a figure scene. One WebGL canvas per player, laid over the stage (outside the scaled
        canvas, so it draws at the screen's own size), driven frame by frame from the scene's breath clock (P.brT0), the
-       same clock the circle, the words, and the narration use. A movement with no breath keeps its own pace. */
-    var FG = { el: null, stage: null, tok: 0, raf: 0, t0: 0 };
+       same clock the circle, the words, and the narration use. A movement with no breath keeps its own pace.
+       BLD 998: the same canvas and stage carry the body scan figure (B3, below); a change between the two kinds of scene
+       makes a fresh stage (the body scan needs its drawing kept for the glow's mask). */
+    var FG = { el: null, stage: null, tok: 0, raf: 0, t0: 0, mode: '', b3: null };
     function figScene(sc) {
-      var tk = ++FG.tok; cancelAnimationFrame(FG.raf); st.classList.remove('ln-3d');
-      if (!sc || sc.k !== 'figure' || !fig3Able()) { if (FG.stage) try { FG.stage.pause(true); } catch (e) {} return; }
+      var tk = ++FG.tok; cancelAnimationFrame(FG.raf); st.classList.remove('ln-3d', 'ln-b3on');
+      var B = sc && sc._b3 && sc._b3 === FG.b3 ? sc._b3 : null;
+      if (!sc || (sc.k !== 'figure' && !B) || !fig3Able()) { if (FG.stage) try { FG.stage.pause(true); } catch (e) {} if (B) b3Back(); return; }
       fig3Load().then(function (buf) {
         if (tk !== FG.tok || !st.isConnected) return;
+        var mode = B ? 'b3' : 'fig';
+        if (FG.stage && FG.mode !== mode) figFree();
+        FG.mode = mode;
+        if (B) { try { b3Start(buf, B); } catch (e) { b3Back(); } return; }
         var mv = sc.move || 'stand-breath', E3 = window.GGFigure3D;
         if (!FG.el) { FG.el = document.createElement('canvas'); FG.el.setAttribute('aria-hidden', 'true'); }
         FG.el.className = 'ln-fig3 ln-fig3-' + (sc.side === 'r' ? 'l' : 'r');
@@ -1354,21 +1368,349 @@
         try { if (FG.stage.snap) FG.stage.snap(); } catch (e) {}
         FG.t0 = Date.now(); st.classList.add('ln-3d');
         if (!brReduced()) figTick();
-      }, function () { st.classList.remove('ln-3d'); });
+      }, function () { st.classList.remove('ln-3d'); if (B) b3Back(); });
     }
     // The loop point: a breath move's own loop is in 4, out 6 (40 percent in); the scene's pace is warped onto it.
+    function figU(sc) {
+      if (Array.isArray(sc.breath) || (sc._b3 && isBr(sc))) {
+        var el = P.brPz != null ? P.brPz : ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
+        return el < BR_OUT ? .4 * el / BR_OUT : .4 + .6 * (el - BR_OUT) / (BR_CYC - BR_OUT);
+      }
+      var ld = 0; try { ld = FG.stage.loopDur(); } catch (e) {} return (Date.now() - FG.t0) / 1000 / (ld > 0 ? ld : 4);
+    }
     function figTick() {
       cancelAnimationFrame(FG.raf);
       var sc = P.sc; if (!FG.stage || !sc || sc.k !== 'figure') return;
-      var u;
-      if (Array.isArray(sc.breath)) {
-        var el = P.brPz != null ? P.brPz : ((Date.now() - P.brT0) % BR_CYC + BR_CYC) % BR_CYC;
-        u = el < BR_OUT ? .4 * el / BR_OUT : .4 + .6 * (el - BR_OUT) / (BR_CYC - BR_OUT);
-      } else { var ld = 0; try { ld = FG.stage.loopDur(); } catch (e) {} u = (Date.now() - FG.t0) / 1000 / (ld > 0 ? ld : 4); }
-      try { if (FG.stage.seek) FG.stage.seek(u, { t: performance.now() }); } catch (e) {}
+      try { if (FG.stage.seek) FG.stage.seek(figU(sc), { t: performance.now() }); } catch (e) {}
       if (st.isConnected) FG.raf = requestAnimationFrame(figTick);
     }
-    function figOff() { FG.tok++; cancelAnimationFrame(FG.raf); if (FG.stage) { try { FG.stage.dispose(); } catch (e) {} } FG.stage = null; if (FG.el && FG.el.parentNode) FG.el.parentNode.removeChild(FG.el); FG.el = null; }
+    function figFree() { FG.cache = null; cancelAnimationFrame(FG.raf); if (FG.stage) { try { FG.stage.dispose(); } catch (e) {} } FG.stage = null; if (FG.el && FG.el.parentNode) FG.el.parentNode.removeChild(FG.el); FG.el = null; FG.mode = ''; }
+    function figOff() { FG.tok++; figFree(); b3Back(); }
+
+    /* ---------------- BLD 998 Body Graphic: the body scan figure ----------------
+       Chris approved the round 5 mockup, November 15, 2026 ("1": seated for most videos, lying for evening and rest
+       videos, the warm ground glow for Roots; patches/bld998/r2). A scene whose graphic is the body outline (gfx kind body:
+       body.N:region, + joins, ! squeeze, all, back, handheart, handbelly, roots; the plan tokens are unchanged) plays our 3D
+       figure instead, resting in its own painting: seated cross legged on the cushion of Quiet Meditation, or lying on the
+       mat of Stretch Room in a sleep, evening, or rest video. A soft honey glow follows the figure's own bones and lights
+       the regions the plan names, step by step with the sentences; a hand rises to rest on the heart or the belly (a more
+       facing camera, the relaxed hand); Roots pools a calm warm light on the ground under the seat. The figure breathes on
+       the scene's breath clock (a breath scene) or its own slow breath (in 4, out 6).
+       Placing: each painting is zoomed and panned so its cushion or mat lands on the open side, and the figure is sized to
+       it; the words keep their place, and the figure takes the largest size (down to 6 in 10 of full) whose outline keeps
+       clear of every word, card, and ring (B3F, each pose's outline in bands, measured from the engine). Where no size
+       fits, or lying has no room, it sits instead; where neither fits, the outline graphic plays as before.
+       The outline (gg-gfx.js BODY) stays drawn underneath as the fallback: no WebGL, Save Data, Simple Figure, a soft
+       graphics chip, a lost context, and reduced motion (its still frame), the same rules the figure scenes follow. */
+    var B3P = {
+      // img: the painting; s: its zoom; at: the cushion or mat point (share of the painting) under the figure's root; len:
+      // the root to head length at full size (a share of the painting's height, or width with by 'w'); mv: the move.
+      seat: { img: 'way/quiet-meditation', s: 1.52, at: [.478, .705], len: .335, by: 'h', light: [.3, .7], mv: 'bs-seat' },
+      face: { img: 'way/quiet-meditation', s: 1.58, at: [.478, .705], len: .335, by: 'h', light: [.3, .7], mv: 'bs-seat-f' },
+      lie: { img: 'way/stretch-room', s: 1, at: [.49, .728], len: .21, by: 'w', light: [-.5, .8], mv: 'bs-lie', contact: 1 }
+    };
+    // Each pose's outline: bands of a tenth of the root to head length (y from the root, down is plus), with the left and
+    // right edge of the drawn figure (the same unit, from the root). Measured on the engine with patches/bld998 tools.
+    var B3F = {
+      seat: [[-1.3, .02, .22], [-1.2, -.04, .26], [-1.1, -.05, .27], [-1, -.03, .27], [-.9, -.09, .3], [-.8, -.19, .37], [-.7, -.21, .41], [-.6, -.21, .48], [-.5, -.18, .54], [-.4, -.14, .6], [-.3, -.11, .65], [-.2, -.1, .79], [-.1, -.1, .86], [0, -.1, .86], [.1, -.09, .8], [.2, .03, .8], [.3, .29, .73]],
+      face: [[-1.3, -.03, .16], [-1.2, -.08, .2], [-1.1, -.08, .2], [-1, -.06, .19], [-.9, -.25, .38], [-.8, -.37, .46], [-.7, -.39, .5], [-.6, -.39, .56], [-.5, -.4, .62], [-.4, -.41, .66], [-.3, -.41, .7], [-.2, -.4, .74], [-.1, -.38, .83], [0, -.35, .89], [.1, -.31, .89], [.2, -.3, .87], [.3, -.27, .63], [.4, -.01, .29]],
+      lie: [[-.6, .11, .31], [-.5, -.43, 1.42], [-.4, -1.13, 1.42], [-.3, -1.22, 1.48], [-.2, -1.22, 1.5], [-.1, -1.2, 1.5], [0, -.87, 1.48], [.1, -.83, 1.44], [.2, .73, 1.37]]
+    };
+    // Lying fits a sleep, evening, or rest video, on a list scene (its words sit above the mat).
+    var B3_LIE = /(^|-)(night|sleep|bedtime|bed|evening|eve|rest|wind-down)(-|$)/, B3_LIET = /\b(sleep|bedtime|good night|evening|wind down)\b/i;
+    // The plan's words for the body (shared/gg-gfx.js REGION), onto the regions the glow lights.
+    var B3R = { feet: 'feet', toes: 'feet', ankles: 'feet', legs: 'legs', knees: 'legs', calves: 'legs', thighs: 'legs', hips: 'hips', belly: 'belly', tummy: 'belly',
+      chest: 'chest', heart: 'chest', back: 'back', hands: 'hands', fists: 'hands', fingers: 'hands', arms: 'arms', elbows: 'arms', shoulders: 'shoulders', neck: 'neck',
+      jaw: 'jaw', face: 'face', eyes: 'face', forehead: 'face', head: 'head', handheart: 'handheart', handbelly: 'handbelly', roots: 'roots' };
+    var B3ALL = ['feet', 'legs', 'hips', 'belly', 'chest', 'arms', 'hands', 'shoulders', 'neck', 'jaw', 'face', 'head'];
+    var B3J = ['root', 'spine05', 'spine04', 'spine03', 'spine02', 'spine01', 'neck01', 'head'];
+    ['L', 'R'].forEach(function (s) { ['clavicle', 'upperarm01', 'lowerarm01', 'wrist', 'upperleg01', 'lowerleg01', 'foot', 'toe1-1', 'finger3-1', 'finger3-3'].forEach(function (n) { B3J.push(n + '.' + s); }); });
+    function b3L(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; }
+    function b3Both(f) { return f('.L').concat(f('.R')); }
+    // Soft light points on the bones for each region: [point, radius in torso lengths].
+    var B3G = {
+      feet: function (J) { return b3Both(function (s) { return [[b3L(J['foot' + s], J['toe1-1' + s], .45), .2], [J['toe1-1' + s], .14]]; }); },
+      legs: function (J) { return b3Both(function (s) { var u = J['upperleg01' + s], k = J['lowerleg01' + s], f = J['foot' + s]; return [[b3L(u, k, .3), .17], [b3L(u, k, .65), .17], [k, .16], [b3L(k, f, .4), .15], [b3L(k, f, .75), .14]]; }); },
+      hips: function (J) { return [[J['upperleg01.L'], .22], [J['upperleg01.R'], .22], [J.root, .24], [J.spine05, .2]]; },
+      belly: function (J) { return [[b3L(J.spine05, J.spine04, .6), .24], [J.spine03, .25], [J.spine04, .24]]; },
+      chest: function (J) { return [[J.spine02, .25], [J.spine01, .27], [b3L(J.spine01, J.neck01, .35), .22]]; },
+      back: function (J) { return [[J.spine04, .2], [J.spine02, .2], [J.spine01, .2]]; },
+      arms: function (J) { return b3Both(function (s) { var a = J['upperarm01' + s], e = J['lowerarm01' + s], w = J['wrist' + s]; return [[b3L(a, e, .35), .14], [b3L(a, e, .75), .13], [e, .12], [b3L(e, w, .5), .12]]; }); },
+      hands: function (J) { return b3Both(function (s) { return [[J['wrist' + s], .12], [J['finger3-1' + s], .14], [J['finger3-3' + s], .1]]; }); },
+      shoulders: function (J) { return b3Both(function (s) { return [[J['clavicle' + s], .17], [b3L(J['clavicle' + s], J['upperarm01' + s], .6), .19], [J['upperarm01' + s], .15]]; }); },
+      neck: function (J) { return [[J.neck01, .15], [b3L(J.neck01, J.head, .45), .14]]; },
+      jaw: function (J) { return [[b3L(J.neck01, J.head, .9), .15]]; },
+      face: function (J) { return [[b3L(J.neck01, J.head, 1.25), .22]]; },
+      head: function (J) { return [[b3L(J.neck01, J.head, 1.95), .2], [b3L(J.neck01, J.head, 1.6), .17]]; },
+      handheart: function (J) { return [[b3L(J['wrist.R'], J['finger3-3.R'], .55), .2]]; },
+      handbelly: function (J) { return [[b3L(J['wrist.R'], J['finger3-3.R'], .55), .2]]; },
+      roots: function (J) { return [[J.root, .2], [J['foot.L'], .12], [J['foot.R'], .12]]; }
+    };
+    // Small regions on skin take a little more light around them, so the glow reads as warm light; the back (out of view)
+    // shows as light around the body only.
+    var B3LIFT = { face: 2.3, head: 1.8, jaw: 1.7, neck: 1.5, hands: 1.5, feet: 1.4, handheart: 1.6, handbelly: 1.6, back: 2.4 }, B3HALO = { back: 1 };
+    // The scene's figure, chosen as the scene shows (before the stage loads): null keeps the outline graphic.
+    function b3Set(sc) {
+      b3Back();
+      var G = sc && sc._gfx; if (!G || G.g !== 'body' || sc.k === 'end' || brReduced() || !fig3Able()) return;
+      var all = (G.steps || []).map(function (x) { return String(x.v); }).join('+'), hand = /(^|\+)hand(heart|belly)!?(\+|$)/.test(all), roots = /(^|\+)roots!?(\+|$)/.test(all);
+      var lie = !hand && !roots && sc.k === 'points' && (sc.items || []).length <= 4 && (B3_LIE.test(String(l.id || '')) || B3_LIET.test(String(l.title || '')));
+      var tries = lie ? ['lie', 'seat'] : [hand ? 'face' : 'seat'], fit = null, pose = '';
+      cv.classList.add('ln-b3');
+      for (var i = 0; i < tries.length && !fit; i++) { pose = tries[i]; cv.classList.toggle('ln-b3-lie', pose === 'lie'); var C0 = FG.stage && FG.mode === 'b3' && FG.cache && FG.cache[pose]; fit = b3Fit(pose, C0 && C0.prof); }
+      if (!fit) { cv.classList.remove('ln-b3', 'ln-b3-lie'); return; }
+      var A = B3P[pose], bg = document.createElement('div'), im = new Image();
+      bg.className = 'ln-b3bg'; bg.setAttribute('aria-hidden', 'true'); im.alt = ''; im.decoding = 'async'; im.src = ART(A.img, cfg.app);
+      im.style.cssText = 'left:' + fit.ox.toFixed(1) + 'px;top:' + fit.oy.toFixed(1) + 'px;width:' + (960 * A.s).toFixed(1) + 'px;height:' + (540 * A.s).toFixed(1) + 'px;';
+      bg.appendChild(im); cv.insertBefore(bg, cv.firstChild);
+      if (sc._bd) { var sh = document.createElement('div'); sh.className = 'ln-b3sh'; bg.after(sh); }
+      cv.classList.add('ln-b3-' + pose);
+      var B = { pose: pose, A: A, fit: fit, G: G, base: A.mv, mv: A.mv, on: {}, hand: '', roots: false, v: {}, rootsP: 0, at: null, n: 0, ratio: null, handT: 0 }, C1 = FG.stage && FG.mode === 'b3' && FG.cache && FG.cache[pose];
+      if (C1 && C1.ratio && C1.prof) { B.ratio = C1.ratio; B.prof = C1.prof; }
+      sc._b3 = B; FG.b3 = B;
+      st.setAttribute('data-b3', pose);
+    }
+    // The figure's place: the root on the cushion or mat (the painting panned within its zoom), and the largest size whose
+    // outline keeps clear of the words. Units: the 960 by 540 frame.
+    function b3Fit(pose, prof) {
+      var A = B3P[pose], F = prof || B3F[pose], s = A.s, full = A.len * (A.by === 'w' ? 960 : 540) * s, rx = A.at[0] * 960 * s;
+      if (rx > 952) return null;
+      var cr = cv.getBoundingClientRect(), k = cr.width / 960 || 1, W = [], M = 14;
+      Array.prototype.forEach.call(cv.querySelectorAll('h2,h3,h4,p,small,b,label,.ln-eb,.ln-in,.ln-b,.ln-brt i,.ln-sn,.ln-dot,.ln-brw,.ln-step,.ln-card,.ln-pn'), function (el) {
+        if (el.closest('.ln-gfx,.ln-b3bg')) return; var cs = getComputedStyle(el); if (cs.display === 'none' || cs.visibility === 'hidden') return;
+        var rs = /^(DIV|SPAN)$/.test(el.tagName) && el.matches('.ln-dot,.ln-brw,.ln-step,.ln-card') ? [el.getBoundingClientRect()] : (function () { var r = document.createRange(); r.selectNodeContents(el); return Array.prototype.slice.call(r.getClientRects()); })();
+        rs.forEach(function (q) { if (q.width >= 1 && q.height >= 1) W.push([(q.left - cr.left) / k - M, (q.top - cr.top) / k - M - 16, (q.right - cr.left) / k + M, (q.bottom - cr.top) / k + M + 16]); });
+      });
+      var nW = W.length;   // the words, cards, and rings (the light fades in past them)
+      // the corner name (Get Grounded Now, the app) stays clear too
+      Array.prototype.forEach.call(st.querySelectorAll('.ln-wm-br'), function (el) { var q = el.getBoundingClientRect(); if (q.width >= 1) W.push([(q.left - cr.left) / k - 8, (q.top - cr.top) / k - 8, (q.right - cr.left) / k + 8, (q.bottom - cr.top) / k + 8]); });
+      var y0 = A.at[1] * 540 * s, yLo = 540 - 540 * s + y0, yHi = y0, best = null, want = pose === 'lie' ? y0 : .75 * 540;
+      for (var f = 1; f >= .6 && !best; f -= .04) {
+        var L = full * f, top = F[0][0] * L, bot = (F[F.length - 1][0] + .1) * L, cands = [];
+        for (var ry = Math.max(yLo, 22 - top); ry <= Math.min(yHi, 536 - bot); ry += 6) cands.push(ry);
+        if (pose === 'lie') cands = y0 - top >= 0 && y0 + bot <= 540 ? [y0] : [];
+        cands.sort(function (a, b) { return Math.abs(a - want) - Math.abs(b - want); });
+        for (var c = 0; c < cands.length && !best; c++) {
+          var ry2 = cands[c], ok = true;
+          for (var j = 0; j < F.length && ok; j++) {
+            var bx0 = rx + F[j][1] * L - 4, bx1 = rx + F[j][2] * L + 4, by0 = ry2 + F[j][0] * L, by1 = by0 + .1 * L;
+            if (bx1 > 956 || bx0 < 4) ok = false;
+            for (var w = 0; w < W.length && ok; w++) if (bx0 < W[w][2] && bx1 > W[w][0] && by0 < W[w][3] && by1 > W[w][1]) ok = false;
+          }
+          if (ok) best = { f: f, L: L, rx: rx, ry: ry2, ox: 0, oy: ry2 - y0, clip: W.slice(0, nW).reduce(function (m, q) { return q[3] > ry2 - 1.4 * L ? Math.max(m, q[2]) : m; }, 0) };
+        }
+      }
+      return best;
+    }
+    // Back to the outline graphic and the scene's own painting (no 3D here, or it was lost).
+    function b3Back() {
+      var B = FG.b3; FG.b3 = null; st.classList.remove('ln-b3on'); st.removeAttribute('data-b3');
+      if (B && P.sc && P.sc._b3 === B) P.sc._b3 = null;
+      cv.classList.remove('ln-b3', 'ln-b3-seat', 'ln-b3-face', 'ln-b3-lie');
+      Array.prototype.forEach.call(cv.querySelectorAll('.ln-b3bg,.ln-b3sh'), function (e) { e.remove(); });
+      if (FG.w && FG.w.parentNode) FG.w.parentNode.removeChild(FG.w);
+      if (B && FG.mode === 'b3') { cancelAnimationFrame(FG.raf); if (FG.stage) try { FG.stage.pause(true); } catch (e) {} }
+      if (B && P.gx && window.GGGfx) { try { GGGfx.at(P.gx, P.gx.__gfxAt); } catch (e) {} }
+    }
+    function b3Start(buf, B) {
+      var E3 = window.GGFigure3D;
+      if (!FG.w) {
+        FG.w = document.createElement('div'); FG.w.className = 'ln-b3w'; FG.w.setAttribute('aria-hidden', 'true');
+        ['ln-b3c', 'ln-b3h', '', 'ln-b3t', 'ln-b3r'].forEach(function (c) { if (c) { var e = document.createElement('canvas'); e.className = c; FG.w.appendChild(e); FG.w[c] = e; } else FG.w.appendChild(document.createComment('fig')); });
+      }
+      if (FG.w.parentNode !== st) st.insertBefore(FG.w, cv.nextSibling);
+      if (!FG.el) {
+        FG.el = document.createElement('canvas'); FG.el.setAttribute('aria-hidden', 'true');
+        // the glow is laid only on the body: the tint is masked by the figure's own drawing, so the drawing is kept
+        var g0 = HTMLCanvasElement.prototype.getContext;
+        FG.el.getContext = function (t, a) { return g0.call(this, t, Object.assign({}, a || {}, { preserveDrawingBuffer: true })); };
+      }
+      FG.el.className = 'ln-fig3 ln-fig3b';
+      if (FG.el.parentNode !== FG.w) FG.w.insertBefore(FG.el, FG.w['ln-b3t']);
+      if (!FG.stage) { B.ratio = null; B.prof = null; FG.cache = {}; }
+      B.n = 0; b3Layout();
+      if (B.ratio && B.prof) st.classList.add('ln-b3on');
+      if (!FG.stage) {
+        var body = lsGet('gg-fig-body') === 'woman' ? 'woman' : 'man';
+        FG.stage = E3.create(FG.el, buf, { dark: fig3Dark(), move: B.mv, body: body, still: false, paper: false, palette: 'paint', zoom: .9,
+          extra: function (name) { return fetch(url('/shared/fig3d/figure-' + name + '.bin?v=' + FIGV)).then(function (r) { if (!r.ok) throw new Error(name); return r.arrayBuffer(); }); } });
+        FG.el.addEventListener('webglcontextlost', function (e) { e.preventDefault(); F3.bad = true; if (FG.mode === 'b3') { b3Back(); figFree(); } });
+      } else { FG.stage.pause(false); FG.stage.move(B.mv); }
+      if (FG.stage.has && !FG.stage.has(B.mv)) throw new Error('move');
+      FG.stage.light(B.A.light); FG.stage.props({ mat: false });
+      try { if (FG.stage.floor) FG.stage.floor.visible = !B.A.contact; } catch (e) {}
+      try { FG.stage.snap(); } catch (e) {}
+      FG.t0 = Date.now(); B.last = 0;
+      if (B.at != null) b3At(B.at);
+      b3Tick();
+    }
+    // The canvases: the figure and its tint at the figure's box (sized and placed from its measured root and head), the
+    // light, the contact shadow, and the ground glow over the whole stage.
+    function b3Layout() {
+      var B = FG.b3, w = FG.w; if (!B || !w || !FG.el) return;
+      var W = st.clientWidth, H = st.clientHeight, k = W / 960; if (!W || !H) return;
+      var r = B.ratio, f = B.fit, rx = f.rx * k, ry = f.ry * k, want = f.L * k, cw, ch, left, top;
+      if (r) { var q = want / r.len; cw = r.cw * q; ch = r.ch * q; left = rx - r.ax * q; top = ry - r.ay * q; }
+      else { cw = W * .5; ch = H * .9; left = W * .45; top = H * .05; }
+      var d = Math.min(W < 600 ? 1.5 : 2, window.devicePixelRatio || 1), tn = w['ln-b3t'];
+      [FG.el, tn].forEach(function (c) { c.style.left = left + 'px'; c.style.top = top + 'px'; c.style.width = cw + 'px'; c.style.height = ch + 'px'; });
+      tn.width = Math.max(1, Math.round(cw * d)); tn.height = Math.max(1, Math.round(ch * d));
+      ['ln-b3c', 'ln-b3h', 'ln-b3r'].forEach(function (n) { var c = w[n]; c.style.left = '0px'; c.style.top = '0px'; c.style.width = W + 'px'; c.style.height = H + 'px'; c.width = Math.round(W * d); c.height = Math.round(H * d); });
+      B.box = { x: left, y: top, w: cw, h: ch }; B.d = d; B.k = k;
+      if (FG.stage) { try { FG.stage.snap(); } catch (e) {} }
+    }
+    // The drawn outline in bands of a tenth of the root to head length, from the root (the B3F shape). A hand scene keeps
+    // the measured bands of the facing seat too, so the hand may rise anywhere in it.
+    function b3Prof(B, J) {
+      try {
+        var r = J.root, L = Math.hypot(r[0] - J.head[0], r[1] - J.head[1]), cw = Math.round(B.box.w), ch = Math.round(B.box.h); if (!(L > 8) || cw < 8 || ch < 8) return null;
+        var c = document.createElement('canvas'); c.width = cw; c.height = ch; var x = c.getContext('2d'); x.drawImage(FG.el, 0, 0, cw, ch);
+        var d = x.getImageData(0, 0, cw, ch).data, out = [], base = B3F[B.pose];
+        for (var yb = -1.6; yb < .8; yb += .1) {
+          var ya = Math.max(0, Math.floor(r[1] + yb * L)), yz = Math.min(ch, Math.ceil(r[1] + (yb + .1) * L)), lo = 1e9, hi = -1e9;
+          for (var yy = ya; yy < yz; yy++) for (var xx = 0; xx < cw; xx++) if (d[(yy * cw + xx) * 4 + 3] > 150) { if (xx < lo) lo = xx; if (xx > hi) hi = xx; }
+          var q = Math.round(yb * 10) / 10;
+          if (B.pose === 'face') base.forEach(function (b) { if (b[0] === q) { lo = Math.min(lo, r[0] + b[1] * L); hi = Math.max(hi, r[0] + b[2] * L); } });
+          if (hi >= lo) out.push([q, (lo - r[0]) / L - .04, (hi - r[0]) / L + .04]);
+        }
+        return out.length > 4 ? out : null;
+      } catch (e) { return null; }
+    }
+    // The painting follows the figure's place (the cushion or mat stays under the root).
+    function b3Pan(B) { var im = cv.querySelector('.ln-b3bg img'); if (im) { im.style.left = B.fit.ox.toFixed(1) + 'px'; im.style.top = B.fit.oy.toFixed(1) + 'px'; } }
+    function b3Joints() { try { var J = FG.stage.screen(B3J); for (var n in J) if (!J[n] || !isFinite(J[n][0])) return null; return J; } catch (e) { return null; } }
+    // The regions lit at sentence i (the same steps the outline graphic takes; Infinity, stepping by hand, lights them all).
+    function b3At(i) {
+      var B = FG.b3; if (!B) return; B.at = i;
+      var v = [], steps = B.G.steps || [];
+      if (i === Infinity) steps.forEach(function (x) { v.push(x.v); }); else { var c = null; steps.forEach(function (x) { if (x.b <= i) c = x.v; }); if (c) v.push(c); }
+      var on = {}, hand = '', roots = false;
+      v.join('+').split('+').forEach(function (x) {
+        var sq = /!$/.test(x), w = x.replace(/!$/, ''), r = w === 'all' ? 'all' : B3R[w]; if (!r) return;
+        if (r === 'handheart' || r === 'handbelly') hand = hand || r; if (r === 'roots') roots = true;
+        if (r === 'all') B3ALL.concat('all').forEach(function (a) { on[a] = Math.max(on[a] || 0, 1); }); else on[r] = Math.max(on[r] || 0, sq ? 2 : 1);
+      });
+      if (roots) on.roots = .55;
+      var mv = hand === 'handheart' ? 'bs-heart' : hand === 'handbelly' ? 'bs-belly' : B.base;
+      if (mv !== B.mv || hand !== B.hand) { B.handT = performance.now(); }
+      B.on = on; B.hand = hand; B.roots = roots;
+      if (mv !== B.mv) { B.mv = mv; if (FG.stage && FG.mode === 'b3') try { FG.stage.move(mv); } catch (e) {} }
+      st.setAttribute('data-b3on', Object.keys(on).filter(function (x) { return on[x]; }).join(' ')); st.setAttribute('data-b3mv', mv);
+    }
+    function b3Tick() {
+      cancelAnimationFrame(FG.raf);
+      var B = FG.b3, sc = P.sc; if (!B || !FG.stage || FG.mode !== 'b3' || !sc || sc._b3 !== B) return;
+      var now = performance.now(), dt = B.last ? Math.min(100, now - B.last) : 16; B.last = now;
+      try { FG.stage.seek(figU(sc), { t: now }); } catch (e) {}
+      b3Draw(B, now, dt);
+      if (st.isConnected) FG.raf = requestAnimationFrame(b3Tick);
+    }
+    function b3Blob(c, x, y, r, a, halo) {
+      if (!(r > 1)) return; a = Math.max(0, Math.min(1, a));
+      var g = c.createRadialGradient(x, y, 0, x, y, r);
+      if (halo) { g.addColorStop(0, 'rgba(255,206,120,' + a + ')'); g.addColorStop(.5, 'rgba(240,170,80,' + (a * .45) + ')'); g.addColorStop(1, 'rgba(230,150,60,0)'); }
+      else { g.addColorStop(0, 'rgba(246,182,80,' + a + ')'); g.addColorStop(.5, 'rgba(238,164,62,' + (a * .55) + ')'); g.addColorStop(1, 'rgba(232,150,52,0)'); }
+      c.fillStyle = g; c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fill();
+    }
+    // The light fades in from the words' edge, so a halo or the ground glow never brightens behind the words.
+    function b3Fade(c, B) {
+      var x0 = B.fit.clip * B.k * B.d, x1 = x0 + 36 * B.k * B.d, h = c.canvas.height; if (!(x0 > 0)) return;
+      c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, x0, h); c.globalCompositeOperation = 'destination-out';
+      var g = c.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      c.fillStyle = g; c.fillRect(x0, 0, x1 - x0, h); c.restore();
+    }
+    function b3Draw(B, now, dt) {
+      var w = FG.w;
+      if (!B.ratio) {
+        // the first frames: measure the root and the head, then size and place the figure on the cushion or mat
+        if (++B.n < 4) return;
+        var J0 = b3Joints(); if (!J0) return;
+        var len0 = Math.hypot(J0.root[0] - J0.head[0], J0.root[1] - J0.head[1]); if (!(len0 > 4)) return;
+        B.ratio = { cw: B.box.w, ch: B.box.h, ax: J0.root[0], ay: J0.root[1], len: len0 };
+        (FG.cache = FG.cache || {})[B.pose] = { ratio: B.ratio };
+        b3Layout(); return;
+      }
+      if (!B.prof) {
+        // then the figure's own outline, read from its drawing at this size: the place is solved again with it, so the
+        // figure keeps clear of the words exactly (any body, any screen)
+        if (++B.n < 7) return;
+        var J1 = b3Joints(); if (!J1) return;
+        B.prof = b3Prof(B, J1) || B3F[B.pose]; if (FG.cache && FG.cache[B.pose]) FG.cache[B.pose].prof = B.prof;
+        var f2 = b3Fit(B.pose, B.prof); if (f2) { B.fit = f2; b3Pan(B); b3Layout(); }
+        st.classList.add('ln-b3on'); return;
+      }
+      var J = b3Joints(); if (!J) return;
+      var k = 1 - Math.exp(-dt / 700), names = Object.keys(B3G), on = B.on, held = !B.hand || now - B.handT > 1400;
+      names.forEach(function (r) { var tgt = on[r] || 0; if ((r === 'handheart' || r === 'handbelly') && !held) tgt = 0; B.v[r] = (B.v[r] || 0) + (tgt - (B.v[r] || 0)) * k; });
+      B.v.all = (B.v.all || 0) + ((on.all ? 1 : 0) - (B.v.all || 0)) * k;
+      // the breath: a little brighter on the breath in, easing on the breath out
+      var br = 1; try { var b = FG.stage.breath(FG.stage.now()); br = b.phase === 'in' ? b.x : b.phase === 'out' ? 1 - b.x : 1; } catch (e) {}
+      var Am = .78 + .22 * br, tor = Math.hypot(J.root[0] - J.neck01[0], J.root[1] - J.neck01[1]), d = B.d, tn = w['ln-b3t'], hl = w['ln-b3h'];
+      var tc = tn.getContext('2d'), hc = hl.getContext('2d');
+      tc.setTransform(1, 0, 0, 1, 0, 0); hc.setTransform(1, 0, 0, 1, 0, 0); tc.clearRect(0, 0, tn.width, tn.height); hc.clearRect(0, 0, hl.width, hl.height);
+      tc.setTransform(d, 0, 0, d, 0, 0); hc.setTransform(d, 0, 0, d, d * B.box.x, d * B.box.y);
+      tc.globalCompositeOperation = 'lighter'; hc.globalCompositeOperation = 'lighter';
+      var any = false, all = B.v.all;
+      names.forEach(function (r) {
+        var v = B.v[r]; if (!(v > .01)) return; any = true;
+        var sq = on[r] === 2, rr = sq ? .85 : 1, aa = sq ? 1.2 : r === 'handheart' || r === 'handbelly' ? 1.25 : 1;
+        B3G[r](J).forEach(function (p) {
+          if (!p[0]) return;
+          if (!B3HALO[r]) b3Blob(tc, p[0][0], p[0][1], p[1] * tor * 1.3 * rr, v * Am * .78 * aa * (1 - all), 0);
+          b3Blob(hc, p[0][0], p[0][1], p[1] * tor * (B3HALO[r] ? 3 : 2.2) * rr, v * Am * (all > .5 ? .17 : .28 * (B3LIFT[r] || 1)) * aa, 1);
+        });
+      });
+      // Whole Body: one even honey wash over the whole figure, breathing
+      if (all > .01) { any = true; tc.globalCompositeOperation = 'source-over'; tc.fillStyle = 'rgba(244,178,80,' + (.3 * all * Am) + ')'; tc.fillRect(0, 0, B.box.w, B.box.h); }
+      if (any) { tc.globalCompositeOperation = 'destination-in'; tc.setTransform(1, 0, 0, 1, 0, 0); try { tc.drawImage(FG.el, 0, 0, tn.width, tn.height); } catch (e) {} tc.globalCompositeOperation = 'source-over'; }
+      if (any) b3Fade(hc, B);
+      b3Contact(B, J, tor);
+      b3Roots(B, J, now, dt, br, tor);
+    }
+    // Lying: a soft contact shadow hugging the body on the mat (the engine's floor shadow is hidden for this pose).
+    function b3Contact(B, J, tor) {
+      var cs = FG.w['ln-b3c'], c = cs.getContext('2d'), d = B.d;
+      c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cs.width, cs.height);
+      if (!B.A.contact) return;
+      c.setTransform(d, 0, 0, d, d * B.box.x, d * B.box.y);
+      var pts = [[J.head, .16], [J.neck01, .14], [J.spine01, .2], [J.spine02, .2], [J.spine04, .2], [J.root, .21]];
+      ['L', 'R'].forEach(function (s) { var u = J['upperleg01.' + s], kn = J['lowerleg01.' + s], f = J['foot.' + s]; pts.push([b3L(u, kn, .5), .13], [kn, .11], [b3L(kn, f, .5), .1], [f, .09], [J['lowerarm01.' + s], .08], [J['wrist.' + s], .08]); });
+      pts.forEach(function (p) {
+        var r = p[1] * tor; c.save(); c.translate(p[0][0], p[0][1] + tor * .07); c.scale(1, .42);
+        var g = c.createRadialGradient(0, 0, 0, 0, 0, r); g.addColorStop(0, 'rgba(46,28,12,.28)'); g.addColorStop(.6, 'rgba(46,28,12,.11)'); g.addColorStop(1, 'rgba(46,28,12,0)');
+        c.fillStyle = g; c.beginPath(); c.arc(0, 0, r, 0, Math.PI * 2); c.fill(); c.restore();
+      });
+    }
+    // Roots: a soft warm light pools on the floor under the seat and spreads slowly outward, with three faint threads of
+    // light sinking straight down and fading, a little deeper on each breath out.
+    function b3Roots(B, J, now, dt, br, tor) {
+      var cs = FG.w['ln-b3r'], c = cs.getContext('2d'), d = B.d;
+      c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cs.width, cs.height);
+      var tgt = B.roots ? 1 : 0; B.rootsP += (tgt - B.rootsP) * (1 - Math.exp(-dt / (B.roots ? 2600 : 700)));
+      var Pq = B.rootsP; if (Pq < .01) return;
+      c.setTransform(d, 0, 0, d, 0, 0);
+      var bx = B.box.x, by = B.box.y, sx = J.root[0] + bx, fy = Math.max(J['foot.L'][1], J['foot.R'][1]) + by;
+      var ground = Math.max(J.root[1] + by + tor * .3, fy) + tor * .04, deep = .88 + .12 * (1 - br);
+      var rx = tor * (.5 + 1.1 * Pq) * deep, ry = rx * .36;
+      c.save(); c.translate(sx, ground); c.scale(1, ry / rx);
+      var g = c.createRadialGradient(0, 0, 0, 0, 0, rx);
+      g.addColorStop(0, 'rgba(255,206,120,' + (.85 * Pq) + ')'); g.addColorStop(.35, 'rgba(246,178,84,' + (.5 * Pq) + ')'); g.addColorStop(.7, 'rgba(240,166,70,' + (.18 * Pq) + ')'); g.addColorStop(1, 'rgba(236,160,64,0)');
+      c.fillStyle = g; c.beginPath(); c.arc(0, 0, rx, 0, Math.PI * 2); c.fill(); c.restore();
+      var t = now / 1000;
+      [-.3, 0, .28].forEach(function (o, i) {
+        var x = sx + o * rx, y0 = ground - ry * .15 + Math.abs(o) * ry * .4, len = tor * (.32 + .18 * (1 - Math.abs(o) * 1.6)) * Pq * deep;
+        if (len < 2) return;
+        var lg = c.createLinearGradient(0, y0, 0, y0 + len); lg.addColorStop(0, 'rgba(255,214,140,' + (.6 * Pq) + ')'); lg.addColorStop(1, 'rgba(240,170,80,0)');
+        c.strokeStyle = lg; c.lineCap = 'round';
+        c.lineWidth = Math.max(2, tor * .07); c.globalAlpha = .3; c.beginPath(); c.moveTo(x, y0); c.lineTo(x, y0 + len); c.stroke();
+        c.lineWidth = Math.max(1, tor * .03); c.globalAlpha = .35; c.beginPath(); c.moveTo(x, y0); c.lineTo(x, y0 + len); c.stroke();
+        c.globalAlpha = 1;
+        var u = (t / 5 + i * .37) % 1, yb = y0 + u * len, a = .35 * Pq * (1 - u), bg = c.createRadialGradient(x, yb, 0, x, yb, tor * .07);
+        bg.addColorStop(0, 'rgba(255,226,160,' + a + ')'); bg.addColorStop(1, 'rgba(255,200,110,0)');
+        c.fillStyle = bg; c.beginPath(); c.arc(x, yb, tor * .07, 0, Math.PI * 2); c.fill();
+      });
+      c.globalAlpha = 1; b3Fade(c, B);
+    }
     // GWG BLD 898 (Chris: "we just need to ensure all these things sync in all vids"): in a breathe scene, a sentence that
     // says breathe in starts as the circle begins to grow, and one that says breathe out as it begins to shrink. The first
     // such sentence sets the circle's cycle (in 4 seconds, out 6); each later one waits for its turn in the cycle.
@@ -1910,7 +2252,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c119'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c122'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

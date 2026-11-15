@@ -5762,6 +5762,41 @@ G.define('incline-yt-raise', {name: 'Incline Y-T Raise', tempo: 3.4, top: [1, 3]
 
 })(window.GG3D);
 
+// ---- Body Scan (GWG BLD 998) ---------------------------------------------------------------------------------
+// The body scan figure in the video player (shared/gg-learn.js): seated cross legged on the cushion of the Quiet
+// Meditation painting, lying on the mat of the Stretch Room painting for evening and rest videos, and a hand resting on
+// the heart or the belly (Chris approved the round 5 mockup, November 15, 2026: patches/bld998/r2). Breath leads: in 4
+// seconds, out 6, one breath a loop; the player warps the scene's breath clock onto it.
+(function(G){
+var A = function(){ var o = {}; for (var i = 0; i < arguments.length; i++){ var s = arguments[i]; for (var k in s) o[k] = s[k]; } return o; };
+var Z = {tw: 0, lb: 0, hy: 0, ht: 0, px: 0, shR: 0, shL: 0};
+var SLOW = {tempo: 10, bp: [4, 6], dur: [4, 6], rest: 0, glow: {}, props: []};
+// Seated cross legged on a cushion, hands resting on the knees (the cross-seat posture).
+var XR = {x: -.12, y: .062, z: .02, f: 78, pole: [1, .2, .35]}, XL = {x: -.15, y: .075, z: .08, f: 78, pole: [1, .2, .35]};
+var XH = {x: .34, y: .2, z: .05, f: 70, pole: [1, -.3, -.4]};
+var CROSS = A(Z, {p: [.15, -.28], t: [176, 181], n: 182, rl: XR, ll: XL, ra: XH, la: XH, hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', ao: 18, lo: 0, on: 'p'});
+var IN = {t: [176, 184], n: 184, ao: 22};
+var CAM = {yaw: 26, el: 10, zoom: 1};
+G.define('bs-seat', A(SLOW, {name: 'Body Scan, Seated', cam: CAM, k: [A(CROSS, {br: 'in', e: .1}), A(CROSS, IN, {br: 'out', e: .1})]}));
+// Hand on Heart and Hand on Belly face the viewer more (CAMF), so the hand rests flat toward the camera. The right hand
+// rises from the knee with the elbow out and forward (pole), so the whole arm stays in front of the body and in view.
+var CAMF = {yaw: 60, el: 10, zoom: 1};
+G.define('bs-seat-f', A(SLOW, {name: 'Seated, Facing', cam: CAMF, k: [A(CROSS, {br: 'in', e: .1}), A(CROSS, IN, {br: 'out', e: .1})]}));
+// Hand on Heart: the hand lies along the chest like a real resting hand: wrist in line with the forearm (f 75, a little
+// below level), fingers relaxed and pointing across toward the heart, palm against the body; it rises with the breath in.
+var HEART = {x: -.02, y: .48, z: -.055, f: 75, pole: [1, -.4, 1]}, HEART2 = {x: -.02, y: .49, z: -.045, f: 75, pole: [1, -.4, 1]};
+G.define('bs-heart', A(SLOW, {name: 'Hand on Heart', cam: CAMF, k: [A(CROSS, {br: 'in', ra: HEART, hR: 'relax', pnR: 'back', e: .1}), A(CROSS, IN, {br: 'out', ra: HEART2, hR: 'relax', pnR: 'back', e: .1})]}));
+// Hand on Belly: the hand lies level across the belly, just below the ribs, wrist straight, fingers relaxed, palm against
+// the body; the belly lifts it on the breath in.
+var BELLY = {x: -.01, y: .31, z: -.06, f: 95, pole: [1, -.4, 1]}, BELLY2 = {x: -.01, y: .31, z: -.045, f: 95, pole: [1, -.4, 1]};
+G.define('bs-belly', A(SLOW, {name: 'Hand on Belly', cam: CAMF, k: [A(CROSS, {br: 'in', ra: BELLY, hR: 'relax', pnR: 'back', e: .1}), A(CROSS, IN, {br: 'out', ra: BELLY2, hR: 'relax', pnR: 'back', e: .1})]}));
+// Lying on the back, legs long and resting on the mat, arms at the sides with the palms up (the lie posture).
+var LL = [90, 90, 150];
+var SUP = A(Z, {b: 'back', p: [.1, 0], t: [-88, -90], n: -92, rl: LL, ll: LL, lo: 8, ra: [94, 94, 94], la: [94, 94, 94], pnR: 'up', pnL: 'up', ao: 20, on: 'p b'});
+var LCAM = {view: 'side', el: 28, zoom: 1};  // looking down on the mat at the painting's own floor angle
+G.define('bs-lie', A(SLOW, {name: 'Body Scan, Lying', cam: LCAM, k: [A(SUP, {br: 'in', e: .1}), A(SUP, {br: 'out', t: [-88, -91], e: .1})]}));
+})(window.GG3D);
+
 }catch(e){(window.GG3D_LOADERR=window.GG3D_LOADERR||[]).push("p3.js"+': '+e.message);}
 /* names.js */
 try{
