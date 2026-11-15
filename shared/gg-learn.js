@@ -984,7 +984,7 @@
   function medOf(l) { return !!l && l.section === 'meditation'; }
   /* BLD 991 Sound and Music: shared/gg-sound.js (one AudioContext for music, beds, and cues; the duck bus) and its plan of
      nature beds by scene (shared/gg-sound-plan.js). It loads with the player; a video with no bed fetches nothing more. */
-  var SNDV = 'c117', SNDP = null;
+  var SNDV = 'c119', SNDP = null;
   function needSound() {
     if (window.GGSound) return GGSound.ready();
     if (SNDP) return SNDP;
@@ -1910,7 +1910,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c117'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c119'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

@@ -244,7 +244,7 @@
   function needSound() {
     if (window.GGSound) return GGSound.ready();
     if (SNDP) return SNDP;
-    SNDP = new Promise(function (ok) { var s = document.createElement('script'); s.src = SRC.replace(/gg-readings\.js.*$/, 'gg-sound.js?v=c117'); s.onload = function () { window.GGSound ? GGSound.ready().then(ok) : ok(null); }; s.onerror = function () { SNDP = null; ok(null); }; document.head.appendChild(s); });
+    SNDP = new Promise(function (ok) { var s = document.createElement('script'); s.src = SRC.replace(/gg-readings\.js.*$/, 'gg-sound.js?v=c119'); s.onload = function () { window.GGSound ? GGSound.ready().then(ok) : ok(null); }; s.onerror = function () { SNDP = null; ok(null); }; document.head.appendChild(s); });
     return SNDP;
   }
   function bedOf(r, any) { return (any || P.bedOk) && r && window.GGSound ? GGSound.reading(r.id) : null; }
