@@ -169,7 +169,7 @@
     { name: 'For Groups', items: [
       ['Speaking', 'Talks for your event or gathering', 'speaking-training'],
       ['Trainings for Your Team', 'Half day, full day, keynote, or virtual', 'trainings'],
-      ['For Organizations', 'Membership packs for your people', 'organizations']] }
+      ['For Organizations', 'Membership Packs for your people', 'organizations']] }
   ];
   var SVC_PIC = { weddings: '/shared/heroes/p/site-menu-tile-weddings-tile.webp', elopements: '/shared/heroes/p/site-menu-tile-elopements-tile.webp', 'child-blessings': '/shared/heroes/p/site-menu-tile-child-blessings-tile.webp', milestones: '/shared/heroes/p/site-menu-tile-milestones-tile.webp',
     'celebrations-of-life': '/shared/heroes/p/site-menu-tile-celebrations-of-life-tile.webp', 'funerals-memorials': '/shared/heroes/p/site-menu-tile-funerals-memorials-tile.webp', 'speaking-training': '/shared/heroes/p/site-menu-tile-speaking-tile.webp', 'talk-grounded-way': '/shared/heroes/p/site-menu-tile-talk-grounded-way-tile.webp', 'talk-living-sober': '/shared/heroes/p/site-menu-tile-talk-living-sober-tile.webp',
@@ -483,7 +483,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=c012';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=c115';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

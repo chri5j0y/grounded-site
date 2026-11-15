@@ -1,4 +1,4 @@
-/* Grounded buy buttons (GWG BLD 951, Household Gift BLD 952): the Stripe payment links for Organization Membership packs and Gift Membership,
+/* Grounded buy buttons (GWG BLD 951, Household Gift BLD 952): the Stripe payment links for Organization Membership Packs and Gift Membership,
    kept in one place. Each link is the buy.stripe.com address Stripe gives a payment link (public, safe to share).
    Until a link is filled in, its buttons keep their own href (the contact form), so every button always works.
 

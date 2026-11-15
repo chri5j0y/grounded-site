@@ -17331,8 +17331,8 @@ window.GG_LEARN = {
       "h": "Kept so far",
       "items": [
        [
-        "Read this aloud",
-        "Hear it read out loud"
+        "In their words",
+        "Kept just as they said it"
        ],
        [
         "Save or Print",
@@ -17347,7 +17347,7 @@ window.GG_LEARN = {
         "Willow asks first"
        ]
       ],
-      "say": "Every saved cutting shows under Kept so far, with its kind, who it is for, and the date. Each one can be read aloud. Save or Print makes a clean page to give someone, or to keep. Edit lets you add to it anytime. And Remove asks first, because it cannot be undone unless you have a backup."
+      "say": "Every saved cutting shows under Kept so far, with its kind, who it is for, and the date. Each one keeps their own words, just as they were said. Save or Print makes a clean page to give someone, or to keep. Edit lets you add to it anytime. And Remove asks first, because it cannot be undone unless you have a backup."
      },
      {
       "k": "points",
@@ -17977,7 +17977,7 @@ window.GG_LEARN = {
         "To find another"
        ]
       ],
-      "say": "Inside a reading, Listen reads it in a warm recorded voice, one line at a time, for the times your own voice won't come. Some readings use Read this aloud instead. Save or Print gives you a page to keep, or tuck in a card. And Back to readings takes you to the list again."
+      "say": "Inside a reading, Listen reads it in a warm recorded voice, one line at a time, for the times your own voice won't come. The other readings are there to read slowly, in your own voice. Save or Print gives you a page to keep, or tuck in a card. And Back to readings takes you to the list again."
      },
      {
       "k": "big",
@@ -22958,6 +22958,11 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Read it with kindness",
        "sub": "Your strongest part, and one Growing Edge.",
+       "cue": {
+        "w": {
+         "5": 10
+        }
+       },
        "say": "Read your results with kindness, the way you would read a letter from a good friend. Let's practice that now. Think of your whole tree: Roots, Bark, Leaves, and Branches, and the Trunk and Fruit that grow from them. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
       },
       {
@@ -29919,6 +29924,11 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Try one real question",
        "sub": "Looked forward to something, soon or someday?",
+       "cue": {
+        "w": {
+         "4": 8
+        }
+       },
        "say": "Let's try one real question now. This is the first question for Fruit: Hope. In the past two weeks, how often have you looked forward to something, soon or someday? A game, a trip, a friend, or a plan all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
       },
       {
@@ -30082,6 +30092,11 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Read it like a friend would",
        "sub": "Your strongest part, and one Growing Edge.",
+       "cue": {
+        "w": {
+         "5": 10
+        }
+       },
        "say": "Read your results the way a good friend would read them, honestly and kindly. Let's practice that now. Think of your whole tree: Roots, Bark, Leaves, and Branches, and the Trunk and Fruit that grow from them. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
       },
       {
@@ -35473,6 +35488,11 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Try one real question",
        "sub": "Looked forward to something, soon or someday?",
+       "cue": {
+        "w": {
+         "4": 8
+        }
+       },
        "say": "Let's try one real question now. This is the first question for Fruit: Hope. In the past two weeks, how often have you looked forward to something, soon or someday? A trip, a payday, a person, a plan, or a quiet weekend all count. Answer out loud: Rarely, Sometimes, Often, Almost always, or Not sure."
       },
       {
@@ -35644,6 +35664,11 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Read it like a friend would",
        "sub": "Your strongest part, and one Growing Edge.",
+       "cue": {
+        "w": {
+         "4": 10
+        }
+       },
        "say": "Let's practice reading your tree the way a good friend would, honestly and kindly. Think of your whole tree: Roots, Bark, Leaves, and Branches, and the Trunk and Fruit that grow from them. Which one feels strongest right now? And which one would you most like to tend? Say both out loud: My strongest part is this one, and the part I will tend is this one."
       },
       {
@@ -47909,7 +47934,7 @@ window.GG_LEARN = {
          "2": 8,
          "4": 8,
          "5": 8,
-         "6": 10
+         "6": 16
         },
         "at": [2, 3, 5, 6]
        },
@@ -50511,7 +50536,7 @@ window.GG_LEARN = {
         "If someone you served died today, say their name aloud.",
         {
          "t": "Then hold a minute of quiet together, honoring their life, and the work of everyone who served them.",
-         "w": 25
+         "w": 50
         }
        ],
        "say": "Let us begin with the pause now. Stand or sit together, wherever you are. If someone you served died today, say their name aloud. Then hold a minute of quiet together, honoring their life, and the work of everyone who served them."

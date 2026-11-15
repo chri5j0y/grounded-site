@@ -678,13 +678,13 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=c030"></script>
 <script src="../shared/gg-sources.js?v=b940"></script>
-<script src="../shared/gg-learn.js?v=c114"></script>
+<script src="../shared/gg-learn.js?v=c115"></script>
 <script src="../shared/gg-parts.js?v=b929"></script>
 <script src="../shared/gg-print.js?v=b939"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
-<script src="share.js?v=c021"></script>
+<script src="share.js?v=c115"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=c030"></script>
 <script src="ceremonies.js?v=b890"></script>
@@ -698,7 +698,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="grovevisit.js?v=b907"></script>
 <script src="heartwood.js?v=b934"></script>
 <script src="member-acct.js?v=b950"></script>
-<script src="../shared/gg-stories.js?v=c114"></script>
+<script src="../shared/gg-stories.js?v=c115"></script>
 <script src="moves.js?v=b903"></script>
 <script src="stage.js?v=c114"></script>
 <script src="coach.js?v=c019"></script>
@@ -957,7 +957,7 @@ function lockScreen(mode, msg){
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
       <p>The private workspace for Grounded's own team of Guides, Staff, and Founders: guided visits for every age, with a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion, on the way to becoming a Certified Grounded Guide, including Walking with Someone Growing Sober and Walking Someone Through The Grounded Way; the Grounded Response Plan; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Your own Tending lives in The Grounded Way. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For the Grounded team</b><span>Guides, Staff, and Founders ask for access here.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
-      <div><b>For organizations</b><span>Membership packs for churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">See For Organizations</a></div></div></div>`,
+      <div><b>For organizations</b><span>Membership Packs for churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">See For Organizations</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
       <form id="lf"><label for="l1">Founder code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Add Founder Access</button></form>
@@ -8742,7 +8742,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b890', '../willow/practices.js?v=b907'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=c116', '../willow/practices.js?v=c116'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
