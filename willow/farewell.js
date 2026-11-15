@@ -40,6 +40,9 @@ window.WILLOW_FAREWELL = {
     learn: ['learn2', 'A son and his mother reading a short guide together on a sofa in a sunroom'],
     guides: ['guides2', 'A hospice nurse talking gently with a father and his two grown daughters'],
     videos: ['videos2', 'A grandfather resting peacefully in bed, listening, his wife holding his hand'],
+    sup: ['videos2', 'A grandfather resting peacefully in bed, listening, his wife holding his hand'],
+    gentle: ['helpers2', 'A man resting on a sunny porch, eyes closed with a warm cup, a friend bringing soup'],
+    steps: ['helpers', 'A couple sitting on their garden steps with a covered dish, a neighbor bringing tea from the doorway'],
     about: ['hero2', 'A family gathered on a quilt under a weeping willow by the lake at golden hour']
   },
 
@@ -60,12 +63,13 @@ window.WILLOW_FAREWELL = {
     eulogy: ['Farewell', 'The Eulogy', 'Who they were, three true stories, what they gave you, and goodbye. Willow lays your words into that simple shape.'],
     readings: ['Farewell', 'Readings', 'Psalms, prayers, poems, and blessings for all faith traditions and everything in-between.'],
     send: ['Farewell', 'Send to the Grounded Team', 'When you are ready, send your plans to the Grounded team, and we help you prepare the service.'],
-    learn: ['Learn', 'Words and videos for the hardest days', 'When Life Changes guides, short videos for the person and the people who love them, and how Willow works.'],
+    learn: ['Learn', 'Words and videos for the hardest days', 'When Life Changes guides, short videos for the hard hours, gentle practices, step by step lessons, and how Willow works. One tap opens each.'],
     guides: ['Learn', 'When Life Changes', 'Words for the hardest conversations.'],
     about: ['Learn', 'How Willow Works', 'A tree for the last season of life.']
   },
 
-  /* The cards on each tab's own page: [page, title, a line about it] */
+  /* The cards on each tab's own page: [page, title, a line about it]. Learn's cards (GWG BLD 997, one click) add the
+     button's words; sup, gentle, and steps open that one list in the shared player (shared/gg-learn.js). */
   hub: {
     wishes: [
       ['matters', 'What Matters', 'Who they are, a good day, small joys, hopes, and who they want close.'],
@@ -86,9 +90,11 @@ window.WILLOW_FAREWELL = {
       ['send', 'Send to the Grounded Team', 'One tap shares your plans so we can help you prepare the service.']
     ],
     learn: [
-      ['guides', 'When Life Changes', 'Guides for the hardest conversations, each with two short videos.'],
-      ['videos', 'Learn Videos', 'Short videos, narrated aloud, for the person and the people who love them.'],
-      ['about', 'How Willow Works', 'Tend Four, Grow Two, built for two, and what is inside.']
+      ['guides', 'When Life Changes', 'Guides for the hardest conversations, each with two short videos.', 'Open the Guides'],
+      ['sup', 'Support for Right Now', 'Short videos, narrated aloud, for the hard hours. Open one anytime.', 'Watch'],
+      ['gentle', 'Gentle Practices', 'One short video for every practice in Today and at the Bedside, each with a moment to try it.', 'Watch'],
+      ['steps', 'Learn Step by Step', 'Short lessons on how Willow works, in order, for the person and the people who love them.', 'Start'],
+      ['about', 'How Willow Works', 'Tend Four, Grow Two, built for two, and what is inside.', 'Read']
     ]
   },
 

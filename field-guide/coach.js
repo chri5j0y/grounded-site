@@ -210,7 +210,11 @@ const V = window.GGVoice = {
   musicReset(){ PL.played = new Set(); },
   busy: () => !!cur,
   // BLD 991 cues (made in code by Grow With Grounded): a Promise that resolves after `wait` seconds (or the cue's length).
-  cue(file, o){ o = o || {}; return needSnd().then(S => S ? S.cue(file, {gain: o.gain == null ? 0.7 : o.gain}) : null).then(h => new Promise(r => setTimeout(() => r(h), Math.max(0, (o.wait != null ? o.wait : h ? h.dur : 0) * 1000)))); },
+  // It never holds a session: a cue that cannot load in time is skipped.
+  cue(file, o){ o = o || {}; const wait = Math.max(0, o.wait != null ? +o.wait : 1.5);
+    return new Promise(r => { let done = false; const fin = h => { if (!done){ done = true; r(h); } };
+      setTimeout(() => fin(null), (wait + 2) * 1000);
+      needSnd().then(S => S ? S.cue(file, {gain: o.gain == null ? 0.7 : o.gain}) : null).then(h => setTimeout(() => fin(h), wait * 1000), () => fin(null)); }); },
   // The countdown (decision 8): three beeps and a go beep (fit-countdown-4, beeps at 0, 1, 2, and 3 s), placed on the Web Audio
   // clock so the go beep lands as the clock reaches zero. Returns a handle with stop(), or null (Beeps off, or not ready yet).
   countdown(leftMs){

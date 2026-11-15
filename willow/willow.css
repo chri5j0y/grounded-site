@@ -437,3 +437,12 @@ body:not([data-wtab="today"]) .w-hero{display:none;}
 .w-readit p{margin:8px 0 0;}
 .w-pc-vid .tx i{font-style:normal;}
 @media (max-width:420px){.w-pscene{width:84px;height:84px;}.w-pc2{gap:12px;}.w-mini{grid-template-columns:72px minmax(0,1fr);}.w-mini img{width:72px;height:72px;}}
+/* One click Learn (GWG BLD 997): five painted cards in the Bedside look, the whole card one tap. */
+.w-lcard{padding:0;text-align:left;font:inherit;color:var(--ink);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;}
+.w-lcard:hover{transform:translateY(-3px);box-shadow:var(--w-shadow-up,var(--w-shadow));}
+.w-lcard:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+.w-lcard .tx b{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:24px;line-height:1.1;margin:0 0 6px;}
+.w-lcard .w-lline{font-size:16px;line-height:1.55;color:var(--ink-soft);margin:0 0 14px;}
+.w-lcard .w-lgo{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;pointer-events:none;}
+.w-backb{display:inline-flex;align-items:center;}
+.w-lgrid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
