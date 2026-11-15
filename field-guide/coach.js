@@ -18,7 +18,7 @@ let el = null, cur = null, musicEl = null;
 // BLD 991 Sound and Music: shared/gg-sound.js gives one AudioContext for the voice's counts, the music, and the cues, and a
 // bus that dips the music under Ava's lines (4 dB, 3 under her counts). Workout music plays as a playlist of its group
 // (field-guide/health.js musicFor), crossfading over 4 seconds, through a Web Audio gain (phones ignore an audio volume).
-const SND_JS = (() => { try { const s = document.currentScript && document.currentScript.src; if (s) return new URL('../shared/gg-sound.js?v=c117', s).href; } catch(e){} return '/shared/gg-sound.js?v=c117'; })();
+const SND_JS = (() => { try { const s = document.currentScript && document.currentScript.src; if (s) return new URL('../shared/gg-sound.js?v=c119', s).href; } catch(e){} return '/shared/gg-sound.js?v=c119'; })();
 let sndP = null;
 function needSnd(){ if (window.GGSound) return Promise.resolve(window.GGSound); if (sndP) return sndP; sndP = new Promise(ok => { const s = document.createElement('script'); s.src = SND_JS; s.onload = () => ok(window.GGSound || null); s.onerror = () => { sndP = null; ok(null); }; document.head.appendChild(s); }); return sndP; }
 const G = () => window.GGSound || null;

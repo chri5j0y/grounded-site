@@ -122,8 +122,10 @@
   function bedResume() { var b = S.bed; if (!b) return; b.paused = false; unlock(); if (b.g) ramp(b.g.gain, b.lvl, 0.8); }
   function preload(f) { if (f && natureOn() && ctx()) load(f).catch(function () {}); }
   // Ducking: music and bed dip while a sentence speaks, back up over 0.6 seconds after it ends.
-  function duck(on, db) { if (!S.c || !S.bus) return; if (on) ramp(S.bus.gain, gainOf(db == null ? -4 : db), 0.12); else ramp(S.bus.gain, 1, 0.6); }
-  function duckFor(sec, db) { if (!S.c || !S.bus) return; var g = S.bus.gain, t = S.c.currentTime; try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(gainOf(db == null ? -3 : db), t + 0.08); g.setValueAtTime(gainOf(db == null ? -3 : db), t + Math.max(0.1, sec)); g.linearRampToValueAtTime(1, t + Math.max(0.1, sec) + 0.6); } catch (e) {} }
+  // Chris, November 15, 2026 ("seems music is quiet in relation to voice", then "1"): no dip under the voice; the bus stays at full level.
+  var NODUCK = true;
+  function duck(on, db) { if (!S.c || !S.bus) return; if (NODUCK) on = false; if (on) ramp(S.bus.gain, gainOf(db == null ? -4 : db), 0.12); else ramp(S.bus.gain, 1, 0.6); }
+  function duckFor(sec, db) { if (!S.c || !S.bus || NODUCK) return; var g = S.bus.gain, t = S.c.currentTime; try { g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(gainOf(db == null ? -3 : db), t + 0.08); g.setValueAtTime(gainOf(db == null ? -3 : db), t + Math.max(0.1, sec)); g.linearRampToValueAtTime(1, t + Math.max(0.1, sec) + 0.6); } catch (e) {} }
   function startCue(buf, o) {
     var c = S.c, g = c.createGain(), s = c.createBufferSource(), when = o.at != null ? Math.max(c.currentTime, o.at) : c.currentTime;
     g.gain.value = o.gain == null ? 0.7 : o.gain; g.connect(c.destination); s.buffer = buf; s.connect(g);
