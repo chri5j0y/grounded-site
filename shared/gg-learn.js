@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'c115';
+  var V = 'c117';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -862,6 +862,9 @@
      from the first scene to the last (Oak Safety, BLD 721). Since BLD 808 the voice never speaks crisis lines or helplines,
      except in videos about suicide or self-harm (Chris, October 15, 2026): this line carries the numbers instead. */
   // Seven licensed tracks per mood (Pixabay Content License, chosen by Chris, GWG BLD 721). Each video always gets the same one.
+  // BLD 991: the new tracks live on R2 (music/v2), loudness evened to the site's tracks (about -20 LUFS); each carries its
+  // file name, and shared/gg-sources.js (GGSources.audio) holds its credit.
+  var MU2 = 'https://audio.growwithgrounded.com/music/v2/';
   var MUSIC = {
     learning: [
       { src: '/audio/music/learning-1.mp3', credit: "\"Fresh Acoustic Guitar and Felt Piano Harmony\" by juraganvisi, Pixabay" },
@@ -879,7 +882,15 @@
       { src: '/audio/music/calm-4.mp3', credit: "\"Soft Ambient Textures with Subtle Bird Chirps\" by desifreemusic, Pixabay" },
       { src: '/audio/music/calm-5.mp3', credit: "\"Slow Morning Ritual\" by alex-morgan, Pixabay" },
       { src: '/audio/music/calm-6.mp3', credit: "\"Acoustic Music\" by andriig, Pixabay" },
-      { src: '/audio/music/calm-7.mp3', credit: "\"Acoustic Music\" by andriih, Pixabay" }
+      { src: '/audio/music/calm-7.mp3', credit: "\"Acoustic Music\" by andriih, Pixabay" },
+      // BLD 991 (Chris, November 15, 2026, decision 6): the seven earth tracks join Calm for more variety.
+      { src: MU2 + 'move-earth-1.mp3', file: 'move-earth-1.mp3' },
+      { src: MU2 + 'move-earth-2.mp3', file: 'move-earth-2.mp3' },
+      { src: MU2 + 'move-earth-3.mp3', file: 'move-earth-3.mp3' },
+      { src: MU2 + 'move-earth-4.mp3', file: 'move-earth-4.mp3' },
+      { src: MU2 + 'move-earth-5.mp3', file: 'move-earth-5.mp3' },
+      { src: MU2 + 'move-earth-6.mp3', file: 'move-earth-6.mp3' },
+      { src: MU2 + 'move-earth-7.mp3', file: 'move-earth-7.mp3' }
     ],
     kids: [
       { src: '/audio/music/kids-1.mp3', credit: "\"Cheerful Joyful Playful Music\" by viacheslavstarostin, Pixabay" },
@@ -897,7 +908,35 @@
       { src: '/audio/music/willow-4.mp3', credit: "\"Whispered Memories, Piano and Cello\" by icsilviu, Pixabay" },
       { src: '/audio/music/willow-5.mp3', credit: "\"Sad Piano Instrumental\" by trtasfiq, Pixabay" },
       { src: '/audio/music/willow-6.mp3', credit: "\"Piano Music\" by paulyudin, Pixabay" },
-      { src: '/audio/music/willow-7.mp3', credit: "\"Piano Music\" by arpmedia, Pixabay" }
+      { src: '/audio/music/willow-7.mp3', credit: "\"Piano Music\" by arpmedia, Pixabay" },
+      // BLD 991 (decision 5): the cello and string pieces join Willow's music.
+      { src: MU2 + 'calm-classical-7.mp3', file: 'calm-classical-7.mp3' },
+      { src: MU2 + 'calm-classical-8.mp3', file: 'calm-classical-8.mp3' },
+      { src: MU2 + 'calm-classical-9.mp3', file: 'calm-classical-9.mp3' },
+      { src: MU2 + 'calm-classical-11.mp3', file: 'calm-classical-11.mp3' },
+      { src: MU2 + 'calm-classical-12.mp3', file: 'calm-classical-12.mp3' },
+      { src: MU2 + 'calm-classical-13.mp3', file: 'calm-classical-13.mp3' },
+      { src: MU2 + 'calm-classical-14.mp3', file: 'calm-classical-14.mp3' },
+      { src: MU2 + 'calm-classical-15.mp3', file: 'calm-classical-15.mp3' }
+    ],
+    // BLD 991: classical piano, cello, and strings for the Meditation videos, the eight longer Get Grounded Now practices, and
+    // any meditation lesson (section: 'meditation'). Public domain, CC0, and CC BY-SA recordings; credits in shared/gg-sources.js.
+    classical: [
+      { src: MU2 + 'calm-classical-1.mp3', file: 'calm-classical-1.mp3' },
+      { src: MU2 + 'calm-classical-2.mp3', file: 'calm-classical-2.mp3' },
+      { src: MU2 + 'calm-classical-3.mp3', file: 'calm-classical-3.mp3' },
+      { src: MU2 + 'calm-classical-4.mp3', file: 'calm-classical-4.mp3' },
+      { src: MU2 + 'calm-classical-5.mp3', file: 'calm-classical-5.mp3' },
+      { src: MU2 + 'calm-classical-6.mp3', file: 'calm-classical-6.mp3' },
+      { src: MU2 + 'calm-classical-7.mp3', file: 'calm-classical-7.mp3' },
+      { src: MU2 + 'calm-classical-8.mp3', file: 'calm-classical-8.mp3' },
+      { src: MU2 + 'calm-classical-9.mp3', file: 'calm-classical-9.mp3' },
+      { src: MU2 + 'calm-classical-10.mp3', file: 'calm-classical-10.mp3' },
+      { src: MU2 + 'calm-classical-11.mp3', file: 'calm-classical-11.mp3' },
+      { src: MU2 + 'calm-classical-12.mp3', file: 'calm-classical-12.mp3' },
+      { src: MU2 + 'calm-classical-13.mp3', file: 'calm-classical-13.mp3' },
+      { src: MU2 + 'calm-classical-14.mp3', file: 'calm-classical-14.mp3' },
+      { src: MU2 + 'calm-classical-15.mp3', file: 'calm-classical-15.mp3' }
     ],
     // Safety videos (GWG BLD 721, Chris): only the two softest Calm tracks, played lower (SAFETY_SCALE).
     safety: [
@@ -906,7 +945,7 @@
     ]
   };
   var MUSIC_V = 'mu2', LEVELS = { soft: 0.11, medium: 0.18 }, SAFETY_SCALE = 0.65;
-  var MOODS = [['', 'Automatic'], ['learning', 'Learning'], ['calm', 'Calm'], ['kids', 'Kids'], ['willow', 'Willow']];
+  var MOODS = [['', 'Automatic'], ['learning', 'Learning'], ['calm', 'Calm'], ['classical', 'Classical'], ['kids', 'Kids'], ['willow', 'Willow']];
   var BG = { el: null, ctx: null, gain: null, src: '', fade: 0 };
   function musicHas() { for (var k in MUSIC) if (MUSIC[k] && MUSIC[k].length) return true; return false; }
   // Settings kept on this device (GWG BLD 721): gg-music is 'off', 'soft' (the default; the old 'on' reads as soft)
@@ -925,6 +964,7 @@
   function moodOf(cfg) {
     if (cfg.lesson && cfg.lesson.music === 'safety') return 'safety'; // Safety videos always keep their softest tracks
     if (musicMood()) return musicMood();
+    if (classicalOf(cfg.lesson)) return 'classical'; // BLD 991: meditations and the eight longer practices
     if (cfg.lesson && cfg.lesson.music && MUSIC.hasOwnProperty(cfg.lesson.music)) return cfg.lesson.music;
     if (cfg.mood && MUSIC.hasOwnProperty(cfg.mood)) return cfg.mood;
     if (cfg.track && cfg.track.kind === 'support') return 'calm';
@@ -932,6 +972,20 @@
     if (cfg.app === 'pine' || cfg.app === 'birch') return 'learning'; // high schoolers and young adults get the learning tracks, not the kids' tracks
     if (cfg.app === 'willow') return 'willow';
     return 'learning';
+  }
+  // BLD 991: the 14 Meditation videos (and any lesson in the meditation section) and the eight longer Get Grounded Now
+  // practices play classical. Rest in Prayer keeps Calm (avoid friction).
+  var CLASSICAL_IDS = { 'gg-stop-after': 1, 'gg-rain-after': 1, 'gg-selfcompassion-after': 1, 'gg-soften-after': 1, 'gg-bodyscan-after': 1, 'gg-lovingkindness-after': 1, 'gg-calm-place-after': 1, 'gg-container-after': 1 };
+  function classicalOf(l) { return !!l && (l.section === 'meditation' || CLASSICAL_IDS[l.id] === 1); }
+  function medOf(l) { return !!l && l.section === 'meditation'; }
+  /* BLD 991 Sound and Music: shared/gg-sound.js (one AudioContext for music, beds, and cues; the duck bus) and its plan of
+     nature beds by scene (shared/gg-sound-plan.js). It loads with the player; a video with no bed fetches nothing more. */
+  var SNDV = 'c117', SNDP = null;
+  function needSound() {
+    if (window.GGSound) return GGSound.ready();
+    if (SNDP) return SNDP;
+    SNDP = new Promise(function (ok) { var s = document.createElement('script'); s.src = url('/shared/gg-sound.js?v=' + SNDV); s.onload = function () { window.GGSound ? GGSound.ready().then(ok) : ok(null); }; s.onerror = function () { SNDP = null; ok(null); }; document.head.appendChild(s); });
+    return SNDP;
   }
   function bgVol(v) { if (BG.gain) BG.gain.gain.value = v; else if (BG.el) BG.el.volume = v; }
   function bgFade(to, ms, done) {
@@ -941,11 +995,13 @@
   function bgPlay(cfg) {
     var m = musicPick(cfg); if (!m || !m.src || !musicOn()) return;
     try {
-      var src = url(m.src + '?v=' + MUSIC_V);
+      var src = /^https?:/.test(m.src) ? m.src : url(m.src + '?v=' + MUSIC_V); // BLD 991: R2 tracks are versioned by their folder
       if (!BG.el) {
         BG.el = new Audio(); BG.el.loop = true; BG.el.preload = 'auto'; BG.el.crossOrigin = 'anonymous';
         var AC = window.AudioContext || window.webkitAudioContext;
-        if (AC) { try { BG.ctx = new AC(); BG.gain = BG.ctx.createGain(); BG.gain.gain.value = 0; BG.ctx.createMediaElementSource(BG.el).connect(BG.gain); BG.gain.connect(BG.ctx.destination); } catch (e) { BG.ctx = BG.gain = null; } }
+        // BLD 991: through the shared sound context and its duck bus when shared/gg-sound.js is here.
+        var GS = window.GGSound && GGSound.ctx() ? GGSound : null;
+        if (AC) { try { BG.ctx = GS ? GS.ctx() : new AC(); BG.gain = BG.ctx.createGain(); BG.gain.gain.value = 0; BG.ctx.createMediaElementSource(BG.el).connect(BG.gain); BG.gain.connect(GS ? GS.bus() : BG.ctx.destination); } catch (e) { BG.ctx = BG.gain = null; } }
       }
       var go = function () {
         BG.want = true; bgWatch();
@@ -970,6 +1026,12 @@
   }
   function bgStop(ms) { BG.want = false; if (!BG.el) return; bgFade(0, ms || 700, function () { try { BG.el.pause(); } catch (e) {} }); }
   function musicCredit(cfg) { var m = musicPick(cfg); return m && m.src && m.credit && musicOn() ? '<small class="gg-src-line"><span class="gg-src-k">Music:</span> ' + esc(m.credit) + '</small>' : ''; }
+  // BLD 991: the Music line for a new track and the Sound line for each nature bed that played (shared/gg-sources.js).
+  function audioCredit(cfg, beds) {
+    var m = musicPick(cfg), files = (m && m.file && musicOn() ? [m.file] : []).concat(beds || []);
+    var h = files.length && window.GGSources && GGSources.audio ? GGSources.audio(files) : '';
+    return (m && m.file ? '' : musicCredit(cfg)) + h;
+  }
   // Music settings beside Voice and Speed: Volume (Off, Soft, Medium), Mood (Automatic or one mood), Another Track.
   function musicSwitch(host, cfg, P) {
     if (!musicHas()) return;
@@ -988,11 +1050,20 @@
     w.addEventListener('click', function (e) { if (e.target.getAttribute('data-mu') !== 'next') return; musicTurn(String((cfg.lesson || {}).id || '')); if (musicOn()) { if (P.playing && !P.last) bgPlay(cfg); } });
     var vs = host.querySelector('.ln-vs'); if (vs) vs.appendChild(w);
   }
+  // BLD 991 (decision 4): Nature Sounds, its own switch beside Music, shown only on a video that has a bed; kept on this device.
+  function natureSwitch(host, cfg, P, onChange) {
+    var l = cfg.lesson || {}; if (!window.GGSound || !GGSound.has(l.id) || moodOf(cfg) === 'safety' || host.querySelector('.ln-nat')) return;
+    var w = document.createElement('div'); w.className = 'ln-mu ln-nat'; w.setAttribute('role', 'group'); w.setAttribute('aria-label', 'Nature Sounds');
+    var on = GGSound.natureOn();
+    w.innerHTML = '<span class="ln-mu-k">Nature Sounds</span><label><span class="ggl-sr">Nature Sounds</span><select data-mu="nat"><option value="on"' + (on ? ' selected' : '') + '>On</option><option value="off"' + (on ? '' : ' selected') + '>Off</option></select></label>';
+    w.addEventListener('change', function (e) { if (e.target.getAttribute('data-mu') !== 'nat') return; GGSound.setNature(e.target.value !== 'off'); if (onChange) onChange(); });
+    var vs = host.querySelector('.ln-vs'), mu = vs && vs.querySelector('.ln-mu'); if (mu && mu.nextSibling) vs.insertBefore(w, mu.nextSibling); else if (vs) vs.appendChild(w);
+  }
 
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b940'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=c117'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -1025,10 +1096,23 @@
     var SK = !l.audio && typeof cfg.clip === 'function' && window.Audio ? { voice: rec || l.voice || cfg.voice || 'brian', clip: cfg.clip } : l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
     if (recd) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
+    // BLD 991: nature beds by scene, the duck under each sentence, and the meditation bells.
+    P.beds = {}; P.bell1 = false;
+    needSound().then(function () { if (CUR === ctl && host.isConnected) natureSwitch(host, cfg, P, function () { if (P.playing && !P.last) bedAt(); }); });
+    function bedAt() {
+      var G = window.GGSound; if (!G) return;
+      if (!P.playing || P.last || P.i < 0 || P.i >= N - 1) { G.bedOff(P.last ? 2.5 : 0.3); return; }
+      var e = moodOf(cfg) === 'safety' ? null : G.at(l.id, P.i);
+      if (!e || !G.natureOn()) { G.bedOff(2.5); return; }
+      G.unlock(); G.bed(e[0], e[1], 3); P.beds[e[0]] = 1;
+      var nx = G.at(l.id, P.i + 1); if (nx && nx[0] !== e[0]) G.preload(nx[0]);
+    }
+    function bedNext() { var G = window.GGSound; if (!G || !G.natureOn()) return; var nx = G.at(l.id, P.i + 1); if (nx) G.preload(nx[0]); }
+    function bell(f) { var G = window.GGSound; if (!G || !musicOn() || !medOf(l)) return; G.cue(f, { gain: 0.55 }); }
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
     function stopTimers() { brGo(); P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); clearInterval(P.tl); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = P.audio.onplaying = P.audio.onratechange = P.audio.onseeked = P.audio.onpause = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
-    function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(cfg); }
+    function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); if (window.GGSound) { GGSound.bedPause(); GGSound.duck(false); } } else if (!P.last) { if (window.GGSound) GGSound.unlock(); bgPlay(cfg); bedAt(); } }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
       if (hasQuiz && !answered && !(cfg.done || {})[l.id]) return { ok: false, eyebrow: 'Almost There', h: 'One question left.', sub: 'Answer it to finish this lesson.', say: 'One question left. Answer it to finish this lesson.', unfinished: true };
@@ -1075,6 +1159,14 @@
           var im = new Image(); im.decoding = 'async'; im.src = u; AHEAD[u] = im; if (im.decode) im.decode().catch(function () {}); } catch (e) {}
       }
     }
+    // The closing scene's Sources line, then Music and Sound for what played (BLD 991), above the copyright line. When the
+    // credits file is still on its way, the line is drawn again once it arrives.
+    function endLine() {
+      var lk = $('.ln-link', host); if (!lk) return;
+      lk.innerHTML = srcLine(l) + audioCredit(cfg, Object.keys(P.beds || {})) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
+      var sj = document.getElementById('gg-src-js');
+      if (!window.GGSources && sj && !sj._ggEnd) { sj._ggEnd = 1; sj.addEventListener('load', function () { sj._ggEnd = 0; if (CUR === ctl && P.last) endLine(); }); }
+    }
     function show(n) {
       P.i = Math.max(0, Math.min(N - 1, n)); var last = P.i === N - 1, sc, t;
       stopTimers(); t = P.tok; hush();
@@ -1098,7 +1190,10 @@
       $('.ln-link', host).innerHTML = sc.link && sc.link.href ? '<a href="' + esc(sc.link.href) + '" target="_blank" rel="noopener">' + esc(sc.link.label || 'Read the Full Story') + '</a>' : '';
       if (last) bgStop(2500);
       else if (P.playing) bgPlay(cfg);
-      if (last) $('.ln-link', host).innerHTML = srcLine(l) + musicCredit(cfg) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
+      P.last = last; bedAt(); if (!P.playing) bedNext();
+      if (P.playing && !last && P.i === 0 && !P.bell1) { P.bell1 = true; bell('bell-1.mp3'); }   // BLD 991: a meditation opens with the bowl
+      if (last && P.playing && P.bell1) bell('bell-3.mp3');                                       // and closes with three soft chimes
+      if (last) endLine();
       var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now(); P.brLock = !!carry; P.brDone = -1; P.brT0 = carry || Date.now(); P.brAt = P.i;
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
@@ -1185,7 +1280,8 @@
         var bw = brWait(i); if (bw > 0) { P.nx = setTimeout(function () { if (t === P.tok) step(); }, bw); return; }
         reveal(i); capOn(i); gfxAt(i); P.ph = 'say';
         var b = B[i], ended = false, began = Date.now(), seen = false;
-        var fin = function () { if (ended || t !== P.tok) return; ended = true; clearInterval(P.tick); after(i); };
+        var fin = function () { if (ended || t !== P.tok) return; ended = true; clearInterval(P.tick); if (window.GGSound) GGSound.duck(false); after(i); };
+        if (window.GGSound) GGSound.duck(true, -4); // BLD 991: music and bed dip 4 dB under each sentence
         var est = Math.max(1400, b.t.split(/\s+/).length * 60000 / (165 * sp));
         brHold(i);
         if (clip(i, fin)) return;
@@ -1573,8 +1669,8 @@
       else if (g === 'rans') readAnswer(b);
       else if (g === 'back') show(P.i - 1);
       else if (g === 'next') show(P.i + 1);
-      else if (g === 'restart') { setPlay(false); show(0); }
-      else if (g === 'e-again') { setPlay(true); show(0); }
+      else if (g === 'restart') { setPlay(false); P.bell1 = false; show(0); }
+      else if (g === 'e-again') { P.bell1 = false; setPlay(true); show(0); }
       else if (g === 'ans') answer(b.getAttribute('data-v'));
       else if (g === 'e-answer') { var q = -1; l.scenes.forEach(function (s, j) { if (s.k === 'quiz') q = j; }); show(q); }
       else if (g === 'e-open') { var nx = bar._next; ctl.stop(); if (nx && cfg.open) cfg.open(nx.l.id); }
@@ -1593,7 +1689,7 @@
     host.addEventListener('click', onClick);
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', fit);
-    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); sealedFree(); figOff(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
+    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); if (window.GGSound) { GGSound.bedOff(0.3); GGSound.duck(false); } sealedFree(); figOff(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
     CUR = ctl;
     if (!window.GG_ART) artLoad().then(function (G) { if (G && CUR === ctl && !P.playing && P.i >= 0 && P.i < N - 1) show(P.i); });
     if (!window.GG_GFX) gfxLoad().then(function (G) { if (G && CUR === ctl && !P.playing && P.i >= 0 && P.i < N - 1) show(P.i); });
@@ -1650,7 +1746,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b939', oak: '/oak/guide-videos.js?v=b939', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b939', sequoia: '/sequoia/guide-videos.js?v=b939', pine: '/pine/guide-videos.js?v=b949', birch: '/birch/guide-videos.js?v=b949', grove: '/grove/guide-videos.js?v=b939' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=c117', oak: '/oak/guide-videos.js?v=b939', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b939', sequoia: '/sequoia/guide-videos.js?v=b939', pine: '/pine/guide-videos.js?v=b949', birch: '/birch/guide-videos.js?v=b949', grove: '/grove/guide-videos.js?v=b939' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -1807,7 +1903,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c115'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c117'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

@@ -51,7 +51,7 @@
   var FILES = [
     ['/shared/tending-public.js?v=c021', 'GGTendPublic'],
     ['/field-guide/stage.js?v=c114', 'GGStage'],
-    ['/field-guide/coach.js?v=c019', 'GGVoice'],
+    ['/field-guide/coach.js?v=c117', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=b993', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=b906', 'GGBulk'],

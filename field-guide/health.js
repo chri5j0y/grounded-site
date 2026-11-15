@@ -1408,7 +1408,7 @@ function buildMed(id, m0){
   const mins = medMins(weekNo(new Date())), segs = arr(ss.segments), talk = segs.reduce((a, g) => a + arr(g.lines).reduce((b, l) => b + lineSecs(l) + 0.8, 0), 0) + 8;
   const quiet = Math.max(60, mins * 60 - talk), wsum = segs.reduce((a, g) => a + (+g.quiet || 0), 0) || segs.length;
   const steps = segs.map(g => ({t: 'time', name: g.name, lines: arr(g.lines), secs: Math.round(quiet * ((wsum === segs.length && !segs.some(x => +x.quiet)) ? 1 : (+g.quiet || 0)) / wsum), part: ss.title, candle: true}));
-  return {k: 'work', prac: true, med: true, s: ss.id, title: ss.title, lead: ss.focus || '', mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: BRIAN, music: '/audio/music/calm-' + (1 + (new Date().getDay() + 3) % 7) + '.mp3', key: 'med'};
+  return {k: 'work', prac: true, med: true, s: ss.id, title: ss.title, lead: ss.focus || '', mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: BRIAN, key: 'med'};
 }
 function candle(){ return `<div class="hj-candle" aria-hidden="true"><svg viewBox="0 0 120 200"><defs><radialGradient id="hjglow" cx="50%" cy="40%" r="50%"><stop offset="0" stop-color="#FFD58A" stop-opacity=".55"/><stop offset="1" stop-color="#FFD58A" stop-opacity="0"/></radialGradient></defs>
   <circle cx="60" cy="62" r="58" fill="url(#hjglow)" class="hj-glow"/><path class="hj-flame" d="M60 22 C72 44 74 58 60 74 C46 58 48 44 60 22 Z" fill="#F6B04A"/><path class="hj-flame2" d="M60 40 C66 52 66 60 60 70 C54 60 54 52 60 40 Z" fill="#FFF1C9"/>
@@ -1446,7 +1446,7 @@ function practiceFor(d){ const fp = flowPick(d); if (fp) return fp; const p = PR
 function buildPractice(s, p0){
   const p = p0 || PR(), ss = arr(p && p.sessions).find(x => x.id === s) || (p0 ? null : practiceFor(new Date())); if (!ss) return null;
   const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
-  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, music: '/audio/music/calm-' + (1 + (new Date().getDay() % 7)) + '.mp3', key: 'prac'};
+  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, style: ss.style || 'daily', key: 'prac'};
 }
 // BLD 984: a Member Flow session or meditation beside a moved plan (its own clip key).
 function buildMPrac(id){ const M = MLIB(), o = M ? buildPractice(id, (M.app || {}).practice) : null; if (o) o.mlib = 1; return o; }
@@ -1558,23 +1558,30 @@ const lg = (o, e) => { (o.log = o.log || []).push(Object.assign({i: o.i, set: o.
 // A timer that honors Pause, Skip, and +15 seconds; ticks the last 3 seconds; says Ten seconds on longer rests; drains the ring.
 // kind: '' for work, 'rest' between sets, 'between' between moves, 'switch' between sides.
 async function runTimer(o, ms, kind, half, onTick){
-  o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false, last = 99;
+  o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false, last = 99, cd = null;
+  // BLD 991 (decision 8): the countdown is three beeps and a go beep (fit-countdown-4), started once at 3 seconds left on
+  // the Web Audio clock so the go beep lands on zero; Pause, Skip, and Ava's instructions stop it. Until the cue is ready the
+  // old soft blips play.
+  const cdOff = () => { if (cd){ try { cd.stop(); } catch(e){} cd = null; } };
   // BLD 897: a hold done on each side shows the Left Side chip (and the figure on its left side) until the half, then the right.
   if (half) o.side = 'L'; rerender(true);
   while (!o.dead && !o.skip){
-    if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
+    if (o.paused){ cdOff(); last = 99; const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
     const left = o.end - Date.now(); if (left <= 0) break;
-    if (kind && preTick(o, left)) continue;   // BLD 931: the next move's instructions in the Break's last seconds
+    if (kind && preTick(o, left)){ cdOff(); continue; }   // BLD 931: the next move's instructions in the Break's last seconds
     const s = Math.ceil(left / 1000);
     if ((kind === 'rest' || kind === 'between') && s === 10 && !said10 && ms > 15000){ said10 = true; if (!o.spk && !preNear(o, left)) speak(o, LN.ten); }
     if (half && !saidHalf && left <= o.tot / 2){ saidHalf = true; o.side = 'R'; speak(o, LN.sw); rerender(true); }
     if (onTick) onTick(left);
-    if (s <= 3 && s !== last){ last = s; if (!preBusy(o)) VO() && VO().tick(); }   // BLD 931: Ava's instructions carry the last seconds
+    if (preBusy(o)) cdOff();
+    else if (!cd && left <= 3150 && left > 600 && last === 99 && VO() && VO().countdown){ cd = VO().countdown(left); if (cd) last = 0; }
+    if (!cd && s <= 3 && s !== last){ last = s; if (!preBusy(o)) VO() && VO().tick(); }   // BLD 931: Ava's instructions carry the last seconds
     document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
     ystarTick(o, left);
     stageUpd(Math.max(0, Math.min(1, left / (o.tot || ms))), s);
     await sleep(Math.max(10, Math.min(100, o.end - Date.now())));
   }
+  if (o.skip || o.dead) cdOff();
   if (kind && !o.dead) lg(o, {e: 'zero', kind, skip: !!o.skip});
   o.run = false; o.rest = false; o.sw = false; if (half) o.side = '';
 }
@@ -1786,18 +1793,43 @@ async function between(o, nx, secs){
   o.between = false; o.skip = false;
 }
 function motLine(o){ const m = MOT(); if (!m.length) return ''; if (o.mi == null){ const d = new Date(); o.mi = (d.getDate() * 7 + d.getMonth() * 3) % m.length; } return m[o.mi++ % m.length]; }
-// Upbeat workout music when the move tracks are on the site (BLD 857), else the learning tracks.
-let MOVE_OK = null;
-async function moveMusic(){ if (MOVE_OK == null){ try { const c = new AbortController(), t = setTimeout(() => c.abort(), 2500); const r = await fetch('/audio/music/move-1.mp3', {method: 'HEAD', signal: c.signal}); clearTimeout(t); MOVE_OK = !!r.ok; } catch(e){ MOVE_OK = false; } } return MOVE_OK; }
+// BLD 991 Sound and Music (music-plan.json): Breath and Form music matched to the session, from R2 (music/v2): lofi for
+// Strength, lofi and two softly pulsing guitar tracks for Cardio, folk for Walk, earth for Gentle, world for Yoga and Balance,
+// folk and earth for Stretch, morning music for the morning Flow (earth after noon), morning and folk for kids, lofi and folk
+// for teens, folk and morning for group sessions, classical for meditations. Each session starts on a track set by its id and
+// the date, then plays the group as a playlist (GGVoice.music crossfades).
+const MU2 = 'https://audio.growwithgrounded.com/music/v2/';
+const muFiles = g => Array.from({length: g === 'classical' ? 15 : 7}, (x, k) => (g === 'classical' ? 'calm-classical-' : g + '-') + (k + 1) + '.mp3');
+function musicGroupFiles(o){
+  if (o.med) return muFiles('classical');
+  if (o.prac){ const st = o.style || 'daily'; return st === 'yoga' || st === 'taichi' ? muFiles('move-world') : st === 'stretch' ? muFiles('move-folk').concat(muFiles('move-earth')) : muFiles(new Date().getHours() < 12 ? 'move-morning' : 'move-earth'); }
+  if (o.young) return KID_BANDS.includes(o.young) ? muFiles('move-morning').concat(muFiles('move-folk')) : muFiles('move-lofi').concat(muFiles('move-folk'));
+  if (/\bgroup\b/i.test(o.title || '')) return muFiles('move-folk').concat(muFiles('move-morning'));
+  let ses = null; try { ses = sesById(o.s); } catch(e){}
+  const k = moveKind(o.s, ses, o.gentle ? 'gentle' : '');
+  if (k === 'walk') return muFiles('move-folk');
+  if (k === 'taichi') return muFiles('move-world');
+  if (k === 'gentle') return muFiles('move-earth');
+  if (k === 'cardio') return muFiles('move-lofi').concat(['move-folk-5.mp3', 'move-folk-6.mp3']);
+  return muFiles('move-lofi');
+}
+function musicFor(o){
+  const L = musicGroupFiles(o).map(f => MU2 + f), key = String(o.key || '') + ':' + String(o.s || o.title || '') + ':' + ymd(new Date());
+  let h = 0; for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+  return {list: L, start: h % L.length};
+}
+// The Music line for a session: its group's tracks on the start screen (What is in it), the tracks it played on the finish screen.
+function musicSrc(files){ try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; } } catch(e){} return ''; }
 async function runSession(o){
   const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = []; o.tips = tipPlan(o);
   if (V){ V.unlock(); V.onlost = soundLost; }
   // BLD 898: Ava's counts download and decode now, so every count is ready for its beat.
   if (V && V.prime && !o.prac) V.prime(o.voice || AVA, Array.from({length: 20}, (x, k) => LN.count(k + 1)));
-  if (!o.music && !o.prac) o.music = (await moveMusic()) ? '/audio/music/move-' + (1 + (new Date().getDay() + o.title.length) % 7) + '.mp3' : '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3';
-  if (V) V.music(o.music);
+  const mf = musicFor(o); o.music = mf.list; o.mstart = mf.start;
+  if (V){ if (V.musicReset) V.musicReset(); V.music(o.music, o.mstart); }
   rerender(true);
   if (preRing(o, o.steps[0])) brHold(o, true);   // the first step's breath waits through the opening lines for its own line
+  if (o.med && V && V.cue) await V.cue('bell-1.mp3', {gain: 0.55, wait: 2.5});   // BLD 991: a meditation opens with the bowl
   if (!o.med && !o.prac){ await speak(o, o.focus || LN.focus); await speak(o, o.safe || LN.safe); }   // BLD 981: a young session's own lines   // BLD 931: breathe and form first; BLD 965: the safety line
   await speak(o, o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
   if (o.open && !o.dead) await speak(o, o.open);
@@ -1805,13 +1837,14 @@ async function runSession(o){
   while (!o.dead && o.i < o.steps.length){
     const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; const bh = preRing(o, st) && brHold(o, true); rerender(true);
     if (st.t === 'time'){ o.preOn = false;
+      await partBell(o);
       if (!o.prac && st.part === 'Cooldown' && o.steps[o.i - 1] && o.steps[o.i - 1].part !== 'Cooldown') await speak(o, LN.cool);
       if (st.lines){ for (const ln of st.lines){ if (o.dead || o.skip) break; o.line = ln; rerender(true); await hold(o); await speak(o, ln); if (!(VO() && VO().on())) await snooze(o, Math.min(4000, lineSecs(ln) * 1000)); await snooze(o, 800); } o.line = ''; }
       else { if (bh) brArm(o); await speak(o, tLine(o, st), false, bh ? () => brGo(o, 'voice') : null); if (bh) brGo(o, 'end'); }
       await hold(o); if (o.dead) break;
       if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else { if (tShort(o, st)){ const fb = !preRing(o, st) && brHold(o); speak(o, st.form, false, fb ? () => brGo(o, 'voice') : null).then(() => { if (fb) brGo(o, 'end'); }); } await runTimer(o, st.secs * 1000, '', st.half); } }
       o.done.push(o.i); o.i++; o.set = 1; o.skip = false;
-      const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, GET_READY);
+      const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, GET_READY); }
       continue;
     }
     // BLD 915: the move's name and sets, then (in doSet) its form line and its breath line, then Go: two short lines of
@@ -1829,10 +1862,22 @@ async function runSession(o){
       preArm(o, preLines(o, st, o.set + 1, 0), LN.rest(r) + (wd ? ' ' + WATER : ''));
       await runTimer(o, r * 1000, 'rest'); await preDone(o); if (o.dead) break; o.skip = false; o.set++; continue; }
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
-    const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, st.restAfter);
+    const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, st.restAfter); }
   }
-  if (!o.dead){ o.fin = true; o.run = false; rerender(true); if (o.med && typeof chime === 'function') chime(); await speak(o, o.med ? LN.mOut : o.prac ? LN.pOut : o.close || LN.out); if (!o.prac && lightLine('end')) await speak(o, lightLine('end')); if (!o.prac && !o.med && !o.feel) await speak(o, LN.feel); }
+  if (!o.dead){ o.fin = true; o.run = false; rerender(true);
+    // BLD 991: three soft chimes close a meditation (bell-3, in place of the made in code chime); a workout or Flow ends on the finish chime.
+    if (V && V.cue){ if (o.med) await V.cue('bell-3.mp3', {gain: 0.55, wait: 2}); else if (V.chimeOn()) await V.cue('fit-finish.mp3', {gain: 0.6, wait: 1.6}); } else if (o.med && typeof chime === 'function') chime();
+    await speak(o, o.med ? LN.mOut : o.prac ? LN.pOut : o.close || LN.out); if (!o.prac && lightLine('end')) await speak(o, lightLine('end')); if (!o.prac && !o.med && !o.feel) await speak(o, LN.feel); }
   V && V.music(null);
+}
+// BLD 991: the round bell when a workout moves to a new part (Warm-up to the main moves, a new round, the Cooldown), after any
+// line has ended. Beeps Off keeps it quiet.
+async function partBell(o){
+  const a = o.steps[o.i - 1], b = o.steps[o.i], V = VO();
+  if (o.prac || o.med || !a || !b || a.part === b.part || o.bellAt === o.i || o.dead || !V || !V.cue || !V.chimeOn()) return;
+  o.bellAt = o.i; await hold(o);
+  for (let k = 0; k < 60 && V.busy && V.busy() && !o.dead; k++) await sleep(100);
+  if (!o.dead){ o.bells = (o.bells || 0) + 1; await V.cue('fit-round-bell.mp3', {gain: 0.6, wait: 1.2}); }
 }
 function sessClock(o){ const now = Date.now(); if (!o.paused) o.active += now - (o.lastT || now); o.lastT = now; return clock(o.active); }
 setInterval(() => { const o = S.ov; if (!o || o.mode !== 'auto' || o.fin) return; document.querySelectorAll('[data-hjsess]').forEach(e => { e.textContent = sessClock(o); }); document.querySelectorAll('[data-hjleft]').forEach(l => { l.textContent = 'about ' + Math.max(1, Math.round(estLeft(o) / 60000)) + ' min left'; }); }, 1000);
@@ -2163,7 +2208,7 @@ function vStart(o, top){
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
     ${!o.prac && !o.med ? moveWell() : ''}
-    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : o.young ? youngSrc(o.young) : coachSrc() + srcLine(o.gentle ? arr(((GLIB() || {}).gentle || {}).sources) : progSrc(o.s))}</div></details></div>`;
+    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : o.young ? youngSrc(o.young) : coachSrc() + srcLine(o.gentle ? arr(((GLIB() || {}).gentle || {}).sources) : progSrc(o.s))}${musicSrc(musicGroupFiles(o))}</div></details></div>`;
 }
 // BLD 915 (Chris's workout notes: "one quick question with tap choices about how it felt"): How did that feel? One tap
 // saves the workout's log on this device with the answer. Too Easy and Too Hard move the personal adjustment 5 lb for
@@ -2204,7 +2249,7 @@ function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.pr
   return `${o.young && YART[o.s] ? yDone(o) : stagePanel('done', o.med ? medOp(o) : {fig: ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
     ${!o.prac && !o.med ? feelBlock(o) + wqBlock(o) : ''}${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}${wr ? `<p class="hj-sub">${esc(wr)}</p>` : ''}
     <label class="hj-fld" style="text-align:left"><span>${o.prac || o.med ? 'How did it feel? (optional)' : 'A word about it (optional)'}</span><input id="hj-wnote" placeholder="${o.prac ? 'Calm, loose, clear...' : 'Felt strong, knees easy...'}"></label>
-    <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button>${o.gentle && o.start && !o.med && !o.prac ? memMore() : ''}</div>`; }
+    <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button>${o.gentle && o.start && !o.med && !o.prac ? memMore() : ''}${VO() && VO().musicPlayed ? musicSrc(VO().musicPlayed()) : ''}</div>`; }
 // BLD 919 (Chris): after a Gentle session on Start, one quiet line with a link, never a pop-up.
 const MEM_URL = '/the-grounded-way.html#ways';
 const memMore = () => `<p class="hj-sub hj-memmore" style="margin-top:14px">There's more of this in Membership: the 12-week program and every guided workout. <a href="${MEM_URL}">See Membership</a></p>`;
@@ -2327,7 +2372,7 @@ function actCoach(a, v){
   const o = S.ov, V = VO(), h = H();
   switch (a){
     case 'tvoice': if (V){ V.setOn(!V.on()); } rerender(true); return true;
-    case 'tmusic': if (V){ V.setMusic(!V.musicOn()); if (V.musicOn() && o && o.mode === 'auto' && !o.fin && !o.paused) V.music(o.music || '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3'); } rerender(true); return true;
+    case 'tmusic': if (V){ V.setMusic(!V.musicOn()); if (V.musicOn() && o && o.mode === 'auto' && !o.fin && !o.paused) V.music(o.music || musicFor(o).list, o.mstart); } rerender(true); return true;
     case 'tchime': if (V) V.setChime(!V.chimeOn()); rerender(true); return true;
     case 'tfig3d': { const on = !!(window.GGFig3D && GGFig3D.ok()); try { localStorage.setItem('gg-fig3d', on ? 'off' : 'on'); } catch(e){} rerender(true); return true; }
     case 'tfigbody': if (window.GGFig3D) GGFig3D.setBody(GGFig3D.body() === 'woman' ? 'man' : 'woman'); rerender(true); return true;

@@ -236,6 +236,23 @@
   function readerName(v) { return v === 'jenny' ? 'Female Voice' : 'Male Voice'; }
   var P = { state: 'idle', id: null, q: [], i: 0, voice: '', tok: 0, el: null, pre: null, cc: null, miss: {}, played: 0, root: null, onend: null };
   function audioEl() { if (!P.el) { P.el = new Audio(); P.el.preload = 'auto'; } return P.el; }
+  /* BLD 991 Sound and Music: in the Readings Library's own Listen (readings.html), a reading about rain, the sea, a stream,
+     the woods, birds at dawn, or the hearth plays its soft nature bed under the voice (shared/gg-sound.js and its plan).
+     The Service Builder's and Willow's Listen stay quiet, since those readings are often for a ceremony or a bedside.
+     Nature Sounds On or Off sits beside Reader and is kept on this device. */
+  var SNDP = null;
+  function needSound() {
+    if (window.GGSound) return GGSound.ready();
+    if (SNDP) return SNDP;
+    SNDP = new Promise(function (ok) { var s = document.createElement('script'); s.src = SRC.replace(/gg-readings\.js.*$/, 'gg-sound.js?v=c117'); s.onload = function () { window.GGSound ? GGSound.ready().then(ok) : ok(null); }; s.onerror = function () { SNDP = null; ok(null); }; document.head.appendChild(s); });
+    return SNDP;
+  }
+  function bedOf(r, any) { return (any || P.bedOk) && r && window.GGSound ? GGSound.reading(r.id) : null; }
+  function bedGo() { var e = bedOf(P.r); if (e && GGSound.natureOn()) { GGSound.unlock(); GGSound.bed(e[0], e[1], 3); } else if (window.GGSound) GGSound.bedOff(0.6); }
+  function bedCredit(r) {
+    var e = bedOf(r, true), p = window.GG_SOUND_PLAN, c = e && p && p.c && p.c[e[0]];
+    return c ? ' <span class="ggr-snd"><b>Sound:</b> <a href="' + esc(c[1]) + '" target="_blank" rel="noopener">' + esc(c[0]) + '</a>, with thanks.</span>' : '';
+  }
   function lmark() {
     if (!P.root) return;
     Array.prototype.forEach.call(P.root.querySelectorAll('[data-ggr-s]'), function (n) { n.classList.toggle('ggr-now', P.state !== 'idle' && P.q[P.i] && +n.getAttribute('data-ggr-s') === P.q[P.i].s); });
@@ -247,10 +264,11 @@
       b.setAttribute('aria-pressed', mine ? 'true' : 'false'); s.hidden = !mine;
       var rb = bar.querySelector('.ggr-reader');
       if (rb) { var v = chosen() || bar.getAttribute('data-v') || 'brian', o = v === 'jenny' ? 'brian' : 'jenny'; rb.textContent = 'Reader: ' + readerName(v); rb.setAttribute('aria-label', 'Reader: ' + readerName(v) + '. Switch to ' + readerName(o)); }
+      var nb = bar.querySelector('.ggr-nat'); if (nb && window.GGSound) { var on = GGSound.natureOn(); nb.textContent = 'Nature Sounds: ' + (on ? 'On' : 'Off'); nb.setAttribute('aria-pressed', on ? 'true' : 'false'); }
     });
     lmark();
   }
-  function dropClip() { var c = P.cc; if (!c) return; clearTimeout(c.timer); clearInterval(c.watch); var a = audioEl(); a.onended = a.onerror = a.onplaying = null; P.cc = null; }
+  function dropClip() { var c = P.cc; if (!c) return; clearTimeout(c.timer); clearInterval(c.watch); var a = audioEl(); a.onended = a.onerror = a.onplaying = null; P.cc = null; if (P.bed && window.GGSound) GGSound.duck(false); }
   function ahead(k) {
     var it = P.q[k]; if (!it) return; var u = clipUrl(P.voice, it.t); if (P.miss[u]) return;
     try { if (!P.pre) { P.pre = new Audio(); P.pre.preload = 'auto'; } if (P.pre.src !== u) { P.pre.src = u; P.pre.load(); } } catch (e) {}
@@ -272,7 +290,7 @@
     c.arm = function () { clearTimeout(c.timer); c.timer = setTimeout(function () { if (!c.started && P.state === 'playing') fail(); }, 8000); };
     P.cc = c;
     a.onplaying = function () {
-      if (P.cc !== c) return; c.started = true; clearTimeout(c.timer); clearInterval(c.watch);
+      if (P.cc !== c) return; c.started = true; clearTimeout(c.timer); clearInterval(c.watch); if (P.bed && window.GGSound) GGSound.duck(true, -4);
       if (!isFinite(a.duration) || a.duration < cut[0] + cut[1] + 0.4) return;
       var end = a.duration - cut[1];
       c.watch = setInterval(function () { if (P.cc !== c) return clearInterval(c.watch); if (!a.paused && a.currentTime >= end) done(); }, 25);
@@ -284,10 +302,11 @@
     c.arm();
     try { var p = a.play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') fail(); }); } catch (e) { fail(); }
   }
-  function lplay(r, root, onend) {
+  function lplay(r, root, onend, o) {
     lstop(); if (!window.Audio) return;
     P.id = r.id; P.voice = voiceFor(r); P.q = chunkInfo(r); P.i = 0; P.played = 0; P.root = root; P.onend = onend || null;
-    audioEl(); P.state = 'playing'; lpaint(); lnext();
+    P.r = r; P.bedOk = !!(o && o.bed); P.bed = !!bedOf(r);
+    audioEl(); P.state = 'playing'; lpaint(); if (P.bed) bedGo(); lnext();
   }
   // Switching the reader keeps the place: the chunk that is playing starts over in the other voice.
   function setReader(v, quiet) {
@@ -306,14 +325,15 @@
     window.addEventListener('gg-reader', function (e) { if (e.detail && e.detail.from !== 'readings') setReader(e.detail.voice, true); });
     window.addEventListener('storage', function (e) { if (e.key === READER_KEY && (e.newValue === 'brian' || e.newValue === 'jenny')) setReader(e.newValue, true); });
   }
-  function lpause() { if (P.state !== 'playing') return; P.state = 'paused'; if (P.cc) { clearTimeout(P.cc.timer); try { audioEl().pause(); } catch (e) {} } lpaint(); }
+  function lpause() { if (P.state !== 'playing') return; P.state = 'paused'; if (P.cc) { clearTimeout(P.cc.timer); try { audioEl().pause(); } catch (e) {} } if (P.bed && window.GGSound) { GGSound.bedPause(); GGSound.duck(false); } lpaint(); }
   function lresume() {
     if (P.state !== 'paused') return; P.state = 'playing'; lpaint();
+    if (P.bed) bedGo();
     var c = P.cc; if (!c) { lnext(); return; }
     if (!c.started) c.arm();
     try { var p = audioEl().play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') c.fail(); }); } catch (e) { c.fail(); }
   }
-  function lstop() { P.state = 'idle'; P.tok++; if (P.cc) { dropClip(); try { audioEl().pause(); } catch (e) {} } lpaint(); P.id = null; P.root = null; }
+  function lstop() { P.state = 'idle'; P.tok++; if (P.cc) { dropClip(); try { audioEl().pause(); } catch (e) {} } if (P.bed && window.GGSound) GGSound.bedOff(2.5); P.bed = false; P.bedOk = false; P.r = null; lpaint(); P.id = null; P.root = null; }
   window.addEventListener('pagehide', function () { lstop(); });
 
   /* ---------------- look ---------------- */
@@ -446,6 +466,16 @@
     opts = opts || {};
     style();
     var pick = typeof opts.onPick === 'function', usesHash = opts.mode === 'page';
+    var beds = usesHash && !pick; // BLD 991: nature beds in the Readings Library page only
+    if (beds) needSound().then(function () { if (root._r && root.isConnected && st.open === root._r.id) natBtn(root._r); });
+    // The Nature Sounds button beside Reader, and the Sound credit, on a reading with a bed.
+    function natBtn(r) {
+      if (!beds || !window.GGSound || !GGSound.reading(r.id)) return;
+      var bar = root.querySelector('.ggr-listen'); if (!bar || bar.querySelector('.ggr-nat')) return;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'ggr-btn ggr-reader ggr-nat'; bar.appendChild(b);
+      var src = root.querySelector('.ggr-src'); if (src && !src.querySelector('.ggr-snd')) src.insertAdjacentHTML('beforeend', bedCredit(r));
+      lpaint();
+    }
     var st = { q: opts.q || '', trad: opts.trad || '', denom: opts.denom || '', type: opts.type || '', occasion: opts.occasion || '', kind: opts.kind || '', open: opts.id || null, shown: PAGE, deep: false };
     var root = document.createElement('div'); root.className = 'ggr'; el.appendChild(root);
     var listY = 0;
@@ -560,7 +590,7 @@
           stanzas(r).map(function (s, i) { return '<p data-ggr-s="' + i + '">' + esc(s).replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div>' +
           (r.note ? '<p class="ggr-note">' + esc(r.note) + '</p>' : '') +
           '<p class="ggr-src">' + sourceHtml(r) + (r.pd && r.rights === 'pd' ? ' Public domain: ' + esc(r.pd) + '.' : '') + '</p></article>';
-        root._r = r; lpaint();
+        root._r = r; lpaint(); natBtn(r);
         var b = root.querySelector('.ggr-back'); if (b && opts.focus !== false) try { b.focus({ preventScroll: true }); } catch (e) {}
       });
     }
@@ -577,10 +607,11 @@
         var r = root._r; if (!r) return;
         if (P.id === r.id && P.state === 'playing') return lpause();
         if (P.id === r.id && P.state === 'paused') return lresume();
-        lplay(r, root, function (played) { if (!played) say('The recorded voice for this reading is on its way. The words are here to read aloud.'); });
+        lplay(r, root, function (played) { if (!played) say('The recorded voice for this reading is on its way. The words are here to read aloud.'); }, { bed: beds });
         return;
       }
       if (t.classList.contains('ggr-lstop')) { lstop(); return; }
+      if (t.classList.contains('ggr-nat')) { if (window.GGSound) { GGSound.setNature(!GGSound.natureOn()); if (P.id === (root._r || {}).id && P.state === 'playing') bedGo(); } lpaint(); return; }
       if (t.classList.contains('ggr-reader')) { var cur = voiceFor(root._r); setReader(cur === 'jenny' ? 'brian' : 'jenny'); return; }
       if (act === 'back') {
         lstop();
