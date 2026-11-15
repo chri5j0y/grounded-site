@@ -37,6 +37,8 @@
                        #library=workouts, #me=numbers, #me=settings, ...)
      #library=money    Grounded Money (BLD 937, shared/gg-money.js), the One Page sheet since BLD 941, with its own view after it: #library=money-plan,
                        money-month, money-log, money-check, money-import, money-share, money-tools, money-tool:<id>
+                       (BLD 999: each Money screen is its own history entry, so Back returns to the screen before; plan is
+                       Every Line, ahead is Look Ahead, and money-home opens Tools)
      #money=<code>     a Family money plan shared from another phone (read here, never sent anywhere)
      Old addresses keep working: #tending opens Today, #tree opens Grow, #more and #privacy open the sheet,
      #recipe-<id> opens that recipe in the frame over Library. Kid profiles keep Today and My Tree (#tree).
@@ -55,10 +57,10 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=c114', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c117', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=c114', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c120', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c119';
-  var MONEY_SRC = '/shared/gg-money.js?v=b949';
+  var MONEY_SRC = '/shared/gg-money.js?v=c120';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
   var PIMG = '/shared/heroes/p/';   // BLD 970: the new app paintings, each card its own
@@ -538,7 +540,12 @@
   }
 
   function app() { return document.getElementById('hm-app'); }
-  window.addEventListener('popstate', function () { if (S.id && viewOf() !== S.view) render(); });
+  window.addEventListener('popstate', function () {
+    if (!S.id) return; var nv = viewOf(); if (nv === S.view) return;
+    // BLD 999: Back and Forward between two Grounded Money screens paint the earlier screen inside Money (no full redraw).
+    if (moneyPop(nv)) return;
+    render();
+  });
 
   /* =====================================================================
      RENDER
@@ -1292,7 +1299,7 @@
     var h = ''; try { h = decodeURIComponent(location.hash || ''); } catch (e) { h = location.hash || ''; }
     h = h.replace(/^#/, '');
     if (/^recipe-./.test(h)) return { tab: 'library', sub: '', recipe: h.slice(7) };
-    // BLD 937: Grounded Money and the view inside it (#library=money-plan, #library=money-tool:debt).
+    // BLD 937: Grounded Money and the view inside it (#library=money-plan, #library=money-tool:debt). BLD 999: each Money screen is its own history entry.
     var mm = /^library=money(?:-([a-z]+(?::[a-z]+)?))?$/.exec(h); if (mm) return { tab: 'library', sub: 'money', money: mm[1] || '' };
     // BLD 950: the Family Planner and its places (#library=planner, #library=planner-wall, #library=planner-week)
     var pm = /^library=planner(?:-(wall|week))?$/.exec(h); if (pm) return { tab: 'library', sub: 'planner', planner: pm[1] || '' };
@@ -4790,7 +4797,7 @@
      A calm monthly money plan for grown-ups, in the Library under Branches: Relationships (money peace is family peace).
      It opens at #library=money (the module's own view after it, so Back and reload land in place) and loads only then.
      The plan lives in the open profile (GGP.data(id, 'money')), locked with it, so backups and Move to Another Device carry
-     it. Start is the taste (Close the Gap, My Plan, Bring In a Spreadsheet, and three tools); Membership opens This Month, Log,
+     it. Start is the taste (One Page, Close the Gap, Every Line, Bring In a Spreadsheet, and three tools); Membership opens This Month, Log,
      the weekly check-in, Share With Family, and every tool. A teen or a kid sees no Grounded Money.
      Today: a Member with a plan sees one quiet This Month line, only when the month needs closing.
      The Family link (/home/#money=<code>) is read here like #kitchen= (never sent anywhere): it waits for a grown-up profile,
@@ -4822,14 +4829,48 @@
       MN.ctl = GGMoney.render(box, {
         store: 'ggp',                                  // the open profile, locked with it
         member: function () { return member(); },      // read each paint, so a code added now opens the Membership places
-        view: sub || 'sheet',                          // BLD 941: the One Page sheet opens first (#library=money); Money Home is #library=money-home, and every older view name still opens its place
-        onView: function (v) { try { history.replaceState(null, '', location.pathname + location.search + '#library=money' + (v === 'sheet' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); },
+        view: sub || 'sheet',                          // BLD 941: the One Page sheet opens first (#library=money); every older view name still opens its place (BLD 999: -home opens Tools)
+        // BLD 999: each new Money screen is its own history entry (pushState), keeping the path before it, so the phone's
+        // Back and Money's Back both return to the screen before; a screen that takes this one's place uses replaceState.
+        path: history.state && Array.isArray(history.state.gmPath) ? history.state.gmPath : [],
+        history: true, hostBack: true,
+        onView: function (v, push, path) { try { history[push ? 'pushState' : 'replaceState']({ gmPath: path || [] }, '', location.pathname + location.search + '#library=money' + (v === 'sheet' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); moneyTop(v); },
         onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
         toast: toast
       });
       // The link waits until the person answers (Bring It In or Later), so a redraw while Home starts up asks the same once.
       if (MIN && MN.ctl) MN.ctl.receive(MIN);
+      // BLD 999: an older address (-home) settles on its new place in the address.
+      if (MN.ctl && MN.ctl.view() !== (sub || 'sheet')) { try { history.replaceState({ gmPath: MN.ctl.path() }, '', location.pathname + location.search + '#library=money' + (MN.ctl.view() === 'sheet' ? '' : '-' + MN.ctl.view())); } catch (e) {} S.view = viewOf(); }
+      moneyTop(MN.ctl ? MN.ctl.view() : 'sheet');
     });
+  }
+  /* BLD 999: one Back on every Money screen. Home's top button reads Back to Library on One Page, and Back everywhere
+     else, where it returns to the Money screen before (Money's own back()). */
+  function moneyTop(v) {
+    var box = document.getElementById('hm-money'), b = document.querySelector('.hm-subbar .hm-backbtn'); if (!b || !box) return;
+    moneyNavTop();
+    var sp = b.querySelector('span'), home = !v || v === 'sheet';
+    if (home) { b.setAttribute('data-hm-tab', 'library'); b.removeAttribute('data-hm-mback'); if (sp) sp.textContent = 'Back to Library'; }
+    else { b.removeAttribute('data-hm-tab'); b.setAttribute('data-hm-mback', '1'); if (sp) sp.textContent = 'Back'; }
+  }
+  // Money's bar stays in reach while scrolling, just under the site's own sticky top bar.
+  function moneyNavTop() { var box = document.getElementById('hm-money'), tb = document.querySelector('.topbar'); if (box) box.style.setProperty('--gm-navtop', (tb && getComputedStyle(tb).position === 'sticky' ? tb.offsetHeight : 0) + 'px'); }
+  window.addEventListener('resize', moneyNavTop);
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('.hm-subbar [data-hm-mback]'); if (!t) return;
+    e.preventDefault(); e.stopPropagation(); if (MN.ctl) MN.ctl.back(); else goTo('library=money');
+  }, true);
+  // The history moved from one Money screen to another: Money paints it in place and keeps the path of that entry.
+  function moneyPop(nv) {
+    if (!/^library=money/.test(nv) || !/^library=money/.test(S.view || '') || !MN.ctl) return false;
+    var box = document.getElementById('hm-money'); if (!box || !box.isConnected) return false;
+    var r = route(); S.view = nv;
+    try { MN.ctl.pop(r.money || 'sheet', history.state && Array.isArray(history.state.gmPath) ? history.state.gmPath : null); } catch (e) { return false; }
+    var v = MN.ctl.view();   // an older name (-home) settles on its place, and a typed address keeps the path that led to it
+    if (v !== (r.money || 'sheet') || !(history.state && history.state.gmPath)) { try { history.replaceState({ gmPath: MN.ctl.path() }, '', location.pathname + location.search + '#library=money' + (v === 'sheet' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); }
+    moneyTop(v); window.scrollTo(0, 0);
+    return true;
   }
   /* The Family link: read it, keep it in this tab until a grown-up profile is open, then open Grounded Money with it. */
   function readMoney() {
