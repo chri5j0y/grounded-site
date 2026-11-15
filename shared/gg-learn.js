@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b949';
+  var V = 'c115';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -178,7 +178,7 @@
   // battery, kind wishes rings, good things on a branch, the conversation turn, growth rings, the repair bridge, the Name It
   // dial, the circle of support, and a hand on the heart or roots on the body outline. The plan is c114; gg-gfx.js has its own
   // version (GFXJS), so a change to the drawings alone needs no new plan.
-  var GFXP = { p: null }, GFXV = 'c114', GFXJS = 'g990', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
+  var GFXP = { p: null }, GFXV = 'c115', GFXJS = 'g992', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
   function gfxLoad() {
     if (window.GG_GFX) return Promise.resolve(window.GG_GFX);
     if (GFXP.p) return GFXP.p;
@@ -333,7 +333,7 @@
       case 'six': // the six parts as cards, with this tree's own words under each one
         return '<div class="ln-six">' + (sc.h ? '<h3' + A(.2) + '>' + h(sc.h) + '</h3>' : '') + '<div class="ln-sixg">' + PART.map(function (P, j) { var t = (sc.words || [])[j] || ''; return '<div' + A(.7 + j * (sc.gap || .7), 'ln-sx', '--k:' + P[3]) + '><b>' + P[1] + '</b><span>' + P[2] + '</span>' + (t ? '<small>' + h(t) + '</small>' : '') + '</div>'; }).join('') + '</div></div>';
       case 'big': return (sc.bg ? '<img class="ln-dm-bg" src="' + HERO(sc.bg) + '" alt=""><div class="ln-dm-shade ln-big-sh"></div>' : '') + '<div class="ln-big' + (sc.bg ? ' ln-big-on' : '') + '"><p' + A(.3) + '>' + h(sc.h) + '</p>' + (sc.sub ? '<small' + A(1.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
-      case 'points': return '<div class="ln-pts' + ((sc.items || []).length >= 5 ? ' ln-pts5' : '') + '"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (it, j) { var a = Array.isArray(it) ? it : [it]; return '<div' + A(.9 + j * (sc.gap || 1.1), 'ln-pt') + '><span class="ln-dot" style="background:' + (a[2] || acc) + '"></span><span><b>' + h(a[0]) + '</b>' + (a[1] ? '<small>' + h(a[1]) + '</small>' : '') + '</span></div>'; }).join('') + '</div>';
+      case 'points': return '<div class="ln-pts' + ((sc.items || []).length >= 6 ? ' ln-pts5 ln-pts6' : (sc.items || []).length >= 5 ? ' ln-pts5' : '') + '"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (it, j) { var a = Array.isArray(it) ? it : [it]; return '<div' + A(.9 + j * (sc.gap || 1.1), 'ln-pt') + '><span class="ln-dot" style="background:' + (a[2] || acc) + '"></span><span><b>' + h(a[0]) + '</b>' + (a[1] ? '<small>' + h(a[1]) + '</small>' : '') + '</span></div>'; }).join('') + '</div>';
       case 'trees': {
         var T = [['maple', 'Maple', 'Grades K to 5'], ['aspen', 'Aspen', 'Grades 6 to 8'], ['pine', 'Pine', 'Grades 9 to 12'], ['birch', 'Birch', '18 to 25'], ['oak', 'Oak', '26 to 59'], ['sequoia', 'Sequoia', '60 and up'], ['willow', 'Willow', 'Hospice']].concat(sc.grove ? [['grove', 'The Grove', 'Every age, together']] : []);
         return '<div class="ln-trees"><h3' + A(.2) + '>' + h(sc.h || 'Every tree. Tend four, grow two.') + '</h3><div class="ln-trow' + (T.length > 7 ? ' ln-t8' : '') + '">' + T.map(function (x, j) { return '<div' + A(.6 + j * .4, 'ln-tr') + '><img src="' + MARK(x[0] + '-tab') + '" alt=""><b style="color:' + COL[x[0]] + '">' + x[1] + '</b><small>' + x[2] + '</small></div>'; }).join('') + '</div></div>';
@@ -371,7 +371,7 @@
         var dimg = function (x) { return url('/shared/demo/' + x + '.webp'); };
         return '<img class="ln-dm-bg" src="' + HERO(sc.hero || 'home') + '" alt=""><div class="ln-dm-shade"></div>'
           + '<div class="ln-dm-tx' + (sc.side === 'l' ? ' ln-dm-r' : '') + '">' + (sc.eyebrow ? '<div' + A(.3, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + '<h3' + A(.6) + '>' + h(sc.h) + '</h3>'
-          + '<div class="ln-dm-list">' + it.map(function (x, j) { return '<div' + A(1.2 + j * .9, 'ln-dm-pt' + (x.b ? '' : ' ln-dm-cue')) + ' data-j="' + j + '"' + (x.z ? ' data-z="' + x.z.join(',') + '"' : '') + (x.shot ? ' data-shot="' + h(x.shot) + '"' : '') + '><span class="ln-dot" style="background:' + acc + '"></span><span><b>' + h(x.b || '') + '</b>' + (x.s ? '<small>' + h(x.s) + '</small>' : '') + '</span></div>'; }).join('') + '</div></div>'
+          + '<div class="ln-dm-list' + (it.filter(function (x) { return x.b; }).length >= 5 ? ' ln-dm-list5' : '') + '">' + it.map(function (x, j) { return '<div' + A(1.2 + j * .9, 'ln-dm-pt' + (x.b ? '' : ' ln-dm-cue')) + ' data-j="' + j + '"' + (x.z ? ' data-z="' + x.z.join(',') + '"' : '') + (x.shot ? ' data-shot="' + h(x.shot) + '"' : '') + '><span class="ln-dot" style="background:' + acc + '"></span><span><b>' + h(x.b || '') + '</b>' + (x.s ? '<small>' + h(x.s) + '</small>' : '') + '</span></div>'; }).join('') + '</div></div>'
           + (sc.shot2 ? '<div' + A(.5, 'ln-dm-ph ln-dm-ph2' + (sc.side === 'l' ? ' ln-dm-l' : '')) + '><div class="ln-dm-sc"><img src="' + dimg(sc.shot2) + '" alt=""></div></div>' : '')
           + '<div' + A(.2, 'ln-dm-ph' + (sc.side === 'l' ? ' ln-dm-l' : '')) + '><div class="ln-dm-sc"><div class="ln-dm-cam" style="transform:' + demoCam(sc.z) + '">'
           + shots.map(function (x, j) { return '<img src="' + dimg(x) + '" alt="" data-shot="' + h(x) + '"' + (j ? '' : ' class="on"') + '>'; }).join('')
@@ -389,7 +389,7 @@
         var org = g ? g[0] + '% ' + g[1] + '%' : '50% 60%', ci = Array.isArray(sc.items) ? sc.items : [];
         return '<div class="ln-bd ln-bd-clear ln-bd-slow"><img src="' + ART(sc.img, sc._app) + '" alt="" style="transform-origin:' + org + '"></div>'
           + (g ? '<div class="ln-cd-glow" style="left:' + g[0] + '%;top:' + g[1] + '%"></div>' : '<div class="ln-cd-all"></div>')
-          + '<div class="ln-ps ln-ps-' + cs + '"></div><div class="ln-pn ln-cd ln-pn-' + cs + (ci.length > 3 ? ' ln-cd-many' : '') + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '')
+          + '<div class="ln-ps ln-ps-' + cs + '"></div><div class="ln-pn ln-cd ln-pn-' + cs + cdFit(ci, sc.sub) + '">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '')
           + ci.map(function (x, j) { return '<p' + A(1.2 + j * (sc.gap || 1.2), 'ln-cd-l') + '>' + h(x) + '</p>'; }).join('')
           + (sc.sub ? '<p' + A(1.5 + ci.length * (sc.gap || 1.2), 'ln-cd-s') + '>' + h(sc.sub) + '</p>' : '') + '</div>';
       }
@@ -406,7 +406,7 @@
       case 'still': {
         var S = STILL[sc.img] || { s: 'l', w: 400 }, ss = S.s, si = Array.isArray(sc.items) ? sc.items : [];
         return '<div class="ln-bd ln-bd-clear ln-bd-slow"><img src="' + ART(sc.img, sc._app) + '" alt=""></div><div class="ln-ps ln-sps-' + ss + '"></div>'
-          + '<div class="ln-pn ln-cd ln-sp ln-pn-' + ss + (si.length > 3 ? ' ln-cd-many' : '') + '" style="width:' + S.w + 'px">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '')
+          + '<div class="ln-pn ln-cd ln-sp ln-pn-' + ss + cdFit(si, sc.sub) + '" style="width:' + S.w + 'px">' + (sc.eyebrow ? '<div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow) + '</div>' : '') + (sc.h ? '<h3' + A(.8) + '>' + h(sc.h) + '</h3>' : '')
           + si.map(function (x, j) { return '<p' + A(1.2 + j * (sc.gap || 1.2), 'ln-cd-l') + '>' + h(x) + '</p>'; }).join('')
           + (sc.sub ? '<p' + A(1.5 + si.length * (sc.gap || 1.2), 'ln-cd-s') + '>' + h(sc.sub) + '</p>' : '')
           + (Array.isArray(sc.breath) ? '<div class="ln-spb" style="--k:' + acc + '"><div class="ln-brc"></div>' + brRing(sc, sc._k0 === 'breathe' ? 'c' + (sc._brx ? ' h' : '') : '', 'dark') + '</div><div class="ln-brt ln-fg-brt">' + brWords(sc) + '</div>' : '') + '</div>';
@@ -448,6 +448,8 @@
       '.ln-wait.run .ln-wt1{stroke-dashoffset:119.4;}',
       '@media (prefers-reduced-motion:reduce){.ln-wt1{transition:none !important;}}',
       '.ln-pts5{padding-top:34px;}.ln-pts5 h3{margin-bottom:14px;}.ln-pts5 .ln-pt{margin-bottom:11px;}',
+      // BLD 994: six rows (Oak's welcome) sit closer, a little smaller, so the last row stays inside the frame.
+      '.ln-pts.ln-pts6{padding-top:26px;}.ln-pts.ln-pts6 h3{font-size:40px;margin-bottom:10px;}.ln-pts6 .ln-pt{margin-bottom:6px;font-size:25px;line-height:1.18;}.ln-pts6 .ln-pt small{font-size:19px;margin-top:1px;}.ln-pts6 .ln-dot{margin-top:8px;}',
       '.ln-copyline{display:block;font-size:13px;line-height:1.4;color:var(--ggl-soft,#6B5A4D);margin-top:6px;}',
       '.ggl-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:12px;border:1.5px solid var(--ggl-acc);background:transparent;color:var(--ggl-acc);font:inherit;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;}',
       '.ggl-btn.pri{background:var(--ggl-acc);color:#FFF8EC;}.ggl-btn.quiet{border-color:var(--ggl-line);color:var(--ggl-soft);}',
@@ -555,6 +557,8 @@
       '.ln-dm-tx h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:46px;line-height:1.04;margin:6px 0 22px;text-wrap:balance;text-shadow:0 2px 12px rgba(0,0,0,.4);}',
       '.ln-dm-pt{display:flex;gap:14px;align-items:flex-start;margin:0 0 16px;font-size:25px;line-height:1.22;}.ln-dm-pt b{font-weight:600;}.ln-dm-pt small{display:block;font-size:19px;color:#E9D7B4;margin-top:3px;line-height:1.3;}',
       '.ln-dm-pt .ln-dot{width:13px;height:13px;margin-top:9px;box-shadow:0 0 0 3px rgba(246,239,226,.25);}.ln-dm-cue{display:none;}',
+      // BLD 994: a demo list of five or more rows sits closer, so the last row stays inside the frame.
+      '.ln-dm-list5 .ln-dm-pt{margin-bottom:9px;font-size:23px;line-height:1.18;}.ln-dm-list5 .ln-dm-pt small{font-size:18px;margin-top:2px;line-height:1.24;}.ln-dm-list5 .ln-dm-pt .ln-dot{margin-top:8px;}',
       '.ln-dm-ph{position:absolute;left:600px;top:36px;width:300px;height:626px;padding:10px;box-sizing:border-box;border-radius:46px;background:linear-gradient(145deg,#3A2C22,#14100C);box-shadow:0 34px 70px rgba(0,0,0,.5),inset 0 0 0 1.5px rgba(255,240,210,.18);}',
       '.ln-dm-ph.ln-dm-l{left:64px;}.ln-dm-ph2{left:470px;top:84px;transform:scale(.82) rotate(-5deg) !important;transform-origin:50% 0;opacity:.0;filter:brightness(.82);}.go .ln-dm-ph2{opacity:.92;}.ln-dm-ph2.ln-dm-l{left:200px;transform:scale(.82) rotate(5deg) !important;}',
       '.ln-dm-sc{position:relative;width:280px;height:606px;border-radius:36px;overflow:hidden;background:#F6EFE2;}.ln-dm-ph2 .ln-dm-sc img{width:100%;display:block;}',
@@ -582,7 +586,8 @@
       '.ln-bdon .ln-wd p{color:#FFF8EC;border-left-color:#E7B65A !important;text-shadow:0 1px 10px rgba(0,0,0,.45);}',
       '.ln-bdon .ln-step{background:rgba(255,252,246,.95);color:#2C1810;}.ln-bdon .ln-step b{text-shadow:none;}.ln-bdon .ln-arr{color:#F2C46A;}',
       '.ln-bdon .ln-brt{color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.5);}.ln-bdon .ln-brc{background:radial-gradient(circle,rgba(255,226,170,.85) 0%,rgba(255,226,170,0) 72%);}',
-      '.ln-bdon .ln-qz .ln-eb,.ln-bdon .ln-story .ln-eb{color:#F2C46A !important;}.ln-bdon .ln-lc,.ln-bdon .ln-sx,.ln-bdon .ln-card,.ln-bdon .ln-tr,.ln-bdon .ln-story{color:#2C1810;}.ln-bdon .ln-story h3,.ln-bdon .ln-sx h3{color:#2C1810;text-shadow:none;}',
+      '.ln-bdon .ln-qz .ln-eb{color:#F2C46A !important;}.ln-bdon .ln-lc,.ln-bdon .ln-sx,.ln-bdon .ln-card,.ln-bdon .ln-tr,.ln-bdon .ln-story{color:#2C1810;}.ln-bdon .ln-story h3,.ln-bdon .ln-sx h3{color:#2C1810;text-shadow:none;}',
+      // BLD 994: the story card is cream in both themes, so its eyebrow keeps the app color (the light gold read 1.6 to 1 there).
       // paint, candle, and figure: the words on a soft shade on one side of the painting
       '.ln-ps{position:absolute;inset:0;pointer-events:none;}.ln-ps-b{background:linear-gradient(0deg,rgba(20,13,7,.78) 0%,rgba(20,13,7,.42) 30%,rgba(20,13,7,0) 55%);}',
       '.ln-ps-l{background:linear-gradient(90deg,rgba(20,13,7,.74) 0%,rgba(20,13,7,.46) 38%,rgba(20,13,7,0) 62%);}.ln-ps-r{background:linear-gradient(270deg,rgba(20,13,7,.74) 0%,rgba(20,13,7,.46) 38%,rgba(20,13,7,0) 62%);}',
@@ -590,7 +595,7 @@
       '.ln-pn{position:absolute;color:#FFF8EC;}.ln-pn-l{left:56px;top:56px;width:440px;}.ln-pn-r{right:56px;top:56px;width:440px;text-align:right;}.ln-pn-t{left:90px;right:90px;top:42px;text-align:center;}.ln-pn-b{left:60px;right:60px;bottom:46px;}',
       '.ln-pn h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:50px;line-height:1.06;margin:6px 0 0;text-wrap:balance;text-shadow:0 2px 14px rgba(0,0,0,.55);}',
       '.ln-pn>p{font-size:24px;line-height:1.35;margin:12px 0 0;color:#F2DDB5;text-shadow:0 1px 8px rgba(0,0,0,.55);}.ln-pn-b h3{font-size:46px;}',
-      '.ln-cd .ln-cd-l{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:34px;line-height:1.18;margin:14px 0 0;color:#FFF8EC;}.ln-cd-many .ln-cd-l{font-size:28px;margin-top:9px;}.ln-cd .ln-cd-s{font-size:21px;color:#EBD9B6;margin-top:16px;}',
+      '.ln-cd .ln-cd-l{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:34px;line-height:1.18;margin:14px 0 0;color:#FFF8EC;}.ln-cd-many .ln-cd-l{font-size:28px;margin-top:9px;}.ln-cd-long.ln-pn-l,.ln-cd-long.ln-pn-r{top:34px;}.ln-cd-long h3{font-size:40px;}.ln-cd-long .ln-cd-l{font-size:24px;line-height:1.14;margin-top:7px;}.ln-cd-long .ln-cd-s{margin-top:10px;}.ln-cd .ln-cd-s{font-size:21px;color:#EBD9B6;margin-top:16px;}',
       '.ln-cd-glow{position:absolute;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,214,140,.5) 0%,rgba(255,190,110,.16) 34%,rgba(255,190,110,0) 68%);mix-blend-mode:screen;animation:lnFl 3.4s ease-in-out infinite alternate;}',
       '.ln-cd-all{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 60%,rgba(255,200,120,.16),rgba(255,200,120,0) 60%);mix-blend-mode:screen;animation:lnFl 3.4s ease-in-out infinite alternate;}',
       '@keyframes lnFl{0%{opacity:.72;transform:scale(.96)}30%{opacity:1;transform:scale(1.03)}55%{opacity:.84;transform:scale(.99)}80%{opacity:.96;transform:scale(1.02)}100%{opacity:.8;transform:scale(.98)}}',
@@ -598,10 +603,12 @@
       '.ln-fgb{position:relative;width:300px;height:300px;}.ln-fg3 .ln-brc{background:radial-gradient(circle,rgba(255,236,200,.34) 0%,rgba(255,236,200,.2) 52%,rgba(255,242,218,.8) 62%,rgba(255,236,200,0) 71%);opacity:.95;}.ln-3d .ln-fgb{width:430px;height:430px;}.ln-3d .ln-fg3 .ln-brc{opacity:.8;}',
       '.ln-sps-l{background:linear-gradient(90deg,rgba(20,13,7,.72) 0%,rgba(20,13,7,.5) 24%,rgba(20,13,7,.16) 40%,rgba(20,13,7,0) 50%);}.ln-sps-r{background:linear-gradient(270deg,rgba(20,13,7,.72) 0%,rgba(20,13,7,.5) 24%,rgba(20,13,7,.16) 40%,rgba(20,13,7,0) 50%);}.ln-sp.ln-pn-l{left:36px;top:40px;}.ln-sp.ln-pn-r{right:36px;top:40px;}.ln-sp h3{font-size:44px;}.ln-sp .ln-cd-l{font-size:28px;}.ln-sp.ln-cd-many .ln-cd-l{font-size:24px;}',
       '.ln-spb{position:relative;width:150px;height:150px;margin-top:18px;}.ln-pn-r .ln-spb{margin-left:auto;}.ln-spb .ln-brc{opacity:0 !important;}.ln-spb svg.ggbr{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;opacity:.9;}.ln-sp .ln-fg-brt{margin-top:12px;font-size:34px;}',
-      '.ggl-small .ln-sp.ln-pn h3{font-size:52px;}.ggl-small .ln-sp.ln-pn .ln-cd-l{font-size:34px;}.ggl-small .ln-sp.ln-pn>p.ln-cd-s{font-size:28px;}.ggl-small .ln-sp.ln-pn .ln-fg-brt{font-size:44px;height:54px;}.ggl-small .ln-sp.ln-pn .ln-spb{width:170px;height:170px;}',
+      '.ggl-small .ln-sp.ln-pn h3{font-size:52px;}.ggl-small .ln-sp.ln-pn .ln-cd-l{font-size:34px;}.ggl-small .ln-sp.ln-pn>p.ln-cd-s{font-size:28px;}.ggl-small .ln-sp.ln-pn.ln-cd-long .ln-cd-l{font-size:28px;}.ggl-small .ln-sp.ln-pn .ln-fg-brt{font-size:44px;height:54px;}.ggl-small .ln-sp.ln-pn .ln-spb{width:120px;height:120px;margin-top:10px;}.ggl-small .ln-sp.ln-pn .ln-fg-brt{margin-top:8px;}',
       '.ln-fg-brt{position:relative;height:50px;width:100%;margin-top:22px;font-family:\'Cormorant Garamond\',serif;font-size:40px;font-weight:600;color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.55);}.ln-pn-r .ln-fg-brt i{right:0;}',
       '.ln-fig3{position:absolute;top:3%;height:92%;width:46%;pointer-events:none;opacity:0;transition:opacity .9s ease;}.ln-fig3-r{right:1%;}.ln-fig3-l{left:1%;}.ln-3d .ln-fig3{opacity:1;}',
-      '.ggl-small .ln-pn h3{font-size:62px;}.ggl-small .ln-pn>p{font-size:32px;}.ggl-small .ln-pn-l,.ggl-small .ln-pn-r{width:470px;}.ggl-small .ln-cd .ln-cd-l{font-size:42px;}.ggl-small .ln-cd-many .ln-cd-l{font-size:34px;}.ggl-small .ln-fg-brt{font-size:52px;height:62px;}.ggl-small .ln-pn-b h3{font-size:58px;}',
+      '.ggl-small .ln-pn h3{font-size:62px;}.ggl-small .ln-pn>p{font-size:32px;}.ggl-small .ln-pn-l,.ggl-small .ln-pn-r{width:470px;}.ggl-small .ln-cd .ln-cd-l{font-size:42px;}.ggl-small .ln-cd-many .ln-cd-l{font-size:34px;}.ggl-small .ln-cd-long h3{font-size:46px;}.ggl-small .ln-cd-long .ln-cd-l{font-size:28px;margin-top:6px;}.ggl-small .ln-cd-long>p.ln-cd-s{font-size:26px;margin-top:8px;}.ggl-small .ln-fg-brt{font-size:52px;height:62px;}.ggl-small .ln-pn-b h3{font-size:58px;}',
+      // BLD 994: on a phone the headline is larger and climbs higher, so the bottom shade is taller and a little darker.
+      '.ggl-small .ln-ps-b{background:linear-gradient(0deg,rgba(20,13,7,.86) 0%,rgba(20,13,7,.64) 32%,rgba(20,13,7,.3) 52%,rgba(20,13,7,0) 72%);}',
       '@media (prefers-reduced-motion:reduce){.go .ln-bd img,.ln-cd-glow,.ln-cd-all{animation:none !important;}.ln-fig3{transition:none;}}',
       // BLD 989 Video Graphics: the graphic's panel on the open side, and the words narrowed beside it
       '.ln-gfx{position:absolute;top:56px;width:270px;height:400px;z-index:2;pointer-events:none;box-sizing:border-box;opacity:0;transition:opacity .9s ease .25s;}.go .ln-gfx{opacity:1;}',
@@ -773,6 +780,13 @@
       else out.push(x);
     });
     return out.map(function (t, i) { return { t: t, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0, bk: (cue.bk || {})[i] }; });
+  }
+  // BLD 994: the words of a candle or still scene fit the frame by their length, not only their count: more than three lines
+  // or about 160 letters in all take the compact size (ln-cd-many), and about 200 or more (or seven lines) the long size
+  // (ln-cd-long), so Psalm 23, Saint Francis, Psalm 121, Metta, and Just Like Me stay inside the frame at every size.
+  function cdFit(items, sub) {
+    var n = items.length, ch = items.join('').length + String(sub || '').length;
+    return ch >= 200 || n >= 7 ? ' ln-cd-many ln-cd-long' : n > 3 || ch >= 160 ? ' ln-cd-many' : '';
   }
   var REV = { demo: '.ln-dm-pt', points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p', tale: '.ln-tl-s', candle: '.ln-cd-l' };
   var NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
@@ -1793,7 +1807,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c114'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c115'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

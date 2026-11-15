@@ -23,6 +23,15 @@
              (one ring of dots drawing). day  the day arc; bridge  the repair bridge (one path drawing). cup  a plain water glass,
              battery, dial  the Name It dial (one fill level drawing). weather  Maple's weather; branch  good things on a branch;
              talk  the conversation turn. People are always plain dots, never figures.
+   BLD 992 Video Graphics Round 3 (Chris, November 15, 2026: the mockup, "build as shown"):
+     forest  three trees linked underground: roots, threads, share (water travels to the little tree), shelter (wind), grow.
+     hope    the hope path: a goal flag, a path (two with def.two), and a warm dot that walks it.
+     pulse   a heartbeat line in honey that slows and settles; no numbers, no grid, no red.
+     note    the set it down notebook: blank marks, one gold step for tomorrow, and the cover closes.
+     stones  stepping stones across a stream, lit one at a time, a warm dot hopping onto each.
+             These five are named by a def's x on a plain panel kind, and each keeps its own clock (timed, below).
+     wx      a def flag: weather icons take the place of the dots beside Sunny, Partly cloudy, and Rainy in the points.
+     box     a def's own place for the panel, off a person in the painting.
    GGGfx.draw(el) draws into a player's panel (el.__gfx = {g, def, steps: [{b, v}], dk}); GGGfx.at(el, beat) moves it to
    the step for that sentence (-1 before the first, Infinity shows everything, as stepping by hand does).
    Reduced motion: no pulsing, glowing, or riding; each step lands at once, and the color and the words lead.
@@ -957,15 +966,264 @@
     }
   };
 
+  /* ---------------- BLD 992 Video Graphics Round 3: five drawings on their own clock ----------------
+     Each one keeps the states its sentences have reached (a value is one state, or several joined by +), and each state
+     moves in from the moment its sentence starts; several new at once follow each other a moment apart. Under the drawing,
+     def.w gives the line for each step of the token in order ([line, smaller line]). A def names its drawing with x (forest,
+     hope, pulse, note, stones) on top of a plain panel kind, so the player needs no new name for it. Stepping by hand shows
+     each state landed; reduced motion lands each state at once and holds still. */
+  function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function ease(u) { u = clamp01(u); return u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2; }
+  var TSTATES = { forest: ['roots', 'threads', 'share', 'shelter', 'grow'], hope: ['goal', 'path', 'path2', 'walk'], pulse: ['beat', 'slow', 'calm'],
+    note: ['write', 'step', 'close'], stones: ['s1', 'h1', 's2', 'h2', 's3', 'h3'] };
+  function timed(x, make) {
+    return {
+      draw: function (host, G) {
+        var C = ink(G.dk), s = svgOf(host, '0 0 270 400');
+        var L = lab(s, 135, 340, 30, C), L2 = sub(s, 135, 372, 18, C);
+        G.$ = { C: C, on: {}, t0: performance.now(), L: L, L2: L2, lw: null };
+        G.$.fn = make(s, C, G.dk, G);
+        host.setAttribute('data-x', x);
+      },
+      at: function (host, G, i) {
+        var $ = G.$, now = performance.now(), on = {}, order = [], k = -1, ALL = TSTATES[x];
+        (G.steps || []).forEach(function (s, j) {
+          if (i !== Infinity && s.b > i) return; k = j;
+          String(s.v).split('+').forEach(function (v) { (v === 'all' ? ALL : [v]).forEach(function (w) { if (ALL.indexOf(w) >= 0 && !on[w]) { on[w] = 1; order.push(w); } }); });
+        });
+        var fresh = 0, land = i === Infinity || G.red;
+        order.forEach(function (v) { if ($.on[v] == null) $.on[v] = land ? -1e9 : now + 1400 * (fresh++); });
+        Object.keys($.on).forEach(function (v) { if (!on[v]) delete $.on[v]; });
+        var W = (G.def.w || [])[k] || ['', ''];
+        if ($.lw !== W) { $.lw = W; setT($.L, W[0] || '', 30, 246); setT($.L2, W[1] || '', 18, 250); }
+        host.setAttribute('data-v', order.join(' ') || '-');
+        if (G.red) paintT(G, now); else loop(host, G);
+      },
+      frame: function (host, G, now) { paintT(G, now); return true; }
+    };
+  }
+  function paintT(G, now) {
+    var $ = G.$;
+    $.fn((now - $.t0) / 1000, function (v) { var a = $.on[v]; return a == null || now < a ? -1 : (now - a) / 1000; });
+  }
+
+  // forest: three trees above a soil line; roots reach, fine threads link them, drops of water travel from the big tree to
+  // the little one (share), soft wind lines pass over (shelter), and the little tree grows (grow). No symbols.
+  var FOREST = timed('forest', function (s, C, dk, G) {
+    var RED = G.red, d = el('defs', {}, s), id = 'gx' + (++N), gf = glowF(d, id + 'g', C.glow, 3, 0.8);
+    var lf = radial(d, id + 'a', '#A9C97F', '#56743F'), lf2 = radial(d, id + 'b', '#C3DD98', '#6E8F50'), bk = radial(d, id + 'c', '#A07650', '#6A4A2E');
+    el('rect', { x: 6, y: 212, width: 258, height: 96, rx: 18, fill: dk ? 'rgba(150,108,66,.26)' : '#E6D6BB' }, s);
+    el('path', { d: 'M6 213 Q135 205 264 213', stroke: C.line, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round' }, s);
+    var T = [{ x: 62, h: 104, r: 44, w: 16 }, { x: 150, h: 82, r: 34, w: 12 }, { x: 224, h: 50, r: 22, w: 8 }], RC = dk ? '#D8B48C' : '#8A6238', roots = [];
+    T.forEach(function (q) {
+      var f = q.r / 44, x = q.x, b = 212;
+      [['M' + x + ' ' + b + ' C' + (x - 8 * f) + ' ' + (b + 18 * f) + ' ' + (x - 26 * f) + ' ' + (b + 26 * f) + ' ' + (x - 46 * f) + ' ' + (b + 40 * f), 3.6],
+       ['M' + x + ' ' + b + ' C' + (x + 2) + ' ' + (b + 26 * f) + ' ' + (x - 4) + ' ' + (b + 44 * f) + ' ' + x + ' ' + (b + 58 * f), 4],
+       ['M' + x + ' ' + b + ' C' + (x + 8 * f) + ' ' + (b + 18 * f) + ' ' + (x + 26 * f) + ' ' + (b + 26 * f) + ' ' + (x + 46 * f) + ' ' + (b + 40 * f), 3.6]].forEach(function (a) {
+        roots.push(el('path', { d: a[0], stroke: RC, 'stroke-width': a[1] * Math.max(0.6, f), 'stroke-linecap': 'round', fill: 'none' }, s)); });
+    });
+    var TH = ['M62 270 Q106 288 150 257', 'M150 257 Q188 264 224 241', 'M108 252 Q113 250 114 243', 'M185 243 Q193 241 201 236', 'M16 252 Q40 280 62 270', 'M247 236 Q258 248 262 262', 'M84 262 Q92 276 104 280', 'M196 252 Q200 262 210 262'];
+    var th = el('g', {}, s), threads = TH.map(function (p) { return el('path', { d: p, stroke: C.glow, 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round' }, th); });
+    [roots, threads].forEach(function (A) { A.forEach(function (p) { var L = p.getTotalLength ? p.getTotalLength() : 80; p.__L = L; p.setAttribute('stroke-dasharray', L.toFixed(1) + ' ' + (L + 10).toFixed(1)); p.setAttribute('stroke-dashoffset', L.toFixed(1)); }); });
+    var trees = T.map(function (q, k) {
+      var g = el('g', {}, s), x = q.x, b = 212, top = b - q.h + q.r * 0.4, w = q.w;
+      el('path', { d: 'M' + (x - w / 2) + ' ' + b + ' Q' + (x - w * 0.3) + ' ' + (b - q.h * 0.5) + ' ' + (x - w * 0.16) + ' ' + top + ' L' + (x + w * 0.16) + ' ' + top + ' Q' + (x + w * 0.3) + ' ' + (b - q.h * 0.5) + ' ' + (x + w / 2) + ' ' + b + ' Z', fill: bk }, g);
+      var cy = b - q.h, r = q.r, can = el('g', {}, g);
+      [[0, 0, 1], [-0.62, 0.28, 0.66], [0.62, 0.28, 0.66], [0, -0.42, 0.7]].forEach(function (c) { el('circle', { cx: x + c[0] * r, cy: cy + c[1] * r, r: c[2] * r, fill: k === 2 ? lf2 : lf }, can); });
+      el('circle', { cx: x - 0.28 * r, cy: cy - 0.32 * r, r: 0.34 * r, fill: '#FFFFFF', opacity: 0.13 }, can);
+      return { g: g, hi: el('circle', { cx: x, cy: cy, r: r * 1.15, fill: C.glow, opacity: 0 }, g) };
+    });
+    var wind = [0, 1, 2].map(function (k) { return el('path', { d: 'M4 ' + (128 - k * 12) + ' C20 ' + (118 - k * 12) + ' 24 ' + (62 - k * 12) + ' 70 ' + (46 - k * 12) + ' C120 ' + (30 - k * 12) + ' 200 ' + (36 - k * 12) + ' 264 ' + (70 - k * 10), stroke: C.line, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round', 'stroke-dasharray': '22 12', opacity: 0 }, s); });
+    var WP = el('path', { d: 'M62 214 C64 242 58 256 62 270 Q106 288 150 257 Q188 264 224 241 C226 232 224 222 224 214', fill: 'none', stroke: 'none' }, s), WL = WP.getTotalLength ? WP.getTotalLength() : 300;
+    var drops = [0, 1, 2, 3].map(function () { return el('circle', { r: 3.8, fill: '#7FB8DE', stroke: dk ? 'rgba(255,255,255,.7)' : '#FFFFFF', 'stroke-width': 1.2, opacity: 0 }, s); });
+    return function (t, since) {
+      var r = since('roots'); roots.forEach(function (p) { p.setAttribute('stroke-dashoffset', (p.__L * (1 - (r < 0 ? 0 : ease(r / 2)))).toFixed(1)); });
+      var h = since('threads'); threads.forEach(function (p, i) { p.setAttribute('stroke-dashoffset', (p.__L * (1 - (h < 0 ? 0 : ease((h - i * 0.15) / 1.8)))).toFixed(1)); });
+      var sh = since('share'), on = sh >= 0 ? ease(sh / 1.2) : 0;
+      th.setAttribute('filter', sh >= 0 && !RED ? gf : '');
+      drops.forEach(function (c, i) {
+        var u = RED ? (i + 0.5) / 4 : ((t * 0.14 + i / 4) % 1), q = WP.getPointAtLength(u * WL), fade = Math.min(1, u * 8, (1 - u) * 8);
+        c.setAttribute('cx', q.x.toFixed(1)); c.setAttribute('cy', q.y.toFixed(1)); c.setAttribute('opacity', (on * fade).toFixed(2));
+      });
+      trees[2].hi.setAttribute('opacity', (on * 0.2).toFixed(2));
+      var w = since('shelter'), wo = w >= 0 ? ease(w / 1.2) : 0;
+      wind.forEach(function (p, k) { p.setAttribute('opacity', (wo * (0.75 - k * 0.18)).toFixed(2)); p.setAttribute('stroke-dashoffset', RED ? 0 : (-t * 40 - k * 9).toFixed(1)); });
+      var gr = since('grow'), gs = 1 + 0.24 * (gr >= 0 ? ease(gr / 3) : 0);
+      trees[2].g.setAttribute('transform', 'translate(224 212) scale(' + gs.toFixed(3) + ') translate(-224 -212)');
+    };
+  });
+
+  // hope: a flag on a rise is the goal, a path draws toward it (def.two: a second path), and a warm dot walks the path.
+  var HOPE = timed('hope', function (s, C, dk, G) {
+    var RED = G.red, two = !!G.def.two, d = el('defs', {}, s), id = 'gx' + (++N), gf = glowF(d, id + 'g', C.glow, 5, 0.85);
+    el('path', { d: 'M0 300 L0 270 C60 264 96 238 130 198 C160 162 186 114 214 106 C236 100 256 112 270 120 L270 300 Z', fill: dk ? 'rgba(255,248,236,.08)' : '#E7DCC6' }, s);
+    var P = ['M40 280 C120 276 70 222 128 206 C184 190 156 138 214 106', 'M40 280 C150 286 236 236 232 176 C230 140 204 130 214 106'], tracks = [], trails = [];
+    P.forEach(function (p, k) {
+      if (k && !two) return;
+      tracks.push(el('path', { d: p, fill: 'none', stroke: C.dim, 'stroke-width': 3.5, 'stroke-dasharray': '2 8', 'stroke-linecap': 'round', opacity: 0 }, s));
+      var q = el('path', { d: p, fill: 'none', stroke: C.glow, 'stroke-width': 4, 'stroke-linecap': 'round' }, s), L = q.getTotalLength ? q.getTotalLength() : 260;
+      q.__L = L; q.setAttribute('stroke-dasharray', L.toFixed(1) + ' ' + (L + 10).toFixed(1)); q.setAttribute('stroke-dashoffset', L.toFixed(1)); trails.push(q);
+    });
+    el('circle', { cx: 40, cy: 280, r: 8, fill: soft(dk).panel, stroke: C.line, 'stroke-width': 2 }, s);
+    var halo = el('circle', { cx: 214, cy: 106, r: 24, fill: C.glow, opacity: 0 }, s), flag = el('g', {}, s);
+    el('path', { d: 'M214 106 V52', stroke: C.line, 'stroke-width': 3, 'stroke-linecap': 'round' }, flag);
+    var pen = el('path', { fill: C.glow }, flag);
+    el('ellipse', { cx: 214, cy: 107, rx: 10, ry: 3, fill: C.line, opacity: 0.6 }, flag);
+    var wk = el('g', { opacity: 0 }, s); el('circle', { r: 16, fill: C.glow, opacity: 0.3 }, wk); el('circle', { r: 9, fill: C.glow, filter: RED ? '' : gf }, wk);
+    return function (t, since) {
+      var g = since('goal'), gu = g < 0 ? 0 : ease(g / 1.2);
+      flag.setAttribute('transform', 'translate(214 106) scale(1 ' + Math.max(0.001, gu).toFixed(3) + ') translate(-214 -106)');
+      var w = RED ? 0 : 3 * Math.sin(t * 2.4);
+      pen.setAttribute('d', 'M214 54 Q230 ' + (55 + w).toFixed(1) + ' 248 ' + (63 + w * 0.5).toFixed(1) + ' Q230 ' + (70 - w * 0.5).toFixed(1) + ' 214 78 Z');
+      var pa = [since('path'), since('path2')], wv = since('walk');
+      trails.forEach(function (q, k) { var v = pa[k], u = v < 0 ? 0 : ease(v / 2); q.setAttribute('stroke-dashoffset', (q.__L * (1 - u)).toFixed(1)); q.setAttribute('opacity', wv >= 0 && k ? 0.45 : 1); tracks[k].setAttribute('opacity', g >= 0 || v >= 0 ? 1 : 0); });
+      var wu = wv < 0 ? 0 : ease(wv / 4.2), pt = trails[0].getPointAtLength(trails[0].__L * wu);
+      wk.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')'); wk.setAttribute('opacity', g >= 0 || wv >= 0 || pa[0] >= 0 ? 1 : 0);
+      halo.setAttribute('opacity', (wu >= 1 ? 0.28 : g >= 0 ? 0.1 * gu : 0).toFixed(2));
+    };
+  });
+
+  // pulse: a soft honey line with gentle rounded beats that spread farther apart as it settles, and a small heart beating
+  // along. No numbers, no grid, no red. beat (a steady beat), slow (the beats ease apart over def.T seconds), calm (slow and
+  // steady). def.I0 and def.I1 are the seconds between beats at the start and once settled.
+  var PULSE = timed('pulse', function (s, C, dk, G) {
+    var RED = G.red, D = { I0: num(G.def.I0, 0.62), I1: num(G.def.I1, 1.25), T: num(G.def.T, 10) }, d = el('defs', {}, s), id = 'gx' + (++N), gf = glowF(d, id + 'g', C.glow, 4, 0.8);
+    var lg = el('linearGradient', { id: id + 'l', gradientUnits: 'userSpaceOnUse', x1: 34, y1: 0, x2: 236, y2: 0 }, d);
+    el('stop', { offset: '0%', 'stop-color': C.glow, 'stop-opacity': 0 }, lg); el('stop', { offset: '45%', 'stop-color': C.glow, 'stop-opacity': 0.85 }, lg); el('stop', { offset: '100%', 'stop-color': C.glow, 'stop-opacity': 1 }, lg);
+    el('rect', { x: 14, y: 66, width: 242, height: 150, rx: 26, fill: soft(dk).panel, stroke: C.dim, 'stroke-width': 1.5 }, s);
+    el('path', { d: 'M34 172 H236', stroke: C.dim, 'stroke-width': 1.5, 'stroke-linecap': 'round' }, s);
+    var line = el('path', { fill: 'none', stroke: 'url(#' + id + 'l)', 'stroke-width': 3.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, s);
+    var head = el('circle', { r: 6, cx: 236, cy: 172, fill: C.glow, filter: RED ? '' : gf }, s), hg = el('g', {}, s);
+    el('path', { d: 'M0 14 C-20 2 -26 -14 -14 -21 C-6 -25 0 -18 0 -13 C0 -18 6 -25 14 -21 C26 -14 20 2 0 14 Z', fill: C.on, stroke: C.glow, 'stroke-width': 2, 'stroke-linejoin': 'round' }, hg);
+    function bump(ds) { return Math.exp(-Math.pow((ds - 0.15) / 0.1, 2)) + 0.5 * Math.exp(-Math.pow((ds - 0.42) / 0.11, 2)); }
+    return function (t, since) {
+      var sl = since('slow'), ca = since('calm'), t0 = sl >= 0 ? t - sl : ca >= 0 ? -1e9 : 1e9, I0 = ca >= 0 && sl < 0 ? D.I1 : D.I0, I1 = D.I1, T = D.T;
+      function I(x) { return I0 + (I1 - I0) * clamp01((x - t0) / T); }
+      function phi(x) {
+        if (x <= t0) return x / I0;
+        var k = (I1 - I0) / T, xx = Math.min(x, t0 + T), p = t0 / I0 + (k ? Math.log(I(xx) / I0) / k : (xx - t0) / I0);
+        return x > t0 + T ? p + (x - t0 - T) / I1 : p;
+      }
+      function yAt(x) { var f = phi(x), fr = ((f % 1) + 1) % 1; return 172 - 46 * bump(fr * I(x)); }
+      var now = RED ? t0 + T + 2.3 : t, dd = '';
+      if (RED && t0 > 1e8) now = 2.3;
+      for (var x = 34; x <= 236; x += 2) dd += (dd ? ' L' : 'M') + x + ' ' + yAt(now - (236 - x) / 202 * 2.8).toFixed(1);
+      line.setAttribute('d', dd); head.setAttribute('cy', yAt(now).toFixed(1));
+      var f = phi(now), b = RED ? 0 : bump((((f % 1) + 1) % 1) * I(now));
+      hg.setAttribute('transform', 'translate(135 266) scale(' + (1.5 * (1 + 0.08 * b)).toFixed(3) + ')');
+    };
+  });
+
+  // note: an open notebook; blank marks appear for what is spinning (write, never words), one gold mark glows as the
+  // step for tomorrow (step), and the cover closes and rests (close).
+  var NOTE = timed('note', function (s, C, dk, G) {
+    var RED = G.red, d = el('defs', {}, s), id = 'gx' + (++N), gf = glowF(d, id + 'g', C.glow, 3, 0.9);
+    var paper = dk ? '#F6EEDF' : '#FFFCF6', edge = dk ? 'rgba(255,248,236,.75)' : '#A8957C', rule = '#EADFCB', mark = '#B09C82', gold = '#E3A83E';
+    var book = el('g', {}, s);
+    el('ellipse', { cx: 135, cy: 248, rx: 118, ry: 8, fill: '#000', opacity: dk ? 0.25 : 0.08 }, book);
+    function page(g, x) { el('rect', { x: x, y: 70, width: 113, height: 170, rx: 8, fill: paper, stroke: edge, 'stroke-width': 2 }, g); for (var y = 100; y <= 220; y += 26) el('path', { d: 'M' + (x + 10) + ' ' + (y + 8) + ' H' + (x + 103), stroke: rule, 'stroke-width': 1.2 }, g); }
+    var left = el('g', {}, book); page(left, 22);
+    var W = [72, 58, 80, 50], marks = W.map(function (w, i) { return el('rect', { x: 34, y: 100 + i * 26, width: 0, height: 7, rx: 3.5, fill: mark }, left); });
+    var flap = el('g', {}, book), front = el('g', {}, flap); page(front, 135);
+    var steps = [[0, 58], [2, 44]].map(function (q) { var g = el('g', { opacity: 0 }, front); el('circle', { cx: 150, cy: 103.5 + q[0] * 26, r: 4.5, fill: gold }, g); el('rect', { x: 160, y: 100 + q[0] * 26, width: q[1], height: 7, rx: 3.5, fill: gold }, g); return g; });
+    var cover = el('g', { opacity: 0 }, flap);
+    el('rect', { x: 135, y: 68, width: 115, height: 174, rx: 9, fill: '#7A5638', stroke: dk ? 'rgba(255,248,236,.5)' : '#5E4128', 'stroke-width': 2 }, cover);
+    el('rect', { x: 145, y: 80, width: 95, height: 150, rx: 6, fill: 'none', stroke: '#A07650', 'stroke-width': 1.5 }, cover);
+    var ribbon = el('path', { d: 'M226 240 V266 L231 260 L236 266 V240 Z', fill: C.glow, opacity: 0 }, flap);
+    el('path', { d: 'M135 72 V238', stroke: edge, 'stroke-width': 1.5, opacity: 0.6 }, book);
+    return function (t, since) {
+      var w = since('write'); marks.forEach(function (m, i) { var u = w < 0 ? 0 : RED ? 1 : ease((w - i * 0.7) / 0.6); m.setAttribute('width', (W[i] * u).toFixed(1)); });
+      var sp = since('step'); steps.forEach(function (g, i) { var u = sp < 0 ? 0 : RED ? 1 : ease((sp - i * 0.8) / 0.6); g.setAttribute('opacity', u.toFixed(2)); g.setAttribute('filter', u > 0.9 && i === 0 && !RED ? gf : ''); });
+      var c = since('close'), cu = c < 0 ? 0 : RED ? 1 : ease(c / 1.6), sx = Math.cos(Math.PI * cu);
+      flap.setAttribute('transform', 'translate(135 0) scale(' + (Math.abs(sx) < 0.01 ? 0.01 : sx).toFixed(3) + ' 1) translate(-135 0)');
+      front.setAttribute('opacity', sx >= 0 ? 1 : 0); cover.setAttribute('opacity', sx < 0 ? 1 : 0); ribbon.setAttribute('opacity', sx < 0 ? 1 : 0);
+      var mv = c < 0 ? 0 : RED ? 1 : ease((c - 1.7) / 1.1);
+      book.setAttribute('transform', 'translate(' + (56.5 * mv).toFixed(1) + ' 0)');
+    };
+  });
+
+  // stones: three stones across a stream; sN lights a stone, hN brings the warm dot onto it in a small hop.
+  var STONES = timed('stones', function (s, C, dk, G) {
+    var RED = G.red, d = el('defs', {}, s), id = 'gx' + (++N), gf = glowF(d, id + 'g', C.glow, 5, 0.85);
+    var bank = dk ? '#8DB36A' : '#8DAE68', water = dk ? 'rgba(127,184,222,.26)' : '#CFE2E8', rip = dk ? 'rgba(170,210,226,.6)' : '#9CC3CF', rest = dk ? '#CFC4B4' : '#BDB2A3', rim = dk ? 'rgba(255,248,236,.5)' : '#9A8E7E';
+    var cp = el('clipPath', { id: id + 'c' }, d); el('rect', { x: 8, y: 70, width: 254, height: 232, rx: 26 }, cp);
+    var inner = el('g', { 'clip-path': 'url(#' + id + 'c)' }, s);
+    el('rect', { x: 0, y: 112, width: 270, height: 160, fill: water }, inner);
+    var rips = [150, 196, 240].map(function (y, k) { var p = el('path', { fill: 'none', stroke: rip, 'stroke-width': 2, 'stroke-linecap': 'round', opacity: 0.9 - k * 0.2 }, inner); p.__y = y; return p; });
+    el('path', { d: 'M0 60 L270 60 V122 Q135 112 0 124 Z', fill: bank, opacity: 0.9 }, inner);
+    el('path', { d: 'M0 262 Q135 254 270 262 V300 H0 Z', fill: bank, opacity: 0.9 }, inner);
+    var SP = [[76, 232], [135, 196], [194, 160]], ST = SP.map(function (p) {
+      el('ellipse', { cx: p[0] + 2, cy: p[1] + 6, rx: 30, ry: 11, fill: '#000', opacity: dk ? 0.25 : 0.12 }, inner);
+      var e = el('ellipse', { cx: p[0], cy: p[1], rx: 30, ry: 13, fill: rest, stroke: rim, 'stroke-width': 1.5 }, inner);
+      el('ellipse', { cx: p[0] - 6, cy: p[1] - 4, rx: 14, ry: 4, fill: '#FFFFFF', opacity: 0.28 }, inner);
+      return e;
+    });
+    var ring = el('ellipse', { fill: 'none', stroke: C.line, 'stroke-width': 2, opacity: 0 }, inner);
+    el('rect', { x: 8, y: 70, width: 254, height: 232, rx: 26, fill: 'none', stroke: C.dim, 'stroke-width': 1.5 }, s);
+    var wk = el('g', {}, s); el('circle', { r: 15, fill: C.glow, opacity: 0.3 }, wk); el('circle', { r: 8.5, fill: C.glow, filter: RED ? '' : gf }, wk);
+    return function (t, since) {
+      rips.forEach(function (p, k) { var o = RED ? 0 : (t * 14 + k * 20) % 48, dd = 'M' + (-48 + o).toFixed(1) + ' ' + p.__y; for (var x = -48 + o; x < 280; x += 24) dd += ' q6 -4 12 0 t12 0'; p.setAttribute('d', dd); });
+      ST.forEach(function (e, k) { var on = since('s' + (k + 1)) >= 0 || since('h' + (k + 1)) >= 0; e.setAttribute('fill', on ? C.on : rest); e.setAttribute('stroke', on ? C.glow : rim); e.setAttribute('stroke-width', on ? 2.6 : 1.5); e.setAttribute('filter', on && !RED ? gf : ''); });
+      var at = [44, 280], land = -1, cur = -1;
+      for (var k = 0; k < 3; k++) { var h = since('h' + (k + 1)); if (h < 0) break; cur = k; var from = k ? [SP[k - 1][0], SP[k - 1][1] - 6] : [44, 280], to = [SP[k][0], SP[k][1] - 6], u = RED ? 1 : ease(h / 0.9); at = [from[0] + (to[0] - from[0]) * u, from[1] + (to[1] - from[1]) * u - Math.sin(Math.PI * u) * 34]; land = h - 0.9; }
+      wk.setAttribute('transform', 'translate(' + at[0].toFixed(1) + ' ' + at[1].toFixed(1) + ')');
+      if (land >= 0 && !RED && land < 1.4) { var r = land / 1.4; ring.setAttribute('cx', SP[cur][0]); ring.setAttribute('cy', SP[cur][1] + 2); ring.setAttribute('rx', 30 + 26 * r); ring.setAttribute('ry', 13 + 10 * r); ring.setAttribute('opacity', (0.7 * (1 - r)).toFixed(2)); } else ring.setAttribute('opacity', 0);
+    };
+  });
+
+  /* BLD 992: weather icons in place of the dots. A def with wx (on any graphic but the weather icons themselves) gives the
+     scene's points a small sun, a sun with a cloud, or a soft rain cloud beside each line whose first word is Sunny, Partly
+     cloudy, or Rainy. The words stay live text; a line with any other word keeps its dot. Rain is soft and blue. */
+  var WXW = { sunny: 'sun', 'partly cloudy': 'part', rainy: 'rain' };
+  function wxIcon(kind, dk) {
+    var s = el('svg', { viewBox: '0 0 120 120', 'class': 'gx-wx', 'aria-hidden': 'true', focusable: 'false' });
+    if (kind === 'sun') { var r = el('g', { 'class': 'gx-sunr' }, s); sunI(r, 60, 60, 0.95); }
+    else if (kind === 'part') { sunI(el('g', {}, s), 44, 44, 0.72); cloud(el('g', { 'class': 'gx-drift' }, s), 66, 68, 0.78, '#FFFFFF', dk ? 'none' : '#C9CED6'); }
+    else { for (var j = 0; j < 4; j++) el('path', { d: 'M' + (34 + j * 17) + ' 82 l-4 14', stroke: '#6FA7D0', 'stroke-width': 5, 'stroke-linecap': 'round', 'class': 'gx-drop', style: 'animation-delay:' + (j * 0.3) + 's' }, s); cloud(el('g', { 'class': 'gx-drift' }, s), 60, 50, 0.85, dk ? '#D6DEE6' : '#DCE3EA', dk ? 'none' : '#B3BECA'); }
+    return s;
+  }
+  function wxDots(host, G) {
+    var cv = host.parentNode; if (!cv || !cv.querySelectorAll) return;
+    Array.prototype.forEach.call(cv.querySelectorAll('.ln-pt'), function (it) {
+      var b = it.querySelector('b'), dot = it.querySelector('.ln-dot'), k = b && WXW[String(b.textContent || '').trim().toLowerCase()];
+      if (!k || !dot || dot.querySelector('svg')) return;
+      dot.className = 'ln-dot gx-wxd'; dot.setAttribute('data-wx', k); dot.style.background = 'none'; dot.appendChild(wxIcon(k, G.dk));
+    });
+  }
+
+  /* BLD 992: a def's own place (def.box: {l or r, t, w, h} in the scene's 960 by 540 frame) moves the panel off a person
+     in the painting, into open sky, wall, or field; the drawing scales to fit. */
+  function placeBox(host, G) {
+    var b = G.def && G.def.box; if (!b) return;
+    var st = host.style; st.top = b.t + 'px'; st.width = b.w + 'px'; st.height = b.h + 'px';
+    if (b.l != null) { st.left = b.l + 'px'; st.right = 'auto'; } else { st.right = (b.r || 0) + 'px'; st.left = 'auto'; }
+    if (b.w < 240) st.padding = '10px 8px';
+    host.setAttribute('data-box', '1');
+    // the words come first: the panel ends a little above any line of the scene's words under it (the phone's words are larger)
+    try {
+      var cv = host.parentNode, cr = cv.getBoundingClientRect(), k = cr.width / 960; if (!k) return;
+      var x0 = b.l != null ? b.l : 960 - (b.r || 0) - b.w, x1 = x0 + b.w, top = 540;
+      Array.prototype.forEach.call(cv.querySelectorAll('h2,h3,h4,p,small,b,label'), function (e) {
+        if (host.contains(e)) return; var q = e.getBoundingClientRect(); if (!q.width || !q.height) return;
+        var a = (q.left - cr.left) / k, z = (q.right - cr.left) / k, y = (q.top - cr.top) / k;
+        if (z > x0 && a < x1 && y > b.t) top = Math.min(top, y - 26);
+      });
+      if (top < b.t + b.h) st.height = Math.max(120, Math.round(top - b.t)) + 'px';
+    } catch (e) {}
+  }
+
   var KINDS = { tree: TREE, body: BODY, wave: WAVE, senses: SENSES, tap: TAP, rail: RAIL, box: SHAPE, tri: SHAPE, sigh: SHAPE,
-    circle: CIRCLE, kind: KIND, rings: RINGS, support: SUPPORT, day: DAY, bridge: BRIDGE, talk: TALK, cup: FILL, battery: FILL, dial: FILL, weather: WEATHER, branch: BRANCH };
+    circle: CIRCLE, kind: KIND, rings: RINGS, support: SUPPORT, day: DAY, bridge: BRIDGE, talk: TALK, cup: FILL, battery: FILL, dial: FILL, weather: WEATHER, branch: BRANCH,
+    forest: FOREST, hope: HOPE, pulse: PULSE, note: NOTE, stones: STONES };
+  // BLD 992: a def's x names its drawing (one of the Round 3 drawings) on top of the panel kind the player knows (def.g).
+  function kindOf(G) { return G && ((G.def && G.def.x && KINDS[G.def.x]) || KINDS[G.g]); }
 
   // One animation loop for the graphics that move by code (the wave); everything else moves with CSS.
   var LIVE = [];
   function loop(host, G) { if (LIVE.indexOf(host) < 0) LIVE.push(host); if (!loop.raf) loop.raf = requestAnimationFrame(tick); }
   function tick(now) {
     loop.raf = 0;
-    LIVE = LIVE.filter(function (h) { if (!h.isConnected || !h.__gfx || !h.__gfx.$) return false; var K = KINDS[h.__gfx.g]; try { return K.frame ? K.frame(h, h.__gfx, now) : false; } catch (e) { return false; } });
+    LIVE = LIVE.filter(function (h) { if (!h.isConnected || !h.__gfx || !h.__gfx.$) return false; var K = kindOf(h.__gfx); try { return K.frame ? K.frame(h, h.__gfx, now) : false; } catch (e) { return false; } });
     if (LIVE.length) loop.raf = requestAnimationFrame(tick);
   }
 
@@ -993,23 +1251,27 @@
       '@keyframes gxSq{0%,100%{transform:scale(1)}50%{transform:scale(.95)}}',
       '@keyframes gxDot{to{fill-opacity:1}}',
       '@keyframes gxTap{0%,100%{transform:scale(1.1);opacity:1}50%{transform:scale(.86);opacity:.3}}',
-      '@media (prefers-reduced-motion:reduce){.ln-gfx *{animation:none !important;transition:none !important;}}'
+      '.ln-dot.gx-wxd{width:40px;height:40px;margin:-2px -4px 0 -8px;background:none !important;box-shadow:none !important;border-radius:0;}.gx-wx{display:block;width:100%;height:100%;overflow:visible;}',
+      '.gx-wx .gx-sunr{transform-box:fill-box;transform-origin:center;animation:gxSpin 28s linear infinite;}.gx-wx .gx-drift{animation:gxDrift 6s ease-in-out infinite alternate;}.gx-wx .gx-drop{animation:gxDrop2 1.5s ease-in infinite;}',
+      '@keyframes gxSpin{to{transform:rotate(360deg)}}@keyframes gxDrift{from{transform:translateX(-3px)}to{transform:translateX(3px)}}@keyframes gxDrop2{0%{transform:translateY(-3px);opacity:0}25%{opacity:1}100%{transform:translateY(9px);opacity:0}}',
+      '@media (prefers-reduced-motion:reduce){.ln-gfx *,.gx-wx *{animation:none !important;transition:none !important;}}'
     ].join('\n');
     document.head.appendChild(st);
   }
 
   function draw(host) {
-    var G = host && host.__gfx, K = G && KINDS[G.g]; if (!K || G.$) return;
+    var G = host && host.__gfx, K = kindOf(G); if (!K || G.$) return;
     css(); G.red = reduced();
+    try { placeBox(host, G); if (G.def && G.def.wx && G.g !== 'weather') wxDots(host, G); } catch (e) {}
     try { K.draw(host, G); host.setAttribute('data-drawn', G.g); } catch (e) { host.setAttribute('data-err', String(e && e.message || e)); return; }
     at(host, host.__gfxAt == null ? -1 : host.__gfxAt);
   }
   function at(host, i) {
-    var G = host && host.__gfx, K = G && KINDS[G.g]; if (!host) return; host.__gfxAt = i; if (!K || !G.$) return;
+    var G = host && host.__gfx, K = kindOf(G); if (!host) return; host.__gfxAt = i; if (!K || !G.$) return;
     try { K.at(host, G, i); } catch (e) { host.setAttribute('data-err', String(e && e.message || e)); }
   }
 
-  window.GGGfx = { draw: draw, at: at, kinds: Object.keys(KINDS), v: 'g990' };
+  window.GGGfx = { draw: draw, at: at, kinds: Object.keys(KINDS), v: 'g992' };
   // any panel drawn before this file arrived
   try { Array.prototype.forEach.call(document.querySelectorAll('.ln-gfx'), function (h) { if (h.__gfx && !h.__gfx.$) draw(h); }); } catch (e) {}
 })();
