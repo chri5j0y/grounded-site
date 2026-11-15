@@ -53,7 +53,7 @@ window.WILLOW_FAREWELL = {
     stories: ['Stories', 'Stories that root and grow', 'Cuttings keep stories, letters, lessons, and blessings. The Legacy Book gathers them into one book to keep.'],
     cuttings: ['Stories', 'Cuttings', 'Stories, letters, lessons, and blessings, kept for the people who stay.'],
     legacy: ['Stories', 'The Legacy Book', 'Every Cutting in one book, ready to print or save, for the people who stay.'],
-    bedside: ['Bedside', 'At the bedside', 'Small, real things families and helpers can do, with how well each one is backed.'],
+    bedside: ['Bedside', 'Small things that help at the bedside', 'A simple, kind word is enough. You only have to stay. Each card has a short video to watch.'],
     farewell: ['Farewell', 'Planning the farewell, together', 'A checklist for the first hours and days, the Obituary and the Eulogy, readings, and an easy way to bring the Grounded team in to help prepare the service.'],
     plan: ['Farewell', 'The Farewell Checklist', 'Any order works, and most of it can wait. Check things off, and hand any of it to someone who asked how to help.'],
     obituary: ['Farewell', 'The Obituary', 'Answer what you can. Willow puts your words into three drafts to shape in your own voice.'],

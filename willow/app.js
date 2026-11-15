@@ -252,7 +252,6 @@ function render() {
   document.body.setAttribute('data-wtab', TAB_OF[S.tab] || 'today'); heroActs();
   v.innerHTML = topOf(S.tab) + (VIEWS[S.tab] || VIEWS.today)();
   if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: W_SCENE });
-  v.querySelectorAll('[data-read]').forEach(el => addRead(el));
   if (S.tab === 'guides' && !S.guide.open && S.guide.find) { const i = v.querySelector('.lc-search'); if (i) gFind(i); }
 }
 // The Today hero: Begin with Willow at first; once Willow is started, the check-in and the farewell plans.
@@ -269,18 +268,24 @@ function go(v, force) {
   if (v !== 'checkin') S.ck = v === 'results' ? S.ck : null;
   S.tab = v; render(); scrollTop(force !== false); pushHash();
 }
-// Read aloud: a button on anything marked data-read (read.js, shared). data-read-rec marks a guide or a practice,
-// read in the Grounded voice (Brian, BLD 796); nothing a person writes carries it.
-function addRead(el) {
-  const R = window.GGRead; if (!R || !R.control || el.querySelector('.gg-rbar')) return;
-  // Chris, November 13, 2026 ("the old read this practice button is still on Willow Today"): a card with a button row gets one
-  // Listen button in that row, in the new look; other regions keep the bar at the top, also labeled Listen.
-  try {
-    const bar = R.control({ root: el, label: 'Listen', recordedLabel: 'Listen', recorded: el.hasAttribute('data-read-rec') ? 'willow' : '' });
-    const row = el.querySelector(':scope > .btn-row');
-    if (row) { bar.classList.add('w-listen'); row.appendChild(bar); } else el.insertBefore(bar, el.firstChild);
-  } catch (e) {}
+/* BLD 996 Willow in the Player (Chris, November 15, 2026): the old read-aloud bars are gone from every Willow page.
+   Practices and bedside tips have their own videos in the shared player (willow/practice-videos.js); readings keep their
+   recorded line by line Listen (shared/gg-listen.js); what a person writes is never read aloud. */
+const PV = () => window.WILLOW_PV || { cards: {}, bedside: {}, faith: {} };
+const heroSrc = p => '/shared/heroes/' + p + '.webp';
+function playVid(id) { if (window.GGLearn) GGLearn.open('willow', id); }
+// A Watch button for one video, with a quiet check once it has been watched (kept by gg-learn.js in the vault).
+function watchBtn(id, label, cls, mins) {
+  const w = vidWatched(id);
+  return `<button type="button" class="btn ${cls || 'btn-primary'} w-watch" onclick="W.pv('${esc(id)}')">${icon(w ? 'check' : 'play', 18)} ${esc(label || 'Watch')}${mins ? ', ' + mins + ' min' : ''}${w ? '<span class="w-gv-w">Watched</span>' : ''}</button>`;
 }
+// How: the steps fold open in place, on the card (the Home card look).
+function howToggle(b) {
+  const c = b.closest('.w-card, .w-tcard'), pn = c && c.querySelector('.w-howp'); if (!pn) return;
+  pn.hidden = !pn.hidden; b.setAttribute('aria-expanded', String(!pn.hidden));
+}
+// Watched marks show on the painted cards once Learn closes (the Today log keeps its typing: Today waits for its next render).
+['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (['bedside', 'about', 'wishes', 'farewell', 'results'].includes(S.tab)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }));
 
 /* ---------- who's here ---------- */
 function renderBar() {
@@ -374,25 +379,31 @@ function offer(r, role) {
   // The four tended parts only (GWG BLD 907); Trunk and Fruit grow from that tending.
   const order = PARTS.map(p => p.key).filter(k => wTends(k) && (P.person[k] || []).length), need = needPart(r, order);
   const part = need && off === 0 ? need : order[(dayNo() + off) % order.length];
-  const L = P.person[part]; return { part, it: L[(dayNo() + off) % L.length] };
+  // BLD 996 (choice 8): when faith is answered none or private, Roots offers the practices that fit any person.
+  const quiet = part === 'roots' && r.faith && (tradsOf(r.faith).includes('private') || r.faith.matters === 'none');
+  const all = P.person[part], L = quiet ? all.filter(x => !(PV().cards[x[0]] || {}).prayer) : all;
+  return { part, it: L[(dayNo() + off) % L.length] };
 }
-const evOf = it => it[it.length - 1];
 const timeOf = it => it.length === 5 ? it[3] : '';
+// One gentle thing for today, in the painted card look of Home and The Grounded Way (BLD 996): the practice's own painting
+// (BLD 976), its name and one line, Watch (its own video), Did It Today, Something Else, and How (the steps fold open).
 function practiceCard(r, role) {
   const o = offer(r, role), it = o.it, d = (r.days || {})[today()] || {}, done = (d.done || []).includes(o.part + ':' + it[0]);
-  const p = PART[o.part];
-  return `<div class="w-card w-practice" style="--pc:${p.color}" data-read="Read this practice aloud" data-read-rec>
-    <img class="w-pimg" src="/shared/heroes/p/willow-${role === 'helper' ? 'helpers2' : 'today2'}-card.webp" alt="" width="800" height="450" loading="lazy">
-    <p class="w-eyebrow">One gentle thing for today${role === 'person' ? ' &middot; ' + p.part : ''}</p>
+  const p = PART[o.part], c = PV().cards[it[0]] || {}, how = c.how || [];
+  return `<div class="w-card w-practice w-pcard" style="--pc:${p.color}">
+    <div class="w-pc2"><div class="w-pscene"><img src="${heroSrc(c.img || 'p/willow-today2-card')}" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
+    <div class="w-ptx"><p class="w-eyebrow">One gentle thing for today${role === 'person' ? ' &middot; ' + p.part : ''}${timeOf(it) ? ' &middot; ' + esc(timeOf(it)) : ''}</p>
     <h3>${esc(it[1])}</h3>
-    <p>${esc(it[2])}</p>
-    <p class="w-meta">${timeOf(it) ? esc(timeOf(it)) + ' &middot; ' : ''}${esc(P.evidence[evOf(it)] || '')}</p>
-    ${window.GGSources ? GGSources.practice(it[1], 'willow') : ''}
+    <p>${esc(c.one || it[2])}</p></div></div>
     <div class="btn-row">
-      ${done ? `<span class="w-done">${icon('leaf', 18)} Done for today. That's enough.</span>` : `<button type="button" class="btn btn-primary" onclick="W.did('${o.part}','${it[0]}')">Did it today</button>`}
-      <button type="button" class="btn btn-secondary" onclick="W.another()">Something else</button>
+      ${c.vid ? watchBtn(c.vid, 'Watch', '', c.mins) : ''}
+      ${done ? `<span class="w-done">${icon('leaf', 18)} Done for today. That's enough.</span>` : `<button type="button" class="btn ${c.vid ? 'btn-secondary' : 'btn-primary'}" onclick="W.did('${o.part}','${it[0]}')">Did It Today</button>`}
+      <button type="button" class="btn btn-secondary" onclick="W.another()">Something Else</button>
+      ${how.length ? `<button type="button" class="btn btn-secondary" aria-expanded="false" onclick="W.how(this)">How</button>` : ''}
     </div>
-    <p class="w-small">${role === 'person' ? 'Every practice works lying down, and every one can be done with a helper.' : 'Five minutes for you counts. It helps them too.'} No streaks here. One a day is plenty, and none is okay.</p>
+    ${how.length ? `<div class="w-howp" hidden><ol>${how.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : ''}
+    ${window.GGSources ? GGSources.practice(it[1], 'willow', c.story ? { story: c.story } : null) : ''}
+    <p class="w-small">${role === 'person' ? 'Every practice works lying down, and every one can be done with a helper.' : 'Five minutes for you counts. It helps them too.'} One a day is plenty, and a day of rest is welcome too.</p>
   </div>`;
 }
 function did(part, id) {
@@ -475,19 +486,27 @@ function addLog() {
 }
 function bedsidePick() {
   const L = P.bedside, a = L[dayNo() % L.length], b = L[(dayNo() + 5) % L.length];
-  return `<div class="w-card" data-read="Read these aloud">
+  return `<div class="w-card">
     <p class="w-eyebrow">At the bedside today</p>
-    ${[a, b].map(x => `<h3 class="w-h4">${esc(x[1])}</h3><p>${esc(x[2])}</p>`).join('')}
-    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('bedside')">More for the bedside</button></div>
+    <div class="w-minis">${[a, b].map(x => { const c = PV().bedside[x[0]] || {};
+      return `<div class="w-mini"><img src="${heroSrc(c.img || 'p/willow-bedside-card')}" alt="" width="160" height="160" loading="lazy" decoding="async"><div><b>${esc(x[1])}</b><span>${esc(c.one || x[2])}</span>${c.vid ? watchBtn(c.vid, 'Watch', 'btn-secondary btn-sm') : ''}</div></div>`; }).join('')}</div>
+    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('bedside')">More for the Bedside</button></div>
   </div>`;
 }
 /* Support for Right Now: short videos from Learn (shared/learn-lessons.js), one tap from Today (Willow Learn, October 2026) */
+const SUPPORT_ART = { 'wl-s-after': 'willow-s-after', 'wl-s-blessing': 'willow-s-blessing-h2', 'wl-s-tonight': 'willow-s-tonight', 'wl-s-breathe': 'willow-s-breathe', 'wl-s-say': 'willow-s-say', 'wl-s-vigil': 'willow-s-vigil' };
 function supportCard(after) {
   const vids = after
     ? [['wl-s-after', 'The First Hour After'], ['wl-s-blessing', 'A Blessing for the Room'], ['wl-s-tonight', 'Caring for Yourself Tonight'], ['wl-s-breathe', 'Breathe at the Bedside']]
     : [['wl-s-breathe', 'Breathe at the Bedside'], ['wl-s-say', "When You Don't Know What to Say"], ['wl-s-vigil', 'The Vigil Hours'], ['wl-s-tonight', 'Caring for Yourself Tonight']];
   return `<div class="w-card"><p class="w-eyebrow">${icon('play', 16)} Support for Right Now</p><p>Short videos, narrated aloud, for the hard hours. Open one anytime.</p>
-    <div class="w-links">${vids.map(v => `<button type="button" onclick="window.GGLearn&&GGLearn.open('willow','${v[0]}')">${esc(v[1])}</button>`).join('')}<button type="button" onclick="window.GGLearn&&GGLearn.open('willow')">All Support Videos</button></div></div>`;
+    <div class="w-vids">${vids.map(v => vidCard(v[0], v[1], '/shared/heroes/p/vid/' + SUPPORT_ART[v[0]] + '-card.webp')).join('')}</div>
+    <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="window.GGLearn&&GGLearn.open('willow')">All Support Videos</button></div></div>`;
+}
+// A painted video card (Learn's look): the painting with a play mark, the title, and a quiet Watched once seen.
+function vidCard(id, title, img, line) {
+  const w = vidWatched(id);
+  return `<button type="button" class="w-vc" onclick="W.pv('${esc(id)}')"><span class="w-vc-img"><img src="${esc(img)}" alt="" width="800" height="450" loading="lazy" decoding="async"><i>${icon(w ? 'check' : 'play', 22)}</i></span><span class="tx"><b>${esc(title)}</b>${line ? `<span>${esc(line)}</span>` : ''}${w ? '<em>Watched</em>' : ''}</span></button>`;
 }
 VIEWS.today = () => {
   const a = me();
@@ -519,7 +538,7 @@ function rememberedHtml(t) {
   return `<div class="w-head w-remember"><p class="w-eyebrow">${icon('candle', 16)} Remembered</p><h2>Remembering ${n}</h2><p class="lead">${m.date ? 'Died ' + longDate(m.date) + '. ' : ''}Their tree stays here, just as it was. Nothing is taken away.</p></div>
     <div class="w-card w-treecard"><div class="w-treewrap">${artTreeHtml(sees('tree') && lastOwn(r) ? lastOwn(r).levels : null, n + '\'s willow, remembered', 'w-remart')}<p class="w-rings">${ringsOf(r) ? ringsOf(r) + (ringsOf(r) === 1 ? ' ring' : ' rings') : 'Remembered'}</p></div>
       <div class="w-treetext">${r.matters && r.matters.who && sees('matters') ? `<p class="w-eyebrow">In their words</p><p class="w-quote">${esc(r.matters.who)}</p>` : ''}
-      ${after ? `<div data-read="Read this aloud"><p class="w-eyebrow">${esc(after.title)}</p>${after.lines.map(l => `<p class="w-line-read">${esc(l)}</p>`).join('')}</div>` : ''}</div></div>
+      ${after ? `<div><p class="w-eyebrow">${esc(after.title)}</p>${after.lines.map(l => `<p class="w-line-read">${esc(l)}</p>`).join('')}</div>` : ''}</div></div>
     <div class="w-card"><p class="w-eyebrow">The next few days</p>
       <div class="w-links"><button type="button" onclick="W.guide('firsthour')">The first hour after</button><button type="button" onclick="W.guide('official')">Making it official</button><button type="button" onclick="W.guide('relief')">Relief, and the guilt that follows</button><button type="button" onclick="W.go('cuttings')">Their Cuttings</button></div>
       <div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.go('plan')">The Farewell Checklist</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('obituary')">The Obituary</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('eulogy')">The Eulogy</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('send')">Send to the Grounded Team</button></div>
@@ -532,7 +551,8 @@ function aboutShort() {
   return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on every part of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings, gathered into a Legacy Book. Plan the farewell in one place: Service Wishes, a checklist, the Obituary, and the Eulogy, with one tap to send it all to the Grounded team. Find words for hard conversations in When Life Changes, readings and faith cards for all faith traditions and everything in-between, what to do at the bedside, and short videos in Learn.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
 }
 VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h2>A tree for the last part of the path</h2></div>
-  <div data-read="Read this aloud">
+  <div class="w-vids w-vids-1">${vidCard('wl-welcome', 'Watch: Welcome to Willow', '/shared/heroes/p/vid/willow-welcome-card.webp', 'Four minutes, narrated aloud: the whole of Willow, gently.')}</div>
+  <div>
   <p class="lead">A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone.</p>
   <p class="lead">${esc(P.intro)}</p>
   <h3 class="section-title">Tend Four, Grow Two</h3>
@@ -667,7 +687,7 @@ VIEWS.checkin = () => {
   } else body = closeStep(ck);
   const nextP = PART[steps[ck.i + 1]];
   const back = GUIDED() ? `<div class="btn-row w-guided-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.guided()">Guided Check-in</button></div>` : '';
-  return `<div class="w-ck" data-read="Read this aloud">${back}${dots}${body}</div>${ckNav(ck, steps, nextP ? 'Next: ' + nextP.part : 'Next')}${quietHtml()}`;
+  return `<div class="w-ck">${back}${dots}${body}</div>${ckNav(ck, steps, nextP ? 'Next: ' + nextP.part : 'Next')}${quietHtml()}`;
 };
 function who(v) { const ck = S.ck; if (!ck) return; ck.by = v; render(); }
 
@@ -889,6 +909,12 @@ function guidedLines() {
   return all;
 }
 const GUIDE_FOR_FLAG = { end: 'end', burden: 'burden', struggle: 'punish', regret: 'forgive', guilt: 'notthere', alone: 'conflict', hope: 'relief' };
+// Check-in results (BLD 996): Watch that part's Tend Four, Grow Two video (wl-6-*) and today's practice video.
+function resultsVids(ck, need) {
+  const r = rec(ck.pid); if (!r) return '';
+  let pv = null; try { const o = offer(r, ck.role === 'helper' ? 'helper' : 'person'); pv = { id: (PV().cards[o.it[0]] || {}).vid, name: o.it[1], img: (PV().cards[o.it[0]] || {}).img }; } catch (e) {}
+  return `<div class="w-vids">${vidCard('wl-6-' + need.key, 'Watch: ' + wLabel(need), '/shared/heroes/p/vid/willow-6-' + need.key + '-card.webp', 'Tend Four, Grow Two')}${pv && pv.id ? vidCard(pv.id, 'Watch: ' + pv.name, heroSrc(pv.img), 'Today\'s gentle practice') : ''}</div>`;
+}
 VIEWS.results = () => {
   const ck = S.ck; if (!ck || !ck.entry) return VIEWS.today();
   const e = ck.entry, r = rec(ck.pid), n = esc(nameOf(ck.pid)), self = ck.self, seen = e.by === 'observed';
@@ -900,7 +926,7 @@ VIEWS.results = () => {
     <p class="lead">${seen ? 'This is kept apart from ' + n + '\'s own answers, and doesn\'t add a ring. It helps their helpers and their hospice team notice what\'s changing.' : 'These are gentle words, not grades. Every part of a tree has seasons.'}</p></div>
     <div class="w-card w-treecard"><div class="w-treewrap">${artTreeHtml(e.levels, (seen ? 'From what you see: ' : '') + 'the willow painting, each part in light', seen ? 'w-seen' : '')}<p class="w-rings">${seen ? 'No new ring' : ringsOf(r) === 1 ? 'A first ring' : ringsOf(r) + ' rings'}</p></div><div class="w-treetext">${words}</div></div>
     ${flags ? `<div class="w-card"><p class="w-eyebrow">Gently</p>${flags}</div>` : ''}
-    ${need && !seen ? `<div class="w-card"><p class="w-eyebrow">One small thing</p><p>Today's practice in Today leans toward the ${esc(need.part.toLowerCase())}: ${esc(need.name.toLowerCase())}.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button>${!(r.matters || {}).who && ck.role === 'person' ? `<button type="button" class="btn btn-secondary" onclick="W.go('matters')">Write what matters</button>` : ''}</div></div>` : `<div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button></div>`}
+    ${need && !seen ? `<div class="w-card"><p class="w-eyebrow">One small thing</p><p>Today's practice in Today leans toward the ${esc(need.part.toLowerCase())}: ${esc(need.name.toLowerCase())}.</p>${resultsVids(ck, need)}<div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button>${!(r.matters || {}).who && ck.role === 'person' ? `<button type="button" class="btn btn-secondary" onclick="W.go('matters')">Write what matters</button>` : ''}</div></div>` : `<div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button></div>`}
     ${st ? `<div class="w-card w-story"><p class="w-eyebrow">A Grounded story</p><h3><a class="text-link" href="${storyUrl(st[0])}" target="_blank" rel="noopener">${esc(st[0])}</a></h3><p class="w-quote">${esc(st[1])}</p></div>` : ''}
     ${quietHtml()}`;
 };
@@ -1012,7 +1038,7 @@ VIEWS.cuttings = () => {
   } else {
     h += `<div class="w-choices w-choices-3">${CUT_KINDS.map(k => `<button type="button" class="w-choice" onclick="W.newCut('${k[0]}')"><b>${esc(k[1])}</b><span>${esc(k[2])}</span></button>`).join('')}</div>`;
   }
-  h += list.length ? `<h3 class="section-title">Kept so far (${list.length})</h3>` + list.map(c => `<article class="w-card w-cut" id="cut-${c.id}" data-read="Read this aloud">
+  h += list.length ? `<h3 class="section-title">Kept so far (${list.length})</h3>` + list.map(c => `<article class="w-card w-cut" id="cut-${c.id}">
       <p class="w-eyebrow">${esc((CUT[c.kind] || CUT.story)[1])}${c.to ? ' &middot; ' + esc(c.to) : ''}</p>
       <h3>${esc(c.title || 'Untitled')}</h3>
       <div class="w-cuttext">${esc(c.text).replace(/\n/g, '<br>')}</div>
@@ -1051,18 +1077,25 @@ const CARD_FIELDS = [['words', 'Words they may use'], ['ask', 'Ask'], ['comfort'
 const CHRISTIAN = (F.intake.groups.find(g => g[0] === 'christian') || [0, 0, []])[2];
 function cardHtml(id, title) {
   const c = F.cards[id]; if (!c) return '';
-  return `<article class="w-card w-faithcard" id="faith-${id}" data-read="Read this card aloud">
+  return `<article class="w-card w-faithcard" id="faith-${id}">
     <p class="w-eyebrow">${esc(title || 'Tradition card')}</p><h3>${esc(c.name)}</h3>
     ${CARD_FIELDS.filter(f => c[f[0]]).map(f => `<p><b>${f[1]}.</b> ${esc(c[f[0]])}</p>`).join('')}
     <p class="w-end">${esc(F.end)}</p>
   </article>`;
 }
-const evTag = ev => `<span class="w-ev w-ev-${ev}">${esc(P.evidence[ev] || '')}</span>`;
+// A painted bedside card (BLD 996): painting, name, one line, Watch, and Read It for the full words and the Sources line.
+function tipCard(x, c, story) {
+  c = c || {};
+  const src = window.GGSources ? GGSources.practice(x[1], 'willow', story ? { story } : null) : '';
+  return `<div class="w-tcard"><img src="${heroSrc(c.img || 'p/willow-bedside-card')}" alt="" width="800" height="450" loading="lazy" decoding="async">
+    <div class="tx"><h4>${esc(x[1])}</h4><p>${esc(c.one || x[2])}</p>
+    <div class="btn-row">${c.vid ? watchBtn(c.vid, 'Watch', '', c.mins) : ''}</div>
+    <details class="w-readit"><summary>Read It</summary><p>${esc(x[2])}</p>${src}</details></div></div>`;
+}
 VIEWS.bedside = () => {
   const a = me(), t = target(), r = t ? rec(t) : null, n = t ? esc(nameOf(t)) : '';
   const person = r && r.started && roleOf(t) === 'person';
-  let h = `<div class="w-head"><p class="w-eyebrow">At the bedside</p><h2>What to do when you don't know what to do</h2><p class="lead">A simple, kind word is enough. You only have to stay. These are small, real things families and helpers can do, with how well each one is backed.</p></div>`;
-  h += lineHtml();
+  let h = lineHtml();
   if (person && r.faith && (tradsOf(r.faith).length || r.faith.never) && sees('faith')) {
     h += `<h3 class="section-title">${a && t === a.id ? 'Your' : n + '\'s'} faith</h3>`;
     if (r.faith.never) h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.faith.never)}</p></div>`;
@@ -1071,9 +1104,12 @@ VIEWS.bedside = () => {
   } else if (person && r.matters && r.matters.never && sees('matters')) {
     h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.matters.never)}</p></div>`;
   }
-  h += `<h3 class="section-title">What helps</h3><div class="w-grid" data-read="Read these aloud" data-read-rec>${P.bedside.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
-  h += `<h3 class="section-title">Care for the one keeping watch</h3><p class="lead">You can't pour from an empty cup, and this cup has been pouring a long time.</p><div class="w-grid" data-read="Read these aloud" data-read-rec>${P.selfcare.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
-  h += `<h3 class="section-title">Faith at the bedside</h3><div class="w-card" data-read="Read these aloud">${F.rules.map(x => `<p><b>${esc(x[0])}</b> ${esc(x[1])}</p>`).join('')}</div>`;
+  h += `<h3 class="section-title">What Helps</h3><p class="lead">Small, real things families and helpers can do. Each one has a short video.</p><div class="w-tgrid">${P.bedside.map(x => tipCard(x, PV().bedside[x[0]])).join('')}</div>`;
+  h += `<h3 class="section-title">For the One Keeping Watch</h3><p class="lead">Fill your own cup too. It has been pouring a long time.</p><div class="w-tgrid">${P.selfcare.map(x => { const c = PV().cards[x[0]] || {}; return tipCard(x, c, c.story); }).join('')}</div>`;
+  const fv = PV().faith || {};
+  h += `<h3 class="section-title">Faith at the Bedside</h3><div class="w-tgrid w-tgrid-1"><div class="w-tcard w-tcard-wide"><img src="${heroSrc(fv.img || 'p/willow-faith2-card')}" alt="" width="800" height="450" loading="lazy" decoding="async">
+    <div class="tx"><h4>Faith at the Bedside</h4><p>${esc(fv.one || '')}</p><div class="btn-row">${fv.vid ? watchBtn(fv.vid, 'Watch', '', fv.mins) : ''}</div>
+    <details class="w-readit"><summary>The Six Ways</summary>${F.rules.map(x => `<p><b>${esc(x[0])}</b> ${esc(x[1])}</p>`).join('')}</details></div></div></div>`;
   h += `<h3 class="section-title">Look up a tradition</h3><p class="lead">For a family with more than one faith, a visitor from another tradition, or just to understand. ${esc(F.end)}</p>
     <label class="w-l" for="w-flook">Tradition</label><select id="w-flook" onchange="W.S.faithLook=this.value;W.render()"><option value="">Choose one</option>${F.intake.groups.map(g => `<optgroup label="${esc(g[1])}">${g[2].filter(id => F.cards[id]).map(id => `<option value="${id}"${S.faithLook === id ? ' selected' : ''}>${esc(F.cards[id].name)}</option>`).join('')}</optgroup>`).join('')}</select>
     ${S.faithLook ? cardHtml(S.faithLook) : ''}`;
@@ -1172,7 +1208,7 @@ function guideHtml(g) {
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeGuide()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or Print This Guide</button></div>
     <span class="lc-tag">${esc(ring ? ring[1] : '')}</span><h2>${esc(g.title)}</h2>
     ${guideVids(g.id)}
-    <div data-read="Read this guide aloud" data-read-rec>${body}</div>
+    <div>${body}</div>
     ${pro ? `<details class="w-det"><summary>${esc(G.labels.pro)}</summary><div><p>${esc(pro[1])}</p></div></details>` : ''}
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
     ${window.GGShelf ? GGShelf.html('willow', g.id) : ''}
@@ -1277,7 +1313,7 @@ function readingHtml(x) {
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeReading()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
     <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}${listen}
-    ${vid}<div class="w-readtext" data-read="Read this aloud"${listen ? ` data-ggl-text="w:${esc(x.id)}"` : ''}>${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
+    ${vid}<div class="w-readtext"${listen ? ` data-ggl-text="w:${esc(x.id)}"` : ''}>${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
     ${bp}${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}${src}
   </article>`;
 }
@@ -1323,8 +1359,10 @@ function topOf(v) {
   if ((v === 'guides' && S.guide.open) || (v === 'readings' && S.read.open)) return subHtml(v);
   return theadHtml(v) + subHtml(v);
 }
+const HUB_VID = { wishes: ['wl-u-matters', 'Watch: What Matters', 'A short video on writing What Matters, together.', 'willow-u-matters'], farewell: ['wl-h-farewell', "Watch: When It's Time to Plan the Farewell", 'A short video for the family, on planning the farewell together.', 'willow-h-farewell'] };
 function hubHtml(tab) {
-  return `<div class="w-hub">${(FW.hub[tab] || []).map(c => {
+  const hv = HUB_VID[tab], vid = hv ? `<button type="button" class="w-pc w-pc-vid" onclick="W.pv('${hv[0]}')"><span class="w-vc-img"><img src="/shared/heroes/p/vid/${hv[3]}-card.webp" alt="" width="800" height="450" loading="lazy"><i>${icon(vidWatched(hv[0]) ? 'check' : 'play', 22)}</i></span><span class="tx"><b>${esc(hv[1])}</b><span>${esc(hv[2])}</span>${vidWatched(hv[0]) ? '<i>Watched</i>' : ''}</span></button>` : '';
+  return `<div class="w-hub">${vid}${(FW.hub[tab] || []).map(c => {
     const a = FW.art[c[0]] || FW.art[tab], go = c[0] === 'videos' ? `window.GGLearn&&GGLearn.open('willow')` : `W.go('${c[0]}')`, st = hubStatus(c[0]);
     return `<button type="button" class="w-pc" onclick="${go}"><img src="${artSrc(a[0], 'card')}" alt="" width="800" height="450" loading="lazy"><span class="tx"><b>${esc(c[1])}</b><span>${esc(c[2])}</span>${st ? `<i>${esc(st)}</i>` : ''}</span></button>`;
   }).join('')}</div>`;
@@ -1503,7 +1541,7 @@ VIEWS.legacy = () => {
   const n = esc(legacyName(r, t)), cuts = r.cuttings || [];
   if (!cuts.length) return `<div class="w-card"><p>The Legacy Book gathers every Cutting into one book. Keep a first story, and it starts here.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('cuttings');W.newCut('story')">Keep a First Story</button></div></div>`;
   return `<div class="btn-row no-print" style="margin:0 0 14px"><button type="button" class="btn btn-primary" onclick="W.printLegacy()">Save or Print the Book</button><button type="button" class="btn btn-secondary" onclick="W.go('cuttings')">Add a Cutting</button></div>
-    <article class="w-card w-book" data-read="Read the book aloud"><div class="w-legacy-cover"><p class="w-eyebrow" style="justify-content:center">The Legacy Book</p><h3>${n}</h3><p class="w-small">${cuts.length} ${cuts.length === 1 ? 'Cutting' : 'Cuttings'}, kept in Willow</p></div>${legacyBody(r, t)}</article>`;
+    <article class="w-card w-book"><div class="w-legacy-cover"><p class="w-eyebrow" style="justify-content:center">The Legacy Book</p><h3>${n}</h3><p class="w-small">${cuts.length} ${cuts.length === 1 ? 'Cutting' : 'Cuttings'}, kept in Willow</p></div>${legacyBody(r, t)}</article>`;
 };
 function printLegacy() {
   const t = target(), r = rec(t); if (!r) return;
@@ -2081,7 +2119,7 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'w
 window.W = window.W || {};
 Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
-  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog, guided, guidedLines, classic: quick => startCheckin(quick, true),
+  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog, pv: playVid, how: howToggle, guided, guidedLines, classic: quick => startCheckin(quick, true),
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
   guide: openGuide, closeGuide, closeReading, lib: openLib, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,

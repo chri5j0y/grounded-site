@@ -29,13 +29,14 @@ const INTAKE = {
   universal: `When someone answers "Not at all" or "Rather not say," Willow uses universal language: meaning, love, legacy, what grounds you.`
 };
 
+// BLD 996: forward wording (Chris, November 15, 2026); the Faith at the Bedside video says the same six things.
 const RULES = [
-  [`Never pray in a tradition that isn't theirs without asking first.`, `Offer, don't perform. "Would you like a prayer? From your tradition, or in my own words?"`],
-  [`Never use the bedside to convert.`, `Not chaplains, not doulas, not family. When a relative pushes, the chaplain's job is to protect the dying person's own faith, or their lack of one.`],
+  [`Ask first, then pray in their tradition or in your own words.`, `Offer gently: "Would you like a prayer? From your tradition, or in my own words?"`],
+  [`The bedside belongs to the dying person's own faith.`, `This holds for chaplains, doulas, and family alike. When a relative pushes, the chaplain's job is to protect the dying person's own faith, or their lack of one.`],
   [`Ask before touching the body after death.`, `Some traditions want same-gender care, some want the body left undisturbed for a time, some want family to wash and dress. Ask first, every time.`],
-  [`A clear mind at death matters to some traditions.`, `Buddhist, Hindu, and many Muslim families may want the person alert enough to pray. That is a conversation with the hospice nurse about balancing comfort and clarity, not a refusal of comfort.`],
-  [`Cremation, embalming, autopsy, and donation views differ.`, `Never assume. The funeral home and the family's clergy can help.`],
-  [`When clergy can't come in time,`, `Willow always offers what family can do themselves, and says plainly that God's love is not stuck in traffic.`]
+  [`A clear mind at death matters to some traditions.`, `Buddhist, Hindu, and many Muslim families may want the person alert enough to pray. That is a conversation with the hospice nurse about comfort and clarity together.`],
+  [`Cremation, embalming, autopsy, and donation views differ.`, `Ask, every time. The funeral home and the family's clergy can help.`],
+  [`When clergy are still on the way,`, `Willow always offers what family can do themselves. Love reaches the room in time.`]
 ];
 
 const END = `Families practice their faith in their own ways. Ask.`;

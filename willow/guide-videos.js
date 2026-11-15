@@ -2904,11 +2904,11 @@ window.GG_LEARN_GUIDES.willow = {
 "h": "Words you can use",
 "items": [
 "Grandma is dying.",
-"Her body is very sick, and it's stopping working.",
+"Her body is very sick, and it's wearing out.",
 "Nothing you did caused this.",
 "You can ask me anything."
 ],
-"say": "Here are words you can use. Grandma is dying. Her body is very sick, and it's stopping working. Nothing you did caused this. You can ask me anything."
+"say": "Here are words you can use. Grandma is dying. Her body is very sick, and it's wearing out. Nothing you did caused this. You can ask me anything."
 },
 {
 "k": "points",
@@ -2932,12 +2932,11 @@ window.GG_LEARN_GUIDES.willow = {
 {
 "k": "big",
 "h": "Practice the first sentence.",
-"say": "Take a moment. Say the first sentence you'll use, out loud or quietly. Grandma is dying. Her body is stopping working. Hearing yourself say it once makes it easier.",
+"say": "Take a moment. Picture the child beside you, and say your first sentence, out loud or quietly. Hearing yourself say it once makes it easier.",
 "beats": [
 "Take a moment.",
-"Say the first sentence you'll use, out loud or quietly.",
 {
-"t": "Grandma is dying. Her body is stopping working.",
+"t": "Picture the child beside you, and say your first sentence, out loud or quietly.",
 "w": 8
 },
 "Hearing yourself say it once makes it easier."
