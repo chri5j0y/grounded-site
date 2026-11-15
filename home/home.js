@@ -4848,11 +4848,15 @@
   /* BLD 999: one Back on every Money screen. Home's top button reads Back to Library on One Page, and Back everywhere
      else, where it returns to the Money screen before (Money's own back()). */
   function moneyTop(v) {
-    var b = document.querySelector('.hm-subbar .hm-backbtn'); if (!b || !document.getElementById('hm-money')) return;
+    var box = document.getElementById('hm-money'), b = document.querySelector('.hm-subbar .hm-backbtn'); if (!b || !box) return;
+    moneyNavTop();
     var sp = b.querySelector('span'), home = !v || v === 'sheet';
     if (home) { b.setAttribute('data-hm-tab', 'library'); b.removeAttribute('data-hm-mback'); if (sp) sp.textContent = 'Back to Library'; }
     else { b.removeAttribute('data-hm-tab'); b.setAttribute('data-hm-mback', '1'); if (sp) sp.textContent = 'Back'; }
   }
+  // Money's bar stays in reach while scrolling, just under the site's own sticky top bar.
+  function moneyNavTop() { var box = document.getElementById('hm-money'), tb = document.querySelector('.topbar'); if (box) box.style.setProperty('--gm-navtop', (tb && getComputedStyle(tb).position === 'sticky' ? tb.offsetHeight : 0) + 'px'); }
+  window.addEventListener('resize', moneyNavTop);
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('.hm-subbar [data-hm-mback]'); if (!t) return;
     e.preventDefault(); e.stopPropagation(); if (MN.ctl) MN.ctl.back(); else goTo('library=money');

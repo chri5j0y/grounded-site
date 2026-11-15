@@ -710,10 +710,10 @@ textarea.gm-in{resize:vertical;}
 }
 
 /* =====================================================================
-   BLD 999: Money Made Simple. One bar on every Money screen (sticky, one row; it scrolls sideways inside itself if a
-   phone is ever too narrow), a slim header band, Tools as painted cards grouped by part, and the gentle Set-Aside note.
+   BLD 999: Money Made Simple. One bar on every Money screen (sticky, one row, held just under the host's own sticky top
+   bar through --gm-navtop; it scrolls sideways inside itself if a phone is ever too narrow), a slim header band, Tools as painted cards grouped by part, and the gentle Set-Aside note.
    ===================================================================== */
-.gm-nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;padding:6px;margin:0;border-radius:18px;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);box-shadow:var(--shadow);
+.gm-nav{position:sticky;top:var(--gm-navtop,0px);z-index:5;display:flex;gap:6px;padding:6px;margin:0;border-radius:18px;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);box-shadow:var(--shadow);
   overflow-x:auto;scrollbar-width:none;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
 .gm-nav::-webkit-scrollbar{display:none;}
 .gm-bb{flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 12px;border-radius:13px;border:0;background:transparent;color:var(--ink-soft);
