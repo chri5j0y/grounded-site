@@ -5,7 +5,7 @@
    device only and keeps its answers in the same money object as the plan (money.tools.<id>), so the profile lock,
    backups, and Move to Another Device carry them.
 
-   A tool: {id, part (give, live, protect, grow, ahead: the Plan part), n name, i icon, sub one line, start: 1 for the Start taste, init(t, c), form(c), out(c), act(a, arg, c)}
+   A tool: {id, part (give, live, protect, grow, ahead: the Look Ahead part, Plan before BLD 999), n name, i icon, sub one line, start: 1 for the Start taste, init(t, c), form(c), out(c), act(a, arg, c)}
    c (from gg-money.js): {d money, t this tool's state, U helpers, save(), paint(), say(msg), go(view), celebrate(msg), member()}
    Inputs carry data-gt="path" (data-n="1" for numbers); the module writes them into t and redraws out(c) as you type.
    Buttons carry data-gm="tool:<id>:<action>:<arg>".
@@ -14,11 +14,15 @@
    (givelog Giving Tracker, insure Insurance Overview, blind Blind Spot Check, grow Growth Calculator, year Year Plan) keep
    their answers in money.tools.<id> like the rest; each tip shows in its part (tipPart). The tree paintings are gone.
 
-   BLD 942: holidays (Holidays and Birthdays, Plan part) keeps its answers in money.holidays, not money.tools, because it is
+   BLD 942: holidays (Holidays and Birthdays, Look Ahead part) keeps its answers in money.holidays, not money.tools, because it is
    household plan data that rides the Family share; it feeds one set-aside fund on One Page. A tool may also have lead(c)
    (drawn above the results, kept while typing) and onSet(path, c) (after an input is written). The Standards ask for the
    household size the first time they open, and "household of N" opens the same field in place. Set-asides count in the
    Standards areas like lines.
+
+   BLD 999 (Money Made Simple): the part Plan is Look Ahead and My Plan is Every Line; places on the plan read One Page. A
+   tool opens from Tools with one tap and the module's own Back returns to the screen before. Holidays and Birthdays counts
+   the steady amount (the year total over twelve months, rounded up), and a fund that is behind shows the gentle note.
 
    GGMoneyTools.math holds every calculation (pure, for tests). No dashes in any words here.
    ===================================================================== */
@@ -151,7 +155,7 @@
     ['signin', 'Strong Sign In', 'Strong passwords and two step sign in on email and bank accounts.', 'Turn on two step sign in for your email and your bank.'],
     ['subs', 'Yearly Subscription Review', 'Each subscription earns its place once a year.', 'Open Subscription Check and choose Keep, Pause, or Let Go for each one.'],
     ['tax', 'Tax Set Aside for Side Income', 'Side income often owes tax at year end; a set aside keeps spring calm.', 'Set aside a share of each side payment in its own savings account.'],
-    ['autopay', 'Every Due Date Covered', 'Autopay or reminders cover each bill on time.', 'Set autopay or a reminder for each bill in My Plan.']
+    ['autopay', 'Every Due Date Covered', 'Autopay or reminders cover each bill on time.', 'Set autopay or a reminder for each bill on One Page.']
   ];
   function blindSums(t) { var done = (t && t.done) || {}, na = (t && t.na) || {}, d = 0, total = 0, next = null;
     BLIND.forEach(function (b) { if (na[b[0]]) return; total++; if (done[b[0]]) d++; else if (!next) next = b; });
@@ -522,7 +526,7 @@
         return '<div class="gm-f"><span>I am paid</span>' + chips('pay', 's', t.s, [['w', 'Weekly'], ['b', 'Every Two Weeks'], ['s', 'Twice a Month'], ['m', 'Monthly']]) + '</div>' +
           '<div class="gm-two">' + (t.s === 'w' || t.s === 'b' ? fld('A recent payday', 'anchor', t.anchor, { text: 1, type: 'date' }) : fld(t.s === 's' ? 'First payday of the month' : 'Payday', 'd1', t.d1, { ph: '1' })) + (t.s === 's' ? fld('Second payday', 'd2', t.d2, { ph: '15' }) : fld('Each paycheck', 'amt', t.amt, { ph: String(Math.round(U.totals(c.d).income * 12 / checksPerYear(t.s)) || '') })) + '</div>' +
           (t.s === 's' ? fld('Each paycheck', 'amt', t.amt, { ph: String(Math.round(U.totals(c.d).income * 12 / 24) || '') }) : '') +
-          (ms.length ? '<details class="gm-fold"' + (Object.keys(t.due).some(function (k) { return n0(t.due[k]) > 0; }) ? '' : ' open') + '><summary>Due days for your monthly bills</summary><p class="gm-mini">Add the day of the month each bill is due. Until then, it sits on the first paycheck.</p><div class="gm-grid3">' + ms.map(function (l) { return fld(l.n, 'due.' + l.id, t.due[l.id] || '', { ph: '1' }); }).join('') + '</div></details>' : '<p class="gm-mini">Add monthly lines to My Plan to place them on paychecks.</p>');
+          (ms.length ? '<details class="gm-fold"' + (Object.keys(t.due).some(function (k) { return n0(t.due[k]) > 0; }) ? '' : ' open') + '><summary>Due days for your monthly bills</summary><p class="gm-mini">Add the day of the month each bill is due. Until then, it sits on the first paycheck.</p><div class="gm-grid3">' + ms.map(function (l) { return fld(l.n, 'due.' + l.id, t.due[l.id] || '', { ph: '1' }); }).join('') + '</div></details>' : '<p class="gm-mini">Add monthly lines on One Page to place them on paychecks.</p>');
       },
       out: function (c) {
         var t = c.t, now = new Date(), y = now.getFullYear(), m = now.getMonth(), days = paydays(t.s, t.anchor, y, m, n0(t.d1), n0(t.d2));
@@ -541,7 +545,7 @@
         var t = c.t, L = U.live(c.d.lines).filter(function (l) { return l.s !== 'hold' && (l.f === 'y' || l.f === 'h' || l.f === 's'); });
         // BLD 942: Set-Asides on One Page hold each fund with its balance, due months or cap, and Pay From a Fund.
         var sa = '<div class="gm-note" data-sa-note>' + U.I('jar') + '<span>Set-Asides live on One Page now: Known Bills, Just in Case funds with a cap, and Pay From a Fund. In a line\u2019s dots, Make This a Set-Aside moves it there. <button type="button" class="gm-linkbtn" data-gm="go:sheet">One Page' + U.I('arrow') + '</button></span></div>';
-        if (!L.length) return sa + '<p class="gm-sub">Lines marked Yearly, Twice a Year, or Spread Monthly in My Plan become set-aside funds here.</p>';
+        if (!L.length) return sa + '<p class="gm-sub">Lines marked Yearly, Twice a Year, or Spread Monthly on One Page become set-aside funds here.</p>';
         return sa + '<p class="gm-sub">Each yearly or twice a year line gets its own fund. Add its monthly amount each month, and the bill arrives ready.</p>' +
           L.map(function (l) { return '<div class="gm-line gm-trow"><div class="gm-pt"><b>' + E(l.n) + '</b><span>' + M(U.monthly(l)) + ' a month</span></div>' + fld('In this fund now', 'bal.' + l.id, t.bal[l.id] || '', { ph: '0' }) + '</div>'; }).join('') +
           '<div class="gm-acts">' + btn('fund', 'month', t.last === U.monthKey() ? 'Added for ' + MONTHS[new Date().getMonth()] : 'Add This Month’s Set-Aside', t.last === U.monthKey()) + '</div>';
@@ -782,7 +786,7 @@
       form: function (c) {
         var t = c.t, Y = yearlyLines(c.d), mo = [['', 'Choose a month']].concat(MONTHS.map(function (m, i) { return [i, m]; }));
         return '<p class="gm-sub">The whole year on one page: birthdays and holidays, yearly bills, and the goals you are saving toward. Nothing big arrives as a surprise.</p>' +
-          (Y.length ? '<details class="gm-fold" open><summary>Yearly bills from My Plan</summary><p class="gm-mini">Choose the month each one is due.</p><div class="gm-grid3">' + Y.map(function (l) { return fld(l.n + ' (' + M(l.a) + ')', 'lm.' + l.id, t.lm[l.id] == null ? '' : t.lm[l.id], { sel: mo }); }).join('') + '</div></details>' : '') +
+          (Y.length ? '<details class="gm-fold" open><summary>Yearly bills from One Page</summary><p class="gm-mini">Choose the month each one is due.</p><div class="gm-grid3">' + Y.map(function (l) { return fld(l.n + ' (' + M(l.a) + ')', 'lm.' + l.id, t.lm[l.id] == null ? '' : t.lm[l.id], { sel: mo }); }).join('') + '</div></details>' : '') +
           '<h3 class="gm-h4">Add to the Year</h3><div class="gm-line gm-trow">' + chips('year', 'k', t.draft.k, [['date', 'Big Date'], ['bill', 'Bill'], ['goal', 'Goal']]) +
           '<div class="gm-lr2 c3">' + fld('What', 'draft.n', t.draft.n, { text: 1, ph: 'Family birthday', max: 60 }) + fld('Month', 'draft.m', t.draft.m, { sel: MONTHS.map(function (m, i) { return [i, m]; }) }) + fld('Amount', 'draft.a', t.draft.a, { ph: '0' }) + '</div>' +
           '<div class="gm-acts">' + btn('year', 'add', U.I('plus') + 'Add to My Year') + '</div></div>' +
@@ -946,8 +950,9 @@
         var cal = '<h3 class="gm-h4">Your Year</h3><div class="gm-hcal" data-hcal>' + cells.join('') + '</div>';
         if (!year) return cal + '<p class="gm-mini">Check a day or add a birthday, and your year fills in here.</p>';
         var avg = Math.ceil(year / 12 - 1e-6), mo = f ? U.fundMonth(d, f) : avg;
-        var why = mo > avg + 1 ? 'About ' + M(avg) + ' a month covers the year. A little more for now has ' + U.MONTHS[big1.m] + ' ready; it settles near ' + M(avg) + ' once the fund catches up.'
-          : mo < avg - 1 ? 'About ' + M(avg) + ' a month covers the year. Your fund is ahead, so ' + M(mo) + ' is enough this month.' : 'The year total, spread over twelve months: about ' + M(avg) + ' a month.';
+        // BLD 999: the fund counts the steady amount; when it is behind, the gentle note names the first day that is short.
+        var bh = f && U.fundBehind ? U.fundBehind(d, f) : null;
+        var why = 'The year total, spread over twelve months: about ' + M(avg) + ' a month.' + (bh ? ' To be ready for ' + U.MONTHS[bh.m] + ', add ' + M(bh.add) + ' when you can.' : '');
         var now = MS[m0], nowLine = now.length ? '<p class="gm-note" data-hnow>' + U.I('gift') + '<span>' + E(now.map(function (x) { return x.n; }).join(', ') + ', ' + U.MONTHS[m0] + ': ' + M(now.reduce(function (s, x) { return s + x.a; }, 0)) + ' from your fund.') + ' Log it in This Month with From a Fund.</span></p>' : '';
         var gl = U.live(d.lines).filter(function (l) { return l.s !== 'hold' && l.s !== 'pretax' && /gift|christmas|holiday|birthday/i.test(l.n || ''); });
         var dup = gl.map(function (l) { return '<div class="gm-note" data-hdup="' + l.id + '">' + U.I('leaf') + '<span>Your plan also has ' + E(l.n) + ' at ' + M(U.monthly(l)) + ' a month. Once this planner covers it, rest that line so it counts once. ' + btn('holidays', 'hold:' + l.id, 'Set ' + E(l.n) + ' On Hold', 1) + '</span></div>'; }).join('');

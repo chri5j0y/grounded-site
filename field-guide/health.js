@@ -1008,7 +1008,7 @@ function vShop(){
 const TRIP = {H, save, shopList, keepShop, rerender: () => rerender(true), toast, esc, PUB, TEEN, STORES, aisleOf, asset, fwl: n => fwl(n), shopDate: n => shopDate(n),
   week: () => S.shopWk || foodWeek(new Date()), age: () => { try { return C.age ? String(C.age() || '') : ''; } catch(e){ return ''; } }};
 let TRIPL = 0;
-function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('field-guide/trip.js?v=b949');
+function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('field-guide/trip.js?v=c120');
   s.onload = () => { if (S.sec === 'shop' || document.querySelector('.hj-shopbar')) rerender(true); }; s.onerror = () => { TRIPL = 0; }; document.head.appendChild(s); } return ''; }
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
