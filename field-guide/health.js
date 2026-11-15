@@ -1819,7 +1819,13 @@ function musicFor(o){
   return {list: L, start: h % L.length};
 }
 // The Music line for a session: its group's tracks on the start screen (What is in it), the tracks it played on the finish screen.
-function musicSrc(files){ try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; } } catch(e){} return ''; }
+let SRCL = 0;
+function musicSrc(files){
+  try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; return ''; } } catch(e){}
+  // the credits file loads the first time a session shows, then the screen draws again
+  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c117'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
+  return '';
+}
 async function runSession(o){
   const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = []; o.tips = tipPlan(o);
   if (V){ V.unlock(); V.onlost = soundLost; }

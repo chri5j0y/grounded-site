@@ -39,6 +39,10 @@
      count, no certificate: a quiet check marks the ones watched. The closing scene offers Open the Full
      Guide (window.GG_GUIDE_OPEN[app](id), or #guide=id), the other video, and Back.
      GGLearn.open(app, id, {from: 'guide'}) opens one straight from a guide page.
+     One click (GWG BLD 997): GGLearn.open(app, null, {cat: 'sup' or 'les', solo: true}) opens that one category's list
+     with no Learn menu, tabs, or search; its Back closes Learn, so the tree's own page (Willow's Learn) is next. tracks: [ids]
+     keeps only those tracks, skip: [ids] leaves them out, back: 'Back to Learn' names the way home. A lesson opened with
+     {solo: true} and no cat closes Learn on Back, the same way.
      One home, two doors (GWG BLD 790): where the tree shows its When Life Changes cards in the page, Learn's When Life
      Changes card and tab close Learn and open them there (window.GG_LC_OPEN[app]() when a tree names its own opener,
      otherwise the tree's own tab opener, see lcDoor). The videos still open by #learn= links, from each guide, and from
@@ -1123,7 +1127,7 @@
       if (e.guide) {
         b.push(['guide', 'Open the Full Guide', 'pri']);
         if (e.pair) b.push(['pair', 'Watch: ' + esc(e.pair.sideName), '']);
-        b.push(['home', cfg.fromGuide ? 'Back to the Guide' : 'Back to Learn', '']);
+        b.push(['home', cfg.backLabel || (cfg.fromGuide ? 'Back to the Guide' : 'Back to Learn'), '']);
         b.push(['again', 'Watch Again', 'quiet']);
         bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
         bar.classList.add('on'); place(); bar._next = null; return;
@@ -1144,7 +1148,7 @@
       if (e.unfinished) b.push(['answer', 'Answer the Question', 'pri']);
       if (e.cert) b.push(['cert', IC.award + 'Get Your Certificate', e.next ? '' : 'pri']);
       if (e.next) b.push(['open', e.support ? 'Play Another' : 'Next Lesson', e.support ? '' : 'pri']);
-      b.push(['home', e.support ? 'Back to Learn' : 'Back to Lessons', (e.next && !e.support) || e.cert || e.unfinished ? '' : 'pri']);
+      b.push(['home', cfg.backLabel || (e.support ? 'Back to Learn' : 'Back to Lessons'), (e.next && !e.support) || e.cert || e.unfinished ? '' : 'pri']);
       if (!e.unfinished) b.push(['again', 'Watch Again', 'quiet']);
       bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
       bar.classList.add('on'); place();
@@ -1857,7 +1861,7 @@
     var meta = APPS[app]; if (!meta) return;
     css();
     var pg = opts && opts.page;
-    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return need30(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () { return pg || hasPages(app) ? needPages() : null; }).then(function () {
+    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return need30(app); }).then(function () { return (lessonId && LIFE_ID.test(lessonId)) || (opts && opts.cat === 'sup') ? needLife(app) : null; }).then(function () { return pg || hasPages(app) ? needPages() : null; }).then(function () {
       var keep = APP ? APP.depth : 0;
       if (APP) close(true, true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
@@ -1868,6 +1872,7 @@
       root.innerHTML = '<div class="ggl-top"><img src="' + MARK(app + '-tab') + '" alt=""><b>Learn ' + esc(meta.name) + '</b><button class="ggl-x" data-l="close">' + esc(meta.back) + '</button></div><div class="ggl-in" id="ggl-in"></div>';
       document.body.appendChild(root);
       APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide'), depth: keep };
+      if (opts && opts.solo) { APP.solo = true; APP.cat = opts.cat || null; APP.only = opts.tracks || null; APP.skip = opts.skip || null; APP.back = opts.back || meta.back; }
       document.body.style.overflow = 'hidden';
       root.addEventListener('click', appClick); root.addEventListener('input', appInput);
       document.addEventListener('keydown', appKey);
@@ -1892,8 +1897,10 @@
     e.preventDefault();
     var qi = e.target && e.target.id === 'ggl-q' ? e.target : null;
     if (qi && qi.value) { qi.value = ''; APP.q = ''; if (APP.paint) APP.paint(); return; }
-    if (APP.view === 'lesson') { if (APP.gv && APP.fromGuide) close(); else goList(); } else close();
+    if (APP.view === 'lesson') { if ((APP.gv && APP.fromGuide) || soloDirect()) close(); else goList(); } else close();
   }
+  // One click (GWG BLD 997): a lesson opened alone with {solo: true} goes back to the page that opened it.
+  function soloDirect() { return !!(APP && APP.solo && !APP.cat); }
   function tracksFor(app) {
     var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
     var lt = lifeTracks(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
@@ -1929,13 +1936,13 @@
   function list(fromPop) {
     if (CUR) CUR.stop();
     APP.view = 'list'; if (!fromPop) hSet(null);
-    var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app).filter(function (t) { return !t.unlisted; }), D = load(app);
+    var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app).filter(function (t) { return !t.unlisted && (!APP.only || APP.only.indexOf(t.id) >= 0) && (!APP.skip || APP.skip.indexOf(t.id) < 0); }), D = load(app);
     var gd = every.filter(function (t) { return t.kind === 'guide'; }), tr = every.filter(function (t) { return t.kind !== 'support' && t.kind !== 'guide'; }), sup = every.filter(function (t) { return t.kind === 'support'; }), counted = tr.filter(function (t) { return t.kind !== 'setup'; });
     var all = counted.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = counted.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
     var el = $('#ggl-in', APP.root);
-    var card = function (t) {
+    var card = function (t, bare) {
       var isSup = t.kind === 'support', n = t.lessons.filter(function (l) { return D.done[l.id]; }).length, ok = n === t.lessons.length && certable(t);
-      return '<div class="ggl-card"><div class="ggl-spread"><div><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ggl-muted">' + esc(t.who) + '</p>' : '') + '</div>' + (isSup ? '' : '<span class="ggl-muted">' + n + ' of ' + t.lessons.length + '</span>') + '</div>'
+      return '<div class="ggl-card"><div class="ggl-spread"><div>' + (bare === true ? '' : '<h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ggl-muted">' + esc(t.who) + '</p>' : '')) + '</div>' + (isSup ? '' : '<span class="ggl-muted">' + n + ' of ' + t.lessons.length + '</span>') + '</div>'
         + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id] && !isSup; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : isSup ? IC.play : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b>' + forTag(l, 'ln-for') + '<small>' + (l.blurb ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !D.done[l.id] && !isSup ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
         + pagesHtml(t)
         + (ok ? '<div class="ggl-row"><button class="ggl-btn pri" data-l="cert" data-v="' + esc(t.id) + '">' + IC.award + 'Get Your Certificate</button></div>' : certable(t) ? '<p class="ggl-muted" style="margin-top:10px;font-size:15px">Finish every lesson in this series for a Certificate of Completion.</p>' : '') + '</div>';
@@ -1950,7 +1957,7 @@
       return '<div class="ggl-card"><h3>' + esc(t.title) + '</h3><div class="ln-list">' + t.lessons.map(function (l) { var d = !!D.done[l.id]; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : IC.play) + '</span><span class="ln-t"><b>' + esc(l.guideTitle || l.title) + '</b><small>' + esc(l.sideName || '') + '. About ' + esc(String(l.mins || 3)) + ' minutes' + (d ? '. Watched.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div></div>';
     };
     var GD = (window.GG_LEARN_GUIDES || {})[app] || {}, S = L.support || {};
-    var H2 = function (t) { return '<h2 style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(t) + '</h2>'; };
+    var hn = APP.solo ? 'h1' : 'h2', H2 = function (t) { return '<' + hn + ' style="font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:30px;margin:2px 0 0">' + esc(t) + '</' + hn + '>'; };
     var back = function (to, label) { return '<button class="ggl-link" data-l="' + to[0] + '"' + (to[1] ? ' data-v="' + esc(to[1]) + '"' : '') + '>&larr; ' + esc(label) + '</button>'; };
     var watched = function (ts) { var n = 0; ts.forEach(function (t) { t.lessons.forEach(function (l) { if (D.done[l.id]) n++; }); }); return n; };
     var size = function (ts) { return ts.reduce(function (n, t) { return n + t.lessons.length; }, 0); };
@@ -1971,8 +1978,13 @@
     var chip = function (k, label, on, isDoor) { return '<button type="button" class="ggl-chip' + (on ? ' on' : '') + '" aria-pressed="' + (on ? 'true' : 'false') + '" data-l="' + (isDoor ? 'door' : k ? 'cat' : 'cats') + '"' + (k ? ' data-v="' + k + '"' : '') + (isDoor ? ' aria-label="' + esc(label) + ', opens the guides in ' + esc(meta.name) + '"' : '') + '>' + esc(label) + (isDoor ? IC.go : '') + '</button>'; };
     var top = cats.length ? '<div class="ggl-find" role="search"><input class="ggl-q" id="ggl-q" type="search" placeholder="Search the lessons and videos" aria-label="Search Learn ' + esc(meta.name) + '" value="' + esc(q) + '" enterkeyhint="search" autocomplete="off">'
       + '<div class="ggl-chips" role="group" aria-label="Learn categories">' + chip('', 'All', !cat) + cats.map(function (c) { return chip(c.k, c.title, cat === c.k, c.door); }).join('') + '</div></div><p class="ggl-sr" id="ggl-qn" aria-live="polite"></p>' : '';
-    var head = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1>' + (cat ? '' : '<p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>');
+    // One click (GWG BLD 997): a solo category shows its own list only, with one way back; one track is named by itself.
+    var one = APP.solo && (cat === 'sup' || cat === 'les') && (cat === 'sup' ? sup : tr).length === 1 ? (cat === 'sup' ? sup : tr)[0] : null;
+    if (APP.solo) APP.soloTitle = one ? one.title : cat === 'les' ? (L.lessonsTitle || 'Learn Step by Step') : (S.title || 'Support for Right Now');
+    var head = APP.solo && cat ? '<button class="ggl-link" data-l="close">&larr; ' + esc(APP.back) + '</button>' : '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1>' + (cat ? '' : '<p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>');
+    if (APP.solo && cat) top = '';
     var catHtml = function () {
+      if (one) return '<div class="ggl-eb" style="margin-top:18px">' + esc(cat === 'sup' ? (S.eyebrow || 'Support') : 'Lessons') + '</div>' + H2(one.title) + (one.who ? '<p class="ggl-muted">' + esc(String(one.who).replace(/([^.!?])$/, '$1.')) + '</p>' : '') + card(one, true);
       if (cat === 'les') return '<div class="ggl-eb" style="margin-top:18px">Lessons</div>' + H2(L.lessonsTitle || 'Learn Step by Step') + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '') + tr.map(card).join('');
       if (cat === 'sup') return '<div class="ggl-eb" style="margin-top:18px">' + esc(S.eyebrow || 'Support') + '</div>' + H2(S.title || 'Support for Right Now') + (S.intro ? '<p class="ggl-muted">' + esc(S.intro) + '</p>' : '') + sup.map(card).join('');
       if (cat === 'gd') {
@@ -2046,16 +2058,17 @@
     APP.view = 'lesson'; APP.gv = f.t.kind === 'guide';
     var D = load(app), el = $('#ggl-in', APP.root), meta = APPS[app];
     var sup = f.t.kind === 'support', gv = f.t.kind === 'guide', pair = gv && f.l.pairId ? (find(app, f.l.pairId) || {}).l : null;
-    el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? esc(((window.GG_LEARN_GUIDES || {})[app] || {}).title || 'When Life Changes') + ', ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
+    var solo = soloDirect(), sb = APP.solo ? (solo ? APP.back : 'Back to ' + (APP.soloTitle || 'Learn')) : null;
+    el.innerHTML = '<button class="ggl-link" data-l="' + ((gv && APP.fromGuide) || solo ? 'close' : 'home') + '">&larr; ' + (sb ? esc(sb) : gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? esc(((window.GG_LEARN_GUIDES || {})[app] || {}).title || 'When Life Changes') + ', ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
       app: app, lesson: f.l, track: f.t, tracks: f.t.unlisted ? [f.t] : tracksFor(app).filter(function (t) { return !t.unlisted && (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
-      pair: pair, fromGuide: gv && APP.fromGuide,
+      pair: pair, fromGuide: gv && APP.fromGuide, backLabel: sb,
       guide: function (gid) { closeThen(function () { var go = (window.GG_GUIDE_OPEN || {})[app]; if (typeof go === 'function') go(gid); else location.hash = '#guide=' + encodeURIComponent(gid); }); },
       onAt: function (i) { var d = load(app); d.at[f.l.id] = i; keep(app, d); },
       onDone: function (lid) { var d = load(app); if (!d.done[lid]) { d.done[lid] = today(); keep(app, d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { lesson(nid); },
-      home: function () { if (gv && APP && APP.fromGuide) close(); else goList(); },
+      home: function () { if ((gv && APP && APP.fromGuide) || soloDirect()) close(); else goList(); },
       cert: function (t) { cert(app, t); }
     });
   }
