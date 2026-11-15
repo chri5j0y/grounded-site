@@ -4863,7 +4863,9 @@
     var box = document.getElementById('hm-money'); if (!box || !box.isConnected) return false;
     var r = route(); S.view = nv;
     try { MN.ctl.pop(r.money || 'sheet', history.state && Array.isArray(history.state.gmPath) ? history.state.gmPath : null); } catch (e) { return false; }
-    moneyTop(r.money || 'sheet'); window.scrollTo(0, 0);
+    var v = MN.ctl.view();   // an older name (-home) settles on its place, and a typed address keeps the path that led to it
+    if (v !== (r.money || 'sheet') || !(history.state && history.state.gmPath)) { try { history.replaceState({ gmPath: MN.ctl.path() }, '', location.pathname + location.search + '#library=money' + (v === 'sheet' ? '' : '-' + v)); } catch (e) {} S.view = viewOf(); }
+    moneyTop(v); window.scrollTo(0, 0);
     return true;
   }
   /* The Family link: read it, keep it in this tab until a grown-up profile is open, then open Grounded Money with it. */
