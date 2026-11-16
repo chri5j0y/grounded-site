@@ -152,7 +152,7 @@
     Object.keys(m).forEach(function (k) { var i = +k, v = +m[k]; if (i >= 0 && i < (n == null ? 1e6 : n) && i === Math.floor(i) && v > 0 && v <= 10) { o[i] = v; any = true; } });
     return any ? o : null;
   }
-  // BLD 1002: a series (a Story Vault collection told in parts) shows as its own section on Grounded Stories, in the Vault's order.
+  // BLD 1002: a series (a Story Vault collection told in parts) shows as its own section on Grounded Stories, by part (story.part), then the Vault's order.
   var SERIES = { 'The Wisdom They Share': 'Four short stories from the edge of life, in full for everyone.' };
   var THEMES = [['', 'All Stories'], ['dying', 'Dying and Saying Goodbye'], ['grief', 'Grief and After'], ['faith', 'Faith and Doubt'], ['kids', 'Kids and Families']];
 
@@ -255,6 +255,7 @@
       if (s.status !== 'early' && pv.cut) e.cut = 1; // the preview ends partway through a paragraph
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
       var tp = topicsOf(s.topics); if (tp) e.topics = tp;
+      if (+s.part > 0) e.part = +s.part; // BLD 1002: a series story's place in its series
       var pz = pausesOf(s.pause, paras.length); if (pz) e.pz = pz; // BLD 1002: the story's own pause marks, as timing in the voiced version
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
       if (open) e.full = paras; else { locked[e.id] = paras; n++; }
@@ -543,7 +544,7 @@
     perks(d);
     filter(FILTER);
   }
-  // BLD 1002: each series with a Posted story gets its own section (heading, lead, cards in the Vault's order) above More Stories.
+  // BLD 1002: each series with a Posted story gets its own section (heading, lead, cards by part, then the Vault's order) above More Stories.
   function series(L, postEl) {
     var host = document.getElementById('gs-series');
     if (!host) {
@@ -551,6 +552,7 @@
       host = document.createElement('div'); host.id = 'gs-series'; before.parentNode.insertBefore(host, before);
     }
     var by = {}, order = [];
+    L = L.map(function (s, i) { return [s, i]; }).sort(function (a, b) { return ((+a[0].part || 1e3) - (+b[0].part || 1e3)) || a[1] - b[1]; }).map(function (x) { return x[0]; });
     L.forEach(function (s) { if (!by[s.col]) { by[s.col] = []; order.push(s.col); } by[s.col].push(s); });
     host.innerHTML = order.map(function (c) {
       return '<section class="gs-series" id="series-' + esc(slug(c)) + '" aria-labelledby="gs-ser-' + esc(slug(c)) + '"><h2 class="gs-h" id="gs-ser-' + esc(slug(c)) + '">' + esc(c) + '</h2>'
