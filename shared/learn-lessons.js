@@ -18432,8 +18432,8 @@ window.GG_LEARN = {
       "k": "story",
       "title": "He Deserves That",
       "lines": [
-       "Judy cut me off on the phone. Bill is transitioning, she said. You need to go see him right away.",
-       "We grew up Catholic, she said, but Bill never really followed along with it. I know he still believes. He deserves that.",
+       "Judy cut me off on the phone. Gene is transitioning, she said. You need to go see him right away.",
+       "We grew up Catholic, she said, but Gene never really followed along with it. I know he still believes. He deserves that.",
        "I read the Twenty-third Psalm and prayed. It was peaceful, I told her. I don't think he was alone for a second of it."
       ],
       "lesson": "Roots can run deep, even after years of quiet.",
@@ -18443,13 +18443,13 @@ window.GG_LEARN = {
        "label": "Read the Full Story"
       },
       "hold": 2,
-      "say": "Let me tell you about Bill. At the end of my day, I called his sister Judy to introduce myself. She cut me off. Bill is transitioning, she said, and you need to go see him right away. I asked about his faith. We grew up Catholic, she said, but Bill never really followed along with it. I know he still believes. He was not much for priests or church. If you could do it, she said, that would be better. He is a good man. He deserves that. I sat beside Bill, read the Twenty-third Psalm, and prayed. His breathing had been sporadic, and it settled into a rhythm. When he died, I called Judy. It was peaceful, I told her. I don't think he was alone for a second of it."
+      "say": "Let me tell you about Gene. At the end of my day, I called his sister Judy to introduce myself. She cut me off. Gene is transitioning, she said, and you need to go see him right away. I asked about his faith. We grew up Catholic, she said, but Gene never really followed along with it. I know he still believes. He was not much for priests or church. If you could do it, she said, that would be better. He is a good man. He deserves that. I sat beside Gene, read the Twenty-third Psalm, and prayed. His breathing had been sporadic, and it settled into a rhythm. When he died, I called Judy. It was peaceful, I told her. I don't think he was alone for a second of it."
      },
      {
       "k": "big",
       "h": "Someone remembered what would hold him.",
       "sub": "Willow keeps what grounds a person, in their own words.",
-      "say": "Bill's faith had been quiet for years, and his sister still knew what would hold him. Willow keeps what grounds a person in their own words. When they choose to share it, the people beside them can bring it to the bedside."
+      "say": "Gene's faith had been quiet for years, and his sister still knew what would hold him. Willow keeps what grounds a person in their own words. When they choose to share it, the people beside them can bring it to the bedside."
      },
      {
       "k": "points",

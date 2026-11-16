@@ -59,7 +59,7 @@
   var V = 'b908';
   var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c135', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c134', '/shared/gentle-public.js?v=c135'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c135';
+  var GGN_SRC = '/shared/ggn.js?v=c136';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -1344,7 +1344,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c135';
+  var PV_SRC = '/shared/page-videos.js?v=c136';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2475,7 +2475,7 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=c126';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=c136';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=c128', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c128', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c126', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
@@ -4600,7 +4600,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=c135', next: '/shared/home/nextsteps.js?v=c135', legacy: '/shared/home/legacy.js?v=c135', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c135', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=c135', next: '/shared/home/nextsteps.js?v=c135', legacy: '/shared/home/legacy.js?v=c135', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c136', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4702,7 +4702,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c135'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c136'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -5194,7 +5194,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c135';
+  var LEARN_JS = '/shared/gg-learn.js?v=c136';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
