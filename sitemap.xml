@@ -37,6 +37,7 @@
   <url><loc>https://growwithgrounded.com/try-one-practice</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-apple-cinnamon-baked-oatmeal.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/b-baked-chilaquiles.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-banana-oat-pancakes.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-berry-overnight-oats.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-black-bean-egg-burritos.html</loc></url>
@@ -48,27 +49,43 @@
   <url><loc>https://growwithgrounded.com/recipes/r/b-savory-spinach-oats.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-strawberry-banana-smoothie.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-sweet-potato-bean-hash.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/b-sweet-potato-turkey-skillet.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/b-turkish-eggs.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-veggie-egg-cups.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/b-wild-rice-blueberry-bowls.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/b-yogurt-power-bowl.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/br-no-knead-whole-wheat-bread.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/br-swedish-rye-bread.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/br-whole-wheat-pita.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/br-whole-wheat-tortillas.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/bs-berbere-spice-blend.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/bs-big-pot-of-beans.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/bs-grounded-spice-blends.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/bs-one-method-three-grains.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/bs-oven-baked-brown-rice.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/bs-pressure-cooker-chickpeas.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/bs-quick-fridge-pickles.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/bs-quick-pickled-beets.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/bs-scrap-vegetable-broth.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/bs-small-batch-sauerkraut.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/bs-whole-wheat-breadcrumbs.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/bs-wild-rice-simmered.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-arroz-con-pollo.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-beef-black-bean-tacos.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-beef-lentil-shepherds-pie.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-bibimbap-bowls.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-black-bean-soup.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-blackened-shrimp-salsa.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-breakfast-for-dinner.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chana-masala.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-barley-vegetable-soup.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-burrito-bowls.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-fajitas.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-larb.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-marinara-penne.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-pot-pie.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-stir-fry.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-suqaar.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-tinga-tacos.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-chicken-wild-rice-hotdish.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-cod-fish-tacos.html</loc></url>
@@ -77,14 +94,17 @@
   <url><loc>https://growwithgrounded.com/recipes/r/d-greek-shrimp-farro.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-herb-salmon-lentils.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-honey-ginger-salmon-bowls.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-italian-wedding-soup.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-jerk-chicken-black-beans.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-lemon-chicken-soup.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-lemon-garlic-chicken-quinoa.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-lemon-garlic-cod-brown-rice.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-lemongrass-ginger-chicken-soup.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-lentil-bolognese.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-lentil-shepherds-pie.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-lentil-sloppy-joes.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-maple-dijon-trout.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-mediterranean-baked-cod.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-misir-wat.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-oven-baked-walleye.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-oven-fish-and-chips.html</loc></url>
@@ -113,14 +133,17 @@
   <url><loc>https://growwithgrounded.com/recipes/r/d-salmon-patties.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-salmon-quinoa-bowls.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sardine-pasta.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-sheet-pan-chicken-apples-brussels.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sheet-pan-chicken-chickpeas.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sheet-pan-chicken-shawarma.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sheet-pan-lemon-salmon.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sheet-pan-salmon-potatoes-green-beans.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sheet-pan-salmon-sweet-potatoes.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-shrimp-broccoli-stir-fry.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-shrimp-coconut-curry.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-shrimp-tacos-slaw-black-beans.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-sirloin-kebabs.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-slow-cooker-beef-barley-stew.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-slow-cooker-pulled-chicken.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-slow-cooker-turkey-chili.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-split-pea-soup.html</loc></url>
@@ -129,6 +152,7 @@
   <url><loc>https://growwithgrounded.com/recipes/r/d-turkey-black-bean-enchilada-bake.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-turkey-burgers.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-unstuffed-cabbage-roll-skillet.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/d-west-african-peanut-stew.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-white-bean-minestrone.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-white-chicken-chili.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/d-whole-wheat-pizza-night.html</loc></url>
@@ -138,20 +162,28 @@
   <url><loc>https://growwithgrounded.com/recipes/r/dr-berry-lemonade-honey.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-blackberry-sage-sparkler.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-blueberry-lemon-thyme-water.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/dr-brown-rice-horchata.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-cinnamon-hot-cocoa.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-cranberry-rosemary-sparkler.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-cucumber-lime-fizz.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-golden-turmeric-latte.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-hibiscus-ginger-punch.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-mango-lassi.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/dr-masala-chai.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-orange-dream-shake.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-peach-mint-iced-tea.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-pineapple-ginger-mint-water.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-pomegranate-orange-punch.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/dr-rhubarb-ginger-sparkler.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-strawberry-orange-basil-water.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/dr-switchel.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/dr-watermelon-lime-slush.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/ds-banana-berry-nice-cream.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/ds-brown-rice-kheer.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/ds-chocolate-avocado-mousse.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/ds-frozen-banana-pops.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/ds-grilled-pineapple.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/ds-peach-blueberry-cobbler.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/hol-after-service-a-bars.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/hol-after-service-a-chicken.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/hol-after-service-a-drinks.html</loc></url>
@@ -250,17 +282,21 @@
   <url><loc>https://growwithgrounded.com/recipes/r/hol-winter-gathering-w-roots.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/hol-winter-gathering-w-salad.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/hol-winter-gathering-w-soup.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/l-banh-mi-bowls.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-bento-box.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/l-black-bean-quesadillas.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-black-bean-quinoa-burrito-bowl.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-chicken-hummus-pinwheels.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-chicken-white-bean-kale-soup.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-chicken-white-bean-wraps.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-chickpea-edamame-quinoa-bowl.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/l-egg-salad-sandwiches.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-lemony-lentil-white-bean-soup.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-mason-jar-chopped-salad.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-mujaddara.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-rainbow-pasta-salad.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-salmon-brown-rice-bowl.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/l-salmon-onigiri.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-tabbouleh-bowls.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-tofu-broccoli-rice-bowl.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/l-tuna-white-bean-salad.html</loc></url>
@@ -285,12 +321,16 @@
   <url><loc>https://growwithgrounded.com/recipes/r/s-herb-popcorn.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/s-lemon-edamame.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/s-lemon-garlic-hummus.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/s-muhammara.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/s-oat-date-energy-bites.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/s-pb-banana-roll-ups.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/s-pita-chips-white-bean-dip.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/s-seedy-oat-crackers.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/s-trail-mix.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-avocado-lime-crema.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-balsamic-dijon-vinaigrette.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-chimichurri.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sc-cilantro-mint-chutney.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-fresh-basil-pesto.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-ginger-sesame-dressing.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-greek-yogurt-herb-dressing.html</loc></url>
@@ -298,11 +338,22 @@
   <url><loc>https://growwithgrounded.com/recipes/r/sc-lemon-tahini-dressing.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-peanut-lime-sauce.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sc-quick-marinara.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sc-romesco.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sc-tomatillo-salsa-verde.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-baked-sweet-potato-fries.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-braised-red-cabbage.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sd-crunchy-rainbow-slaw.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-fattoush.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sd-garlicky-greens.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-grilled-zucchini-chickpeas.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sd-maple-roasted-squash.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sd-roasted-vegetables-master-method.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-sesame-spinach.html</loc></url>
   <url><loc>https://growwithgrounded.com/recipes/r/sd-shirazi-salad.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-smashed-cucumber-salad.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-spring-pea-radish-salad.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-sweet-corn-tomato-salad.html</loc></url>
+  <url><loc>https://growwithgrounded.com/recipes/r/sd-wild-rice-apple-salad.html</loc></url>
   <url><loc>https://growwithgrounded.com/tools</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://growwithgrounded.com/vow-renewals</loc></url>
   <url><loc>https://growwithgrounded.com/weddings</loc></url>
