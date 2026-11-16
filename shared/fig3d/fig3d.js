@@ -4777,15 +4777,27 @@ G.define('shoulder-tap', {name: 'Plank Shoulder Tap', tempo: 2.4, mirror: true, 
 var PT = {reach: null, t: [108, 108], n: 104, ra: PH, la: PH, rl: [-72, -72, 22, 64], ll: [-72, -72, 22, 64], lo: 10, hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down'};
 function bell(x, y, z){ return {x: x, y: y, z: z, pole: [.3, -.3, -1], f: 4}; }
 var PT_FIT_R = {r: .95, by: 't', span: 10, side: 'R'}, PT_FIT_L = {r: .95, by: 't', span: 10, side: 'L'};
-G.define('pull-through', {name: 'Plank Pull-Through', tempo: 3, mirror: true, dur: [1.2, 1.2, 1.1, .3, 1], base: 'plank', props: ['mat', {id: 'dumbbell', at: 'key'}],
+// BLD 979 (Chris, November 12 and 13, 2026: "a weird transition when he sets down the dumbbell and picks it up", "when he
+// trades hands with the dumbbell it jumps"): the reaching hand could not reach the far side, so the dumbbell jumped from one
+// hand to the other and floated off the floor. Now the planted hands stay put, the chest turns and the body shifts a little
+// toward the planted hand so the reaching hand truly reaches the dumbbell on the floor, the dumbbell rests just outside and
+// behind the planted hand, and both hands meet on it before it changes hands, so it never leaves the floor or jumps.
+// Written out on both sides (no mirror), so each side fits its own planted arm.
+var PTA = {x: .3, y: .055, z: .4, pole: [.5, 0, -1], f: FLAT}, PT2 = ext(PT, {ra: PTA, la: PTA}), PTX = .37, PTZ = .28, PTW = -26, PTP = -.11;
+G.define('pull-through', {name: 'Plank Pull-Through', tempo: 3, alt: true, dur: [1.2, 1.2, 1.1, .3, 1, 1.2, 1.2, 1.1, .3, 1], base: 'plank', props: ['mat', {id: 'dumbbell', at: 'key'}],
   glow: {abs: [1, 1], obliques: [1, 1], delts: [.6, .6], lats: [.4, .4]}, cam: {yaw: 62, el: 26, zoom: 1},
   form: [{when: 'out', level: ['upperleg01.R', 'upperleg01.L'], say: 'hips square', at: 'root', side: -1}],
   k: [
-    ext(PT, {br: 'out', hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(-.44, .06, .36), hL: 'grip', pnL: 'in', e: .7}),
-    ext(PT, {br: 'out', via: true, hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(.0, .14, .32), hL: 'grip', pnL: 'in', e: 1}),
-    ext(PT, {br: 'in', hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(.46, .06, .4), hL: 'grip', pnL: 'in', e: .6}),
-    ext(PT, {br: 'in', hold: 'L', on: 'hL tR tL', fitArm: PT_FIT_L, la: bell(.46, .06, .42), ra: bell(-.42, .06, .36), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5}),
-    ext(PT, {br: 'in', hold: 'R', on: 'hL tR tL', fitArm: PT_FIT_L, la: bell(.46, .06, .42), ra: bell(-.42, .06, .36), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5})
+    ext(PT2, {br: 'out', hold: 'L', on: 'hR tR tL', tw: PTW, px: PTP, fitArm: PT_FIT_R, la: bell(-PTX, .06, PTZ), hL: 'grip', pnL: 'in', e: .7}),
+    ext(PT2, {br: 'out', via: true, hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(0, .1, PTZ), hL: 'grip', pnL: 'in', e: 1}),
+    ext(PT2, {br: 'in', hold: 'L', on: 'hR tR tL', fitArm: PT_FIT_R, la: bell(PTX, .06, PTZ), hL: 'grip', pnL: 'in', e: .6}),
+    ext(PT2, {br: 'in', hold: 'L', on: 'hL tR tL', tw: -PTW, px: -PTP, fitArm: PT_FIT_L, la: bell(PTX, .06, PTZ), ra: bell(-(PTX - .06), .06, PTZ), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5}),
+    ext(PT2, {br: 'in', hold: 'R', on: 'hL tR tL', tw: -PTW, px: -PTP, fitArm: PT_FIT_L, la: bell(PTX, .06, PTZ), ra: bell(-(PTX - .06), .06, PTZ), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5}),
+    ext(PT2, {br: 'out', hold: 'R', on: 'hL tR tL', tw: -PTW, px: -PTP, fitArm: PT_FIT_L, ra: bell(-PTX, .06, PTZ), hR: 'grip', pnR: 'in', e: .7}),
+    ext(PT2, {br: 'out', via: true, hold: 'R', on: 'hL tR tL', fitArm: PT_FIT_L, ra: bell(0, .1, PTZ), hR: 'grip', pnR: 'in', e: 1}),
+    ext(PT2, {br: 'in', hold: 'R', on: 'hL tR tL', fitArm: PT_FIT_L, ra: bell(PTX, .06, PTZ), hR: 'grip', pnR: 'in', e: .6}),
+    ext(PT2, {br: 'in', hold: 'R', on: 'hR tR tL', tw: PTW, px: PTP, fitArm: PT_FIT_R, ra: bell(PTX, .06, PTZ), la: bell(-(PTX - .06), .06, PTZ), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5}),
+    ext(PT2, {br: 'in', hold: 'L', on: 'hR tR tL', tw: PTW, px: PTP, fitArm: PT_FIT_R, ra: bell(PTX, .06, PTZ), la: bell(-(PTX - .06), .06, PTZ), hL: 'grip', pnL: 'in', hR: 'grip', pnR: 'in', e: .5})
   ]});
 
 // Bird dog: the round 4 reference (p0), with the injury line of the move as its form guide.
