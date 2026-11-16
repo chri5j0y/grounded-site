@@ -3098,7 +3098,7 @@ function vKitchen(){
 // Public: GGTendPublic.recipes. The Field Guide, a moved plan, and the Family Kitchen: every week's dinners (one of each)
 // plus the breakfasts, lunches, and snacks that carry steps. A recipe opened here uses an idea key ('idea:recipe:<id>'),
 // so finishing it marks only that recipe; tonight's dinner opens as tonight's dinner.
-const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['party', 'Party Food'], ['sauce', 'Sauces and Dressings'], ['drink', 'Sober Drinks']];
+const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['side', 'Sides'], ['bread', 'Breads'], ['dessert', 'Desserts'], ['snack', 'Snack'], ['party', 'Party Food'], ['sauce', 'Sauces and Dressings'], ['basic', 'Basics'], ['drink', 'Sober Drinks']]; // BLD 1006: Sides, Breads, Desserts, Basics
 const R_GOALS = [['heart', 'Heart'], ['energy', 'Energy'], ['strength', 'Strength'], ['weight', 'Weight'], ['well', 'Well']];
 const R_FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
 const R_ICO = {
@@ -3126,7 +3126,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=c021'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=c129'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);

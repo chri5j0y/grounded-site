@@ -6,9 +6,9 @@
    .rc-mnt (the root a mount draws) and the rcm container, so the page itself looks exactly as before.
    ===================================================================== */
 /* Grounded Recipes page (GWG BLD 875) */
-.rc{--rc-b:#B87A2A;--rc-l:#5F7D48;--rc-d:#B8612F;--rc-s:#6E5A8A;--rc-h:#9A4E24;--rc-p:#A8443A;--rc-k:#2C7A86;--rc-c:#6E6A1E;--rc-kbg1:#DDEFEE;--rc-kbg2:#EAF0E2;--rc-tile:#F3E9D6;--rc-chip:#FFFBF3;--rc-on:#fff;--rc-panel:#F3E7D2;--rc-hbg1:#F6E2CF;--rc-hbg2:#EFE6D0;--rc-g:#7A5A26;--rc-gbg1:#EEF0DC;--rc-gbg2:#F4EAD4;}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rc{--rc-b:#EDB85E;--rc-l:#AACB8F;--rc-d:#EE9C72;--rc-s:#BCA9DB;--rc-h:#F0A877;--rc-p:#F09A8C;--rc-k:#7FCAD3;--rc-c:#D2CB7A;--rc-kbg1:#1D2E2F;--rc-kbg2:#252A20;--rc-tile:#3A2E22;--rc-chip:#2A241D;--rc-on:#1F1A14;--rc-panel:#30251A;--rc-hbg1:#3A2619;--rc-hbg2:#2C2219;--rc-g:#DDB97E;--rc-gbg1:#262A1C;--rc-gbg2:#2E2519;}}
-:root[data-theme="dark"] .rc{--rc-b:#EDB85E;--rc-l:#AACB8F;--rc-d:#EE9C72;--rc-s:#BCA9DB;--rc-h:#F0A877;--rc-p:#F09A8C;--rc-k:#7FCAD3;--rc-c:#D2CB7A;--rc-kbg1:#1D2E2F;--rc-kbg2:#252A20;--rc-tile:#3A2E22;--rc-chip:#2A241D;--rc-on:#1F1A14;--rc-panel:#30251A;--rc-hbg1:#3A2619;--rc-hbg2:#2C2219;--rc-g:#DDB97E;--rc-gbg1:#262A1C;--rc-gbg2:#2E2519;}
+.rc{--rc-sd:#4F7A3A;--rc-br:#8A5A2B;--rc-ds:#A04A66;--rc-bs:#5E6B4A;--rc-b:#B87A2A;--rc-l:#5F7D48;--rc-d:#B8612F;--rc-s:#6E5A8A;--rc-h:#9A4E24;--rc-p:#A8443A;--rc-k:#2C7A86;--rc-c:#6E6A1E;--rc-kbg1:#DDEFEE;--rc-kbg2:#EAF0E2;--rc-tile:#F3E9D6;--rc-chip:#FFFBF3;--rc-on:#fff;--rc-panel:#F3E7D2;--rc-hbg1:#F6E2CF;--rc-hbg2:#EFE6D0;--rc-g:#7A5A26;--rc-gbg1:#EEF0DC;--rc-gbg2:#F4EAD4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rc{--rc-sd:#A6CF8E;--rc-br:#E2B98A;--rc-ds:#F0A3BD;--rc-bs:#C4CFA8;--rc-b:#EDB85E;--rc-l:#AACB8F;--rc-d:#EE9C72;--rc-s:#BCA9DB;--rc-h:#F0A877;--rc-p:#F09A8C;--rc-k:#7FCAD3;--rc-c:#D2CB7A;--rc-kbg1:#1D2E2F;--rc-kbg2:#252A20;--rc-tile:#3A2E22;--rc-chip:#2A241D;--rc-on:#1F1A14;--rc-panel:#30251A;--rc-hbg1:#3A2619;--rc-hbg2:#2C2219;--rc-g:#DDB97E;--rc-gbg1:#262A1C;--rc-gbg2:#2E2519;}}
+:root[data-theme="dark"] .rc{--rc-sd:#A6CF8E;--rc-br:#E2B98A;--rc-ds:#F0A3BD;--rc-bs:#C4CFA8;--rc-b:#EDB85E;--rc-l:#AACB8F;--rc-d:#EE9C72;--rc-s:#BCA9DB;--rc-h:#F0A877;--rc-p:#F09A8C;--rc-k:#7FCAD3;--rc-c:#D2CB7A;--rc-kbg1:#1D2E2F;--rc-kbg2:#252A20;--rc-tile:#3A2E22;--rc-chip:#2A241D;--rc-on:#1F1A14;--rc-panel:#30251A;--rc-hbg1:#3A2619;--rc-hbg2:#2C2219;--rc-g:#DDB97E;--rc-gbg1:#262A1C;--rc-gbg2:#2E2519;}
 .rc .rc-hero{min-height:clamp(380px,34vw,540px);--pos:center 62%;}
 .rc .rc-hero .cer-sub{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6);max-width:720px;margin:14px auto 0;font-size:clamp(18px,1.8vw,22px);}
 .rc .rc-hero .cp-back{color:#FFE7BD;border-bottom-color:rgba(255,231,189,.6);text-shadow:0 1px 4px rgba(0,0,0,.7);}
@@ -100,6 +100,13 @@
 .rc-card .rc-n{display:block;margin-top:auto;font-size:14px;color:var(--ink-soft);line-height:1.45;}
 .rc-empty{margin-top:22px;font-size:18px;color:var(--ink-soft);}
 .rc-k-breakfast{--k:var(--rc-b);} .rc-k-lunch{--k:var(--rc-l);} .rc-k-dinner{--k:var(--rc-d);} .rc-k-snack{--k:var(--rc-s);} .rc-k-party{--k:var(--rc-p);} .rc-k-drink{--k:var(--rc-k);} .rc-k-sauce{--k:var(--rc-c);}
+/* BLD 1006: the new courses (Sides, Breads, Desserts, Basics), and a Bulk Foods tile one column wide so the twelve tiles fill whole rows. */
+.rc-k-side{--k:var(--rc-sd);} .rc-k-bread{--k:var(--rc-br);} .rc-k-dessert{--k:var(--rc-ds);} .rc-k-basic{--k:var(--rc-bs);}
+.rc-cats .rc-cat.rc-k-bulk{grid-column:auto;}
+.rc-head{font-size:1.08rem;line-height:1.6;margin:6px 0 10px;max-width:46em;}
+.rc-trad{margin:0 0 12px;opacity:.88;font-style:italic;}
+.rc-contains{margin:12px 0 0;font-size:.95rem;}
+.rc-hnut{margin:8px 0 0;font-size:.95rem;}
 /* BLD 902: Celebration Drinks, its own section like Holidays and Gatherings */
 .rc-drsec{margin-top:54px;padding:26px 22px 28px;border-radius:24px;background:linear-gradient(160deg,var(--rc-kbg1),var(--rc-kbg2));border:1px solid var(--line);scroll-margin-top:80px;--rc-tint:color-mix(in srgb,var(--k) 16%,var(--card));}
 .rc-drsec .rc-sh{border-bottom-color:var(--rc-k);}

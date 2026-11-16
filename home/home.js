@@ -57,9 +57,9 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=c114', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c126', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c021', '/shared/gentle-public.js?v=b919b'];
+  var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=c114', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c129', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=b977', '/shared/tending-public.js?v=c129', '/shared/gentle-public.js?v=b919b'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c130';
+  var GGN_SRC = '/shared/ggn.js?v=c131';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -1008,7 +1008,7 @@
       (lsVid(F.video) ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-a-sober" data-hm-ls="watch:' + esc(F.video) + '">' + I('play') + 'Watch the Practice</button></div>' : '') +
       '<div class="hm-ls4steps">' + steps + '</div><div class="hm-src" id="hm-ls4src">' + (F.credit ? esc(F.credit) + '.' : '') + '</div></div>');
     // The Sources line (shared/gg-sources.js): Practice: Chris Joy, then the research behind the steps.
-    if (arr(F.sources).length) load('/shared/gg-sources.js?v=c130').then(function () {
+    if (arr(F.sources).length) load('/shared/gg-sources.js?v=c131').then(function () {
       var el = document.getElementById('hm-ls4src'); if (!el || !window.GGSources || typeof GGSources.line !== 'function') return;
       try { var h = GGSources.line(F.sources, { practice: true }); if (h) el.innerHTML = h; } catch (e) {}
     });
@@ -1344,7 +1344,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c130';
+  var PV_SRC = '/shared/page-videos.js?v=c131';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2561,7 +2561,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c119';
+  var RECIPES_JS = '/recipes/recipes.js?v=c129';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -4600,7 +4600,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=c130', next: '/shared/home/nextsteps.js?v=c130', legacy: '/shared/home/legacy.js?v=c130', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c130', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=c131', next: '/shared/home/nextsteps.js?v=c131', legacy: '/shared/home/legacy.js?v=c131', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c131', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4702,7 +4702,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c130'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c131'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -5194,7 +5194,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c130';
+  var LEARN_JS = '/shared/gg-learn.js?v=c131';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5598,7 +5598,7 @@
       if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }
       else mDialog(T.title, html);
     };
-    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=c130')]).then(go);
+    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=c131')]).then(go);
   }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;
