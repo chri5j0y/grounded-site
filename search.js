@@ -206,7 +206,7 @@
   // has its own copies loaded (searching from inside Maple, Aspen, Oak, or The Grove).
   var GPART = null;
   function loadGrove() {
-    return Promise.all(['/grove/data.js?v=b911b', '/grove/library.js?v=b907'].map(function (u) {
+    return Promise.all(['/grove/data.js?v=b911b', '/grove/library.js?v=c124'].map(function (u) {
       return fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; });
     })).then(function (t) {
       try {
@@ -236,7 +236,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js?v=b934'), load('/aspen/guides.js?v=b934'), load('/pine/guides.js?v=b924'), load('/birch/guides.js?v=b949'), load('/oak/guides.js?v=b930'), load('/sequoia/guides.js?v=b924'), load('/willow/guides.js?v=b887'), load('/grove/guides.js?v=b934'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=b934'), load('/aspen/guides.js?v=b934'), load('/pine/guides.js?v=b924'), load('/birch/guides.js?v=c126'), load('/oak/guides.js?v=c126'), load('/sequoia/guides.js?v=c126'), load('/willow/guides.js?v=b887'), load('/grove/guides.js?v=b934'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
