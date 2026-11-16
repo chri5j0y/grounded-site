@@ -1126,7 +1126,7 @@ const LC_TOPICS = [
   "id": "gambling",
   "ring": "br-work",
   "title": "Gambling and Sports Betting",
-  "keys": "gambling sports betting betting apps sportsbook parlay same game parlay odds prop bets live betting fantasy sports daily fantasy online casino slots poker crypto trading lottery scratch tickets chasing losses lost my paycheck lost rent money owe money borrowed to bet credit card cash advance can't stop betting hiding betting self exclusion delete the app deposit limit my boyfriend bets my girlfriend bets my partner gambles my son is betting my friend is betting gambling debt gamblers anonymous",
+  "keys": "gambling sports betting betting apps sportsbook parlay same game parlay odds prop bets live betting fantasy sports daily fantasy online casino slots poker crypto trading lottery scratch tickets chasing losses lost my paycheck lost rent money owe money borrowed to bet credit card cash advance can't stop betting hiding betting self exclusion delete the app deposit limit my boyfriend bets my girlfriend bets my partner gambles my son is betting my friend is betting gambling debt support group smart recovery",
   "parts": [
    "leaves",
    "bark",
@@ -1152,7 +1152,7 @@ const LC_TOPICS = [
     "Watching games for the game, with no money on them.",
     "Another way to get the rush: a sport, a competition, a hard workout, a new skill.",
     "Counseling with a gambling treatment provider. In Minnesota, the helpline can connect you, and treatment is often available at no cost.",
-    "Gamblers Anonymous, or another support group, with people who know exactly what it's like."
+    "SMART Recovery, or another support group, with people who know exactly what it's like."
    ],
    "tell": [
     "“The apps make money because most people lose.”",
@@ -1178,7 +1178,7 @@ const LC_TOPICS = [
     "Protect shared money: separate accounts, limits on shared cards, and no saved cards on shared devices.",
     "Offer to sit with them while they call or text a helpline.",
     "Ask directly about mood. If they talk about not wanting to be alive, call or text 988 together.",
-    "Get support for yourself: Gam-Anon, or the Minnesota helpline, which is there for family members and partners too.",
+    "Get support for yourself: SMART Recovery Family and Friends, a support group, or the Minnesota helpline, which is there for family members and partners too.",
     "If you're a Birch helper, you see only what they choose to share. The betting question in Birch is never shown to a helper."
    ],
    "you": "Finding out someone you love has lost money betting can bring anger, fear, and grief, especially if it's your money too. You can get support for yourself, even if they're not ready. Your calm matters more than having every answer."
@@ -1209,12 +1209,12 @@ const LC_TOPICS = [
     "https://www.ncpgambling.org"
    ],
    [
-    "Gamblers Anonymous",
-    "https://www.gamblersanonymous.org"
+    "SMART Recovery",
+    "https://smartrecovery.org"
    ],
    [
-    "Gam-Anon (for family and friends)",
-    "https://www.gam-anon.org"
+    "SMART Recovery Family and Friends",
+    "https://smartrecovery.org"
    ],
    [
     "Fairleigh Dickinson University Poll, online betting and young men (2024)",

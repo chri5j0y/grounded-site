@@ -128,6 +128,10 @@
     "way-aha-fish": ["Fish and Omega-3 Fatty Acids, American Heart Association", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/fish-and-omega-3-fatty-acids"],
     "tend-prevent": ["Development and Validation of the American Heart Association PREVENT Equations, Khan SS and others, Circulation, 2024", "https://doi.org/10.1161/CIRCULATIONAHA.123.067626"],
 /* BLD866 sources end */
+/* BLD1003 sources start */
+    // Whose Is This? (GWG BLD 1003): Chris Joy's own practice, from his story I Can Use Both.
+    whoseisthis: ["Whose Is This? is Chris Joy's own practice, from his story I Can Use Both", ""],
+/* BLD1003 sources end */
 /* BLD787 shelf start */
     // From Chris's Shelf (GWG BLD 787): books on Chris's shelf, linked to their Library card, and the writers' new sources.
     byock97: ["Ira Byock, Dying Well (1997)", SHELF + "DY-001"],
@@ -1123,6 +1127,9 @@
 
   // Practices by name, everywhere they appear. P_RE is matched against the name (Aspen names are sentences).
   var P = {
+/* BLD1003 p start */
+    "whose is this?": ["whoseisthis"],
+/* BLD1003 p end */
 /* BLD787 shelf-p start */
     // From Chris's Shelf (GWG BLD 787): the shelf practices, by name.
     "five minutes with your grief": ["devine17"],

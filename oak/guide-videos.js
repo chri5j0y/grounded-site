@@ -7494,14 +7494,14 @@ window.GG_LEARN_GUIDES.oak = {
 ],
 [
 "Support groups",
-"Gamblers Anonymous"
+"SMART Recovery"
 ],
 [
 "A money plan",
 "With a financial counselor"
 ]
 ],
-"say": "What helps? Counseling with a gambling treatment provider. Gamblers Anonymous or another support group. And financial counseling, to face the debt with a plan."
+"say": "What helps? Counseling with a gambling treatment provider. SMART Recovery, or another support group. And financial counseling, to face the debt with a plan."
 },
 {
 "k": "card",
@@ -7512,7 +7512,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Find support for yourself.",
 "sub": "Even if they won't go.",
-"say": "This hurts you too, in money, in trust, and in sleep. Find support for yourself, like Gam-Anon. In Minnesota, you can get counseling as an affected family member, even if they won't go."
+"say": "This hurts you too, in money, in trust, and in sleep. Find support for yourself, like SMART Recovery Family and Friends, or a support group. In Minnesota, you can get counseling as an affected family member, even if they won't go."
 },
 {
 "k": "big",
