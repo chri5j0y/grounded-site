@@ -593,7 +593,7 @@ const KW = [
   [/hollow/, 'hollow'], [/reverse crunch/, 'reverse-crunch'], [/leg raise/, 'leg-raise'], [/dead ?bugs?|crunch/, 'dead-bug'],
   [/y.?t raise|reverse fly|rear delt/, 'yt-raise'], [/chest.?supported/, 'chest-row'], [/bird ?dogs?/, 'bird-dog'],
   [/thread the needle/, 'thread-needle'], [/side plank.*reach|reach.?through/, 'reach-through'], [/side plank/, 'side-plank'], [/pull.?through/, 'pull-through'], [/plank/, 'plank'],
-  [/wall push/, 'wall-push-up'], [/fast push|plyo push|explosive push/, 'fast-push-up'], [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/push press/, 'push-press'],
+  [/wall push/, 'wall-push-up'], [/fast push|power push|plyo push|explosive push/, 'fast-push-up'], [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/push press/, 'push-press'],
   [/incline (dumbbell |db )?press|incline bench/, 'incline-press'], [/bench press|chest press|floor press/, 'bench-press'], [/kneeling.*press|half.?kneel/, 'kneel-press'],
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],
   [/single ?leg (romanian|rdl|deadlift|hinge)|\bsl rdl/, 'sl-hinge'], [/balance|one leg stand|stand on one/, 'balance'],
