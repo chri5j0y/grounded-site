@@ -83,7 +83,9 @@ const SELFCARE = [
   ['ws-debt', `Grief Debt Check`, `Name one loss that is waiting to be felt. Give it ten minutes. (Grief Debt)`, 'wisdom'],
   ['ws-gates', `Gates, Not Walls`, `Tag out for an hour. Someone else is on. (My Boundaries Have Gates)`, 'wisdom'],
   ['ws-eat', `Eat Something Real`, `One real meal today.`, 'wisdom'],
-  ['ws-guilt', `Set Guilt Down`, `Write the guilt down. Then write: "I'm doing what love can do today."`, 'growing']
+  ['ws-guilt', `Set Guilt Down`, `Write the guilt down. Then write: "I'm doing what love can do today."`, 'growing'],
+  // GWG BLD 1003: Chris Joy's own practice, from his story I Can Use Both.
+  ['ws-whose', `Whose Is This?`, `Sit still with both hands on something steady. Take three slow breaths, longer on the way out. Sort out loud what is theirs and what is yours. Then say, "Thank you for today." (I Can Use Both)`, 'wisdom']
 ];
 
 // Care plan builder: Goal (why), Approach (how), Action (what).
