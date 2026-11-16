@@ -144,6 +144,16 @@
   };
   var TOPICS = ['dying', 'grief', 'faith', 'kids'];
   function topicsOf(t) { return Array.isArray(t) ? TOPICS.filter(function (k) { return t.indexOf(k) >= 0; }) : null; }
+  // BLD 1002: pause marks a story was written with ("pause", "long pause"), kept as timing only, never as words. The Vault holds
+  // pause: {paragraph index: seconds}; the player waits that much longer after the paragraph's last sentence.
+  function pausesOf(m, n) {
+    if (!m || typeof m !== 'object') return null;
+    var o = {}, any = false;
+    Object.keys(m).forEach(function (k) { var i = +k, v = +m[k]; if (i >= 0 && i < (n == null ? 1e6 : n) && i === Math.floor(i) && v > 0 && v <= 10) { o[i] = v; any = true; } });
+    return any ? o : null;
+  }
+  // BLD 1002: a series (a Story Vault collection told in parts) shows as its own section on Grounded Stories, in the Vault's order.
+  var SERIES = { 'The Wisdom They Share': 'Four short stories from the edge of life, in full for everyone.' };
   var THEMES = [['', 'All Stories'], ['dying', 'Dying and Saying Goodbye'], ['grief', 'Grief and After'], ['faith', 'Faith and Doubt'], ['kids', 'Kids and Families']];
 
   /* ---------------- small helpers ---------------- */
@@ -245,6 +255,7 @@
       if (s.status !== 'early' && pv.cut) e.cut = 1; // the preview ends partway through a paragraph
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
       var tp = topicsOf(s.topics); if (tp) e.topics = tp;
+      var pz = pausesOf(s.pause, paras.length); if (pz) e.pz = pz; // BLD 1002: the story's own pause marks, as timing in the voiced version
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
       if (open) e.full = paras; else { locked[e.id] = paras; n++; }
       // The Story Behind the Story (BLD 787): Chris's own note, sealed for members on every Posted and Early Preview story.
@@ -348,25 +359,27 @@
     o = o || {};
     var P = o.paras || (mode === 'preview' ? (s.preview || []) : paras(s.id)), scenes = [], cur = [], size = 0, eb = o.eyebrow || 'Grounded Stories';
     scenes.push({ k: 'title', hero: 'page-stories', heroNarrow: 'page-stories-narrow', eyebrow: eb, h: s.title, sub: o.sub != null ? o.sub : (s.sub || ''), beats: [o.opening || LINES.opening], hold: 1 });
+    var PZ = o.paras ? null : pausesOf(s.pz || s.pause), curZ = [];
     function flush() {
       if (!cur.length) return;
-      var beats = [], at = [];
-      cur.forEach(function (p) { p.forEach(function (x) { at.push(beats.length); beats.push(x); }); });
-      scenes.push({ k: 'tale', eyebrow: eb, title: s.title, paras: cur, beats: beats, cue: { at: at } });
-      cur = []; size = 0;
+      var beats = [], at = [], cp = {}, anyP = false;
+      cur.forEach(function (p, j) { p.forEach(function (x) { at.push(beats.length); beats.push(x); }); if (curZ[j]) { cp[beats.length - 1] = curZ[j]; anyP = true; } });
+      var cue = { at: at }; if (anyP) cue.p = cp;
+      scenes.push({ k: 'tale', eyebrow: eb, title: s.title, paras: cur, beats: beats, cue: cue });
+      cur = []; curZ = []; size = 0;
     }
-    P.forEach(function (p) {
-      var S = sentences(p), len = String(p).length;
+    P.forEach(function (p, pi) {
+      var S = sentences(p), len = String(p).length, z = PZ && PZ[pi] || 0;
       if (!S.length) return;
       if (len > 640) {
         flush();
         var piece = [], pl = 0;
         S.forEach(function (x) { if (piece.length && pl + x.length > 560) { cur = [piece]; flush(); piece = []; pl = 0; } piece.push(x); pl += x.length + 1; });
-        if (piece.length) { cur = [piece]; flush(); }
+        if (piece.length) { cur = [piece]; curZ = [z]; flush(); }
         return;
       }
       if (cur.length && size + len > 520) flush();
-      cur.push(S); size += len + 1;
+      cur.push(S); curZ.push(z); size += len + 1;
     });
     flush();
     return { id: o.id || 'story-' + s.id, n: '', title: s.title, mins: o.paras ? mins(P) : s.mins, blurb: s.sub || '', scenes: scenes, srcHtml: o.id && /^letter-/.test(o.id) ? '' : creditHtml(s) };
@@ -515,8 +528,10 @@
     var d = data(); css(); membersBar();
     var openEl = document.getElementById('gs-open'), postEl = document.getElementById('gs-posted'), earlyEl = document.getElementById('gs-early');
     if (!d) { if (openEl) openEl.innerHTML = '<p class="gs-wait">The stories are on their way. Please check back in a moment.</p>'; return; }
-    var O = d.list.filter(function (s) { return s.open; }), Pz = newest(d.list.filter(function (s) { return !s.open && s.status === 'posted'; })), E = newest(d.list.filter(function (s) { return s.status === 'early'; }));
+    var inSer = function (s) { return s.status === 'posted' && Object.prototype.hasOwnProperty.call(SERIES, s.col); };
+    var O = d.list.filter(function (s) { return s.open && !inSer(s); }), Pz = newest(d.list.filter(function (s) { return !s.open && s.status === 'posted' && !inSer(s); })), E = newest(d.list.filter(function (s) { return s.status === 'early'; }));
     if (openEl) openEl.innerHTML = O.map(card).join('');
+    series(d.list.filter(inSer), postEl);
     if (postEl) postEl.innerHTML = Pz.map(card).join('');
     if (earlyEl) {
       if (unlocked()) earlyEl.innerHTML = E.length ? E.map(card).join('') : '<p class="gs-wait">New early previews arrive here first.</p>';
@@ -527,6 +542,21 @@
     var hP = document.getElementById('gs-posted-h'); if (hP) hP.hidden = !Pz.length;
     perks(d);
     filter(FILTER);
+  }
+  // BLD 1002: each series with a Posted story gets its own section (heading, lead, cards in the Vault's order) above More Stories.
+  function series(L, postEl) {
+    var host = document.getElementById('gs-series');
+    if (!host) {
+      var before = document.getElementById('gs-posted-h') || (postEl && postEl.parentNode); if (!before || !before.parentNode) return;
+      host = document.createElement('div'); host.id = 'gs-series'; before.parentNode.insertBefore(host, before);
+    }
+    var by = {}, order = [];
+    L.forEach(function (s) { if (!by[s.col]) { by[s.col] = []; order.push(s.col); } by[s.col].push(s); });
+    host.innerHTML = order.map(function (c) {
+      return '<section class="gs-series" id="series-' + esc(slug(c)) + '" aria-labelledby="gs-ser-' + esc(slug(c)) + '"><h2 class="gs-h" id="gs-ser-' + esc(slug(c)) + '">' + esc(c) + '</h2>'
+        + (SERIES[c] ? '<p class="gs-lead">' + esc(SERIES[c]) + '</p>' : '') + '<div class="gs-grid">' + by[c].map(card).join('') + '</div></section>';
+    }).join('');
+    host.hidden = !order.length;
   }
   /* The Monthly Letter and Reflection Cards on the page (BLD 787). Members: the letters newest first (Watch, Read, New for 30
      days) and this month's card with past cards. Visitors: an invite naming the months and titles. */
@@ -789,7 +819,7 @@
   }
 
   root.GGStories = {
-    version: 'b786', lines: LINES, words: WORDS, look: LOOK, topics: TOPICS, themesOf: themesOf,
+    version: 'c125', series: SERIES, pausesOf: pausesOf, lines: LINES, words: WORDS, look: LOOK, topics: TOPICS, themesOf: themesOf,
     seal: seal, previewCut: previewCut, makeWrap: makeWrap, newSalt: newSalt, check: check, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
     mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); },
     // BLD 787: the Supporter perks and story pictures
