@@ -1823,7 +1823,7 @@ let SRCL = 0;
 function musicSrc(files){
   try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; return ''; } } catch(e){}
   // the credits file loads the first time a session shows, then the screen draws again
-  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c117'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
+  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c124'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
   return '';
 }
 async function runSession(o){

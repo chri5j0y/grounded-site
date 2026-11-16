@@ -677,7 +677,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=c030"></script>
-<script src="../shared/gg-sources.js?v=c117"></script>
+<script src="../shared/gg-sources.js?v=c124"></script>
 <script src="../shared/gg-learn.js?v=c123"></script>
 <script src="../shared/gg-parts.js?v=b929"></script>
 <script src="../shared/gg-print.js?v=b939"></script>
@@ -704,8 +704,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="coach.js?v=c119"></script>
 <script src="../shared/gg-scale.js?v=b934"></script>
 <script src="../shared/gg-holidays.js?v=b993"></script>
-<script src="health.js?v=c123"></script>
-<script src="vault.js?v=b985"></script>
+<script src="health.js?v=c124"></script>
+<script src="vault.js?v=c124"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -10052,7 +10052,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=b930', '../willow/guides.js?v=c116', '../sequoia/guides.js?v=b924', '../pine/guides.js?v=b924', '../birch/guides.js?v=b949'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=c124', '../willow/guides.js?v=c116', '../sequoia/guides.js?v=c124', '../pine/guides.js?v=b924', '../birch/guides.js?v=c124'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
