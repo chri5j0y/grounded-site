@@ -2,7 +2,7 @@
  "version": "897.1",
  "built": "2026-11-04",
  "files": {
-  "fig3d.js": 753527,
+  "fig3d.js": 754791,
   "figure.bin": 759548,
   "figure-woman.bin": 136432,
   "figure-full.bin": 107072
@@ -30,8 +30,10 @@
   "bridge",
   "bridge-march",
   "bs-belly",
+  "bs-chair",
   "bs-heart",
   "bs-lie",
+  "bs-lie-belly",
   "bs-seat",
   "bs-seat-f",
   "burpee-walk-out",

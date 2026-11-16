@@ -645,7 +645,7 @@
      The same engine and figure data as the workout player (shared/fig3d, BLD 897), loaded only when a figure scene
      shows, and the same rules for when it draws: WebGL, not Save Data, not Simple Figure (gg-fig3d 'off'), and a real
      graphics chip unless the person turned 3D Figure on (gg-fig3d 'on'). */
-  var FIGV = 'c122', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files; BLD 998 c122: the body scan poses (bs-seat, bs-seat-f, bs-heart, bs-belly, bs-lie)
+  var FIGV = 'c123', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files; BLD 998 c122: the body scan poses (bs-seat, bs-seat-f, bs-heart, bs-belly, bs-lie); BLD 1001 c123: bs-chair, bs-lie-belly
   function fig3Dark() { var t = document.documentElement.getAttribute('data-theme'); if (t) return t === 'dark'; try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; } }
   function fig3Able() {
     if (F3.bad) return false;
@@ -1410,7 +1410,7 @@
       lie: { img: 'way/stretch-room', s: 1, at: [.49, .728], len: .21, by: 'w', light: [-.5, .8], mv: 'bs-lie', contact: 1 },
       // BLD 1001: on the chair (the engine's chair, feet flat on the floor in front of the Stretch Room mat; drop: the floor
       // under the feet, in root to head lengths below the root), and lying with a hand on the belly (belly: the hand move).
-      chair: { img: 'way/stretch-room', s: 1.3, at: [.56, .93], drop: .97, len: .3, by: 'h', light: [.3, .7], mv: 'bs-chair' },
+      chair: { img: 'way/stretch-room', s: 1.6, at: [.49, .9], drop: .98, len: .23, by: 'h', light: [.3, .7], mv: 'bs-chair' },
       lieb: { img: 'way/stretch-room', s: 1, at: [.49, .728], len: .21, by: 'w', light: [-.5, .8], mv: 'bs-lie', belly: 'bs-lie-belly', contact: 1 }
     };
     // Each pose's outline: bands of a tenth of the root to head length (y from the root, down is plus), with the left and
@@ -1587,7 +1587,7 @@
         var r = J.root, L = Math.hypot(r[0] - J.head[0], r[1] - J.head[1]), cw = Math.round(B.box.w), ch = Math.round(B.box.h); if (!(L > 8) || cw < 8 || ch < 8) return null;
         var c = document.createElement('canvas'); c.width = cw; c.height = ch; var x = c.getContext('2d'); x.drawImage(FG.el, 0, 0, cw, ch);
         var d = x.getImageData(0, 0, cw, ch).data, out = [], base = B3F[B.pose];
-        for (var yb = -1.6; yb < .8; yb += .1) {
+        for (var yb = -1.6; yb < (B.A.drop ? 1.2 : .8); yb += .1) {
           var ya = Math.max(0, Math.floor(r[1] + yb * L)), yz = Math.min(ch, Math.ceil(r[1] + (yb + .1) * L)), lo = 1e9, hi = -1e9;
           for (var yy = ya; yy < yz; yy++) for (var xx = 0; xx < cw; xx++) if (d[(yy * cw + xx) * 4 + 3] > 150) { if (xx < lo) lo = xx; if (xx > hi) hi = xx; }
           var q = Math.round(yb * 10) / 10;
@@ -1613,7 +1613,7 @@
       });
       if (roots) on.roots = .55;
       var mv = hand === 'handheart' ? 'bs-heart' : hand === 'handbelly' ? B.A.belly || 'bs-belly' : B.base;
-      if (hand === 'handbelly' && B.A.belly) on.belly = Math.max(on.belly || 0, 1);   // lying: the light on the hand and the belly under it
+      if (hand === 'handbelly' && B.A.belly) on.belly = Math.max(on.belly || 0, .5);   // lying: the light on the hand and the belly under it
       if (mv !== B.mv || hand !== B.hand) { B.handT = performance.now(); }
       B.on = on; B.hand = hand; B.roots = roots;
       if (mv !== B.mv) { B.mv = mv; if (FG.stage && FG.mode === 'b3') try { FG.stage.move(mv); } catch (e) {} }
@@ -1675,7 +1675,7 @@
       var any = false, all = B.v.all;
       names.forEach(function (r) {
         var v = B.v[r]; if (!(v > .01)) return; any = true;
-        var sq = on[r] === 2, rr = sq ? .85 : 1, aa = sq ? 1.2 : r === 'handheart' || r === 'handbelly' ? 1.25 : 1;
+        var sq = on[r] === 2, rr = sq ? .85 : B.A.belly && (r === 'handbelly' || r === 'belly') ? .75 : 1, aa = sq ? 1.2 : r === 'handheart' || r === 'handbelly' ? (B.A.belly ? .9 : 1.25) : 1;   // lying (BLD 1001): a smaller, softer light, so the resting hand reads
         B3G[r](J).forEach(function (p) {
           if (!p[0]) return;
           if (!B3HALO[r]) b3Blob(tc, p[0][0], p[0][1], p[1] * tor * 1.3 * rr, v * Am * .78 * aa * (1 - all), 0);
@@ -2274,7 +2274,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c122'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c123'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

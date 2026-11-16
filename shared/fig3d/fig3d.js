@@ -5803,7 +5803,7 @@ G.define('bs-lie', A(SLOW, {name: 'Body Scan, Lying', cam: LCAM, k: [A(SUP, {br:
 // Hand on Belly, lying (GWG BLD 1001): on the back on the mat, the near hand resting on the belly, wrist straight, palm on
 // the body, fingers relaxed across; the elbow rests out to the side so the whole arm shows. The belly lifts the hand on
 // the breath in. Targets here are in the room (x toward the near side, y up from the mat, z toward the feet).
-var LB = {x: .05, y: .275, z: -.11, f: 95, pole: [1, 0, 0]}, LB2 = {x: .05, y: .265, z: -.11, f: 95, pole: [1, 0, 0]};
+var LB = {x: .05, y: .28, z: -.15, f: 95, pole: [1, 0, 0]}, LB2 = {x: .05, y: .27, z: -.15, f: 95, pole: [1, 0, 0]};
 G.define('bs-lie-belly', A(SLOW, {name: 'Hand on Belly, Lying', cam: LCAM, k: [A(SUP, {br: 'in', ra: LB, hR: 'relax', pnR: 'back', e: .1}), A(SUP, {br: 'out', t: [-88, -91], ra: LB2, hR: 'relax', pnR: 'back', e: .1})]}));
 })(window.GG3D);
 
