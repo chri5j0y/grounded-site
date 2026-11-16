@@ -46,10 +46,10 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'c129';   // BLD 1006: Sides, Breads, Desserts, and Basics; nutrition computed from USDA FoodData Central; headnotes, contains, seasons   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
+  var VER = 'c132';   // BLD 1007: Recipes Round Two (51 more; a jar of Basics opens at its own size; Pressure Cooker)   // BLD 1006: Sides, Breads, Desserts, and Basics; nutrition computed from USDA FoodData Central; headnotes, contains, seasons   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
-    ['/shared/tending-public.js?v=c129', 'GGTendPublic'],
+    ['/shared/tending-public.js?v=c132', 'GGTendPublic'],
     ['/field-guide/stage.js?v=c114', 'GGStage'],
     ['/field-guide/coach.js?v=c119', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
@@ -80,8 +80,9 @@
     return L.length ? 'Contains: ' + L.join(', ') + '. Check the labels on packaged foods for your table.' : 'Made from foods outside the nine major food allergens. Check the labels on packaged foods for your table.';
   }
   // BLD 1006: a long recipe (a slow cooker, a loaf that rises overnight) reads in hours.
-  function minsText(m) { m = +m || 0; return m >= 120 ? 'About ' + Math.round(m / 60) + ' hr' : m + ' min'; }
-  function minsLong(m) { m = +m || 0; return m >= 120 ? 'about ' + Math.round(m / 60) + ' hours' : m + ' minutes'; }
+  // BLD 1007: a jar that ferments for days reads in days.
+  function minsText(m) { m = +m || 0; return m >= 2880 ? 'About ' + Math.round(m / 1440) + ' days' : m >= 120 ? 'About ' + Math.round(m / 60) + ' hr' : m + ' min'; }
+  function minsLong(m) { m = +m || 0; return m >= 2880 ? 'about ' + Math.round(m / 1440) + ' days' : m >= 120 ? 'about ' + Math.round(m / 60) + ' hours' : m + ' minutes'; }
   function seasonText(m) { m = (m || []).filter(function (x) { return x >= 1 && x <= 12; }); return m.length ? 'In season in Minnesota from ' + MONTH[m[0] - 1] + (m.length > 1 ? ' to ' + MONTH[m[m.length - 1] - 1] : '') + '.' : ''; }
   var CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
   var PEOPLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 0 1 0 6M18 14c2 .8 3 3 3 6"/></svg>';
@@ -179,7 +180,7 @@
   ];
   var MEAL_WORDS = { breakfast: 'breakfast morning brunch', lunch: 'lunch midday', dinner: 'dinner supper main', snack: 'snack snacks', party: 'party food snack snacks appetizer', sauce: 'sauce sauces dressing dressings', drink: 'drink drinks beverage',
     side: 'side sides side dish vegetables veggies', bread: 'bread breads loaf baking', dessert: 'dessert desserts sweet treat', basic: 'basic basics pantry staple staples batch' };
-  var EQUIP = { sheetPan: ['Sheet Pan', 'sheet pan'], onePot: ['One Pot', 'one pot'], slowCooker: ['Slow Cooker', 'slow cooker crockpot'] };
+  var EQUIP = { sheetPan: ['Sheet Pan', 'sheet pan'], onePot: ['One Pot', 'one pot'], slowCooker: ['Slow Cooker', 'slow cooker crockpot'], pressureCooker: ['Pressure Cooker', 'pressure cooker instant pot'] };   // BLD 1007: Pressure Cooker
   var COURSE_WORDS = { main: 'main dinner entree', side: 'side sides', dessert: 'dessert desserts sweet treat', snack: 'snack snacks appetizer', drink: 'drink drinks sober beverage', bread: 'bread', breakfast: 'breakfast brunch' };
   var FIT_WORDS = { vegan: 'vegan plant based', vegetarian: 'vegetarian veggie meatless plant based', dairyFree: 'dairy free', glutenFree: 'gluten free', nutFree: 'nut free', eggFree: 'egg free', kidFriendly: 'kid kids kid friendly family' };
   // The singular of one word: tacos to taco, berries to berry, dishes to dish, tomatoes to tomato; hummus and grass stay.
@@ -258,7 +259,7 @@
     // Chris (November 1, 2026): pitcher drinks open at their full batch (12, or 8 for infused waters); the Serves chips still
     // make a smaller batch, for this drink only, and the table size for meals stays as it is.
     var batchSize = {};
-    function isBatch(r) { return !!(r && (r.meal === 'drink' || r.meal === 'bread') && +r.serves > 6); }   // BLD 1006: a loaf opens at its 12 slices too
+    function isBatch(r) { return !!(r && (r.meal === 'drink' || r.meal === 'bread' || r.meal === 'basic') && +r.serves > 6); }   // BLD 1006: a loaf opens at its 12 slices too; BLD 1007: a jar of sauerkraut at its 30 servings
     function sv(r) { return isBatch(r) ? (batchSize[r.id] || +r.serves) : serves; }
     function sized(r) { return window.GGScale && r ? GGScale.recipe(r, sv(r)) : r; }
     function sizeChips(cur) {
@@ -462,7 +463,7 @@
         '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + shareBtn('r:' + r.id) + plateBtn(r.id) + '<span>Step by step, with a voice to guide you.</span></div><p class="rc-shnote" data-rc-shnote="' + esc('r:' + r.id) + '" role="status" hidden></p><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
         '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
         (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
-          '<p class="rc-size-note">' + (isBatch(r) ? 'A full pitcher. Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
+          '<p class="rc-size-note">' + (isBatch(r) ? (r.meal === 'drink' ? 'A full pitcher.' : r.meal === 'bread' ? 'A full batch.' : 'A full jar.') + ' Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
         '<ul class="rc-ing" id="rc-ing" aria-live="polite">' + ingHTML(r) + '</ul>' + (r.contains ? '<p class="rc-contains">' + esc(containsLine(r.contains)) + '</p>' : '') + '</div>' +
         '<div class="card"><h3>Steps</h3><ol class="rc-steps">' + steps + '</ol></div></div>' +
         '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Make Ahead', r.makeAhead) + note('Keeps', r.keeps) + note('Freezer', r.freezer) + note('In Season', seasonText(r.season)) + note('For Kids', r.kid) + pairsHTML(r) +
