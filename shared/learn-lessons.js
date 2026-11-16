@@ -50974,7 +50974,11 @@ window.GG_LEARN = {
     "blurb": "A strong sorry has two parts: own it, and help fix it.",
     "img": "pb/mp-g-lying-you-3",
     "sources": [
-     "byock4",
+     {
+      "label": "Ira Byock, The Four Things That Matter Most",
+      "href": "/library/#book=DY-002",
+      "adapted": true
+     },
      "lewicki16"
     ],
     "for": "kids",

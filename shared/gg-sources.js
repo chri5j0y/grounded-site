@@ -1281,7 +1281,11 @@
   "mueller98"
  ],
  "sorry and make it right": [
-  "byock4",
+  {
+   "label": "Ira Byock, The Four Things That Matter Most",
+   "href": "/library/#book=DY-002",
+   "adapted": true
+  },
   "lewicki16"
  ],
  "making it right": [
