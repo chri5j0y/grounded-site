@@ -439,9 +439,11 @@ const CSS = `
 .ggs-side b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,248,232,.9);color:#3A2414;font:700 17px/1 'Cormorant Garamond',Georgia,serif;}
 .ggs-hud{position:absolute;top:10px;right:10px;display:grid;justify-items:end;gap:6px;z-index:4;max-width:52%;}
 .ggs-lab{padding:7px 12px;border-radius:999px;background:rgba(255,248,232,.88);color:#2F2216;border:1px solid rgba(90,60,30,.22);font:700 13px/1 'Barlow',sans-serif;letter-spacing:.05em;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 8px rgba(60,35,10,.12);}
-.ggs-count{display:flex;align-items:baseline;gap:5px;padding:2px 12px 4px;border-radius:16px;background:rgba(255,248,232,.88);box-shadow:0 4px 14px rgba(60,35,10,.14);}
-.ggs-count b{font:600 clamp(34px,10vw,54px)/1 'Cormorant Garamond',Georgia,serif;color:#3A2414;font-variant-numeric:lining-nums;min-width:.6em;text-align:right;}
-.ggs-count span{font:italic 15px 'Cormorant Garamond',Georgia,serif;color:#6D5640;}
+/* BLD 979 (Chris, November 13, 2026: "make the rep count much more visible, so you can look up mid rep and know how many are
+   left"): a big, bold count on a dark badge, readable from across the room on a phone, a tablet, and a computer. */
+.ggs-count{display:flex;align-items:baseline;gap:.12em;padding:4px 16px 8px;border-radius:18px;background:rgba(36,25,16,.9);border:2px solid rgba(242,206,140,.55);box-shadow:0 6px 18px rgba(30,18,8,.3);font-size:clamp(52px,15vw,96px);}
+.ggs-count b{font:700 1em/1 'Barlow Condensed','Barlow',sans-serif;color:#FFF4DC;font-variant-numeric:lining-nums tabular-nums;min-width:.55em;text-align:right;}
+.ggs-count span{font:700 .42em/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.04em;color:#F2CE8C;white-space:nowrap;}
 .ggs-prog{position:absolute;left:16px;right:16px;bottom:10px;height:3px;border-radius:2px;background:rgba(90,60,30,.22);z-index:4;}
 .ggs-prog i{position:absolute;left:0;top:-1px;bottom:-1px;border-radius:3px;background:#C98A2C;transition:width .25s ease-out;}
 .ggs-prog b{position:absolute;top:-3px;width:1px;height:9px;background:#3A2414;opacity:.35;}
@@ -498,8 +500,8 @@ ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DE
 & .ggs-break{background:var(--ggs-ad);color:#10201E;}
 & .ggs-side{background:#E7B04E;color:#1E140A;}
 & .ggs-side b{background:rgba(36,27,20,.9);color:#F2DCB4;}
-& .ggs-lab,& .ggs-count{background:rgba(36,27,20,.84);color:#F4E8D4;border-color:rgba(242,220,180,.2);}
-& .ggs-count b{color:#F2DCB4;}& .ggs-count span{color:#CCB593;}& .ggs-prog{background:rgba(242,220,180,.2);}& .ggs-prog i{background:#E7B04E;}& .ggs-prog b{background:#F2DCB4;}
+& .ggs-lab{background:rgba(36,27,20,.84);color:#F4E8D4;border-color:rgba(242,220,180,.2);}
+& .ggs-count{background:rgba(24,17,11,.92);border-color:rgba(242,206,140,.6);}& .ggs-count b{color:#FFF4DC;}& .ggs-count span{color:#F2CE8C;}& .ggs-prog{background:rgba(242,220,180,.2);}& .ggs-prog i{background:#E7B04E;}& .ggs-prog b{background:#F2DCB4;}
 & .ggs-deck::after{background:var(--ggs-ad);}
 & .ggs::after{box-shadow:inset 0 0 0 4px var(--ggs-ad);}& .ggs-last::after{box-shadow:inset 0 0 0 6px var(--ggs-ad);}
 & .ggs-tint{background:linear-gradient(180deg,transparent 30%,var(--ggs-ad) 170%);opacity:.4;}

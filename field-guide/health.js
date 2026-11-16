@@ -467,7 +467,18 @@ function libApp(a){
   const out = Object.assign({}, a, {dinners: Object.assign({}, a.dinners, {weeks: rot(a.dinners.weeks)})}); if (a.shop && a.shop.weeks) out.shop = Object.assign({}, a.shop, {weeks: rot(a.shop.weeks)});
   LAPP = {a, off, out}; return out;
 }
-const WK = () => (APP() || {}).workouts || {};
+const WK0 = () => (APP() || {}).workouts || {};
+// BLD 979 (Chris, November 16, 2026: "was supposed to be 52 m but was only 32?????", then "you have to fix this so the
+// videos are timed correctly and so we are providing what we promise"): a Guide session carries its minutes as measured
+// by this player's own clock for each phase (minsByPhase) and for the lighter weeks (minsLight), so every card, list,
+// start screen, and Ava's "About N minutes" says the time the workout really runs. patches/bld979/test/measure979.mjs
+// measures them, and t979.mjs fails when a card is more than 3 minutes off the clock.
+const minsOf = (x, ph, light) => +((light ? x.minsLight : x.minsByPhase) || {})[ph] || +(x.minsByPhase || {})[ph] || x.mins;
+let WKC = null;
+const WK = () => { const w = WK0(); if (!w || !w.sessions || PUB()) return w; const d = new Date(), k = d.toDateString();
+  if (WKC && WKC.w === w && WKC.k === k) return WKC.v;
+  const ss = {}; Object.entries(w.sessions).forEach(([id, x]) => { if (!x || !x.minsByPhase){ ss[id] = x; return; } const pk = phKeyFor(id, d); ss[id] = Object.assign({}, x, {mins: minsOf(x, pk.ph, pk.light)}); });
+  const v = Object.assign({}, w, {sessions: ss}); WKC = {w, k, v}; return v; };
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
 const parseD = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '')); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
@@ -492,7 +503,7 @@ const foodWeek = d => { const w = d.getDay(); return weekNo(w === 6 ? addD(d, 2)
 // set.track: 'strength' (or unset), 'cardio', 'mixed' (set.cardioDays 1 or 2), and the older 'practice' (Flow only) and 'both'
 // (Strength plus Flow), still read as before; set.flow adds Flow to the days. A library with no program keeps today's plan exactly.
 const PH_IDS = ['foundation', 'build', 'peak'], PH_NAME = {foundation: 'Foundation', build: 'Build', peak: 'Peak'};
-const PROG = () => { if (PUB()){ const L = PLIB(); return L && L.program && L.program.tracks && L.program.tracks.strength ? L.program : null; } const p = WK().program; return p && p.tracks && p.tracks.strength ? p : null; };
+const PROG = () => { if (PUB()){ const L = PLIB(); return L && L.program && L.program.tracks && L.program.tracks.strength ? L.program : null; } const p = WK0().program; return p && p.tracks && p.tracks.strength ? p : null; };
 const progOn = () => !!PROG() && !(PUB() && (H().set.level || 'root') === 'gentle');
 const progStart = () => parseD(H().set.progStart) || startMon();
 const progWeek = d => Math.floor((day0(d || new Date()) - progStart()) / (7 * DAYMS)) + 1;
@@ -1022,7 +1033,7 @@ function buildWork(s){
   const ses = sesById(s); if (!ses) return null;
   const t0 = new Date(), pk = phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
-  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
+  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: minsOf(ses, pk.ph, pk.light), steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 // BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
 // BLD 984: a Member session opened beside a moved plan plays with the Member clip key; everything else with the library's own.
@@ -1311,6 +1322,7 @@ const LN = {
   alt: 'Alternate sides, left then right, back and forth.',
   half: ['Halfway. Smooth and steady.', 'Halfway. Keep breathing.', 'Halfway. Nice control.'], last: 'Last few.', done: 'Set done.',
   hard: st => 'Too hard? ' + st.easier, easy: st => 'Too easy? ' + st.harder,
+  swing: 'Let your arms swing loose while you rest.',
   weight: ['Pick a weight where the last two reps feel hard and your form stays clean.', 'If you could do five more reps, go a little heavier next set.', 'If your form slips, go a little lighter. Clean reps come first.'],
   count: k => NUMW[k] + '.',
   pIntro: (t, m) => t + '. About ' + m + ' minutes. Settle in, and we begin.', pOut: 'Your practice is complete. Carry this calm with you.',
@@ -1359,12 +1371,14 @@ const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
 // A warm-up or cooldown hold done on each side (Couch Stretch, Figure-4): Ava says Switch sides at the halfway point.
 // An alternating warm-up (Dead Bugs, 6 per side) flows side to side with no Switch sides (BLD 891).
 const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
+// BLD 979: a library may keep every set in the lighter weeks (workouts.lightKeepsSets: a step lighter weight, the same work
+// and the same minutes; Chris, November 16, 2026: "32 too short for a person w my goals").
 function stepsFor(ses, ph, light, w0){
   const w = w0 || WK(), out = [];
   // BLD 891: a session may carry its own warm-up for its focus (public Tending by day; the Guide library per session).
   arr((ses && ses.warmup) || w.warmup).forEach(x => out.push(wuStep(x, 'Warm-up', ph)));
   arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x), mv = pubMove(x);
-    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
+    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light && !w.lightKeepsSets ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
       rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per, steps: arr(x.steps).filter(Boolean), easier: x.easier || '', harder: x.harder || '', tempo: +x.tempo || 0, tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || '',
       form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath),
       // BLD 915: a one arm move done on each side names the arm (arm), and may start on the right (first: 'R'); the
@@ -1455,7 +1469,7 @@ function buildMMed(id){ const M = MLIB(), md = M && (M.app || {}).meditations, o
 function allLines(){
   if (PUB()) return allLinesPub();
   const out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); }, w = WK(), app = APP() || {};
-  Object.entries(w.sessions || {}).forEach(([id, ses]) => { add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins || 50));
+  Object.entries(WK0().sessions || {}).forEach(([id, ses]) => { [ses.mins || 50].concat(Object.values(ses.minsByPhase || {}), Object.values(ses.minsLight || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light); S2.forEach((st, i) => {
       const nx = S2[i + 1];
       if (st.t === 'time'){ add(AVA, st.form && !st.lines ? LN.tname(st) : LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
@@ -1463,7 +1477,7 @@ function allLines(){
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); }
     }); })); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
@@ -1482,7 +1496,7 @@ function allLines(){
 function allLinesPub(){
   const L = PLIB() || {}, P = TP(), out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); };
   const sesLines = (sessions, w0) => Object.entries(sessions || {}).forEach(([id, ses]) => {
-    [ses.mins].concat(Object.values(ses.minsByPhase || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
+    [ses.mins].concat(Object.values(ses.minsByPhase || {}), Object.values(ses.minsLight || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
     add(AVA, ses.open); add(AVA, ses.close); // BLD 919
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light, w0); S2.forEach((st, i) => { const nx = S2[i + 1];
       if (st.t === 'time'){ add(AVA, st.form && !st.lines ? LN.tname(st) : LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
@@ -1513,7 +1527,7 @@ function allLinesPub(){
         else { add(AVA, LN.ex(st)); if (!st.form && !st.breathLine) add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
           if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); }); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
@@ -1534,12 +1548,21 @@ function planSecs(steps, i0, set0, o){
       if (nx && nx.t === 'ex') s += GET_READY; return; }
     const first = i === at ? (set0 || 1) : 1, left = Math.max(0, st.sets - first + 1), sides = st.side ? 2 : 1;
     const work = st.kind === 'time' ? workSecs(st) : repN(st) ? repN(st) * tempoOf(st) : o && o.hands === false ? TAP_EST : WORD_REPS * tempoOf(st);
-    const perSet = lineSecs(LN.go) + sides * work + (st.side ? 2 * lineSecs(LN.left) + lineSecs(LN.sw) + SWITCH : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
-    s += (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue && !st.form && !st.breathLine ? lineSecs(st.cue) : 0) + (st.fin ? lineSecs(LN.fin) + lineSecs(LN.push[0]) : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine && repN(st) && o && o.count ? lineSecs(st.breathLine) : 0) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
+    // BLD 979 (Chris, November 16, 2026: the card said 52 minutes and the workout ran 32): since BLD 931 the move's
+    // instructions (its name and sets, side, form and breath lines, Go) play inside the Break before it, and a set's
+    // "Set 2 of 3" and Go inside the rest; the Break grows only when its lines run longer. So a Break costs the longer of
+    // its own time and its lines, and the lines are never counted twice.
+    const intro = (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue && !st.form && !st.breathLine ? lineSecs(st.cue) : 0) + (st.fin ? lineSecs(LN.fin) + lineSecs(LN.push[0]) : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine && repN(st) && (!o || o.count) ? lineSecs(st.breathLine) : 0) : lineSecs(LN.set(2, 3))) + (st.side ? lineSecs(LN.left) : 0) + lineSecs(LN.go) + PRE_MARGIN;
+    const pv = i > at ? steps[i - 1] : null, brk = !pv ? 0 : pv.t === 'ex' ? (pv.restAfter || 0) : GET_READY, open = brk ? lineSecs(LN.nextRest(brk, st.name)) + PRE_GAP : 0;
+    const perSet = sides * work + (st.side ? lineSecs(LN.sw) + Math.max(SWITCH, lineSecs(LN.right) + lineSecs(LN.go) + PRE_MARGIN) : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
+    const restCost = Math.max(st.rest, lineSecs(LN.rest(st.rest)) + PRE_GAP + lineSecs(LN.set(2, 3)) + (st.side ? lineSecs(LN.left) : 0) + lineSecs(LN.go) + PRE_MARGIN);
+    s += Math.max(0, intro + open - brk) + left * perSet + Math.max(0, left - 1) * restCost;
     if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
   return s;
 }
-function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return planSecs(st, 0, 1) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
+// BLD 979: measured as the player plays by default (Voice Counts Reps on, hands free), so a warm up item with a form line
+// costs its short call, as it does in the player.
+function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
 // ---------- the hands-free engine ----------
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function estLeft(o){ let s = planSecs(o.steps, o.i, o.between ? 1 : o.set, o); const left = o.run && o.end ? Math.max(0, o.end - Date.now()) / 1000 : 0;
@@ -1615,8 +1638,11 @@ function preArm(o, lines, open){
   const p = o.pre = {lines, durs: null, dur: null, open: 0, started: false, fin: false, gen: 0, ext: false, p: null}, vo = o.voice || AVA;
   const len = t => { const est = lineSecs(t); if (typeof V.len !== 'function') return Promise.resolve(est);
     return Promise.race([V.len(vo, t).then(x => x > 0 ? x : est, () => est), sleep(2500).then(() => est)]); };
-  Promise.all(lines.map(len).concat(open ? [len(open)] : [])).then(a => { if (o.pre !== p) return;
-    p.durs = a.slice(0, lines.length).map(x => x + PRE_PER); p.dur = p.durs.reduce((s, x) => s + x, 0); p.open = open ? a[lines.length] : 0;
+  // BLD 979: the opening lines are measured one by one (each clip has its own start and end), so a Break with two opening
+  // lines (Next up, then the water tip) grows enough and the next move's words never start over them.
+  const opens = Array.isArray(open) ? open.filter(Boolean) : open ? [open] : [];
+  Promise.all(lines.map(len).concat(opens.map(len))).then(a => { if (o.pre !== p) return;
+    p.durs = a.slice(0, lines.length).map(x => x + PRE_PER); p.dur = p.durs.reduce((s, x) => s + x, 0); p.open = a.slice(lines.length).reduce((s, x) => s + x + PRE_PER, 0);
     lg(o, {e: 'pmeasure', dur: Math.round(p.dur * 1000) / 1000, open: Math.round(p.open * 1000) / 1000, n: lines.length}); });
 }
 // Each tick of the Break's timer: once the lengths are known, grow a Break too short for them, then start the lines on time.
@@ -1765,18 +1791,21 @@ async function beats(o, n, t, keep){
 async function wuCount(o, st){
   const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = true; if (st.wturn === 'side') o.side = 'L';
   for (let k = 0; k < turns && !o.dead && !o.skip; k++){
-    if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
+    if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.way2 = st.wturn === 'way'; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
     else { if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } if (st.breathLine && !o.dead && !o.skip){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); } await speak(o, LN.go); }
     await beats(o, n, st.tempo, !!st.wbreath);
   }
-  o.rep = 0; o.side = ''; o.ring = false;
+  o.rep = 0; o.side = ''; o.way2 = false; o.ring = false;
 }
 // What Ava says in a rest between sets, here and there (BLD 891): after the first set the easier and harder versions, after the
 // second a weight line for a move with a weight, otherwise a motivation line.
 function restLines(o, st){
-  if (o.set === 1 && (st.easier || st.harder)) return [st.easier ? LN.hard(st) : '', st.harder ? LN.easy(st) : ''].filter(Boolean);
-  if (o.set === 2 && loaded(st) && !o.young) return [LN.weight[(o.wi = (o.wi == null ? 0 : o.wi + 1)) % LN.weight.length]];
-  const m = motLine(o); return m ? [m] : [];
+  // BLD 979 (Chris, November 11, 2026: "it can be nice to swing the arms on breaks between heavy or hard sets"): after a set
+  // with a weight, or with a rest of 45 seconds or more, the Break opens with an easy arm swing.
+  const sw = !o.young && (loaded(st) || st.rest >= 45) ? [LN.swing] : [];
+  if (o.set === 1 && (st.easier || st.harder)) return sw.concat([st.easier ? LN.hard(st) : '', st.harder ? LN.easy(st) : ''].filter(Boolean));
+  if (o.set === 2 && loaded(st) && !o.young) return sw.concat([LN.weight[(o.wi = (o.wi == null ? 0 : o.wi + 1)) % LN.weight.length]]);
+  const m = motLine(o); return sw.concat(m ? [m] : []);
 }
 // The rest before a move: Next up (its tips and recommended weight show on the screen, BLD 915), and a draining ring.
 async function between(o, nx, secs){
@@ -1788,10 +1817,15 @@ async function between(o, nx, secs){
   const wd = waterAt(o, o.i + '|b'), fo = nx.fin ? [LN.fin, pushOf()] : []; o.finOpen = nx.fin ? nx : null;
   const open = [LN.nextRest(secs, nx.name)].concat(fo, wd ? [WATER] : []);
   (async () => { for (const l of open){ if (o.dead || (l !== open[0] && o.pre && o.pre.started)) break; await speak(o, l); } })();
-  preArm(o, preLines(o, nx, 1, 0), open.join(' '));
+  preArm(o, preLines(o, nx, 1, 0), open);
   await runTimer(o, secs * 1000, 'between'); await preDone(o);
   o.between = false; o.skip = false;
 }
+// BLD 979: does this line end before the next set's instructions start (their measured length, plus the margin)?
+async function fitsRest(o, l){ const V = VO(); if (!V || !V.on()) return true; const vo = o.voice || AVA, est = lineSecs(l);
+  const len = typeof V.len === 'function' ? await Promise.race([V.len(vo, l).then(x => x > 0 ? x : est, () => est), sleep(1500).then(() => est)]) : est;
+  const p = o.pre, need = p && p.dur != null ? p.dur + PRE_MARGIN : lineSecs(LN.set(2, 3)) + lineSecs(LN.go) + PRE_MARGIN;
+  const room = (o.end - Date.now()) / 1000 - need - .4; const ok = len <= room; lg(o, {e: ok ? 'rline' : 'rskip', len: Math.round(len * 100) / 100, room: Math.round(room * 100) / 100}); return ok; }
 function motLine(o){ const m = MOT(); if (!m.length) return ''; if (o.mi == null){ const d = new Date(); o.mi = (d.getDate() * 7 + d.getMonth() * 3) % m.length; } return m[o.mi++ % m.length]; }
 // BLD 991 Sound and Music (music-plan.json): Breath and Form music matched to the session, from R2 (music/v2): lofi for
 // Strength, lofi and two softly pulsing guitar tracks for Cardio, folk for Walk, earth for Gentle, world for Yoga and Balance,
@@ -1823,7 +1857,7 @@ let SRCL = 0;
 function musicSrc(files){
   try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; return ''; } } catch(e){}
   // the credits file loads the first time a session shows, then the screen draws again
-  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c124'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
+  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c135'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
   return '';
 }
 async function runSession(o){
@@ -1862,10 +1896,12 @@ async function runSession(o){
     if (o.dead) break;
     lg(o, {e: 'set'});
     const skipMove = o.skipMove; o.skip = false; o.skipMove = false;
-    if (!skipMove && o.set < st.sets){ const r = st.rest, rl = restLines(o, st); lg(o, {e: 'rest', secs: r}); o.mline = rl.join(' '); o.mcoach = /^Too (hard|easy)\?/.test(rl[0] || '');
+    if (!skipMove && o.set < st.sets){ const r = st.rest, rl = restLines(o, st); lg(o, {e: 'rest', secs: r}); o.mline = rl.join(' '); o.mcoach = rl.some(l => /^Too (hard|easy)\?/.test(l));
       const wd = waterAt(o, o.i + '|r' + o.set);   // BLD 965: the water tip spoken at its Break
-      (async () => { await speak(o, LN.rest(r)); if (wd && !o.dead && !(o.pre && o.pre.started)) await speak(o, WATER); for (const l of rl){ if (!o.rest || o.dead || o.pre && o.pre.started) break; await speak(o, l); } })();
-      preArm(o, preLines(o, st, o.set + 1, 0), LN.rest(r) + (wd ? ' ' + WATER : ''));
+      // BLD 979 (Chris, November 12, 2026: "it cut off the part about too hard or too easy"): a Break line starts only when
+      // it ends before the next set's instructions begin, so no line is ever cut off; a line that cannot fit is left out.
+      (async () => { await speak(o, LN.rest(r)); if (wd && !o.dead && !(o.pre && o.pre.started)) await speak(o, WATER); for (const l of rl){ if (!o.rest || o.dead || o.pre && o.pre.started) break; if (!(await fitsRest(o, l))) continue; await speak(o, l); } })();
+      preArm(o, preLines(o, st, o.set + 1, 0), [LN.rest(r), wd ? WATER : '']);
       await runTimer(o, r * 1000, 'rest'); await preDone(o); if (o.dead) break; o.skip = false; o.set++; continue; }
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
     const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, st.restAfter); }
@@ -1956,11 +1992,14 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c123';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c135';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
+// BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
+// arm circles figure circles backward with the palms turned up.
+const fig3dName = (o, st) => { const n = (o.swap && st.swap) || st.name || ''; return o.way2 && /arm circles/i.test(n) ? n + ' Backward' : n; };
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
-  return {art, kind: 'move', category: cat, workout: o.s || '', name: (o.swap && st.swap) || st.name || '', side: o.stage === 'start' ? '' : o.side || '', age: youngAge(o), fig: o.young ? st.fig || '' : ''}; }
+  return {art, kind: 'move', category: cat, workout: o.s || '', name: fig3dName(o, st), side: o.stage === 'start' ? '' : o.side || '', age: youngAge(o), fig: o.young ? st.fig || '' : ''}; }
 // BLD 985: a session for kids (ages 4 to 10) plays with the kid 3D figure, a session for teens (11 to 17) with the teen figure.
 const youngAge = o => o && o.young ? (KID_BANDS.includes(o.young) ? 'kid' : 'teen') : '';
 function fig3d(){
@@ -2102,7 +2141,7 @@ function wChip(st){ if (!st || st.t !== 'ex' || TEEN() || !wtMove(st)) return nu
 // BLD 928 (note 6): Grounded Tips, type only, on the card during a Break between moves (never during a set). 2 a workout under 30
 // minutes, 3 for longer, turning by day; a workout with dumbbells always gets a dumbbell safety tip, and its last Break shows the
 // clear-the-floor tip. A library may give its own list (workouts.tips); then those turn by day with no dumbbell rule.
-const TIPS = ['Take a sip of water before the next move.', 'Stand tall: ears over shoulders, shoulders over hips.', 'Smooth and steady builds more strength than fast and heavy.',
+const TIPS = ['Take a sip of water before the next move.', 'Breathe in through your nose, fill your belly, and breathe out through your mouth.', 'Stand tall: ears over shoulders, shoulders over hips.', 'Smooth and steady builds more strength than fast and heavy.',
   'Move in a range that feels good to your joints.', 'Knees travel in line with your toes.', 'Keep your wrists straight and your grip firm.', 'Brace gently before each lift, then breathe out on the effort.',
   'A lighter weight with great form is a strong choice.', 'Lift a dumbbell from the floor with a squat: back long, weight close.', 'Carry dumbbells close at your sides, shoulders level.',
   'Lower dumbbells to the floor with control.', 'Set your dumbbells beside the mat, out of the walkway.', 'Clear the floor of dumbbells when you finish, so everyone walks safely.',
@@ -5858,6 +5897,7 @@ html.gg-fs .hj-fstip b{font-family:'Barlow Condensed','Barlow',sans-serif;letter
 /* BLD 957: top items come down, clear of the phone's own exit X in full screen, and on a tablet or computer everything is bigger. */
 html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-ftip{top:calc(56px + env(safe-area-inset-top,0px));}
 html.gg-fs .ggs-break,html.gg-fs .ggs-hud{top:calc(48px + env(safe-area-inset-top,0px));}
+html.gg-fs .ggs-count{font-size:clamp(64px,19vw,120px);}
 @media (min-width:700px) and (min-height:560px){
   html.gg-fs{--fsb:196px;}
   html.gg-fs .hj-stagebox .ggs{--fs:min(560px,46vw,calc(var(--H) * .78));}
@@ -5878,6 +5918,7 @@ html.gg-fs .ggs-break,html.gg-fs .ggs-hud{top:calc(48px + env(safe-area-inset-to
   html.gg-fs .ggs-break{font-size:clamp(34px,5vh,52px);padding:10px 38px 11px;}
   html.gg-fs .ggs-rsub{font-size:clamp(18px,2.4vh,26px);max-width:min(640px,80vw);top:calc(100% + 12px);}
   html.gg-fs .ggs-side{font-size:20px;bottom:34px;left:24px;}
+  html.gg-fs .ggs-count{font-size:clamp(96px,17vh,180px);padding:6px 24px 12px;border-radius:24px;}
   html.gg-fs .ggs-fig.small{--fs:min(260px,26vh);}
   html.gg-fs .hj-fsbar .btn{min-height:56px;min-width:180px;font-size:18px;}
 }

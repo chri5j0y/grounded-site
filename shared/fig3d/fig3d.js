@@ -4052,7 +4052,9 @@ G.define('step-back-reach', {name: 'Step Back and Reach Up', tempo: 4, base: 'st
     {when: [.19, .31], line: ['root', 'neck01'], say: 'tall chest, ribs down', at: 'spine01', side: -1},
     {when: [.69, .81], line: ['root', 'neck01'], say: 'tall chest, ribs down', at: 'spine01', side: -1}],
   k: [
-    {br: 'in', on: 'fL', p: [.925, -.062], t: [181, 180], n: 182, ra: [4, 8], la: [4, 8], ll: foot(.11, .02), rl: foot(.11, .02, {toe: 88}), lift: .08, e: .2},
+    // BLD 979 (Chris, November 11, 2026: "the hand flips fast at the bottom of the move"): the hands hang a touch forward with
+    // the palms already turned forward, so they turn slowly through the whole sweep and never flip at the bottom.
+    {br: 'in', on: 'fL', p: [.925, -.062], t: [181, 180], n: 182, ra: [6, 10, 10], la: [6, 10, 10], hR: 'relax', hL: 'relax', pnR: [0, 0, 1], pnL: [0, 0, 1], ll: foot(.11, .02), rl: foot(.11, .02, {toe: 88}), lift: .08, e: .2},
     mix(SBR_UP, {br: 'out', on: 'fL', p: [.52, -.46], t: [175, 177], n: 179, ll: foot(.11, .02, {pole: [.15, 0, 1]}), rl: {x: .11, y: .15, z: -.84, f: 42, toe: 92}, lift: .08, e: 1})
   ]});
 
@@ -4067,6 +4069,15 @@ G.define('hinge', {name: 'Romanian Deadlift', tempo: 3, base: 'stand', glow: {ha
     {br: 'out', p: [.89, -.25], t: [112, 112], n: 118, ra: [-2, -2], la: [-2, -2], rl: foot(.12, .02), ll: foot(.12, .02), hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', e: 1, ao: 4}
   ]});
 
+// BLD 979 (Chris, November 11, 2026: "Hip hinge: shows a dumbbell, but no recommended weight"): the warm-up Hip Hinge is a
+// body weight move, hands on the hips, so its figure holds no dumbbells. The Romanian deadlift keeps its pair.
+var HHIP = {rel: [.19, .07, .02], pole: [1, -.2, -.6], f: 0};
+G.define('hip-hinge-bw', {name: 'Hip Hinge', tempo: 3, base: 'stand', glow: {hams: [1, 1], glutes: [.85, .85], back: [.35, .35]}, cam: {yaw: 6, el: 6, zoom: 1},
+  form: [{when: [.3, .7], line: ['root', 'neck01'], ext: .1, say: 'long, flat back', at: 'spine01', side: 1}],
+  k: [
+    {br: 'in', p: [.925, -.062], t: [181, 181], n: 182, ra: HHIP, la: HHIP, rl: foot(.12, .02), ll: foot(.12, .02), hR: 'flat', hL: 'flat', pnR: 'in', pnL: 'in', e: .2},
+    {br: 'out', p: [.89, -.25], t: [112, 112], n: 118, ra: HHIP, la: HHIP, rl: foot(.12, .02), ll: foot(.12, .02), hR: 'flat', hL: 'flat', pnR: 'in', pnL: 'in', e: 1}
+  ]});
 // Single-leg Romanian deadlift: stand on the right leg, soft knee; the left leg reaches back in one line with the
 // back; the dumbbell hangs from the left hand. Hips stay square.
 G.define('sl-hinge', {name: 'Single-Leg Romanian Deadlift', tempo: 3.4, base: 'stand', glow: {hams: [.3, 1], glutes: [.5, 1], back: [.3, .3]}, cam: {yaw: 8, el: 6, zoom: 1},
@@ -4161,13 +4172,18 @@ G.define('step-up', D_STEPUP);
 // BLD 915 (Chris's workout notes: "add an arm swing up as the knee drives up, to blast off, with one leg up"): the
 // Step-Up Drive. The whole right foot on a low step, arms back; drive up through that heel and blast off: the left knee
 // drives up to hip height as both arms swing up, then lower slowly back down. Out on the drive.
-G.define('step-up-drive', {name: 'Step-Up Drive', tempo: 3, base: 'stand', top: [1], hold: .2, dur: [1.2, 1.6], glow: {quads: [.4, 1], glutes: [.4, 1], flexors: [.7, 0], delts: [.4, .4]}, cam: {yaw: 10, el: 6, zoom: 1},
+// BLD 979 (Chris, November 11, 2026: "both feet should step down each move, then step up and launch"): each rep starts
+// with both feet on the floor: the right foot steps up, the drive and the arm swing, the left foot steps back down, then
+// the right foot steps down, so both feet are on the floor before the next rep.
+G.define('step-up-drive', {name: 'Step-Up Drive', tempo: 4, base: 'stand', top: [2], hold: .16, dur: [1, 1.1, 1.3, 1], glow: {quads: [.4, 1], glutes: [.4, 1], flexors: [.7, 0], delts: [.4, .4]}, cam: {yaw: 10, el: 6, zoom: 1},
   props: ['step'],
-  form: [{when: [.02, .2], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'press through the whole foot', at: 'lowerleg01.R', side: 1},
-    {when: [.4, .6], plumb: ['head', 'foot.R'], say: 'tall, knee to hip height', at: 'neck01', side: -1}],
+  form: [{when: [.2, .4], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'press through the whole foot', at: 'lowerleg01.R', side: 1},
+    {when: [.45, .62], plumb: ['head', 'foot.R'], say: 'tall, knee to hip height', at: 'neck01', side: -1}],
   k: [
+    {br: 'in', on: 'fL', p: [.925, -.062], t: [179, 180], n: 181, ra: [-10, -4], la: [-10, -4], rl: foot(.11, -.02), ll: foot(.11, -.02), lift: .12, e: .2},
     {br: 'out', on: 'fR', p: [.88, .12], t: [170, 173], n: 177, ra: [-16, -8], la: [-16, -8], rl: {x: .11, y: .272, z: .33, f: 72, pole: [.2, 0, 1]}, ll: foot(.11, -.02), lift: .12, e: .5},
-    {br: 'in', on: 'fR', p: [1.125, .25], t: [181, 182], n: 182, ra: [128, 138], la: [128, 138], ao: 8, rl: {x: .11, y: .272, z: .33, f: 72}, ll: [96, 4, 70], e: 1}
+    {br: 'in', on: 'fR', p: [1.125, .25], t: [181, 182], n: 182, ra: [128, 138], la: [128, 138], ao: 8, rl: {x: .11, y: .272, z: .33, f: 72}, ll: [96, 4, 70], e: 1},
+    {br: 'in', on: 'fL', p: [.88, .12], t: [172, 175], n: 178, ra: [-6, -2], la: [-6, -2], rl: {x: .11, y: .272, z: .33, f: 72, pole: [.2, 0, 1]}, ll: foot(.11, -.02), lift: .12, e: .4}
   ]});
 
 // ---- Presses and arms ------------------------------------------------
@@ -4916,6 +4932,16 @@ var PU_GLOW = {lats: [1, 1], biceps: [.7, .7], upper: [.5, .5], forearms: [.4, .
 G.define('pull-up', {name: 'Pull-Up', tempo: 3, dur: [1, 1.5], props: ['bar'], glow: PU_GLOW, cam: {view: 'three', el: 4, zoom: 1},
   form: [{when: [.3, .5], level: ['upperarm01.R', 'upperarm01.L'], say: 'shoulders down, chest up', at: 'neck01', side: 1}],
   k: [ext(PU_HANG, {br: 'out', e: .4}), ext(PU_TOP, {br: 'in', e: 1})]});
+// BLD 979 (Chris, November 11, 2026: "Chin-up: which way do the hands go? Same as pull-ups?"): the chin-up hangs with the
+// palms facing you, hands about shoulder width; the wide grip pull-up (the harder way) has the palms facing away, hands
+// well outside the shoulders.
+var CU = function(o, x, pn){ var h = {x: x, y: 2.2, z: 0, pole: [1, -1, .3], f: 180}; return ext(o, {pnR: pn, pnL: pn, hR: 'grip', hL: 'grip', ra: o === PU_TOP ? h : {x: x, y: 2.2, z: 0, pole: [1, 0, -.3], f: 180}, la: o === PU_TOP ? h : {x: x, y: 2.2, z: 0, pole: [1, 0, -.3], f: 180}}); };
+G.define('chin-up', {name: 'Chin-Up', tempo: 3, dur: [1, 1.5], props: ['bar'], glow: {lats: [1, 1], biceps: [.9, .9], upper: [.5, .5], forearms: [.4, .4], abs: [.2, .2]}, cam: {view: 'three', el: 4, zoom: 1},
+  form: [{when: [.3, .5], level: ['upperarm01.R', 'upperarm01.L'], say: 'palms facing you, chest up', at: 'neck01', side: 1}],
+  k: [ext(CU(PU_HANG, .19, 'back'), {br: 'out', e: .4}), ext(CU(PU_TOP, .19, 'back'), {br: 'in', e: 1})]});
+G.define('wide-pull-up', {name: 'Wide Grip Pull-Up', tempo: 3, dur: [1, 1.5], props: ['bar'], glow: PU_GLOW, cam: {view: 'three', el: 4, zoom: 1},
+  form: [{when: [.3, .5], level: ['upperarm01.R', 'upperarm01.L'], say: 'wide hands, chest up', at: 'neck01', side: 1}],
+  k: [ext(CU(PU_HANG, .36, 'fwd'), {br: 'out', e: .4}), ext(CU(PU_TOP, .36, 'fwd'), {br: 'in', e: 1})]});
 G.define('pull-up-hold', {name: 'Pull-Up Top Hold', tempo: 10, bp: [4, 6], props: ['bar'], glow: PU_GLOW, cam: {view: 'three', el: 4, zoom: 1},
   form: [{when: 'always', level: ['upperarm01.R', 'upperarm01.L'], say: 'shoulders down, chest up', at: 'neck01', side: 1}],
   k: [ext(PU_TOP, {br: 'in', e: 1}), ext(PU_TOP, {br: 'out', p: [1.615, -.15], e: 1})]});
@@ -5240,11 +5266,15 @@ TWO('thread-needle', A(SLOW, {name: 'Thread the Needle', props: ['mat'], glow: {
 // each in breath and the hips settle on each out breath.
 var CPH = {x: .27, y: .03, z: .72, f: 'flat', pole: [0, 1, 0]};
 var CP = {b: 'kneel', an: ['lowerleg01.*', .055, .2], ra: CPH, la: CPH, hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down', lo: 6, ao: 10, on: 'hR hL kR kL'};
-G.define('child-pose', A(SLOW, {name: "Child's Pose", props: ['mat'], glow: {back: [.5, .5], lats: [.45, .45]}, cam: {yaw: 2, el: 12, zoom: 1.04},
+// BLD 979 (Chris, November 16, 2026, Full Body Strength: the pose looked tangled, the head buried in the arms): knees down
+// and wide, hips back toward the heels, the back long and low, the forehead toward the mat, arms long in front, seen from
+// the front and side so each part reads.
+var CPH2 = {x: .2, y: .03, z: .84, f: 'flat', pole: [0, 1, 0]};
+G.define('child-pose', A(SLOW, {name: "Child's Pose", props: ['mat'], glow: {back: [.5, .5], lats: [.45, .45]}, cam: {yaw: 50, el: 14, zoom: 1.04},
   form: [{when: 'out', say: 'hips sink toward heels', at: 'root', side: -1}],
   k: [
-    K(CP, {br: 'in', t: [66, 78], n: 58, rl: [55, -90, -96], ll: [55, -90, -96], e: .7}),
-    K(CP, {br: 'out', t: [68, 82], n: 62, rl: [52, -90, -96], ll: [52, -90, -96], e: .5})
+    K(CP, {br: 'in', lo: 18, t: [75, 86], n: 66, rl: [60, -92, -96], ll: [60, -92, -96], ra: CPH2, la: CPH2, e: .7}),
+    K(CP, {br: 'out', lo: 18, t: [75 - 4, 86 + 2], n: 66, rl: [60 + 3, -92, -96], ll: [60 + 3, -92, -96], ra: CPH2, la: CPH2, e: .5})
   ]}));
 // Downward Dog: hands and feet locked, hips up and back in an upside down V, knees soft, head easy between the arms.
 // The hips press up and back on each out breath.
@@ -5280,12 +5310,13 @@ TWO('ankle-rock', {name: 'Ankle Rocks', tempo: 2.8, props: HKP, glow: {calves: [
   ]});
 // Half Kneeling One Arm Press: dumbbell at the left shoulder, on the side of the down knee; press straight up on the
 // out breath, lower slowly on the in breath. The left glute stays firm.
+// BLD 979 (Chris, November 13 and 16, 2026: "1"): a gentle turn, the palm facing in at the shoulder and facing forward at the top.
 TWO('kneel-press', {name: 'Half Kneeling One Arm Press', tempo: 3, top: [1], props: ['mat', {id: 'dumbbell', at: 'L'}],
   glow: {delts: [1, 0], triceps: [.7, 0], abs: [.4, .4], glutes: [.5, 0]}, cam: {yaw: 34, el: 6, zoom: 1},
   form: [{when: 'hold', plumb: ['wrist.L', 'root'], say: 'ribs down, press straight up', at: 'neck01', side: 1}],
   k: [
     K(HKL, {br: 'out', la: [12, 166, 170], laO: 34, hL: 'grip', pnL: 'in', ra: [8, 70], hR: 'relax', e: .3}),
-    K(HKL, {br: 'in', la: [176, 178, 180], laO: 10, hL: 'grip', pnL: 'in', ra: [8, 70], hR: 'relax', e: 1})
+    K(HKL, {br: 'in', la: [176, 178, 180], laO: 10, hL: 'grip', pnL: 'fwd', ra: [8, 70], hR: 'relax', e: 1})
   ]});
 // Half Kneeling Band Chop: band anchored high on the left; both hands start up by the left shoulder and pull down
 // across the body toward the right hip (out breath), then return with control (in breath). Hips stay square.
@@ -5368,6 +5399,15 @@ var CIRC = function(base){ var k = [], i, th; for (i = 0; i < 8; i++){ th = i * 
 G.define('arm-circles', {name: 'Arm Circles', tempo: 2.4, rest: 0, glow: {delts: [.8, .8], rotator: [.5, .5]}, cam: {view: 'front', turn: -20, el: 8, zoom: 1},
   form: [{when: 'always', level: ['wrist.L', 'wrist.R'], say: 'arms long, shoulders down', at: 'neck01', side: 1}],
   k: CIRC(ST)});
+// BLD 979 (Chris, November 11, 2026: "turn over the hand on the second half"): the second half of Arm Circles (after
+// Now the other way) circles backward with the palms turned up.
+var CIRCB = function(base){ var k = [], i, th; for (i = 0; i < 8; i++){ th = -i * 45 * Math.PI / 180;
+  var a = R(90 + 16 * Math.sin(th)), o = R(76 + 12 * Math.cos(th));
+  k.push(K(base, {br: i < 4 ? 'in' : 'out', via: true, ra: [a, a, a], la: [a, a, a], raO: [o, o, o], laO: [o, o, o], hR: 'reach', hL: 'reach', pnR: 'up', pnL: 'up', e: .7})); }
+  return k; };
+G.define('arm-circles-back', {name: 'Arm Circles Backward', tempo: 2.4, rest: 0, glow: {delts: [.8, .8], rotator: [.5, .5]}, cam: {view: 'front', turn: -20, el: 8, zoom: 1},
+  form: [{when: 'always', level: ['wrist.L', 'wrist.R'], say: 'palms up, circle back', at: 'neck01', side: 1}],
+  k: CIRCB(ST)});
 // Dowel Pass-Through: a wide grip, straight arms; over the top and behind as far as feels smooth on the in breath,
 // back over the top on the out breath. Ribs stay down.
 var PT = function(a){
@@ -5506,9 +5546,12 @@ G.define('bike', {name: 'Stationary Bike', tempo: 1.8, rest: 0, bp: [3, 3], prop
 G.define('cross-seat', A(SLOW, {name: 'Cross Legged Seat', props: CROSSP, glow: {}, cam: {yaw: 34, el: 12, zoom: 1},
   form: [{when: 'in', plumb: ['head', 'root'], say: 'spine tall, shoulders soft', at: 'spine01', side: 1}],
   k: [K(CROSS, {br: 'in', e: .2}), K(CROSS, {br: 'out', t: [177, 183], n: 183, e: .2})]}));
+// BLD 979 (Chris, November 13, 2026: "Slow breathing: the hands blend into the knees"): the hands rest palms up on the
+// thighs, over the shorts, so they read clearly against the knees.
+var XHB = {x: .24, y: .27, z: .0, f: 40, pole: [1, -.6, -.2]}, BRH = {ra: XHB, la: XHB, pnR: 'up', pnL: 'up', hR: 'relax', hL: 'relax'};
 G.define('breath', A(SLOW, {name: 'Seated Breath', props: CROSSP, glow: {}, cam: {yaw: 34, el: 12, zoom: 1},
   form: [{when: 'out', say: 'long, slow breath out', at: 'spine01', side: 1}],
-  k: [K(CROSS, {br: 'in', e: .2}), K(CROSS, {br: 'out', t: [176, 184], n: 184, ao: 22, e: .2})]}));
+  k: [K(CROSS, BRH, {br: 'in', e: .2}), K(CROSS, BRH, {br: 'out', t: [176, 184], n: 184, e: .2})]}));
 G.define('shrug', A(SLOW, {name: 'Shoulder Rolls', props: CROSSP, glow: {neck: [.4, .4], upper: [.4, .4]}, cam: {yaw: 30, el: 8, zoom: 1},
   form: [{when: 'out', say: 'shoulders drop, easy and slow', at: 'neck01', side: 1}],
   k: [K(CROSS, {br: 'in', e: .2}), K(CROSS, {br: 'out', shR: 24, shL: 24, e: .7})]}));
@@ -5555,11 +5598,14 @@ var HS = function(s){ var up = [.2, 1, .3], out = [1, .15, -.45], inw = [-1, .3,
     ll: {x: HS_F.x, y: .072, z: HS_F.z, f: 70, pole: s === 0 ? up : s < 0 ? inw : out}}; };
 var HSB = {b: 'floor', t: [168, 174], n: 176, ra: {x: .2, y: .03, z: -.48, f: -84, pole: [.3, 0, 1]}, la: {x: .2, y: .03, z: -.48, f: -84, pole: [.3, 0, 1]},
   fitArm: {r: .97, by: 't', span: 10}, hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down', on: 'p hR hL fR fL'};
+// BLD 979 (Chris, November 12 and 13, 2026: "looks like his upper body is detached from his legs", "fill more of his body
+// at the crotch"): the pelvis rolls back a little (as a real seat does), so the shirt and shorts close over the crotch with
+// no notch, and the hips and chest turn with the knees as they fall to each side, the chest a little less than the hips.
 G.define('hip-switch', {name: 'Hip Switches', props: ['mat'], tempo: 3, alt: true, glow: {glutes: [.5, .5], adductors: [.4, .4], obliques: [.4, .4]}, cam: {view: 'front', turn: -25, el: 34, zoom: 1},
   form: [{when: 'out', say: 'knees fall slowly, chest tall', at: 'spine01', side: 1}],
   k: [
-    K(HSB, HS(0), {br: 'out', e: .3}), K(HSB, HS(-1), {br: 'in', e: .9}),
-    K(HSB, HS(0), {br: 'out', e: .3}), K(HSB, HS(1), {br: 'in', e: .9})
+    K(HSB, HS(0), {br: 'out', t: [140, 174], e: .3}), K(HSB, HS(-1), {br: 'in', t: [140, 174], yaw: -22, tw: 8, lb: 0, e: .9}),
+    K(HSB, HS(0), {br: 'out', t: [140, 174], e: .3}), K(HSB, HS(1), {br: 'in', t: [140, 174], yaw: 22, tw: -8, lb: -0, e: .9})
   ]});
 // Seated Hamstring Reach: legs long, a tall seat, hands toward the shins; the fold eases a little deeper on each out
 // breath and the chest lifts a little on each in breath.
@@ -5836,6 +5882,9 @@ GG3D.stepWords = GG3D.stepWords || function(){
 function byWords(name, words, id){ var r = new RegExp(name.source, name.flags);
   r.test = function(s){ return name.test(s) && words.test(GG3D.stepWords()); }; return [r, id]; }
 GG3D.names = [
+  [/\barm circles backward\b/i, 'arm-circles-back'],
+  [/\bwide.?grip (pull|chin).?ups?\b/i, 'wide-pull-up'], [/^chin.?ups?$/i, 'chin-up'],   // BLD 979: the grip shows
+  byWords(/^hip hinges?$/i, /\bhands on your hips\b/i, 'hip-hinge-bw'),   // BLD 979: the warm-up hinge, no dumbbells   // BLD 979: the second half of Arm Circles, palms up
   [/^step back and reach up\b|^reverse lunge and reach\b/i, 'step-back-reach'],   // BLD 903: its own pattern, arms overhead
   // BLD 931: a dumbbell in each hand at the sides (Chris: "where are the dumbbells?"); the body weight moves keep their own.
   [/\bdumbbell reverse lunges?\b/i, 'db-reverse-lunge'],
