@@ -5778,6 +5778,11 @@ var CROSS = A(Z, {p: [.15, -.28], t: [176, 181], n: 182, rl: XR, ll: XL, ra: XH,
 var IN = {t: [176, 184], n: 184, ao: 22};
 var CAM = {yaw: 26, el: 10, zoom: 1};
 G.define('bs-seat', A(SLOW, {name: 'Body Scan, Seated', cam: CAM, k: [A(CROSS, {br: 'in', e: .1}), A(CROSS, IN, {br: 'out', e: .1})]}));
+// Body Scan in the Chair (GWG BLD 1001, Chris, November 16, 2026): sitting upright on the chair (the seat base), feet flat
+// on the floor, both hands resting on the thighs. Chosen for videos whose words set the scene in a chair.
+var THH = {dx: .02, y: .5, z: .2, f: 95, pole: [.5, -.3, -1]};
+var CHAIR = A(Z, {b: 'seat', ra: THH, la: THH, hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down'});
+G.define('bs-chair', A(SLOW, {name: 'Body Scan, Chair', props: ['chair'], cam: CAM, k: [A(CHAIR, {br: 'in', e: .1}), A(CHAIR, {br: 'out', t: [181, 183], n: 183, e: .1})]}));
 // Hand on Heart and Hand on Belly face the viewer more (CAMF), so the hand rests flat toward the camera. The right hand
 // rises from the knee with the elbow out and forward (pole), so the whole arm stays in front of the body and in view.
 var CAMF = {yaw: 60, el: 10, zoom: 1};
@@ -5795,6 +5800,11 @@ var LL = [90, 90, 150];
 var SUP = A(Z, {b: 'back', p: [.1, 0], t: [-88, -90], n: -92, rl: LL, ll: LL, lo: 8, ra: [94, 94, 94], la: [94, 94, 94], pnR: 'up', pnL: 'up', ao: 20, on: 'p b'});
 var LCAM = {view: 'side', el: 28, zoom: 1};  // looking down on the mat at the painting's own floor angle
 G.define('bs-lie', A(SLOW, {name: 'Body Scan, Lying', cam: LCAM, k: [A(SUP, {br: 'in', e: .1}), A(SUP, {br: 'out', t: [-88, -91], e: .1})]}));
+// Hand on Belly, lying (GWG BLD 1001): on the back on the mat, the near hand resting on the belly, wrist straight, palm on
+// the body, fingers relaxed across; the elbow rests out to the side so the whole arm shows. The belly lifts the hand on
+// the breath in. Targets here are in the room (x toward the near side, y up from the mat, z toward the feet).
+var LB = {x: .05, y: .28, z: -.15, f: 95, pole: [1, 0, 0]}, LB2 = {x: .05, y: .27, z: -.15, f: 95, pole: [1, 0, 0]};
+G.define('bs-lie-belly', A(SLOW, {name: 'Hand on Belly, Lying', cam: LCAM, k: [A(SUP, {br: 'in', ra: LB, hR: 'relax', pnR: 'back', e: .1}), A(SUP, {br: 'out', t: [-88, -91], ra: LB2, hR: 'relax', pnR: 'back', e: .1})]}));
 })(window.GG3D);
 
 }catch(e){(window.GG3D_LOADERR=window.GG3D_LOADERR||[]).push("p3.js"+': '+e.message);}
