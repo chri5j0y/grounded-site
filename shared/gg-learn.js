@@ -1407,17 +1407,36 @@
       // the root to head length at full size (a share of the painting's height, or width with by 'w'); mv: the move.
       seat: { img: 'way/quiet-meditation', s: 1.52, at: [.478, .705], len: .335, by: 'h', light: [.3, .7], mv: 'bs-seat' },
       face: { img: 'way/quiet-meditation', s: 1.58, at: [.478, .705], len: .335, by: 'h', light: [.3, .7], mv: 'bs-seat-f' },
-      lie: { img: 'way/stretch-room', s: 1, at: [.49, .728], len: .21, by: 'w', light: [-.5, .8], mv: 'bs-lie', contact: 1 }
+      lie: { img: 'way/stretch-room', s: 1, at: [.49, .728], len: .21, by: 'w', light: [-.5, .8], mv: 'bs-lie', contact: 1 },
+      // BLD 1001: on the chair (the engine's chair, feet flat on the floor in front of the Stretch Room mat; drop: the floor
+      // under the feet, in root to head lengths below the root), and lying with a hand on the belly (belly: the hand move).
+      chair: { img: 'way/stretch-room', s: 1.3, at: [.56, .93], drop: .97, len: .3, by: 'h', light: [.3, .7], mv: 'bs-chair' },
+      lieb: { img: 'way/stretch-room', s: 1, at: [.49, .728], len: .21, by: 'w', light: [-.5, .8], mv: 'bs-lie', belly: 'bs-lie-belly', contact: 1 }
     };
     // Each pose's outline: bands of a tenth of the root to head length (y from the root, down is plus), with the left and
     // right edge of the drawn figure (the same unit, from the root). Measured on the engine with patches/bld998 tools.
     var B3F = {
       seat: [[-1.3, .02, .22], [-1.2, -.04, .26], [-1.1, -.05, .27], [-1, -.03, .27], [-.9, -.09, .3], [-.8, -.19, .37], [-.7, -.21, .41], [-.6, -.21, .48], [-.5, -.18, .54], [-.4, -.14, .6], [-.3, -.11, .65], [-.2, -.1, .79], [-.1, -.1, .86], [0, -.1, .86], [.1, -.09, .8], [.2, .03, .8], [.3, .29, .73]],
       face: [[-1.3, -.03, .16], [-1.2, -.08, .2], [-1.1, -.08, .2], [-1, -.06, .19], [-.9, -.25, .38], [-.8, -.37, .46], [-.7, -.39, .5], [-.6, -.39, .56], [-.5, -.4, .62], [-.4, -.41, .66], [-.3, -.41, .7], [-.2, -.4, .74], [-.1, -.38, .83], [0, -.35, .89], [.1, -.31, .89], [.2, -.3, .87], [.3, -.27, .63], [.4, -.01, .29]],
-      lie: [[-.6, .11, .31], [-.5, -.43, 1.42], [-.4, -1.13, 1.42], [-.3, -1.22, 1.48], [-.2, -1.22, 1.5], [-.1, -1.2, 1.5], [0, -.87, 1.48], [.1, -.83, 1.44], [.2, .73, 1.37]]
+      lie: [[-.6, .11, .31], [-.5, -.43, 1.42], [-.4, -1.13, 1.42], [-.3, -1.22, 1.48], [-.2, -1.22, 1.5], [-.1, -1.2, 1.5], [0, -.87, 1.48], [.1, -.83, 1.44], [.2, .73, 1.37]],
+      // BLD 1001: the figure on the chair (the chair's back and legs included, down to the shoes)
+      chair: [[-1.3, .01, .21], [-1.2, -.04, .26], [-1.1, -.05, .27], [-1, -.03, .26], [-.9, -.12, .29], [-.8, -.2, .35], [-.7, -.34, .37], [-.6, -.51, .42], [-.5, -.51, .46], [-.4, -.51, .51], [-.3, -.51, .55], [-.2, -.5, .6], [-.1, -.5, .82], [0, -.5, .84], [.1, -.5, .79], [.2, -.49, .79], [.3, -.48, .78], [.4, -.48, .78], [.5, -.47, .77], [.6, -.47, .78], [.7, -.47, .98], [.8, -.47, 1.01], [.9, .03, .86], [1, .65, .79]]
     };
+    B3F.lieb = B3F.lie;   // the resting hand lies inside the lying outline
     // Lying fits a sleep, evening, or rest video, on a list scene (its words sit above the mat).
     var B3_LIE = /(^|-)(night|sleep|bedtime|bed|evening|eve|rest|wind-down)(-|$)/, B3_LIET = /\b(sleep|bedtime|good night|evening|wind down)\b/i;
+    // BLD 1001 (Chris, November 16, 2026): the pose follows the words. A video set in a chair (its title, or any sentence
+    // naming the chair, apart from the wheelchair choice) sits on the chair, feet flat; a hand on the belly scene whose
+    // words lie down (and offer no sitting first) lies on the mat with the hand resting on the belly.
+    var B3_CHAIR = /\bchair\b/i, B3_WHEEL = /wheelchair/i, B3_LIEW = /\b(lie|lying)\s+(down|back)\b|\blying\b/i, B3_SITW = /\b(sit|sitting)\s+or\s+(lie|lying)\b/i;
+    function b3Words(sc) { var t = [sc.h, sc.title, sc.sub, sc.body, sc.say]; (sc.beats || []).forEach(function (b) { t.push(typeof b === 'string' ? b : b && b.t); }); return t.filter(Boolean).join(' '); }
+    function b3InChair() {
+      if (l.__b3c != null) return l.__b3c;
+      var yes = B3_CHAIR.test(String(l.title || ''));
+      (l.scenes || []).forEach(function (s) { b3Words(s).split(/[.!?]+\s+/).forEach(function (x) { if (B3_CHAIR.test(x) && !B3_WHEEL.test(x)) yes = true; }); });
+      try { Object.defineProperty(l, '__b3c', { value: yes, configurable: true }); } catch (e) {}
+      return yes;
+    }
     // The plan's words for the body (shared/gg-gfx.js REGION), onto the regions the glow lights.
     var B3R = { feet: 'feet', toes: 'feet', ankles: 'feet', legs: 'legs', knees: 'legs', calves: 'legs', thighs: 'legs', hips: 'hips', belly: 'belly', tummy: 'belly',
       chest: 'chest', heart: 'chest', back: 'back', hands: 'hands', fists: 'hands', fingers: 'hands', arms: 'arms', elbows: 'arms', shoulders: 'shoulders', neck: 'neck',
@@ -1455,9 +1474,10 @@
       var G = sc && sc._gfx; if (!G || G.g !== 'body' || sc.k === 'end' || brReduced() || !fig3Able()) return;
       var all = (G.steps || []).map(function (x) { return String(x.v); }).join('+'), hand = /(^|\+)hand(heart|belly)!?(\+|$)/.test(all), roots = /(^|\+)roots!?(\+|$)/.test(all);
       var lie = !hand && !roots && sc.k === 'points' && (sc.items || []).length <= 4 && (B3_LIE.test(String(l.id || '')) || B3_LIET.test(String(l.title || '')));
-      var tries = lie ? ['lie', 'seat'] : [hand ? 'face' : 'seat'], fit = null, pose = '';
+      var words = b3Words(sc), lieb = /(^|\+)handbelly!?(\+|$)/.test(all) && B3_LIEW.test(words) && !B3_SITW.test(words), chair = !hand && !roots && b3InChair();
+      var tries = lieb ? ['lieb', 'face'] : lie ? ['lie', chair ? 'chair' : 'seat'] : [hand ? 'face' : chair ? 'chair' : 'seat'], fit = null, pose = '';
       cv.classList.add('ln-b3');
-      for (var i = 0; i < tries.length && !fit; i++) { pose = tries[i]; cv.classList.toggle('ln-b3-lie', pose === 'lie'); var C0 = FG.stage && FG.mode === 'b3' && FG.cache && FG.cache[pose]; fit = b3Fit(pose, C0 && C0.prof); }
+      for (var i = 0; i < tries.length && !fit; i++) { pose = tries[i]; cv.classList.toggle('ln-b3-lie', pose === 'lie' || pose === 'lieb'); var C0 = FG.stage && FG.mode === 'b3' && FG.cache && FG.cache[pose]; fit = b3Fit(pose, C0 && C0.prof); }
       if (!fit) { cv.classList.remove('ln-b3', 'ln-b3-lie'); return; }
       var A = B3P[pose], bg = document.createElement('div'), im = new Image();
       bg.className = 'ln-b3bg'; bg.setAttribute('aria-hidden', 'true'); im.alt = ''; im.decoding = 'async'; im.src = ART(A.img, cfg.app);
@@ -1484,11 +1504,12 @@
       var nW = W.length;   // the words, cards, and rings (the light fades in past them)
       // the corner name (Get Grounded Now, the app) stays clear too
       Array.prototype.forEach.call(st.querySelectorAll('.ln-wm-br'), function (el) { var q = el.getBoundingClientRect(); if (q.width >= 1) W.push([(q.left - cr.left) / k - 8, (q.top - cr.top) / k - 8, (q.right - cr.left) / k + 8, (q.bottom - cr.top) / k + 8]); });
-      var y0 = A.at[1] * 540 * s, yLo = 540 - 540 * s + y0, yHi = y0, best = null, want = pose === 'lie' ? y0 : .75 * 540;
+      var y0 = A.at[1] * 540 * s, best = null, lying = !!A.contact, want = lying ? y0 : A.drop ? 540 : .75 * 540;
       for (var f = 1; f >= .6 && !best; f -= .04) {
-        var L = full * f, top = F[0][0] * L, bot = (F[F.length - 1][0] + .1) * L, cands = [];
+        // the painting's point lands under the root, or (drop) on the floor under the feet and the chair's legs
+        var L = full * f, top = F[0][0] * L, bot = (F[F.length - 1][0] + .1) * L, cands = [], dL = (A.drop || 0) * L, yLo = 540 - 540 * s + y0 - dL, yHi = y0 - dL;
         for (var ry = Math.max(yLo, 22 - top); ry <= Math.min(yHi, 536 - bot); ry += 6) cands.push(ry);
-        if (pose === 'lie') cands = y0 - top >= 0 && y0 + bot <= 540 ? [y0] : [];
+        if (lying) cands = y0 - top >= 0 && y0 + bot <= 540 ? [y0] : [];
         cands.sort(function (a, b) { return Math.abs(a - want) - Math.abs(b - want); });
         for (var c = 0; c < cands.length && !best; c++) {
           var ry2 = cands[c], ok = true;
@@ -1497,7 +1518,7 @@
             if (bx1 > 956 || bx0 < 4) ok = false;
             for (var w = 0; w < W.length && ok; w++) if (bx0 < W[w][2] && bx1 > W[w][0] && by0 < W[w][3] && by1 > W[w][1]) ok = false;
           }
-          if (ok) best = { f: f, L: L, rx: rx, ry: ry2, ox: 0, oy: ry2 - y0, clip: W.slice(0, nW).reduce(function (m, q) { return q[3] > ry2 - 1.4 * L ? Math.max(m, q[2]) : m; }, 0) };
+          if (ok) best = { f: f, L: L, rx: rx, ry: ry2, ox: 0, oy: ry2 + dL - y0, clip: W.slice(0, nW).reduce(function (m, q) { return q[3] > ry2 - 1.4 * L ? Math.max(m, q[2]) : m; }, 0) };
         }
       }
       return best;
@@ -1506,7 +1527,7 @@
     function b3Back() {
       var B = FG.b3; FG.b3 = null; st.classList.remove('ln-b3on'); st.removeAttribute('data-b3');
       if (B && P.sc && P.sc._b3 === B) P.sc._b3 = null;
-      cv.classList.remove('ln-b3', 'ln-b3-seat', 'ln-b3-face', 'ln-b3-lie');
+      cv.classList.remove('ln-b3', 'ln-b3-seat', 'ln-b3-face', 'ln-b3-lie', 'ln-b3-chair', 'ln-b3-lieb');
       Array.prototype.forEach.call(cv.querySelectorAll('.ln-b3bg,.ln-b3sh'), function (e) { e.remove(); });
       if (FG.w && FG.w.parentNode) FG.w.parentNode.removeChild(FG.w);
       if (B && FG.mode === 'b3') { cancelAnimationFrame(FG.raf); if (FG.stage) try { FG.stage.pause(true); } catch (e) {} }
@@ -1570,7 +1591,7 @@
           var ya = Math.max(0, Math.floor(r[1] + yb * L)), yz = Math.min(ch, Math.ceil(r[1] + (yb + .1) * L)), lo = 1e9, hi = -1e9;
           for (var yy = ya; yy < yz; yy++) for (var xx = 0; xx < cw; xx++) if (d[(yy * cw + xx) * 4 + 3] > 150) { if (xx < lo) lo = xx; if (xx > hi) hi = xx; }
           var q = Math.round(yb * 10) / 10;
-          if (B.pose === 'face') base.forEach(function (b) { if (b[0] === q) { lo = Math.min(lo, r[0] + b[1] * L); hi = Math.max(hi, r[0] + b[2] * L); } });
+          if (B.pose === 'face' || B.pose === 'lieb') base.forEach(function (b) { if (b[0] === q) { lo = Math.min(lo, r[0] + b[1] * L); hi = Math.max(hi, r[0] + b[2] * L); } });
           if (hi >= lo) out.push([q, (lo - r[0]) / L - .04, (hi - r[0]) / L + .04]);
         }
         return out.length > 4 ? out : null;
@@ -1591,7 +1612,8 @@
         if (r === 'all') B3ALL.concat('all').forEach(function (a) { on[a] = Math.max(on[a] || 0, 1); }); else on[r] = Math.max(on[r] || 0, sq ? 2 : 1);
       });
       if (roots) on.roots = .55;
-      var mv = hand === 'handheart' ? 'bs-heart' : hand === 'handbelly' ? 'bs-belly' : B.base;
+      var mv = hand === 'handheart' ? 'bs-heart' : hand === 'handbelly' ? B.A.belly || 'bs-belly' : B.base;
+      if (hand === 'handbelly' && B.A.belly) on.belly = Math.max(on.belly || 0, 1);   // lying: the light on the hand and the belly under it
       if (mv !== B.mv || hand !== B.hand) { B.handT = performance.now(); }
       B.on = on; B.hand = hand; B.roots = roots;
       if (mv !== B.mv) { B.mv = mv; if (FG.stage && FG.mode === 'b3') try { FG.stage.move(mv); } catch (e) {} }
