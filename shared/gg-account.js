@@ -56,11 +56,11 @@
   'use strict';
   if (window.GGAccount) return;
   var V = 'c143', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
-  var TERMS_V = '2026-11-10', PRIVACY_V = '2026-11-10';   // stage 2 moves these to the launch date with gg-profiles.js
+  var TERMS_V = '2026-11-17', PRIVACY_V = '2026-11-17';   // stage 2 moves these to the launch date with gg-profiles.js
   // BLD 1017: the Membership Trial (Try Membership for 14 days, no card) rests until Chris reads its sections of Terms and
   // Privacy (patches/bld1017/DEPLOY1017.md). While false, Start Membership shows Join Now only, and no page shows trial
   // words. Tests turn it on for one browser with window.GG_TRIAL_LIVE = true; nothing on the site sets that.
-  var TRIAL_LIVE = false;
+  var TRIAL_LIVE = true;
   function trialLive() { return TRIAL_LIVE === true || window.GG_TRIAL_LIVE === true; }
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var site = /(^|\.)growwithgrounded\.com$/.test(location.hostname);
