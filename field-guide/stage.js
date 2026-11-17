@@ -227,7 +227,12 @@ function scene(state, opts){
   const cn = o.count && +o.count.of > 0 ? o.count : null, cr = cn ? Math.max(0, Math.min(+cn.of, +cn.n || 0)) : 0;
   const count = cn ? `<div class="ggs-count"><b data-hjrep data-ggsrep>${cr || ''}</b><span>of ${+cn.of}</span></div>` : '';
   const prog = cn ? `<div class="ggs-prog" data-ggsprog data-of="${+cn.of}"><i style="width:${r1(cr / cn.of * 100)}%"></i>${Array.from({length: Math.max(0, cn.of - 1)}, (x, k) => `<b style="left:${r1((k + 1) / cn.of * 100)}%"></b>`).join('')}</div>` : '';
-  const label = o.label || cn ? `<div class="ggs-hud">${count}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
+  // BLD 1018 (Chris, November 17, 2026: Standing Knee Balance and Suitcase Carry showed no timer for the set): every timed
+  // hold, carry, balance, and stretch shows a small ring with the seconds left in the rep badge's corner, in the clear
+  // numerals (it starts again for each side, since each side is its own timer).
+  const hp = o.hold && o.hold.secs != null ? Math.max(0, Math.min(1, o.hold.pct == null ? 1 : +o.hold.pct)) : null;
+  const holdR = hp != null ? `<div class="ggs-hold" data-ggshold><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="ggs-hrt"/><circle cx="50" cy="50" r="44" class="ggs-hrp" data-ggsharc stroke-dasharray="${r1(C)}" stroke-dashoffset="${r1(C * (1 - hp))}" transform="rotate(-90 50 50)"/></svg><b data-ggshsecs>${esc(fmt(o.hold.secs))}</b></div>` : '';
+  const label = o.label || cn || holdR ? `<div class="ggs-hud">${count}${holdR}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
   // BLD 928 (Chris's workout notes): the recommended weight, bottom right (reps stay top right), and a clear Break sign.
   const wt = o.weight && o.weight.line ? `<div class="ggs-wt" data-ggswt>${o.weight.cap ? `<b>${esc(o.weight.cap)}</b>` : ''}<span>${esc(o.weight.line)}</span></div>` : '';
   // BLD 931 (Chris, November 6, 2026: breathe and form first): one short form tip beside the breathing ring.
@@ -247,7 +252,10 @@ function update(el, opts){
   if (!el) return; const o = opts || {};
   const root = el.matches && el.matches('[data-ggstage]') ? el : el.querySelector && el.querySelector('[data-ggstage]');
   if (!root) return;
-  const c = root.__ggs || (root.__ggs = {arc: root.querySelector('[data-ggsarc]'), secs: root.querySelector('[data-ggssecs]'), side: root.querySelector('[data-ggsside]'), p: null, s: null, sd: null});
+  const c = root.__ggs || (root.__ggs = {arc: root.querySelector('[data-ggsarc]'), secs: root.querySelector('[data-ggssecs]'), side: root.querySelector('[data-ggsside]'), harc: root.querySelector('[data-ggsharc]'), hsecs: root.querySelector('[data-ggshsecs]'), p: null, s: null, sd: null, hp: null, hs: null});
+  // BLD 1018: with no main ring, the timer's numbers drive the hold ring in the badge corner.
+  if (!c.arc && c.harc){ if (o.pct != null){ const v = r1(C * (1 - Math.max(0, Math.min(1, +o.pct)))); if (v !== c.hp){ c.hp = v; c.harc.setAttribute('stroke-dashoffset', v); } }
+    if (o.secs != null && c.hsecs){ const t = fmt(o.secs); if (t !== c.hs){ c.hs = t; c.hsecs.textContent = t; } } }
   if (o.pct != null && c.arc){ const v = r1(C * (1 - Math.max(0, Math.min(1, +o.pct)))); if (v !== c.p){ c.p = v; c.arc.setAttribute('stroke-dashoffset', v); } }
   if (o.secs != null && c.secs){ const t = fmt(o.secs); if (t !== c.s){ c.s = t; c.secs.textContent = t; } }
   if (o.rep != null){ const b = root.querySelector('[data-ggsrep]'), pg = root.querySelector('[data-ggsprog]');
@@ -415,7 +423,7 @@ const CSS = `
 .ggs-ring svg{width:100%;height:100%;display:block;}
 .ggs-rt{fill:rgba(255,248,232,.88);stroke:rgba(90,60,30,.18);stroke-width:5;}
 .ggs-rp{fill:none;stroke:#C98A2C;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .12s linear;}
-.ggs-secs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(36px,12vw,62px);color:#3A2414;font-variant-numeric:tabular-nums;line-height:1;}
+.ggs-secs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Barlow',sans-serif;font-weight:700;font-size:clamp(36px,12vw,62px);color:#3A2414;font-variant-numeric:lining-nums tabular-nums;letter-spacing:0;line-height:1;}
 .ggs-mid.hasfig:not(.ggs-rest *) .ggs-secs{font-size:clamp(22px,6vw,30px);}
 .ggs-breath{position:absolute;left:50%;top:50%;width:min(172px,46vw,calc(var(--H) * .62));transform:translate(-50%,-52%);z-index:3;padding:8px 8px 4px;border-radius:20px;background:rgba(255,248,232,.84);box-shadow:0 4px 14px rgba(60,35,10,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
 .ggs-breath.wf{left:10px;top:10px;width:min(112px,28vw,calc(var(--H) * .38));transform:none;padding:6px 5px 2px;border-radius:16px;}
@@ -433,7 +441,7 @@ const CSS = `
 .ggs-break{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:5;padding:6px 26px 7px;border-radius:999px;background:var(--ggs-a);color:#FFFFFF;font:700 clamp(22px,6.4vw,30px)/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 18px rgba(0,0,0,.2);}
 .ggs-rsub{position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;max-width:min(340px,86vw);overflow:hidden;text-overflow:ellipsis;padding:5px 14px;border-radius:999px;background:rgba(255,248,232,.92);color:#2F2216;font:700 14px/1.1 'Barlow',sans-serif;letter-spacing:.04em;box-shadow:0 2px 8px rgba(60,35,10,.14);}
 .ggs-brk .ggs-mid .ggs-ring,.ggs-brk.ggs-rest .ggs-mid.hasfig .ggs-ring{width:min(170px,46vw,calc(var(--H) * .56));transform:translate(-50%,-48%);}
-.ggs-breath .ggs-secs{position:static;display:block;text-align:center;color:#3A2414;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(26px,8vw,40px);padding-bottom:4px;}
+.ggs-breath .ggs-secs{position:static;display:block;text-align:center;color:#3A2414;font-family:'Barlow Condensed','Barlow',sans-serif;font-size:clamp(26px,8vw,40px);padding-bottom:4px;}
 .ggs-side{position:absolute;bottom:22px;left:12px;display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:#E7B04E;color:#2A1A08;font:700 14px/1 'Barlow',sans-serif;letter-spacing:.04em;z-index:4;box-shadow:0 2px 8px rgba(60,35,10,.18);}
 .ggs-side[hidden]{display:none;}
 .ggs-side b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,248,232,.9);color:#3A2414;font:700 17px/1 'Cormorant Garamond',Georgia,serif;}
@@ -445,6 +453,11 @@ const CSS = `
 .ggs-count b{font:700 1em/1 'Barlow Condensed','Barlow',sans-serif;color:#FFF4DC;font-variant-numeric:lining-nums tabular-nums;min-width:.55em;text-align:right;}
 /* BLD 1018 (Chris, November 17, 2026: "the number on the left is a little too big, making the whole box a little big. Try to make all the numbers about the same size"): the rep and its total read at nearly one size, in a smaller badge. */
 .ggs-count span{font:700 .82em/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.04em;color:#F2CE8C;white-space:nowrap;}
+.ggs-hold{position:relative;width:clamp(64px,15vw,92px);aspect-ratio:1;border-radius:50%;background:rgba(36,25,16,.9);border:2px solid rgba(242,206,140,.55);box-shadow:0 6px 18px rgba(30,18,8,.3);}
+.ggs-hold svg{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);}
+.ggs-hrt{fill:none;stroke:rgba(242,206,140,.25);stroke-width:7;}
+.ggs-hrp{fill:none;stroke:#F2CE8C;stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .25s linear;}
+.ggs-hold b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 clamp(24px,6vw,36px)/1 'Barlow Condensed','Barlow',sans-serif;color:#FFF4DC;font-variant-numeric:lining-nums tabular-nums;letter-spacing:0;}
 .ggs-prog{position:absolute;left:16px;right:16px;bottom:10px;height:3px;border-radius:2px;background:rgba(90,60,30,.22);z-index:4;}
 .ggs-prog i{position:absolute;left:0;top:-1px;bottom:-1px;border-radius:3px;background:#C98A2C;transition:width .25s ease-out;}
 .ggs-prog b{position:absolute;top:-3px;width:1px;height:9px;background:#3A2414;opacity:.35;}

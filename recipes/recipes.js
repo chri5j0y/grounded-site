@@ -5,7 +5,7 @@
    (deep links work on load, Back returns to the list). BLD 877: a gold Guide Me, Step by Step button (BLD 907: named Grounded Cooking) opens a full screen
    guided mode right on this page: one step at a time in the recorded kitchen voice (field-guide/coach.js, GGVoice, with the
    public clip key GGTendPublic.audio), Back and Next, timers for steps with minutes, the kitchen scene (field-guide/stage.js),
-   Voice, Music, and Beeps toggles, and a finish screen. No sign-in. The spoken lines are the ones field-guide/health.js
+   Voice, Music, and Bell toggles, and a finish screen. No sign-in. The spoken lines are the ones field-guide/health.js
    speaks in its kitchen guide (LN.cIntro, each step, LN.tset, LN.tdone, LN.cOut), so every line has a recorded clip;
    with no clip, coach.js speaks with the device voice. Plain JS, no library.
    BLD 880: every recipe is written for six. A Serves picker on each recipe (2 to 12) scales the ingredients with
@@ -57,7 +57,7 @@
   var FILES = [
     ['/shared/tending-public.js?v=c142', 'GGTendPublic'],
     ['/field-guide/stage.js?v=c144', 'GGStage'],
-    ['/field-guide/coach.js?v=c119', 'GGVoice'],
+    ['/field-guide/coach.js?v=c144', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=c139', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=c138', 'GGBulk'],
@@ -796,10 +796,10 @@
       function setKey() { var v = V(); if (v && !keyed && T.audio) { v.setKey(T.audio); keyed = true; } }
       function say(text) { var v = V(); if (!v || !o) return Promise.resolve(); var me = o; return v.say(VOICE, text).then(function () { return me === o; }); }
       function enter() { var s = steps()[o.gi]; if (!s) return; say(s.t); var nx = steps()[o.gi + 1], v = V(); if (nx && v) v.prefetch(VOICE, nx.t); }
+      // BLD 1018: a kitchen timer's end is one soft bell and one short buzz (it was three quick beeps and a long double buzz).
       function chime() {
-        var v = V(); if (v && !v.chimeOn()) return;
-        try { var A = window.AudioContext || window.webkitAudioContext; if (A) { var c = chime.c = chime.c || new A(); [0, 0.35, 0.7].forEach(function (t) { var g = c.createGain(), os = c.createOscillator(); os.frequency.value = 660; g.gain.setValueAtTime(0.0001, c.currentTime + t); g.gain.exponentialRampToValueAtTime(0.25, c.currentTime + t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + t + 0.3); os.connect(g); g.connect(c.destination); os.start(c.currentTime + t); os.stop(c.currentTime + t + 0.32); }); } } catch (e) {}
-        try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch (e) {}
+        var v = V(); if (v && v.soft) v.soft('done');
+        try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
       }
       function wake(on) { try { if (on && navigator.wakeLock && !wl) navigator.wakeLock.request('screen').then(function (l) { wl = l; }).catch(function () {}); if (!on && wl) { wl.release(); wl = null; } } catch (e) {} }
       var MUSIC = '/audio/music/calm-' + (1 + new Date().getDay() % 7) + '.mp3';
@@ -816,7 +816,7 @@
       function toggles() {
         var v = V(), on = v ? v.on() : false, mu = v ? v.musicOn() : false, ch = v ? v.chimeOn() : true;
         var b = function (a, p, yes, no) { return '<button type="button" class="rg-chip" aria-pressed="' + p + '" data-rg="' + a + '">' + (p ? yes : no) + '</button>'; };
-        return '<div class="rg-tg" role="group" aria-label="Sound">' + (v ? b('voice', on, 'Voice On', 'Voice Off') + b('music', mu, 'Music On', 'Music Off') : '') + (v ? b('beeps', ch, 'Beeps On', 'Beeps Off') : '') + '</div>';
+        return '<div class="rg-tg" role="group" aria-label="Sound">' + (v ? b('voice', on, 'Voice On', 'Voice Off') + b('music', mu, 'Music On', 'Music Off') : '') + (v ? b('beeps', ch, 'Bell On', 'Bell Off') : '') + '</div>';
       }
       function timersHtml(canStop) {
         if (!o.timers.length) return '';
