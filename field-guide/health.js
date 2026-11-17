@@ -2118,7 +2118,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c147';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c149';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
@@ -6097,8 +6097,10 @@ html.gg-fs .ggs-hold{width:clamp(90px,14vh,150px);}html.gg-fs .ggs-hold b{font-s
   html.gg-fs .ggs-secs{font-size:clamp(56px,9vh,110px);}
   html.gg-fs .ggs-mid.hasfig:not(.ggs-rest *) .ggs-secs{font-size:clamp(34px,5vh,58px);}
   html.gg-fs .ggs-breath{width:min(340px,38vh);}
-  html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-breath.wf.ggs-rings{width:min(230px,26vh);left:24px;}
-  html.gg-fs .ggs-ftip{left:calc(min(230px,26vh) + 44px);max-width:min(520px,calc(100% - min(230px,26vh) - 300px));padding:10px 16px 12px;}
+  /* BLD 1019: the Sunset Tide breath chip grows with the room beside the figure (up to 300 px), so it reads from across a room. */
+  html.gg-fs .hj-stagebox .ggs{--brf:min(300px,30vh,max(230px,calc((100% - var(--fs)) / 2 - 40px)));}
+  html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-breath.wf.ggs-rings{width:var(--brf);left:24px;}
+  html.gg-fs .ggs-ftip{left:calc(var(--brf) + 44px);max-width:min(520px,calc(100% - var(--brf) - 300px));padding:10px 16px 12px;}
   html.gg-fs .ggs-ftip b{font-size:14px;}
   html.gg-fs .ggs-ftip span{font-size:clamp(17px,2.2vh,24px);}
   html.gg-fs .ggs-wt{right:24px;bottom:34px;padding:12px 18px 14px;}
