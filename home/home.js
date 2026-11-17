@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c138', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=c137', '/shared/tending-public.js?v=c138', '/shared/gentle-public.js?v=c135'];
+  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c139', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=c137', '/shared/tending-public.js?v=c139', '/shared/gentle-public.js?v=c135'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c137';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -2561,7 +2561,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c138';
+  var RECIPES_JS = '/recipes/recipes.js?v=c139';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
