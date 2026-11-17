@@ -77,7 +77,7 @@ const MLIB = () => { if (C.host !== 'home' || KIT() || PUB()) return null; const
 const GLIB = () => PLIB() || MLIB();
 const mKey = x => String(x && x.id) + '|' + String((x && x.title) || '').trim().toLowerCase();
 // The Member Flow sessions and meditations the moved plan does not already hold (the same id and title count as one).
-const MFLOW = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((PR() || {}).sessions).map(mKey)); return arr(((M.app || {}).practice || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))).map(x => Object.assign({}, x, {_m: 1})); };
+const MFLOW = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((PR() || {}).sessions).map(mKey)); return arr(((M.app || {}).practice || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))).map(x => Object.assign({}, flowTimed(x), {_m: 1})); };
 const MMEDS = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((MED() || {}).sessions).map(mKey)); return arr(((M.app || {}).meditations || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))); };
 const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
 // BLD 916, Living Sober Path: Living Sober is on when this profile holds a sober date (vault life.soberDate, read the way Home
@@ -475,9 +475,14 @@ const WK0 = () => (APP() || {}).workouts || {};
 // measures them, and t979.mjs fails when a card is more than 3 minutes off the clock.
 const minsOf = (x, ph, light) => +((light ? x.minsLight : x.minsByPhase) || {})[ph] || +(x.minsByPhase || {})[ph] || x.mins;
 let WKC = null;
+// The clock for a session of this library (its morning light lines read from the library itself, not through WK()).
+function wkClock(x, ph, light, w){ const l = w.light, ll = k => !l ? '' : typeof l === 'string' ? (k === 'start' ? l : '') : Array.isArray(l) ? l[k === 'start' ? 0 : 1] || '' : l[k] || '';
+  return planSecs(stepsFor(x, ph, light, w), 0, 1, {count: true, hands: true}) + lineSecs(LN.focus) + lineSecs(LN.safe) + lineSecs(LN.ses(x.title || '', 50)) + lineSecs(LN.out) + lineSecs(LN.feel) + lineSecs(ll('start')) + lineSecs(ll('end')); }
 const WK = () => { const w = WK0(); if (!w || !w.sessions || PUB()) return w; const d = new Date(), k = d.toDateString();
   if (WKC && WKC.w === w && WKC.k === k) return WKC.v;
-  const ss = {}; Object.entries(w.sessions).forEach(([id, x]) => { if (!x || !x.minsByPhase){ ss[id] = x; return; } const pk = phKeyFor(id, d); ss[id] = Object.assign({}, x, {mins: minsOf(x, pk.ph, pk.light)}); });
+  // BLD 979 follow-up: a session with no measured minutes (a plan's saved copy from before BLD 979) shows the player's own clock.
+  const ss = {}; Object.entries(w.sessions).forEach(([id, x]) => { if (!x || !arr(x.blocks).length){ ss[id] = x; return; } const pk = phKeyFor(id, d);
+    ss[id] = Object.assign({}, x, {mins: x.minsByPhase ? minsOf(x, pk.ph, pk.light) : Math.max(1, Math.round(wkClock(x, pk.ph, pk.light, w) / 60))}); });
   const v = Object.assign({}, w, {sessions: ss}); WKC = {w, k, v}; return v; };
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
@@ -1372,13 +1377,15 @@ const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
 // An alternating warm-up (Dead Bugs, 6 per side) flows side to side with no Switch sides (BLD 891).
 const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
 // BLD 979: a library may keep every set in the lighter weeks (workouts.lightKeepsSets: a step lighter weight, the same work
-// and the same minutes; Chris, November 16, 2026: "32 too short for a person w my goals").
+// and the same minutes; Chris, November 16, 2026: "32 too short for a person w my goals"). BLD 979 follow-up (Chris, November 17:
+// "they all still short"): every workout keeps every set in the lighter weeks, a plan's older saved copy, public Tending, Member
+// plans, and Gentle too; only a library that says lightKeepsSets: false drops a set.
 function stepsFor(ses, ph, light, w0){
   const w = w0 || WK(), out = [];
   // BLD 891: a session may carry its own warm-up for its focus (public Tending by day; the Guide library per session).
   arr((ses && ses.warmup) || w.warmup).forEach(x => out.push(wuStep(x, 'Warm-up', ph)));
   arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x), mv = pubMove(x);
-    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light && !w.lightKeepsSets ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
+    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light && w.lightKeepsSets === false ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
       rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per, steps: arr(x.steps).filter(Boolean), easier: x.easier || '', harder: x.harder || '', tempo: +x.tempo || 0, tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || '',
       form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath),
       // BLD 915: a one arm move done on each side names the arm (arm), and may start on the right (first: 'R'); the
@@ -1404,7 +1411,16 @@ function wuStep(x, part, ph){
 }
 // How many counts a warm-up item takes per turn (0: it keeps its timer). Counted only with Voice Counts Reps on and a tempo.
 const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= 20 ? n : 0; };
-const PR = () => { const p = (APP() || {}).practice || null; if (!p || !START()) return p; const f = startPicks().flow; return Object.assign({}, p, {sessions: f ? [f] : []}); };
+// BLD 979 follow-up: a Flow session's card, start screen, and opening line say its own clock (prSteps, as buildPractice plays it).
+const prSteps = ss => arr(ss && ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
+const FLM = new WeakMap();
+function flowMins(ss){ if (!ss || typeof ss !== 'object') return 0; if (FLM.has(ss)) return FLM.get(ss); const st = prSteps(ss);
+  const m = st.length ? Math.max(1, Math.round((planSecs(st, 0, 1, {prac: true}) + lineSecs(LN.pIntro(ss.title || 'Flow', 20)) + lineSecs(LN.pOut)) / 60)) : +ss.mins || 0; FLM.set(ss, m); return m; }
+const FLT = new WeakMap();
+const flowTimed = x => { if (!x || typeof x !== 'object' || !arr(x.steps).length) return x; if (FLT.has(x)) return FLT.get(x); const y = Object.assign({}, x, {mins: flowMins(x)}); FLT.set(x, y); return y; };
+const PRT = new WeakMap();
+const prTimed = p => { if (!p) return p; if (PRT.has(p)) return PRT.get(p); const q = Object.assign({}, p, {sessions: arr(p.sessions).map(flowTimed)}); PRT.set(p, q); return q; };
+const PR = () => { const p = (APP() || {}).practice || null; if (!p || !START()) return prTimed(p); const f = startPicks().flow; return Object.assign({}, p, {sessions: f ? [flowTimed(f)] : []}); };
 function startPicks(d){ d = d || new Date(); const a = APP() || {}, ps = arr(a.practice && a.practice.sessions), ms = arr(a.meditations && a.meditations.sessions), i = (d.getDay() + 6) % 7;
   return {flow: ps.length ? ps[i % ps.length] : null, med: ms.find(x => x.day === DOW[d.getDay()]) || ms[i % Math.max(1, ms.length)] || null}; }
 const MED = () => { const m = (APP() || {}).meditations; if (!(m && arr(m.sessions).length)) return null; if (!START()) return m; const x = startPicks().med; return Object.assign({}, m, {sessions: x ? [x] : []}); };
@@ -1459,8 +1475,8 @@ const flowOnOf = s => Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowS
 function practiceFor(d){ const fp = flowPick(d); if (fp) return fp; const p = PR(); if (!p || !arr(p.sessions).length) return null; const L = p.sessions.filter(x => !x.style || x.style === 'daily'), D0 = L.length ? L : p.sessions; return D0[(d.getDay() + 6) % 7 % D0.length]; }
 function buildPractice(s, p0){
   const p = p0 || PR(), ss = arr(p && p.sessions).find(x => x.id === s) || (p0 ? null : practiceFor(new Date())); if (!ss) return null;
-  const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
-  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, style: ss.style || 'daily', key: 'prac'};
+  const steps = prSteps(ss);
+  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: flowMins(ss) || ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, style: ss.style || 'daily', key: 'prac'};
 }
 // BLD 984: a Member Flow session or meditation beside a moved plan (its own clip key).
 function buildMPrac(id){ const M = MLIB(), o = M ? buildPractice(id, (M.app || {}).practice) : null; if (o) o.mlib = 1; return o; }
@@ -1480,7 +1496,7 @@ function allLines(){
   [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
-  const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
+  const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, flowMins(s) || s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
   ['breakfasts', 'lunches', 'snacks'].forEach(ty => arr((app.dinners || {})[ty]).forEach(x => { if (!arr(x.steps).length) return; add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
   const dn = (app.dinners || {}).weeks || {}; Object.values(dn).forEach(wk => arr(wk.dinners).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); });
     arr(x.dayOf).forEach(e => arr(e && e.steps).concat(arr(e && e.after), Object.values((e && e.swap) || {})).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); })); })); // BLD 947
@@ -1518,7 +1534,8 @@ function allLinesPub(){
   const walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
   (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
-    sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); }); });
+    const gw = {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}; sesLines(ses, gw);
+    Object.entries(ses).forEach(([id, c]) => ['1', '2', '3'].forEach(ph => add(AVA, LN.ses(c.title || 'Session ' + id, clockMins(c, ph, gw))))); }); });
   // BLD 981: For Kids and For Teens, at the one phase they play (no light weeks)
   BANDS().forEach(g => { const w0 = youngWo(g), G = w0.G || {}; add(AVA, G.focus); add(AVA, G.safe);
     Object.entries(w0.sessions).forEach(([id, ses]) => { if (ses.intro) add(AVA, ses.intro); else add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins)); add(AVA, ses.open); add(AVA, ses.close);
@@ -1530,7 +1547,7 @@ function allLinesPub(){
   [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
-  const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
+  const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, flowMins(x) || x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
   arr(L.recipes).concat(P && P.LEFT ? [P.LEFT] : []).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
   [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
   return [...out.values()];
@@ -1562,7 +1579,7 @@ function planSecs(steps, i0, set0, o){
 }
 // BLD 979: measured as the player plays by default (Voice Counts Reps on, hands free), so a warm up item with a form line
 // costs its short call, as it does in the player.
-function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
+function sessSecs(ses, ph, light, w0){ const st = stepsFor(ses, ph, light, w0); return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
 // BLD 979 follow-up: the whole session as the engine plays it (its opening and closing lines too), in seconds.
 function engineSecs(o){ if (!o || !arr(o.steps).length) return 0; const m = o.mins || 50, keep = S.ov; S.ov = o;
   try { let s = planSecs(o.steps, 0, 1, o);
@@ -1579,7 +1596,7 @@ function apiAudit(){
       add(key, c.cat + (L ? ':' + L : ''), +x.mins || 0); }))); }); } finally { S.ewLvl = keep; }
   const t = sesFor(new Date()); if (t) add('work:' + t.id, 'today', +t.mins || 0);
   const out = []; keys.forEach((v, key) => { let o = null; try { o = ovFor(key); } catch(e){ o = null; } if (!o || !arr(o.steps).length) return;
-    out.push({key, cat: v.cat, title: o.title, card: v.card, start: +o.mins || 0, clock: +(engineSecs(o) / 60).toFixed(1), want: +H().set.mins || 0}); });
+    out.push({key, cat: v.cat, title: o.title, card: v.card, start: startMins(o), said: +o.mins || 0, clock: +(engineSecs(o) / 60).toFixed(1), want: +H().set.mins || 0}); });
   return out;
 }
 // ---------- the hands-free engine ----------
@@ -2254,8 +2271,10 @@ function moveWell(){
   const li = x => typeof x === 'string' ? esc(x) : `${x.name || x.title ? `<b>${esc(x.name || x.title)}.</b> ` : ''}${esc(x.line || x.text || x.how || '')}`;
   return `<details class="hj-doc hj-mw" data-hjmw style="text-align:left;margin-top:16px"><summary><span>Move Well</span></summary><div class="hj-body">${lead ? `<p class="hj-mwl">${esc(lead)}</p>` : ''}<ol>${items.map(x => `<li>${li(x)}</li>`).join('')}</ol></div></details>`;
 }
+// The start screen's minutes: the player's clock for a workout, the session's own minutes for Flow and meditation.
+const startMins = o => o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
 function vStart(o, top){
-  const moves = o.steps.filter(s => s.t === 'ex'), mins = o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
+  const moves = o.steps.filter(s => s.t === 'ex'), mins = startMins(o);
   const kit = !o.med && !o.prac && PUB() ? [...new Set(moves.map(m => m.equip).filter(Boolean))] : o.med ? ['a comfortable seat'] : !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
   const st0 = o.steps.find(s => s.t === 'ex') || o.steps[0], lt = !o.prac && lightLine('start');
   const pl = !o.prac && !o.med && progOn() ? progLabel(new Date()) : '';
@@ -3650,7 +3669,13 @@ function vStartHome(){
 // The food plan and the workouts are built by shared/gg-tend-plan.js (GGTendPlan) into the same shapes the Field Guide's views
 // already play: dinners.weeks A to D, breakfasts, lunches, snacks, shop.weeks, and workouts.sessions A to D.
 // =====================================================================
-const TP = () => window.GGTendPlan || null;
+// BLD 979 follow-up: public Tending and Member plans are built to the person's minutes by the player's own clock (the same
+// model the engine plays, GGHealth.audit), so the card, the start screen, and the session say the same time.
+const TP = () => { const P = window.GGTendPlan || null; if (P && P.setClock && P.clock !== builderClock) P.setClock(builderClock); return P; };
+function builderClock(ses, wu, cd, ph){ const w0 = {warmup: arr(wu), cooldown: arr(cd)}, st = stepsFor(Object.assign({}, ses, {warmup: arr(wu)}), String(ph || '1'), false, w0);
+  return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.focus) + lineSecs(LN.safe) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.out) + lineSecs(LN.feel); }
+// Gentle, For Kids, and For Teens: each session's card says its own clock (its walk week and phase), never a typed number.
+const clockMins = (ses, ph, w0) => Math.max(1, Math.round(builderClock(ses, (ses && ses.warmup) || w0.warmup, (ses && ses.cooldown) || w0.cooldown, ph) / 60));
 const CHECKS_P = [
   {id: 'walk', label: 'Time outdoors', sub: 'A walk, fresh air, and daylight'},
   {id: 'fiber', label: 'Fiber at two meals', sub: 'Oats, beans, lentils, whole grains, fruit'},
@@ -3920,7 +3945,7 @@ function gentleWo(L, wk){
   const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
   const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; }));
-    c.mins = (c.minsByPhase || {})[String(phaseOf(wk))] || c.mins; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
+    c.mins = clockMins(c, String(phaseOf(wk)), {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
   return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
 }
 // BLD 981 (Chris, November 13, 2026: "every age gets full library", "3, we will build fitness for kids"): Grounded Fitness for
@@ -3939,7 +3964,8 @@ const BAND = () => { const a = AGE(); if (a === 'grown') return ''; const pick =
 const AGE = () => { try { const a = C.age ? String(C.age() || '') : ''; return a === 'maple' ? 'kids' : /^(aspen|pine)$/.test(a) ? 'teens' : 'grown'; } catch(e){ return 'grown'; } };
 const YF = () => { const y = (GLIB() || {}).youngFit; return y && typeof y === 'object' ? y : null; };
 const YG = g => ((YF() || {})[g]) || null;
-function youngWo(g){ const G = YG(g) || {}, ses = {}; arr(G.sessions).forEach(x => { if (x && x.id) ses[x.id] = JSON.parse(JSON.stringify(x)); }); return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown), G}; }
+function youngWo(g){ const G = YG(g) || {}, ses = {}, w0 = {warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
+  arr(G.sessions).forEach(x => { if (x && x.id){ const c = ses[x.id] = JSON.parse(JSON.stringify(x)); if (!c.intro && arr(c.blocks).length) c.mins = clockMins(c, '1', w0); } }); return {sessions: ses, warmup: w0.warmup, cooldown: w0.cooldown, G}; }
 const youngKick = (g, x) => ({k4: ['Play Game', 'Play Game'], k7: ['Play Workout', 'Daily Play'], t11: ['Strength', 'Mobility'], t14: ['Teen Workout', 'Daily Practice']}[g] || ['Workout', 'Practice'])[x.kind === 'daily' ? 1 : 0] + (x.mins ? ' · ' + x.mins + ' min' : '');
 const youngSrc = g => { const L = arr((YG(g) || {}).sources).filter(x => x && x.t); return L.length ? `<p class="hj-src">${L.length > 1 ? 'Sources' : 'Source'}: ${L.map(x => `<a href="${esc(x.url || '')}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}`).join('; ')}</p>` : ''; };
 function pubApp(){

@@ -250,7 +250,7 @@ function steps(ses, warmup, cooldown, ph, light){
   const out = [];
   arr(warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up', half: halfSide(x)}));
   arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x);
-    out.push({t: 'ex', name: x.name, cue: x.cue, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', tempo: x.tempo,
+    out.push({t: 'ex', name: x.name, cue: x.cue, sets: sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', tempo: x.tempo,
       rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per}); }));
   for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
   arr(cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown', half: halfSide(x)}));
@@ -268,6 +268,10 @@ function planSecs(S){
     if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
   return s;
 }
+// BLD 979 follow-up: the player hands the builder its own clock (field-guide/health.js builderClock, the model the engine
+// plays), so a session is fitted to the chosen minutes by the time it really runs; the lighter weeks keep every set.
+let CLOCK = null;
+function setClock(fn){ CLOCK = typeof fn === 'function' ? fn : null; API.clock = CLOCK; }
 function estimate(ses, warmup, cooldown, ph, light){
   return planSecs(steps(ses, warmup, cooldown, String(ph || '1'), !!light)) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs('') + lineSecs(LN.out) + lineSecs('');
 }
@@ -400,10 +404,14 @@ function buildSessions(moves, templates, opts){
     // template may name its warm-up (a day letter or ids); a cardio day warms up like Day D (full body and cardio).
     const wd = tset ? (Array.isArray(tp.warm) ? null : tp.warm || (track === 'cardio' ? 'D' : d)) : d;
     const wu = (tset && Array.isArray(tp.warm) ? byIdList(opts.warmup, tp.warm) : byIdList(opts.warmup, (len.warmByDay || {})[wd])) || warmup; if (wu !== warmup) ses.warmup = wu;
-    const items = () => blocks.flatMap(b => b.items), est = () => estimate(ses, wu, cooldown, '1', false);
+    const phn = tset ? String(PHASES.indexOf(phase) + 1) : '1';
+    const items = () => blocks.flatMap(b => b.items), est = () => CLOCK ? CLOCK(ses, wu, cooldown, phn) : estimate(ses, wu, cooldown, phn, false);
     const setAll = (it, n) => { it.sets = {'1': n, '2': n, '3': n}; };
     // Too long: one set less on the move with the most sets (never under 1, Main keeps 2 while it can), then the last finisher move.
-    for (let g = 0; g < 60 && est() > target * 1.05; g++){
+    // BLD 979 follow-up: with the player's clock the fit aims at the chosen minutes (90 to 100 percent of them, the Finish Strong
+    // added after), so a 60 minute choice plays about 55 to 61 minutes; the builder's own estimate keeps its old 95 to 105 window.
+    const hiT = target * (CLOCK ? 1 : 1.05), loT = target * (CLOCK ? 0.9 : 0.95);
+    for (let g = 0; g < 60 && est() > hiT; g++){
       const all = items(), big = all.slice().sort((a, b) => b.sets['1'] - a.sets['1'])[0];
       if (big && big.sets['1'] > 2){ setAll(big, big.sets['1'] - 1); continue; }
       const tail = blocks.length > 1 ? blocks[blocks.length - 1] : null;
@@ -412,12 +420,12 @@ function buildSessions(moves, templates, opts){
       if (blocks[0].items.length > 2){ blocks[0].items.pop(); continue; } break;
     }
     // Too short: one more set where there are fewest (up to 5), then another move.
-    for (let g = 0; g < 60 && est() < target * 0.95; g++){
+    for (let g = 0; g < 60 && est() < loT; g++){
       const all = items(), small = all.slice().sort((a, b) => a.sets['1'] - b.sets['1'])[0];
-      if (small && small.sets['1'] < Math.max(4, sHi + 1)){ setAll(small, small.sets['1'] + 1); if (est() <= target * 1.05) continue; setAll(small, small.sets['1'] - 1); }
+      if (small && small.sets['1'] < Math.max(4, sHi + 1)){ setAll(small, small.sets['1'] + 1); if (est() <= hiT) continue; setAll(small, small.sets['1'] - 1); }
       const m = pick(slots[all.length % slots.length]) || pick('core') || pick('cardio'); if (!m) break;
       const it = mk(m, 2); blocks[0].items.push(it);
-      if (est() > target * 1.05){ setAll(it, 1); if (est() > target * 1.05){ blocks[0].items.pop(); break; } }
+      if (est() > hiT){ setAll(it, 1); if (est() > hiT){ blocks[0].items.pop(); break; } }
     }
     const fs = finishStrong(tp, track, blocks, MB, used, m => mk(m, 1), pre); if (fs) blocks.push(fs);
     items().forEach(it => { it.restAfter = ra; }); const all = items(); if (all.length) all[all.length - 1].restAfter = 0;
@@ -483,7 +491,7 @@ function ldlRange(base, levers, picks, opts){
 }
 
 const API = {needOk, fitsAll, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
-  buildSessions, estimate, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
+  buildSessions, estimate, setClock, clock: null, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
   GEAR, PLACE_GEAR, gearOk, gearPlace, PHASES, phaseOfWeek, cardioSlots};
 if (typeof module === 'object' && module.exports) module.exports = API;
 if (root) root.GGTendPlan = API;
