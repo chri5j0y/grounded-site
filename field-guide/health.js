@@ -1034,9 +1034,12 @@ function shopText(n){
   return out.join('\n').trim() || 'Everything is in the cart.';
 }
 // ---------- overlays: workout, cook, prep, meditation ----------
+// BLD 979 follow-up: a Gentle session plays the phase of its walk week (as its card says), never the Strength session that
+// shares its letter (Gentle A to D read as Foundation strength before, so Gentle never grew past phase 1).
+const gentlePk = d => ({ph: String(phaseOf(Math.max(1, weekNo(d)))), light: lightOn(d)});
 function buildWork(s){
   const ses = sesById(s); if (!ses) return null;
-  const t0 = new Date(), pk = phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
+  const t0 = new Date(), pk = PUB() && (H().set.level || 'root') === 'gentle' ? gentlePk(t0) : phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: minsOf(ses, pk.ph, pk.light), steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
@@ -1893,7 +1896,7 @@ let SRCL = 0;
 function musicSrc(files){
   try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; return ''; } } catch(e){}
   // the credits file loads the first time a session shows, then the screen draws again
-  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c135'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
+  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c137'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
   return '';
 }
 async function runSession(o){
@@ -3966,7 +3969,7 @@ function gentleWo(L, wk){
   const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
   const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; }));
-    c.mins = clockMins(c, String(phaseOf(wk)), {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
+    c.mins = clockMins(c, String(phaseOf(wk)), {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); delete c.minsByPhase; delete c.minsLight; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
   return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
 }
 // BLD 981 (Chris, November 13, 2026: "every age gets full library", "3, we will build fitness for kids"): Grounded Fitness for
@@ -4941,7 +4944,7 @@ function buildLevelWork(lvl, id){
   const X = levelSes(lvl, id); if (!X) return null; const ses = X.ses;
   if (X.mine) return buildWork(id);
   const young = BANDS().includes(lvl), G = young ? X.w0.G || {} : {};
-  const t0 = new Date(), pk = young ? {ph: '1', light: false} : phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
+  const t0 = new Date(), pk = young ? {ph: '1', light: false} : lvl === 'gentle' ? gentlePk(t0) : phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
   // BLD 981: a Daily session's moves flow as one timer each, named for what they are
   if (young && ses.kind === 'daily') steps.forEach(st => { if (st.part === 'Warm-up') st.part = lvl === 'k4' ? 'Play' : KID_BANDS.includes(lvl) ? 'Daily Play' : 'Daily Practice'; });
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
