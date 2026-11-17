@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c138', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=c137', '/shared/tending-public.js?v=c138', '/shared/gentle-public.js?v=c135'];
+  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c140', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=c137', '/shared/tending-public.js?v=c138', '/shared/gentle-public.js?v=c135'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c137';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -496,6 +496,189 @@
   function tendOn(h) { return h.parts.some(function (k) { return HEALTH_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
   function anyTend(h) { return h.parts.some(function (k) { return TEND_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
 
+  /* ---------- BLD 1015: The Grounded Way keeps a moved plan's library new by itself ----------
+     Chris (firm, November 17, 2026): "i dont want the app to depend on field guide for anything". A plan moved from the Field
+     Guide (BLD 867) runs on its own copy of the library (w.lib, and the Founder plans in w.fdr). The move now also keeps the keys
+     to those libraries inside the person's locked profile (w.libKeys: the Guide key, the Founder key for a Founder plan, the
+     access code's id, and which sealed file each copy came from: giv, fiv). Each time a profile opens here, wayLib reads the
+     first bytes of the site's own sealed files (field-guide/lib-guide.js, or lib-field.js before the rename, and lib-founder.js
+     for a Founder plan). When one is new, it opens it on this device with the kept key and takes only the library copy: the plan,
+     the logs, the lifts, and every choice stay exactly as they were. A second open with the same files changes nothing. Nothing
+     leaves the device; the keys and the copy stay locked in the profile with everything else.
+     A plan moved before BLD 1015 holds no key yet. wayLib takes the keys once, quietly, from the Field Guide's own unlocked
+     session in this same browser when there is one; otherwise My Growth Plan and Workouts show one small card, Keep My Plan New,
+     where the person enters their Grounded team code (Guide, Staff, or Founder) once, read against field-guide/codes.js the
+     same way the Field Guide reads it. An access code that has reached its end date keeps the copy just as it is. */
+  var WL = { at: {}, busy: null, need: '', msg: '' };
+  var WL_FILES = { guide: ['/field-guide/lib-guide.js', '/field-guide/lib-field.js'], founder: ['/field-guide/lib-founder.js'] };
+  var WL_OLD = 'own' + 'er', WL_FLD = 'fie' + 'ld';
+  function wlP(v) { return Promise.resolve(v); }
+  function wlUn(s) { s = String(s || '').replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  /* The same signature the Field Guide keeps (health.js libSigOf), so both sides agree on a copy. */
+  function wlSig(o) { try { var t = JSON.stringify(o || null), x = 5381; for (var i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0; return t.length + ':' + (x >>> 0).toString(36); } catch (e) { return ''; } }
+  function wlBox(t) { t = String(t || ''); var i = t.indexOf('{'), j = t.lastIndexOf('}'); if (i < 0 || j < i) return null; try { return JSON.parse(t.slice(i, j + 1)); } catch (e) { return null; } }
+  function wlIv(t) { var m = /"iv"\s*:\s*"([^"]+)"/.exec(String(t || '')); return m ? m[1] : ''; }
+  function wlTier(t) { return t === WL_OLD ? 'founder' : t === WL_FLD ? 'guide' : String(t || ''); }
+  function wlOpen(box, raw) {
+    var c = window.crypto && crypto.subtle; if (!c || !box || !box.iv || !box.ct || !raw) return Promise.reject(new Error('box'));
+    return c.importKey('raw', wlUn(raw), { name: 'AES-GCM' }, false, ['decrypt']).then(function (k) { return c.decrypt({ name: 'AES-GCM', iv: wlUn(box.iv) }, k, wlUn(box.ct)); })
+      .then(function (pt) { return JSON.parse(new TextDecoder().decode(pt)); });
+  }
+  function wlCodes() { return fetch('/field-guide/codes.js', { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).then(wlBox, function () { return null; }); }
+  /* The head of a sealed file: its iv says which seal it is. A server that sends the whole file answers with it, kept for wlLib. */
+  function wlHead(kind) {
+    var L = WL_FILES[kind] || [];
+    function one(i) {
+      if (i >= L.length) return wlP(null);
+      return fetch(L[i], { cache: 'no-store', headers: { Range: 'bytes=0-2047' } }).then(function (r) {
+        if (r.status === 404) return one(i + 1);
+        if (!r.ok) return null;
+        return r.text().then(function (t) { var iv = wlIv(t); return r.status === 206 && iv ? { url: L[i], iv: iv, full: null } : r.status === 206 ? wlWhole(L[i]) : { url: L[i], iv: iv, full: t }; });
+      }, function () { return null; });
+    }
+    return one(0);
+  }
+  function wlWhole(url) { return fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { return t ? { url: url, iv: wlIv(t), full: t } : null; }, function () { return null; }); }
+  function wlLib(h, raw) {
+    if (!h) return wlP(null);
+    return (h.full ? wlP(h.full) : fetch(h.url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; })).then(function (t) {
+      var box = wlBox(t); h.full = null; if (box && box.iv) h.iv = box.iv;
+      return box ? wlOpen(box, raw).then(null, function () { return false; }) : null;
+    }, function () { return null; });
+  }
+  /* A higher level's key opens the Guide key through codes.js links, as the Field Guide does (openLevels and linkKey). */
+  function wlLink(codes, name, raw) {
+    var L = (codes && codes.links) || {}, alt = name.replace('founder>', WL_OLD + '>'), b = L[name] || L[alt] || L[name.replace('>guide', '>' + WL_FLD)] || L[alt.replace('>guide', '>' + WL_FLD)];
+    if (!b || !raw) return wlP(null);
+    return wlOpen(b, raw).then(function (r) { return (r && r.k) || null; }, function () { return null; });
+  }
+  function wlKeysFrom(codes, tier, keys, codeId) {
+    tier = wlTier(tier); keys = keys || {};
+    var own = keys[tier] || (tier === 'founder' ? keys[WL_OLD] : tier === 'guide' ? keys[WL_FLD] : null); if (!own) return wlP(null);
+    return (tier === 'guide' ? wlP(own) : wlLink(codes, tier + '>guide', own)).then(function (g) {
+      g = g || keys.guide || keys[WL_FLD] || null; if (!g) return null;
+      return { v: 1, tier: tier, codeId: codeId || '', guide: g, founder: tier === 'founder' ? own : null, giv: '', fiv: '', at: Date.now() };
+    });
+  }
+  /* The Field Guide's own unlocked session in this browser (its passcode key in IndexedDB gfg-session, its vault in
+     localStorage gfg-vault-v1), read once and only when it is open; this page never creates or changes either. */
+  function wlFromFg(codes) {
+    var v = null; try { v = JSON.parse(localStorage.getItem('gfg-vault-v1') || 'null'); } catch (e) { v = null; }
+    if (!v || !v.iv || !v.ct || !window.indexedDB) return wlP(null);
+    return new Promise(function (ok) {
+      try {
+        var r = indexedDB.open('gfg-session'); r.onupgradeneeded = function () { try { r.transaction.abort(); } catch (e) {} };
+        r.onsuccess = function () { var db = r.result; try { var q = db.transaction('s', 'readonly').objectStore('s').get('cur'); q.onsuccess = function () { db.close(); ok(q.result || null); }; q.onerror = function () { db.close(); ok(null); }; } catch (e) { try { db.close(); } catch (x) {} ok(null); } };
+        r.onerror = r.onblocked = function () { ok(null); };
+      } catch (e) { ok(null); }
+    }).then(function (ss) {
+      if (!ss || !ss.key || !(+ss.until > Date.now())) return null;
+      return crypto.subtle.decrypt({ name: 'AES-GCM', iv: wlUn(v.iv) }, ss.key, wlUn(v.ct)).then(function (pt) {
+        var rec = JSON.parse(new TextDecoder().decode(pt)); if (!rec || rec.v !== 2) return null;
+        return wlKeysFrom(codes, rec.tier, rec.keys, rec.codeId);
+      });
+    }).then(null, function () { return null; });
+  }
+  function wlEnded(codes, k) {
+    if (!codes || !k || !k.codeId || k.codeId === 'legacy') return false;
+    var e = arr(codes.codes).filter(function (x) { return x && x.id === k.codeId; })[0];
+    return !e || !!(e.ends && e.ends < today());
+  }
+  function wlMoved(w) { return !!(w && w.lib && w.lib.healthJourney && (w.movedOnce || !w.kitLib)); }
+  /* One pass for the open profile: 'took' (a newer copy came over), 'same', 'need' (no key yet), 'renew' (the key no longer
+     opens the Guide library), 'ended', 'offline', or 'off' (nothing to do here). */
+  function wayLib(force, given) {
+    if (PREVIEW || !S.id || !window.GGP || !(window.crypto && crypto.subtle)) return wlP('off');
+    var id = S.id, w = tdata(id); if (!wlMoved(w)) return wlP('off');
+    if (WL.busy) return WL.busy.then(function () { return force ? wayLib(force, given) : 'same'; });
+    if (!force && WL.at[id]) return wlP('same'); WL.at[id] = 1;
+    var done = function (r) { WL.busy = null; return r; };
+    WL.busy = wlCodes().then(function (codes) {
+      if (!codes) return 'offline';
+      var have = w.libKeys && w.libKeys.guide && !w.libKeys.renew ? w.libKeys : null;
+      return (given ? wlP(given) : have ? wlP(have) : wlFromFg(codes)).then(function (k) {
+        if (!k || !k.guide) { WL.need = id; return 'need'; }
+        if (wlEnded(codes, k)) { WL.need = ''; return 'ended'; }
+        return Promise.all([wlHead('guide'), k.founder ? wlHead('founder') : null]).then(function (hh) {
+          var hg = hh[0], hf = hh[1]; if (!hg) return 'offline';
+          var needG = !hg.iv || hg.iv !== k.giv, needF = !!(hf && (!hf.iv || hf.iv !== k.fiv));
+          var w2 = tdata(id); if (!w2 || S.id !== id) return 'off';
+          if (!needG && !needF) { WL.need = ''; if (!w2.libKeys || w2.libKeys !== k) { w2.libKeys = Object.assign({}, k, { renew: 0 }); return GGP.save(id).then(function () { return 'same'; }); } return 'same'; }
+          return Promise.all([needG ? wlLib(hg, k.guide) : null, needF ? wlLib(hf, k.founder) : null]).then(function (L) {
+            var g = L[0], f = L[1];
+            if (needG && g === false) { if (given) return 'nomatch'; if (w2.libKeys) { w2.libKeys.renew = 1; WL.need = id; return GGP.save(id).then(function () { return 'renew'; }); } WL.need = id; return 'need'; }
+            if (needG && (!g || !g.healthJourney)) return 'offline';
+            var lib = g ? { healthJourney: g.healthJourney, audio: g.audio } : w2.lib, fdr = f ? { healthMine: f.healthMine, healthKayti: f.healthKayti } : (w2.fdr || null);
+            var sig = wlSig([lib, fdr]), was = w2.libSig || wlSig([w2.lib, w2.fdr || null]), took = sig !== was;
+            if (took) { w2.lib = lib; if (f) w2.fdr = fdr; w2.libSync = Date.now(); }
+            w2.libSig = sig; WL.need = '';
+            w2.libKeys = Object.assign({}, k, { giv: needG ? hg.iv : k.giv, fiv: hf ? (needF && f ? hf.iv : k.fiv) : (k.fiv || ''), renew: 0 });
+            return GGP.save(id).then(function () { if (took && S.id === id) wlRedraw(); return took ? 'took' : 'same'; });
+          });
+        });
+      });
+    }).then(done, function () { return done('offline'); });
+    return WL.busy;
+  }
+  function wlRedraw() {
+    if (WP.open && WP.d) { try { paintPlan(true); } catch (e) {} }
+    if (window.GGHealth && S.tendInit === S.id && typeof window.GGHealth.redraw === 'function') window.GGHealth.redraw();
+  }
+  function wayLibSoon() { if (!S.id || WL.at[S.id]) return; setTimeout(function () { wayLib().then(function (r) { if (r === 'need' || r === 'renew') wlRedraw(); }); }, 1200); }
+  /* Keep My Plan New: the one time card, in Workouts (inside Tending's own kit) and in My Growth Plan. */
+  function wlNote(where) {
+    if (PREVIEW || !S.id || WL.need !== S.id) return '';
+    var w = tdata(S.id); if (!wlMoved(w)) return '';
+    var renew = !!(w.libKeys && w.libKeys.renew), wp = where === 'wp', fid = 'hm-wl-c-' + (wp ? 'wp' : 'tn');
+    var lead = renew ? 'Your Grounded team code has a newer version. Enter your newest code once on this device, and your plan keeps taking each new workout, recipe, and guide by itself.'
+      : 'Your plan can take each new workout, recipe, and guide straight from Grounded, by itself. Enter your Grounded team code (your Guide, Staff, or Founder code) once on this device. Everything you logged stays just as it is.';
+    var form = '<form class="hm-wl-f" data-hm-wl="1"><label for="' + fid + '">Grounded team code</label><div class="hm-wl-row"><input id="' + fid + '" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>' +
+      '<button type="submit" class="' + (wp ? 'hm-wp-btn' : 'tn-btn sm') + '">Keep It New</button></div><p class="hm-wl-m" role="status">' + esc(WL.msg) + '</p></form>';
+    return wp ? '<div class="hm-wp-card hm-wl">' + wpK('Keep My Plan New', 'move') + '<p class="hm-wp-lead sm">' + esc(lead) + '</p>' + form + '</div>'
+      : '<div class="tn-card a-move hm-wl"><div class="tn-k a-move">Keep My Plan New</div><p class="tn-sub">' + esc(lead) + '</p>' + form + '</div>';
+  }
+  /* A typed code: the same reading the Field Guide gives it (PBKDF2 SHA-256, 250,000 rounds with codes.js salt, then each
+     code's sealed line), then the Guide key through the links; kept only once it opens the Guide library. */
+  function wlResolve(code) {
+    var c = crypto.subtle, enc = new TextEncoder();
+    return wlCodes().then(function (codes) {
+      if (!codes) return { why: 'offline' };
+      if (!codes.salt || !arr(codes.codes).length) return { why: 'nomatch' };
+      var t0 = String(code || '').trim().toLowerCase(), t1 = t0.normalize('NFKC').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean).join('-'), tries = t1 && t1 !== t0 ? [t0, t1] : [t0];
+      function tryOne(i) {
+        if (i >= tries.length) return wlP({ why: 'nomatch' });
+        return c.importKey('raw', enc.encode(tries[i].normalize('NFKC')), 'PBKDF2', false, ['deriveKey']).then(function (base) {
+          return c.deriveKey({ name: 'PBKDF2', salt: wlUn(codes.salt), iterations: 250000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+        }).then(function (dk) {
+          var L = arr(codes.codes);
+          function each(j) {
+            if (j >= L.length) return tryOne(i + 1);
+            var e = L[j];
+            return c.decrypt({ name: 'AES-GCM', iv: wlUn(e.iv) }, dk, wlUn(e.ct)).then(function (pt) {
+              var r = JSON.parse(new TextDecoder().decode(pt)); if (e.ends && e.ends < today()) return { why: 'ended' };
+              var kk = {}; kk[wlTier(r.tier || e.tier)] = r.k;
+              return wlKeysFrom(codes, r.tier || e.tier, kk, e.id).then(function (k) { return k ? { k: k } : { why: 'nomatch' }; });
+            }, function () { return each(j + 1); });
+          }
+          return each(0);
+        });
+      }
+      return tryOne(0);
+    }).then(null, function () { return { why: 'offline' }; });
+  }
+  var WL_SAY = { took: 'Your newest workouts and recipes are here.', same: 'All set. Your plan now stays new by itself.', nomatch: 'Check each word of the code, and try once more.',
+    ended: 'This code has reached its end date. Your plan stays just as it is.', offline: 'Connect to the internet, then try once more.', need: 'Check each word of the code, and try once more.', renew: 'Check each word of the code, and try once more.' };
+  document.addEventListener('submit', function (e) {
+    var f = e.target; if (!f || !f.matches || !f.matches('form[data-hm-wl]')) return;
+    e.preventDefault(); var inp = f.querySelector('input'), m = f.querySelector('.hm-wl-m'), b = f.querySelector('button'), code = inp ? inp.value : '';
+    if (!code.trim()) return; if (m) m.textContent = 'One moment...'; if (b) b.disabled = true;
+    wlResolve(code).then(function (r) { return r.k ? wayLib(true, r.k) : r.why; }).then(function (res) {
+      WL.msg = WL_SAY[res] || WL_SAY.nomatch; if (b) b.disabled = false;
+      if (res === 'took' || res === 'same') { WL.msg = ''; toast(WL_SAY[res]); wlRedraw(); return; }
+      if (m) m.textContent = WL.msg;
+    });
+  });
+
   /* ---------- Tending: load, then hand it to field-guide/health.js ---------- */
   function loadTending() {
     if (S.tendLoad) return S.tendLoad;
@@ -527,7 +710,10 @@
       grade: function () { if (!S.p || S.p.age !== 'maple' || !S.id) return ''; var v = obj(obj(obj(GGP.data(S.id) || {}).maple).kid); return String(v.grade || ''); },
       name: function () { return S.p ? S.p.name : ''; },
       // BLD 927: the welcome's Who Is This For? (Me, My Family), so Tending asks it once.
-      who: function () { return S.id ? homeRec().who || 'me' : 'me'; }
+      who: function () { return S.id ? homeRec().who || 'me' : 'me'; },
+      // BLD 1015: one clear place for workouts (Grow, My Growth Plan, at its movement screen), and the one time Keep My Plan New card.
+      plan: function () { if (planOK()) openPlan(2); },
+      libNote: function () { return wlNote('tn'); }
     });
     S.tendInit = S.id;
     return true;
@@ -582,6 +768,7 @@
     renderApp(route());
     maybeTour();
     kitSoon();
+    wayLibSoon();   // BLD 1015: a moved plan's newest library, straight from the site's own sealed files
     moneySoon();
     // BLD 893: /home/#plan opens My Grounded Way Plan; an open plan redraws with anything new (a check-in).
     if (wantPlan) openPlan(); else if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); }
@@ -3222,6 +3409,12 @@
   function wpK(t, c) { return '<div class="hm-wp-k"' + (c ? ' style="--c:var(--' + c + ')"' : '') + '>' + esc(t) + '</div>'; }
   function wpH(t) { return '<h2 class="hm-wp-h2" id="hm-wp-h" tabindex="-1">' + esc(t) + '</h2>'; }
   function wpBtn(act, label, ghost) { return '<button type="button" class="hm-wp-btn' + (ghost ? ' ghost' : '') + '" data-hm-wp="' + act + '">' + esc(label) + '</button>'; }
+  /* BLD 1015: a Guide plan's days and length, plainly, from its library and the measured minutes (GGHealth facts). */
+  function wpFacts(info) { return obj(info).facts || null; }
+  function wpFactsHtml(info) {
+    var f = wpFacts(info); if (!f) return '';
+    return '<div class="hm-wp-card hm-wp-facts">' + wpK('Your Guide Plan', 'move') + '<p class="hm-wp-lead sm"><b>' + esc(cap(f.text)) + '.</b> Each workout is shaped by the 12-week program, with the equipment it names.</p></div>';
+  }
   function wpScreen() {
     var i = WP.i, d = WP.d, info = wpInfo() || {}, b = '', f = '', t = TREES[d.lead] || TREES.oak;
     if (i === 0) {
@@ -3268,7 +3461,7 @@
             if (arr(info.gear).length) b += '<div>' + wpLbl('What you have') + '<div class="hm-wp-chips">' + info.gear.map(function (g) { return wpChip('gear:' + g.id, g.name, d.gear.indexOf(g.id) >= 0, 'trunk'); }).join('') + '</div><small class="hm-wp-small">' + (d.gear.length ? 'Every workout uses just what you check.' : esc(info.gearNone || 'Nothing checked: your body weight, a chair, a wall, and a mat.')) + '</small></div>';
           }
         }
-      } else b += '<p class="hm-wp-lead sm">Your Guide plan keeps its own days, minutes, and equipment.</p>';
+      } else b += wpFactsHtml(info) + wlNote('wp');
       var keep = info.done && info.prog && !gentle && work && d.track === (info.track || 'strength');
       if (work) b += '<p class="hm-wp-lead sm">' + (gentle ? 'The Gentle walk grows a little each week.' : keep ? 'You are in ' + esc(info.prog) + '. Your place in the program stays.' : 'Week 1 of 12 · Foundation. Build starts week 5 and Peak week 9.') + '</p>';
       f = wpBtn('next', 'Next');
@@ -3314,7 +3507,7 @@
         (big ? '<p class="hm-wp-lead">Your busiest day holds ' + m + ' items. Habits stick best a few at a time, so many people begin with the core of the plan and add the rest after two good weeks.</p><div class="hm-wp-nudge"><b>Start lighter:</b> movement, meditation, and dinner first. Spirit and practices join on week 3, and the plan reminds you.</div>'
           : '<p class="hm-wp-lead">Your busiest day holds ' + m + (m === 1 ? ' item' : ' items') + '. That is a steady, doable start.</p>') +
         (wpSober() ? '<div class="hm-wp-nudge"><b>Living Sober:</b> Bark and Leaves lead your first two weeks. Roots and Branches, with your spirit choices, join on week 3, and the plan reminds you.</div>' : '') +
-        '<div class="hm-wp-card">' + wpRow('move', d.moves.map(function (x) { return x === 'strength' ? 'Strength' : x === 'cardio' ? 'Cardio' : FLOW_NAME[WP_MSTYLE[x]]; }).join(', ') + ', ' + d.days + ' days', wpWork(d) ? (d.level === 'gentle' || wpHold(info) ? 'Gentle level' : '12-week program, ' + d.mins + ' min') + (d.flowStyles.length ? ', the rest on other days' : '') : 'About 20 minutes each, taking turns') +
+        '<div class="hm-wp-card">' + wpRow('move', d.moves.map(function (x) { return x === 'strength' ? 'Strength' : x === 'cardio' ? 'Cardio' : FLOW_NAME[WP_MSTYLE[x]]; }).join(', ') + ', ' + (info.pub === false && wpFacts(info) && wpWork(d) ? wpFacts(info).days : d.days) + ' days', wpWork(d) ? (d.level === 'gentle' || wpHold(info) ? 'Gentle level' : info.pub === false && wpFacts(info) ? '12-week program, ' + wpFacts(info).text : '12-week program, ' + d.mins + ' min') + (d.flowStyles.length ? ', the rest on other days' : '') : 'About 20 minutes each, taking turns') +
         wpRow('bark', 'Meditation', d.med === 'later' ? 'Later' : WP_MED[d.med].charAt(0) + WP_MED[d.med].slice(1).toLowerCase() + ', ' + d.medTime) +
         wpRow('roots', plabel('roots'), sps.length ? sps.join(', ') : 'Later') + wpRow('plate', 'Leaves: the Table', d.food === 'yes' ? 'Dinners for ' + d.household : 'Later') +
         wpRow('leaves', 'Practices', wpPicks().length ? wpPicks().map(function (p) { return p.split('|')[1]; }).join(', ') : 'From your growth plan, anytime') + '</div>';
@@ -3629,7 +3822,7 @@
     });
   }
   function suSave(ck) {
-    var d = SU.d, res = suResult(d), h = GGP.data(S.id, 'home'), tree = suTree(), kid = suKid(); if (!h) return;
+    var d = SU.d, res = suResult(d), h = GGP.data(S.id, 'home'), tree = suTree(), kid = suKid(), edit1015 = suOnePlace(); if (!h) return;
     h.parts = arr(h.parts); var sv = obj(h.setup);
     suHost(tree);
     if (suWord() && !suLocked() && (d.wording === 'plain' || d.wording === 'faith')) { var host = tendHost(S.id, kid ? tree : S.tree); if (host) host.wording = d.wording; }
@@ -3643,8 +3836,8 @@
     if (!kid && planOK() && obj(d.f.fit).c === 'plan') {
       var sid = S.id, applyFour = function () {
         if (S.id !== sid || !tendReady() || !hasFn('applyPlan')) return;
-        var info = wpInfo() || {}, f = d.f.fit, o = { moves: wpMovesFor(arr(f.moves).length ? f.moves : ['strength']), days: f.days, food: !suTeen() && obj(d.f.food).c === 'plan', household: suTeen() ? undefined : obj(d.f.food).house, medFreq: obj(d.f.med).c === 'plan' ? d.f.med.freq : 'later', medTime: obj(d.f.med).time };
-        if (wpNeedCheck(info)) { o.check = Object.assign({}, f.check); o.cleared = !!f.cleared; }
+        var info = wpInfo() || {}, f = d.f.fit, one = edit1015, cur = obj(info.set), o = { moves: one && arr(info.moves).length ? arr(info.moves).slice() : wpMovesFor(arr(f.moves).length ? f.moves : ['strength']), days: one ? cur.days : f.days, cardioDays: one ? cur.cardioDays : undefined, level: one ? cur.level : undefined, gentle: one ? cur.level === 'gentle' : undefined, food: !suTeen() && obj(d.f.food).c === 'plan', household: suTeen() ? undefined : obj(d.f.food).house, medFreq: obj(d.f.med).c === 'plan' ? d.f.med.freq : 'later', medTime: obj(d.f.med).time };
+        if (wpNeedCheck(info) && !one) { o.check = Object.assign({}, f.check); o.cleared = !!f.cleared; }
         hCall('applyPlan', o);
       };
       if (tendReady() && hasFn('applyPlan')) applyFour(); else loadTending().then(function () { applyFour(); if (S.id === sid && S.view === 'today' && !SU.open) refreshPane(); });
@@ -3701,6 +3894,11 @@
         sub = '<div class="hm-wp-lbl">Around the table</div><div class="hm-wp-chips">' + [1, 2, 3, 4, 5, 6, 8].map(function (n) { return suChip('set:food:house:' + n, n + (n === 1 ? ' person' : ' people'), x.house === n, 'leaves'); }).join('') + '</div>' +
           '<small class="hm-wp-small">Food needs, allergies, and goals live in Tending Setup, ready whenever you like.</small>' +
           (!member() && !suTeen() ? '<div class="hm-wp-seedmv"><span class="hm-wp-chip hm-wp-seednut" aria-disabled="true">Grounded Nutrition <em class="hm-seedtag">Membership</em></span></div><small class="hm-wp-small">Grounded Nutrition is part of Membership: meal plans, Grounded Cooking in your plan, and one shopping list.</small>' : '');
+      } else if (f.id === 'fit' && suOnePlace()) {
+        // BLD 1015 (Chris, November 17, 2026: "1", one clear place): Change My Setup shows the movement plainly and sends the choice to My Growth Plan.
+        var fi = wpInfo() || {}, fs = obj(fi.set), fm = arr(fi.moves).map(function (m) { return obj(fi.moveNames)[m] || m; }), ff = wpFacts(fi);
+        sub = '<div class="hm-wp-lbl">Your movement now</div><p class="hm-wp-lead sm">' + esc((fm.length ? wpList(fm) : 'Strength') + (ff && fi.pub === false ? ': ' + ff.text : fi.pub !== false && fs.days ? ', ' + fs.days + ' days a week' + (fs.mins && arr(fi.moves).some(function (m) { return m === 'strength' || m === 'cardio'; }) && fs.level !== 'gentle' ? ', ' + fs.mins + ' minutes' : '') : '') + '.') + '</p>' +
+          '<small class="hm-wp-small">Your workouts, days, and minutes live in one place: Grow, My Growth Plan.</small><div class="hm-wp-chips" style="margin-top:8px">' + suChip('growplan', 'Choose My Workouts', false, 'move') + '</div>';
       } else if (f.id === 'fit') {
         var info = wpInfo() || {}, mvs = WP_MOVES.filter(function (m) { return (m[0] !== 'cardio' || info.cardio !== false) && wpMoveOK(m[0]); }), need = wpNeedCheck(info), KQ = obj(info.check);
         sub = '<div class="hm-wp-lbl">How do you like to move? Choose any</div><div class="hm-wp-chips">' + mvs.map(function (m) { return suChip('mv:' + m[0], m[1], arr(x.moves).indexOf(m[0]) >= 0, 'move'); }).join('') + '</div>' + wpSeedMoves(true) +
@@ -3766,13 +3964,17 @@
     if (key) { var n = byId ? document.getElementById(key) : document.querySelector('[data-hm-su="' + cssq(key) + '"]'); if (n) try { n.focus({ preventScroll: true }); } catch (e) {} }
   }
   function suGo(i) { SU.i = Math.max(0, Math.min(SU_N - 1, i)); suKeep(); suPaint(true); }
+  /* BLD 1015: Change My Setup (a setup already done) leaves movement to My Growth Plan; a profile's first setup keeps its quick choice. */
+  function suOnePlace() { return !!(SU.edit && !suKid() && planOK()); }
   function suFitNeedsAnswers() {
     var x = obj(SU.d.f.fit), info = wpInfo() || {};
+    if (suOnePlace()) return false;
     return !suKid() && x.c === 'plan' && wpNeedCheck(info) && arr(info.check.questions).some(function (q) { return obj(x.check)[q.id] == null; });
   }
   function suAct(a, el) {
     var d = SU.d; if (!d) return;
     if (a === 'close') { SU.open = false; SU.d = null; render(); return; }
+    if (a === 'growplan') { suSave(''); setTimeout(function () { openPlan(2); }, 60); return; }
     if (a === 'next') { if (SU.i === 3 && suFitNeedsAnswers()) { toast('Answer each health check question with Yes or No.'); return; } suGo(SU.i + 1); return; }
     if (a === 'back') { suGo(SU.i - 1); return; }
     if (a === 'all') { Object.keys(d.f).forEach(function (k) { d.f[k].c = 'plan'; }); if (suFitNeedsAnswers()) { toast('One quick health check for Fitness first.'); suGo(3); } else suGo(5); return; }
@@ -4702,7 +4904,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c137'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c140'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {

@@ -1744,3 +1744,10 @@ html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;-
   --gold:#FF7085; --gold2:#FF8C9D; --golds:#4A1C29; --on:#0F1A38; --edge:#FFB347;
   --wash:linear-gradient(180deg,rgba(15,26,56,.42) 0%,rgba(15,26,56,.7) 42%,rgba(15,26,56,.9) 100%);
 }
+/* BLD 1015: Keep My Plan New, the one time team code card (Workouts and My Growth Plan) */
+.hm-wl-f{margin-top:10px;min-width:0}
+.hm-wl-f label{display:block;font-weight:600;font-size:14px;margin:0 0 6px;color:var(--ink)}
+.hm-wl-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-width:0}
+.hm-wl-row input{flex:1 1 12em;min-width:0;max-width:100%;box-sizing:border-box;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card-2);color:var(--ink);font:inherit;font-size:16px}
+.hm-wl-m{margin:6px 0 0;font-size:14px;color:var(--ink-soft);min-height:1em}
+.hm-wp-facts b{color:var(--ink)}

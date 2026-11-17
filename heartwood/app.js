@@ -294,7 +294,7 @@
     var run = function () { if (window.GGBackup) GGBackup[act]({}); };
     saveAll().then(function () {
       if (window.GGBackup) return run();
-      var s = document.createElement('script'); s.src = '/shared/gg-backup.js?v=b782'; s.onload = run;
+      var s = document.createElement('script'); s.src = '/shared/gg-backup.js?v=c140'; s.onload = run;
       s.onerror = function () { say('The backup could not load. Check the connection and try again.'); };
       document.head.appendChild(s);
     });

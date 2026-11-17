@@ -564,7 +564,7 @@
   function acctIn() { return acctOn() && window.GGAccount && GGAccount.state && GGAccount.state() !== 'out'; }
   var WHY = {
     empty: 'Enter your code, then tap Open Membership.',
-    nomatch: 'That code opens a different part of Grounded. Check each word and the number, and try again. Guide codes open the Field Guide.',
+    nomatch: 'That code opens a different part of Grounded. Check each word and the number, and try again.',
     ended: 'That code reached its end date. A new code renews Membership.',
     none: 'Membership is still loading on this device. Refresh the page and try again.',
     offline: 'Membership needs a connection the first time. Try again once you are online.',
