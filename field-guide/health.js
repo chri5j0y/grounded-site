@@ -6106,6 +6106,8 @@ window.GGHealth = {
   state: S, allLines, LN,
   // BLD 947 (tests): a dinner card's data for a food week (day-of steps ride in while a head start is open), and a prep guide's data.
   cookData: (wk, id, n) => { const o = cookOv(wk, id, n); return o ? o.data : null; }, prepData: (kind, n) => { const o = prepOv(kind, n); return o ? o.data : null; }, reminders: d => remindersFor(day0(d)),
+  // BLD 1016 (tests): a day's dinner and lunch as Today shows them (the lunch picked by the variety rules).
+  mealsOf: d => { const x = day0(parseD(d) || d), dn = dinnerFor(x), L = arr(((APP() || {}).dinners || {}).lunches), i = L.length ? lunchIx(x) : -1; return {dinner: dn ? {id: dn.id, wk: dn.wk, name: dn.name, prepped: dn.prepped || '', nut: dn.nut || null, steps: arr(dn.steps).length, hsOpen: dn.hsOpen || null, leftover: !!dn.leftover} : null, lunch: i >= 0 ? {i, name: L[i].name, nut: (lunchNut(L[i], x) || {}).nut || null} : null}; },
   // BLD 915: the recommended weight (tests and other views): rec(step, bodyWeight?, adjustment?) gives {lb, each, line} or null.
   weights: {rec: (st, bw, adj) => recW(st, bw, adj), body: () => bodyW(), adj: () => wAdj(), chip: st => wChip(st), ok: st => recOK(st)},
   tips: {list: TIPS, plan: (o, day) => tipPlan(o, day)},

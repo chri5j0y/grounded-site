@@ -21,6 +21,10 @@
 (function(root){
 'use strict';
 const REC = {
+ // BLD 1014's new recipes (November 17, 2026)
+ "d-ginger-scallion-cod": "cod asian skillet", "d-halibut-barley-beets": "cod american skillet", "d-gigantes-plaki": "beans mediterranean bake",
+ "d-red-beans-and-rice": "beans southern slow", "d-red-lentil-kofte": "lentils mediterranean bowl", "d-turkey-wild-rice-squash": "turkey american roast",
+ "d-navy-bean-rutabaga-soup": "beans european soup",
  "d-sheet-pan-lemon-salmon": "salmon american sheetpan", "d-honey-ginger-salmon-bowls": "salmon asian bake",
  "d-herb-salmon-lentils": "salmon european bake", "d-cod-fish-tacos": "cod mexican bake", "d-oven-fish-and-chips": "cod european bake",
  "d-greek-shrimp-farro": "shrimp mediterranean skillet", "d-tuna-cakes": "tuna american bake", "d-maple-dijon-trout": "trout american roast",
@@ -75,7 +79,7 @@ const REC = {
 };
 const GUIDE = {
  "a-mon": "turkey mexican slow", "a-tue": "salmon american sheetpan", "a-wed": "beef italian skillet", "a-thu": "mixed none bowl",
- "a-fri": "shrimp mexican bake", "a-sat": "chicken italian bake", "a-sun": "chicken american roast", "b-mon": "chicken mediterranean sheetpan",
+ "a-fri": "shrimp mexican bake", "a-sat": "dairy italian bake", "a-sun": "chicken american roast", "b-mon": "chicken mediterranean sheetpan",
  "b-tue": "cod american bake", "b-wed": "beef european bake", "b-thu": "mixed none bowl", "b-fri": "salmon american bake",
  "b-sat": "chicken mexican skillet", "b-sun": "chicken american bake", "c-mon": "beans italian soup", "c-tue": "salmon mediterranean bowl",
  "c-wed": "shrimp asian skillet", "c-thu": "mixed none bowl", "c-fri": "shrimp southern skillet", "c-sat": "beef american grill",
