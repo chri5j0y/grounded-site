@@ -742,11 +742,14 @@ function hsAdj(x, d){
     const r = hsRef(c, d); if (!r || hsDone(r)) return c; const k = ymd(r); if (!seen.has(k)){ seen.add(k); open.push(r); } return null; })
     .filter(Boolean).map((c, i) => i ? c : c.replace(/^and\s+/i, '').replace(/^./, ch => ch.toUpperCase())).join(', ').replace(/([^.])$/, '$1.')).filter(t => t && t !== '.').join(' ');
   const out = {}; fields.forEach(k => { out[k] = fix(x[k]); }); if (!open.length) return x;
-  let frozen = false; const parts = open.map(hsSteps).filter(Boolean).flatMap(t => t.replace(/\.$/, '').split(/\.\s+|,\s+(?:and|then)\s+(?=[a-z])/)).filter(t => { if (/from the freezer to/i.test(t)){ frozen = true; return false; } return !!t.trim(); });
-  const thaw = !frozen ? '' : x.thaw && x.thaw.quick ? String(x.thaw.quick).replace(/^Still frozen\?\s*/i, '') : 'Set anything still frozen in a sealed bag in cold water for about 30 minutes, changing the water once.', lead = parts.length ? 'Tonight starts with the head start: ' + parts.join(', then ').replace(/\.$/, '') + '.' : '';
+  // Each head start's sentences, with a clause that moves food from the freezer to the fridge set aside (the quick thaw stands in).
+  let frozen = false; const cap = t => t.replace(/^(then\s+)/i, '').replace(/^./, c => c.toUpperCase());
+  const sents = open.map(hsSteps).filter(Boolean).flatMap(t => t.split(/(?<=\.)\s+/)).map(sn => sn.replace(/\.$/, '').split(/,\s+and\s+(?=[a-z])/).filter(c => { if (/from the freezer to/i.test(c)){ frozen = true; return false; } return !!c.trim(); }).map((c, j) => j ? c : cap(c)).join(', and ')).filter(Boolean);
+  const parts = sents.length ? [sents.join('. ')] : [];
+  const thaw = !frozen ? '' : x.thaw && x.thaw.quick ? String(x.thaw.quick).replace(/^Still frozen\?\s*/i, '') : 'Set anything still frozen in a sealed bag in cold water for about 30 minutes, changing the water once.', lead = parts.length ? 'Tonight starts with the head start. ' + parts[0] + '.' : '';
   const tw = thaw ? 'Thaw ' + ((x.thaw && x.thaw.item) || 'it') + ' first: ' + thaw.replace(/^./, c => c.toLowerCase()) : '', now = [tw, lead].filter(Boolean).join(' ');
   fields.forEach(k => { out[k] = (out[k] ? out[k] + ' ' : '') + now; });
-  const pre = [].concat(tw ? [{t: tw, min: 0, kick: 'Head Start'}] : [], parts.length ? [{t: 'Head start first: ' + parts.join(', then ') + '.', min: 0, kick: 'Head Start'}] : []);
+  const pre = [].concat(tw ? [{t: tw, min: 0, kick: 'Head Start'}] : [], parts.length ? [{t: 'Head start first. ' + parts[0] + '.', min: 0, kick: 'Head Start'}] : []);
   const st = arr(x.steps), g = +x.gi0 || 0; return Object.assign({}, x, out, {steps: st.slice(0, g).concat(pre, st.slice(g)), hsOpen: open.map(ymd)}); }
 // The plan's dinner for a day as the library writes it (no day-of steps and no head start note), for reading a head start step.
 function dinnerFor0(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; return w ? arr(w.dinners).find(z => z.day === DOW[d.getDay()]) || null : null; }
@@ -6133,7 +6136,7 @@ window.GGHealth = {
   // BLD 947 (tests): a dinner card's data for a food week (day-of steps ride in while a head start is open), and a prep guide's data.
   cookData: (wk, id, n) => { const o = cookOv(wk, id, n); return o ? o.data : null; }, prepData: (kind, n) => { const o = prepOv(kind, n); return o ? o.data : null; }, reminders: d => remindersFor(day0(d)),
   // BLD 1016 (tests): a day's dinner and lunch as Today shows them (the lunch picked by the variety rules).
-  mealsOf: d => { const x = day0(parseD(d) || d), dn = dinnerFor(x), L = arr(((APP() || {}).dinners || {}).lunches), i = L.length ? lunchIx(x) : -1; return {dinner: dn ? {id: dn.id, wk: dn.wk, name: dn.name, prepped: dn.prepped || '', nut: dn.nut || null, steps: arr(dn.steps).length, hsOpen: dn.hsOpen || null, leftover: !!dn.leftover} : null, lunch: i >= 0 ? {i, name: L[i].name, nut: (lunchNut(L[i], x) || {}).nut || null} : null}; },
+  mealsOf: d => { const x = day0(parseD(d) || d), dn = dinnerFor(x), L = arr(((APP() || {}).dinners || {}).lunches), i = L.length ? lunchIx(x) : -1; return {dinner: dn ? {id: dn.id, wk: dn.wk, name: dn.name, prepped: dn.prepped || '', nut: dn.nut || null, steps: arr(dn.steps).length, hsOpen: dn.hsOpen || null, leftover: !!dn.leftover} : null, lunch: i >= 0 ? {i, id: L[i].id || '', name: L[i].name, nut: (lunchNut(L[i], x) || {}).nut || null} : null}; },
   // BLD 915: the recommended weight (tests and other views): rec(step, bodyWeight?, adjustment?) gives {lb, each, line} or null.
   weights: {rec: (st, bw, adj) => recW(st, bw, adj), body: () => bodyW(), adj: () => wAdj(), chip: st => wChip(st), ok: st => recOK(st)},
   tips: {list: TIPS, plan: (o, day) => tipPlan(o, day)},
