@@ -11,8 +11,8 @@
 //       hour: 0 to 23 (decimals welcome; default the clock now),
 //       pct: 0 to 1, the rest left: a ring that drains (shown in 'rest', or in any state when given),
 //       secs: whole seconds left, shown in the ring (60 and up shows as m:ss),
-//       inhale, exhale: seconds; the breath guide, the breathing rings (BLD 928, shared/gg-breath-ring.js: Sage grows on
-//         the in breath, Honey eases on the out breath; shown in 'breathe', or in any state when inhale is given), with
+//       inhale, exhale: seconds; the breath guide (BLD 928, shared/gg-breath-ring.js; since BLD 1019 Sunset Tide With a Path:
+//         the window fills on the in breath and empties on the out breath, a dot travels the rim; shown in 'breathe', or in any state when inhale is given), with
 //         Breathe In and Breathe Out; phases: the same timed by the figure's plan (BLD 898); breathCount: counts go up,
 //       weight: {cap, line} (BLD 928): the weight chip, bottom right ("Recommended" over "15 lb each hand"),
 //       brk: {sub} (BLD 928): the Break banner, top center, with sub ("Set 2 Next") under the rest ring,
@@ -189,6 +189,9 @@ function ringHTML(o, show){
 // Words only on workout moves (Breathe In, Breathe Out, Hold); o.breathCount adds counts that go up (a breathing step).
 // With a figure it sits top left on a frosted chip; without one (a breathing step) it stands larger in the middle.
 // Reduced motion: the ring moves only a little and the color and the word lead (in the module).
+// BLD 1019 (Chris, November 17, 2026): Sunset Tide With a Path draws here too (the same host and clock). On a workout move its
+// chip is sized by the room beside the figure (--brw: up to 200 px on a wide stage, so it reads from across a room, about 104 px
+// on a phone), and the form tip moves over to clear it and the rep badge. No backdrop blur, so it stays smooth on an iPad.
 function ringsHTML(o, red, P, mark){
   P = P.filter(p => p && +p.d > 0);
   const T = P.reduce((a, p) => a + +p.d, 0), w = r1(T * 1000) / 1000, ph = P.map(p => p.k + ':' + r1(+p.d * 100) / 100).join(' ');
@@ -201,7 +204,7 @@ function ringsHTML(o, red, P, mark){
 // The ring module, once, next to this file (../shared/gg-breath-ring.js), with this file's own version.
 function ringLoad(){
   if (window.GGBreathRing || ringLoad.on) return; ringLoad.on = 1;
-  try { const u = new URL('../shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=b989';
+  try { const u = new URL('../shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c148';
     const el = document.createElement('script'); el.src = u.href; el.async = true; (document.head || document.documentElement).appendChild(el); } catch (e) {}
 }
 function phaseHTML(o, red){ return ringsHTML(o, red, o.phases, true); }
@@ -381,7 +384,7 @@ try { document.addEventListener('visibilitychange', () => { if (!document.hidden
 const D1 = ':root[data-theme="dark"]', D2 = ':root:not([data-theme="light"])';
 const dk = rules => `${rules.replace(/&/g, D1)}\n@media (prefers-color-scheme: dark){${rules.replace(/&/g, D2)}}`;
 const CSS = `
-.ggs{--H:clamp(236px,64vw,340px);--dk:calc(var(--H) * .25);--fs:min(214px,56vw,calc(var(--H) * .8));position:relative;width:100%;height:var(--H);border-radius:22px;overflow:hidden;isolation:isolate;
+.ggs{--H:clamp(236px,64vw,340px);--brw:min(200px,calc(var(--H) * .62),max(min(104px,27vw),calc((100% - var(--fs)) / 2 - 22px)));--dk:calc(var(--H) * .25);--fs:min(214px,56vw,calc(var(--H) * .8));position:relative;width:100%;height:var(--H);border-radius:22px;overflow:hidden;isolation:isolate;
   --ggm-ink:#1B2836;--ggm-far:.45;--ggm-gear:#5B6B7E;--ggm-gear-op:.9;--ggm-db:var(--ggs-a);--ggm-steel:#46525F;--ggm-mat:var(--ggs-a);--ggm-mat-op:.55;--ggm-ground-op:0;--ggm-shadow:#1B2836;--ggm-shadow-op:.22;
   box-shadow:0 1px 0 rgba(0,0,0,.04),0 12px 30px rgba(20,40,70,.16);margin:0 auto;}
 .ggs.ggs-fill{position:absolute;inset:0;height:auto;border-radius:0;box-shadow:none;z-index:0;background:var(--ggs-bgl);}
@@ -425,17 +428,17 @@ const CSS = `
 .ggs-rp{fill:none;stroke:#C98A2C;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .12s linear;}
 .ggs-secs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Barlow',sans-serif;font-weight:700;font-size:clamp(36px,12vw,62px);color:#3A2414;font-variant-numeric:lining-nums tabular-nums;letter-spacing:0;line-height:1;}
 .ggs-mid.hasfig:not(.ggs-rest *) .ggs-secs{font-size:clamp(22px,6vw,30px);}
-.ggs-breath{position:absolute;left:50%;top:50%;width:min(172px,46vw,calc(var(--H) * .62));transform:translate(-50%,-52%);z-index:3;padding:8px 8px 4px;border-radius:20px;background:rgba(255,248,232,.84);box-shadow:0 4px 14px rgba(60,35,10,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+.ggs-breath{position:absolute;left:50%;top:50%;width:min(230px,58vw,calc(var(--H) * .7));transform:translate(-50%,-52%);z-index:3;padding:8px 8px 4px;border-radius:20px;background:rgba(255,248,232,.9);box-shadow:0 4px 14px rgba(60,35,10,.14);}
 .ggs-breath.wf{left:10px;top:10px;width:min(112px,28vw,calc(var(--H) * .38));transform:none;padding:6px 5px 2px;border-radius:16px;}
 .ggs-breath svg{width:100%;height:auto;display:block;overflow:visible;}
 .ggs-rings svg.ggbr{max-width:100%;}
-.ggs-breath.wf.ggs-rings{width:min(104px,26vw,calc(var(--H) * .36));padding:6px 4px 2px;}
+.ggs-breath.wf.ggs-rings{width:var(--brw);padding:6px 4px 2px;}
 .ggs-wt{position:absolute;right:12px;bottom:22px;z-index:4;display:grid;justify-items:end;gap:2px;max-width:46%;padding:7px 12px 8px;border-radius:14px;background:rgba(255,248,232,.9);color:#2F2216;box-shadow:0 4px 14px rgba(60,35,10,.14);text-align:right;}
 .ggs-wt b{font:700 11px/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6D5640;}
 .ggs-wt span{font:600 clamp(17px,4.6vw,22px)/1.1 'Cormorant Garamond',Georgia,serif;color:#3A2414;}
 .ggs-hasring .ggs-wt{right:calc(min(96px,26vw) + 26px);}
 .ggs-ftip{position:absolute;top:10px;left:12px;z-index:4;max-width:min(250px,calc(100% - 170px));padding:6px 10px 7px;border-radius:12px;background:rgba(255,248,232,.9);color:#2F2216;box-shadow:0 4px 14px rgba(60,35,10,.14);overflow-wrap:anywhere;}
-.ggs-ftip.br{left:calc(min(104px,26vw,calc(var(--H) * .36)) + 20px);max-width:min(250px,calc(100% - min(104px,26vw,calc(var(--H) * .36)) - 150px));}
+.ggs-ftip.br{left:calc(var(--brw) + 20px);max-width:min(250px,calc(100% - var(--brw) - max(160px,34% + 20px)));}
 .ggs-ftip b{display:block;font:700 10px/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6D5640;margin-bottom:3px;}
 .ggs-ftip span{display:block;font:600 12.5px/1.25 'Barlow',sans-serif;}
 .ggs-break{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:5;padding:6px 26px 7px;border-radius:999px;background:var(--ggs-a);color:#FFFFFF;font:700 clamp(22px,6.4vw,30px)/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 18px rgba(0,0,0,.2);}

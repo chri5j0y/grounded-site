@@ -555,7 +555,7 @@
   var PH = { box: 'in:4 hold:4 out:4 rest:4', tri: 'in:4 hold:7 out:8', sigh: 'in:3 sip:1.5 out:6' };
   function ringNeed() {
     if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1;
-    try { var u = new URL('gg-breath-ring.js', SELF || location.href); u.search = '?v=b989'; var e = document.createElement('script'); e.src = u.href; e.async = true; document.head.appendChild(e); } catch (e) {}
+    try { var u = new URL('gg-breath-ring.js', SELF || location.href); u.search = '?v=c148'; var e = document.createElement('script'); e.src = u.href; e.async = true; document.head.appendChild(e); } catch (e) {}
   }
   var SHAPE = {
     draw: function (host, G) {

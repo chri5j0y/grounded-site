@@ -6097,8 +6097,10 @@ html.gg-fs .ggs-hold{width:clamp(90px,14vh,150px);}html.gg-fs .ggs-hold b{font-s
   html.gg-fs .ggs-secs{font-size:clamp(56px,9vh,110px);}
   html.gg-fs .ggs-mid.hasfig:not(.ggs-rest *) .ggs-secs{font-size:clamp(34px,5vh,58px);}
   html.gg-fs .ggs-breath{width:min(340px,38vh);}
-  html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-breath.wf.ggs-rings{width:min(230px,26vh);left:24px;}
-  html.gg-fs .ggs-ftip{left:calc(min(230px,26vh) + 44px);max-width:min(520px,calc(100% - min(230px,26vh) - 300px));padding:10px 16px 12px;}
+  /* BLD 1019: the Sunset Tide breath chip grows with the room beside the figure (up to 300 px), so it reads from across a room. */
+  html.gg-fs .hj-stagebox .ggs{--brf:min(300px,30vh,max(230px,calc((100% - var(--fs)) / 2 - 40px)));}
+  html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-breath.wf.ggs-rings{width:var(--brf);left:24px;}
+  html.gg-fs .ggs-ftip{left:calc(var(--brf) + 44px);max-width:min(520px,calc(100% - var(--brf) - 300px));padding:10px 16px 12px;}
   html.gg-fs .ggs-ftip b{font-size:14px;}
   html.gg-fs .ggs-ftip span{font-size:clamp(17px,2.2vh,24px);}
   html.gg-fs .ggs-wt{right:24px;bottom:34px;padding:12px 18px 14px;}
