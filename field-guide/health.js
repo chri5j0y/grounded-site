@@ -1563,6 +1563,25 @@ function planSecs(steps, i0, set0, o){
 // BLD 979: measured as the player plays by default (Voice Counts Reps on, hands free), so a warm up item with a form line
 // costs its short call, as it does in the player.
 function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
+// BLD 979 follow-up: the whole session as the engine plays it (its opening and closing lines too), in seconds.
+function engineSecs(o){ if (!o || !arr(o.steps).length) return 0; const m = o.mins || 50, keep = S.ov; S.ov = o;
+  try { let s = planSecs(o.steps, 0, 1, o);
+    if (!o.med && !o.prac) s += lineSecs(o.focus || LN.focus) + lineSecs(o.safe || LN.safe) + lineSecs(LN.feel);
+    s += lineSecs(o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, m) : LN.ses(o.title, m)) + (o.open ? lineSecs(o.open) : 0);
+    if (!o.prac) s += lineSecs(lightLine('start')) + lineSecs(lightLine('end'));
+    return s + lineSecs(o.med ? LN.mOut : o.prac ? LN.pOut : o.close || LN.out); } finally { S.ov = keep; } }
+function apiAudit(){
+  if (!H()) return []; const keys = new Map(), keep = S.ewLvl, add = (key, cat, card) => { if (!keys.has(key)) keys.set(key, {cat, card}); };
+  try { (PUB() ? EW_LVLS.map(x => x[0]) : ['']).forEach(lvl => { S.ewLvl = lvl || undefined; const cur = curLvl();
+    everyGroups(everyLvl()).forEach(c => c.groups.forEach(g => g.list.forEach(([id, x]) => { const L = everyLvl();
+      const key = c.cat === 'strength' || c.cat === 'cardio' ? (PUB() && L !== cur ? 'wl:' + L + ':' + id : 'work:' + id) : BANDS().includes(c.cat) ? 'wl:' + c.cat + ':' + id
+        : c.cat === 'gentle' ? (cur === 'gentle' ? 'work:' + id : 'wl:gentle:' + id) : (x._m ? 'mprac:' : 'pracid:') + x.id;
+      add(key, c.cat + (L ? ':' + L : ''), +x.mins || 0); }))); }); } finally { S.ewLvl = keep; }
+  const t = sesFor(new Date()); if (t) add('work:' + t.id, 'today', +t.mins || 0);
+  const out = []; keys.forEach((v, key) => { let o = null; try { o = ovFor(key); } catch(e){ o = null; } if (!o || !arr(o.steps).length) return;
+    out.push({key, cat: v.cat, title: o.title, card: v.card, start: +o.mins || 0, clock: +(engineSecs(o) / 60).toFixed(1), want: +H().set.mins || 0}); });
+  return out;
+}
 // ---------- the hands-free engine ----------
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function estLeft(o){ let s = planSecs(o.steps, o.i, o.between ? 1 : o.set, o); const left = o.run && o.end ? Math.max(0, o.end - Date.now()) / 1000 : 0;
@@ -6005,7 +6024,10 @@ window.GGHealth = {
   qrReady: () => qrLoad(), qr: t => qrSvg(String(t || '')),
   starts: () => H() ? {food: ymd(kitStart()), prog: progOn() ? ymd(progStart()) : null, start: ymd(startMon())} : null,
   setStart: (kind, d) => apiSetStart(kind, d),
-  planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }
+  planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; },
+  // BLD 979 follow-up (tests, patches/bld979/test/measure979.mjs): every workout and Flow this view can play today (Every Workout
+  // at each level, plus today's), each with the minutes its card and start screen say and the player's own clock for it.
+  audit: () => apiAudit()
 };
 // ---------- BLD 896, Holiday Sets ----------
 // Chris, October 30, 2026: "a special set for holidays and special occasions.. so you can select thanksgiving dinner, and it will
