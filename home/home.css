@@ -1751,3 +1751,6 @@ html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;-
 .hm-wl-row input{flex:1 1 12em;min-width:0;max-width:100%;box-sizing:border-box;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card-2);color:var(--ink);font:inherit;font-size:16px}
 .hm-wl-m{margin:6px 0 0;font-size:14px;color:var(--ink-soft);min-height:1em}
 .hm-wp-facts b{color:var(--ink)}
+/* BLD 1016: the Shopping List and Sunday Together Prep lead the Week tab; on a phone they sit as two compact rows so both show
+   in the first screen (the whole card stays one button). */
+@media (max-width:699px){ .hm-wmain .hm-wfind{gap:10px;margin:0 0 14px;} .hm-wmain .hm-wbig{flex-direction:row;align-items:center;border-radius:18px;} .hm-wmain .hm-wbig .pic{flex:0 0 92px;height:92px;} .hm-wmain .hm-wbig .pic::after,.hm-wmain .hm-wbig .ic,.hm-wmain .hm-wbig .go{display:none;} .hm-wmain .hm-wbig .tx{padding:10px 14px;} .hm-wmain .hm-wbig b{font-size:24px;} .hm-wmain .hm-wbig small{font-size:14px;} }
