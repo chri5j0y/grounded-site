@@ -441,9 +441,10 @@ const CSS = `
 .ggs-lab{padding:7px 12px;border-radius:999px;background:rgba(255,248,232,.88);color:#2F2216;border:1px solid rgba(90,60,30,.22);font:700 13px/1 'Barlow',sans-serif;letter-spacing:.05em;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 8px rgba(60,35,10,.12);}
 /* BLD 979 (Chris, November 13, 2026: "make the rep count much more visible, so you can look up mid rep and know how many are
    left"): a big, bold count on a dark badge, readable from across the room on a phone, a tablet, and a computer. */
-.ggs-count{display:flex;align-items:baseline;gap:.12em;padding:4px 16px 8px;border-radius:18px;background:rgba(36,25,16,.9);border:2px solid rgba(242,206,140,.55);box-shadow:0 6px 18px rgba(30,18,8,.3);font-size:clamp(52px,15vw,96px);}
+.ggs-count{display:flex;align-items:baseline;gap:.12em;padding:4px 16px 8px;border-radius:18px;background:rgba(36,25,16,.9);border:2px solid rgba(242,206,140,.55);box-shadow:0 6px 18px rgba(30,18,8,.3);font-size:clamp(40px,10vw,64px);}
 .ggs-count b{font:700 1em/1 'Barlow Condensed','Barlow',sans-serif;color:#FFF4DC;font-variant-numeric:lining-nums tabular-nums;min-width:.55em;text-align:right;}
-.ggs-count span{font:700 .42em/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.04em;color:#F2CE8C;white-space:nowrap;}
+/* BLD 1018 (Chris, November 17, 2026: "the number on the left is a little too big, making the whole box a little big. Try to make all the numbers about the same size"): the rep and its total read at nearly one size, in a smaller badge. */
+.ggs-count span{font:700 .82em/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.04em;color:#F2CE8C;white-space:nowrap;}
 .ggs-prog{position:absolute;left:16px;right:16px;bottom:10px;height:3px;border-radius:2px;background:rgba(90,60,30,.22);z-index:4;}
 .ggs-prog i{position:absolute;left:0;top:-1px;bottom:-1px;border-radius:3px;background:#C98A2C;transition:width .25s ease-out;}
 .ggs-prog b{position:absolute;top:-3px;width:1px;height:9px;background:#3A2414;opacity:.35;}
