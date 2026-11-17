@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c137', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=c137', '/shared/tending-public.js?v=c134', '/shared/gentle-public.js?v=c135'];
+  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c138', '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=c137', '/shared/tending-public.js?v=c138', '/shared/gentle-public.js?v=c135'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c137';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -2497,7 +2497,7 @@
     return LIB.load;
   }
   function shelves() {
-    var t = TREES[S.tree] || TREES.oak, c = hCall('counts') || {}, learn = learnOf(S.tree), lc = guidesOf(S.tree), rc = window.GGTendPublic ? arr(window.GGTendPublic.recipes).length : 0;
+    var t = TREES[S.tree] || TREES.oak, c = hCall('counts') || {}, learn = learnOf(S.tree), lc = guidesOf(S.tree), rc = (window.GGTendPublic ? arr(window.GGTendPublic.recipes).length : 0) + (window.GGHolidays && typeof window.GGHolidays.listed === 'function' ? arr(window.GGHolidays.listed()).length : 0);   // BLD 1013: every recipe, the holidays too
     var cnt = function (n, one, many) { return typeof n === 'number' && n > 0 ? n + ' ' + (n === 1 ? one : many) : ''; };
     return [
       { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: IMG + 'ppl-library-learn.webp' },
@@ -2561,7 +2561,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c135';
+  var RECIPES_JS = '/recipes/recipes.js?v=c138';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
