@@ -74,8 +74,23 @@ const goalScore = (r, set) => arr(r.goals).filter(g => arr(set.goals).includes(g
 function pool(recipes, set, meal){
   const rand = rng((+set.seed || 1) * 31 + meal.length);
   const ok = shuffle(arr(recipes).filter(r => r && r.id && r.meal === meal && fitsAll(r, set)), rand);
-  return ok.map((r, i) => ({r, s: goalScore(r, set), i})).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.r);
+  const out = ok.map((r, i) => ({r, s: goalScore(r, set), i})).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.r);
+  // BLD 1016: every meal a plan picks meets the Grounded Standards (saturated fat, added sugar, sodium per serving). The rest
+  // wait at the end, used only when food needs leave too few to fill a week.
+  const T = MT(); if (!T) return out; const kind = meal === 'snack' ? 'snack' : 'meal', yes = out.filter(r => T.meets(r, kind));
+  return yes.length >= (MIN_POOL[meal] || 1) ? yes : yes.concat(out.filter(r => !T.meets(r, kind)));
 }
+// ---------- BLD 1016: variety (shared/gg-meal-tags.js, GGMealTags) ----------
+// Chris, November 17, 2026: "make sure we do not have similar meals like this, salmon back to back, or mexican style dinners
+// two nights in a row". A meal's tag is {p: main protein, c: cuisine style, m: method}.
+let MTX = null;
+function MT(){ if (root && root.GGMealTags) return root.GGMealTags; if (MTX === null){ MTX = false; try { if (typeof require === 'function') MTX = require('./gg-meal-tags.js'); } catch(e){ MTX = false; } } return MTX || null; }
+const MIN_POOL = {dinner: 10, lunch: 4, breakfast: 4, snack: 5};
+const tg = r => { const T = MT(); return T ? T.tagOf(r) : {p: (r && r.protein) || 'mixed', c: 'american', m: 'skillet'}; };
+// The cost of a run of dinners in date order: the same protein or the same style on back to back nights, and fish two nights running.
+function runCost(list){ const T = MT(); let c = 0; for (let i = 1; i < list.length; i++){ const a = list[i - 1], b = list[i]; if (!a || !b) continue;
+  const x = tg(a), y = tg(b); if (T ? T.sameP(x, y) : x.p === y.p) c += 10; if (T && T.sameC(x, y)) c += 10; if (isFish(a) && isFish(b)) c += 1; } return c; }
+function perms(a){ if (a.length <= 1) return [a.slice()]; const out = []; a.forEach((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(p => out.push([x].concat(p)))); return out; }
 
 // ---------- dinners ----------
 const isFish = r => r && r.protein === 'fish';
@@ -95,7 +110,7 @@ function dinnerItem(r, day){
     swaps: r.swaps || null, shop: r.shop || null, cost: r.cost != null ? r.cost : undefined, batch: day === 'Sun' ? true : undefined};
 }
 // Order a week's cooked dinners: quickest on weeknights, the longest cook on Sunday, fish apart, no protein two nights running.
-function arrange(list, days){
+function arrange(list, days, edge){
   const sun = days.includes('Sun') ? list.slice().sort((a, b) => (+b.mins || 0) - (+a.mins || 0) || (+b.serves || 0) - (+a.serves || 0))[0] : null;
   let rest = list.filter(r => r !== sun), out = [];
   const wd = days.filter(d => d !== 'Sun');
@@ -106,12 +121,16 @@ function arrange(list, days){
   }
   // Fish apart: if two fish dinners sit next to each other, move one later when a spot allows.
   for (let i = 1; i < out.length; i++) if (isFish(out[i]) && isFish(out[i - 1])){ const j = out.findIndex((r, k) => k > i + 1 && !isFish(r) && !isFish(out[k - 1]) && !(out[k + 1] && isFish(out[k + 1]))); if (j > 0){ [out[i], out[j]] = [out[j], out[i]]; } }
+  // BLD 1016: the nights in date order are the week before's last dinner, Sunday, then Monday on (a Leftovers Night is neutral).
+  // When that order puts one protein or one style on back to back nights, the weeknights take the order with the fewest.
+  edge = edge || {}; const seq = o => [edge.before || null, sun].concat(o, wd.length < 6 ? [LEFT] : [], [edge.after || null]).filter(x => x !== undefined);
+  if (out.length > 1 && runCost(seq(out)) >= 10){ let best = out, bc = runCost(seq(out)); for (const p of perms(out)){ const c = runCost(seq(p)); if (c < bc){ best = p; bc = c; if (!c) break; } } out = best; }
   const map = {}; wd.forEach((d, i) => { map[d] = out[i]; }); if (sun) map.Sun = sun; return map;
 }
 function planWeeks(recipes, set){
   set = Object.assign({needs: [], goals: [], allergies: '', seed: 1, leftovers: true}, set || {});
   const P = pool(recipes, set, 'dinner'), fishP = P.filter(isFish), otherP = P.filter(r => !isFish(r));
-  const ids = {}, stats = {};
+  const ids = {}, stats = {}, lists = {};
   const cookDays = set.leftovers === false ? DAYS.slice() : DAYS.filter(d => d !== 'Sat');
   const need = cookDays.length;
   let fq = 0, oq = 0;
@@ -126,17 +145,28 @@ function planWeeks(recipes, set){
       const r = otherP[oq++ % otherP.length];
       if (has(r) && otherP.length + fishP.length >= need) continue;
       if (isRed(r) && week.some(isRed)) continue;
+      // BLD 1016: a week holds each protein twice at most and each style twice at most, while the pool allows it.
+      if (guard < otherP.length * 2 && crowd(week, r, guard < otherP.length)) continue;
       week.push(r);
     }
     // A small pool: fill with more fish, then allow repeats (never a second red meat).
     for (let guard = 0; week.length < need && guard < 40 && P.length; guard++){ const r = P[(fq + oq + guard) % P.length]; if (isRed(r) && week.some(isRed)) continue; if (has(r) && P.filter(x => !(isRed(x) && week.some(isRed))).some(x => !has(x))) continue; week.push(r); }
-    const map = arrange(week, cookDays);
+    lists[w] = week;
+  });
+  // BLD 1016: each week's Sunday is its longest cook; the weeks are then arranged in date order, each one knowing the night
+  // before it (last week's Saturday) and the night after it (next week's Sunday, Week A's after Week D).
+  const m = byId(recipes), suns = {}; WEEKS.forEach(w => { suns[w] = cookDays.includes('Sun') ? lists[w].slice().sort((a, b) => (+b.mins || 0) - (+a.mins || 0) || (+b.serves || 0) - (+a.serves || 0))[0] : null; });
+  WEEKS.forEach((w, k) => {
+    const prevW = WEEKS[k - 1], before = prevW && ids[prevW] ? m[ids[prevW][5]] : null, after = suns[WEEKS[(k + 1) % 4]];
+    const map = arrange(lists[w], cookDays, {before, after});
     ids[w] = DAYS.map(d => map[d] ? map[d].id : (d === 'Sat' && set.leftovers !== false ? 'leftovers' : ''));
   });
   const weeks = weeksFromIds(recipes, ids);
   WEEKS.forEach(w => { stats[w] = weekStats(weeks[w].dinners); });
   return {weeks, ids, stats};
 }
+// A week already holds this protein (twice, once the pool runs thin), this style twice (American home cooking is a neutral style), or this method twice.
+function crowd(week, r, tight){ const t = tg(r), T = MT(), n = k => week.filter(x => tg(x)[k] === t[k]).length; return n('p') >= (tight ? 1 : 2) || (!!T && T.sameC(t, t) && n('c') >= 2) || (t.c === 'american' && n('c') >= 3) || n('m') >= 2; }
 function weekStats(dinners){
   const cooked = arr(dinners).filter(x => x && !x.leftover);
   const costs = cooked.map(x => x.cost).filter(x => x != null && isFinite(+x));
@@ -158,14 +188,22 @@ function swapDinner(recipes, set, ids, wk, day, n){
   const fishOk = P.some(isFish);
   const cands = fishLeft < 2 && fishOk ? P.filter(isFish) : P;
   if (!cands.length && !(cur && cur.leftover)) return ids;
-  const pick = cands.length ? cands[Math.abs(+n || 0) % cands.length] : null;
+  // BLD 1016: the swap keeps the nights around it varied (no protein or style shared with the night before or after).
+  const order = [6, 0, 1, 2, 3, 4, 5], k = order.indexOf(di), nb = [order[k - 1], order[k + 1]].filter(x => x != null).map(x => m[list[x]]).filter(Boolean), T = MT();
+  const fine = cands.filter(r => !nb.some(x => T ? T.sameP(tg(x), tg(r)) || T.sameC(tg(x), tg(r)) : x.protein === r.protein)), from = fine.length ? fine : cands;
+  const pick = from.length ? from[Math.abs(+n || 0) % from.length] : null;
   if (!pick) return ids;
   list[di] = pick.id; return Object.assign({}, ids, {[wk]: list});
 }
 
 // ---------- breakfasts, lunches, snacks ----------
-const MEALS = {breakfasts: 'breakfast', lunches: 'lunch', snacks: 'snack'}, MCOUNT = {breakfasts: 4, lunches: 4, snacks: 5};
-function planMeals(recipes, set){ set = set || {}; const out = {}; Object.keys(MEALS).forEach(k => { out[k] = pool(recipes, set, MEALS[k]).slice(0, MCOUNT[k]).map(r => r.id); }); return out; }
+const MEALS = {breakfasts: 'breakfast', lunches: 'lunch', snacks: 'snack'}, MCOUNT = {breakfasts: 4, lunches: 5, snacks: 5}; // BLD 1016: five lunches, each its own protein, so every day has one that fits
+// BLD 1016: the lunches each bring their own main protein, so a day's lunch can always step aside from the dinners around it.
+function distinct(list, n){ const out = [], seen = new Set(); list.forEach(r => { if (out.length < n && !seen.has(tg(r).p)){ out.push(r); seen.add(tg(r).p); } }); list.forEach(r => { if (out.length < n && !out.includes(r)) out.push(r); }); return out; }
+function planMeals(recipes, set){ set = set || {}; const out = {}; Object.keys(MEALS).forEach(k => { const P = pool(recipes, set, MEALS[k]); const L = k === 'lunches' ? lunchPool(recipes, set, P) : P; out[k] = (k === 'lunches' ? distinct(L, MCOUNT[k]) : P.slice(0, MCOUNT[k])).map(r => r.id); }); return out; }
+// When food needs leave fewer than five lunch proteins, a dinner that brings a missing protein joins the lunches (it packs well).
+function lunchPool(recipes, set, P){ const have = new Set(P.map(r => tg(r).p)); if (have.size >= MCOUNT.lunches) return P;
+  const extra = pool(recipes, set, 'dinner').filter(r => { const p = tg(r).p; if (have.has(p)) return false; have.add(p); return true; }); return P.concat(extra); }
 function planDay(recipes, set, dayIndex){
   const m = planMeals(recipes, set), b = byId(recipes), at = (list, k) => list.length ? b[list[((+dayIndex || 0) + k) % list.length]] : null;
   return {breakfast: at(m.breakfasts, 0), lunch: at(m.lunches, 1), snack: at(m.snacks, 2)};
@@ -490,7 +528,7 @@ function ldlRange(base, levers, picks, opts){
     at: (weeks, which) => { const r = 1 - Math.exp(-Math.max(0, weeks) / 2.5), p = which === 'lo' ? lo : which === 'hi' ? hi : mid; return B * (1 - p * r); }};
 }
 
-const API = {needOk, fitsAll, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
+const API = {needOk, fitsAll, tagOf: tg, runCost, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
   buildSessions, estimate, setClock, clock: null, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
   GEAR, PLACE_GEAR, gearOk, gearPlace, PHASES, phaseOfWeek, cardioSlots};
 if (typeof module === 'object' && module.exports) module.exports = API;
