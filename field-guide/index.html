@@ -1060,12 +1060,16 @@ function lock(){
 setInterval(() => { if (!DATA) return; if (SESS_UNTIL && Date.now() > SESS_UNTIL) { lock(); return; } const al = +DATA.settings.autolock || 0; if (al && Date.now() - lastAct > al * 60000) lock(); }, 15000);
 
 // ---------------- app shell ----------------
+// BLD 979 follow-up: a plan moved into The Grounded Way takes this device's newest library over on its own (health.js syncMoved),
+// once the Field Guide is open, and again after a library is sealed here.
+function fgSyncMoved(){ setTimeout(() => { try { if (window.GGHealth && GGHealth.syncMoved) GGHealth.syncMoved(); } catch(e){} }, 1500); }
 function start(){
   lockEl.classList.add('hide'); appEl.classList.remove('hide');
   if (!DATA.settings.lockv2){ DATA.settings.autolock = 0; DATA.settings.lockv2 = 1; save(); }
   if (SESS_UNTIL) setTimeout(() => toast('Unlocked until ' + untilText() + '.'), 400);
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
   V = {tab: firstTab(tabsFor())}; render();
+  fgSyncMoved();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
   if (dr && dr.kind === 'wl'){
     if (WLG() && (dr.demo || CL(dr.clientId))) setTimeout(() => { if (confirm('You have a Willow visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); wlLoad(); let n = 0; const go2 = () => { if (WC) wlOpenRun(); else if (WC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Willow questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
@@ -11016,7 +11020,7 @@ async function sealUpdate(){
   d.libs[U.lvl] = box;
   if (U.lvl === 'guide' && kitchenLive()) await kitchenSeal(U.next); // the Family Kitchen follows every Guide library update while a kitchen code is in use (BLD 846, 908)
   if (U.lvl === 'founder') FDR = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
-  UPD = null; await persist(); render(); toast('Sealed. It is in Ready to Upload.');
+  UPD = null; await persist(); render(); toast('Sealed. It is in Ready to Upload.'); fgSyncMoved();
 }
 function vUpdateCard(){
   const U = UPD;

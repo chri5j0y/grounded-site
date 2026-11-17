@@ -3456,7 +3456,7 @@ function vCard(hasPlan){
   const moved = !!H().set.movedHome, busy = S.moving;
   const move = moved ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Bring Over What\'s New'}</button>`
     : hasPlan ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Move My Plan to The Grounded Way'}</button>` : '';
-  const when = moved ? 'After a library update, tap Bring Over What\'s New.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
+  const when = moved ? 'Each library update comes over on its own when you open the Field Guide. Bring Over What\'s New also brings what you logged here.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
   return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Your Tending Lives in The Grounded Way</h3>
     <p class="hj-sub">Your plan, your week, and your tree grow together in The Grounded Way app, private on this phone.</p>
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button>${move}</div>
@@ -3468,6 +3468,27 @@ function loadGGP(){
   if (window.GGP) return Promise.resolve();
   return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=c026'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
+// BLD 979 follow-up (Chris, November 17, 2026: "now it says 34 min when i open", then "they all still short"): a plan moved
+// into The Grounded Way keeps its own copy of the library, and that copy stayed as it was on the day of the move, so the newly
+// sealed workouts never reached it. Now, each time the Field Guide opens with a library and a moved plan, the unlocked profile's
+// copy of the library (w.lib: the healthJourney and audio, and the Founder plans) is brought up to date on its own, quietly,
+// on this device. Only the library copy changes: what the person logged, chose, and saved stays exactly as it is. A locked
+// profile is never asked to open; its copy comes over the next time both are open.
+const libSigOf = o => { try { const t = JSON.stringify(o || null); let x = 5381; for (let i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0; return t.length + ':' + (x >>> 0).toString(36); } catch(e){ return ''; } };
+let SYNC = null;
+async function syncMoved(){
+  if (C.host === 'home' || GUIDE_T() || PUB()) return false; const h = H(); if (!h || !h.set || !h.set.movedHome) return false;
+  const f = FX() || {}; if (!f.healthJourney) return false;
+  const fd = C.fdr && C.fdr(), lib = {healthJourney: f.healthJourney, audio: f.audio}, fdr = fd ? {healthMine: fd.healthMine, healthKayti: fd.healthKayti} : null, sig = libSigOf([lib, fdr]);
+  if (SYNC && SYNC.sig === sig) return SYNC.p; SYNC = {sig, p: (async () => {
+    await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
+    const a = window.GGP.active && window.GGP.active(); if (!a) { SYNC = null; return false; }
+    const w = window.GGP.data(a.id, 'tending'); if (!w || !w.lib || !w.movedOnce) return false;
+    if (w.libSig === sig || (!w.libSig && libSigOf([w.lib, w.fdr || null]) === sig)){ if (!w.libSig){ w.libSig = sig; await window.GGP.save(a.id); } return false; }
+    w.lib = clone(lib); if (fdr) w.fdr = clone(fdr); w.tier = C.tier ? C.tier() : (w.tier || 'guide'); w.libSig = sig; w.libSync = Date.now();
+    await window.GGP.save(a.id); return true; })().catch(() => { SYNC = null; return false; })};
+  return SYNC.p;
+}
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
   try {
@@ -3478,7 +3499,7 @@ async function moveHome(){
     const f = (FX()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
     w.lib = clone({healthJourney: f.healthJourney, audio: f.audio});
     w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : null;
-    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now();
+    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now(); w.libSig = libSigOf([w.lib, w.fdr]);
     const fresh = !w.health || !w.health.set || w.health.set.pubDone || !w.movedOnce;
     if (fresh){ w.health = clone(d.health || {}); w.deleted = {health: clone(((d.deleted || {}).health) || {})}; }
     else window.GGHealth.merge(w, {health: d.health || {}, deleted: d.deleted || {}});
@@ -4944,8 +4965,14 @@ function vWorkouts(){
     return `<h3 class="tn-h3">${progOn() ? 'This Week' : esc(L.name)}${progOn() ? ` <small class="tn-mine">${esc(phName(phaseId(Math.max(1, progWeek(new Date())))))}</small>` : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
   const every = everyHtml((key, kick, title, sub, art) => artCard(i++, key, kick, title, sub, 'a-move', art));
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${wlogLine(w)}</div>`).join('')}</div>` : '';
-  return `<div class="tn-sec a-move">${young ? youngHead(ya) : PUB() ? pubMoveHead() : progCard()}${lv}${every}${recent}</div>`;
+  return `<div class="tn-sec a-move">${young ? youngHead(ya) : PUB() ? pubMoveHead() : progCard()}${newerCard()}${lv}${every}${recent}</div>`;
 }
+// BLD 979 follow-up: a moved plan whose saved copy is from before BLD 979 (no measured minutes) says, once, that the newest
+// workouts come over when the Field Guide opens on this device.
+function newerCard(){ if (C.host !== 'home' || PUB()) return ''; const ss = Object.values(WK0().sessions || {}).filter(x => x && arr(x.blocks).length);
+  if (!ss.length || ss.some(x => x.minsByPhase)) return '';
+  return `<div class="tn-card a-move tn-new"><div class="tn-k a-move">Newer Workouts Are Ready</div><p class="tn-sub">Open the Field Guide once on this device, and your newest workouts come over here on their own, with everything you logged kept as it is.</p>
+    <div class="tn-acts"><a class="tn-btn sm" href="/field-guide/">${ic('play')}Open the Field Guide</a></div></div>`; }
 // BLD 896 (Chris, October 30, 2026): the Every Workout shelf. This Week (the phase the person is in) stays on top; then every workout
 // by category: Strength, Cardio, Flow, Yoga, Balance, Stretch, and in public Tending Gentle; Strength and Cardio by phase (Foundation,
 // Build, Peak), each tile with its place, like "Build 2 · 56 min". A workout from another phase plays with that phase's sets and reps.
@@ -6050,10 +6077,12 @@ window.GGHealth = {
   qrReady: () => qrLoad(), qr: t => qrSvg(String(t || '')),
   starts: () => H() ? {food: ymd(kitStart()), prog: progOn() ? ymd(progStart()) : null, start: ymd(startMon())} : null,
   setStart: (kind, d) => apiSetStart(kind, d),
-  planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; },
+  planSecs: (id, ph, light) => { const w = WK0(), ses = (w.sessions || {})[id]; return ses ? Math.round(wkClock(ses, String(ph || '1'), !!light, w)) : 0; },
   // BLD 979 follow-up (tests, patches/bld979/test/measure979.mjs): every workout and Flow this view can play today (Every Workout
   // at each level, plus today's), each with the minutes its card and start screen say and the player's own clock for it.
-  audit: () => apiAudit()
+  audit: () => apiAudit(),
+  // BLD 979 follow-up: the Field Guide calls this once it opens (and again after a library is sealed on this device).
+  syncMoved: () => syncMoved()
 };
 // ---------- BLD 896, Holiday Sets ----------
 // Chris, October 30, 2026: "a special set for holidays and special occasions.. so you can select thanksgiving dinner, and it will
