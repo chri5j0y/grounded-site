@@ -5,7 +5,13 @@
    See My Root Words, New Root Words, Download My Account Data, Sign Out), Delete My Account, and Household.
    Needs shared/gg-account.js; uses shared/gg-sync.js when it is on the page, and shared/gg-rootwords.js to show words.
      GGAccountUI.open(view, opts)   view: signup, signin, forgot, recover, fresh, keep, confirm, join, account, delete,
-                                    household, password; opts: {token}. Promise when the sheet closes.
+                                    household, password, membership; opts: {token}. Promise when the sheet closes.
+   BLD 1017, Start Membership (the membership view; every Start Membership button on the site opens it through
+   shared/gg-join.js, and /home/#membership opens it in The Grounded Way): signed out, Create My Account (or I Have an
+   Account) first; then the choice: Begin My 14 Days (Try Membership for 14 days, no card, full Membership on the
+   account at once) or Join Now (the Founding prices, the Stripe payment links carrying this account).
+   TRIAL_LIVE (shared/gg-account.js) keeps Begin My 14 Days resting until Chris reads the trial sections of Terms and Privacy; until
+   then the choice shows Join Now only. Tests turn it on for one browser with window.GG_TRIAL_LIVE = true.
      GGAccountUI.fromHash()         opens the sheet a #confirm=, #recover=, #keep=, or #join= link asks for
      GGAccountUI.css(href)          adds shared/gg-account.css once (opts.css false skips it)
    No dashes in any words here.
@@ -14,7 +20,16 @@
   'use strict';
   if (window.GGAccountUI) return;
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
-  var CSS = HERE + 'gg-account.css?v=b971', cssOn = false, cur = null, uid = 0;
+  var CSS = HERE + 'gg-account.css?v=c143', cssOn = false, cur = null, uid = 0;
+  // BLD 1017: the Membership Trial rests until Terms and Privacy carry its sections (TRIAL_LIVE in shared/gg-account.js)
+  function trialLive() { return !!(G() && G().trialLive && G().trialLive()); }
+  // The Founding prices and their Stripe payment links (the same four links The Grounded Way page used, BLD 949)
+  var PLANS = [
+    { id: 'mm', who: 'Founding Member', price: '$8 a month', then: 'then $12 a month', href: 'https://buy.stripe.com/bJe6oG27y8UcgNO06y7kc00?prefilled_promo_code=FOUNDINGM' },
+    { id: 'my', who: 'Founding Member', price: '$64 a year', then: 'then $96 a year', save: 'Saves a third', href: 'https://buy.stripe.com/4gMdR8h2sfiA1SUdXo7kc01?prefilled_promo_code=FOUNDINGMY' },
+    { id: 'hm', who: 'Founding Household', price: '$16 a month', then: 'then $24 a month', href: 'https://buy.stripe.com/8x29ASaE4fiA69a6uW7kc02?prefilled_promo_code=FOUNDINGH' },
+    { id: 'hy', who: 'Founding Household', price: '$128 a year', then: 'then $192 a year', save: 'Saves a third', href: 'https://buy.stripe.com/7sYdR88vWfiAgNOcTk7kc03?prefilled_promo_code=FOUNDINGHY' }
+  ];
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function css(href) { if (cssOn || document.querySelector('link[data-ga-css]')) { cssOn = true; return; } var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href || CSS; l.setAttribute('data-ga-css', '1'); document.head.appendChild(l); cssOn = true; }
   var G = function () { return window.GGAccount; };
@@ -67,12 +82,12 @@
     // BLD 958: an invite on this device (a link from a parent) makes the account for the person it names; a teen or kid
     // account comes only this way. A kid's invite carries a sign in name, so a kid needs no email.
     var inv = o.token || joinWaiting(), kid = o.kid || joinKid();
-    var c = sheet('Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : 'One email and password opens your tree on every device. Everything is locked on this device before it leaves, so only you can open it.');
+    var c = sheet(o.title || 'Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : o.lead || 'One email and password opens your tree on every device. Everything is locked on this device before it leaves, so only you can open it.');
     var agree = '<a href="/terms.html" target="_blank" rel="noopener">Terms of Use</a> and the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>';
     c.body.innerHTML = '<form novalidate>' + (kid ? '<p class="ga-note">Your sign in name: <b>' + esc(kid) + '</b></p>' : field('ga-em', 'Email', 'email', 'email')) + field('ga-pw', 'Password', 'password', 'new-password', 'At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your password is the key to your account, so keep it yours alone.') +
       '<label class="ga-check"><input id="ga-ag" type="checkbox"><span>' + (inv ? 'I agree to the ' + agree + '.' : 'I am 18 or older, and I agree to the ' + agree + '.') + '</span></label>' +
       '<button type="submit" class="ga-btn big">Create My Account</button></form>' + (inv ? '' : '<p class="ga-note">Younger than 18? A parent adds you from their Grounded Household, and the invite opens your account.</p>') + '<div class="ga-alt"><button type="button" class="ga-link" data-go="signin">I Have an Account</button></div>';
-    on('[data-go=signin]', function () { V.signin(); });
+    on('[data-go=signin]', function () { V.signin({ then: o.then }); });
     form(function (btn) {
       if (!cur.w.querySelector('#ga-ag').checked) return say(inv ? 'Check the box to agree to the Terms of Use and the Privacy Policy.' : 'Check the box to say you are 18 or older and agree to the Terms of Use and the Privacy Policy.');
       busy(btn, true, 'Locking Your Keys');
@@ -82,6 +97,7 @@
         return showWords(r.words).then(function () {
           // A kid's account starts confirmed, so the invite joins the Household right away.
           if (kid && inv) return G().household.join(inv).then(function () { joinWait(null); joinKid(null); var d = sheet('You Are In', 'Welcome to your family’s Household. Your tree opens on every device you sign in on.'); d.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>'; return d.p; }, function () { close(); });
+          if (o.then) return o.then();   // BLD 1017: Start Membership carries on to its choice
           V.welcome(email);
         });
       }).catch(fail(btn));
@@ -93,15 +109,17 @@
     c.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>';
     return c.p;
   };
-  V.signin = function () {
+  V.signin = function (o) {
+    o = o || {};
     var c = sheet('Sign In', 'Sign in with your Grounded Account email (or your sign in name) and password. Each profile still opens with its own passcode.');
     c.body.innerHTML = '<form novalidate>' + field('ga-em', 'Email or Sign In Name', 'text', 'username') + field('ga-pw', 'Password', 'password', 'current-password') + '<button type="submit" class="ga-btn big">Sign In</button></form>' +
       '<div class="ga-alt"><button type="button" class="ga-link" data-go="forgot">Forgot My Password</button><button type="button" class="ga-link" data-go="signup">Create My Account</button></div>';
-    on('[data-go=forgot]', function () { V.forgot(); }); on('[data-go=signup]', function () { V.signup(); });
+    on('[data-go=forgot]', function () { V.forgot(); }); on('[data-go=signup]', function () { V.signup(o.then ? { then: o.then, title: o.title, lead: o.lead } : undefined); });
     form(function (btn) {
       busy(btn, true, 'Opening Your Account');
       G().signIn({ email: val('ga-em'), password: val('ga-pw') }).then(function () {
         if (window.GGSync) GGSync.sync().catch(function () {});
+        if (o.then) return o.then();   // BLD 1017: Start Membership carries on to its choice
         say('Welcome back. Your tree is coming in now.', true); setTimeout(close, 900);
       }).catch(fail(btn));
     });
@@ -151,7 +169,7 @@
   V.confirm = function (o) {
     var c = sheet('Confirm Your Email', '');
     c.body.innerHTML = '<p class="ga-lead">Confirming…</p>';
-    G().confirm(o.token).then(function () { c.body.innerHTML = '<p class="ga-lead">Your email is confirmed. Sign in on every device you use, and your tree comes along.</p><button type="button" class="ga-btn big" data-ga="close">Done</button>'; }, function (e) { say(e.message); });
+    G().confirm(o.token).then(function (r) { c.body.innerHTML = '<p class="ga-lead">' + (r && r.trial ? 'Your email is confirmed, and your 14 days of Membership are open. Every device you sign in on has the full Grounded Way.' : 'Your email is confirmed. Sign in on every device you use, and your tree comes along.') + '</p><button type="button" class="ga-btn big" data-ga="close">Done</button>'; }, function (e) { say(e.message); });
     return c.p;
   };
   // BLD 957: an invite opened before the account exists or is confirmed waits on this device (gg-join-wait) and joins by
@@ -327,6 +345,66 @@
       }, function (e) { if (cur === c) say(e.message); });
     };
     paint();
+    return c.p;
+  };
+
+  /* ---------- BLD 1017: Start Membership ---------- */
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function lastDay(ms) { var d = new Date(ms - 60000); return MONTHS[d.getMonth()] + ' ' + d.getDate(); }
+  function plansHtml(pick) {
+    return '<fieldset class="ga-plans"><legend class="ga-k">Founding prices for our first 500 members</legend>' + PLANS.map(function (p) {
+      return '<label class="ga-plan"><input type="radio" name="ga-plan" value="' + p.id + '"' + (p.id === pick ? ' checked' : '') + '><span><b>' + esc(p.who) + '</b><span class="ga-pr">' + esc(p.price) + (p.save ? ' <em>' + esc(p.save) + '</em>' : '') + '</span><small>For your first year, ' + esc(p.then) + '.' + (p.who === 'Founding Household' ? ' Your whole home, up to six people.' : '') + '</small></span></label>';
+    }).join('') + '</fieldset>';
+  }
+  V.membership = function (o) {
+    o = o || {};
+    var A = G();
+    var lead = 'The full Grounded Way: Grounded Nutrition and Grounded Fitness, Grounded Meditation, deeper Spirit programs, Grounded Relationships with the Grove, the full growth plan, Grounded Seasons, and Grounded Stories read aloud.';
+    if (A.state() === 'out') {
+      return V.signup({ title: 'Start Membership', lead: 'First, your Grounded Account: one email and password, and Membership opens on every device you sign in on. Everything is locked on this device before it leaves, so only you can open it.', then: function () { return V.membership(o); } });
+    }
+    var c = sheet('Start Membership', lead);
+    c.body.innerHTML = '<p class="ga-note">One moment.</p>';
+    var info = A.info() || {};
+    var ask = trialLive() ? A.trial().catch(function () { return null; }) : Promise.resolve(null);
+    Promise.all([ask, A.memberRefresh().catch(function () { return A.member(); })]).then(function (r) {
+      if (cur !== c) return;
+      var t = r[0], m = r[1], tr = t && t.trial, paid = m && m.status === 'active' && !m.trial;
+      var top = '';
+      if (paid) {
+        top = '<div class="ga-card"><span class="ga-k">Membership</span><b class="ga-big">Membership is open on your Grounded Account.</b><small>Every device you sign in on has the full Grounded Way.</small></div>' +
+          '<a class="ga-btn big" href="/home/">Open The Grounded Way</a>';
+        c.body.innerHTML = top; return;
+      }
+      if (t && t.live && tr && tr.status === 'open') {
+        top = '<div class="ga-card"><span class="ga-k">Your 14 Days</span><b class="ga-big">Your 14 days of Membership are open through ' + esc(lastDay(tr.ends)) + '.</b><small>Join now, and Membership carries straight on from today.</small></div>' +
+          '<a class="ga-btn big line" href="/home/">Open The Grounded Way</a>';
+      } else if (t && t.live && tr && tr.status === 'waiting') {
+        top = '<div class="ga-card"><span class="ga-k">Your 14 Days</span><b class="ga-big">Your 14 days begin when you confirm your email.</b><small>Tap the link we sent to ' + esc(info.email || 'your email') + '. Membership opens on every device you sign in on.</small></div>';
+      } else if (t && t.live && tr && (tr.status === 'ended' || tr.status === 'used')) {
+        top = '<div class="ga-card"><span class="ga-k">Welcome Back</span><b class="ga-big">Join now, and the full Grounded Way opens again on every device.</b><small>Everything you made is right where it is.</small></div>';
+      } else if (t && t.live && t.can) {
+        top = '<div class="ga-card ga-trial"><span class="ga-k">Try Membership for 14 Days</span><b class="ga-big">Everything opens today. No card needed.</b>' +
+          '<small>On day 12 we send one gentle note. If you choose to wait after 14 days, your account returns to Start, the light version, with every tree, check-in, and plan right where it is.</small>' +
+          '<button type="button" class="ga-btn big" data-go="trial">Begin My 14 Days</button></div>' +
+          '<p class="ga-or">Or join now at the Founding price</p>';
+      }
+      c.body.innerHTML = top + plansHtml(o.plan || 'mm') + '<button type="button" class="ga-btn big' + (t && t.live && t.can ? ' line' : '') + '" data-go="join">Join Now</button>' +
+        '<p class="ga-note">Yearly saves a third. Membership opens on your Grounded Account as soon as you join, on every device you sign in on.</p>';
+      on('[data-go=join]', function () {
+        var pick = c.w.querySelector('input[name=ga-plan]:checked'), p = PLANS.filter(function (x) { return pick && x.id === pick.value; })[0] || PLANS[0];
+        location.href = A.checkoutUrl(p.href);
+      });
+      on('[data-go=trial]', function (b) {
+        busy(b, true);
+        A.trialStart().then(function (x) {
+          var tt = x && x.trial;
+          if (tt && tt.status === 'waiting') { say(''); V.membership(o); return; }
+          var d = sheet('Your 14 Days Are Open', 'Full Membership is open on your Grounded Account through ' + lastDay(tt && tt.ends || Date.now() + 14 * 864e5) + '. Every device you sign in on has the full Grounded Way.');
+          d.body.innerHTML = '<a class="ga-btn big" href="/home/">Open The Grounded Way</a><p class="ga-note">On day 12 we send one gentle note with the Founding prices. Join anytime, and Membership carries straight on.</p>';
+        }).catch(fail(b));
+      });
+    });
     return c.p;
   };
 
