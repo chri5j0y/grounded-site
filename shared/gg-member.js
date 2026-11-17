@@ -62,15 +62,18 @@
    hour) the account is asked again: active keeps it open, ended returns this device to Start with Renew Membership, and
    signing out closes it here. A code typed while signed in attaches to the account (Worker checked, once per account; an
    organization code takes a seat); without an account, a code opens Membership on this device as before.
+   The Membership Trial (GWG BLD 1017): 14 days of Membership on the account read rec.trial, with their own words and a
+   Join Now button that opens Start Membership's choice (/home/#membership).
    Words: forward and plain. No dashes in any words here.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGMember && window.GGMember.__v) return;
-  var V = 'b950', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
+  var V = 'c143', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
   var me = document.currentScript;
   var LIB = (me && me.getAttribute('data-lib')) || '/field-guide/lib-member.js';
   var SEE = (me && me.getAttribute('data-see')) || '/the-grounded-way.html#ways';
+  var JOIN = '/home/#membership';   // BLD 1017: Start Membership's choice, in The Grounded Way
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var SECTIONS = ['tend', 'meditation', 'spirit', 'relationships', 'growth', 'seasons'];
   var KINDS = { member: 'Member', household: 'Household', org: 'Organization', staff: 'Staff', founder: 'Founder' };
@@ -346,11 +349,11 @@
         ACH = Date.now();
         var mine = REC && REC.acct === me;
         if (m && m.status === 'active') {
-          var rec = { c: '', kind: KINDS[m.kind] ? m.kind : 'member', ends: m.ends ? dayOf(m.ends) : '', at: Date.now(), acct: me, auto: m.auto ? 1 : 0, hh: m.household ? 1 : 0, org: m.org ? 1 : 0 };
+          var rec = { c: '', kind: KINDS[m.kind] ? m.kind : 'member', ends: m.ends ? dayOf(m.ends) : '', at: Date.now(), acct: me, auto: m.auto ? 1 : 0, hh: m.household ? 1 : 0, org: m.org ? 1 : 0, trial: m.trial ? 1 : 0 };
           if (ST.status === 'member' && LIBR && mine) {
-            var was = JSON.stringify([REC.kind, REC.ends, REC.auto, REC.hh, REC.org]);
+            var was = JSON.stringify([REC.kind, REC.ends, REC.auto, REC.hh, REC.org, REC.trial || 0]);
             REC = rec; ST.kind = rec.kind; ST.ends = rec.ends;
-            if (was !== JSON.stringify([rec.kind, rec.ends, rec.auto, rec.hh, rec.org])) { keepRec2(rec); emit(); }
+            if (was !== JSON.stringify([rec.kind, rec.ends, rec.auto, rec.hh, rec.org, rec.trial])) { keepRec2(rec); emit(); }
             return;
           }
           if (ST.status === 'member' && LIBR && REC && !REC.acct) return;   // a code already opened it on this device
@@ -372,7 +375,7 @@
           });
         }
         if (m && m.status === 'ended' && (mine || ST.status !== 'member')) {
-          var r2 = { c: '', kind: KINDS[m.kind] ? m.kind : 'member', ends: m.ends ? dayOf(m.ends) : '', at: Date.now(), acct: me, lapsed: 'ended' };
+          var r2 = { c: '', kind: KINDS[m.kind] ? m.kind : 'member', ends: m.ends ? dayOf(m.ends) : '', at: Date.now(), acct: me, lapsed: 'ended', trial: m.trial ? 1 : 0 };
           setClosed('ended', r2); return keepRec(r2).then(emit);
         }
         if (!m && mine) { setClosed('start'); return wipe().then(emit); }
@@ -510,6 +513,9 @@
   function kindName(k) { return KINDS[k] || 'Member'; }
   function statusLine() {
     var s = ST, R0 = REC || {};
+    // BLD 1017: the Membership Trial (Try Membership for 14 days)
+    if (s.status === 'member' && R0.acct && R0.trial) return 'Your 14 days of Membership are open on your Grounded Account' + (s.ends ? ', through ' + nice(s.ends) : '') + '. Every device you sign in on has the full suite. Join anytime, and Membership carries straight on.';
+    if (s.status === 'ended' && R0.acct && R0.trial) return 'Your 14 days of Membership are complete. Everything you made stays right here, and Start keeps growing with you. Join anytime, and the full suite opens again on every device.';
     if (s.status === 'member' && R0.acct) return 'Membership is open on your Grounded Account' + (R0.hh ? ' through your Household' : R0.org ? ' through your organization' : s.kind && s.kind !== 'member' && s.kind !== 'household' ? ' as ' + kindName(s.kind) : '') +
       (s.ends && !R0.auto ? ', through ' + nice(s.ends) : s.ends && R0.auto ? ', renewing ' + nice(s.ends) : '') + '. Every device you sign in on has the full suite.';
     if (s.status === 'renew' && R0.acct) return 'Membership has a fresh lock, and it opens again by itself on your Grounded Account in a little while.';
@@ -521,9 +527,11 @@
   }
   function card(o) {
     css(); o = o || {};
-    var on = ST.status === 'member', t = on ? 'Membership' : ST.status === 'start' ? 'Membership' : 'Renew Membership';
+    var on = ST.status === 'member', t = on || ST.status === 'start' || (REC && REC.trial) ? 'Membership' : 'Renew Membership';
     return '<div class="ggm-card" data-ggm-card="1"><span class="ggm-ey">Grounded</span><b>' + esc(t) + '</b><small data-ggm-line="1">' + esc(statusLine()) + '</small>' +
-      '<div class="ggm-row">' + (on ? '<button type="button" class="ggm-b l" data-ggm="open">Membership on This Device</button>'
+      '<div class="ggm-row">' + (on && REC && REC.trial ? '<a class="ggm-b" href="' + esc(JOIN) + '" data-ggm-see="1">Join Now</a><button type="button" class="ggm-b l" data-ggm="open">Membership on This Device</button>'
+        : on ? '<button type="button" class="ggm-b l" data-ggm="open">Membership on This Device</button>'
+        : ST.status === 'ended' && REC && REC.acct && REC.trial ? '<a class="ggm-b" href="' + esc(JOIN) + '" data-ggm-see="1">Join Now</a><button type="button" class="ggm-b l" data-ggm="open">I Have a Code</button>'
         : ST.status === 'ended' && REC && REC.acct ? '<a class="ggm-b" href="' + esc(SEE) + '" data-ggm-see="1">Renew Membership</a><button type="button" class="ggm-b l" data-ggm="open">I Have a Code</button>'
         : '<button type="button" class="ggm-b" data-ggm="open">I Have a Code</button>' + (o.see === false ? '' : '<a class="ggm-b l" href="' + esc(SEE) + '" data-ggm-see="1">See Membership</a>')) + '</div></div>';
   }

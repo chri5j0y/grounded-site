@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c142', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c141', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c135'];
+  var TEND_SRC = ['/field-guide/moves.js?v=c135', '/field-guide/stage.js?v=c135', '/field-guide/coach.js?v=c119', '/field-guide/health.js?v=c143', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c141', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c135'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c137';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -4058,7 +4058,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=b979';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=c143';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -4067,6 +4067,13 @@
   // when the link opens in a tab already showing Home. The token leaves the address bar at once.
   function acctHashRead() {
     if (!acctLive()) return false;
+    // BLD 1017: #membership opens Start Membership's choice (Begin My 14 Days or Join Now), from any Start Membership
+    // button whose page could not open it in place, and from the day 12 note's Join Now
+    if (location.hash === '#membership') {
+      AH.hash = { kind: 'membership', token: '', kid: '' };
+      try { history.replaceState(null, '', location.pathname + location.search + (S.id ? '#today' : '')); } catch (e) {}
+      return true;
+    }
     // BLD 958: a kid's invite also carries the kid's sign in name (&kid=name).
     var m = /^#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})(?:&kid=([A-Za-z0-9.]{3,24}))?$/.exec(location.hash || '');
     if (!m) return false;

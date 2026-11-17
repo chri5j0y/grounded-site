@@ -394,6 +394,61 @@ a.ht-wlc:hover{border-color:var(--gold);}
 @media (max-width:860px){.sb-parts{grid-template-columns:repeat(2,minmax(0,1fr))}.sb-mrow{grid-template-columns:1fr}}
 @media (max-width:640px){.sb-steps,.sb-choices{grid-template-columns:1fr}.sb-guide-in{flex-wrap:nowrap;gap:16px;align-items:center}.sb-guide-in img,.sb-guide img{width:96px;flex:0 0 96px}.sb-guide h2{flex:1 1 auto;font-size:22px}}
 @media (max-width:420px){.sb-parts{gap:12px}.sb-part h3{font-size:20px}.sb-part>div{padding:12px 12px 14px}}
+/* BLD 1017 Front Page Focus: the three steps shown, the Membership card, and Also from Grounded */
+.sb-show{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;max-width:980px}
+.sb-show li{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 18px 24px;border-radius:20px;background:var(--card);border:1px solid var(--line);min-width:0}
+.sb-show .sb-n{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--gold);color:#fff;font-weight:700;font-size:19px;margin-bottom:8px}
+.sb-show .sb-st{display:block;font:600 24px/1.2 'Cormorant Garamond',Georgia,serif;color:var(--ink)}
+.sb-screen{margin:16px 0 14px;width:100%;max-width:240px;aspect-ratio:480/560;border-radius:22px;overflow:hidden;border:6px solid var(--bg-deep);box-shadow:0 10px 26px rgba(44,24,16,.12);background:var(--bg)}
+.sb-screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.sb-cap{font-size:16.5px;line-height:1.5;color:var(--ink-soft);max-width:30ch;margin:0}
+.sb-cta2{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 24px;margin-top:28px}
+.sb-cta2 .btn{margin:0}
+.sb-cta2 .text-link{font-size:17px}
+.sb-member{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;max-width:1040px;margin:0 auto;box-shadow:0 12px 32px rgba(44,24,16,.08)}
+.sb-member>img{width:100%;height:100%;min-height:100%;object-fit:cover;display:block}
+.sb-mem-in{padding:30px 32px 32px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.sb-mem-in h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(32px,3.6vw,44px);line-height:1.1;margin:0}
+.sb-mem-lead{margin:0;color:var(--ink-soft);font-size:18px}
+.sb-opens{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px}
+.sb-opens li{position:relative;padding-left:24px;font-size:16.5px;line-height:1.4}
+.sb-opens li::before{content:"";position:absolute;left:4px;top:.45em;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.sb-prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:6px}
+.sb-price{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:16px;background:var(--bg);border:1px solid var(--line);min-width:0}
+.sb-price b{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:14px;color:var(--gold)}
+.sb-amt{font:700 38px/1.05 'Cormorant Garamond',Georgia,serif;color:var(--ink)}
+.sb-amt small{font:500 17px 'Barlow',sans-serif;color:var(--ink-soft)}
+.sb-yr{font-weight:600;font-size:16.5px}
+.sb-then{color:var(--ink-soft);font-size:14px;line-height:1.4}
+.sb-found{margin:2px 0 0;font-size:16.5px}
+.sb-trial{margin:0;font-weight:600;color:var(--gold)}
+.sb-mem-btn{align-self:flex-start;margin-top:6px}
+.sb-light{text-align:center;margin:22px 0 0;font-size:17px;color:var(--ink-soft)}
+.sb-alsosec{padding:40px 0 48px}
+.sb-alsosec h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;margin:0 0 14px;color:var(--ink-soft)}
+.sb-arow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sb-acard{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-decoration:none;color:var(--ink);min-width:0}
+.sb-acard:hover,.sb-acard:focus-visible{border-color:var(--gold)}
+.sb-acard img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:0 0 auto}
+.sb-acard b{font:600 19px/1.15 'Cormorant Garamond',Georgia,serif;display:block}
+.sb-acard small{display:block;color:var(--ink-soft);font-size:13.5px;line-height:1.35;margin-top:2px}
+.sb-aline{display:flex;flex-wrap:wrap;gap:6px 20px;margin:14px 0 0;font-size:15px}
+.sb-aline a{color:var(--gold);font-weight:600;text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+.sb-aline a:hover{text-decoration:underline}
+@media (max-width:980px){.sb-arow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.sb-member{grid-template-columns:1fr}.sb-member>img{aspect-ratio:16/7;height:auto;min-height:0}.sb-mem-in{padding:22px 20px 24px}}
+@media (max-width:760px){
+  .sb-show{grid-template-columns:1fr;gap:14px}
+  .sb-show li{display:grid;grid-template-columns:132px 1fr;grid-template-rows:auto 1fr;column-gap:16px;text-align:left;align-items:start;padding:14px}
+  .sb-show .sb-screen{grid-column:1;grid-row:1 / span 2;margin:0;max-width:none;border-width:4px;border-radius:16px}
+  .sb-show .sb-head{grid-column:2;display:flex;align-items:center;gap:10px;padding-top:6px}
+  .sb-show .sb-n{width:34px;height:34px;font-size:16px;margin:0;flex:0 0 auto}
+  .sb-show .sb-st{font-size:22px}
+  .sb-show .sb-cap{grid-column:2;margin-top:8px;font-size:15.5px}
+}
+@media (max-width:600px){.sb-arow,.sb-opens,.sb-prices{grid-template-columns:1fr}.sb-cta2 .btn,.sb-mem-btn{width:100%;text-align:center;justify-content:center;align-self:stretch}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sb-screen,:root:not([data-theme="light"]) .sb-member{box-shadow:0 10px 26px rgba(0,0,0,.4)}}
+:root[data-theme="dark"] .sb-screen,:root[data-theme="dark"] .sb-member{box-shadow:0 10px 26px rgba(0,0,0,.4)}
 </style>
 </head>
 <body>
@@ -410,7 +465,8 @@ a.ht-wlc:hover{border-color:var(--gold);}
     <div class="hh-text">
       <h1 id="home-title" class="hh-title">Every part of you, working together.</h1>
       <p class="hh-sub hh-one">The Grounded app helps you see your mind, body, spirit, and relationships as a whole, and grow the meaning, hope, and resilience that carry you through.</p>
-      <div class="hh-acts"><a class="btn btn-primary hh-btn hh-begin" href="/home/">Begin The Grounded Way</a><!-- PAGE VIDEO (BLD 907, F1) --><button type="button" class="btn btn-ghost hh-btn hh-what gg-watch hh-watch" data-gg-watch="demo-grounded" hidden>Watch a Look Inside</button><!-- /PAGE VIDEO --></div>
+      <div class="hh-acts"><a class="btn btn-primary hh-btn hh-begin" href="/home/#membership" data-gg-join>Start Membership</a><!-- PAGE VIDEO (BLD 907, F1) --><button type="button" class="btn btn-ghost hh-btn hh-what gg-watch hh-watch" data-gg-watch="demo-grounded" hidden>Watch a Look Inside</button><!-- /PAGE VIDEO --></div>
+      <p class="hh-try" data-gg-trial hidden>Try Membership for 14 days. No card needed.</p>
     </div>
   </div>
 </section>
@@ -435,36 +491,67 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <h2 id="sb-guide-h">Made by the Grounded team, for every person and every season of life.</h2>
 </div></section>
 
+<!-- BLD 1017 Front Page Focus: the three steps, each shown with a small real screen from the app (a test profile, Sam, an Oak). -->
 <section class="sb-plan" aria-labelledby="sb-plan-h"><div class="wrap">
   <h2 id="sb-plan-h">Getting started is simple.</h2>
-  <ol class="sb-steps">
-    <li><b aria-hidden="true">1</b><span>Meet your tree.</span></li>
-    <li><b aria-hidden="true">2</b><span>Take a check-in.</span></li>
-    <li><b aria-hidden="true">3</b><span>Grow every day.</span></li>
+  <ol class="sb-show">
+    <li><span class="sb-head"><b class="sb-n" aria-hidden="true">1</b><span class="sb-st">Meet your tree.</span></span>
+      <span class="sb-screen"><img src="/shared/heroes/front/step-tree.webp" alt="The app's Your Tree card: a painted oak on a green hill, with a bar for each part: Roots, Trunk, Bark, Branches, Leaves, and Fruit." width="480" height="664" loading="lazy" decoding="async"></span>
+      <p class="sb-cap">Your tree shows how your four parts are doing, and it grows as you tend them.</p></li>
+    <li><span class="sb-head"><b class="sb-n" aria-hidden="true">2</b><span class="sb-st">Take a check-in.</span></span>
+      <span class="sb-screen"><img src="/shared/heroes/front/step-checkin.webp" alt="A check-in question: In the past two weeks, how often have you had at least one person you can be fully yourself with? Answers from Rarely to Almost always." width="480" height="664" loading="lazy" decoding="async"></span>
+      <p class="sb-cap">A few gentle questions, about two minutes.</p></li>
+    <li><span class="sb-head"><b class="sb-n" aria-hidden="true">3</b><span class="sb-st">Grow every day.</span></span>
+      <span class="sb-screen"><img src="/shared/heroes/front/step-today.webp" alt="Today's Tending: Sit Spot in the morning and Body Scan at midday, each with How and Done." width="480" height="664" loading="lazy" decoding="async"></span>
+      <p class="sb-cap">Today's practices, from your own growth plan.</p></li>
   </ol>
-  <div class="sb-cta"><a class="btn btn-primary" href="/home/">Begin The Grounded Way</a></div>
+  <div class="sb-cta2"><a class="btn btn-primary" href="/home/#membership" data-gg-join>Begin Your Membership</a><a class="text-link" href="/the-grounded-way.html">See How It Works</a></div>
 </div></section>
 
 <section class="sb-story" aria-label="About Grounded"><div class="wrap">
   <p>Most apps help with one part of life. Grounded helps you see all four parts, notice the ones that are easy to miss, and tend them together every day. Over time, every part grows stronger, together.</p>
 </div></section>
 
-<section id="membership" class="sb-choices-sec" aria-label="Ways to begin"><div class="wrap">
-  <div class="sb-choices">
-    <article class="sb-choice"><img src="/shared/heroes/p/site-index-card-start.webp" alt="" loading="lazy" decoding="async"><div><div class="eyebrow">Start</div><h3>Begin today.</h3><p>Begin today with your tree, check-ins, and daily practices.</p><a class="btn btn-primary" href="/home/">Begin The Grounded Way</a></div></article>
-    <article class="sb-choice"><img src="/shared/heroes/p/site-index-card-membership.webp" alt="" loading="lazy" decoding="async"><div><div class="eyebrow">Membership</div><h3>Go as deep as you like.</h3><p>Now open. Founding Members pay $8 a month for their first year.</p><a class="btn btn-secondary" href="/the-grounded-way.html#ways">See Ways to Walk It</a></div></article>
-  </div>
+<!-- BLD 1017: Membership is the main choice, with one Start Membership button; the light version is one quieter line. -->
+<section id="membership" class="sb-choices-sec" aria-labelledby="sb-mem-h"><div class="wrap">
+  <article class="sb-member">
+    <img src="/shared/heroes/p/site-index-card-membership.webp" alt="" loading="lazy" decoding="async">
+    <div class="sb-mem-in">
+      <div class="eyebrow">Membership</div>
+      <h2 id="sb-mem-h">The full Grounded Way.</h2>
+      <p class="sb-mem-lead">Everything opens, for every part of you:</p>
+      <ul class="sb-opens">
+        <li>Grounded Nutrition and Grounded Fitness</li>
+        <li>Grounded Meditation</li>
+        <li>Deeper Spirit programs</li>
+        <li>Grounded Relationships, with the Grove</li>
+        <li>The full growth plan</li>
+        <li>Grounded Seasons</li>
+        <li>Grounded Stories, read aloud</li>
+        <li>On every device you sign in on</li>
+      </ul>
+      <div class="sb-prices">
+        <div class="sb-price"><b>Founding Member</b><span class="sb-amt">$8 <small>a month</small></span><span class="sb-yr">or $64 a year</span><small class="sb-then">For your first year, then $12 a month or $96 a year.</small></div>
+        <div class="sb-price"><b>Founding Household</b><span class="sb-amt">$16 <small>a month</small></span><span class="sb-yr">or $128 a year</span><small class="sb-then">Your whole home, up to six people. For your first year, then $24 a month or $192 a year.</small></div>
+      </div>
+      <p class="sb-found"><b>Founding prices for our first 500 members.</b> Yearly saves a third.</p>
+      <p class="sb-trial" data-gg-trial hidden>Try Membership for 14 days. No card needed.</p>
+      <a class="btn btn-primary sb-mem-btn" href="/home/#membership" data-gg-join>Start Membership</a>
+    </div>
+  </article>
+  <p class="sb-light">Want to look around first? <a class="text-link" href="/home/">Try the light version.</a></p>
 </div></section>
 
-<section id="stories" class="sb-more" aria-labelledby="sb-more-h"><div class="wrap">
-  <h2 id="sb-more-h">More from Grounded</h2>
-  <div class="sb-mrow">
-    <a class="sb-mcard" href="/services.html"><img src="/shared/heroes/p/site-index-card-ceremonies-sq.webp" alt="" loading="lazy" decoding="async"><span><b>Ceremonies</b><small>Weddings, blessings, and new beginnings.</small></span></a>
-    <a class="sb-mcard" href="/stories.html"><img src="/shared/heroes/p/site-index-card-stories-sq.webp" alt="" loading="lazy" decoding="async"><span><b>Grounded Stories</b><small>Real stories, a new one every Wednesday.</small></span></a>
-    <a class="sb-mcard" href="/tools.html"><img src="/shared/heroes/p/site-index-card-resources-sq.webp" alt="" loading="lazy" decoding="async"><span><b>Resources</b><small>Recipes, books, readings, calm, and stories.</small></span></a>
+<!-- BLD 1017: everything beyond The Grounded Way, in one quiet section; every place stays one tap away (here or in the footer). -->
+<section id="stories" class="sb-alsosec" aria-labelledby="sb-also-h"><div class="wrap">
+  <h2 id="sb-also-h">Also from Grounded</h2>
+  <div class="sb-arow">
+    <a class="sb-acard" href="/services.html"><img src="/shared/heroes/p/site-index-card-ceremonies-sq.webp" alt="" loading="lazy" decoding="async"><span><b>Ceremonies</b><small>Weddings, blessings, and new beginnings.</small></span></a>
+    <a class="sb-acard" href="/stories.html"><img src="/shared/heroes/p/site-index-card-stories-sq.webp" alt="" loading="lazy" decoding="async"><span><b>Grounded Stories</b><small>A new story every Wednesday.</small></span></a>
+    <a class="sb-acard" href="/living-sober.html"><img src="/shared/heroes/p/site-menu-tile-living-sober-tile.webp" alt="" loading="lazy" decoding="async"><span><b>Living Sober</b><small>A clear mind and a healthy body, every day.</small></span></a>
+    <a class="sb-acard" href="/tools.html"><img src="/shared/heroes/p/site-index-card-resources-sq.webp" alt="" loading="lazy" decoding="async"><span><b>Resources</b><small>Recipes, The Grove, books, and calm.</small></span></a>
   </div>
-  <!-- Chris: "Don't lose anything": every place the old front page opened stays one tap away here. -->
-  <p class="sb-also"><a href="/the-grounded-way.html">The Grounded Way</a><a href="living-sober.html">Living Sober</a><a href="/home/#learn=life">When Life Changes</a><a href="/recipes/">Grounded Recipes</a><a href="/grove/">The Grove</a><a href="/try-one-practice.html">Try One Practice</a><a href="stories.html#drift-away">This Week's Story: Drift Away</a><a href="/the-grounded-way.html#ways">Membership</a></p>
+  <p class="sb-aline"><a href="/home/#learn=life">When Life Changes</a><a href="/try-one-practice.html">Try One Practice</a></p>
 </div></section>
 
 <section id="kind-words" hidden>
@@ -492,7 +579,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b934"></script>
-<script src="nav.js?v=c140" defer></script>
+<script src="nav.js?v=c143" defer></script>
 <script>
 /* BLD 934: the floating Contact button (kept from the old brochure script, which is gone): it rests while the header shows. */
 (function () {
@@ -531,5 +618,6 @@ a.ht-wlc:hover{border-color:var(--gold);}
 })();
 </script>
 <!-- PAGE VIDEO (Welcome) --><script src="/shared/page-videos.js?v=c137" defer></script><!-- /PAGE VIDEO -->
+<script src="/shared/gg-join.js?v=c143" defer></script>
 </body>
 </html>
