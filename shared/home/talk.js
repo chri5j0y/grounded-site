@@ -120,7 +120,7 @@
     },
     files: function (tree) {
       return ['/shared/gg-parts.js?v=b929', '/shared/gg-life.js?v=b907', '/shared/gg-shelf.js?v=c124', '/shared/gg-sources.js?v=c137', '/shared/gg-pdf.js?v=b803',
-        '/read.js?v=c030', '/shared/gg-learn.js?v=c146', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
+        '/read.js?v=c030', '/shared/gg-learn.js?v=c147', '/' + tree + '/life.js?v=b907', SRC[tree][0], '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
     },
     open: function (ctx) {
       var K = window.GGKidKit, tree = ctx.tree, id = ctx.talk, host = ctx.host;

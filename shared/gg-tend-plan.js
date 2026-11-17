@@ -361,6 +361,77 @@ function itemFor(m, level, place, sets, rest, restAfter, prefix, work){
   if (m.alt === true) it.alt = true;
   return it;
 }
+// BLD 1018 (Chris, November 17, 2026: "You can raise foot too for difficulty", then "Go"): the side plank grows through the
+// 12 weeks. Foundation keeps the Side Plank; Build plays Side Plank Thread the Needle (the top arm threads slowly under the
+// body and back up through the whole hold); Peak plays the Star Side Plank (the top leg raised and held). Each keeps the side
+// plank's levels, sets, and seconds, so the minutes stay the same.
+const SP_MOVES = {
+  build: {id: 'm-side-plank-thread', name: 'Side Plank Thread the Needle', fig: 'reach-through',
+    how: 'In a forearm side plank, feet stacked and hips lifted, reach the top arm to the ceiling, then slowly thread it under your body and back up. Keep threading for the whole hold, then switch sides.',
+    cue: 'Breathe out as you thread under, hips stay high.',
+    tips: ['Hips stay lifted as you thread through.', 'Slow and smooth, eyes following your hand.'],
+    swap: 'Easier: bottom knee down, or a still side plank. Shoulder: forearm on a cushion.',
+    steps: ['Lie on your left side, left forearm on the floor, elbow under your shoulder, feet stacked.', 'Lift your hips into one long line and reach your right arm to the ceiling.',
+      'Slowly thread your right hand under your body, turning your chest toward the floor.', 'Reach it back up to the ceiling. Keep threading, slow and smooth, for the whole hold, then switch to the right side.'],
+    easier: 'Bottom knee down, or hold a still side plank.', harder: 'Pause for a breath each time you reach through.',
+    form: 'Elbow under your shoulder, hips high, turn from your ribs.', breath: 'Breathe out as you thread under, breathe in as you reach up.'},
+  peak: {id: 'm-star-side-plank', name: 'Star Side Plank', fig: 'star-side-plank',
+    how: 'In a forearm side plank, feet stacked and hips lifted, raise the top leg and hold it there, top arm reaching to the ceiling. Hold, then switch sides.',
+    cue: 'Keep the breath moving, top leg long and steady.',
+    tips: ['Hips stay lifted, body in one long line.', 'Lift the top leg only as high as your hips stay steady.'],
+    swap: 'Easier: a side plank with the top foot resting down, or the bottom knee down. Shoulder: forearm on a cushion.',
+    steps: ['Lie on your left side, left forearm on the floor, elbow under your shoulder, feet stacked.', 'Lift your hips so your body makes one straight line, and reach your right arm to the ceiling.',
+      'Raise your right leg a little above your hips and hold it there, breathing steadily.', 'Lower the leg, then your hips, slowly. Hold on the left side, then switch to the right.'],
+    easier: 'Rest the top foot down for part of the hold.', harder: 'Hold a little longer, or lift the top leg a little higher.',
+    form: 'Elbow under your shoulder, hips lifted, top leg long and level.', breath: 'Stay braced and keep breathing, slow and steady.'}
+};
+const phaseMove = (m, phase) => m && m.id === 'm-side-plank' && SP_MOVES[phase] ? Object.assign({}, m, SP_MOVES[phase]) : m;
+// BLD 1018 (Chris, November 17, 2026: "We can get rid of extra stretch for tight spots. Let's do something better here."): the
+// Finish Stretch. In place of the cooldown's general stretches, two or three guided, timed stretches matched to the day's work
+// (lower body and cardio days: hip flexor, hamstring, calf; upper body days: chest, child's pose side reach, thread the needle;
+// core and total body days: sphinx, supine twist, child's pose), each with its own figure, hold, and sides. The moving part of
+// the cooldown (the walk, Cat-Cow, Hip Switches, Open Book) and Slow Breathing stay. The same words play in the Guide plan.
+const BR_SOFT = 'Breathe slowly, and let each breath out soften the stretch.';
+const FINISH = {
+  'fs-hip-flexor': {name: 'Hip Flexor Lunge Stretch', how: 'Back knee down on a cushion, front foot forward in a low lunge. Tuck your hips under and shift forward a little, staying tall. Thirty seconds each side.', secs: 60,
+    steps: ['Kneel on your left knee on a cushion, right foot forward in a low lunge.', 'Tuck your hips under and squeeze your left glute.', 'Shift forward a little and stay tall, five slow breaths.', 'Switch sides for five breaths.'],
+    feel: 'A long stretch across the front of the hip of the down knee.', easier: 'Stand in a split stance and hold a chair.', reps: 5, tempo: 6, side: true, unit: 'breaths', form: 'Hips tucked under, ribs down, stay tall.', breath: BR_SOFT},
+  'fs-hamstring': {name: 'Seated Hamstring Stretch', how: 'Sit tall on the floor, one leg long and the other knee bent, foot resting against the inner thigh. Hinge forward from your hips over the long leg. Thirty seconds each side.', secs: 60,
+    steps: ['Sit on the floor with your left leg long, right knee bent, and the right foot resting against your inner thigh.', 'Sit tall, then hinge forward from your hips over the long leg, back long.', 'Rest your hands on your shin and hold for five slow breaths.', 'Switch legs for five breaths.'],
+    feel: 'A stretch down the back of the long leg.', easier: 'Sit on a folded towel, or bend the long knee a little.', reps: 5, tempo: 6, side: true, unit: 'breaths', form: 'Hinge from your hips, back long, chest toward the knee.', breath: BR_SOFT},
+  'fs-calf': {name: 'Wall Calf Stretch', how: 'Hands on a wall, one foot stepped back with the heel down and the leg long, front knee bent. Lean in gently. Thirty seconds each side.', secs: 60,
+    steps: ['Stand facing a wall, hands on it at shoulder height.', 'Step your right foot back, heel down and leg long, and bend your left knee.', 'Lean in gently until you feel the calf, and hold for five slow breaths.', 'Switch legs for five breaths.'],
+    feel: 'A stretch down the calf of the back leg.', easier: 'Take a shorter step back.', reps: 5, tempo: 6, side: true, unit: 'breaths', form: 'Back heel down, leg long, hips square to the wall.', breath: BR_SOFT},
+  'fs-chest': {name: 'Doorway Chest Stretch', how: 'Stand in a doorway, forearms on the frame at shoulder height. Step one foot through and let your chest open forward.', secs: 48,
+    steps: ['Stand in a doorway and rest your forearms on the frame, elbows at shoulder height.', 'Step one foot through, and let your chest move gently forward.', 'Shoulders soft, hold for eight slow breaths.'],
+    feel: 'A stretch across your chest and the front of your shoulders.', easier: 'Use one arm at a time, or take a smaller step.', reps: 8, tempo: 6, unit: 'breaths', form: 'Shoulders low and soft, ribs down, chest opening forward.', breath: BR_SOFT},
+  'fs-child-reach': {name: 'Child\'s Pose Side Reach', how: 'From Child\'s Pose, walk both hands over to one side and rest there, then walk them to the other side. Thirty seconds each side.', secs: 60,
+    steps: ['Kneel with your knees wide and big toes touching, and sit back toward your heels.', 'Walk both hands over to the right and rest your forehead down.', 'Breathe into the long left side of your body, five slow breaths.', 'Walk your hands over to the left for five breaths.'],
+    feel: 'A long stretch down the side of your back and under your arm.', easier: 'Set a cushion between your heels and hips.', reps: 5, tempo: 6, side: true, unit: 'breaths', form: 'Hips sink back toward your heels, arms long, neck easy.', breath: BR_SOFT},
+  'fs-thread': {name: 'Thread the Needle', how: 'On hands and knees, slide one arm under your body along the floor and rest that shoulder down, then reach the arm up to the ceiling. Three slow rounds each side.', secs: 60,
+    steps: ['Start on hands and knees, hands under your shoulders, knees under your hips.', 'Breathe out and slide your right arm under your body, resting your right shoulder down.', 'Breathe in and reach your right arm up to the ceiling, chest opening.', 'Three slow rounds, then switch to the left arm.'],
+    feel: 'Your upper back turning and the back of your shoulder opening.', easier: 'Keep the reach small, or rest longer with the shoulder down.', reps: 3, tempo: 10, side: true, unit: 'breaths', form: 'Hips stay over your knees, turn from your upper back.', breath: 'Breathe out as you thread under, breathe in as you reach up.'},
+  'fs-sphinx': {name: 'Sphinx Pose', how: 'Lie face down and prop yourself up on your forearms, elbows under your shoulders. Let your low back rest long, and breathe.', secs: 48,
+    steps: ['Lie on your stomach, legs long, the tops of your feet down.', 'Set your forearms on the floor, elbows under your shoulders, and lift your chest.', 'Shoulders down, neck long, rest here for eight slow breaths.'],
+    feel: 'A gentle stretch along the front of your body and an easy arch in your back.', easier: 'Slide your elbows a little forward, so the lift is smaller.', reps: 8, tempo: 6, unit: 'breaths', form: 'Elbows under your shoulders, shoulders down, neck long.', breath: BR_SOFT},
+  'fs-twist': {name: 'Supine Twist', how: 'Lie on your back, arms out wide, knees bent together. Let both knees rest over to one side, then the other. Thirty seconds each side.', secs: 60,
+    steps: ['Lie on your back, knees bent, feet on the floor, arms out wide.', 'Let both knees fall slowly to the right and rest there, shoulders on the floor.', 'Turn your head gently to the left, five slow breaths.', 'Bring your knees through the middle and rest them to the left for five breaths.'],
+    feel: 'A gentle turn through your low back and the side of your hip.', easier: 'Set a cushion under your knees.', reps: 5, tempo: 6, side: true, unit: 'breaths', form: 'Shoulders rest on the floor, knees together, turn easy.', breath: BR_SOFT},
+  'fs-child': {name: 'Child\'s Pose', how: 'Knees wide, big toes together. Sit back toward your heels, arms long on the floor, and breathe into your back.', secs: 48,
+    steps: ['Kneel with your knees wide and big toes touching.', 'Sit back toward your heels and reach your arms long on the floor.', 'Rest your forehead down and breathe into your back.'],
+    feel: 'Your back and hips lengthening.', easier: 'Set a cushion between your heels and hips.', reps: 8, tempo: 6, unit: 'breaths', form: 'Sink your hips back, and let your back widen and soften.', breath: BR_SOFT}
+};
+const FINISH_SETS = {lower: ['fs-hip-flexor', 'fs-hamstring', 'fs-calf'], upper: ['fs-chest', 'fs-child-reach', 'fs-thread'], core: ['fs-sphinx', 'fs-twist', 'fs-child']};
+// The day's kind from its title: upper body and pulling days, core, posture, and total body days, and the rest (lower body, full
+// body, and every cardio day).
+const finishKind = (title, track) => track === 'cardio' ? 'lower' : /upper|push|pull/i.test(title || '') ? 'upper' : /core|posture|total body/i.test(title || '') && !/\blegs?\b/i.test(title || '') ? 'core' : 'lower';
+const finishItems = (kind, n) => arr(FINISH_SETS[kind] || FINISH_SETS.lower).slice(0, n || 3).map(id => Object.assign({id}, FINISH[id]));
+// The moving cooldown items stay in their order; the general stretches give way to the day's Finish Stretch, just before Slow Breathing.
+const FINISH_KEEP = ['c-walk', 'c-cat-cow', 'c-hip-switch', 'c-open-book', 'c-breathing'];
+function finishCool(cooldown, kind, n){
+  const keep = arr(cooldown).filter(x => x && FINISH_KEEP.includes(x.id)), fs = finishItems(kind, n), bi = keep.findIndex(x => x.id === 'c-breathing');
+  return bi >= 0 ? keep.slice(0, bi).concat(fs, keep.slice(bi)) : keep.concat(fs);
+}
 const byIdList = (list, ids) => { const L = arr(list); if (!Array.isArray(ids)) return null; return ids.map(id => L.find(x => x && x.id === id)).filter(Boolean); };
 // opts: {level, place, mins, warmup, cooldown} as before, plus (BLD 892) track 'strength'|'cardio', phase 'foundation'|'build'|'peak',
 // gear [ids], program (else templates.program). With no track the day templates are the original four (A to D); with no gear the
@@ -427,7 +498,7 @@ function buildSessions(moves, templates, opts){
     const pick = slot => { const pat = slot && typeof slot === 'object' ? slot.p : slot;
       if (slot && typeof slot === 'object') for (const id of arr(slot.prefer)){ const m = MB[id]; if (m && !used.has(id) && fitsLv(m)) return take(m); }
       for (const p of [pat].concat(FALL[pat] || [])){ const m = listFor(p, baseOnly).find(x => !used.has(x.id)); if (m) return take(m); } return null; };
-    const mk = (m, sets) => itemFor(m, level, place, sets, Math.min(+m.rest || REST_MAX, restCap), ra, pre, wpat.includes(m.pattern) ? wk : 0);
+    const mk = (m0, sets) => { const m = tset ? phaseMove(m0, phase) : m0; return itemFor(m, level, place, sets, Math.min(+m.rest || REST_MAX, restCap), ra, pre, wpat.includes(m.pattern) ? wk : 0); };
     const blocks = [], add = (title, pats, setsf) => { const items = []; pats.forEach(p => { const m = pick(p); if (m) items.push(mk(m, setsf(m))); }); if (items.length) blocks.push({title, items}); };
     const base = m => +((lv(m, level) || {}).sets) || 3;
     const slots = arr(tp.main).length ? tp.main : ['squat', 'push', 'hinge', 'pull', 'core'];
@@ -443,7 +514,9 @@ function buildSessions(moves, templates, opts){
     const wd = tset ? (Array.isArray(tp.warm) ? null : tp.warm || (track === 'cardio' ? 'D' : d)) : d;
     const wu = (tset && Array.isArray(tp.warm) ? byIdList(opts.warmup, tp.warm) : byIdList(opts.warmup, (len.warmByDay || {})[wd])) || warmup; if (wu !== warmup) ses.warmup = wu;
     const phn = tset ? String(PHASES.indexOf(phase) + 1) : '1';
-    const items = () => blocks.flatMap(b => b.items), est = () => CLOCK ? CLOCK(ses, wu, cooldown, phn) : estimate(ses, wu, cooldown, phn, false);
+    // BLD 1018: the day's own cooldown, its Finish Stretch matched to the work (two stretches in a 20 minute session, three longer).
+    const cd = finishCool(cooldown, finishKind(ses.title, tset ? track : null), mins <= 20 ? 2 : 3); ses.cooldown = cd;
+    const items = () => blocks.flatMap(b => b.items), est = () => CLOCK ? CLOCK(ses, wu, cd, phn) : estimate(ses, wu, cd, phn, false);
     const setAll = (it, n) => { it.sets = {'1': n, '2': n, '3': n}; };
     // Too long: one set less on the move with the most sets (never under 1, Main keeps 2 while it can), then the last finisher move.
     // BLD 979 follow-up: with the player's clock the fit aims at the chosen minutes (90 to 100 percent of them, the Finish Strong
@@ -529,7 +602,7 @@ function ldlRange(base, levers, picks, opts){
 }
 
 const API = {needOk, fitsAll, tagOf: tg, runCost, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
-  buildSessions, estimate, setClock, clock: null, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
+  buildSessions, estimate, setClock, clock: null, FINISH, FINISH_SETS, SP_MOVES, finishKind, finishItems, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
   GEAR, PLACE_GEAR, gearOk, gearPlace, PHASES, phaseOfWeek, cardioSlots};
 if (typeof module === 'object' && module.exports) module.exports = API;
 if (root) root.GGTendPlan = API;
