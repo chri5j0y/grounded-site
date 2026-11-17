@@ -592,7 +592,7 @@ const KW = [
   [/90\/90|hip switch|windshield/, 'hip-switch'], [/hanging (knee|leg)|knee raise|knees? to chest/, 'knee-raise'], [/dead ?hang|\bhang/, 'hang'], [/pull ?ups?|chin ?ups?|pullups|chinups/, 'pull-up'],
   [/hollow/, 'hollow'], [/reverse crunch/, 'reverse-crunch'], [/leg raise/, 'leg-raise'], [/dead ?bugs?|crunch/, 'dead-bug'],
   [/y.?t raise|reverse fly|rear delt/, 'yt-raise'], [/chest.?supported/, 'chest-row'], [/bird ?dogs?/, 'bird-dog'],
-  [/thread the needle/, 'thread-needle'], [/side plank.*reach|reach.?through/, 'reach-through'], [/side plank/, 'side-plank'], [/pull.?through/, 'pull-through'], [/plank/, 'plank'],
+  [/side plank.*(reach|thread)|reach.?through/, 'reach-through'], [/thread the needle/, 'thread-needle'], [/side plank/, 'side-plank'], [/pull.?through/, 'pull-through'], [/plank/, 'plank'],
   [/wall push/, 'wall-push-up'], [/fast push|power push|plyo push|explosive push/, 'fast-push-up'], [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/push press/, 'push-press'],
   [/incline (dumbbell |db )?press|incline bench/, 'incline-press'], [/bench press|chest press|floor press/, 'bench-press'], [/kneeling.*press|half.?kneel/, 'kneel-press'],
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],

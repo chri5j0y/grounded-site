@@ -22,7 +22,24 @@ const SND_JS = (() => { try { const s = document.currentScript && document.curre
 let sndP = null;
 function needSnd(){ if (window.GGSound) return Promise.resolve(window.GGSound); if (sndP) return sndP; sndP = new Promise(ok => { const s = document.createElement('script'); s.src = SND_JS; s.onload = () => ok(window.GGSound || null); s.onerror = () => { sndP = null; ok(null); }; document.head.appendChild(s); }); return sndP; }
 const G = () => window.GGSound || null;
-const CUE_FILES = ['fit-countdown-4.mp3', 'fit-round-bell.mp3', 'fit-finish.mp3', 'bell-1.mp3', 'bell-3.mp3'];
+// BLD 1018 (Chris, November 17, 2026: "Beeps at start sounds bad.... sounds like a racing video game... at most have a nice soft
+// bell", then "I like variety just needs to match grounded"): the recorded countdown, the last-seconds ticks, the round bell, and
+// the finish cue are retired. Only the meditation bowl and the three soft chimes load; the move and Break sounds are made below.
+const CUE_FILES = ['bell-1.mp3', 'bell-3.mp3'];
+// BLD 1018: a small family of gentle, warm sounds made in the browser, in the spirit of the breath ring's bell (a sine with soft
+// partials through a lowpass, a gentle start, a long fade, a quiet level). f: the note; p: [partial, level]; a: the attack; d:
+// the fade; g: the level; lp: the lowpass; w: a second voice a few hertz away, for a singing bowl's slow shimmer.
+const SOFT = {
+  bell: {f: 523.25, p: [[1, 1], [2.003, .22], [3.01, .06]], a: .03, d: 2.2, g: .07, lp: 2400},
+  kalimba: {f: 659.25, p: [[1, 1], [3.95, .07]], a: .012, d: 1.5, g: .06, lp: 2200},
+  wood: {f: 392, p: [[1, 1], [2.76, .1], [5.4, .02]], a: .012, d: 1.1, g: .07, lp: 1800},
+  low: {f: 440, p: [[1, 1], [2.003, .18], [3.01, .04]], a: .035, d: 2.4, g: .06, lp: 2000},
+  bowl: {f: 220, p: [[1, 1], [2.71, .16], [5.15, .04]], a: .15, d: 4.5, g: .075, lp: 1500, w: 1.3}
+};
+// A move or a Break beginning rotates through the bell, kalimba, wooden chime, and lower bell; a new part of the workout (the
+// Warm-up to the main moves, a new round, the Cooldown) is the singing bowl; a timer's end is the bell.
+const SOFT_TURN = ['bell', 'kalimba', 'wood', 'low'];
+let softI = 0, softAt = 0;
 const MU_LEVEL = 0.14, MU_X = 4;
 const PL = {key: '', list: [], i: 0, k: 0, E: [], on: false, played: new Set(), x: false};
 function plEl(){
@@ -132,7 +149,12 @@ const V = window.GGVoice = {
   stop(){ if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } if (cur){ const c = cur; cur = null; c.stop(); } },
   // Pause and Resume (and a pause the phone made): _held tells a line's pause apart from one the player asked for.
   pause(){ V._held = true; if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } plPause(); if (G()) G().duck(false); try { el && el.pause(); musicEl && musicEl.pause(); const s = window.speechSynthesis; if (s && s.speaking) s.pause(); } catch(e){} },
-  resume(){ V._held = false; try { if (el && el.src && !el.ended && (el.currentTime > 0 || (cur && cur.clip))) el.play().catch(e => { if (e && e.name === 'NotAllowedError' && cur && cur.clip && V.onlost) try { V.onlost(); } catch(x){} }); if (V._c && V._c.state !== 'running' && V._c.resume) V._c.resume(); musicEl && V.musicOn() && musicEl.play().catch(() => {}); V.musicOn() && plResume(); const s = window.speechSynthesis; if (s && s.paused) s.resume(); } catch(e){} },
+  // BLD 1018 (Chris's iPad froze after a long pause near the end of a workout): a long pause can lose the line's sound for
+  // good (the page hidden, the screen asleep, the browser letting the audio go). A line held by the pause had no guard, so
+  // a play that never started again held the workout forever. Now Resume re-arms the line's guard (what is left of the line
+  // plus a few seconds), and a play the browser refuses for any reason other than needing a tap ends the line, so the
+  // workout always moves on.
+  resume(){ V._held = false; try { if (cur && cur.clip && cur.rearm) cur.rearm(); if (el && el.src && !el.ended && (el.currentTime > 0 || (cur && cur.clip))) el.play().catch(e => { if (e && e.name === 'NotAllowedError' && cur && cur.clip && V.onlost){ try { V.onlost(); } catch(x){} } else if (cur && cur.clip) cur.stop(); }); if (V._c && V._c.state !== 'running' && V._c.resume) V._c.resume(); musicEl && V.musicOn() && musicEl.play().catch(() => {}); V.musicOn() && plResume(); const s = window.speechSynthesis; if (s && s.paused) s.resume(); } catch(e){} },
   // Speak one line; resolves when it ends (or right away with Voice Off). o.onstart runs when the line's sound really starts
   // (the recording plays, or the device voice begins), so the breath circle can start with the voice (November 12, 2026).
   // Sound and pictures keep one clock: when the phone stops the sound mid line (an outside pause, or a refused play), the line
@@ -153,7 +175,8 @@ const V = window.GGVoice = {
       const fin = () => { if (done) return; done = true; clearTimeout(g); el.onplaying = el.onpause = el.onloadedmetadata = null; res(); };
       const arm = ms => { clearTimeout(g); g = setTimeout(fin, ms); };
       const lost = () => { if (done) return; clearTimeout(g); if (V._held) return; me.lost = true; let held = false; try { held = !!(V.onlost && V.onlost()); } catch(e){} if (!held) fin(); };
-      me = cur = {clip: true, lost: false, stop(){ el.onpause = null; try { el.pause(); } catch(e){} fin(); }};
+      me = cur = {clip: true, lost: false, stop(){ el.onpause = null; try { el.pause(); } catch(e){} fin(); },
+        rearm(){ const left = isFinite(el.duration) && el.duration > 0 ? Math.max(0, el.duration - el.currentTime) * 1000 / (el.playbackRate || 1) : 6000; arm(left + 4000); }};
       el.onended = fin; el.onerror = fin; el.src = url;
       arm(30000);
       el.onplaying = () => { me.lost = false; if (!began){ began = true; if (onstart) try { onstart(); } catch(e){} }
@@ -215,15 +238,23 @@ const V = window.GGVoice = {
     return new Promise(r => { let done = false; const fin = h => { if (!done){ done = true; r(h); } };
       setTimeout(() => fin(null), (wait + 2) * 1000);
       needSnd().then(S => S ? S.cue(file, {gain: o.gain == null ? 0.7 : o.gain}) : null).then(h => setTimeout(() => fin(h), wait * 1000), () => fin(null)); }); },
-  // The countdown (decision 8): three beeps and a go beep (fit-countdown-4, beeps at 0, 1, 2, and 3 s), placed on the Web Audio
-  // clock so the go beep lands as the clock reaches zero. Returns a handle with stop(), or null (Beeps off, or not ready yet).
-  countdown(leftMs){
-    if (!V.chimeOn()) return null; const S = G(); if (!S || !S.cueReady('fit-countdown-4.mp3')) return null;
-    const c = S.ctx(); if (!c || c.state !== 'running') return null;
-    const L = Math.max(0, +leftMs || 0) / 1000;
-    return S.cueNow('fit-countdown-4.mp3', L >= 3 ? {at: c.currentTime + (L - 3), gain: 0.7} : {offset: 3 - L, gain: 0.7});
-  },
-  tick(){ if (!V.chimeOn()) return; try { const A = window.AudioContext || window.webkitAudioContext; const c = V._c = V._c || new A(), o = c.createOscillator(), g = c.createGain(); o.frequency.value = 880; g.gain.setValueAtTime(0.0001, c.currentTime); g.gain.exponentialRampToValueAtTime(0.2, c.currentTime + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 0.12); o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + 0.14); } catch(e){} }
+  // BLD 1018: one soft sound (kind: 'move' or 'break' rotates through the family, 'part' the singing bowl, 'done' the bell).
+  // Bell Off keeps it quiet; never two within 3 seconds. Uses the one shared AudioContext (BLD 991). Returns true when it sounds.
+  soft(kind){
+    if (!V.chimeOn()) return false;
+    try {
+      const c = (G() && G().ctx()) || V._c; if (!c || c.state !== 'running') return false;
+      const now = c.currentTime; if (now - softAt < 3) return false; softAt = now;
+      const name = kind === 'part' ? 'bowl' : kind === 'done' ? 'bell' : SOFT_TURN[softI++ % SOFT_TURN.length], S = SOFT[name];
+      const t = now + .02, g = c.createGain(), lp = c.createBiquadFilter();
+      lp.type = 'lowpass'; lp.frequency.value = S.lp; g.connect(lp); lp.connect(c.destination);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(S.g, t + S.a); g.gain.exponentialRampToValueAtTime(.0001, t + S.d);
+      (S.w ? [0, S.w] : [0]).forEach(dw => S.p.forEach(pt => { const o = c.createOscillator(), og = c.createGain(); o.type = 'sine'; o.frequency.value = S.f * pt[0] + dw; og.gain.value = pt[1] / (S.w ? 2 : 1);
+        o.connect(og); og.connect(g); o.start(t); o.stop(t + S.d + .1); }));
+      V.softLog = (V.softLog || []).concat([name]).slice(-50);
+      return true;
+    } catch(e){ return false; }
+  }
 };
 // BLD 991: the sound engine loads with the coach, so the first tap finds one shared AudioContext.
 needSnd();

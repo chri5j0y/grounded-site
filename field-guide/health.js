@@ -1112,7 +1112,12 @@ const AKEY = o => { const M = o && o.mlib && !PUB() ? MLIB() : null; return ((M 
 function keyVoice(o){ if (VO()) VO().setKey(AKEY(o === undefined ? S.ov : o)); }
 function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } keyVoice(o); S.ov = o; wake(true); tick(); rerender(true); }
 function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } if (FS.on) fsSet(false); const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
-let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL) navigator.wakeLock.request('screen').then(l => { WL = l; }).catch(() => {}); if (!on && WL){ WL.release(); WL = null; } } catch(e){} }
+// BLD 1018: the screen stays awake while a player runs (Wake Lock, where the browser allows it). The browser lets the lock go
+// when the page is hidden; it is asked for again when the page shows and the player is still running, let go on Pause, and
+// asked for again on Resume.
+let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL && !document.hidden){ WL = 'asking'; navigator.wakeLock.request('screen').then(l => { if (WL !== 'asking'){ l.release().catch(() => {}); return; } WL = l; l.addEventListener('release', () => { if (WL === l) WL = null; }); }).catch(() => { WL = null; }); }
+  if (!on && WL){ if (WL !== 'asking') WL.release().catch(() => {}); WL = null; } } catch(e){ WL = null; } }
+document.addEventListener('visibilitychange', () => { const o = S.ov; if (!document.hidden && o && !o.dead && !o.paused) wake(true); });
 // BLD 857 (note 2, "says 3 sets, only does 2 sets"): this tick also ended Play Session's rests, so when it fired between the end
 // of a rest and the engine's own check, the set count went up twice and a set was lost. Play Session keeps its own timers now.
 let TK = null; function tick(){ clearInterval(TK); TK = setInterval(() => { const o = S.ov; if (!o){ clearInterval(TK); return; } if (!o.run || o.mode === 'auto') return; const ms = o.end - Date.now();
@@ -1121,8 +1126,10 @@ let TK = null; function tick(){ clearInterval(TK); TK = setInterval(() => { cons
   if (o.tot) stageUpd(Math.max(0, Math.min(1, ms / o.tot)), Math.max(0, Math.ceil(ms / 1000)));
   if (ms <= 0){ o.run = false; o.left = 0; chime(); if (o.k === 'work' && o.between){ o.between = false; } else if (o.k === 'work' && o.rest){ o.rest = false; o.set++; } if (o.k === 'med'){ markDone('med'); checkOn('still'); o.fin = true; } if (o.k === 'quiet'){ checkOn('quiet'); o.fin = true; } if (o.ti != null) o.tdone = Object.assign(o.tdone || {}, {[o.ti]: true}); rerender(true); } }, 250); }
 const clock = ms => { const s = Math.ceil(ms / 1000); return Math.floor(s / 60) + ':' + pad(s % 60); };
-function chime(){ try { const A = window.AudioContext || window.webkitAudioContext; if (A){ const c = chime.c = chime.c || new A(); [0, 0.35, 0.7].forEach(t => { const o = c.createOscillator(), g = c.createGain(); o.frequency.value = 660; g.gain.setValueAtTime(0.0001, c.currentTime + t); g.gain.exponentialRampToValueAtTime(0.25, c.currentTime + t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + t + 0.3); o.connect(g); g.connect(c.destination); o.start(c.currentTime + t); o.stop(c.currentTime + t + 0.32); }); } } catch(e){} try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch(e){} }
-function startTimer(o, secs, ti){ o.end = Date.now() + secs * 1000; o.left = secs * 1000; o.tot = secs * 1000; o.run = true; o.ti = ti; try { chime.c && chime.c.resume && chime.c.resume(); } catch(e){} }
+// BLD 1018: a timer's end (a timed set by hand, a quiet time, the kitchen timer) is one soft bell and one short buzz (it was
+// three quick 660 Hz beeps and a long double buzz).
+function chime(){ const V = VO(); if (V && V.soft) V.soft('done'); try { navigator.vibrate && navigator.vibrate(60); } catch(e){} }
+function startTimer(o, secs, ti){ o.end = Date.now() + secs * 1000; o.left = secs * 1000; o.tot = secs * 1000; o.run = true; o.ti = ti; try { const V = VO(); V && V.unlock && V.unlock(); } catch(e){} }
 function checkOn(id){ const h = H(), t = today(), d = h.days[t] = h.days[t] || {checks: {}}; d.checks = d.checks || {}; d.checks[id] = true; d.u = Date.now(); save(); }
 function vOv(){
   const o = S.ov; if (!o) return '';
@@ -1682,30 +1689,26 @@ const lg = (o, e) => { (o.log = o.log || []).push(Object.assign({i: o.i, set: o.
 // A timer that honors Pause, Skip, and +15 seconds; ticks the last 3 seconds; says Ten seconds on longer rests; drains the ring.
 // kind: '' for work, 'rest' between sets, 'between' between moves, 'switch' between sides.
 async function runTimer(o, ms, kind, half, onTick){
-  o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false, last = 99, cd = null;
-  // BLD 991 (decision 8): the countdown is three beeps and a go beep (fit-countdown-4), started once at 3 seconds left on
-  // the Web Audio clock so the go beep lands on zero; Pause, Skip, and Ava's instructions stop it. Until the cue is ready the
-  // old soft blips play.
-  const cdOff = () => { if (cd){ try { cd.stop(); } catch(e){} cd = null; } };
+  o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false;
+  // BLD 1018 (Chris: "Beeps at start sounds bad"): no countdown beeps and no last-seconds ticks; Ava's instructions carry the
+  // last seconds. One soft sound as a Break begins (when Ava is not speaking) and one as the next move begins.
+  if ((kind === 'rest' || kind === 'between') && !o.dead){ const V = VO(); if (V && V.soft && !(V.busy && V.busy())) V.soft('break'); }
   // BLD 897: a hold done on each side shows the Left Side chip (and the figure on its left side) until the half, then the right.
   if (half) o.side = 'L'; rerender(true);
   while (!o.dead && !o.skip){
-    if (o.paused){ cdOff(); last = 99; const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
+    if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
     const left = o.end - Date.now(); if (left <= 0) break;
-    if (kind && preTick(o, left)){ cdOff(); continue; }   // BLD 931: the next move's instructions in the Break's last seconds
+    if (kind && preTick(o, left)) continue;   // BLD 931: the next move's instructions in the Break's last seconds
     const s = Math.ceil(left / 1000);
     if ((kind === 'rest' || kind === 'between') && s === 10 && !said10 && ms > 15000){ said10 = true; if (!o.spk && !preNear(o, left)) speak(o, LN.ten); }
     if (half && !saidHalf && left <= o.tot / 2){ saidHalf = true; o.side = 'R'; speak(o, LN.sw); rerender(true); }
     if (onTick) onTick(left);
-    if (preBusy(o)) cdOff();
-    else if (!cd && left <= 3150 && left > 600 && last === 99 && VO() && VO().countdown){ cd = VO().countdown(left); if (cd) last = 0; }
-    if (!cd && s <= 3 && s !== last){ last = s; if (!preBusy(o)) VO() && VO().tick(); }   // BLD 931: Ava's instructions carry the last seconds
     document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
     ystarTick(o, left);
     stageUpd(Math.max(0, Math.min(1, left / (o.tot || ms))), s);
     await sleep(Math.max(10, Math.min(100, o.end - Date.now())));
   }
-  if (o.skip || o.dead) cdOff();
+  if (kind && !o.dead){ const V = VO(); if (V && V.soft) V.soft('move'); }   // BLD 1018: the next move (or side) begins
   if (kind && !o.dead) lg(o, {e: 'zero', kind, skip: !!o.skip});
   o.run = false; o.rest = false; o.sw = false; if (half) o.side = '';
 }
@@ -1783,6 +1786,7 @@ const ins = (o, t) => o.preOn ? Promise.resolve() : speak(o, t);
 async function doSet(o, st){
   const sides = st.side ? (st.first === 'R' ? ['R', 'L'] : ['L', 'R']) : [''];
   for (let k = 0; k < sides.length && !o.dead; k++){
+    if (o.jumpTo != null) break;
     if (k){ o.side = ''; await speak(o, st.arm ? LN.swarm : LN.sw); preArm(o, preLines(o, st, o.set, k)); await runTimer(o, SWITCH * 1000, 'switch'); await preDone(o); if (o.dead) break; if (o.skip){ o.skip = false; if (o.skipMove) break; } }
     o.side = sides[k]; rerender(true);
     if (o.side) await ins(o, o.side === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
@@ -1976,6 +1980,7 @@ async function runSession(o){
   if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
   while (!o.dead && o.i < o.steps.length){
+    if (o.jumpTo != null) jumpNow(o);
     const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; const bh = preRing(o, st) && brHold(o, true); rerender(true);
     if (st.t === 'time'){ o.preOn = false;
       await partBell(o);
@@ -1984,6 +1989,7 @@ async function runSession(o){
       else { if (bh) brArm(o); await speak(o, tLine(o, st), false, bh ? () => brGo(o, 'voice') : null); if (bh) brGo(o, 'end'); }
       await hold(o); if (o.dead) break;
       if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else { if (tShort(o, st)){ const fb = !preRing(o, st) && brHold(o); speak(o, st.form, false, fb ? () => brGo(o, 'voice') : null).then(() => { if (fb) brGo(o, 'end'); }); } await runTimer(o, st.secs * 1000, '', st.half); } }
+      if (o.jumpTo != null) continue;
       o.done.push(o.i); o.i++; o.set = 1; o.skip = false;
       const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, GET_READY); }
       continue;
@@ -1995,6 +2001,7 @@ async function runSession(o){
     await hold(o); if (o.dead) break;
     await doSet(o, st);
     if (o.dead) break;
+    if (o.jumpTo != null) continue;
     lg(o, {e: 'set'});
     const skipMove = o.skipMove; o.skip = false; o.skipMove = false;
     if (!skipMove && o.set < st.sets){ const r = st.rest, rl = restLines(o, st); lg(o, {e: 'rest', secs: r}); o.mline = rl.join(' '); o.mcoach = rl.some(l => /^Too (hard|easy)\?/.test(l));
@@ -2003,25 +2010,43 @@ async function runSession(o){
       // it ends before the next set's instructions begin, so no line is ever cut off; a line that cannot fit is left out.
       (async () => { await speak(o, LN.rest(r)); if (wd && !o.dead && !(o.pre && o.pre.started)) await speak(o, WATER); for (const l of rl){ if (!o.rest || o.dead || o.pre && o.pre.started) break; if (!(await fitsRest(o, l))) continue; await speak(o, l); } })();
       preArm(o, preLines(o, st, o.set + 1, 0), [LN.rest(r), wd ? WATER : '']);
-      await runTimer(o, r * 1000, 'rest'); await preDone(o); if (o.dead) break; o.skip = false; o.set++; continue; }
+      await runTimer(o, r * 1000, 'rest'); await preDone(o); if (o.dead) break; if (o.jumpTo != null){ o.rest = false; continue; } o.skip = false; o.set++; continue; }
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
     const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, st.restAfter); }
   }
-  if (!o.dead){ o.fin = true; o.run = false; rerender(true);
-    // BLD 991: three soft chimes close a meditation (bell-3, in place of the made in code chime); a workout or Flow ends on the finish chime.
-    if (V && V.cue){ if (o.med) await V.cue('bell-3.mp3', {gain: 0.55, wait: 2}); else if (V.chimeOn()) await V.cue('fit-finish.mp3', {gain: 0.6, wait: 1.6}); } else if (o.med && typeof chime === 'function') chime();
+  if (!o.dead){ o.fin = true; o.run = false; resumeClear(); rerender(true);
+    // BLD 991: three soft chimes close a meditation (bell-3). BLD 1018: a workout, Flow, Gentle, or Daily Practice ends on the same
+    // three soft chimes (the finish cue is retired); Bell Off keeps a workout's end quiet.
+    if (V && V.cue){ if (o.med) await V.cue('bell-3.mp3', {gain: 0.55, wait: 2}); else if (V.chimeOn()) await V.cue('bell-3.mp3', {gain: 0.5, wait: 2}); } else if (o.med && typeof chime === 'function') chime();
     await speak(o, o.med ? LN.mOut : o.prac ? LN.pOut : o.close || LN.out); if (!o.prac && lightLine('end')) await speak(o, lightLine('end')); if (!o.prac && !o.med && !o.feel) await speak(o, LN.feel); }
   V && V.music(null);
 }
+// BLD 1018: go to the move chosen in the Moves list (from the top of the loop, so the step starts clean).
+function jumpNow(o){ o.i = o.jumpTo; o.jumpTo = null; o.set = 1; o.side = ''; o.rep = 0; o.ring = false; o.rest = false; o.between = false; o.sw = false; o.run = false; o.skip = false; o.skipMove = false; o.mline = ''; o.bellAt = o.i; }
 // BLD 991: the round bell when a workout moves to a new part (Warm-up to the main moves, a new round, the Cooldown), after any
-// line has ended. Beeps Off keeps it quiet.
+// line has ended. BLD 1018: the singing bowl in place of the round bell; Bell Off keeps it quiet.
 async function partBell(o){
   const a = o.steps[o.i - 1], b = o.steps[o.i], V = VO();
   if (o.prac || o.med || !a || !b || a.part === b.part || o.bellAt === o.i || o.dead || !V || !V.cue || !V.chimeOn()) return;
   o.bellAt = o.i; await hold(o);
   for (let k = 0; k < 60 && V.busy && V.busy() && !o.dead; k++) await sleep(100);
-  if (!o.dead){ o.bells = (o.bells || 0) + 1; await V.cue('fit-round-bell.mp3', {gain: 0.6, wait: 1.2}); }
+  if (!o.dead && V.soft && V.soft('part')){ o.bells = (o.bells || 0) + 1; await sleep(1200); }
 }
+// BLD 1018: the Moves list: every move in order with its part, a check on each one done, the one playing marked; tap to go.
+function movesList(o){ const done = new Set(o.done || []); let part = '';
+  return `<div class="hj-mlist" role="list" aria-label="Moves">${o.steps.map((x, k) => { const hd = x.part && x.part !== part ? `<div class="hj-mlp">${esc(part = x.part)}</div>` : '';
+    return `${hd}<button type="button" role="listitem" class="hj-mli${k === o.i ? ' cur' : ''}${done.has(k) ? ' done' : ''}" data-hja="ajump" data-hjv="${k}"${k === o.i ? ' aria-current="step"' : ''}><i aria-hidden="true">${done.has(k) ? '&#10003;' : k + 1}</i><span>${esc(o.swap && x.swap && k === o.i ? x.swap : x.name || '')}</span>${x.t === 'ex' && x.sets ? `<small>${x.sets} ${x.sets === 1 ? 'set' : 'sets'}</small>` : ''}</button>`; }).join('')}</div>`; }
+// BLD 1018 (Chris's iPad froze mid workout): Pick Up Where You Left Off. As a session plays, where it is (the move, the set,
+// the side, the seconds left, the moves done) is kept in this profile's own data on this device, like the other logs, every
+// few seconds; nothing leaves the device. Opening the same session again the same day offers to pick up at that move (its
+// set starts again from the top). A finished session, or Start From the Top, clears it.
+function resumeOf(o){ const h = H(), r = h && h.resume; if (!r || !o || o.med || r.d !== today() || r.key !== (o.key + '|' + (o.s || '')) || !(r.i > 0) || r.i >= o.steps.length || r.n !== o.steps.length) return null; return r; }
+function resumeClear(){ const h = H(); if (h && h.resume){ delete h.resume; save(); } }
+function resumeKeep(o){ const h = H(); if (!h || !o || o.med || o.mode !== 'auto' || o.dead) return; if (o.fin){ resumeClear(); return; }
+  h.resume = {d: today(), key: o.key + '|' + (o.s || ''), n: o.steps.length, i: o.i, set: o.set, side: o.side || '', left: o.run ? Math.max(0, Math.round((o.end - Date.now()) / 1000)) : 0, done: (o.done || []).slice(), at: Date.now()}; save(); }
+function resumeCard(o){ const r = resumeOf(o); if (!r) return ''; const st = o.steps[r.i] || {};
+  return `<div class="hj-resume"><p><b>Pick Up Where You Left Off</b>Move ${r.i + 1} of ${o.steps.length}: ${esc(st.name || '')}${st.t === 'ex' && st.sets > 1 ? ', set ' + r.set + ' of ' + st.sets : ''}.</p><button type="button" class="btn btn-gold hj-go" data-hja="aresume">Pick Up at ${esc(st.name || 'That Move')}</button></div>`; }
+setInterval(() => { const o = S.ov; if (o && o.mode === 'auto' && !o.dead) resumeKeep(o); }, 4000);
 function sessClock(o){ const now = Date.now(); if (!o.paused) o.active += now - (o.lastT || now); o.lastT = now; return clock(o.active); }
 setInterval(() => { const o = S.ov; if (!o || o.mode !== 'auto' || o.fin) return; document.querySelectorAll('[data-hjsess]').forEach(e => { e.textContent = sessClock(o); }); document.querySelectorAll('[data-hjleft]').forEach(l => { l.textContent = 'about ' + Math.max(1, Math.round(estLeft(o) / 60000)) + ' min left'; }); }, 1000);
 // ---------- color and the stage (BLD 857): every player wears its state's color over a scene from GGStage ----------
@@ -2093,7 +2118,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c135';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c144';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
@@ -2322,7 +2347,7 @@ function toggles(o){
   return `<div class="hj-tg">
     <button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="tvoice">${on ? 'Voice On' : 'Voice Off'}</button>
     <button type="button" class="chip${mu ? ' on' : ''}" aria-pressed="${mu}" data-hja="tmusic">${mu ? 'Music On' : 'Music Off'}</button>
-    <button type="button" class="chip${ch ? ' on' : ''}" aria-pressed="${ch}" data-hja="tchime">${ch ? 'Beeps On' : 'Beeps Off'}</button>
+    <button type="button" class="chip${ch ? ' on' : ''}" aria-pressed="${ch}" data-hja="tchime">${ch ? 'Bell On' : 'Bell Off'}</button>
     ${o && !o.prac ? `<button type="button" class="chip${o.hands !== false ? ' on' : ''}" aria-pressed="${o.hands !== false}" data-hja="thands">${o.hands !== false ? 'Auto Flow On' : 'Auto Flow Off'}</button><button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Voice Counts Reps' : o.hands !== false ? 'Quiet Timed Reps' : 'I Tap Done'}</button>` : ''}${o ? figChips() : ''}</div>`;
 }
 // BLD 896 (Chris's Friday note 4): the Move Well card on a workout's start screen, shown only (folded until opened): the library's
@@ -2353,7 +2378,7 @@ function vStart(o, top){
     ${toggles(o)}
     ${bwAsk(o) ? bwCard(o) : ''}
     ${!o.prac && o.hands !== false ? `<p class="hj-note hj-hfnote">Auto Flow: the session moves on its own, start to finish, with every set counted or timed for you. Need more time? Tap Pause anytime.</p>` : ''}
-    <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
+    ${resumeCard(o)}<button type="button" class="btn ${resumeOf(o) ? 'btn-line' : 'btn-gold'} hj-go" data-hja="play">${resumeOf(o) ? 'Start From the Top' : `Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}`}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
     ${!o.prac && !o.med ? moveWell() : ''}
     <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : o.young ? youngSrc(o.young) : coachSrc() + srcLine(o.gentle ? arr(((GLIB() || {}).gentle || {}).sources) : progSrc(o.s))}${musicSrc(musicGroupFiles(o))}</div></details></div>`;
@@ -2451,7 +2476,9 @@ function vAuto(o, top){
   const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
   const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
     breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined,
-    ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined}, ring);
+    ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined,
+    // BLD 1018: a timed hold, carry, balance, or stretch shows its seconds left in a small ring in the badge corner.
+    hold: o.run && !o.rest && !o.between && !o.sw && !o.hf && !st.candle && !st.lines && (st.kind === 'time' || st.t === 'time') ? {pct: left / (o.tot || 1), secs: Math.ceil(left / 1000)} : undefined}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep && cntOf ? (st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : '') : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? (st.arm ? ' · Left arm' : ' · Left side') : o.side === 'R' ? (st.arm ? ' · Right arm' : ' · Right side') : '';
   const label = o.between ? 'Break, then next move' : o.sw ? 'Switch sides' : o.rest ? `Break, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (st.fin && st.sets === 1 ? 'Finish strong' : o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
@@ -2470,7 +2497,7 @@ function vAuto(o, top){
     ${detail}
     ${o.wait ? `<button type="button" class="btn btn-gold hj-go" data-hja="tapdone">${o.side && o.side !== (st.first === 'R' ? 'L' : 'R') ? (o.side === 'L' ? 'Left' : 'Right') + (st.arm ? ' Arm Done' : ' Side Done') : 'Set Done'}</button>` : ''}
     <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">${o.between ? 'Start Now' : o.rest || o.sw ? 'Ready Now' : o.hf ? 'Set Done' : 'Skip'}</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest && !o.between ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>${o.lost && o.paused ? '<p class="hj-tap" role="status">Tap Resume to keep going.</p>' : ''}
-    <div class="hj-links">${st.t === 'ex' && !o.between ? `<button type="button" class="linkbtn hj-skip" data-hja="askipmove">Skip This Move</button>` : ''}<button type="button" class="linkbtn hj-fsb" data-hja="fs">Full Screen</button></div>
+    <div class="hj-links">${st.t === 'ex' && !o.between ? `<button type="button" class="linkbtn hj-skip" data-hja="askipmove">Skip This Move</button>` : ''}<button type="button" class="linkbtn hj-mvb" data-hja="amoves" aria-expanded="${!!o.mlist}">Moves</button><button type="button" class="linkbtn hj-fsb" data-hja="fs">Full Screen</button></div>${o.mlist ? movesList(o) : ''}
     ${toggles(o)}</div>`;
 }
 // ---------- the kitchen guide (Andrew) ----------
@@ -2526,7 +2553,8 @@ function actCoach(a, v){
     case 'tfigbody': if (window.GGFig3D) GGFig3D.setBody(GGFig3D.body() === 'woman' ? 'man' : 'woman'); rerender(true); return true;
     case 'thands': if (o){ o.hands = o.hands === false; try { localStorage.setItem('gg-health-hands', o.hands ? '1' : '0'); } catch(e){} } rerender(true); return true;
     case 'tcount': if (o){ o.count = !o.count; try { localStorage.setItem('gg-health-count', o.count ? '1' : '0'); } catch(e){} } rerender(true); return true;
-    case 'play': if (o){ if (bwAsk(o)){ bwKeep(o); return true; } runSession(o); } return true;
+    case 'play': if (o){ if (bwAsk(o)){ bwKeep(o); return true; } resumeClear(); runSession(o); } return true;
+    case 'aresume': if (o){ const r = resumeOf(o); if (r){ o.i = r.i; o.set = r.set; o.done = r.done.slice(); o.resumed = r.i; lg(o, {e: 'resume', i: r.i, set: r.set}); } runSession(o); } return true;
     // BLD 915: the body weight question on the start screen (asked once) and the personal adjustment (start screen, Settings).
     case 'bwsave': if (o) bwKeep(o, true); return true;
     case 'bwskip': if (h){ h.set.bwAsked = 1; h.set.u = Date.now(); save(); } rerender(true); return true;
@@ -2534,8 +2562,13 @@ function actCoach(a, v){
     case 'wadj': if (h && W_ADJ.includes(+v)){ h.set.wadj = +v; h.set.u = Date.now(); save(); toast('Saved. Every recommended weight follows it.'); } rerender(true); return true;
     case 'manual': if (o){ o.stage = 'run'; o.mode = 'manual'; if (V) V.unlock(); } rerender(true); return true;
     case 'didit': if (o){ markDone(o.key || ('work:' + o.s)); checkOn(o.prac ? 'still' : 'move'); toast('Marked done. Well done.'); closeOv(); } return true;
-    case 'apause': if (o){ o.paused = !o.paused; if (!o.paused) o.lost = false; if (V){ o.paused ? V.pause() : V.resume(); } clkSync(o); } rerender(true); return true;
+    case 'apause': if (o){ o.paused = !o.paused; if (!o.paused) o.lost = false; if (V){ o.paused ? V.pause() : V.resume(); } clkSync(o); wake(!o.paused); } rerender(true); return true;
     case 'askip': if (o){ preCut(o); o.skip = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
+    // BLD 1018: the Moves list (every move in order, a check on each one done) and a tap to go to any move. The step it was on
+    // ends at once (the voice stops, any Break ends), and the clock, ring, figure, and voice start fresh on the chosen move.
+    case 'amoves': if (o){ o.mlist = !o.mlist; rerender(true); } return true;
+    case 'ajump': if (o && o.mode === 'auto' && !o.fin){ const j = +v; if (j >= 0 && j < o.steps.length){ o.mlist = false; if (j === o.i && !o.rest && !o.between){ rerender(true); return true; }
+      preCut(o); o.jumpTo = j; o.skip = true; o.skipMove = true; o.wait = false; if (o.paused){ o.paused = false; o.lost = false; if (V) V.resume(); wake(true); } if (V) V.stop(); clkSync(o); lg(o, {e: 'jump', to: j}); rerender(true); } } return true;
     case 'askipmove': if (o){ preCut(o); o.skip = true; o.skipMove = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
     case 'amore': if (o && o.run){ preCut(o); o.end += 15000; o.tot = (o.tot || 0) + 15000; } return true;
     case 'tapdone': if (o) o.wait = false; return true;
@@ -4903,7 +4936,7 @@ function vLog(mode){
     ${N.length ? `<div class="tn-notes">${N.map(n => `<div class="hj-entry"><b>${nice(n.date)}</b><p>${esc(n.text).replace(/\n/g, '<br>')}</p></div>`).join('')}</div>` : ''}</div>`;
   return `<div class="tn-sec a-plate">${plate}${note}</div>`;
 }
-function voiceCard(){ return `<div class="tn-card" id="tn-voice"><div class="tn-hd">${badge('bell', 'a-move', 'med-m5')}<div><div class="tn-k a-move">Voice and Music</div><div class="tn-sub">The calm voice, the music, and the beeps for workouts, quiet times, and the kitchen guide.</div></div></div>${toggles(null)}</div>`; }
+function voiceCard(){ return `<div class="tn-card" id="tn-voice"><div class="tn-hd">${badge('bell', 'a-move', 'med-m5')}<div><div class="tn-k a-move">Voice and Music</div><div class="tn-sub">The calm voice, the music, and the soft bell for workouts, quiet times, and the kitchen guide.</div></div></div>${toggles(null)}</div>`; }
 function houseCard(){
   if (KIT()) return ''; const h = H(), s = h.set, pub = PUB(), kids = pub ? KIDS().length : 0, a = pub ? Math.max(1, +((s.house || {}).adults) || 1) : Math.max(1, +s.household || 1);
   return `<div class="tn-card" id="tn-hh"><div class="tn-hd">${badge('people', 'p-branches')}<div><div class="tn-k p-branches">Household</div><div class="tn-sub">Recipes and the shopping list fit your table.</div></div></div>
@@ -5476,8 +5509,21 @@ const CSS = `
 .hj-reps{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(34px,10vw,52px);color:var(--hj);line-height:1;margin:6px 0 10px;}
 .hj-how{color:var(--ink-soft);max-width:46ch;margin:0 auto 8px;}.hj-cue{font-weight:600;max-width:46ch;margin:0 auto 10px;}
 .hj-lb{max-width:240px;margin:8px auto 4px;text-align:left;}
-.hj-clock{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(64px,22vw,110px);line-height:1;margin:14px 0;color:var(--ink);font-variant-numeric:tabular-nums;}
+.hj-clock{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(64px,22vw,110px);line-height:1;margin:14px 0;color:var(--ink);font-variant-numeric:lining-nums tabular-nums;}
 .hj-clock.sm{font-size:26px;margin:0 8px 0 0;display:inline-block;color:var(--hj);}
+.hj-resume{margin:12px 0 4px;padding:12px 14px;border-radius:14px;border:1.5px solid rgba(201,138,44,.55);background:rgba(201,138,44,.1);text-align:left;}
+.hj-resume p{margin:0 0 10px;color:var(--ink);font:500 15px/1.4 'Barlow',sans-serif;}
+.hj-resume p b{display:block;font:700 13px/1.2 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+.hj-resume .hj-go{width:100%;margin:0;}
+.hj-mlist{margin:10px 0 4px;max-height:min(56vh,460px);overflow-y:auto;border:1px solid var(--line,rgba(90,60,30,.22));border-radius:14px;padding:6px;text-align:left;background:var(--card,rgba(255,250,240,.6));}
+.hj-mlp{font:700 11px/1 'Barlow Condensed','Barlow',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);padding:10px 8px 4px;}
+.hj-mli{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:6px 8px;border:0;border-radius:10px;background:none;color:var(--ink);font:600 15px/1.25 'Barlow',sans-serif;text-align:left;cursor:pointer;}
+.hj-mli:hover,.hj-mli:focus-visible{background:rgba(201,138,44,.12);}
+.hj-mli i{flex:none;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 14px/1 'Barlow Condensed','Barlow',sans-serif;font-style:normal;border:1.5px solid rgba(201,138,44,.6);color:var(--ink);}
+.hj-mli.done i{background:#C98A2C;border-color:#C98A2C;color:#FFFFFF;}
+.hj-mli.cur{background:rgba(201,138,44,.18);}
+.hj-mli span{flex:1;min-width:0;overflow-wrap:anywhere;}
+.hj-mli small{flex:none;color:var(--ink-soft);font-size:12px;}
 .hj-ovbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;}.hj-ovbtns .btn{min-height:54px;min-width:150px;font-size:17px;justify-content:center;}
 .hj-skip{margin-top:14px;}
 .hj-big2{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;font-weight:700;margin:18px 0 6px;}
@@ -6041,6 +6087,7 @@ html.gg-fs .hj-fstip b{font-family:'Barlow Condensed','Barlow',sans-serif;letter
 html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-ftip{top:calc(56px + env(safe-area-inset-top,0px));}
 html.gg-fs .ggs-break,html.gg-fs .ggs-hud{top:calc(48px + env(safe-area-inset-top,0px));}
 html.gg-fs .ggs-count{font-size:clamp(64px,19vw,120px);}
+html.gg-fs .ggs-hold{width:clamp(90px,14vh,150px);}html.gg-fs .ggs-hold b{font-size:clamp(34px,6vh,60px);}
 @media (min-width:700px) and (min-height:560px){
   html.gg-fs{--fsb:196px;}
   html.gg-fs .hj-stagebox .ggs{--fs:min(560px,46vw,calc(var(--H) * .78));}
@@ -6072,7 +6119,7 @@ html.gg-fs .hj-fsbar .btn{min-height:48px;min-width:140px;justify-content:center
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hj-form span{color:#F0B850;}}
 .hj-ov .hj-exn{font-family:'Cormorant Garamond',Georgia,serif;}
 .hj-mlist ol{padding-left:22px;}.hj-mlist li{padding:5px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere;}.hj-mlist li small{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;opacity:.85;margin-left:4px;}
-.hj-ov .hj-clock[data-hjclock]{font-family:'Cormorant Garamond',Georgia,serif;font-variant-numeric:lining-nums tabular-nums;}
+.hj-ov .hj-clock[data-hjclock]{font-family:'Barlow Condensed','Barlow',sans-serif;font-weight:700;font-variant-numeric:lining-nums tabular-nums;letter-spacing:0;}
 .hj-mw ol{margin:4px 0 6px;padding-left:22px;}.hj-mw li{margin:6px 0;line-height:1.45;overflow-wrap:anywhere;}.hj-mw .hj-mwl{margin:0 0 6px;}
 .tn-bclosed{text-align:center;}.tn-bclosed .tn-btn{margin-top:10px;}
 .tn-notes{margin-top:12px;}
