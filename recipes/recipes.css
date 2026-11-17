@@ -76,6 +76,8 @@
 .rc-chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 .rc-chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--rc-on);font-weight:600;}
 .rc-chip.rc-fitc[aria-pressed="true"]{background:var(--sage);border-color:var(--sage);}
+/* BLD 1013: the Holidays and Gatherings chip wears the holiday color when on */
+.rc-chip.rc-holc[aria-pressed="true"]{background:var(--rc-h);border-color:var(--rc-h);}
 .rc-results{margin-top:8px;}
 .rc-results>.rc-sec:first-child{margin-top:22px;}
 .rc-sec{margin-top:34px;}
