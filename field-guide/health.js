@@ -77,7 +77,7 @@ const MLIB = () => { if (C.host !== 'home' || KIT() || PUB()) return null; const
 const GLIB = () => PLIB() || MLIB();
 const mKey = x => String(x && x.id) + '|' + String((x && x.title) || '').trim().toLowerCase();
 // The Member Flow sessions and meditations the moved plan does not already hold (the same id and title count as one).
-const MFLOW = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((PR() || {}).sessions).map(mKey)); return arr(((M.app || {}).practice || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))).map(x => Object.assign({}, x, {_m: 1})); };
+const MFLOW = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((PR() || {}).sessions).map(mKey)); return arr(((M.app || {}).practice || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))).map(x => Object.assign({}, flowTimed(x), {_m: 1})); };
 const MMEDS = () => { const M = MLIB(); if (!M) return []; const have = new Set(arr((MED() || {}).sessions).map(mKey)); return arr(((M.app || {}).meditations || {}).sessions).filter(x => x && x.id && !have.has(mKey(x))); };
 const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
 // BLD 916, Living Sober Path: Living Sober is on when this profile holds a sober date (vault life.soberDate, read the way Home
@@ -475,9 +475,14 @@ const WK0 = () => (APP() || {}).workouts || {};
 // measures them, and t979.mjs fails when a card is more than 3 minutes off the clock.
 const minsOf = (x, ph, light) => +((light ? x.minsLight : x.minsByPhase) || {})[ph] || +(x.minsByPhase || {})[ph] || x.mins;
 let WKC = null;
+// The clock for a session of this library (its morning light lines read from the library itself, not through WK()).
+function wkClock(x, ph, light, w){ const l = w.light, ll = k => !l ? '' : typeof l === 'string' ? (k === 'start' ? l : '') : Array.isArray(l) ? l[k === 'start' ? 0 : 1] || '' : l[k] || '';
+  return planSecs(stepsFor(x, ph, light, w), 0, 1, {count: true, hands: true}) + lineSecs(LN.focus) + lineSecs(LN.safe) + lineSecs(LN.ses(x.title || '', 50)) + lineSecs(LN.out) + lineSecs(LN.feel) + lineSecs(ll('start')) + lineSecs(ll('end')); }
 const WK = () => { const w = WK0(); if (!w || !w.sessions || PUB()) return w; const d = new Date(), k = d.toDateString();
   if (WKC && WKC.w === w && WKC.k === k) return WKC.v;
-  const ss = {}; Object.entries(w.sessions).forEach(([id, x]) => { if (!x || !x.minsByPhase){ ss[id] = x; return; } const pk = phKeyFor(id, d); ss[id] = Object.assign({}, x, {mins: minsOf(x, pk.ph, pk.light)}); });
+  // BLD 979 follow-up: a session with no measured minutes (a plan's saved copy from before BLD 979) shows the player's own clock.
+  const ss = {}; Object.entries(w.sessions).forEach(([id, x]) => { if (!x || !arr(x.blocks).length){ ss[id] = x; return; } const pk = phKeyFor(id, d);
+    ss[id] = Object.assign({}, x, {mins: x.minsByPhase ? minsOf(x, pk.ph, pk.light) : Math.max(1, Math.round(wkClock(x, pk.ph, pk.light, w) / 60))}); });
   const v = Object.assign({}, w, {sessions: ss}); WKC = {w, k, v}; return v; };
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
@@ -1029,9 +1034,12 @@ function shopText(n){
   return out.join('\n').trim() || 'Everything is in the cart.';
 }
 // ---------- overlays: workout, cook, prep, meditation ----------
+// BLD 979 follow-up: a Gentle session plays the phase of its walk week (as its card says), never the Strength session that
+// shares its letter (Gentle A to D read as Foundation strength before, so Gentle never grew past phase 1).
+const gentlePk = d => ({ph: String(phaseOf(Math.max(1, weekNo(d)))), light: lightOn(d)});
 function buildWork(s){
   const ses = sesById(s); if (!ses) return null;
-  const t0 = new Date(), pk = phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
+  const t0 = new Date(), pk = PUB() && (H().set.level || 'root') === 'gentle' ? gentlePk(t0) : phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: minsOf(ses, pk.ph, pk.light), steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
@@ -1372,13 +1380,15 @@ const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
 // An alternating warm-up (Dead Bugs, 6 per side) flows side to side with no Switch sides (BLD 891).
 const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
 // BLD 979: a library may keep every set in the lighter weeks (workouts.lightKeepsSets: a step lighter weight, the same work
-// and the same minutes; Chris, November 16, 2026: "32 too short for a person w my goals").
+// and the same minutes; Chris, November 16, 2026: "32 too short for a person w my goals"). BLD 979 follow-up (Chris, November 17:
+// "they all still short"): every workout keeps every set in the lighter weeks, a plan's older saved copy, public Tending, Member
+// plans, and Gentle too; only a library that says lightKeepsSets: false drops a set.
 function stepsFor(ses, ph, light, w0){
   const w = w0 || WK(), out = [];
   // BLD 891: a session may carry its own warm-up for its focus (public Tending by day; the Guide library per session).
   arr((ses && ses.warmup) || w.warmup).forEach(x => out.push(wuStep(x, 'Warm-up', ph)));
   arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x), mv = pubMove(x);
-    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light && !w.lightKeepsSets ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
+    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light && w.lightKeepsSets === false ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
       rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per, steps: arr(x.steps).filter(Boolean), easier: x.easier || '', harder: x.harder || '', tempo: +x.tempo || 0, tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || '',
       form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath),
       // BLD 915: a one arm move done on each side names the arm (arm), and may start on the right (first: 'R'); the
@@ -1404,7 +1414,16 @@ function wuStep(x, part, ph){
 }
 // How many counts a warm-up item takes per turn (0: it keeps its timer). Counted only with Voice Counts Reps on and a tempo.
 const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= 20 ? n : 0; };
-const PR = () => { const p = (APP() || {}).practice || null; if (!p || !START()) return p; const f = startPicks().flow; return Object.assign({}, p, {sessions: f ? [f] : []}); };
+// BLD 979 follow-up: a Flow session's card, start screen, and opening line say its own clock (prSteps, as buildPractice plays it).
+const prSteps = ss => arr(ss && ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
+const FLM = new WeakMap();
+function flowMins(ss){ if (!ss || typeof ss !== 'object') return 0; if (FLM.has(ss)) return FLM.get(ss); const st = prSteps(ss);
+  const m = st.length ? Math.max(1, Math.round((planSecs(st, 0, 1, {prac: true}) + lineSecs(LN.pIntro(ss.title || 'Flow', 20)) + lineSecs(LN.pOut)) / 60)) : +ss.mins || 0; FLM.set(ss, m); return m; }
+const FLT = new WeakMap();
+const flowTimed = x => { if (!x || typeof x !== 'object' || !arr(x.steps).length) return x; if (FLT.has(x)) return FLT.get(x); const y = Object.assign({}, x, {mins: flowMins(x)}); FLT.set(x, y); return y; };
+const PRT = new WeakMap();
+const prTimed = p => { if (!p) return p; if (PRT.has(p)) return PRT.get(p); const q = Object.assign({}, p, {sessions: arr(p.sessions).map(flowTimed)}); PRT.set(p, q); return q; };
+const PR = () => { const p = (APP() || {}).practice || null; if (!p || !START()) return prTimed(p); const f = startPicks().flow; return Object.assign({}, p, {sessions: f ? [flowTimed(f)] : []}); };
 function startPicks(d){ d = d || new Date(); const a = APP() || {}, ps = arr(a.practice && a.practice.sessions), ms = arr(a.meditations && a.meditations.sessions), i = (d.getDay() + 6) % 7;
   return {flow: ps.length ? ps[i % ps.length] : null, med: ms.find(x => x.day === DOW[d.getDay()]) || ms[i % Math.max(1, ms.length)] || null}; }
 const MED = () => { const m = (APP() || {}).meditations; if (!(m && arr(m.sessions).length)) return null; if (!START()) return m; const x = startPicks().med; return Object.assign({}, m, {sessions: x ? [x] : []}); };
@@ -1459,8 +1478,8 @@ const flowOnOf = s => Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowS
 function practiceFor(d){ const fp = flowPick(d); if (fp) return fp; const p = PR(); if (!p || !arr(p.sessions).length) return null; const L = p.sessions.filter(x => !x.style || x.style === 'daily'), D0 = L.length ? L : p.sessions; return D0[(d.getDay() + 6) % 7 % D0.length]; }
 function buildPractice(s, p0){
   const p = p0 || PR(), ss = arr(p && p.sessions).find(x => x.id === s) || (p0 ? null : practiceFor(new Date())); if (!ss) return null;
-  const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
-  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, style: ss.style || 'daily', key: 'prac'};
+  const steps = prSteps(ss);
+  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: flowMins(ss) || ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, style: ss.style || 'daily', key: 'prac'};
 }
 // BLD 984: a Member Flow session or meditation beside a moved plan (its own clip key).
 function buildMPrac(id){ const M = MLIB(), o = M ? buildPractice(id, (M.app || {}).practice) : null; if (o) o.mlib = 1; return o; }
@@ -1480,7 +1499,7 @@ function allLines(){
   [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
-  const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
+  const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, flowMins(s) || s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
   ['breakfasts', 'lunches', 'snacks'].forEach(ty => arr((app.dinners || {})[ty]).forEach(x => { if (!arr(x.steps).length) return; add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
   const dn = (app.dinners || {}).weeks || {}; Object.values(dn).forEach(wk => arr(wk.dinners).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); });
     arr(x.dayOf).forEach(e => arr(e && e.steps).concat(arr(e && e.after), Object.values((e && e.swap) || {})).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); })); })); // BLD 947
@@ -1518,7 +1537,8 @@ function allLinesPub(){
   const walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
   (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
-    sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); }); });
+    const gw = {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}; sesLines(ses, gw);
+    Object.entries(ses).forEach(([id, c]) => ['1', '2', '3'].forEach(ph => add(AVA, LN.ses(c.title || 'Session ' + id, clockMins(c, ph, gw))))); }); });
   // BLD 981: For Kids and For Teens, at the one phase they play (no light weeks)
   BANDS().forEach(g => { const w0 = youngWo(g), G = w0.G || {}; add(AVA, G.focus); add(AVA, G.safe);
     Object.entries(w0.sessions).forEach(([id, ses]) => { if (ses.intro) add(AVA, ses.intro); else add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins)); add(AVA, ses.open); add(AVA, ses.close);
@@ -1530,7 +1550,7 @@ function allLinesPub(){
   [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
-  const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
+  const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, flowMins(x) || x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
   arr(L.recipes).concat(P && P.LEFT ? [P.LEFT] : []).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
   [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
   return [...out.values()];
@@ -1562,7 +1582,26 @@ function planSecs(steps, i0, set0, o){
 }
 // BLD 979: measured as the player plays by default (Voice Counts Reps on, hands free), so a warm up item with a form line
 // costs its short call, as it does in the player.
-function sessSecs(ses, ph, light){ const st = stepsFor(ses, ph, light); return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
+function sessSecs(ses, ph, light, w0){ const st = stepsFor(ses, ph, light, w0); return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.safe) + lineSecs(lightLine('start')) + lineSecs(LN.out) + lineSecs(lightLine('end')); }
+// BLD 979 follow-up: the whole session as the engine plays it (its opening and closing lines too), in seconds.
+function engineSecs(o){ if (!o || !arr(o.steps).length) return 0; const m = o.mins || 50, keep = S.ov; S.ov = o;
+  try { let s = planSecs(o.steps, 0, 1, o);
+    if (!o.med && !o.prac) s += lineSecs(o.focus || LN.focus) + lineSecs(o.safe || LN.safe) + lineSecs(LN.feel);
+    s += lineSecs(o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, m) : LN.ses(o.title, m)) + (o.open ? lineSecs(o.open) : 0);
+    if (!o.prac) s += lineSecs(lightLine('start')) + lineSecs(lightLine('end'));
+    return s + lineSecs(o.med ? LN.mOut : o.prac ? LN.pOut : o.close || LN.out); } finally { S.ov = keep; } }
+function apiAudit(){
+  if (!H()) return []; const keys = new Map(), keep = S.ewLvl, add = (key, cat, card) => { if (!keys.has(key)) keys.set(key, {cat, card}); };
+  try { (PUB() ? EW_LVLS.map(x => x[0]) : ['']).forEach(lvl => { S.ewLvl = lvl || undefined; const cur = curLvl();
+    everyGroups(everyLvl()).forEach(c => c.groups.forEach(g => g.list.forEach(([id, x]) => { const L = everyLvl();
+      const key = c.cat === 'strength' || c.cat === 'cardio' ? (PUB() && L !== cur ? 'wl:' + L + ':' + id : 'work:' + id) : BANDS().includes(c.cat) ? 'wl:' + c.cat + ':' + id
+        : c.cat === 'gentle' ? (cur === 'gentle' ? 'work:' + id : 'wl:gentle:' + id) : (x._m ? 'mprac:' : 'pracid:') + x.id;
+      add(key, c.cat + (L ? ':' + L : ''), +x.mins || 0); }))); }); } finally { S.ewLvl = keep; }
+  const t = sesFor(new Date()); if (t) add('work:' + t.id, 'today', +t.mins || 0);
+  const out = []; keys.forEach((v, key) => { let o = null; try { o = ovFor(key); } catch(e){ o = null; } if (!o || !arr(o.steps).length) return;
+    out.push({key, cat: v.cat, title: o.title, card: v.card, start: startMins(o), said: +o.mins || 0, clock: +(engineSecs(o) / 60).toFixed(1), want: +H().set.mins || 0}); });
+  return out;
+}
 // ---------- the hands-free engine ----------
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 function estLeft(o){ let s = planSecs(o.steps, o.i, o.between ? 1 : o.set, o); const left = o.run && o.end ? Math.max(0, o.end - Date.now()) / 1000 : 0;
@@ -1857,7 +1896,7 @@ let SRCL = 0;
 function musicSrc(files){
   try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; return ''; } } catch(e){}
   // the credits file loads the first time a session shows, then the screen draws again
-  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c135'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
+  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c137'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
   return '';
 }
 async function runSession(o){
@@ -2235,8 +2274,10 @@ function moveWell(){
   const li = x => typeof x === 'string' ? esc(x) : `${x.name || x.title ? `<b>${esc(x.name || x.title)}.</b> ` : ''}${esc(x.line || x.text || x.how || '')}`;
   return `<details class="hj-doc hj-mw" data-hjmw style="text-align:left;margin-top:16px"><summary><span>Move Well</span></summary><div class="hj-body">${lead ? `<p class="hj-mwl">${esc(lead)}</p>` : ''}<ol>${items.map(x => `<li>${li(x)}</li>`).join('')}</ol></div></details>`;
 }
+// The start screen's minutes: the player's clock for a workout, the session's own minutes for Flow and meditation.
+const startMins = o => o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
 function vStart(o, top){
-  const moves = o.steps.filter(s => s.t === 'ex'), mins = o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
+  const moves = o.steps.filter(s => s.t === 'ex'), mins = startMins(o);
   const kit = !o.med && !o.prac && PUB() ? [...new Set(moves.map(m => m.equip).filter(Boolean))] : o.med ? ['a comfortable seat'] : !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
   const st0 = o.steps.find(s => s.t === 'ex') || o.steps[0], lt = !o.prac && lightLine('start');
   const pl = !o.prac && !o.med && progOn() ? progLabel(new Date()) : '';
@@ -3418,7 +3459,7 @@ function vCard(hasPlan){
   const moved = !!H().set.movedHome, busy = S.moving;
   const move = moved ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Bring Over What\'s New'}</button>`
     : hasPlan ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Move My Plan to The Grounded Way'}</button>` : '';
-  const when = moved ? 'After a library update, tap Bring Over What\'s New.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
+  const when = moved ? 'Each library update comes over on its own when you open the Field Guide. Bring Over What\'s New also brings what you logged here.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
   return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Your Tending Lives in The Grounded Way</h3>
     <p class="hj-sub">Your plan, your week, and your tree grow together in The Grounded Way app, private on this phone.</p>
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button>${move}</div>
@@ -3430,6 +3471,27 @@ function loadGGP(){
   if (window.GGP) return Promise.resolve();
   return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=c026'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
+// BLD 979 follow-up (Chris, November 17, 2026: "now it says 34 min when i open", then "they all still short"): a plan moved
+// into The Grounded Way keeps its own copy of the library, and that copy stayed as it was on the day of the move, so the newly
+// sealed workouts never reached it. Now, each time the Field Guide opens with a library and a moved plan, the unlocked profile's
+// copy of the library (w.lib: the healthJourney and audio, and the Founder plans) is brought up to date on its own, quietly,
+// on this device. Only the library copy changes: what the person logged, chose, and saved stays exactly as it is. A locked
+// profile is never asked to open; its copy comes over the next time both are open.
+const libSigOf = o => { try { const t = JSON.stringify(o || null); let x = 5381; for (let i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0; return t.length + ':' + (x >>> 0).toString(36); } catch(e){ return ''; } };
+let SYNC = null;
+async function syncMoved(){
+  if (C.host === 'home' || GUIDE_T() || PUB()) return false; const h = H(); if (!h || !h.set || !h.set.movedHome) return false;
+  const f = FX() || {}; if (!f.healthJourney) return false;
+  const fd = C.fdr && C.fdr(), lib = {healthJourney: f.healthJourney, audio: f.audio}, fdr = fd ? {healthMine: fd.healthMine, healthKayti: fd.healthKayti} : null, sig = libSigOf([lib, fdr]);
+  if (SYNC && SYNC.sig === sig) return SYNC.p; SYNC = {sig, p: (async () => {
+    await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
+    const a = window.GGP.active && window.GGP.active(); if (!a) { SYNC = null; return false; }
+    const w = window.GGP.data(a.id, 'tending'); if (!w || !w.lib || !w.movedOnce) return false;
+    if (w.libSig === sig || (!w.libSig && libSigOf([w.lib, w.fdr || null]) === sig)){ if (!w.libSig){ w.libSig = sig; await window.GGP.save(a.id); } return false; }
+    w.lib = clone(lib); if (fdr) w.fdr = clone(fdr); w.tier = C.tier ? C.tier() : (w.tier || 'guide'); w.libSig = sig; w.libSync = Date.now();
+    await window.GGP.save(a.id); return true; })().catch(() => { SYNC = null; return false; })};
+  return SYNC.p;
+}
 async function moveHome(){
   if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
   try {
@@ -3440,7 +3502,7 @@ async function moveHome(){
     const f = (FX()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
     w.lib = clone({healthJourney: f.healthJourney, audio: f.audio});
     w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : null;
-    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now();
+    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now(); w.libSig = libSigOf([w.lib, w.fdr]);
     const fresh = !w.health || !w.health.set || w.health.set.pubDone || !w.movedOnce;
     if (fresh){ w.health = clone(d.health || {}); w.deleted = {health: clone(((d.deleted || {}).health) || {})}; }
     else window.GGHealth.merge(w, {health: d.health || {}, deleted: d.deleted || {}});
@@ -3631,7 +3693,13 @@ function vStartHome(){
 // The food plan and the workouts are built by shared/gg-tend-plan.js (GGTendPlan) into the same shapes the Field Guide's views
 // already play: dinners.weeks A to D, breakfasts, lunches, snacks, shop.weeks, and workouts.sessions A to D.
 // =====================================================================
-const TP = () => window.GGTendPlan || null;
+// BLD 979 follow-up: public Tending and Member plans are built to the person's minutes by the player's own clock (the same
+// model the engine plays, GGHealth.audit), so the card, the start screen, and the session say the same time.
+const TP = () => { const P = window.GGTendPlan || null; if (P && P.setClock && P.clock !== builderClock) P.setClock(builderClock); return P; };
+function builderClock(ses, wu, cd, ph){ const w0 = {warmup: arr(wu), cooldown: arr(cd)}, st = stepsFor(Object.assign({}, ses, {warmup: arr(wu)}), String(ph || '1'), false, w0);
+  return planSecs(st, 0, 1, {count: true, hands: true}) + lineSecs(LN.focus) + lineSecs(LN.safe) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs(LN.out) + lineSecs(LN.feel); }
+// Gentle, For Kids, and For Teens: each session's card says its own clock (its walk week and phase), never a typed number.
+const clockMins = (ses, ph, w0) => Math.max(1, Math.round(builderClock(ses, (ses && ses.warmup) || w0.warmup, (ses && ses.cooldown) || w0.cooldown, ph) / 60));
 const CHECKS_P = [
   {id: 'walk', label: 'Time outdoors', sub: 'A walk, fresh air, and daylight'},
   {id: 'fiber', label: 'Fiber at two meals', sub: 'Oats, beans, lentils, whole grains, fruit'},
@@ -3901,7 +3969,7 @@ function gentleWo(L, wk){
   const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
   const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; }));
-    c.mins = (c.minsByPhase || {})[String(phaseOf(wk))] || c.mins; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
+    c.mins = clockMins(c, String(phaseOf(wk)), {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); delete c.minsByPhase; delete c.minsLight; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
   return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
 }
 // BLD 981 (Chris, November 13, 2026: "every age gets full library", "3, we will build fitness for kids"): Grounded Fitness for
@@ -3920,7 +3988,8 @@ const BAND = () => { const a = AGE(); if (a === 'grown') return ''; const pick =
 const AGE = () => { try { const a = C.age ? String(C.age() || '') : ''; return a === 'maple' ? 'kids' : /^(aspen|pine)$/.test(a) ? 'teens' : 'grown'; } catch(e){ return 'grown'; } };
 const YF = () => { const y = (GLIB() || {}).youngFit; return y && typeof y === 'object' ? y : null; };
 const YG = g => ((YF() || {})[g]) || null;
-function youngWo(g){ const G = YG(g) || {}, ses = {}; arr(G.sessions).forEach(x => { if (x && x.id) ses[x.id] = JSON.parse(JSON.stringify(x)); }); return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown), G}; }
+function youngWo(g){ const G = YG(g) || {}, ses = {}, w0 = {warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
+  arr(G.sessions).forEach(x => { if (x && x.id){ const c = ses[x.id] = JSON.parse(JSON.stringify(x)); if (!c.intro && arr(c.blocks).length) c.mins = clockMins(c, '1', w0); } }); return {sessions: ses, warmup: w0.warmup, cooldown: w0.cooldown, G}; }
 const youngKick = (g, x) => ({k4: ['Play Game', 'Play Game'], k7: ['Play Workout', 'Daily Play'], t11: ['Strength', 'Mobility'], t14: ['Teen Workout', 'Daily Practice']}[g] || ['Workout', 'Practice'])[x.kind === 'daily' ? 1 : 0] + (x.mins ? ' · ' + x.mins + ' min' : '');
 const youngSrc = g => { const L = arr((YG(g) || {}).sources).filter(x => x && x.t); return L.length ? `<p class="hj-src">${L.length > 1 ? 'Sources' : 'Source'}: ${L.map(x => `<a href="${esc(x.url || '')}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}`).join('; ')}</p>` : ''; };
 function pubApp(){
@@ -4875,7 +4944,7 @@ function buildLevelWork(lvl, id){
   const X = levelSes(lvl, id); if (!X) return null; const ses = X.ses;
   if (X.mine) return buildWork(id);
   const young = BANDS().includes(lvl), G = young ? X.w0.G || {} : {};
-  const t0 = new Date(), pk = young ? {ph: '1', light: false} : phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
+  const t0 = new Date(), pk = young ? {ph: '1', light: false} : lvl === 'gentle' ? gentlePk(t0) : phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
   // BLD 981: a Daily session's moves flow as one timer each, named for what they are
   if (young && ses.kind === 'daily') steps.forEach(st => { if (st.part === 'Warm-up') st.part = lvl === 'k4' ? 'Play' : KID_BANDS.includes(lvl) ? 'Daily Play' : 'Daily Practice'; });
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
@@ -4899,8 +4968,14 @@ function vWorkouts(){
     return `<h3 class="tn-h3">${progOn() ? 'This Week' : esc(L.name)}${progOn() ? ` <small class="tn-mine">${esc(phName(phaseId(Math.max(1, progWeek(new Date())))))}</small>` : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
   const every = everyHtml((key, kick, title, sub, art) => artCard(i++, key, kick, title, sub, 'a-move', art));
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${wlogLine(w)}</div>`).join('')}</div>` : '';
-  return `<div class="tn-sec a-move">${young ? youngHead(ya) : PUB() ? pubMoveHead() : progCard()}${lv}${every}${recent}</div>`;
+  return `<div class="tn-sec a-move">${young ? youngHead(ya) : PUB() ? pubMoveHead() : progCard()}${newerCard()}${lv}${every}${recent}</div>`;
 }
+// BLD 979 follow-up: a moved plan whose saved copy is from before BLD 979 (no measured minutes) says, once, that the newest
+// workouts come over when the Field Guide opens on this device.
+function newerCard(){ if (C.host !== 'home' || PUB()) return ''; const ss = Object.values(WK0().sessions || {}).filter(x => x && arr(x.blocks).length);
+  if (!ss.length || ss.some(x => x.minsByPhase)) return '';
+  return `<div class="tn-card a-move tn-new"><div class="tn-k a-move">Newer Workouts Are Ready</div><p class="tn-sub">Open the Field Guide once on this device, and your newest workouts come over here on their own, with everything you logged kept as it is.</p>
+    <div class="tn-acts"><a class="tn-btn sm" href="/field-guide/">${ic('play')}Open the Field Guide</a></div></div>`; }
 // BLD 896 (Chris, October 30, 2026): the Every Workout shelf. This Week (the phase the person is in) stays on top; then every workout
 // by category: Strength, Cardio, Flow, Yoga, Balance, Stretch, and in public Tending Gentle; Strength and Cardio by phase (Foundation,
 // Build, Peak), each tile with its place, like "Build 2 · 56 min". A workout from another phase plays with that phase's sets and reps.
@@ -6005,7 +6080,12 @@ window.GGHealth = {
   qrReady: () => qrLoad(), qr: t => qrSvg(String(t || '')),
   starts: () => H() ? {food: ymd(kitStart()), prog: progOn() ? ymd(progStart()) : null, start: ymd(startMon())} : null,
   setStart: (kind, d) => apiSetStart(kind, d),
-  planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }
+  planSecs: (id, ph, light) => { const w = WK0(), ses = (w.sessions || {})[id]; return ses ? Math.round(wkClock(ses, String(ph || '1'), !!light, w)) : 0; },
+  // BLD 979 follow-up (tests, patches/bld979/test/measure979.mjs): every workout and Flow this view can play today (Every Workout
+  // at each level, plus today's), each with the minutes its card and start screen say and the player's own clock for it.
+  audit: () => apiAudit(),
+  // BLD 979 follow-up: the Field Guide calls this once it opens (and again after a library is sealed on this device).
+  syncMoved: () => syncMoved()
 };
 // ---------- BLD 896, Holiday Sets ----------
 // Chris, October 30, 2026: "a special set for holidays and special occasions.. so you can select thanksgiving dinner, and it will
