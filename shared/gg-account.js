@@ -43,6 +43,10 @@
                                          shared/gg-member.js imports them at once as a non extractable key and clears the bytes.
      GGAccount.memberCode(body)          Promise: a code entered while signed in attaches to the account ({code} or {code, c, ck})
      GGAccount.checkoutUrl(href)         a Stripe payment link that carries this account (client_reference_id, prefilled_email)
+     GGAccount.trialLive()               true once TRIAL_LIVE (below) is on
+     GGAccount.trial()                   the Membership Trial (BLD 1017): Promise of {live, can, trial: {status, started, ends}}
+     GGAccount.trialStart()              Begin My 14 Days (POST /member/trial): Promise of {member, trial}; with an email still
+                                         to be confirmed the trial waits (status waiting) and opens on the confirm
    Membership buy buttons (links to buy.stripe.com) carry the signed in account by themselves, and the Welcome, Member page
    and the Membership note on The Grounded Way say how Membership opens on the account. This file loads only while
    Accounts are live (shared/gg-profiles.js ACCOUNTS_LIVE), so none of this runs before then.
@@ -51,8 +55,13 @@
 (function () {
   'use strict';
   if (window.GGAccount) return;
-  var V = 'b950', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
-  var TERMS_V = '2026-11-10', PRIVACY_V = '2026-11-10';   // stage 2 moves these to the launch date with gg-profiles.js
+  var V = 'c143', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
+  var TERMS_V = '2026-11-17', PRIVACY_V = '2026-11-17';   // stage 2 moves these to the launch date with gg-profiles.js
+  // BLD 1017: the Membership Trial (Try Membership for 14 days, no card) rests until Chris reads its sections of Terms and
+  // Privacy (patches/bld1017/DEPLOY1017.md). While false, Start Membership shows Join Now only, and no page shows trial
+  // words. Tests turn it on for one browser with window.GG_TRIAL_LIVE = true; nothing on the site sets that.
+  var TRIAL_LIVE = true;
+  function trialLive() { return TRIAL_LIVE === true || window.GG_TRIAL_LIVE === true; }
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var site = /(^|\.)growwithgrounded\.com$/.test(location.hostname);
   var CFG = { api: window.GG_ACCOUNT_API || (site ? 'https://api.growwithgrounded.com/v1' : ''), turnstile: null };
@@ -165,6 +174,9 @@
       member: 'A Household opens with Household Membership.',
       other: 'This invite is for another email. Sign in with the invited email to join.',
       exists: 'That is already set up.',
+      used: 'Your 14 days of Membership are already part of your story. Join Now, and the full Grounded Way keeps growing with you.',
+      resting: 'Join Now opens the full Grounded Way today.',
+      adult: 'Membership comes through your grown-up\'s Household.',
       joined: 'That person is already in your Household.',
       server: 'Something went wrong on our side. Try again in a little while.'
     })[why] || 'Something went wrong. Try again in a little while.';
@@ -308,7 +320,7 @@
   }
 
   /* ---------- email ---------- */
-  function confirm(token) { return api('POST', '/email/confirm', { token: token }).then(function (r) { if (A) { A.confirmed = true; kPut(A); } emit('confirmed', true); return r; }); }
+  function confirm(token) { return api('POST', '/email/confirm', { token: token }).then(function (r) { if (A) { A.confirmed = true; kPut(A); } emit('confirmed', true); if (r && r.trial && A) memberNow(); return r; }); }   // BLD 1017: 14 days that waited on the confirm open here at once
   function resend(o) { return api('POST', '/email/resend', { turnstile: o && o.turnstile }); }
   function account() {
     return api('GET', '/account').then(function (r) {
@@ -467,7 +479,7 @@
   /* ---------- Membership on the account (BLD 949) ---------- */
   function setMember(m) {
     var was = JSON.stringify(MB);
-    MB = m && typeof m === 'object' ? { status: m.status === 'active' ? 'active' : 'ended', kind: String(m.kind || 'member'), ends: m.ends == null ? null : +m.ends, household: !!m.household, org: !!m.org, auto: !!m.auto } : null;
+    MB = m && typeof m === 'object' ? { status: m.status === 'active' ? 'active' : 'ended', kind: String(m.kind || 'member'), ends: m.ends == null ? null : +m.ends, household: !!m.household, org: !!m.org, auto: !!m.auto, trial: m.source === 'trial' } : null;
     if (A) { A.member = MB; kPut(A).catch(function () {}); }
     if (JSON.stringify(MB) !== was) emit('member', MB);
     return MB;
@@ -492,6 +504,17 @@
         return subtle.decrypt({ name: 'AES-GCM', iv: unb64u(w.iv), additionalData: enc.encode('gg1|member|' + id) }, k, unb64u(w.ct));
       }).then(function (pt) { return new Uint8Array(pt); }, function () { throw kind('box'); });
     });
+  }
+  // The Membership Trial (BLD 1017): Try Membership for 14 days, no card
+  // Membership on this device follows the account at once (shared/gg-member.js)
+  function memberNow() { try { if (window.GGMember && GGMember.sync) GGMember.sync(); else emit('state', state()); } catch (e) {} }
+  function trial() {
+    if (!A) return Promise.reject(kind('signin'));
+    return api('GET', '/member/trial');
+  }
+  function trialStart() {
+    if (!A) return Promise.reject(kind('signin'));
+    return api('POST', '/member/trial', {}).then(function (r) { if ('member' in r) setMember(r.member); memberNow(); return r; });
   }
   function memberCode(b) {
     if (!A) return Promise.reject(kind('signin'));
@@ -556,7 +579,7 @@
     changePassword: changePassword, rootWords: rootWords, newRootWords: newRootWords, changeEmail: changeEmail,
     devices: devices, signOutDevice: signOutDevice, exportData: exportData, openExport: openExport, deleteAccount: deleteAccount,
     household: household, readHash: readHash, words: words, health: function () { return api('GET', '/health', null, { tries: 1 }); },
-    member: member, memberRefresh: memberRefresh, memberKey: memberKey, memberCode: memberCode, checkoutUrl: checkoutUrl,
+    member: member, memberRefresh: memberRefresh, memberKey: memberKey, memberCode: memberCode, checkoutUrl: checkoutUrl, trial: trial, trialStart: trialStart, trialLive: trialLive,
     _: inner
   };
 })();

@@ -72,3 +72,19 @@ html.ga-sheeted,html.ga-sheeted body{overflow:hidden;}
 }
 .ga-ages{display:grid;gap:8px;margin:4px 0 10px;}
 .ga-sent .ga-row{margin-top:8px;}
+/* BLD 1017: Start Membership, the choice (Begin My 14 Days, or Join Now at a Founding price) */
+.ga-trial{gap:8px;}
+.ga-trial .ga-btn{margin-top:6px;}
+.ga-or{margin:4px 0 0;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-soft);}
+.ga-plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0;padding:0;border:0;min-width:0;}
+.ga-plans legend{grid-column:1/-1;padding:0;margin:0 0 8px;}
+.ga-plan{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;border:1.5px solid var(--line);background:var(--card-2);cursor:pointer;min-width:0;}
+.ga-plan:has(input:checked){border-color:var(--gold);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 25%,transparent);}
+.ga-plan input{flex:none;width:20px;height:20px;margin:3px 0 0;accent-color:var(--gold);}
+.ga-plan>span{display:flex;flex-direction:column;min-width:0;}
+.ga-plan b{font-size:15.5px;line-height:1.25;}
+.ga-pr{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:23px;line-height:1.15;color:var(--ink);}
+.ga-pr em{display:inline-block;font-style:normal;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--ok);vertical-align:middle;}
+.ga-plan small{color:var(--ink-soft);font-size:13.5px;line-height:1.35;}
+@media (max-width:420px){.ga-plans{grid-template-columns:1fr;}}
+
