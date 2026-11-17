@@ -570,6 +570,8 @@ const KW = [
   // Step Back and Reach Up was Reverse Lunge and Reach), ahead of every lunge, step, and reach rule. BLD 903: Step Back and
   // Reach Up has its own figure, arms overhead.
   [/^lunge and reach\b/, 'stretch'], [/^step back and reach up\b|^reverse lunge and reach\b/, 'step-back-reach'],
+  // BLD 1018: the Finish Stretch's floor stretches lie on the mat in the simple figure (the 3D figure has its own: sphinx, supine-twist).
+  [/sphinx|cobra|supine twist|lying twist/, 'lie'],
   // BLD 896 figures first: Leg Swings before the dumbbell swing, the holds before dips and pull-ups, and so on.
   [/leg swings?|swing (your|the|one) leg/, 'leg-swing'], [/^(?!.*seated).*hip (circles?|rotations?)/, 'hip-circles'], [/open ?book|book opener/, 'open-book'],
   [/hug (and|n|&) open|open (and|&) hug/, 'hug-open'], [/pull.?aparts?/, 'pull-apart'], [/pallof|anti.?rotation press/, 'pallof'],

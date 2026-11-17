@@ -5808,6 +5808,28 @@ var KS = function(s){ var pR = s === 0 ? [.2, 1, .3] : [s < 0 ? 1 : -1, .25, .3]
 G.define('knee-sway', A(SLOW2, {name: 'Knees Side to Side', props: ['mat'], glow: {obliques: [.6, .6], glutes: [.3, .3]}, cam: {view: 'front', turn: -30, el: 30, zoom: 1},
   form: [{when: 'out', say: 'shoulders rest, knees sway', at: 'root', side: -1}],
   k: [K(SUP, KS(-1), {br: 'in', e: .8}), K(SUP, KS(0), {br: 'out', e: .3}), K(SUP, KS(1), {br: 'in', e: .8}), K(SUP, KS(0), {br: 'out', e: .3})]}));
+// BLD 1018 (Chris, November 17, 2026: "We can get rid of extra stretch for tight spots. Let's do something better here."):
+// the Finish Stretch figures. Supine Twist: on the back, arms out wide on the mat, both knees bent together and resting
+// over to the right, the head turned gently to the left; the knees settle a little lower on each out breath.
+var SPT = function(d){ var o = KS(-1); o.rl = A(o.rl, {y: o.rl.y - d}); o.ll = A(o.ll, {y: o.ll.y - d}); return A(o, {ra: [0, 0, 0], la: [0, 0, 0], raO: [88, 88, 88], laO: [88, 88, 88], ao: 0, hR: 'relax', hL: 'relax', pnR: 'up', pnL: 'up', hy: 40}); };
+TWO('supine-twist', A(SLOW, {name: 'Supine Twist', props: ['mat'], glow: {obliques: [.7, .7], back: [.4, .4], glutes: [.3, 0]}, cam: {view: 'front', turn: -30, el: 34, zoom: 1},
+  form: [{when: 'out', say: 'shoulders rest, knees settle', at: 'root', side: -1}],
+  k: [K(SUP, SPT(0), {br: 'in', e: .6}), K(SUP, SPT(.015), {br: 'out', e: .8})]}));
+// Sphinx Pose: face down, legs long, tops of the feet down; the forearms on the mat with the elbows under the shoulders,
+// the chest lifted, shoulders down, the head in line looking a little forward. The chest lifts a touch on the in breath.
+var SPH = {b: 'front', p: [.11, -.05], t: [93, 132], n: 165, ra: [2, 92, 90], la: [2, 92, 90], raO: [10, 4, 0], laO: [10, 4, 0], hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down', ao: 0, on: 'p'};
+G.define('sphinx', A(SLOW, {name: 'Sphinx Pose', props: ['mat'], glow: {back: [.5, .5], abs: [.4, .4], flexors: [.3, .3]}, cam: {yaw: 30, el: 14, zoom: 1},
+  form: [{when: 'in', say: 'elbows under shoulders, neck long', at: 'neck01', side: 1}],
+  k: [K(SPH, {br: 'in', e: .5}), K(SPH, {br: 'out', t: [92, 134], n: 166, e: .7})]}));
+// Child's Pose Side Reach: Child's Pose with both hands walked over to the right, the body bending toward them so the
+// long left side opens; the hips settle back on each out breath.
+var CPR = {x: .62, y: .03, z: .6, f: 'flat', pole: [0, 1, 0]}, CPL = {x: -.3, y: .03, z: .78, f: 'flat', pole: [0, 1, 0]};
+TWO('child-reach', A(SLOW, {name: "Child's Pose Side Reach", props: ['mat'], glow: {lats: [.8, .2], back: [.4, .4], obliques: [.6, .1]}, cam: {yaw: 70, el: 30, zoom: 1.04},
+  form: [{when: 'out', say: 'hips sink back, side long', at: 'root', side: -1}],
+  k: [
+    K(CP, {br: 'in', lo: 18, t: [75, 86], n: 66, lb: -24, tw: -8, rl: [60, -92, -96], ll: [60, -92, -96], ra: CPR, la: CPL, e: .7}),
+    K(CP, {br: 'out', lo: 18, t: [71, 88], n: 66, lb: -26, tw: -8, rl: [63, -92, -96], ll: [63, -92, -96], ra: CPR, la: CPL, e: .5})
+  ]}));
 G.define('legs-up-wall', A(SLOW, {name: 'Legs Up the Wall', props: ['mat', {id: 'wall', at: 'front', d: .52}], glow: {hams: [.4, .4]}, cam: {yaw: 6, el: 16, zoom: 1},
   form: [{when: 'out', say: 'legs rest, breath slow', at: 'root', side: -1}],
   k: [K(SUP, {br: 'in', p: [.1, .3], rl: [178, 178, 180], ll: [178, 178, 180], ra: [94, 94, 94], la: [94, 94, 94], pnR: 'up', pnL: 'up', ao: 24, on: 'p b', e: .4}),
@@ -6006,6 +6028,9 @@ GG3D.names = (GG3D.names || []).concat([
   [/\bdeep rest with knees up\b/i, 'lie-knees'],
   [/\bcalf stretch\b/i, 'wall-calf'],
   [/\bdoorway chest stretch\b/i, 'doorway-chest'],
+  [/\bsupine twist\b|\blying twist\b/i, 'supine-twist'],   // BLD 1018: the Finish Stretch
+  [/\bsphinx\b/i, 'sphinx'],
+  [/\bchild'?s pose (side )?reach\b/i, 'child-reach'],
   [/\bfront of thigh stretch\b|\bstanding quad(riceps)? stretch\b/i, 'quad-stretch'],
   [/\bcross.?body shoulder stretch\b/i, 'cross-body-shoulder'],
   [/\boverhead triceps stretch\b/i, 'triceps-stretch'],
