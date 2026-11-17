@@ -399,7 +399,7 @@ function vNumbers(){
     ${L.length ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>LDL</th><th>Total</th><th>HDL</th><th>Trig</th><th>ApoB</th><th></th></tr></thead><tbody>${L.map(x => `<tr><td>${short(x.date)}${x.note ? `<small>${esc(x.note)}</small>` : ''}</td><td><b>${cell(x.ldl)}</b></td><td>${cell(x.total)}</td><td>${cell(x.hdl)}</td><td>${cell(x.trig)}</td><td>${cell(x.apob)}</td><td><button type="button" class="linkbtn" data-hja="edit" data-hjv="lab|${esc(x.id)}">Edit</button></td></tr>`).join('')}</tbody></table></div>` : ''}</div>
   <div class="hj-blk">${kick('Markers')}${M.length ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>Weight</th><th>Waist</th><th>Rest HR</th><th>Push-ups</th><th>Pull-ups</th><th>Mile</th><th>Energy</th><th>Sleep</th><th>Joints</th><th></th></tr></thead><tbody>${M.map(x => `<tr><td>${short(x.date)}</td><td>${cell(x.weight)}</td><td>${cell(x.waist)}</td><td>${cell(x.rhr)}</td><td>${cell(x.pushups)}</td><td>${cell(x.pullups)}</td><td>${cell(x.mile)}</td><td>${cell(x.energy)}</td><td>${cell(x.sleep)}</td><td>${cell(x.joint)}</td><td><button type="button" class="linkbtn" data-hja="edit" data-hjv="mark|${esc(x.id)}">Edit</button></td></tr>`).join('')}</tbody></table></div>` : '<p class="hj-sub">Test your markers in week 1, then every four weeks. The Fitness plan shows how.</p>'}</div>
   ${vPanels()}
-  <p class="hj-note">Saved only on this device, locked with your Field Guide, and carried in your locked backup.</p>`;
+  <p class="hj-note">Saved only on this device, locked ${C.host === 'home' ? 'in your profile' : 'with your Field Guide'}, and carried in your locked backup.</p>`;
 }
 function bar(it){
   const v = typeof it.v === 'number' ? it.v : parseFloat(String(it.v).replace(/[^0-9.]/g, '')), lo = num(it.lo), hi = num(it.hi);
@@ -629,7 +629,23 @@ const moveToggle = (cur, id) => { const L = cur.slice(), i = L.indexOf(id); if (
 // The program card in the Field Guide's Move: where you are, this phase, and the track.
 function progCard(){ if (!progOn()) return ''; const w = Math.max(1, progWeek(new Date())), ph = phaseId(w), p = arr(PROG().phases).find(x => x.id === ph) || {};
   return `${newCard()}${againCard()}<div class="tn-card a-move tn-path"><div class="tn-k">My Program</div><h3>${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</h3><p class="tn-sub">${esc((PROG().tracks[progTrack()] || {}).name || {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'}[progTrack()])}${progTrack() === 'mixed' ? ', ' + (+H().set.cardioDays || 1) + ' cardio ' + ((+H().set.cardioDays || 1) === 1 ? 'day' : 'days') : ''}. ${esc(p.note || '')}</p>
-    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup">${ic('gear')}Change My Track</button></div></div>`; }
+    ${GROWP() && apiFacts() ? `<p class="tn-sub">${esc(cap1(apiFacts().text))}.</p>` : ''}<div class="tn-acts">${GROWP() ? growBtn() : `<button type="button" class="tn-btn sm line" data-hja="setup">${ic('gear')}Change My Track</button>`}</div></div>`; }
+const cap1 = t => String(t || '').charAt(0).toUpperCase() + String(t || '').slice(1);
+// BLD 1015 (Chris, November 17, 2026: "1", one clear place to choose workouts): in The Grounded Way, workouts, days, and minutes
+// are chosen only in Grow, My Growth Plan (the host's C.plan('move')). Every other place shows them plainly with one button there.
+const GROWP = () => C.host === 'home' && typeof C.plan === 'function';
+const growBtn = l => `<button type="button" class="tn-btn sm line" data-hja="growplan">${ic('gear')}${esc(l || 'Choose My Workouts')}</button>`;
+const growLine = () => `<p class="tn-sub">You choose your workouts, days, and minutes in one place: Grow, My Growth Plan.</p>`;
+// BLD 1015: a Guide program plan's days and length, plainly, from the library: the workout days (Monday to Friday), and this
+// week's measured minutes for the sessions those days play (each in its own phase, the lighter week included).
+function apiFacts(){
+  if (!H() || PUB() || !progOn() || !workOn()) return null; const mon = monOf(new Date()), mins = [], days = [];
+  for (let i = 0; i < 7; i++){ const d = addD(mon, i), id = WMAP[d.getDay()] ? guideKey(d) : null, x = id ? (WK().sessions || {})[id] : null; if (!x) continue; days.push(d.getDay()); if (+x.mins) mins.push(+x.mins); }
+  if (!days.length) return null; const lo = mins.length ? Math.min(...mins) : 0, hi = mins.length ? Math.max(...mins) : 0, avg = mins.length ? mins.reduce((a, b) => a + b, 0) / mins.length : 0;
+  const run = days.every((d, j) => !j || d === days[j - 1] + 1), names = run && days.length > 2 ? DOWL[days[0]] + ' to ' + DOWL[days[days.length - 1]] : days.map(d => DOWL[d]).join(', ');
+  const about = !mins.length ? '' : hi - lo <= 10 ? 'about ' + Math.round(avg / 5) * 5 + ' minutes' : 'about ' + Math.round(lo / 5) * 5 + ' to ' + Math.round(hi / 5) * 5 + ' minutes';
+  return {days: days.length, dows: days, names, lo, hi, mins: about ? Math.round(avg / 5) * 5 : 0, text: [days.length + ' days a week', about, names].filter(Boolean).join(', ')};
+}
 const medMins = n => { const m = WK().meditation || {}, a = +m.start || 10, b = +m.end || 20, k = +m.buildWeeks || 8; return Math.max(a, Math.min(b, Math.round(a + (Math.max(1, n) - 1) * (b - a) / Math.max(1, k - 1)))); };
 const shortDate = d => d.toLocaleDateString(undefined, {weekday: 'short', month: 'short', day: 'numeric'});
 const logOf = d => { const h = H(), k = ymd(d); return h.log[k] = h.log[k] || {}; };
@@ -2736,7 +2752,7 @@ function vSetup(){
   return `<div class="hj-blk" id="hj-form">${kick('My Goals')}<h3>Make this plan your own</h3>
     <p class="hj-sub">A few answers shape what you see. Everything stays on this device.</p>
     ${MINE_ANY() && MINE_ANY().who ? `<p class="hj-sub" style="margin:6px 0"><b>Whose phone is this?</b></p><div class="hj-chips">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip${(s.who || '') === w ? ' on' : ''}" aria-pressed="${(s.who || '') === w}" data-hja="who" data-hjv="${w}">${w}</button>`).join('')}</div>` : ''}
-    <p class="hj-sub" style="margin:6px 0"><b>My training</b></p>${trackChips(s)}
+    <p class="hj-sub" style="margin:6px 0"><b>My training</b></p>${GROWP() ? `<p class="hj-sub">${esc(movesOf(s).map(x => MOVE_NAME[x]).join(', '))}${apiFacts() ? ': ' + esc(apiFacts().text) : ''}.</p>${growLine()}<div class="row">${growBtn()}</div>` : trackChips(s)}
     <label class="hj-fld"><span>My plan starts on (a Monday)</span><input type="date" data-hjs="start" value="${esc(s.start || '')}"></label>
     <label class="hj-fld"><span>People who eat at home</span><input type="number" min="1" max="12" inputmode="numeric" data-hjs="household" value="${esc(s.household)}"></label>
     <p class="hj-sub" style="margin:12px 0 6px"><b>What are you growing toward?</b></p>
@@ -3459,7 +3475,7 @@ function vCard(hasPlan){
   const moved = !!H().set.movedHome, busy = S.moving;
   const move = moved ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Bring Over What\'s New'}</button>`
     : hasPlan ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Move My Plan to The Grounded Way'}</button>` : '';
-  const when = moved ? 'Each library update comes over on its own when you open the Field Guide. Bring Over What\'s New also brings what you logged here.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
+  const when = moved ? 'Each library update comes over to The Grounded Way on its own. Bring Over What\'s New also brings what you logged here.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
   return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Your Tending Lives in The Grounded Way</h3>
     <p class="hj-sub">Your plan, your week, and your tree grow together in The Grounded Way app, private on this phone.</p>
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button>${move}</div>
@@ -3469,7 +3485,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=c026'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=c140'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 // BLD 979 follow-up (Chris, November 17, 2026: "now it says 34 min when i open", then "they all still short"): a plan moved
 // into The Grounded Way keeps its own copy of the library, and that copy stayed as it was on the day of the move, so the newly
@@ -3477,6 +3493,13 @@ function loadGGP(){
 // copy of the library (w.lib: the healthJourney and audio, and the Founder plans) is brought up to date on its own, quietly,
 // on this device. Only the library copy changes: what the person logged, chose, and saved stays exactly as it is. A locked
 // profile is never asked to open; its copy comes over the next time both are open.
+// BLD 1015 (Chris, firm, November 17, 2026: "i dont want the app to depend on field guide for anything"): the moved plan also keeps
+// the keys to its own libraries (w.libKeys: the Guide key, the Founder key for a Founder plan, the access code's id, and which
+// sealed file each copy came from), inside the person's locked profile, so The Grounded Way brings each new library over by
+// itself from the site's own sealed files (home/home.js wayLib). keysFor writes them when they are new or changed and says so.
+function keysFor(w){ const k = C.libKeys && C.libKeys(); if (!w || !k || !k.guide) return false; const o = w.libKeys || {};
+  if (o.guide === k.guide && (o.founder || null) === (k.founder || null) && o.codeId === k.codeId && o.giv === k.giv && (o.fiv || '') === (k.fiv || '')) return false;
+  w.libKeys = {v: 1, tier: k.tier || 'guide', codeId: k.codeId || '', guide: k.guide, founder: k.founder || null, giv: k.giv || '', fiv: k.fiv || '', at: Date.now()}; return true; }
 const libSigOf = o => { try { const t = JSON.stringify(o || null); let x = 5381; for (let i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0; return t.length + ':' + (x >>> 0).toString(36); } catch(e){ return ''; } };
 let SYNC = null;
 async function syncMoved(){
@@ -3487,7 +3510,8 @@ async function syncMoved(){
     await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
     const a = window.GGP.active && window.GGP.active(); if (!a) { SYNC = null; return false; }
     const w = window.GGP.data(a.id, 'tending'); if (!w || !w.lib || !w.movedOnce) return false;
-    if (w.libSig === sig || (!w.libSig && libSigOf([w.lib, w.fdr || null]) === sig)){ if (!w.libSig){ w.libSig = sig; await window.GGP.save(a.id); } return false; }
+    const kc = keysFor(w);
+    if (w.libSig === sig || (!w.libSig && libSigOf([w.lib, w.fdr || null]) === sig)){ if (!w.libSig || kc){ w.libSig = sig; await window.GGP.save(a.id); } return false; }
     w.lib = clone(lib); if (fdr) w.fdr = clone(fdr); w.tier = C.tier ? C.tier() : (w.tier || 'guide'); w.libSig = sig; w.libSync = Date.now();
     await window.GGP.save(a.id); return true; })().catch(() => { SYNC = null; return false; })};
   return SYNC.p;
@@ -3502,7 +3526,7 @@ async function moveHome(){
     const f = (FX()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
     w.lib = clone({healthJourney: f.healthJourney, audio: f.audio});
     w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : null;
-    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now(); w.libSig = libSigOf([w.lib, w.fdr]);
+    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now(); w.libSig = libSigOf([w.lib, w.fdr]); keysFor(w);
     const fresh = !w.health || !w.health.set || w.health.set.pubDone || !w.movedOnce;
     if (fresh){ w.health = clone(d.health || {}); w.deleted = {health: clone(((d.deleted || {}).health) || {})}; }
     else window.GGHealth.merge(w, {health: d.health || {}, deleted: d.deleted || {}});
@@ -3529,6 +3553,7 @@ const FIELDS = {lab: ['date', 'ldl', 'total', 'hdl', 'trig', 'apob', 'note'], ma
 
 function act(a, v){
   const h = H(); if (!h) return;
+  if (a === 'growplan' && GROWP()){ C.plan('move'); return; }   // BLD 1015: one clear place for workouts
   if (actOwn(a, v)) return;   // BLD 896: My Own Items and the Month
   if (KON() && actKit(a, v)) return;
   if (PUB() && actPub(a, v)) return;
@@ -4055,7 +4080,7 @@ function ckSteps(d){
   const u = id => arr(d.use).includes(id), L = PLIB() || {}, st = START(), out = ['who'];
   if (!st) out.push('use'); if (arr(L.goals).length) out.push('goals');
   if (st || u('food')) out.push('food'); if (d.who === 'family') out.push('house');
-  if (!st && u('move')){ if (L.check && arr(L.check.questions).length) out.push('check'); out.push('level'); }
+  if (!st && u('move')){ if (L.check && arr(L.check.questions).length) out.push('check'); if (!GROWP()) out.push('level'); }
   if (!st && !TEEN() && !d.teen) out.push('body'); if (!st && u('labs')) out.push('labs');
   return out.concat('done');
 }
@@ -4103,7 +4128,7 @@ function vCheck(){
     body = `<h3>Your labs (optional)</h3><p class="hj-sub">${esc((L.labs || {}).lead || '')} Skip this anytime, and add numbers later in Numbers.</p>
     <div class="hj-g3">${inp('lab.date', 'Lab date', 'date')}${inp('lab.ldl', 'LDL')}${inp('lab.hdl', 'HDL')}${inp('lab.total', 'Total cholesterol')}${inp('lab.trig', 'Triglycerides')}</div>
     <p class="hj-sub" style="margin:10px 0 6px"><b>Your LDL goal, set with your doctor</b></p>${chips('goalLdl', lg.map(g => [g.v, 'Under ' + g.v]))}${inp('goalLdl', 'Or your own goal')}`; }
-  else body = `<h3>Ready to tend</h3><p class="hj-sub">${esc(t.intro.private)} ${esc(t.intro.quiet)}</p>${START() ? `<p class="hj-note">${esc(START_HOLDS)}</p>` : ''}${L.disclaimers && L.disclaimers.welcome ? `<p class="hj-note">${esc(L.disclaimers.welcome)}</p>` : ''}`;
+  else body = `<h3>Ready to tend</h3><p class="hj-sub">${esc(t.intro.private)} ${esc(t.intro.quiet)}</p>${GROWP() && arr(d.use).includes('move') && !START() ? growLine() : ''}${START() ? `<p class="hj-note">${esc(START_HOLDS)}</p>` : ''}${L.disclaimers && L.disclaimers.welcome ? `<p class="hj-note">${esc(L.disclaimers.welcome)}</p>` : ''}`;
   const last = i === steps.length - 1, canCancel = !!H().set.pubDone;
   return `<section class="tn-sec a-numbers tn-check" id="hj-form" data-tn="check">${secHead('sprout', 'a-numbers', H().set.pubDone ? 'My Start-Up Check' : 'Welcome to Tending', esc(L.tagline || ''))}
     <div class="tn-ckbar" aria-hidden="true"><span style="width:${Math.round(100 * (i + 1) / steps.length)}%"></span></div><p class="hj-sub tn-ckn">Step ${i + 1} of ${steps.length}</p>
@@ -4170,10 +4195,10 @@ function pubMoveHead(){
   const ll = !work ? movesLine(movesOf(s)) : lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '', pn0 = prog && ph.note ? String(ph.note) : '';
   const pn = pn0 && ll.indexOf(pn0.split(',')[0]) < 0 ? pn0 : '';
   return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(ll)}${pn ? ' ' + esc(pn) : ''}</p>
-    ${prog ? `<p class="tn-sub">${esc(gl)}</p>` : ''}<p class="tn-sub" style="margin-top:8px"><b>My movement:</b> choose any, or all.</p><div class="hj-chips" role="group" aria-label="My movement">${moveChips(movesOf(s), 'pmove')}</div>${movesOf(s).includes('strength') && movesOf(s).includes('cardio') ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}
+    ${prog ? `<p class="tn-sub">${esc(gl)}</p>` : ''}${GROWP() ? `<p class="tn-sub" style="margin-top:8px"><b>My movement:</b> ${esc(movesOf(s).map(x => MOVE_NAME[x]).join(', '))}${movesOf(s).includes('strength') && movesOf(s).includes('cardio') ? ', ' + (+s.cardioDays || 1) + ((+s.cardioDays || 1) === 1 ? ' cardio day' : ' cardio days') : ''}.</p>` : `<p class="tn-sub" style="margin-top:8px"><b>My movement:</b> choose any, or all.</p><div class="hj-chips" role="group" aria-label="My movement">${moveChips(movesOf(s), 'pmove')}</div>${movesOf(s).includes('strength') && movesOf(s).includes('cardio') ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}`}
     ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${SOBER_EARLY() ? `<p class="hj-note">${esc(SOBER_TEXT.move)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
     ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub tn-safe" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}
-    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div></div>`;
+    <div class="tn-acts">${GROWP() ? growBtn('Change My Path') : `<button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button>`}<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div></div>`;
 }
 
 // ---------- the Kitchen: swap a meal, build a new plan ----------
@@ -4970,12 +4995,9 @@ function vWorkouts(){
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${wlogLine(w)}</div>`).join('')}</div>` : '';
   return `<div class="tn-sec a-move">${young ? youngHead(ya) : PUB() ? pubMoveHead() : progCard()}${newerCard()}${lv}${every}${recent}</div>`;
 }
-// BLD 979 follow-up: a moved plan whose saved copy is from before BLD 979 (no measured minutes) says, once, that the newest
-// workouts come over when the Field Guide opens on this device.
-function newerCard(){ if (C.host !== 'home' || PUB()) return ''; const ss = Object.values(WK0().sessions || {}).filter(x => x && arr(x.blocks).length);
-  if (!ss.length || ss.some(x => x.minsByPhase)) return '';
-  return `<div class="tn-card a-move tn-new"><div class="tn-k a-move">Newer Workouts Are Ready</div><p class="tn-sub">Open the Field Guide once on this device, and your newest workouts come over here on their own, with everything you logged kept as it is.</p>
-    <div class="tn-acts"><a class="tn-btn sm" href="/field-guide/">${ic('play')}Open the Field Guide</a></div></div>`; }
+// BLD 1015: The Grounded Way brings a moved plan's newest library over by itself (home/home.js wayLib). Where it holds no key yet,
+// the host's own one time card shows here (C.libNote), the same card as in My Growth Plan.
+function newerCard(){ if (C.host !== 'home' || PUB() || typeof C.libNote !== 'function') return ''; try { return C.libNote() || ''; } catch(e){ return ''; } }
 // BLD 896 (Chris, October 30, 2026): the Every Workout shelf. This Week (the phase the person is in) stays on top; then every workout
 // by category: Strength, Cardio, Flow, Yoga, Balance, Stretch, and in public Tending Gentle; Strength and Cardio by phase (Foundation,
 // Build, Peak), each tile with its place, like "Build 2 · 56 min". A workout from another phase plays with that phase's sets and reps.
@@ -5162,7 +5184,7 @@ function apiPlanInfo(){
     cardio: !!PROG() && hasCardio(), levelLines: (L.templates || {}).levelLines || {}, gentle: {lead: (L.gentle || {}).lead || '', mins: arr((L.gentle || {}).sessions).map(x => +x.mins).filter(Boolean)},
     meds: arr((MED() || {}).sessions).map(x => ({id: x.id, title: x.title || '', day: x.day || ''})), flows: arr((PR() || {}).sessions).filter(x => !x.style || x.style === 'daily').map(x => ({id: x.id, title: x.title || '', style: x.style || 'daily', mins: x.mins || null})),
     flowAll: arr((PR() || {}).sessions).map(x => ({id: x.id, title: x.title || '', style: x.style || 'daily', mins: x.mins || null})), flowStyles: flowStyleList(), flowOn: flowOnOf(s), moves: movesOf(s), moveNames: MOVE_NAME,
-    medMins: [medMins(1), medMins(99)], prog: progLabel(new Date()), track: progTrack(), teen: TEEN()};
+    medMins: [medMins(1), medMins(99)], prog: progLabel(new Date()), track: progTrack(), teen: TEEN(), facts: apiFacts()};
 }
 function apiPlan(o){
   const h = H(); if (!h || !FLDH() || !o) return false; o = o || {};
@@ -6060,6 +6082,10 @@ window.GGHealth = {
   fill: apiFill, guided: apiGuided,
   // BLD 893: My Grounded Way Plan writes the same settings the start-up check and My Goals write (see apiPlan).
   applyPlan: o => apiPlan(o), planInfo: () => apiPlanInfo(),
+  // BLD 1015: a Guide program plan's days and length, from the library ({days, names, mins, text}), or null.
+  facts: () => { try { return apiFacts(); } catch(e){ return null; } },
+  // BLD 1015: draw again after the host brought a newer library copy over (home/home.js wayLib).
+  redraw: () => { try { rerender(true); } catch(e){} },
   state: S, allLines, LN,
   // BLD 947 (tests): a dinner card's data for a food week (day-of steps ride in while a head start is open), and a prep guide's data.
   cookData: (wk, id, n) => { const o = cookOv(wk, id, n); return o ? o.data : null; }, prepData: (kind, n) => { const o = prepOv(kind, n); return o ? o.data : null; }, reminders: d => remindersFor(day0(d)),

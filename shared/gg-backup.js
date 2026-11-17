@@ -176,8 +176,9 @@
           return box('p:' + r.p.id, false, n, 'Also on this device, with different saves. Check this to use the backup\'s copy instead of this device\'s.');
         }).join('');
       }
-      if (plan.fg) rows += '<h3>Field Guide</h3>' + (plan.fg.state === 'same' ? box('fg', false, 'Field Guide records', 'Already the same on this device.', true) :
-        box('fg', true, 'Field Guide records', plan.fg.state === 'new' ? 'Added, locked with the passcode it was made with.' : 'Merged: everything on this device stays. The Field Guide asks for this backup\'s passcode to finish.'));
+      // BLD 1015: The Grounded Way never asks anyone to open the Field Guide; its records are named as the team's records.
+      if (plan.fg) rows += '<h3>Grounded Team Records</h3>' + (plan.fg.state === 'same' ? box('fg', false, 'Team records', 'Already the same on this device.', true) :
+        box('fg', true, 'Team records', plan.fg.state === 'new' ? 'Added, locked with the passcode they were made with.' : 'Merged: everything on this device stays, and the rest finishes with this backup\'s team passcode.'));
       if (plan.hw) rows += '<h3>Heartwood</h3>' + (plan.hw.state === 'same' ? box('hw', false, 'Your Heartwood answers', 'Already the same on this device.', true)
         : plan.hw.state === 'new' ? box('hw', true, 'Your Heartwood answers', 'Added, each partner still locked with their own passcode and Root Words.')
         : box('hw', false, 'Your Heartwood answers', 'This device has its own Heartwood answers. Check this to use the backup\'s copy instead of this device\'s.'));
@@ -221,7 +222,7 @@
       if (on.rest) plan.settings.concat(plan.other).forEach(function (k) { if (here[k] == null) { localStorage.setItem(k, keys[k]); n++; } else if (!SETTINGS.test(k)) { var m = mergeJSON(here[k], keys[k]); if (m !== here[k]) { localStorage.setItem(k, m); n++; } } });
     } catch (e) { alert('Something went wrong while loading. This device may be out of space.'); return; }
     var msg = n ? 'Backup loaded.' : 'Nothing new to bring in.';
-    if (fgWaiting) msg += ' Open the Field Guide to finish adding its records.';
+    if (fgWaiting) msg += ' Your team records finish adding with this backup\'s team passcode.';
     if (opts.onFieldGuide && fgWaiting) { opts.onFieldGuide(); }
     toast(msg);
     if (opts.after) opts.after(n); else if (n) setTimeout(function () { location.reload(); }, 1200);
