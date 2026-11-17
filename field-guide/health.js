@@ -636,7 +636,7 @@ const logOf = d => { const h = H(), k = ymd(d); return h.log[k] = h.log[k] || {}
 const isDone = (d, key) => !!(H().log[ymd(d)] || {})[key];
 function markDone(key, d){ const l = logOf(d || new Date()); l[key] = Date.now(); l.u = Date.now(); save(); }
 // Sunday dinner belongs to the coming food week: it is cooked on Sunday prep day, the day after shopping (BLD 846).
-function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? dinEff(Object.assign({wk: letter(n)}, x), n) : null; }  // BLD 947: a Dinner Head Start left for the day of rides in
+function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? hsAdj(dinEff(Object.assign({wk: letter(n)}, x), n), d) : null; }  // BLD 947: a Dinner Head Start left for the day of rides in
 function sesFor(d){ const s = PUB() ? pubSesKey(d) : progOn() ? guideKey(d) : WMAP[d.getDay()], ss = sesById(s); return ss ? Object.assign({id: s}, ss) : null; }
 // BLD 892: a session by id, from this phase's sessions or, in public Tending, built for the phase it belongs to (a later week in Week).
 function sesById(id){ if (!id) return null; const ss = (WK().sessions || {})[id]; if (ss) return ss; return PUB() && progOn() ? pubPhaseSes(idPhase(id))[id] || null : null; }
@@ -691,6 +691,49 @@ function dinEff(x, n){
   const night = Math.max((+x.mins || 0) - save + seq, ...miss.filter(m => m.e.bg).map(m => +m.e.mins || 0));
   const note = miss.map(m => m.e.note).concat(ready.map(r => r.it.ready), [x.preppedOwn]).filter(Boolean).join(' ');
   return Object.assign({}, x, {steps: morning.concat(pre, own), mins: night, prepped: note, dayNote: note, gi0: morning.length, dayOfN: n, dayOfItems: miss.map(m => ({id: m.it.id, name: m.it.name, am: m.e.ahead ? m.e.am || '' : '', amMins: m.e.ahead ? +m.e.mins || 0 : 0}))}); }
+// BLD 1016 (Chris, November 17, 2026: "make sure we do not have similar meals like this, salmon back to back"): the day's
+// lunch keeps the variety rules in shared/gg-meal-tags.js. It never shares its dinner's main protein, yesterday's lunch or
+// dinner protein, or tomorrow's dinner protein; the weekday's planned lunch stays whenever it fits. Days are worked out in
+// order from the plan's start, once per library (LUN), so every screen shows the same lunch for a day.
+let LUN = null;
+const lunchI0 = (d, n) => ((d.getDay() + 6) % 7) % n;
+function lunchIx(d){
+  const L = arr(((APP() || {}).dinners || {}).lunches), T = window.GGMealTags; if (!L.length) return 0; const i0 = lunchI0(d, L.length);
+  if (!T || L.length < 2) return i0; const app = APP(), s0 = addD(startMon(), -1), end = day0(d);
+  if (end < s0 || (end - s0) / DAYMS > 800) return i0;
+  if (!LUN || LUN.app !== app) LUN = {app, m: {}, tags: L.map(x => T.lunchTag(x))};
+  const dt = x => { const n = dinnerFor(x); return n ? T.tagOf(n) : null; }, lt = (i, x) => LUN.tags[i] && LUN.tags[i].left ? Object.assign({p: 'mixed'}, dt(addD(x, -1)), {left: true}) : LUN.tags[i];
+  let x = end; while (x > s0 && LUN.m[ymd(addD(x, -1))] == null) x = addD(x, -1);
+  for (; x <= end; x = addD(x, 1)){ const k = ymd(x); if (LUN.m[k] != null) continue; const p = addD(x, -1), pi = LUN.m[ymd(p)];
+    LUN.m[k] = T.pickLunch(LUN.tags, lunchI0(x, L.length), {prev: {lunch: pi != null ? lt(pi, p) : null, dinner: dt(p)}, cur: {dinner: dt(x)}, next: {dinner: dt(addD(x, 1))}}); }
+  return LUN.m[ymd(end)] != null ? LUN.m[ymd(end)] : i0;
+}
+// The dinner leftovers lunch shows the numbers of the dinner it comes from (last night's).
+function lunchNut(x, d){ const T = window.GGMealTags; if (!x || !T || !T.lunchTag(x).left) return x; const y = dinnerFor(addD(d, -1)); return y && !y.leftover && nOk(y.nut) ? Object.assign({}, x, {nut: y.nut}) : x; }
+// BLD 1016: a dinner's note says a head start was done only once that head start is marked done (Head Start for Tomorrow on
+// Today, key head:<day>). A note leans on last night's head start, or on a named night's ("Tuesday's head start", "Sunday
+// night's"). While one is still open, the note says what to do now, and the cook guide starts with those steps; frozen fish or
+// meat takes the dinner's own quick thaw. Sunday Together Prep and the Weekly Batch keep their own Done marks (BLD 947).
+const HS_RE = /^Head start for tomorrow:\s*/i, HS_DAY = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+function hsRef(clause, d){ const c = String(clause || ''); if (/\blast night's\b/i.test(c)) return addD(d, -1);
+  const m = /\b(sunday|monday|tuesday|wednesday|thursday|friday|saturday)(?:'s head start| night's)/i.exec(c); if (!m) return null;
+  const w = HS_DAY.indexOf(m[1].toLowerCase()); let k = 1; while (k < 8 && addD(d, -k).getDay() !== w) k++; return k < 8 ? addD(d, -k) : null; }
+const hsDone = r => isDone(r, 'head:' + ymd(r));
+function hsSteps(r){ const y = dinnerFor0(r), t = y && arr(y.steps).map(s => typeof s === 'string' ? s : s && s.t).find(t => HS_RE.test(t || '')); return t ? t.replace(HS_RE, '') : ''; }
+function hsAdj(x, d){
+  if (!x || !d || x.leftover || !H() || day0(d) > day0(new Date())) return x; const fields = ['prepped', 'dayNote'].filter(k => typeof x[k] === 'string' && x[k]); if (!fields.length) return x;
+  const open = [], seen = new Set(), fix = note => String(note).split(/(?<=\.)\s+/).map(sen => sen.split(/,\s+(?=and (?:last|sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b)/i).map((c, i, a) => {
+    const r = hsRef(c, d); if (!r || hsDone(r)) return c; const k = ymd(r); if (!seen.has(k)){ seen.add(k); open.push(r); } return null; })
+    .filter(Boolean).map((c, i) => i ? c : c.replace(/^and\s+/i, '').replace(/^./, ch => ch.toUpperCase())).join(', ').replace(/([^.])$/, '$1.')).filter(t => t && t !== '.').join(' ');
+  const out = {}; fields.forEach(k => { out[k] = fix(x[k]); }); if (!open.length) return x;
+  let frozen = false; const parts = open.map(hsSteps).filter(Boolean).flatMap(t => t.replace(/\.$/, '').split(/\.\s+|,\s+(?:and|then)\s+(?=[a-z])/)).filter(t => { if (/from the freezer to/i.test(t)){ frozen = true; return false; } return !!t.trim(); });
+  const thaw = !frozen ? '' : x.thaw && x.thaw.quick ? String(x.thaw.quick).replace(/^Still frozen\?\s*/i, '') : 'Set anything still frozen in a sealed bag in cold water for about 30 minutes, changing the water once.', lead = parts.length ? 'Tonight starts with the head start: ' + parts.join(', then ').replace(/\.$/, '') + '.' : '';
+  const tw = thaw ? 'Thaw ' + ((x.thaw && x.thaw.item) || 'it') + ' first: ' + thaw.replace(/^./, c => c.toLowerCase()) : '', now = [tw, lead].filter(Boolean).join(' ');
+  fields.forEach(k => { out[k] = (out[k] ? out[k] + ' ' : '') + now; });
+  const pre = [].concat(tw ? [{t: tw, min: 0, kick: 'Head Start'}] : [], parts.length ? [{t: 'Head start first: ' + parts.join(', then ') + '.', min: 0, kick: 'Head Start'}] : []);
+  const st = arr(x.steps), g = +x.gi0 || 0; return Object.assign({}, x, out, {steps: st.slice(0, g).concat(pre, st.slice(g)), hsOpen: open.map(ymd)}); }
+// The plan's dinner for a day as the library writes it (no day-of steps and no head start note), for reading a head start step.
+function dinnerFor0(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; return w ? arr(w.dinners).find(z => z.day === DOW[d.getDay()]) || null : null; }
 // This food week, then the next ones, then last week: the week a dinner card belongs to when only its letter is known.
 function dinN(wk, id){ const fw = foodWeek(new Date()); for (const k of [0, 1, 2, 3, -1, -2, -3]){ const n = fw + k; if (n >= 1 && letter(n) === wk) return n; } return Math.max(1, fw); }
 const piMins = m => 'about ' + m + ' min';
@@ -1189,7 +1232,7 @@ function openKey(key){
 }
 // BLD 881: each guide is built by its own *Ov function, so GGHealth.render can play one inside a sheet as well as full screen.
 function cookOv(wk, id, n){ const w = ((APP() || {}).dinners || {}).weeks || {}, x0 = arr((w[wk] || {}).dinners).find(z => z.id === id); if (!x0) return null;
-  const wn = +n >= 1 ? +n : dinN(wk, id), x = dinEff(x0, wn); // BLD 947
+  const wn = +n >= 1 ? +n : dinN(wk, id), td = day0(new Date()), t0 = dinnerFor(td), x = t0 && t0.id === id && t0.wk === wk ? t0 : dinEff(x0, wn); // BLD 947; BLD 1016: tonight's card carries tonight's head start note
   return {k: 'cook', key: 'cook:' + wk + ':' + id, title: x.name, sub: (x.mins ? x.mins + ' minutes' : '') + (x.cost ? ' · about $' + x.cost : ''), data: x, wn, wk, did: id}; }
 function openCook(wk, id, n){ openOv(cookOv(wk, id, n)); }
 // Breakfasts, lunches, and snacks with steps open in Andrew's guide too (BLD 859).
@@ -5078,7 +5121,7 @@ function apiToday(date){
     else if (x.k === 'prep') push(Object.assign(base, {when: /^Monthly/.test(x.kick) ? 'Sunday' : x.kick, tint: TINT.cook, kind: 'prep'})); });
   if (U('food')){
     const L = arr(((APP() || {}).dinners || {}).lunches);
-    if (L.length){ const i = ((d.getDay() + 6) % 7) % L.length, x = L[i], key = 'idea:lunches:' + i;
+    if (L.length){ const i = lunchIx(d), x = lunchNut(L[i], d), key = 'idea:lunches:' + i;
       push({key, when: 'Midday', hour: 12, title: x.name, sub: (x.mins ? x.mins + ' minutes' : 'Lunch') + (nOk(x.nut) ? ', ' + nSf(x.nut) : ''), btn: arr(x.steps).length ? 'Make It' : 'Done', tint: TINT.meals, done: isDone(d, key), kind: 'meal'}); }
     const dn = dinnerFor(addD(d, 1));
     if (dn && !dn.leftover){ const key = 'head:' + k, th = dn.thaw && dn.thaw.item;
@@ -6377,7 +6420,7 @@ const mmSwapOf = (d, key) => { const k = ymd(d); return MENU().items.find(x => x
 function mmPlanned(d){
   const out = []; if (!H() || !U('food')) return out; const din = (APP() || {}).dinners || {};
   const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, meal: 'dinner', name: dn.name, ref: dn.leftover || dn.id === 'leftovers' ? '' : PUB() ? 'r:' + dn.id : 'g:' + dn.id, x: dn});
-  const L = arr(din.lunches); if (L.length){ const i = ((d.getDay() + 6) % 7) % L.length, x = L[i]; if (x) out.push({key: 'idea:lunches:' + i, meal: 'lunch', name: x.name, ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:lunches:' + i, x}); }
+  const L = arr(din.lunches); if (L.length){ const i = lunchIx(d), x = L[i]; if (x) out.push({key: 'idea:lunches:' + i, meal: 'lunch', name: x.name, ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:lunches:' + i, x}); }
   return out;
 }
 const mmDinner = d => { const dn = dinnerFor(d); return dn && mmSwapOf(d, 'cook:' + dn.wk + ':' + dn.id) ? null : dn; };

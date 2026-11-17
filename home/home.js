@@ -2356,7 +2356,9 @@
     var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-hd">' + pb(PIMG + 'whats-new-sq.webp') + '<div style="min-width:0"><div class="hm-k">' + esc(nw.title) + '</div></div></div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
     // BLD 963 (Chris: "week can have everything clear and bold for the week"): Back, This Week, Next and the seven days lead;
     // practices, the Shopping List, Sunday Together Prep, and the growth plan follow (beside the days on a wide screen).
-    return '<div class="hm-wgrid"><div class="hm-col hm-wmain">' + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div>' + news + '</div><div class="hm-col hm-wside">' + find + prep + door + '</div></div>';
+    // BLD 1016 (Chris, November 17, 2026: the Shopping List was "way down the list, should be near top"): the Shopping List and
+    // Sunday Together Prep sit right under the week's heading, before the practices and the days, on every screen.
+    return '<div class="hm-wgrid"><div class="hm-col hm-wmain">' + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + find + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div>' + news + '</div><div class="hm-col hm-wside">' + prep + door + '</div></div>';
   }
 
   /* BLD 946 (Chris, November 8, 2026: "when you are on This Week, how can i get to Next Week?"): Back and Next on the Week tab,
