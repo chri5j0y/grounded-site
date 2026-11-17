@@ -672,7 +672,7 @@ body.cd-noscroll{overflow:hidden;}
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
 <script src="../shared/gg-app.js?v=c007"></script>
-<script src="../shared/gg-backup.js?v=b782"></script>
+<script src="../shared/gg-backup.js?v=c140"></script>
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
@@ -1273,7 +1273,10 @@ if (window.GGCer){ GGCer.tier = () => TIER; GGCer.saveAll = (key, item) => piece
 if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
 // Tending, formerly My Health (GWG BLD 840, health.js): every level; content from the Guide library, a Founder's own plan from the Founder library.
-if (window.GGHealth) GGHealth.init({data: () => DATA, fld: () => FLD, fdr: () => FDR, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m)});
+// BLD 1015: libKeys hands a plan moved into The Grounded Way the keys to its own libraries (kept in the person's locked profile),
+// so The Grounded Way brings each new sealed library over by itself and never needs the Field Guide open.
+if (window.GGHealth) GGHealth.init({data: () => DATA, fld: () => FLD, fdr: () => FDR, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
+  libKeys: () => (KEYS && KEYS.guide ? {tier: TIER, codeId: CODEID || '', guide: KEYS.guide, founder: TIER === 'founder' ? (KEYS.founder || null) : null, giv: (BOX.guide && BOX.guide.iv) || '', fiv: TIER === 'founder' ? ((BOX.founder && BOX.founder.iv) || '') : ''} : null)});
 // Books (GWG BLD 770, books.js): Founders only, the Books tab and the Set Aside for Taxes card on Home.
 if (window.GGBooks) GGBooks.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});

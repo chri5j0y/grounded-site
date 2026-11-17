@@ -39,7 +39,7 @@
 (function () {
   'use strict';
   if (window.GGSober) return;
-  var V = 'b944';
+  var V = 'c140';
   var TREES = ['birch', 'oak', 'sequoia'];
   var SITE = 'https://growwithgrounded.com/living-sober';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
@@ -641,7 +641,7 @@
       var html = eb() + '<h2>' + esc(Ba.title || 'Sleep, Food, and Movement in Early Sobriety') + '</h2><p>' + esc(Ba.intro || '') + '</p>' +
         (Ba.parts || []).map(function (q) { return '<h3>' + esc(q.title) + '</h3>' + ul(q.items); }).join('') +
         (Ba.note ? '<p class="ggs-soft">' + esc(Ba.note) + '</p>' : '') +
-        (Ba.health ? '<p class="ggs-soft"><a href="' + esc(ROOT + '/field-guide/') + '">' + esc(Ba.health) + '</a></p>' : '') + srcLine(Ba.credits) +
+        (Ba.health ? '<p class="ggs-soft"><a href="' + esc(ROOT + '/home/') + '">' + esc(Ba.health) + '</a></p>' : '') + srcLine(Ba.credits) +
         '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="gains">Milestones and Gains</button><button type="button" class="btn btn-primary" data-dd="close" data-first>Close</button></div>';
       dialog(Ba.title || 'Sleep, Food, and Movement', html, function (d) {
         d.box.setAttribute('data-ggs-basics', tree);
