@@ -228,7 +228,7 @@ function scene(state, opts){
   const showRing = s === 'rest' || o.pct != null, showBreath = s === 'breathe' || o.inhale != null || (Array.isArray(o.phases) && o.phases.length > 0);
   const side = o.side === 'L' || o.side === 'R' ? `<div class="ggs-side" data-ggsside><b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span></div>` : '<div class="ggs-side" data-ggsside hidden></div>';
   const cn = o.count && +o.count.of > 0 ? o.count : null, cr = cn ? Math.max(0, Math.min(+cn.of, +cn.n || 0)) : 0;
-  const count = cn ? `<div class="ggs-count"><b data-hjrep data-ggsrep>${cr || ''}</b><span>of ${+cn.of}</span></div>` : '';
+  const count = cn ? `<div class="ggs-count"><b data-hjrep data-ggsrep>${cr || (cn.n === 0 ? '0' : '')}</b><span>of ${+cn.of}</span></div>` : '';   // BLD 1022: "0 of 5" while a set's words play before Go
   const prog = cn ? `<div class="ggs-prog" data-ggsprog data-of="${+cn.of}"><i style="width:${r1(cr / cn.of * 100)}%"></i>${Array.from({length: Math.max(0, cn.of - 1)}, (x, k) => `<b style="left:${r1((k + 1) / cn.of * 100)}%"></b>`).join('')}</div>` : '';
   // BLD 1018 (Chris, November 17, 2026: Standing Knee Balance and Suitcase Carry showed no timer for the set): every timed
   // hold, carry, balance, and stretch shows a small ring with the seconds left in the rep badge's corner, in the clear

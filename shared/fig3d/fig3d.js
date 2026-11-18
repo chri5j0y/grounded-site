@@ -4166,9 +4166,16 @@ var D_STEPUP = {name: 'Step-Up', tempo: 3.4, base: 'stand', glow: {quads: [.4, 1
   props: ['step'],
   form: [{when: [.02, .2], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'press through the whole foot', at: 'lowerleg01.R', side: 1},
     {when: [.45, .6], plumb: ['head', 'foot.R'], say: 'stand tall', at: 'neck01', side: -1}],
+  // BLD 1022 (Chris, November 18, 2026: "all correct, but still a little clunky. See if you can make this a little smoother
+  // when he steps up and down"): a passing key each way, so the rise and the lowering flow through without a stop. Up: the
+  // hips travel forward over the step as the left foot leaves the floor and swings up clear of the step's edge; down: the
+  // left foot reaches back past the edge before it lowers to the floor.
+  top: [2], dur: [.62, .38, .55, .45],
   k: [
-    {br: 'out', on: 'fR fL', p: [.88, .12], t: [172, 175], n: 178, ra: [10, 14], la: [-6, 4], rl: {x: .11, y: .272, z: .33, f: 72, pole: [.2, 0, 1]}, ll: foot(.11, -.1), lift: .2, e: .5},
-    {br: 'in', on: 'fR fL', p: [1.125, .25], t: [181, 181], n: 182, ra: [4, 8], la: [4, 8], rl: {x: .11, y: .272, z: .33, f: 72}, ll: {x: .11, y: .272, z: .33, f: 72}, lift: .2, e: 1}
+    {br: 'out', on: 'fR fL', p: [.88, .12], t: [172, 175], n: 178, ra: [10, 14], la: [-6, 4], rl: {x: .11, y: .272, z: .33, f: 72, pole: [.2, 0, 1]}, ll: foot(.11, -.1), lift: .06, e: .5},
+    {br: 'out', via: true, on: 'fR', p: [1.03, .21], t: [176, 178], n: 180, ra: [6, 10], la: [0, 6], rl: {x: .11, y: .272, z: .33, f: 72}, ll: {x: .11, y: .38, z: .04, f: 72, pole: [0, 0, 1]}, lift: 0, e: .7},
+    {br: 'in', on: 'fR fL', p: [1.125, .25], t: [181, 181], n: 182, ra: [4, 8], la: [4, 8], rl: {x: .11, y: .272, z: .33, f: 72}, ll: {x: .11, y: .272, z: .33, f: 72}, e: 1},
+    {br: 'in', via: true, on: 'fR', p: [1.04, .2], t: [177, 179], n: 180, ra: [6, 10], la: [0, 6], rl: {x: .11, y: .272, z: .33, f: 72}, ll: {x: .11, y: .36, z: .03, f: 72, pole: [0, 0, 1]}, lift: 0, e: .6}
   ]};
 G.define('db-step-up', withPair(D_STEPUP, 'Step-Up with Dumbbells', [2, 4]));
 G.define('step-up', D_STEPUP);
@@ -4498,10 +4505,16 @@ G.define('wood-chop', {name: 'Wood Chop', tempo: 3, base: 'stand', glow: {obliqu
   form: [{when: [.4, .6], line: ['root', 'neck01'], say: 'turn from ribs and hips', at: 'spine02', side: 1},
     {when: [.4, .6], plumb: ['knee*', 'foot*'], say: 'knees over toes', at: 'lowerleg01.L', side: 1}],
   k: [
-    {br: 'out', p: [.9, -.062], t: [180, 179], n: 178, yaw: -15, tw: -13, rl: step(.2, .02), ll: step(.2, .02), ra: {x: .34, y: 1.58, z: .24, pole: [.3, -1, -.3]}, la: {x: -.28, y: 1.6, z: .24, pole: [.3, -1, -.3]},
+    {br: 'out', p: [.9, -.062], t: [180, 179], n: 178, yaw: -15, tw: -13, rl: step(.2, .02), ll: step(.2, .02), ra: {x: .34, y: 1.56, z: .34, pole: [.3, -1, -.3]}, la: {x: -.28, y: 1.58, z: .34, pole: [.3, -1, -.3]},
       hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', lo: 10, e: .3},
+    // BLD 1022 (Chris, November 18, 2026: "the dumbbells kind of get lost in his chest during the rotation"): a passing key
+    // each way, with the arms long and the dumbbell swinging out in front of the chest, so it stays clear of the body.
+    {br: 'out', via: true, p: [.82, -.115], t: [165, 162], n: 160, yaw: 0, tw: 0, rl: step(.2, .02), ll: step(.2, .02), ra: {x: .16, y: 1.18, z: .62, pole: [.3, -1, -.2]}, la: {x: .04, y: 1.19, z: .62, pole: [.3, -1, -.2]},
+      hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', lo: 10, e: .7},
     {br: 'in', p: [.74, -.17], t: [148, 142], n: 142, yaw: 14, tw: 14, rl: step(.2, .02), ll: step(.2, .02), ra: {x: -.22, y: .74, z: .38, pole: [.3, -1, 0]}, la: {x: .28, y: .72, z: .38, pole: [.3, -1, 0]},
-      hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', lo: 10, e: 1}
+      hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', lo: 10, e: 1},
+    {br: 'in', via: true, p: [.82, -.115], t: [165, 162], n: 160, yaw: 0, tw: 0, rl: step(.2, .02), ll: step(.2, .02), ra: {x: .16, y: 1.18, z: .62, pole: [.3, -1, -.2]}, la: {x: .04, y: 1.19, z: .62, pole: [.3, -1, -.2]},
+      hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', lo: 10, e: .7}
   ]});
 
 // Standing airplane (BLD 900, the step words): stand on the right leg, knee soft (the player mirrors the picture for
