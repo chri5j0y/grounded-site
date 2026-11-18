@@ -2687,7 +2687,7 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=c136';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=c151';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=c128', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c128', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c126', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
