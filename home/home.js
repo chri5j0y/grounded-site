@@ -59,7 +59,7 @@
   var V = 'b908';
   var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c151', '/shared/tend/coach.js?v=c151', '/shared/tend/health.js?v=c151', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c151';
+  var GGN_SRC = '/shared/ggn.js?v=c152';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';

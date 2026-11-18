@@ -12,12 +12,13 @@
    and Listening Well (kids: Mindful Snack and Mindful Walk), each one short video that opens with a timed breath to arrive.
    Crisis lines are never spoken (BLD 808); Get Grounded Now carries none (BLD 944).
    Data: shared/ggn-videos.js (window.GG_NOW), generated from patches/bld809 in grounded-workshop.
+   BLD 1021: GGNow.playApp(app, id, from, {title, back}) and GGNow.lessons() let another page (the reader page, /book) play
+   an app's lesson in this same player, in that app's recorded voice.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGNow) return;
-  var V = 'c136';
-  var READ = '/read.js?v=c030', LEARN = '/shared/gg-learn.js?v=c151', DATA = '/shared/ggn-videos.js?v=c115', LESSONS = '/shared/learn-lessons.js?v=' + V;
+    var READ = '/read.js?v=c030', LEARN = '/shared/gg-learn.js?v=c151', DATA = '/shared/ggn-videos.js?v=c115', LESSONS = '/shared/learn-lessons.js?v=c151';
   var DOORS = [
     { id: 'slow', h: 'Slow My Body Down', sub: 'Racing heart, shaky, panicky', kh: 'Calm My Body', ksub: 'Heart going fast, wiggly, scared' },
     { id: 'quiet', h: 'Quiet My Thoughts', sub: 'Spinning, worried, racing', kh: 'Quiet My Busy Mind', ksub: 'Lots of worries, thoughts zooming' },
@@ -177,7 +178,7 @@
       btns.push(['steady', l.door === 'mindful' ? 'Done for Now' : 'I Feel Steadier', 'quiet']);
       var track = { id: 'ggn', kind: 'support', title: 'Get Grounded Now', lessons: [l] };
       S.open.ctl = GGLearn.player(root.querySelector('.ggn-host'), {
-        app: 'site', lesson: l, track: track, tracks: [track], done: {}, at: 0, accent: '#5F7D48', mood: 'calm', voice: voice(),
+        app: 'site', lesson: l, track: track, tracks: [track], done: {}, at: 0, accent: '#5F7D48', mood: 'calm', voice: o.voice || voice(),
         mark: { name: 'Get Grounded Now' },
         onDone: function () { if (told || typeof o.onDone !== 'function') return; told = true; try { o.onDone(id); } catch (e) {} },
         ending: { eyebrow: tName, h: 'How do you feel now?', sub: nx && nx.id !== id ? 'Another, if it helps: ' + nx.title : 'Come back any time.', say: 'Take all the time you need.', ok: true, buttons: btns },
@@ -213,14 +214,18 @@
       host.innerHTML = h || '<p class="ggn-muted">These open inside each Grounded tool.</p>';
     });
   }
-  function playApp(app, lid, from) {
+  // o: play's options (title, back); the lesson always plays in its app's recorded voice.
+  function playApp(app, lid, from, o) {
     var G = window.GG_LEARN || {}, hit = null;
     ((G[app] || {}).tracks || []).forEach(function (t) { (t.lessons || []).forEach(function (l) { if (l.id === lid) hit = { t: t, l: l }; }); });
-    if (!hit || !window.GGLearn) return;
+    if (!hit || !window.GGLearn) return false;
     var vo = GGLearn.recVoice({ app: app, lesson: hit.l, track: hit.t }, true) || voice();
     if (!byId(lid)) { window.GG_NOW = window.GG_NOW || { lessons: [] }; window.GG_NOW.lessons.push(Object.assign({}, hit.l, { door: 'app', length: 'now', audience: 'app', voice: vo })); }
-    var save = S.voice; S.voice = vo; play(lid, [lid], from); S.voice = save;
+    play(lid, [lid], from, Object.assign({}, o || {}, { voice: vo }));
+    return true;
   }
+  // The apps' lessons (shared/learn-lessons.js) with the player, for a page that plays one of them (BLD 1021, /book).
+  function lessons() { return need(READ, function () { return !!window.GGRead; }).then(function () { return need(LEARN, function () { return !!window.GGLearn; }); }).then(function () { return need(LESSONS, function () { return !!window.GG_LEARN; }); }); }
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-ggn-act],[data-ggn-door],[data-ggn-play],[data-ggn-voice],[data-ggn-app]'); if (!t) return;
@@ -242,7 +247,7 @@
 
   // BLD 912: Home shows this page inside its own window. mount(el, {kids}) draws it into el (the URL stays as it is).
   function mount(el, o) { S.el = el; S.kids = !!(o && o.kids); return need(DATA, function () { return !!window.GG_NOW; }).then(render); }
-  window.GGNow = { play: play, door: door, render: render, mount: mount };
+  window.GGNow = { play: play, playApp: playApp, lessons: lessons, door: door, render: render, mount: mount };
   function boot() { need(DATA, function () { return !!window.GG_NOW; }).then(render); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
