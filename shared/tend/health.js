@@ -6047,7 +6047,7 @@ html.gg-fs .hj-fstip b{font-family:'Barlow Condensed','Barlow',sans-serif;letter
 /* BLD 957: top items come down, clear of the phone's own exit X in full screen, and on a tablet or computer everything is bigger. */
 html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-ftip{top:calc(56px + env(safe-area-inset-top,0px));}
 html.gg-fs .ggs-break,html.gg-fs .ggs-hud{top:calc(48px + env(safe-area-inset-top,0px));}
-html.gg-fs .ggs-count{font-size:clamp(64px,19vw,120px);}
+html.gg-fs{--cf:clamp(40px,min(10.5vw,9vh),84px);}html.gg-fs .ggs-count{font-size:var(--cf);}html.gg-fs .ggs-ftip:not(.br){max-width:min(320px,calc(100% - 36px - var(--cf) * 3.4 - 50px));}
 html.gg-fs .ggs-hold{width:clamp(90px,14vh,150px);}html.gg-fs .ggs-hold b{font-size:clamp(34px,6vh,60px);}
 @media (min-width:700px) and (min-height:560px){
   html.gg-fs{--fsb:196px;}
@@ -6061,7 +6061,7 @@ html.gg-fs .ggs-hold{width:clamp(90px,14vh,150px);}html.gg-fs .ggs-hold b{font-s
   /* BLD 1019: the Sunset Tide breath chip grows with the room beside the figure (up to 300 px), so it reads from across a room. */
   html.gg-fs .hj-stagebox .ggs{--brf:min(300px,30vh,max(230px,calc((100% - var(--fs)) / 2 - 40px)));}
   html.gg-fs .ggs-breath.wf,html.gg-fs .ggs-breath.wf.ggs-rings{width:var(--brf);left:24px;}
-  html.gg-fs .ggs-ftip{left:calc(var(--brf) + 44px);max-width:min(520px,calc(100% - var(--brf) - 300px));padding:10px 16px 12px;}
+  html.gg-fs .ggs-ftip,html.gg-fs .ggs-ftip:not(.br){left:calc(var(--brf) + 44px);max-width:min(520px,calc(100% - var(--brf) - 44px - var(--cf) * 3.4 - 96px));padding:10px 16px 12px;}
   html.gg-fs .ggs-ftip b{font-size:14px;}
   html.gg-fs .ggs-ftip span{font-size:clamp(17px,2.2vh,24px);}
   html.gg-fs .ggs-wt{right:24px;bottom:34px;padding:12px 18px 14px;}
@@ -6071,7 +6071,10 @@ html.gg-fs .ggs-hold{width:clamp(90px,14vh,150px);}html.gg-fs .ggs-hold b{font-s
   html.gg-fs .ggs-break{font-size:clamp(34px,5vh,52px);padding:10px 38px 11px;}
   html.gg-fs .ggs-rsub{font-size:clamp(18px,2.4vh,26px);max-width:min(640px,80vw);top:calc(100% + 12px);}
   html.gg-fs .ggs-side{font-size:20px;bottom:34px;left:24px;}
-  html.gg-fs .ggs-count{font-size:clamp(96px,17vh,180px);padding:6px 24px 12px;border-radius:24px;}
+  /* Chris, November 18, 2026 (iPad photo: "I thought we were going to make those numbers smaller"): the full screen rep badge on a tablet or computer
+     sizes by the narrower of width and height, so it stays clear of the form tip in portrait and never runs off the edge. */
+  html.gg-fs{--cf:clamp(64px,min(9vw,10vh),104px);}
+  html.gg-fs .ggs-count{padding:4px 20px 10px;border-radius:22px;}
   html.gg-fs .ggs-fig.small{--fs:min(260px,26vh);}
   html.gg-fs .hj-fsbar .btn{min-height:56px;min-width:180px;font-size:18px;}
 }
