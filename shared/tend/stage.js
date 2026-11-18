@@ -204,7 +204,7 @@ function ringsHTML(o, red, P, mark){
 // The ring module, once (/shared/gg-breath-ring.js, a root address since BLD 1020), with this file's own version.
 function ringLoad(){
   if (window.GGBreathRing || ringLoad.on) return; ringLoad.on = 1;
-  try { const u = new URL('/shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c148';
+  try { const u = new URL('/shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c151';
     const el = document.createElement('script'); el.src = u.href; el.async = true; (document.head || document.documentElement).appendChild(el); } catch (e) {}
 }
 function phaseHTML(o, red){ return ringsHTML(o, red, o.phases, true); }

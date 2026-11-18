@@ -296,7 +296,7 @@
     return p === 'in hold out rest' ? 'box' : p === 'in hold out' ? 'tri' : p === 'in sip out' ? 'sigh' : '';
   }
   function brRing(sc, opt, tone) { ringNeed(); var sh = brShape(sc); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"' + (sh ? ' data-shape="' + sh + '" data-sw="' + esc(brWordList(sc).join('|')) + '"' : '') + '></svg>'; }
-  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=c148'); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=c151'); el.async = true; document.head.appendChild(el); } catch (e) {} }
   function gfxNeed() { if (window.GGGfx || gfxNeed.on) return; gfxNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-gfx.js?v=' + GFXJS); el.async = true; document.head.appendChild(el); } catch (e) {} }
   // A breathing exercise: a lesson whose own name is a breath (Box Breathing, Long Exhale Breathing, Physiological Sigh, Slow Bubble
   // Breath), never a prayer. A lesson can say so itself with breathEx.
@@ -2276,7 +2276,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c150'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c151'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
