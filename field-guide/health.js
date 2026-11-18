@@ -482,7 +482,7 @@ const WK = () => { const w = WK0(); if (!w || !w.sessions || PUB()) return w; co
   if (WKC && WKC.w === w && WKC.k === k) return WKC.v;
   // BLD 979 follow-up: a session with no measured minutes (a plan's saved copy from before BLD 979) shows the player's own clock.
   const ss = {}; Object.entries(w.sessions).forEach(([id, x]) => { if (!x || !arr(x.blocks).length){ ss[id] = x; return; } const pk = phKeyFor(id, d);
-    ss[id] = Object.assign({}, x, {mins: x.minsByPhase ? minsOf(x, pk.ph, pk.light) : Math.max(1, Math.round(wkClock(x, pk.ph, pk.light, w) / 60))}); });
+    ss[id] = Object.assign({}, x, x.minsByPhase ? {mins: minsOf(x, pk.ph, pk.light)} : {mins: Math.max(1, Math.round(wkClock(x, pk.ph, pk.light, w) / 60)), minsLive: true}); });
   const v = Object.assign({}, w, {sessions: ss}); WKC = {w, k, v}; return v; };
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
@@ -1103,7 +1103,7 @@ function buildWork(s){
   const ses = sesById(s); if (!ses) return null;
   const t0 = new Date(), pk = PUB() && (H().set.level || 'root') === 'gentle' ? gentlePk(t0) : phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
-  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: minsOf(ses, pk.ph, pk.light), steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
+  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: minsOf(ses, pk.ph, pk.light), live: !!ses.minsLive, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 // BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
 // BLD 984: a Member session opened beside a moved plan plays with the Member clip key; everything else with the library's own.
@@ -1380,6 +1380,11 @@ const secsOf = st => parseInt(String(st.reps), 10) || 30;
 const amtTxt = st => { const n = +repTxt(st); if (st.kind === 'time' && !repWords(st) && n >= 180 && n % 60 === 0){ const m = n / 60; return m + ' minute' + (m === 1 ? '' : 's'); } return repTxt(st) + unitOf(st); };
 const LN = {
   ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.',
+  // BLD 1018 follow-up (Chris, November 17, 2026: "bad voice slipped in after a few scenes"): a session whose minutes come
+  // from the player's live clock (a plan's saved copy from before BLD 979, with no measured minutes) is opened by name only.
+  // Its minutes change with every timing change and every setting, so "About N minutes" could never be recorded for every
+  // N and fell back to the device voice; the minutes stay on the card and the start screen.
+  sesGo: t => t + '. We begin with the warm-up.',
   // BLD 931 (Chris, November 6, 2026, option 1): said once at the start of every workout.
   focus: 'Grounded Fitness: breathe and form first, weight and speed come second.',
   // BLD 965 (Chris's 11/10 notes: "still no tips for water, safe moves"): said once at the start of every workout, after focus.
@@ -1557,7 +1562,7 @@ function buildMMed(id){ const M = MLIB(), md = M && (M.app || {}).meditations, o
 function allLines(){
   if (PUB()) return allLinesPub();
   const out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); }, w = WK(), app = APP() || {};
-  Object.entries(WK0().sessions || {}).forEach(([id, ses]) => { [ses.mins || 50].concat(Object.values(ses.minsByPhase || {}), Object.values(ses.minsLight || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
+  Object.entries(WK0().sessions || {}).forEach(([id, ses]) => { add(AVA, LN.sesGo(ses.title || 'Session ' + id)); [ses.mins || 50].concat(Object.values(ses.minsByPhase || {}), Object.values(ses.minsLight || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light); S2.forEach((st, i) => {
       const nx = S2[i + 1];
       if (st.t === 'time'){ add(AVA, st.form && !st.lines ? LN.tname(st) : LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
@@ -1976,7 +1981,7 @@ async function runSession(o){
   if (preRing(o, o.steps[0])) brHold(o, true);   // the first step's breath waits through the opening lines for its own line
   if (o.med && V && V.cue) await V.cue('bell-1.mp3', {gain: 0.55, wait: 2.5});   // BLD 991: a meditation opens with the bowl
   if (!o.med && !o.prac){ await speak(o, o.focus || LN.focus); await speak(o, o.safe || LN.safe); }   // BLD 981: a young session's own lines   // BLD 931: breathe and form first; BLD 965: the safety line
-  await speak(o, o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
+  await speak(o, o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : o.live || !o.mins ? LN.sesGo(o.title) : LN.ses(o.title, o.mins));
   if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
   while (!o.dead && o.i < o.steps.length){
