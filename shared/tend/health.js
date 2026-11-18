@@ -1801,8 +1801,9 @@ async function doSet(o, st){
     if (o.side) await ins(o, o.side === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
     const lead = o.set === 1 && k === 0;
-    if (st.kind === 'time'){ if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); } await ins(o, LN.go); o.preOn = false; lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
+    if (st.kind === 'time'){ setOn(o); if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); } await ins(o, LN.go); o.preOn = false; lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
     else if (o.count && repN(st)){ // Chris (November 1, 2026): every instruction first, then Go, then the count.
+      setOn(o);
       if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); }
       if (lead && st.breathLine){ lg(o, {e: 'breath'}); await ins(o, st.breathLine); }
       await ins(o, LN.go); o.preOn = false;
@@ -1810,15 +1811,20 @@ async function doSet(o, st){
       o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
     else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1, lead);
     else { o.preOn = false; if (lead && st.form) await speak(o, st.form); await speak(o, LN.go); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
+   
     if (o.skip && k < sides.length - 1 && !o.skipMove) o.skip = false;
   }
   o.side = ''; o.rep = 0;
 }
+// BLD 1022 (Chris's iPad photo of Overhead Press, Set 2 of 3, with no count and no breathing circle): a working set shows its
+// breathing circle, and when counted its count, from the moment it begins, while its words play before Go; Go then starts
+// the count and the breath together on one clock (beats), as before.
+function setOn(o){ if (o.dead) return; o.ring = true; rerender(true); }
 // Auto Flow (BLD 891): a set of reps timed at the move's tempo. Ava says Go, a halfway line, Last few, and Set done; the ring
 // drains and the last three seconds tick. Set Done ends it early; Pause holds it.
 async function hfSet(o, st, lastSide, lead){
   const n = repN(st) || WORD_REPS, t = tempoOf(st), secs = Math.max(8, n * t), lastAt = Math.min(3, Math.floor(n / 3)) * t;
-  let saidHalf = false, saidLast = false; o.hf = true;
+  let saidHalf = false, saidLast = false; o.hf = true; setOn(o);
   if (lead && st.form && !o.dead){ lg(o, {e: 'form'}); await ins(o, st.form); }
   if (lead && st.breathLine && !o.dead){ lg(o, {e: 'breath'}); await ins(o, st.breathLine); }
   await ins(o, LN.go); o.preOn = false; o.preGo = false; lg(o, {e: 'hf', secs}); o.ring = true;
@@ -2006,6 +2012,7 @@ async function runSession(o){
     // BLD 915: the move's name and sets, then (in doSet) its form line and its breath line, then Go: two short lines of
     // instruction. The cue is spoken only for a move with neither (it stays on the screen); tips and the weight line stay
     // on the screen between moves, with the recommended weight.
+    if (st.kind === 'time' || (o.count && repN(st)) || o.hands !== false) setOn(o);   // BLD 1022: the count and the breath show while the set's own words play
     if (o.set === 1){ if (st.fin && o.finOpen !== st){ await ins(o, LN.fin); await ins(o, pushOf()); } await ins(o, LN.ex(st)); if (st.alt) await ins(o, LN.alt); if (st.cue && !st.form && !st.breathLine) await ins(o, st.cue); } else await ins(o, LN.set(o.set, st.sets));
     await hold(o); if (o.dead) break;
     await doSet(o, st);
@@ -2127,7 +2134,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c151';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c154';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
@@ -2483,7 +2490,10 @@ function vAuto(o, top){
   const flip = o.side === 'L', pill = brkOn ? '' : st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
   const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
-  const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
+  // BLD 1022 (Chris's iPad photo of Overhead Press, Set 2 of 3: no count and no breathing circle): a counted set shows its
+  // count from the moment the set begins, while its words play before Go ("0 of 5"), not only from the first count.
+  const cntShow = cntOf || (st.t === 'ex' && o.count && o.ring && !o.run && !still && !o.sw && !o.hf ? repN(st) : 0);
+  const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntShow ? {n: o.rep || 0, of: cntShow} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
     breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined,
     ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined,
     // BLD 1018: a timed hold, carry, balance, or stretch shows its seconds left in a small ring in the badge corner.
