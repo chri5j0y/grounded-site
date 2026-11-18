@@ -2,7 +2,8 @@
    GROUNDED MEMBERSHIP (shared/gg-member.js), GWG BLD 908.
    (c) 2026 Grow With Grounded LLC.
    Membership opens with a code, the way the Field Guide does. The Member content lives in one sealed file,
-   field-guide/lib-member.js, which Chris seals in the Field Guide (Founder tab) and uploads beside the other libraries:
+   shared/lib/lib-member.js (BLD 1020; field-guide/ before), which Chris seals in the Field Guide (Founder tab) and uploads
+   beside the other libraries:
      window.GFG_MEMBER = {v: 1, made, rev,
        ws: <the shared wrap salt, base64 of 16 bytes>,
        wraps: [{c, iv, ct}],   the Member lock key, locked by each code that opens Membership (PBKDF2 SHA-256,
@@ -69,9 +70,10 @@
 (function () {
   'use strict';
   if (window.GGMember && window.GGMember.__v) return;
-  var V = 'c143', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
+  var V = 'c151', ROUNDS = 250000, DBN = 'gg-member', STORE = 'k', CLIP_BASE = 'https://audio.growwithgrounded.com/';
   var me = document.currentScript;
-  var LIB = (me && me.getAttribute('data-lib')) || '/field-guide/lib-member.js';
+  // BLD 1020: every sealed library lives in /shared/lib/; the old /field-guide/ address is read only when the new one is missing.
+  var LIB = (me && me.getAttribute('data-lib')) || '/shared/lib/lib-member.js', LIB_OLD = '/field-guide/lib-member.js';
   var SEE = (me && me.getAttribute('data-see')) || '/the-grounded-way.html#ways';
   var JOIN = '/home/#membership';   // BLD 1017: Start Membership's choice, in The Grounded Way
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
@@ -179,13 +181,16 @@
   function loadLib(fresh) {
     if (libP && !fresh) return libP;
     libP = new Promise(function (ok) {
-      try {
-        var s = document.createElement('script');
-        s.src = LIB + (LIB.indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now();
-        s.onload = function () { ok(window.GFG_MEMBER ? 'ok' : 'missing'); };
-        s.onerror = function () { ok(navigator.onLine === false ? 'offline' : 'missing'); };
-        (document.head || document.documentElement).appendChild(s);
-      } catch (e) { ok('missing'); }
+      function one(src, last) {
+        try {
+          var s = document.createElement('script');
+          s.src = src + (src.indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now();
+          s.onload = function () { ok(window.GFG_MEMBER ? 'ok' : 'missing'); };
+          s.onerror = function () { if (!last && navigator.onLine !== false) one(LIB_OLD, true); else ok(navigator.onLine === false ? 'offline' : 'missing'); };
+          (document.head || document.documentElement).appendChild(s);
+        } catch (e) { ok('missing'); }
+      }
+      one(LIB, LIB === LIB_OLD);
     });
     return libP;
   }

@@ -11,7 +11,7 @@
      GGP.data(id).life                        Living Sober: the card shows only when soberDate is set
      GGP.data(id).soberPath                   BLD 916: Storm and Repair and Begin Again ({storm, runs}, see the Living Sober Path)
      GGP.data(id, 'tending')                  Tending, shaped {health: {}, deleted: {health: {}}},
-                                              drawn by field-guide/health.js (GGHealth) in public mode
+                                              drawn by shared/tend/health.js (GGHealth) in public mode
      GGP.data(id, 'home')                     the Home's own choices:
                                               {who, stage, season, parts: [...], hidden: {tend}, days: {date: {quiet, talk, pray}}, kid: {date: 1}, created,
                                                tour: 'b884' once the welcome tour is seen (BLD 884),
@@ -43,8 +43,8 @@
      Old addresses keep working: #tending opens Today, #tree opens Grow, #more and #privacy open the sheet,
      #recipe-<id> opens that recipe in the frame over Library. Kid profiles keep Today and My Tree (#tree).
 
-   Tending host contract (helper A, field-guide/health.js public mode)
-     Loaded only when Tending is chosen: field-guide/moves.js, stage.js, coach.js, health.js,
+   Tending host contract (helper A, shared/tend/health.js public mode; BLD 1020 moved the engine out of field-guide/)
+     Loaded only when Tending is chosen: shared/tend/moves.js, stage.js, coach.js, health.js,
      shared/gg-tend-plan.js, shared/gentle-public.js (BLD 919, the open Gentle sessions),
      shared/tending-public.js (window.GGTendPublic; until it exists the
      Home shows a kind card and creates nothing). Then:
@@ -57,9 +57,9 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/field-guide/moves.js?v=c149', '/field-guide/stage.js?v=c150', '/field-guide/coach.js?v=c146', '/field-guide/health.js?v=c150', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c149', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c135'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c151', '/shared/tend/coach.js?v=c151', '/shared/tend/health.js?v=c151', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c150';
+  var GGN_SRC = '/shared/ggn.js?v=c151';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -491,7 +491,23 @@
   }
   /* Kids and teens keep their own age's Tending (Grounded Fitness for Kids and Teens): a library taken from the Household kitchen
      stays with the grown-ups (Chris, November 13, 2026: a Maple in the Household opened the grown-up Field Guide workouts). */
-  function wLib(w) { return w && w.lib && !(w.kitLib && !w.movedOnce && isYoung(S.p)) ? w.lib : null; }
+  /* BLD 1020 (Chris, November 18, 2026: one 12 week program for everyone, in the Member library; the Guide plan retires): a plan
+     moved from the Field Guide (w.lib) and a Member who chooses the program (w.prog) both play it straight from the Member library
+     (healthJourney) with the Member clip key, every log, lift, and choice kept in the profile. A device without Membership keeps
+     playing the moved plan's own saved copy (w.lib), so nothing ever stops. Kids and teens keep their own Grounded Fitness. */
+  var PROG = { src: null, lib: null };
+  function progLib() {
+    if (PREVIEW || isYoung(S.p) || !member()) return null;
+    var M = window.GGMember, hj = M && M.get ? M.get('healthJourney') : null; if (!hj || !hj.app || !hj.app.workouts) return null;
+    if (PROG.src !== hj) { PROG.src = hj; PROG.lib = { healthJourney: hj, audio: M.audio ? M.audio() : null, prog: 1 }; }
+    return PROG.lib;
+  }
+  function progOpen() { return !!progLib(); }
+  function wLib(w) {
+    var own = w && w.lib && !(w.kitLib && !w.movedOnce && isYoung(S.p)) ? w.lib : null;
+    if (own || (w && w.prog)) { var p = progLib(); if (p) return p; }
+    return own;
+  }
   function tendStarted() { var w = tdata(S.id); return !!(w && (wLib(w) || (w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)))); }
   function tendOn(h) { return h.parts.some(function (k) { return HEALTH_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
   function anyTend(h) { return h.parts.some(function (k) { return TEND_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
@@ -501,16 +517,17 @@
      Guide (BLD 867) runs on its own copy of the library (w.lib, and the Founder plans in w.fdr). The move now also keeps the keys
      to those libraries inside the person's locked profile (w.libKeys: the Guide key, the Founder key for a Founder plan, the
      access code's id, and which sealed file each copy came from: giv, fiv). Each time a profile opens here, wayLib reads the
-     first bytes of the site's own sealed files (field-guide/lib-guide.js, or lib-field.js before the rename, and lib-founder.js
-     for a Founder plan). When one is new, it opens it on this device with the kept key and takes only the library copy: the plan,
+     first bytes of the site's own sealed files (shared/lib/lib-guide.js, and lib-founder.js for a Founder plan; field-guide/
+     before BLD 1020). When one is new, it opens it on this device with the kept key and takes only the library copy: the plan,
      the logs, the lifts, and every choice stay exactly as they were. A second open with the same files changes nothing. Nothing
      leaves the device; the keys and the copy stay locked in the profile with everything else.
      A plan moved before BLD 1015 holds no key yet. wayLib takes the keys once, quietly, from the Field Guide's own unlocked
      session in this same browser when there is one; otherwise My Growth Plan and Workouts show one small card, Keep My Plan New,
-     where the person enters their Grounded team code (Guide, Staff, or Founder) once, read against field-guide/codes.js the
+     where the person enters their Grounded team code (Guide, Staff, or Founder) once, read against shared/lib/codes.js the
      same way the Field Guide reads it. An access code that has reached its end date keeps the copy just as it is. */
   var WL = { at: {}, busy: null, need: '', msg: '' };
-  var WL_FILES = { guide: ['/field-guide/lib-guide.js', '/field-guide/lib-field.js'], founder: ['/field-guide/lib-founder.js'] };
+  // BLD 1020: every sealed library lives in /shared/lib/; the old /field-guide/ address answers only until Chris uploads there once.
+  var WL_FILES = { guide: ['/shared/lib/lib-guide.js', '/field-guide/lib-guide.js'], founder: ['/shared/lib/lib-founder.js', '/field-guide/lib-founder.js'] };
   var WL_OLD = 'own' + 'er', WL_FLD = 'fie' + 'ld';
   function wlP(v) { return Promise.resolve(v); }
   function wlUn(s) { s = String(s || '').replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
@@ -524,7 +541,10 @@
     return c.importKey('raw', wlUn(raw), { name: 'AES-GCM' }, false, ['decrypt']).then(function (k) { return c.decrypt({ name: 'AES-GCM', iv: wlUn(box.iv) }, k, wlUn(box.ct)); })
       .then(function (pt) { return JSON.parse(new TextDecoder().decode(pt)); });
   }
-  function wlCodes() { return fetch('/field-guide/codes.js', { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).then(wlBox, function () { return null; }); }
+  function wlCodes() {
+    function one(u) { return fetch(u, { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : r.status === 404 ? '' : null; }); }
+    return one('/shared/lib/codes.js').then(function (t) { return t === '' ? one('/field-guide/codes.js') : t; }).then(function (t) { return t ? wlBox(t) : null; }, function () { return null; });
+  }
   /* The head of a sealed file: its iv says which seal it is. A server that sends the whole file answers with it, kept for wlLib. */
   function wlHead(kind) {
     var L = WL_FILES[kind] || [];
@@ -607,8 +627,10 @@
           return Promise.all([needG ? wlLib(hg, k.guide) : null, needF ? wlLib(hf, k.founder) : null]).then(function (L) {
             var g = L[0], f = L[1];
             if (needG && g === false) { if (given) return 'nomatch'; if (w2.libKeys) { w2.libKeys.renew = 1; WL.need = id; return GGP.save(id).then(function () { return 'renew'; }); } WL.need = id; return 'need'; }
-            if (needG && (!g || !g.healthJourney)) return 'offline';
-            var lib = g ? { healthJourney: g.healthJourney, audio: g.audio } : w2.lib, fdr = f ? { healthMine: f.healthMine, healthKayti: f.healthKayti } : (w2.fdr || null);
+            if (needG && !g) return 'offline';
+            // BLD 1020: the Guide library no longer holds the plan (the 12 week program lives in the Member library); the saved
+            // copy stays as it is for a device without Membership, and only the Founder plans keep coming over.
+            var lib = g && g.healthJourney ? { healthJourney: g.healthJourney, audio: g.audio } : w2.lib, fdr = f ? { healthMine: f.healthMine, healthKayti: f.healthKayti } : (w2.fdr || null);
             var sig = wlSig([lib, fdr]), was = w2.libSig || wlSig([w2.lib, w2.fdr || null]), took = sig !== was;
             if (took) { w2.lib = lib; if (f) w2.fdr = fdr; w2.libSync = Date.now(); }
             w2.libSig = sig; WL.need = '';
@@ -629,6 +651,7 @@
   function wlNote(where) {
     if (PREVIEW || !S.id || WL.need !== S.id) return '';
     var w = tdata(S.id); if (!wlMoved(w)) return '';
+    if (progOpen() && w.tier !== 'founder') return '';   // BLD 1020: the program comes from the Member library, new by itself
     var renew = !!(w.libKeys && w.libKeys.renew), wp = where === 'wp', fid = 'hm-wl-c-' + (wp ? 'wp' : 'tn');
     var lead = renew ? 'Your Grounded team code has a newer version. Enter your newest code once on this device, and your plan keeps taking each new workout, recipe, and guide by itself.'
       : 'Your plan can take each new workout, recipe, and guide straight from Grounded, by itself. Enter your Grounded team code (your Guide, Staff, or Founder code) once on this device. Everything you logged stays just as it is.';
@@ -679,7 +702,7 @@
     });
   });
 
-  /* ---------- Tending: load, then hand it to field-guide/health.js ---------- */
+  /* ---------- Tending: load, then hand it to shared/tend/health.js ---------- */
   function loadTending() {
     if (S.tendLoad) return S.tendLoad;
     S.tendLoad = TEND_SRC.reduce(function (p, src) { return p.then(function () { return load(src); }); }, Promise.resolve()).then(function () { S.tendLoadDone = true; initTending(); return !!window.GGHealth; });
@@ -1398,7 +1421,7 @@
   /* =====================================================================
      BLD 881: The Grounded Way, top shelf. Four tabs for a grown-up profile (Today, Week, Grow, Library) and a
      profile button (initials, top right) that opens a sheet: Numbers, Household, Settings, Privacy, Switch Profile.
-     Tending (field-guide/health.js) feeds Today and Week through GGHealth.today(date), act(key), week(n),
+     Tending (shared/tend/health.js) feeds Today and Week through GGHealth.today(date), act(key), week(n),
      render(el, section, {bare: true}) and counts(). Every call is guarded: while a function is missing, the app
      falls back to what the Home did before (GGHealth.summary, open and view).
      ===================================================================== */
@@ -1531,7 +1554,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c150';
+  var PV_SRC = '/shared/page-videos.js?v=c151';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2664,7 +2687,7 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=c136';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=c151';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=c128', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c128', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c126', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
@@ -2750,7 +2773,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c150';
+  var RECIPES_JS = '/recipes/recipes.js?v=c151';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
@@ -3411,11 +3434,29 @@
   function wpK(t, c) { return '<div class="hm-wp-k"' + (c ? ' style="--c:var(--' + c + ')"' : '') + '>' + esc(t) + '</div>'; }
   function wpH(t) { return '<h2 class="hm-wp-h2" id="hm-wp-h" tabindex="-1">' + esc(t) + '</h2>'; }
   function wpBtn(act, label, ghost) { return '<button type="button" class="hm-wp-btn' + (ghost ? ' ghost' : '') + '" data-hm-wp="' + act + '">' + esc(label) + '</button>'; }
-  /* BLD 1015: a Guide plan's days and length, plainly, from its library and the measured minutes (GGHealth facts). */
+  /* BLD 1015: the 12 week program's days and length, plainly, from its library and the measured minutes (GGHealth facts).
+     BLD 1020: one program for everyone, in the Member library. A Member on their own plan can choose it here (Use the
+     12-Week Program), and a Member on the program can go back to building their own (every log stays either way). */
   function wpFacts(info) { return obj(info).facts || null; }
   function wpFactsHtml(info) {
     var f = wpFacts(info); if (!f) return '';
-    return '<div class="hm-wp-card hm-wp-facts">' + wpK('Your Guide Plan', 'move') + '<p class="hm-wp-lead sm"><b>' + esc(cap(f.text)) + '.</b> Each workout is shaped by the 12-week program, with the equipment it names.</p></div>';
+    var w = tdata(S.id), back = w && w.prog && !w.lib ? '<div class="hm-wp-chips" style="margin-top:8px">' + wpBtn('prog:off', 'Build My Own Plan Instead', true) + '</div>' : '';
+    return '<div class="hm-wp-card hm-wp-facts">' + wpK('Your 12-Week Program', 'move') + '<p class="hm-wp-lead sm"><b>' + esc(cap(f.text)) + '.</b> Each workout is shaped by the 12-week program, with the equipment it names.</p>' + back + '</div>';
+  }
+  function wpProgHtml() {
+    if (!progOpen()) return '';
+    return '<div class="hm-wp-card hm-wp-prog">' + wpK('The 12-Week Program', 'move') + '<p class="hm-wp-lead sm"><b>Five days a week, about an hour, Monday to Friday.</b> Foundation, Build, and Peak: strength days and cardio days for a gym, or a home with dumbbells, a bench, a pull-up bar, and a dip bar, with its own four week menu. Every log and lift stays with you.</p>' +
+      '<div class="hm-wp-chips" style="margin-top:8px">' + wpBtn('prog:on', 'Use the 12-Week Program', true) + '</div></div>';
+  }
+  function progSwitch(on) {
+    var w = S.id ? tdata(S.id) : null; if (!w || PREVIEW) return;
+    w.prog = on ? 1 : 0;
+    return GGP.save(S.id).then(function () {
+      S.tendInit = null; if (window.GGHealth) initTending();
+      toast(on ? 'The 12-Week Program is your plan now. Every log stays.' : 'Your own plan is back. Every log stays.');
+      try { paintPlan(true); } catch (e) {}
+      if (window.GGHealth && typeof window.GGHealth.redraw === 'function') window.GGHealth.redraw();
+    });
   }
   function wpScreen() {
     var i = WP.i, d = WP.d, info = wpInfo() || {}, b = '', f = '', t = TREES[d.lead] || TREES.oak;
@@ -3463,6 +3504,7 @@
             if (arr(info.gear).length) b += '<div>' + wpLbl('What you have') + '<div class="hm-wp-chips">' + info.gear.map(function (g) { return wpChip('gear:' + g.id, g.name, d.gear.indexOf(g.id) >= 0, 'trunk'); }).join('') + '</div><small class="hm-wp-small">' + (d.gear.length ? 'Every workout uses just what you check.' : esc(info.gearNone || 'Nothing checked: your body weight, a chair, a wall, and a mat.')) + '</small></div>';
           }
         }
+        b += wpProgHtml();
       } else b += wpFactsHtml(info) + wlNote('wp');
       var keep = info.done && info.prog && !gentle && work && d.track === (info.track || 'strength');
       if (work) b += '<p class="hm-wp-lead sm">' + (gentle ? 'The Gentle walk grows a little each week.' : keep ? 'You are in ' + esc(info.prog) + '. Your place in the program stays.' : 'Week 1 of 12 · Foundation. Build starts week 5 and Peak week 9.') + '</p>';
@@ -3620,6 +3662,7 @@
       wpGo(WP.i + 1); return;
     }
     if (a === 'later') { wpGo(2); return; }
+    if (a === 'prog:on' || a === 'prog:off') { progSwitch(a === 'prog:on'); return; }
     if (a === 'skip') { d.spirit = {}; wpGo(5); return; }
     if (a === 'checkin') { openTreeSheet('quick'); return; }
     if (a === 'trim' || a === 'keep') { d.light = a === 'trim'; wpApply(d.light); wpGo(8); return; }
@@ -4195,7 +4238,7 @@
       var hh = obj(homeRec().kitHH); if (!lead && hh.out && hh.out === c && hh.in) c = hh.in;
       // BLD 957: a plan moved from the Field Guide carries its recipes with the kitchen (locked in the Household), so a family
       // phone with another library takes the same menu (Chris and Kayti, November 9, 2026: the kitchen could not travel).
-      var w = tendWrap(S.id), L = w && w.lib && w.lib.healthJourney ? { healthJourney: w.lib.healthJourney, audio: w.lib.audio || null } : null;
+      var w = tendWrap(S.id), wl = wLib(w), L = wl && wl.healthJourney ? { healthJourney: wl.healthJourney, audio: wl.audio || null } : null;
       kitWhy(L ? 'sending your menu and its recipes' : 'sending your menu', 1);
       return L ? { c: c, lib: L } : { c: c };
     },
@@ -4415,7 +4458,7 @@
   function startTend(list) {
     if (!Array.isArray(list) || member()) return list;
     var flow = 0, med = 0;
-    // Tending folds its own Start view in (field-guide/health.js with GGMember.tend); this keeps Home right either way.
+    // Tending folds its own Start view in (shared/tend/health.js with GGMember.tend); this keeps Home right either way.
     return list.filter(function (x) {
       if (!x) return false;
       // BLD 919: a Gentle session (wl:gentle:<id>) is open to everyone, so the Living Sober morning keeps it.
@@ -4602,7 +4645,7 @@
      A real piece of every part of Membership, open to every grown-up without Membership and kept for good: the first session of
      each Grounded Spirit, Relationships, and Seasons program and two Grounded Meditation lessons (the library's first, and one
      more each week, in turn) from shared/seeds-public.js; three Grounded Stories read aloud; the 8 Gentle sessions (BLD 919);
-     a sample week of meals with its shopping list and My Heart Risk (field-guide/health.js); and the full growth plan for a
+     a sample week of meals with its shopping list and My Heart Risk (shared/tend/health.js); and the full growth plan for a
      profile's first 14 days. Each carries a small Seed chip and is followed by one quiet line, "This was a seed. Membership
      grows the whole tree." with See Membership and I Have a Code, never a pop up. The Library's Seeds shelf gathers them all.
      Never on a kid's screen; Members see their own library, unchanged. */
@@ -4811,7 +4854,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=c137', next: '/shared/home/nextsteps.js?v=c137', legacy: '/shared/home/legacy.js?v=c137', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c150', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=b934', ground: '/shared/home/groundwork.js?v=c137', next: '/shared/home/nextsteps.js?v=c137', legacy: '/shared/home/legacy.js?v=c137', guide: '/shared/home/grownup.js?v=c016', talk: '/shared/home/talk.js?v=c151', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -4913,7 +4956,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c150'];
+  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c151'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -4950,7 +4993,7 @@
   }
 
   /* ---------- BLD 921: the Family Kitchen link (/home/#kitchen=<code>) ----------
-     Share Our Kitchen (field-guide/health.js, Tending settings) makes a link and a QR code. Opening it here reads the code from the
+     Share Our Kitchen (shared/tend/health.js, Tending settings) makes a link and a QR code. Opening it here reads the code from the
      address hash (it never reaches a server), clears the hash, and asks once, in plain words, to join (or to update, when this
      profile is already in that kitchen). With no profile open yet, the question waits until one is. Kid profiles can join too;
      their Today shows Tonight's Dinner from the kitchen, with no Membership lines. */
@@ -5405,7 +5448,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c150';
+  var LEARN_JS = '/shared/gg-learn.js?v=c151';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5445,12 +5488,13 @@
   function playLesson(host, lesson, onDone, track, extra) {
     var tr = track || { id: 'hm-' + lesson.id, kind: 'support', title: lesson.title, lessons: [lesson] }, app = ROOM_TREES.test(S.tree) ? S.tree : 'site';
     // BLD 911: the voice the tree recorded this lesson in (Jenny or Brian), so every line plays its recording.
-    var vo = lesson.voice || (track && app !== 'site' && GGLearn.recVoice ? GGLearn.recVoice({ app: app, lesson: lesson, track: tr }, true) : '') || 'brian';
+    var vo = lesson.voice || (track && track.member && track.voice) || (track && app !== 'site' && GGLearn.recVoice ? GGLearn.recVoice({ app: app, lesson: lesson, track: tr }, true) : '') || 'brian';
     // BLD 927: a Learn lesson (a tree's series) keeps what is finished in the home record (ldone), so the closing scene counts
     // it, Next Lesson plays the next one here, and Back to Lessons returns to Learn.
     var series = !!(track && track.kind !== 'guide' && track.kind !== 'support' && S.id), hl = series ? homeRec() : null;
     if (hl && (!hl.ldone || typeof hl.ldone !== 'object')) hl.ldone = {};
-    var cfg = { app: app, lesson: lesson, track: tr, tracks: [tr], voice: vo, clip: !track && window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: hl ? hl.ldone : {}, onDone: onDone || null };
+    var cfg = { app: app, lesson: lesson, track: tr, tracks: [tr], voice: vo, clip: (!track || track.member) && window.GGMember && GGMember.has() && lesson.tier !== 'start' ? GGMember.clip : null, done: hl ? hl.ldone : {}, onDone: onDone || null };
+    if (track && track.member && track.cert) cfg.cert = function (t) { memberCert(t || track); };
     // Back to Learn (a guide or a lesson) returns to Learn; a single session's closing button simply closes its window.
     cfg.home = function () { var w = document.getElementById('hm-mdlg'); if (w && w.classList.contains('hm-vscr') && !track) { vBack(); return; } mClose(); if (track) goTo(isKid(S.p) ? 'watch' : 'learn'); };
     if (series) {
@@ -5587,7 +5631,22 @@
     var L = window.GG_LEARN && window.GG_LEARN[tree], W = window.GG_LEARN_WELCOME, wk = W && W.trees && W.trees[tree], wt = wk && W.tracks ? W.tracks[wk] : null;
     if (!L) return null;
     var list = arr(L.tracks).filter(function (t) { return t && !(wt && /-(start|using)$/.test(t.id || '')) && !t.unlisted && t.kind !== 'forguides' && arr(t.lessons).length; });
-    return wt && arr(wt.lessons).length ? [wt].concat(list) : list;
+    return (wt && arr(wt.lessons).length ? [wt].concat(list) : list).concat(memberTracks());
+  }
+  /* BLD 1020: the Member library's own Learn (The Grounded Way Walkthrough, moved from the Field Guide), for every grown-up
+     Member profile, after the tree's lessons. Its lines play from the Member clips; finishing all of them opens a Certificate
+     of Completion (shared/gg-print.js). */
+  var MTR = { src: null, list: [] };
+  function memberTracks() {
+    if (PREVIEW || !S.p || isYoung(S.p) || !member()) return [];
+    var L = window.GGMember && GGMember.get ? GGMember.get('learn') : null; if (!L) return [];
+    if (MTR.src !== L) { MTR.src = L; MTR.list = arr(L.tracks).filter(function (t) { return t && t.id && arr(t.lessons).length; }).map(function (t) { return Object.assign({}, t, { member: 1 }); }); }
+    return MTR.list;
+  }
+  var PRINT_JS = '/shared/gg-print.js?v=b939';
+  function memberCert(t) {
+    var dn = obj(homeRec().ldone), dates = arr(t && t.lessons).map(function (l) { return dn[l.id] || ''; }).filter(Boolean).sort();
+    return load(PRINT_JS).then(function () { if (window.GGPrint && GGPrint.certificate) return GGPrint.certificate({ tree: 'house', name: S.p ? S.p.name : '', title: t.title, body: t.certLine || '', date: dates[dates.length - 1] || today() }); });
   }
   function findLesson(tree, id) { var out = null; arr(tracksOf(tree)).forEach(function (t) { arr(t.lessons).forEach(function (l) { if (l && l.id === id) out = { l: l, t: t }; }); }); return out; }
   function lessonCard(tree, l, i) {

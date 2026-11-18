@@ -64,7 +64,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'c136';
+  var V = 'c151';   // BLD 1020: learn-lessons.js changed (He Deserves That: Diane)
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -242,7 +242,7 @@
     return Object.assign({}, sc, o);
   }
   /* BLD 970: still scenes. figMoves(move) is true for a movement the 3D figure shows (any move of shared/fig3d and
-     field-guide/moves.js beyond the resting poses: a breath, a seat, a cross-legged seat, lying down, standing still).
+     shared/tend/moves.js beyond the resting poses: a breath, a seat, a cross-legged seat, lying down, standing still).
      stillArt(lesson, scene) names the painting: a Breath Prayer (or a prayer session with breath in its name) the woman
      praying by a sunlit window; any other prayer, faith, Grounded Spirit, or gratitude session the man in quiet prayer on
      a meadow bench; every other session (breathing, meditation, calm, rest, relationships) the woman breathing with her
@@ -296,7 +296,7 @@
     return p === 'in hold out rest' ? 'box' : p === 'in hold out' ? 'tri' : p === 'in sip out' ? 'sigh' : '';
   }
   function brRing(sc, opt, tone) { ringNeed(); var sh = brShape(sc); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"' + (sh ? ' data-shape="' + sh + '" data-sw="' + esc(brWordList(sc).join('|')) + '"' : '') + '></svg>'; }
-  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=c148'); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=c151'); el.async = true; document.head.appendChild(el); } catch (e) {} }
   function gfxNeed() { if (window.GGGfx || gfxNeed.on) return; gfxNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-gfx.js?v=' + GFXJS); el.async = true; document.head.appendChild(el); } catch (e) {} }
   // A breathing exercise: a lesson whose own name is a breath (Box Breathing, Long Exhale Breathing, Physiological Sigh, Slow Bubble
   // Breath), never a prayer. A lesson can say so itself with breathEx.
@@ -2276,7 +2276,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c150'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c151'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

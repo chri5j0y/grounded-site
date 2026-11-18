@@ -1,5 +1,8 @@
 // =====================================================================
-// GROUNDED FIELD GUIDE (TM): Tending, formerly My Health (GWG BLD 840; rebuilt as a tool in BLD 841; Tending in BLD 862).
+// GROUNDED TENDING: the Tending engine, formerly My Health (GWG BLD 840; rebuilt as a tool in BLD 841; Tending in BLD 862).
+// BLD 1020: it lives in shared/tend/ with moves.js, stage.js, coach.js, and trip.js, and runs in The Grounded Way (/home/).
+// The Field Guide loads it only for Bring Your Tending Over and a backup restore that carries Tending logs (GGHealth.carry,
+// GGHealth.merge). The 12 week program is the Member library's healthJourney (the Guide plan retired in BLD 1020).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A personal health journey for every level (Guides, Staff, Founders; Chris, October 24, 2026: "why not make as a
 // courtesy in case others can benefit"). Whole food for the household, steady strength, heart health.
@@ -24,8 +27,8 @@
 // window.GGTendPublic (shared/tending-public.js, public: true). Every public change sits behind PUB(); the Field Guide
 // (tiers guide, staff, founder, kitchen) works exactly as before. The host contract for a public page:
 //   <script src="/shared/tending-public.js"></script> <script src="/shared/gg-tend-plan.js"></script>
-//   <script src="/field-guide/moves.js"></script> <script src="/field-guide/stage.js"></script>
-//   <script src="/field-guide/coach.js"></script> <script src="/field-guide/health.js"></script>
+//   <script src="/shared/tend/moves.js"></script> <script src="/shared/tend/stage.js"></script>
+//   <script src="/shared/tend/coach.js"></script> <script src="/shared/tend/health.js"></script>
 //   GGHealth.init({data: () => wrapper, fld: () => window.GGTendPublic, fdr: () => null, tier: () => 'public',
 //     save: () => { GGP.save(id); }, render: () => { box.innerHTML = GGHealth.view(); }, go: () => {}, toast: m => ...,
 //     age: () => GGP.active().age (optional: 'pine' marks a teen), name: () => first name (optional),
@@ -43,8 +46,6 @@
 let C = {};
 const S = {sec: 'today', form: null, setup: false, open: {}, ov: null};
 const D = () => C.data ? C.data() : null;
-// A Family Kitchen code (BLD 846): the kitchen only. Dinners, cook guide, grab and go, snacks, lists, prep, reminders.
-const KIT = () => !!(C.tier && C.tier() === 'kitchen');
 // BLD 908: Membership. shared/tending-public.js is the Start file (start: true); the Member part lives in the sealed Member
 // library and GGMember.tend(base) folds it in on a device that holds Membership. FX() is the library every read uses.
 // START(): the public Start file with no Membership on this device: one Flow session a day and the daily meditation (the
@@ -63,7 +64,7 @@ const FLDH = () => { const f = FX(); if (f && f.public) return f; const h = f &&
 // BLD 866: public Tending (the library is GGTendPublic). TEEN: a profile under 18 sees no weight and no calories.
 const PUB = () => { const f = FX(); return !!(f && f.public); };
 // BLD 919: the open Gentle sessions on Start, for grown-ups (a teen profile and the Family Kitchen keep their own views).
-const GENTLE_START = () => START() && !TEEN() && !KIT() && !!(FX() || {}).gentleOpen;
+const GENTLE_START = () => START() && !TEEN() && !!(FX() || {}).gentleOpen;
 const PLIB = () => { const f = FX(); return f && f.public ? f : null; };
 // BLD 984 (Chris, November 13, 2026: "i of coure want access to the entire library from all profiles"): a plan moved from the
 // Field Guide (BLD 867) runs on its own library, and on a device that holds Membership it also opens the whole Member library
@@ -71,7 +72,7 @@ const PLIB = () => { const f = FX(); return f && f.public ? f : null; };
 // Spirit, Relationships, and Seasons already open from the Home for every Member profile). MLIB() is
 // that Member library (the Start file with the Member Tending folded in, as a Member profile sees it), only in The Grounded Way
 // and never in a Family Kitchen. Its sessions play with its own clip key (o.mlib, AKEY), the moved plan's with the plan's key.
-const MLIB = () => { if (C.host !== 'home' || KIT() || PUB()) return null; const b = window.GGTendPublic, M = window.GGMember;
+const MLIB = () => { if (C.host !== 'home' || PUB()) return null; const b = window.GGTendPublic, M = window.GGMember;
   if (!b || !M || typeof M.has !== 'function' || typeof M.tend !== 'function') return null;
   let m = null; try { m = M.has() ? M.tend(b) : null; } catch(e){ m = null; } return m && m !== b && m.member ? m : null; };
 const GLIB = () => PLIB() || MLIB();
@@ -99,7 +100,8 @@ const SOBER_TEXT = {
   gentle: 'For early sobriety: a Gentle session, or your Morning Walk. Choose what fits this morning.'};
 function goalsNow(s){ s = s || ((D() || {}).health || {}).set || {}; const g = arr(s.goals).length ? arr(s.goals) : ['well']; return SOBER_ON() && !s.goalsMine ? ['energy'].concat(g.filter(x => x !== 'energy')) : g; }
 // The painted cards (shared/heroes/way/): a host may pass C.asset(path); otherwise the site root is worked out from this script's address.
-const ROOT0 = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('../', s).href : '/'; } catch(e){ return '/'; } })();
+// BLD 1020: the site root itself (this file lives in shared/tend/ and works from any folder).
+const ROOT0 = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('/', s).href : '/'; } catch(e){ return '/'; } })();
 const asset = p => { try { if (C.asset) return C.asset(p); } catch(e){} return ROOT0 + p; };
 // BLD 855: each founder has a plan of their own: FDR.healthMine (Chris) and FDR.healthKayti (Kayti), same shape.
 const PLANS = () => { const f = C.fdr && C.fdr(); return f ? [f.healthMine, f.healthKayti].filter(m => m && typeof m === 'object') : []; };
@@ -162,7 +164,8 @@ const GOALS = [['ldl', 'Lower my LDL'], ['strong', 'Build strength and muscle'],
 const kick = t => `<div class="hj-kick">${esc(t)}</div>`;
 const chip = (sec, label) => `<button type="button" class="chip${S.sec === sec ? ' on' : ''}" aria-pressed="${S.sec === sec}" data-hja="sec" data-hjv="${sec}">${esc(label)}</button>`;
 function hero(lib){
-  const h = (lib && lib.hero) || {}, w = h.wide || '../shared/heroes/p/health-hero-wide.webp', n = h.narrow || '../shared/heroes/p/health-hero-narrow.webp';
+  // BLD 1020: a library painting written as ../shared/... reads from the site root, on any page.
+  const rt = p => String(p).replace(/^(\.\.\/)+shared\//, '/shared/'), h = (lib && lib.hero) || {}, w = rt(h.wide || '/shared/heroes/p/health-hero-wide.webp'), n = rt(h.narrow || '/shared/heroes/p/health-hero-narrow.webp');
   return `<div class="hj-hero"><picture><source media="(max-width:700px)" srcset="${esc(n)}"><img src="${esc(w)}" alt="" loading="lazy"></picture>
     <div class="hj-hin"><div class="hj-eb">Grow With Grounded</div><h2>${esc((lib && lib.title) || 'Tending')}</h2><p>${esc((lib && lib.tagline) || 'Whole food, steady strength, and a strong heart, one week at a time.')}</p></div></div>`;
 }
@@ -399,7 +402,7 @@ function vNumbers(){
     ${L.length ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>LDL</th><th>Total</th><th>HDL</th><th>Trig</th><th>ApoB</th><th></th></tr></thead><tbody>${L.map(x => `<tr><td>${short(x.date)}${x.note ? `<small>${esc(x.note)}</small>` : ''}</td><td><b>${cell(x.ldl)}</b></td><td>${cell(x.total)}</td><td>${cell(x.hdl)}</td><td>${cell(x.trig)}</td><td>${cell(x.apob)}</td><td><button type="button" class="linkbtn" data-hja="edit" data-hjv="lab|${esc(x.id)}">Edit</button></td></tr>`).join('')}</tbody></table></div>` : ''}</div>
   <div class="hj-blk">${kick('Markers')}${M.length ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>Weight</th><th>Waist</th><th>Rest HR</th><th>Push-ups</th><th>Pull-ups</th><th>Mile</th><th>Energy</th><th>Sleep</th><th>Joints</th><th></th></tr></thead><tbody>${M.map(x => `<tr><td>${short(x.date)}</td><td>${cell(x.weight)}</td><td>${cell(x.waist)}</td><td>${cell(x.rhr)}</td><td>${cell(x.pushups)}</td><td>${cell(x.pullups)}</td><td>${cell(x.mile)}</td><td>${cell(x.energy)}</td><td>${cell(x.sleep)}</td><td>${cell(x.joint)}</td><td><button type="button" class="linkbtn" data-hja="edit" data-hjv="mark|${esc(x.id)}">Edit</button></td></tr>`).join('')}</tbody></table></div>` : '<p class="hj-sub">Test your markers in week 1, then every four weeks. The Fitness plan shows how.</p>'}</div>
   ${vPanels()}
-  <p class="hj-note">Saved only on this device, locked ${C.host === 'home' ? 'in your profile' : 'with your Field Guide'}, and carried in your locked backup.</p>`;
+  <p class="hj-note">Saved only on this device, locked in your profile, and carried in your locked backup.</p>`;
 }
 function bar(it){
   const v = typeof it.v === 'number' ? it.v : parseFloat(String(it.v).replace(/[^0-9.]/g, '')), lo = num(it.lo), hi = num(it.hi);
@@ -818,7 +821,7 @@ function agenda(d){
   // BLD 916, Living Sober Path (Chris: "morning walk or gentle session first for sleep and mood"): in the first 90 days the
   // morning leans gentle. A morning workout carries a short For Early Sobriety line; a day with no morning workout opens with a
   // Morning Walk to check off (no new audio). The person's own level, place, and minutes stay exactly as they chose.
-  if (SOBER_EARLY() && !KIT()){ const w = out.find(x => x.k === 'work'); if (w) w.sub = (w.sub ? w.sub + ' ' : '') + SOBER_TEXT.work;
+  if (SOBER_EARLY()){ const w = out.find(x => x.k === 'work'); if (w) w.sub = (w.sub ? w.sub + ' ' : '') + SOBER_TEXT.work;
     else { out.push({key: 'walk', k: 'mark', hour: 6.5, kick: 'Morning', title: 'Morning Walk', sub: SOBER_TEXT.walk, btn: 'I Walked'});
       const gm = PUB() && !START() && (H().set.level || 'root') !== 'gentle' ? soberGentle(d) : null; // BLD 919
       if (gm) out.push({did: true, key: gm.key, k: 'work', hour: 6.6, kick: 'Morning', title: gm.title, sub: gm.sub, btn: 'Start Workout', art: gm.art}); } }
@@ -829,14 +832,14 @@ function agenda(d){
   const mf = medFor(d);
   if (track !== 'practice' && MED() && medOn(d)) out.push({did: true, key: 'med', k: 'med', hour: medAt().hour || 8, kick: medAt().kick || (!PUB() && dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning'), title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
   if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + fwl(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
-  if (dow === 6 && !KIT() && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
+  if (dow === 6 && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
   if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + fwl(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
     const pk = prepFor('pack', fw); if (pk) out.push({key: 'prep:pack:' + fw, k: 'prep', v: 'pack|' + fw, hour: 18, kick: 'Sunday evening', title: pk.title || 'Pack Lunches', sub: (pk.mins || 20) + ' minutes for the week ahead.', btn: 'Start'});
     // BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (the key stays prep:batch:<week>, so old saved days still read).
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 14, kick: 'After Sunday prep', title: b.title || 'Weekly Batch', sub: batchSub(b), btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
-  if ((dow === 2 || dow === 4) && !KIT() && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
-  const dn = mmDinner(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id + (dn.dayOfN ? '|' + dn.dayOfN : ''), hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
+  if ((dow === 2 || dow === 4) && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
+  const dn = mmDinner(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id + (dn.dayOfN ? '|' + dn.dayOfN : ''), hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
   holAgenda(d).forEach(x => out.push(x)); // BLD 896: a set up holiday's shopping day and prep days
   mmAgenda(d).forEach(x => out.push(x)); // BLD 900: My Menu, each added meal on its day (a swapped dinner steps aside above)
   return out.sort((a, b) => a.hour - b.hour);
@@ -917,20 +920,20 @@ function vToday2(lib){
   const h = H(), d = new Date(), items = agenda(d), cur = nowCard(items, d), n = weekNo(d), mine = MINE();
   // BLD 861: movement, stillness, and the supplements a person lists live in Today's Plate, so Daily Habits holds the rest.
   const onPlate = new Set(['move', 'still'].concat(APP() ? supps().map(lever).filter(Boolean) : []));
-  const checks = (arr(lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks)).filter(c => KIT() || !APP() || !onPlate.has(c.id));
+  const checks = (arr(lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks)).filter(c => !APP() || !onPlate.has(c.id));
   const day = h.days[today()] || {checks: {}};
   const s0 = startMon(), before = n < 1;
   const L = labs(), last = L[L.length - 1], goal = num(h.set.goalLdl);
   const card = x => `<div class="hj-now"><div class="hj-kick">${esc(x.kick)}</div><h3>${esc(x.title)}</h3><p>${esc(x.sub || '')}</p>
       <button type="button" class="btn btn-gold hj-go" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.btn)}</button>${x.did ? `<button type="button" class="linkbtn hj-did" data-hja="toggle" data-hjv="${esc(x.key)}">I Did It on My Own</button>` : ''}</div>`;
   return `${hero(lib)}
-  ${before ? `<p class="hj-note">Your plan starts ${esc(DOWL[s0.getDay()])}, ${esc(shortDate(s0))}. This weekend: shop Saturday and prep Sunday, and you are ready.</p>` : `<p class="hj-wk">Week ${n}${KIT() ? '' : progOn() ? (progLabel(d) ? ' · ' + esc(progLabel(d)) + (lightOn(d) ? ' · a lighter week' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · a lighter week' : '')} · Food Week ${letter(n)}</p>`}
+  ${before ? `<p class="hj-note">Your plan starts ${esc(DOWL[s0.getDay()])}, ${esc(shortDate(s0))}. This weekend: shop Saturday and prep Sunday, and you are ready.</p>` : `<p class="hj-wk">Week ${n}${progOn() ? (progLabel(d) ? ' · ' + esc(progLabel(d)) + (lightOn(d) ? ' · a lighter week' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · a lighter week' : '')} · Food Week ${letter(n)}</p>`}
   ${cur ? card(cur) : `<div class="hj-now done"><div class="hj-kick">Today</div><h3>Everything for today is done.</h3><p>Rest well. Tomorrow keeps growing.</p></div>`}
   ${vPlate()}
   ${remBlock(d)}
   ${items.length ? `<div class="hj-blk">${kick('Today')}${items.map(x => { const ok = isDone(d, x.key); return `<div class="hj-ag${ok ? ' ok' : ''}${cur && cur.key === x.key ? ' cur' : ''}"><button type="button" class="hj-agck" data-hja="toggle" data-hjv="${esc(x.key)}" aria-pressed="${ok}" aria-label="Done: ${esc(x.title)}">${ok ? '&#10003;' : ''}</button><button type="button" class="hj-agt" data-hja="go" data-hjv="${esc(x.key)}"><b>${esc(x.title)}</b><small>${esc(x.kick)}</small></button></div>`; }).join('')}</div>` : ''}
-  ${KIT() ? '' : `<div class="hj-blk">${kick('Daily Habits')}<div class="hj-habits">${checks.map(c => { const on = !!(day.checks && day.checks[c.id]); return `<button type="button" class="hj-hb${on ? ' on' : ''}" aria-pressed="${on}" data-hja="check" data-hjv="${esc(c.id)}"><span class="box">${on ? '&#10003;' : ''}</span>${esc(c.label)}</button>`; }).join('')}</div></div>
-  `}${KIT() ? '' : `<button type="button" class="hj-ldl" data-hja="sec" data-hjv="numbers"><span class="hj-kick">LDL</span><b>${last && last.ldl != null ? esc(last.ldl) : 'Add'}</b><span>${last ? 'on ' + short(last.date) + (goal ? '. Goal ' + esc(goal) + '.' : '') : 'Add your first lab results'}</span>${ldlSum()}</button>`}
+  ${`<div class="hj-blk">${kick('Daily Habits')}<div class="hj-habits">${checks.map(c => { const on = !!(day.checks && day.checks[c.id]); return `<button type="button" class="hj-hb${on ? ' on' : ''}" aria-pressed="${on}" data-hja="check" data-hjv="${esc(c.id)}"><span class="box">${on ? '&#10003;' : ''}</span>${esc(c.label)}</button>`; }).join('')}</div></div>
+  `}${`<button type="button" class="hj-ldl" data-hja="sec" data-hjv="numbers"><span class="hj-kick">LDL</span><b>${last && last.ldl != null ? esc(last.ldl) : 'Add'}</b><span>${last ? 'on ' + short(last.date) + (goal ? '. Goal ' + esc(goal) + '.' : '') : 'Add your first lab results'}</span>${ldlSum()}</button>`}
   ${lib.doctor ? `<p class="hj-note">${esc(lib.doctor)}</p>` : ''}`;
 }
 // Play anything, anytime (Chris, October 24, 2026: "give me access to the yoga set you made for kayti.. in case i want to incorporate these to my day").
@@ -951,7 +954,7 @@ function vWeek(){
   const track = H().set.track || 'strength';
   const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = mmDinner(d), ses = !workOn() ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
     return `<div class="hj-day${isT ? ' t' : ''}"><div class="hj-dl"><b>${esc(DOW[d.getDay()])}</b><small>${esc(short(ymd(d)))}</small></div><div class="hj-dr">
-      ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id + '|' + (d.getDay() === 0 ? foodWeek(d) : weekNo(d)))}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) && !KIT() ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
+      ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id + '|' + (d.getDay() === 0 ? foodWeek(d) : weekNo(d)))}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
       ${ses ? `<button type="button" class="hj-pill move" data-hja="work" data-hjv="${esc(ses.id)}">${esc(sesLabel(ses.id, ses))}</button>` : ''}
       ${d.getDay() === 3 && prepFor('wednesday', n) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="wednesday|${n}">Mini Prep</button>` : ''}
       ${d.getDay() === 6 ? `<button type="button" class="hj-pill prep" data-hja="shopwk" data-hjv="${n + 1}">Shop for Week ${fwl(n + 1)}</button>` : ''}
@@ -965,7 +968,7 @@ function vWeek(){
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
     </div></div>`; }).join('');
   const w = (din.weeks || {})[letter(n)] || {}, ideas = ideasBlk;
-  return `${ownViewTabs('week')}${ownWeekLine(mon)}<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${fwl(n)}${KIT() ? '' : progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
+  return `${ownViewTabs('week')}${ownWeekLine(mon)}<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${fwl(n)}${progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
   ${newCard()}${againCard()}${holCardsHtml()}${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
   <div class="hj-blk hj-days">${rows}</div>
   ${remOn() ? `<div class="row" style="margin:-4px 0 14px"><button type="button" class="btn btn-line btn-sm" data-hja="remics">Add Reminders to My Phone Calendar</button><button type="button" class="linkbtn" data-hja="remwk">${H().set.remWk ? 'Show Reminders on This Week' : 'Keep Reminders on Today Only'}</button></div>` : ''}
@@ -1081,12 +1084,12 @@ function vShop(){
   <p class="hj-note">Prices are estimates. Tap any item to change it. This list lives on this device.</p>
   ${tripCard(n)}`;
 }
-// BLD 948: Log This Trip (field-guide/trip.js, loaded the first time a list shows): store totals typed, from the list's estimate,
+// BLD 948: Log This Trip (shared/tend/trip.js, loaded the first time a list shows): store totals typed, from the list's estimate,
 // or read from a receipt photo on this device; trips live in h.trips and the shorthand memory in h.rcptMap.
 const TRIP = {H, save, shopList, keepShop, rerender: () => rerender(true), toast, esc, PUB, TEEN, STORES, aisleOf, asset, fwl: n => fwl(n), shopDate: n => shopDate(n),
   week: () => S.shopWk || foodWeek(new Date()), age: () => { try { return C.age ? String(C.age() || '') : ''; } catch(e){ return ''; } }};
 let TRIPL = 0;
-function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('field-guide/trip.js?v=c121');
+function tripCard(n){ if (window.GGTrip) return GGTrip.card(TRIP, n); if (!TRIPL){ TRIPL = 1; const s = document.createElement('script'); s.src = asset('shared/tend/trip.js?v=c151');
   s.onload = () => { if (S.sec === 'shop' || document.querySelector('.hj-shopbar')) rerender(true); }; s.onerror = () => { TRIPL = 0; }; document.head.appendChild(s); } return ''; }
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
@@ -1351,7 +1354,7 @@ function actTool(a, v){
 // BLD 857, the Grounded Health Regime (Chris, October 26, 2026, after his first full workout with Ava): a rest between
 // moves with short tips, motivation lines in set rests, each side guided (Left side, Switch sides, Right side), I Tap Done
 // for reps written as words, 60 seconds the longest rest, a weight line, an honest time estimate, and color and a stage
-// (field-guide/stage.js, GGStage) for every player, with a morning palette.
+// (shared/tend/stage.js, GGStage) for every player, with a morning palette.
 const VO = () => window.GGVoice || null;
 const NUMW = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
 // Reps that are a number ("10 to 12", "8 per side", "10 total") are counted; reps written as words ("2 to 3 short of your best") are I Tap Done.
@@ -1582,7 +1585,7 @@ function allLines(){
     arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); });
     arr(x.items).forEach(it => { add(ANDREW, piSay(it)); arr(it.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }); })); // BLD 947
   const bt = app.batches || {}; arr(bt.batches).concat(bt.pack ? [Object.assign({name: bt.pack.title || 'Pack Lunches'}, bt.pack)] : []).forEach(x => { add(ANDREW, LN.prepIntro(x.title || x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
-  if (!KIT()) arr((window.GGTendPublic || {}).recipes).filter(r => r && PARTY_MEALS.includes(r.meal)).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }); // BLD 902
+  arr((window.GGTendPublic || {}).recipes).filter(r => r && PARTY_MEALS.includes(r.meal)).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }); // BLD 902
   [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
   return [...out.values()];
 }
@@ -2124,7 +2127,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c150';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c151';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
@@ -2762,7 +2765,7 @@ function plateWeek(T){
 }
 // ---- the card ----
 function vPlate(mode){
-  if (KIT() || !APP()) return ''; const lite = mode === 'today';
+  if (!APP()) return ''; const lite = mode === 'today';
   const h = H(), d = new Date(), k = today(), day = h.days[k] || {checks: {}}, ck = day.checks || {}, T = targets(), tot = totals(k), eat = arr(day.eat), gs = plateGroups(d), hr = d.getHours();
   const inPlan = new Set(gs.flatMap(g => g.items.map(i => i.k))), extras = eat.filter(e => !inPlan.has(e.k)), cur = hr < 11 ? 'morning' : hr < 15 ? 'midday' : 'evening';
   const anyHeart = gs.some(g => g.items.some(i => i.heart)), V = plateV();
@@ -2909,8 +2912,8 @@ function detectUse(){
   if (!out.size) ['food', 'move'].forEach(x => out.add(x));
   return PART_IDS.filter(x => out.has(x));
 }
-const useSet = () => { const h = H(); return KIT() || Array.isArray(h.set.use); };
-function USE(){ if (KIT()) return ['food']; if (START()) return PART_IDS.filter(x => x === 'move' || x === 'mind'); const u = H().set.use; return Array.isArray(u) ? PART_IDS.filter(x => u.includes(x)) : detectUse(); }
+const useSet = () => { const h = H(); return Array.isArray(h.set.use); };
+function USE(){ if (START()) return PART_IDS.filter(x => x === 'move' || x === 'mind'); const u = H().set.use; return Array.isArray(u) ? PART_IDS.filter(x => u.includes(x)) : detectUse(); }
 const U = id => USE().includes(id);
 
 // ---------- icons: inline SVG, 24 box, 1.9 stroke, round caps and joins (the concept set) ----------
@@ -2941,7 +2944,7 @@ const ICO = {today: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19
   sun2: '<path d="M12 7v-3.5M7.4 9 5 6.6M16.6 9 19 6.6"/><path d="M5 17a7 7 0 0 1 14 0z"/><path d="M3 20.5h18"/>', water: '<path d="M12 3.5c3.3 4.3 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 2.7-6.7 6-11z"/>'};
 const ic = n => `<svg class="tn-i" viewBox="0 0 24 24" aria-hidden="true">${ICO[n] || ICO.leaf}</svg>`;
 
-// ---------- the hour's sky and the scenes (the same sky stops as field-guide/stage.js) ----------
+// ---------- the hour's sky and the scenes (the same sky stops as shared/tend/stage.js) ----------
 const SKY = [[0, '#0E1630', '#26294D', null], [4.5, '#16203F', '#3B3B66', null], [5.5, '#4B6DB2', '#FFC79C', '#FFB347'], [7, '#5FB3F2', '#FFE6B5', '#FFC22E'], [9, '#4FAEF4', '#E8F6FF', '#FFCB2E'],
   [12, '#45A6F0', '#EEF8FF', '#FFD84A'], [15, '#5BA8E4', '#F4F1E2', '#FFCF55'], [17.5, '#7AA2D6', '#FFD9A3', '#FFAD3A'], [19, '#675C9F', '#FFA472', '#FF8A3D'], [20.5, '#33355F', '#C47767', null], [22, '#141B36', '#2C2C50', null], [24, '#0E1630', '#26294D', null]];
 const hx2 = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
@@ -3094,7 +3097,7 @@ function vChoose(){
 // BLD 935 (audit M8): What I Use on Start says what Start holds.
 const START_USE = {food: 'Grounded Recipes for your table and food needs, and A Sample Week of Meals.', move: 'One Flow session each day and the eight Gentle sessions, with a calm voice coaching.'};
 function vSettings(bare){
-  const h = H(), t = TD(), br = h.set.bridges || {}, kit = KIT(), on = remOn();
+  const h = H(), t = TD(), br = h.set.bridges || {}, kit = false, on = remOn();
   const row = (cls, icn, title, sub, sw) => `<div class="tn-row ${cls}">${icn ? `<span class="ic2">${ic(icn)}</span>` : ''}<div class="tx"><b>${esc(title)}</b><small>${esc(sub)}</small></div>${sw}</div>`;
   const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves', 'ppl-tending-sq') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
     <div class="tn-set">${t.choose.filter(c => !(c.id === 'supps' && PUB() && !h.set.pubDone && !U('supps')) && !(START() && c.id === 'labs')).map(c => row(PARTS[c.id].a, PARTS[c.id].i, c.name, (START() && START_USE[c.id]) || c.line, tsw('use', c.id, U(c.id), c.name))).join('')}</div></div>`;
@@ -3160,7 +3163,7 @@ function tendWeek(){
   </svg><div class="hj-ptip" hidden></div></div>`;
 }
 function fruitCards(){
-  const out = [], kit = KIT(); if (kit) return '';
+  const out = [], kit = false; if (kit) return '';
   if (U('labs') && PUB()) out.push(pubLdlCard());
   else if (U('labs')){ const m = ldlModel();
     out.push(m ? `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers" aria-label="Open My LDL Path. Start ${r0(m.B)}, estimate now ${r0(m.now)}, the food plan path levels near ${r0(m.level)}.">
@@ -3190,7 +3193,7 @@ function habitList(){
     .map(c => Object.assign({part: food.includes(c.id) ? 'food' : c.id === 'walk' ? 'move' : U('food') ? 'food' : 'move'}, c)).filter(c => U(c.part));
 }
 function vTodayT(lib){
-  const h = H(), d = new Date(), hr = d.getHours() + d.getMinutes() / 60, k = today(), day = h.days[k] || {}, c = day.checks || {}, n = weekNo(d), kit = KIT(), t = TD(), s0 = startMon(), before = n < 1;
+  const h = H(), d = new Date(), hr = d.getHours() + d.getMinutes() / 60, k = today(), day = h.days[k] || {}, c = day.checks || {}, n = weekNo(d), kit = false, t = TD(), s0 = startMon(), before = n < 1;
   const tl = []; const tally = (part, done) => tl.push({part, done: !!done});
   const ag = agenda(d).filter(x => partOf(x) && U(partOf(x))).map(x => Object.assign({done: isDone(d, x.key)}, x));
   const sp = U('supps') && !kit ? supps() : [], spOf = w => sp.filter(s => (s.when === 'evening') === (w === 'evening')), allOn = L => L.length && L.every(s => c[suppId(s)]);
@@ -3265,7 +3268,7 @@ const kitTabs = cur => `<div class="tn-tabs" role="group" aria-label="Kitchen">$
 const numTabs = cur => `<div class="tn-tabs" role="group" aria-label="Numbers">${[['numbers', 'My Numbers', 'numbers'], ['journey', 'My Journey', 'compass']].map(([id, l, i]) => `<button type="button" class="tn-tab${cur === id ? ' on' : ''}" aria-pressed="${cur === id}" data-hja="sec" data-hjv="${id}">${ic(i)}${l}</button>`).join('')}</div>`;
 function vKitchen(){
   const d = new Date(), fw = foodWeek(d), L = letter(fw), din = (APP() || {}).dinners || {}, w = (din.weeks || {})[L] || {}, tn = dinnerFor(d), log = H().log[today()] || {};
-  const nut = x => nOk(x.nutHeart) && !KIT() ? nSf(x.nutHeart) + ' on the heart-health plate' : nSf(x.nut);
+  const nut = x => nOk(x.nutHeart) ? nSf(x.nutHeart) + ' on the heart-health plate' : nSf(x.nut);
   const feat = tn ? (() => { const key = 'cook:' + tn.wk + ':' + tn.id, on = !!log[key];
     return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene"><img src="${esc(WAY(dinnerArtName(tn) || 'p:kitchen-tonight'))}" alt="" loading="lazy" decoding="async"></div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
       ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<p class="tn-sub">Step by step, with a voice to guide you.</p><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Grounded Cooking</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
@@ -3304,7 +3307,7 @@ function recipesAll(){
 // loads it once, on first need, and lists those two meals beside the library's own recipes; they open in the same kitchen guide
 // (Andrew's lines are recorded in the Guide folder too) and go on My Menu as 'r:<id>'. The Family Kitchen keeps its own list.
 const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressings ride the same way
-function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
+function partyRecs(){ if (PUB()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
   try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=c142'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
@@ -3378,7 +3381,7 @@ function vMove(){
     ${lifts.length ? `<div class="hj-blk">${kick('My Weights')}<ul class="hj-ms">${lifts.map(([id, v]) => `<li><b>${esc(String(id).replace(/[-_]/g, ' '))}</b><small>${esc(v)}${/^\d+(\.\d+)?$/.test(String(v)) ? ' lb' : ''}</small></li>`).join('')}</ul></div>` : ''}</div>`;
 }
 const NAVDEF = {today: ['Today', 'today', 'a-today'], week: ['Week', 'week', 'a-week'], plate: ['Plate', 'plate', 'a-plate'], kitchen: ['Kitchen', 'kitchen', 'a-kitchen'], move: ['Move', 'move', 'a-move'], numbers: ['Numbers', 'numbers', 'a-numbers']};
-function navIds(){ if (KIT()) return ['today', 'week', 'kitchen']; const f = U('food'), m = U('move');
+function navIds(){ const f = U('food'), m = U('move');
   return ['today'].concat(f || m ? ['week'] : [], f ? ['plate', 'kitchen'] : [], m ? ['move'] : [], U('labs') ? ['numbers'] : []); }
 const navCur = () => ({shop: 'kitchen', prep: 'kitchen', recipes: 'kitchen', journey: 'numbers', kids: 'today', kidview: 'today', team: 'move'})[S.sec] || S.sec;
 function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2) return '';
@@ -3392,10 +3395,9 @@ function view(){
   keyVoice();
   const h = H(), mine = MINE(), an = S.anim; S.anim = false;
   // Keep the start date once the plan is running, so it never drifts (BLD 857b).
-  if (!KIT() && !h.set.start && firstMon()){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; save(); }
+  if (!h.set.start && firstMon()){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; save(); }
   // BLD 857c: b857b saved the Monday before a weekend of shopping and prep (one week early); put that one start right, once.
-  if (!KIT() && h.set.startFix !== 2){ const d = firstLog(); if (d && h.set.start === ymd(monOf(d)) && h.set.start !== ymd(firstMon())){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; } h.set.startFix = 2; save(); }
-  if (KIT()){ const st = ((FX()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep', 'kitchen', 'recipes', 'settings'].includes(S.sec)) S.sec = 'today'; }
+  if (h.set.startFix !== 2){ const d = firstLog(); if (d && h.set.start === ymd(monOf(d)) && h.set.start !== ymd(firstMon())){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; } h.set.startFix = 2; save(); }
   const first = !h.set.u || !!h.set.needSetup, chosen = PUB() ? !!h.set.pubDone : useSet();
   // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
   const ready = mine && mine.start && (arr(mine.start.labs).length || arr(mine.start.panels).length) && !h.labs.length && !h.panels.length;
@@ -3406,7 +3408,7 @@ function view(){
   if (START()) body = vStartHome();
   else if (PUB() && (!chosen || S.setup)) body = vCheck();
   else if (!chosen) body = vChoose();
-  else if (!KIT() && (S.setup || (first && !ready && S.sec === 'today'))) body = `<div class="tn-sec a-numbers">${vSetup()}</div>`;
+  else if ((S.setup || (first && !ready && S.sec === 'today'))) body = `<div class="tn-sec a-numbers">${vSetup()}</div>`;
   else if (S.sec === 'own') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'My Own Items', 'Your own rhythms beside your plan, kept on this device.')}${vOwn()}</div>`;
   else if (S.sec === 'week') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'This Week', 'Every day of the plan, the dinners, the sessions, and the notes that keep it rolling.')}${vWeek()}</div>`;
   else if (S.sec === 'plate') body = `<div class="tn-sec a-plate">${secHead('plate', 'a-plate', 'Today\'s Plate', PUB() ? 'Tap what you eat. The rings fill as you go, with aims set by your goals.' : 'Tap what you eat. The rings fill as you go, and each logged day feeds My LDL Path.')}${vPlate('full')}${PUB() ? pubAims() : aims()}</div>`;
@@ -3425,16 +3427,12 @@ function view(){
   else if (S.sec === 'settings') body = vSettings();
   else if (S.sec === 'holidays') body = vHol();
   else body = vTodayT(lib);
-  // BLD 879: in the Field Guide, Tending for the guide, staff, and founder tiers is one card; Preview for Guides opens the full view.
-  const card = MOVABLE() && !PREVIEW();
-  if (card) return `<div id="hj-root" class="tn tn-one">${vCard(chosen || !!h.set.u)}${vOv()}</div>`;
-  if (chosen && !KIT() && !START()) celebrate(milestonesT());
+  if (chosen && !START()) celebrate(milestonesT());
   const askWho = chosen && MINE_ANY() && MINE_ANY().who && h.set.u && !h.set.who && !first ? `<div class="hj-blk hj-offer tn-card">${kick('Whose Phone Is This?')}<p class="hj-sub">Tending keeps each person's plan and numbers on their own phone.</p><div class="hj-chips" style="margin:0">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip" data-hja="whoq" data-hjv="${w}">${w}</button>`).join('')}</div></div>` : '';
-  const nav = !START() && chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
+  const nav = !START() && chosen && !(S.setup || (first && !ready && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
   return `<div id="hj-root" class="tn${PUB() ? ' tn-pub' : ''}${TEEN() ? ' tn-teen' : ''}${an ? ' tn-anim' : ''}">
-    ${MOVABLE() ? '<div class="row tn-tocard"><button type="button" class="btn btn-line btn-sm" data-hja="tocard">Back to the Card</button></div>' : ''}
     <div class="tn-bar"><div class="tn-brand"><b>${ic('sprout')}</b>${esc(TNAME())}</div>${nav ? navHtml('top') : ''}<span class="sp"></span>${nav ? `<button type="button" class="tn-iconbtn${S.sec === 'settings' ? ' on' : ''}" data-hja="sec" data-hjv="settings" aria-label="Settings">${ic('gear')}</button>` : ''}</div>
-    ${KIT() ? '' : askWho + offer}
+    ${askWho + offer}
     ${body}${nav ? navHtml('bottom') : ''}${S.ovHome === 'host' ? '' : vOv()}</div>`;
 }
 // =====================================================================
@@ -3445,7 +3443,7 @@ function view(){
 // (home/home.js draws the same line for its own Seeds). Never on a kid's or teen's screen.
 // =====================================================================
 const SEED_URL = '/the-grounded-way.html#ways', SEED_SEED = 920;
-const SEEDS_ON = () => START() && !TEEN() && !KIT();
+const SEEDS_ON = () => START() && !TEEN();
 const seedChipH = () => '<span class="hm-seedchip">Seed</span>';
 const seedLineH = () => `<div class="hm-seedline" data-hm-seedline="1"><p>This was a seed. Membership grows the whole tree.</p><div class="hm-acts tight"><a class="hm-btn sm hm-pill" href="${SEED_URL}" data-hm-mlink="1">See Membership</a><button type="button" class="hm-btn sm line hm-pill" data-hm-mcode="1">I Have a Code</button></div></div>`;
 function vSampleWeek(){
@@ -3543,83 +3541,44 @@ function vRisk(){
 }
 
 // ---------- BLD 867: Move to My Home ----------
-// The Field Guide's own Tending (plan, library copy, and everything logged) moves into the person's My Home vault
-// (GGP.data(id, 'tending')), where /home/ runs it with the same engine. Private: it stays on this device, locked.
-const MOVABLE = () => !PUB() && !KIT() && !(C.host === 'home');
-// BLD 879: Preview for Guides is remembered for this browser session only.
-const PVKEY = 'gg-tend-preview';
-function PREVIEW(){ if (C.tier && C.tier() === 'guide') return false; if (S.hereOk == null){ try { S.hereOk = sessionStorage.getItem(PVKEY) === '1'; } catch (e){ S.hereOk = false; } } return S.hereOk; }
-function setPreview(on){ S.hereOk = on; try { if (on) sessionStorage.setItem(PVKEY, '1'); else sessionStorage.removeItem(PVKEY); } catch (e){} }
-// BLD 908 (decision 10, "guide is different from member."): a Guide's card opens The Grounded Way and points to Membership;
-// Move My Plan and Preview for Guides stay for Staff and Founders.
-const GUIDE_T = () => !!(C.tier && C.tier() === 'guide');
-function vCard(hasPlan){
-  if (GUIDE_T()) return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Tending Lives in The Grounded Way</h3>
-    <p class="hj-sub">Workouts, meal plans, Grounded Cooking, and Today's Plate open with Membership in The Grounded Way app, private on your phone. A Member code opens them there.</p>
-    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button></div></div>`;
-  const moved = !!H().set.movedHome, busy = S.moving;
-  const move = moved ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Bring Over What\'s New'}</button>`
-    : hasPlan ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Move My Plan to The Grounded Way'}</button>` : '';
-  const when = moved ? 'Each library update comes over to The Grounded Way on its own. Bring Over What\'s New also brings what you logged here.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
-  return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Your Tending Lives in The Grounded Way</h3>
-    <p class="hj-sub">Your plan, your week, and your tree grow together in The Grounded Way app, private on this phone.</p>
-    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button>${move}</div>
-    ${when ? `<p class="hj-sub" style="margin-top:10px">${esc(when)}</p>` : ''}
-    <div class="row" style="margin-top:6px"><button type="button" class="linkbtn" data-hja="movehere">Preview for Guides</button></div></div>`;
-}
+// BLD 1020: the Field Guide no longer runs Tending; its Settings card Bring Your Tending Over loads this file for one moment
+// and calls GGHealth.carry(), which runs this same merge (moveHome). The Field Guide's Tending logs (and, while the Guide
+// library still holds one, its plan copy) move into the person's profile in The Grounded Way (GGP.data(id, 'tending')),
+// where /home/ runs it with the same engine. Private: it stays on this device, locked.
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=c145'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c145'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
-// BLD 979 follow-up (Chris, November 17, 2026: "now it says 34 min when i open", then "they all still short"): a plan moved
-// into The Grounded Way keeps its own copy of the library, and that copy stayed as it was on the day of the move, so the newly
-// sealed workouts never reached it. Now, each time the Field Guide opens with a library and a moved plan, the unlocked profile's
-// copy of the library (w.lib: the healthJourney and audio, and the Founder plans) is brought up to date on its own, quietly,
-// on this device. Only the library copy changes: what the person logged, chose, and saved stays exactly as it is. A locked
-// profile is never asked to open; its copy comes over the next time both are open.
-// BLD 1015 (Chris, firm, November 17, 2026: "i dont want the app to depend on field guide for anything"): the moved plan also keeps
-// the keys to its own libraries (w.libKeys: the Guide key, the Founder key for a Founder plan, the access code's id, and which
-// sealed file each copy came from), inside the person's locked profile, so The Grounded Way brings each new library over by
-// itself from the site's own sealed files (home/home.js wayLib). keysFor writes them when they are new or changed and says so.
+// BLD 1015: the moved plan keeps the keys to its own libraries (w.libKeys: the Guide key, the Founder key for a Founder plan,
+// the access code's id, and which sealed file each copy came from), inside the person's locked profile, so The Grounded Way
+// brings each new library over by itself from the site's own sealed files (home/home.js wayLib). keysFor writes them.
 function keysFor(w){ const k = C.libKeys && C.libKeys(); if (!w || !k || !k.guide) return false; const o = w.libKeys || {};
   if (o.guide === k.guide && (o.founder || null) === (k.founder || null) && o.codeId === k.codeId && o.giv === k.giv && (o.fiv || '') === (k.fiv || '')) return false;
   w.libKeys = {v: 1, tier: k.tier || 'guide', codeId: k.codeId || '', guide: k.guide, founder: k.founder || null, giv: k.giv || '', fiv: k.fiv || '', at: Date.now()}; return true; }
 const libSigOf = o => { try { const t = JSON.stringify(o || null); let x = 5381; for (let i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0; return t.length + ':' + (x >>> 0).toString(36); } catch(e){ return ''; } };
-let SYNC = null;
-async function syncMoved(){
-  if (C.host === 'home' || GUIDE_T() || PUB()) return false; const h = H(); if (!h || !h.set || !h.set.movedHome) return false;
-  const f = FX() || {}; if (!f.healthJourney) return false;
-  const fd = C.fdr && C.fdr(), lib = {healthJourney: f.healthJourney, audio: f.audio}, fdr = fd ? {healthMine: fd.healthMine, healthKayti: fd.healthKayti} : null, sig = libSigOf([lib, fdr]);
-  if (SYNC && SYNC.sig === sig) return SYNC.p; SYNC = {sig, p: (async () => {
-    await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
-    const a = window.GGP.active && window.GGP.active(); if (!a) { SYNC = null; return false; }
-    const w = window.GGP.data(a.id, 'tending'); if (!w || !w.lib || !w.movedOnce) return false;
-    const kc = keysFor(w);
-    if (w.libSig === sig || (!w.libSig && libSigOf([w.lib, w.fdr || null]) === sig)){ if (!w.libSig || kc){ w.libSig = sig; await window.GGP.save(a.id); } return false; }
-    w.lib = clone(lib); if (fdr) w.fdr = clone(fdr); w.tier = C.tier ? C.tier() : (w.tier || 'guide'); w.libSig = sig; w.libSync = Date.now();
-    await window.GGP.save(a.id); return true; })().catch(() => { SYNC = null; return false; })};
-  return SYNC.p;
-}
 async function moveHome(){
-  if (S.moving || GUIDE_T()) return; S.moving = true; rerender(true);
+  if (S.moving) return false; S.moving = true; rerender(true);
   try {
     await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
     const ok = await window.GGP.require({reason: 'Open The Grounded Way to bring your Tending over.'});
     const a = ok && window.GGP.active && window.GGP.active(); if (!a) throw new Error('locked');
     const w = window.GGP.data(a.id, 'tending'); if (!w) throw new Error('vault');
     const f = (FX()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
-    w.lib = clone({healthJourney: f.healthJourney, audio: f.audio});
-    w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : null;
-    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now(); w.libSig = libSigOf([w.lib, w.fdr]); keysFor(w);
-    const fresh = !w.health || !w.health.set || w.health.set.pubDone || !w.movedOnce;
+    // BLD 1020: the 12 week program lives in the Member library now (w.prog: the profile plays it from there with Membership).
+    // A plan copy comes along only while this Guide library still holds one, as the fallback a device without Membership plays.
+    w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : (w.fdr || null);
+    if (f.healthJourney){ w.lib = clone({healthJourney: f.healthJourney, audio: f.audio}); w.libSig = libSigOf([w.lib, w.fdr]); }
+    w.prog = 1; w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now(); keysFor(w);
+    // Nothing already in the profile is replaced: a profile with its own entries takes these by the merge (newest wins).
+    const wh = w.health, fresh = !wh || !wh.set || !(wh.set.u || wh.set.pubDone || Object.keys(wh.days || {}).length || arr(wh.labs).length || arr(wh.marks).length);
     if (fresh){ w.health = clone(d.health || {}); w.deleted = {health: clone(((d.deleted || {}).health) || {})}; }
     else window.GGHealth.merge(w, {health: d.health || {}, deleted: d.deleted || {}});
     w.movedOnce = 1;
     await window.GGP.save(a.id);
     const h = H(); h.set.movedHome = h.set.movedHome || today(); h.set.u = Date.now(); save();
-    S.moving = false; toast('Your Tending is in The Grounded Way.'); rerender(false);
-  } catch (e){ S.moving = false; toast('The Grounded Way stayed closed. Your Tending is here, ready to move any time.'); rerender(true); }
+    S.moving = false; rerender(false); return true;
+  } catch (e){ S.moving = false; rerender(true); return false; }
 }
 
 // BLD 881: three homes for what health.js draws. The full view (#hj-root, the Field Guide and older links), one bare section
@@ -3645,7 +3604,6 @@ function act(a, v){
   if (actTool(a, v)) return;
   if (actPlate(a, v)) return;
   switch (a){
-    case 'movehome': moveHome(); return;
     case 'pvopen': S.pvOpen = true; S.pv = pvDefaults(); rerender(true); setTimeout(() => { const e = document.getElementById('hj-pv'); if (e && e.scrollIntoView) e.scrollIntoView({block: 'start', behavior: 'smooth'}); }, 30); return;
     case 'pvclose': S.pvOpen = false; rerender(true); return;
     case 'pvsex': S.pv.sex = v; rerender(true); return;
@@ -3660,9 +3618,6 @@ function act(a, v){
       const i = h.risk.findIndex(x => x.id === rec.id); if (i < 0) h.risk.push(rec); else h.risk[i] = rec;
       save(); S.form = null; S.edit = null; toast('Saved on this device.'); rerender(true); return; }
     case 'riskdel': { const i = h.risk.findIndex(x => x.id === v); if (i >= 0){ (D().deleted = D().deleted || {}).health = D().deleted.health || {}; D().deleted.health[v] = Date.now(); h.risk.splice(i, 1); save(); rerender(true); } return; }
-    case 'movehere': setPreview(true); S.sec = 'today'; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
-    case 'tocard': setPreview(false); rerender(false); window.scrollTo(0, 0); return;
-    case 'openhome': location.href = '../home/#tending'; return;
     case 'sec': if (bareOn()){ S.form = null; S.setup = false; S.shopWk = null; S.shopEd = null; S.whyEd = false; S.bare.section = v; S.bare.closed = false; rerender(false); return; }
       S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; S.whyEd = false; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
     // BLD 862: Choose What You Use, Settings, My Why, Morning Quiet, and the evening and morning supplements in one tap.
@@ -3864,7 +3819,7 @@ const KIT_URL = 'https://growwithgrounded.com/home/#kitchen=';
 // that can hold a Family Kitchen. A moved plan's kitchen (lib: 'g') carries the start week, the table, a fingerprint of the
 // library's dinner ids (f), and its swaps (x, from My Menu); phones in it match when their libraries hold the same dinners.
 const libWeeks = () => { const l = FLDH(), w = l && l.app && l.app.dinners && l.app.dinners.weeks; return w && 'ABCD'.split('').every(x => w[x] && Array.isArray(w[x].dinners)) ? w : null; };
-const KMOVED = () => !PUB() && C.host === 'home' && !KIT() && !!libWeeks();
+const KMOVED = () => !PUB() && C.host === 'home' && !!libWeeks();
 const KON = () => PUB() || KMOVED();
 function libSig(){ const w = libWeeks(); if (!w) return ''; let x = 5381; const t = 'ABCD'.split('').map(l => arr(w[l].dinners).map(d => (d && d.day) + '=' + (d && d.id)).join(',')).join('|');
   for (let i = 0; i < t.length; i++) x = ((x * 33) ^ t.charCodeAt(i)) >>> 0; return x.toString(36); }
@@ -3997,15 +3952,15 @@ function sdRow(kind, label, d, sub, can){
 function kitCard(){
   // BLD 921b: a grown-up Member always sees the Family Kitchen card here; when Food is off in Tending or no meal plan is
   // made yet, the card says the one step that opens it (Chris could not find it on November 5, 2026).
-  if (PUB() && START() && !KIT() && !KJ() && !TEEN()){
+  if (PUB() && START() && !KJ() && !TEEN()){
     return `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">Family Kitchen shares your weekly meal plan with your family, and meal plans open with Membership. If you have a code, add it here on this phone.</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hm-mcode="1">I Have a Code</button><a class="tn-btn sm line" href="${MEM_URL}">See Membership</a></div></div>`;
   }
   const mv = KMOVED(), ready = () => mv ? !!libWeeks() : !!ensurePlan();
-  if ((mv || (PUB() && !START())) && !KIT() && !KJ() && (!U('food') || !ready())){
+  if ((mv || (PUB() && !START())) && !KJ() && (!U('food') || !ready())){
     const off = !U('food');
     return `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">${off ? 'Turn on Food in Tending to share your menu with your family. Everyone who joins sees the same dinners and the same shopping list each week.' : 'Make your weekly meal plan in Tending, then share it here with your family.'}</div></div></div>${off ? `<div class="tn-acts"><button type="button" class="tn-btn sm a-kitchen" data-hja="use" data-hjv="food">Turn On Food</button></div>` : ''}</div>`;
   }
-  if (!(PUB() || mv) || START() || KIT() || !U('food') || !ready()) return KJ() && START() ? `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">You are in a Family Kitchen for a table of ${kitTable()}.</div></div></div><button type="button" class="linkbtn" data-hja="kleave">Leave the Family Kitchen</button></div>` : '';
+  if (!(PUB() || mv) || START() || !U('food') || !ready()) return KJ() && START() ? `<div class="tn-card a-kitchen" id="tn-kitchen"><div class="tn-hd">${badge('kitchen', 'a-kitchen')}<div><div class="tn-k a-kitchen">Family Kitchen</div><div class="tn-sub">You are in a Family Kitchen for a table of ${kitTable()}.</div></div></div><button type="button" class="linkbtn" data-hja="kleave">Leave the Family Kitchen</button></div>` : '';
   if (S.kshareGo){ S.kshareGo = 0; if (!S.kshare) setTimeout(() => act('kshare'), 0); }
   const k = KJ(), sh = S.kshare, ks = kitStart(), w = Math.floor((day0(new Date()) - ks) / (7 * DAYMS)) + 1;
   const sub = k ? `You are in a Family Kitchen for a table of ${kitTable()}. Your menu and shopping list match theirs each week. Your own health and check-ins stay yours.` : 'Share your menu with your family. Everyone who joins sees the same dinners and the same shopping list each week, on their own phone.';
@@ -4043,7 +3998,7 @@ function apiSetStart(kind, v){
   return false;
 }
 function startCard(){
-  if (!PUB() || START() || KIT()) return '';
+  if (!PUB() || START()) return '';
   const rows = []; if (U('move') && workOn() && progOn()){ const ps = progStart(), w = progWeek(new Date()); rows.push(sdRow('prog', '12-Week Program', ps, w >= 1 ? progLabel(new Date()) : 'Week 1 starts then', true)); }
   if (!rows.length) return '';
   return `<div class="tn-card a-move" id="tn-starts"><div class="tn-hd">${badge('week', 'a-move')}<div><div class="tn-k a-move">Start Dates</div><div class="tn-sub">Move a start date and the weeks ahead follow. Everything you logged stays as it is.</div></div></div><div class="tn-set">${rows.join('')}</div></div>`;
@@ -4918,7 +4873,7 @@ function bareBody(b){
     case 'own': return box('a-week', vOwn());   // BLD 896
     case 'month': return box('a-week', vMonth());
     case 'week': return box('a-week', vWeek());
-    case 'fruit': return KIT() ? '' : box('p-fruit', fruitCards());   // BLD 882: milestones, the last 7 days, and the LDL path, for the Home's Grow tab
+    case 'fruit': return box('p-fruit', fruitCards());   // BLD 882: milestones, the last 7 days, and the LDL path, for the Home's Grow tab
     case 'learn': return box('a-today', vPlan(lib, 'food') + vPlan(lib, 'fitness') + SOBER);
     case 'team': return PUB() ? vTeam() : '';
     case 'kids': return PUB() ? vKids() : '';
@@ -4944,7 +4899,7 @@ function vLog(mode){
 }
 function voiceCard(){ return `<div class="tn-card" id="tn-voice"><div class="tn-hd">${badge('bell', 'a-move', 'med-m5')}<div><div class="tn-k a-move">Voice and Music</div><div class="tn-sub">The calm voice, the music, and the soft bell for workouts, quiet times, and the kitchen guide.</div></div></div>${toggles(null)}</div>`; }
 function houseCard(){
-  if (KIT()) return ''; const h = H(), s = h.set, pub = PUB(), kids = pub ? KIDS().length : 0, a = pub ? Math.max(1, +((s.house || {}).adults) || 1) : Math.max(1, +s.household || 1);
+  const h = H(), s = h.set, pub = PUB(), kids = pub ? KIDS().length : 0, a = pub ? Math.max(1, +((s.house || {}).adults) || 1) : Math.max(1, +s.household || 1);
   return `<div class="tn-card" id="tn-hh"><div class="tn-hd">${badge('people', 'p-branches')}<div><div class="tn-k p-branches">Household</div><div class="tn-sub">Recipes and the shopping list fit your table.</div></div></div>
     <div class="tn-hhrow"><span>${pub ? 'Grown-ups' : 'People who eat at home'}</span><div class="hj-stock"><button type="button" class="chip" data-hja="hhadj" data-hjv="-1" aria-label="One fewer">&minus;</button><span><b>${a}</b></span><button type="button" class="chip" data-hja="hhadj" data-hjv="1" aria-label="One more">+</button></div></div>
     ${pub ? `<p class="tn-sub">${kids ? kids + (kids === 1 ? ' child' : ' children') + ' in Family Food, a table of ' + (a + kids) + '.' : 'A table of ' + a + '.'}</p><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="who">${ic('people')}Change My Household</button></div>` : ''}</div>`;
@@ -6213,8 +6168,9 @@ window.GGHealth = {
   // BLD 979 follow-up (tests, patches/bld979/test/measure979.mjs): every workout and Flow this view can play today (Every Workout
   // at each level, plus today's), each with the minutes its card and start screen say and the player's own clock for it.
   audit: () => apiAudit(),
-  // BLD 979 follow-up: the Field Guide calls this once it opens (and again after a library is sealed on this device).
-  syncMoved: () => syncMoved()
+  // BLD 1020: Bring Your Tending Over (the Field Guide's Settings): carries the Field Guide's Tending logs into the open
+  // profile in The Grounded Way, merged; resolves true once they are there.
+  carry: () => moveHome()
 };
 // ---------- BLD 896, Holiday Sets ----------
 // Chris, October 30, 2026: "a special set for holidays and special occasions.. so you can select thanksgiving dinner, and it will
@@ -6319,8 +6275,8 @@ function holToggle(id){ const st = holSt(), i = st.on.indexOf(id); if (i >= 0) s
 function holChips(){ const G = holUse(); if (!G) return ''; const on = holSt().on;
   return `<div class="hj-chips hj-holchips" role="group" aria-label="My Holidays">${G.sets.map(s => { const p = on.includes(s.id); return `<button type="button" class="chip${p ? ' on' : ''}" aria-pressed="${p}" data-hja="holtog" data-hjv="${esc(s.id)}">${esc(s.name)}</button>`; }).join('')}</div>`; }
 function holPick(){ return holUse() ? `<h3 style="margin-top:20px">My Holidays</h3><p class="hj-sub">Choose the days you celebrate. About three weeks before each one, a card offers to set it up: the shopping on your list, the prep on your calendar, and every recipe guided step by step. Every set stays in the recipe library too.</p>${holChips()}` : ''; }
-function holShelf(){ const G = holUse(); if (!G || KIT()) return ''; return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen hj-holshelf" data-hja="holall"><span class="ill"><img src="${esc(WAY(HOL_SHELF))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${G.sets.length} sets</span><span class="h3">Holidays and Gatherings</span><span class="tn-meta">Thanksgiving to a backyard gathering: whole food menus, the shopping, the prep, and every recipe step by step.</span></span></button>`; }
-function holSetCard(){ if (KIT() || !holUse()) return ''; const n = holSt().on.length;
+function holShelf(){ const G = holUse(); if (!G) return ''; return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen hj-holshelf" data-hja="holall"><span class="ill"><img src="${esc(WAY(HOL_SHELF))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${G.sets.length} sets</span><span class="h3">Holidays and Gatherings</span><span class="tn-meta">Thanksgiving to a backyard gathering: whole food menus, the shopping, the prep, and every recipe step by step.</span></span></button>`; }
+function holSetCard(){ if (!holUse()) return ''; const n = holSt().on.length;
   return `<div class="tn-card a-kitchen" id="tn-hol"><div class="tn-hd">${badge('star', 'a-kitchen', HOL_ART.day + '-sq')}<div><div class="tn-k a-kitchen">My Holidays</div><div class="tn-sub">${n ? n + ' chosen. ' : ''}A card about three weeks before each one offers to set it up.</div></div></div>${holChips()}
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holall">${ic('arrow')}Every Holiday Set</button></div></div>`; }
 // The Holidays section: My Holidays, what is coming up, and every set; one set opens with its Set Up, timeline, and recipes.
@@ -6446,7 +6402,7 @@ const MM = {sheet: null, undo: null};
 function MENU(){ const h = H(); if (!h) return {items: []}; const m = h.menu = h.menu && typeof h.menu === 'object' && !Array.isArray(h.menu) ? h.menu : {};
   m.items = arr(m.items).filter(x => x && x.id && parseD(x.date)); return m; }
 const mmSave = () => { MENU().u = Date.now(); save(); };
-const mmReady = () => !!(H() && FLDH() && !setupNeeded() && (U('food') || KIT()));
+const mmReady = () => !!(H() && FLDH() && !setupNeeded() && (U('food')));
 const mmTable = () => { const n = PUB() ? tableOf() : KJ() ? kitTable() : num((H() || {set: {}}).set.household); return n > 0 && n < 30 ? Math.round(n) : 6; };
 const mmCap = t => String(t || '').replace(/^./, c => c.toUpperCase());
 // ---- the recipe behind a ref ----

@@ -201,10 +201,10 @@ function ringsHTML(o, red, P, mark){
     `<animate attributeName="opacity" values="1;1" dur="${w}s" repeatCount="indefinite"/></svg>` +
     (secs ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
 }
-// The ring module, once, next to this file (../shared/gg-breath-ring.js), with this file's own version.
+// The ring module, once (/shared/gg-breath-ring.js, a root address since BLD 1020), with this file's own version.
 function ringLoad(){
   if (window.GGBreathRing || ringLoad.on) return; ringLoad.on = 1;
-  try { const u = new URL('../shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c148';
+  try { const u = new URL('/shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c151';
     const el = document.createElement('script'); el.src = u.href; el.async = true; (document.head || document.documentElement).appendChild(el); } catch (e) {}
 }
 function phaseHTML(o, red){ return ringsHTML(o, red, o.phases, true); }
@@ -276,7 +276,7 @@ const SELF = (() => { try { return (document.currentScript && document.currentSc
 const MS = {map: null, p: null, done: false, url: ''};
 function medLoad(){
   if (MS.p) return; let u;
-  try { u = new URL('../shared/med-stage.json', SELF || location.href); if (SELF) u.search = new URL(SELF).search; MS.url = u.href; } catch (e) { MS.done = true; return; }
+  try { u = new URL('/shared/med-stage.json', SELF || location.href); if (SELF) u.search = new URL(SELF).search; MS.url = u.href; } catch (e) { MS.done = true; return; }
   MS.p = fetch(MS.url).then(r => r.ok ? r.json() : null).catch(() => null).then(m => { MS.map = m && m.art ? m : null; MS.done = true; medHydrate(); });
 }
 function medEntry(m){

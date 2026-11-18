@@ -19,7 +19,7 @@
 //   buildSessions(moves, templates, opts) -> {sessions: {A..D}, warmup, cooldown}
 //       opts: {level: 'root'|'rise'|'thrive', place: 'home'|'light'|'gym', mins: 20|40|60, warmup: [], cooldown: []}
 //       Sessions use the Field Guide item shape the player already plays; rests never over 60 seconds; the time estimate is
-//       the same honest clock as field-guide/health.js (planSecs), fitted close to the chosen minutes.
+//       the same honest clock as shared/tend/health.js (planSecs), fitted close to the chosen minutes.
 //   estimate(session, warmup, cooldown, phase, light)  seconds, the player's own model
 //   targets(goalIds, goals, {weightKg, teen})       the strictest of each target across the chosen goals
 //   kidAims(band, sex)                              a child's daily aims from an age band (no weight, no calories)
@@ -264,14 +264,14 @@ function shopList(weeks, week, extras){
   return out.sort((a, b) => SECTIONS.indexOf(a.sec) - SECTIONS.indexOf(b.sec) || a.name.localeCompare(b.name));
 }
 
-// ---------- the honest clock, the same model as field-guide/health.js (planSecs and sessSecs) ----------
+// ---------- the honest clock, the same model as shared/tend/health.js (planSecs and sessSecs) ----------
 const lineSecs = t => 1.4 + String(t).split(/\s+/).length / 2.4;
 const REPS_RE = /^\s*(\d+)(\s*to\s*\d+)?\s*(reps?|seconds?|per side|each side|total|each)?\s*$/i;
 const repWords = st => !REPS_RE.test(String(st.reps));
 const repTxt = st => String(st.reps).replace(/\s*(per side|each side)\s*$/i, '').trim();
 const unitOf = st => repWords(st) ? '' : st.kind === 'time' ? ' seconds' : st.kind === 'distance' ? '' : (/total$/i.test(repTxt(st)) ? '' : ' reps');
 const secsOf = st => parseInt(String(st.reps), 10) || 30;
-// BLD 891: the same as field-guide/health.js: alternating moves (Dead Bug, Bird Dog, Plank Pull-Through, Seated Knee Lift) run as one
+// BLD 891: the same as shared/tend/health.js: alternating moves (Dead Bug, Bird Dog, Plank Pull-Through, Seated Knee Lift) run as one
 // flow and count both sides together; every rep runs at the move's tempo (seconds per rep), and reps written as words run about 8.
 const ALT_IDS = ['m-dead-bug', 'm-bird-dog', 'm-plank-pull-through', 'g-seated-knee-lift'], ALT_RE = /^\s*(dead bugs?|bird dogs?|plank pull-throughs?|seated knee lifts?)\b/i;
 const altMove = x => !!x && (x.alt === true || ALT_IDS.includes(x.id) || ALT_IDS.includes(x.move) || ALT_RE.test(x.name || ''));
@@ -306,7 +306,7 @@ function planSecs(S){
     if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
   return s;
 }
-// BLD 979 follow-up: the player hands the builder its own clock (field-guide/health.js builderClock, the model the engine
+// BLD 979 follow-up: the player hands the builder its own clock (shared/tend/health.js builderClock, the model the engine
 // plays), so a session is fitted to the chosen minutes by the time it really runs; the lighter weeks keep every set.
 let CLOCK = null;
 function setClock(fn){ CLOCK = typeof fn === 'function' ? fn : null; API.clock = CLOCK; }
