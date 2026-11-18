@@ -242,7 +242,7 @@
     return Object.assign({}, sc, o);
   }
   /* BLD 970: still scenes. figMoves(move) is true for a movement the 3D figure shows (any move of shared/fig3d and
-     field-guide/moves.js beyond the resting poses: a breath, a seat, a cross-legged seat, lying down, standing still).
+     shared/tend/moves.js beyond the resting poses: a breath, a seat, a cross-legged seat, lying down, standing still).
      stillArt(lesson, scene) names the painting: a Breath Prayer (or a prayer session with breath in its name) the woman
      praying by a sunlit window; any other prayer, faith, Grounded Spirit, or gratitude session the man in quiet prayer on
      a meadow bench; every other session (breathing, meditation, calm, rest, relationships) the woman breathing with her

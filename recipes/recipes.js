@@ -3,9 +3,9 @@
    Reads window.GGTendPublic.recipes (shared/tending-public.js, public on purpose).
    A list with meal, goal, and fit chips and a search box; each recipe opens a detail view at /recipes/#<recipe id>
    (deep links work on load, Back returns to the list). BLD 877: a gold Guide Me, Step by Step button (BLD 907: named Grounded Cooking) opens a full screen
-   guided mode right on this page: one step at a time in the recorded kitchen voice (field-guide/coach.js, GGVoice, with the
-   public clip key GGTendPublic.audio), Back and Next, timers for steps with minutes, the kitchen scene (field-guide/stage.js),
-   Voice, Music, and Bell toggles, and a finish screen. No sign-in. The spoken lines are the ones field-guide/health.js
+   guided mode right on this page: one step at a time in the recorded kitchen voice (shared/tend/coach.js, GGVoice, with the
+   public clip key GGTendPublic.audio), Back and Next, timers for steps with minutes, the kitchen scene (shared/tend/stage.js),
+   Voice, Music, and Bell toggles, and a finish screen. No sign-in. The spoken lines are the ones shared/tend/health.js
    speaks in its kitchen guide (LN.cIntro, each step, LN.tset, LN.tdone, LN.cOut), so every line has a recorded clip;
    with no clip, coach.js speaks with the device voice. Plain JS, no library.
    BLD 880: every recipe is written for six. A Serves picker on each recipe (2 to 12) scales the ingredients with
@@ -56,8 +56,8 @@
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
     ['/shared/tending-public.js?v=c142', 'GGTendPublic'],
-    ['/field-guide/stage.js?v=c150', 'GGStage'],
-    ['/field-guide/coach.js?v=c146', 'GGVoice'],
+    ['/shared/tend/stage.js?v=c151', 'GGStage'],
+    ['/shared/tend/coach.js?v=c151', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
     ['/shared/gg-holidays.js?v=c139', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=c138', 'GGBulk'],
@@ -498,7 +498,7 @@
     /* ---------- BLD 896: Holidays and Gatherings (shared/gg-holidays.js, GGHolidays) ----------
        A shelf above the recipe tools: every set opens at /recipes/#hol-<set id> with its menu, each recipe sized by the
        Serves picker, its steps, and Guide Me, Step by Step in the same kitchen guide (the guide speaks 'We are making <name>.'
-       and each step's line, the lines field-guide/health.js speaks for a holiday recipe). Setting a set up on the calendar
+       and each step's line, the lines shared/tend/health.js speaks for a holiday recipe). Setting a set up on the calendar
        lives in The Grounded Way; this page is open to anyone. */
     // Soonest first; the sets for a day you choose follow in their own order.
     function holOrder() {
@@ -774,7 +774,7 @@
     }
 
     /* ---------- BLD 877: Guide Me, Step by Step, built into the page ----------
-       The same flow as the kitchen guide in field-guide/health.js (vGuide, kEnter, kStartTimer): the voice says
+       The same flow as the kitchen guide in shared/tend/health.js (vGuide, kEnter, kStartTimer): the voice says
        'We are making <name>.', then each step as it opens; a step with minutes offers a timer ('Timer set for N minutes.'),
        and a finished timer chimes and says 'That timer is done.'; the finish says 'All done. Enjoy the table together.'
        Voice id 'andrew' is the recorded kitchen voice's clip id (never shown).

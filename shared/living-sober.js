@@ -183,7 +183,7 @@
       return '<details class="ls-gt" id="cr-' + esc(x.id) + '"><summary><b>' + esc(x.title) + '</b><small>' + esc(x.lead || '') + '</small></summary><div class="ls-gtb">' + ul(x.items) + (x.try ? '<h4>Try Saying</h4><p class="ls-try">' + esc(x.try) + '</p>' : '') + '</div></details>';
     }).join('') + '</div>' + srcs(C.credits);
     if (B && (h = $('#ls-basics'))) h.innerHTML = '<p>' + esc(B.intro || '') + '</p><div class="ls-basics">' + (B.parts || []).map(function (x, i) { var k = ['candle-rain-sq', 'ppl-meal-lunch-sq', 'ppl-move-cardio-sq'][i % 3], a = ['a-blue', 'a-honey', 'a-green'][i % 3]; return '<div class="' + a + '"><h4><span class="ls-bpic" aria-hidden="true"><img src="/shared/heroes/way/' + k + '.webp" alt="" loading="lazy" decoding="async" width="600" height="600"></span>' + esc(x.title) + '</h4>' + ul(x.items) + '</div>'; }).join('') + '</div>' +
-      (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.health ? '<p class="ls-note"><a class="text-link" href="/field-guide/">' + esc(B.health) + '</a></p>' : '') + srcs(B.credits);
+      (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.health ? '<p class="ls-note"><a class="text-link" href="/home/">' + esc(B.health) + '</a></p>' : '') + srcs(B.credits);
   }
   function wave(from) {
     var S = window.GGSober30; if (!S || !S.open || !S.wave) return;

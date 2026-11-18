@@ -4,7 +4,7 @@
 // went over a lot but today week 3 was good", "any way we can upload receipts into app? the app scans receipt and loads
 // real data", then "1": the receipt is read on the phone (nothing is uploaded), a review screen, and a shorthand memory.
 //
-// Loaded by field-guide/health.js the first time a shopping list shows (tripCard). health.js hands over a bridge B:
+// Loaded by shared/tend/health.js the first time a shopping list shows (tripCard). health.js hands over a bridge B:
 //   {H, save, shopList, keepShop, rerender, toast, esc, PUB, TEEN, STORES, aisleOf, asset, week, fwl, shopDate, age}
 // Data, in the same health data as the shopping list (DATA.health, locked with the rest):
 //   h.trips:   [{id, n week, d YYYY-MM-DD, store costco|grocer|other, total, food, household, tax, how type|est|scan,

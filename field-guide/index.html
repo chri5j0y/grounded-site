@@ -699,24 +699,18 @@ body.cd-noscroll{overflow:hidden;}
 <script src="heartwood.js?v=b934"></script>
 <script src="member-acct.js?v=b950"></script>
 <script src="../shared/gg-stories.js?v=c150"></script>
-<script src="moves.js?v=c149"></script>
-<script src="stage.js?v=c150"></script>
-<script src="coach.js?v=c146"></script>
-<script src="../shared/gg-scale.js?v=b934"></script>
-<script src="../shared/gg-holidays.js?v=c139"></script>
-<script src="../shared/gg-meal-tags.js?v=c141"></script>
-<script src="health.js?v=c150"></script>
 <script src="vault.js?v=c124"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
-// The Family Kitchen library (GWG BLD 846): lib-kitchen.js, the food part of Tending (formerly My Health) for a Family Kitchen code.
-// The Member library (GWG BLD 908): lib-member.js, the sealed Member content, opened on /home/ by shared/gg-member.js.
-// The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
-(function(){ var t = Date.now(); window.__gfgT = t; ['codes','lib-founder','lib-staff','lib-guide','lib-kitchen','lib-member'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
+// BLD 1020: every sealed library and codes.js live in one shared folder, /shared/lib/ (The Grounded Way and Membership read
+// them there too). The Member library (GWG BLD 908): lib-member.js, opened on /home/ by shared/gg-member.js.
+// Until Chris uploads into /shared/lib/ once, a file missing there is read from its old /field-guide/ address.
+window.GFG_LIBS = [['codes', 'GFG_CODES'], ['lib-founder', 'GFG_FOUNDER'], ['lib-staff', 'GFG_STAFF'], ['lib-guide', 'GFG_GUIDE'], ['lib-member', 'GFG_MEMBER']];
+(function(){ var t = Date.now(); window.__gfgT = t; window.GFG_LIBS.forEach(function(n){ document.write('<script src="/shared/lib/' + n[0] + '.js?t=' + t + '"><\/script>'); }); })();
 </script>
 <script>
-if (!window.GFG_GUIDE) document.write('<script src="lib-field.js?t=' + window.__gfgT + '"><\/script>');
+window.GFG_LIBS.forEach(function(n){ if (!window[n[1]]) document.write('<script src="/field-guide/' + n[0] + '.js?t=' + window.__gfgT + '"><\/script>'); });
 </script>
 <script>
 // =====================================================================
@@ -751,7 +745,7 @@ async function open(key, box){ const pt = await crypto.subtle.decrypt({name:'AES
 // Each level's library has its own key. codes.js holds a sealed copy of a library key for every
 // access code (never the code itself), plus "links" that let a higher level open the ones below it.
 // A code is only used once, to set up a device. After that, each person's own passcode unlocks it.
-const BOX = {founder: window.GFG_FOUNDER || null, staff: window.GFG_STAFF || null, guide: window.GFG_GUIDE || window.GFG_FIELD || null, kitchen: window.GFG_KITCHEN || null, member: window.GFG_MEMBER || null};
+const BOX = {founder: window.GFG_FOUNDER || null, staff: window.GFG_STAFF || null, guide: window.GFG_GUIDE || null, member: window.GFG_MEMBER || null};
 // Codes, vaults, drafts, and update files made before the Founder rename (October 2026) carry the old level
 // name (FG_OLD) inside. fgTier, fgCodesNorm, and fgDraftNorm read them under the new name, so no device or
 // code has to be set up again. The Guide rename (GWG BLD 764) works the same way: the Guide level became the Guide
@@ -776,7 +770,7 @@ function fgDraftNorm(d){
   return d;
 }
 const CODES = fgCodesNorm(window.GFG_CODES || {v:1, stamp:'', salt:null, codes:[], links:{}});
-const RANK = {kitchen:0, guide:1, staff:2, founder:3};
+const RANK = {guide:1, staff:2, founder:3};
 const LEVEL_NAME = {founder:'Founder', staff:'Staff', guide:'Guide', org:'Organization', supporter:'Supporter', kitchen:'Family Kitchen', member:'Member', household:'Household'};
 async function rawKey(raw){ return crypto.subtle.importKey('raw', unb64(raw), {name:'AES-GCM'}, true, ['encrypt','decrypt']); }
 async function tryOpen(box, raw){ if (!box || !raw) return null; try { return await open(await rawKey(raw), box); } catch(e){ return null; } }
@@ -1061,16 +1055,12 @@ function lock(){
 setInterval(() => { if (!DATA) return; if (SESS_UNTIL && Date.now() > SESS_UNTIL) { lock(); return; } const al = +DATA.settings.autolock || 0; if (al && Date.now() - lastAct > al * 60000) lock(); }, 15000);
 
 // ---------------- app shell ----------------
-// BLD 979 follow-up: a plan moved into The Grounded Way takes this device's newest library over on its own (health.js syncMoved),
-// once the Field Guide is open, and again after a library is sealed here.
-function fgSyncMoved(){ setTimeout(() => { try { if (window.GGHealth && GGHealth.syncMoved) GGHealth.syncMoved(); } catch(e){} }, 1500); }
 function start(){
   lockEl.classList.add('hide'); appEl.classList.remove('hide');
   if (!DATA.settings.lockv2){ DATA.settings.autolock = 0; DATA.settings.lockv2 = 1; save(); }
   if (SESS_UNTIL) setTimeout(() => toast('Unlocked until ' + untilText() + '.'), 400);
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
   V = {tab: firstTab(tabsFor())}; render();
-  fgSyncMoved();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
   if (dr && dr.kind === 'wl'){
     if (WLG() && (dr.demo || CL(dr.clientId))) setTimeout(() => { if (confirm('You have a Willow visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); wlLoad(); let n = 0; const go2 = () => { if (WC) wlOpenRun(); else if (WC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Willow questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
@@ -1109,18 +1099,14 @@ function tabsFor(){
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Guide library: after the trees, before Learn.
   const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
-  // Tending, formerly My Health (GWG BLD 840; renamed in BLD 862): every level, whenever the Guide library carries healthJourney. Personal numbers stay on this device.
-  const hj = hjOpen() ? [['health','Tending','sprout']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
-  // A Family Kitchen code (GWG BLD 846) opens the Tending kitchen only: no orientation, no other tabs.
-  if (TIER === 'kitchen') return [['health','Tending','sprout']];
-  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ['safety','Safety','shield']];
-  if (!LIB) return [...hj, ...kids, ...grown, ...hp];
+  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ['safety','Safety','shield']];
+  if (!LIB) return [...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key'], ['books','Books','ledger']); // Books (GWG BLD 770, books.js): Founders only
   return t;
 }
@@ -1129,7 +1115,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder' || id === 'books') return 'founder'; // Books (GWG BLD 770) is Founders only
-  if (id === 'home' || id === 'health' || id === 'trees' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'trees' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -1149,7 +1135,7 @@ function render(){
   const treeTabs = tabs.filter(x => TREE_IDS.includes(x[0]));
   if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !(V.tab === 'trees' && treeTabs.length) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
   drawTabs(tabs, pathSub);
-  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : '', health: () => hjOpen() ? GGHealth.view() : ''};
+  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (pathSub ? `<button class="linkbtn path-back" data-tab="path">${icon('award')} Back to Your Path</button>` : '') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
   certCheck(); // a new certificate shows its congratulations (GWG BLD 797)
@@ -1157,8 +1143,8 @@ function render(){
 // Grouped tabs (GWG BLD 822). tabsFor() stays the one flat list of what each person may open; the bar shows it in
 // six groups, and the open group's own tabs in a second row. Both rows sit inside #tabs, so the tab handlers still work.
 const TREE_IDS = ['maple','aspen','pine','birch','oak','sequoia','willow','grove'];
-const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['me','Tending','sprout'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
-const grpOf = id => id === 'path' || PATH_SUB.includes(id) ? 'path' : id === 'home' ? 'home' : id === 'health' ? 'me' : id === 'trees' || TREE_IDS.includes(id) ? 'trees' : ['talks','hospital','safety'].includes(id) ? 'gde' : ['founder','books'].includes(id) ? 'fdr' : id === 'settings' ? '' : 'staff';
+const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
+const grpOf = id => id === 'path' || PATH_SUB.includes(id) ? 'path' : id === 'home' ? 'home' : id === 'trees' || TREE_IDS.includes(id) ? 'trees' : ['talks','hospital','safety'].includes(id) ? 'gde' : ['founder','books'].includes(id) ? 'fdr' : id === 'settings' ? '' : 'staff';
 const GRP_LAST = {};
 function drawTabs(tabs, pathSub){
   const real = tabs.filter(x => x[0] !== '-'), cur = pathSub ? 'path' : grpOf(V.tab);
@@ -1272,11 +1258,40 @@ if (window.GGCer){ GGCer.tier = () => TIER; GGCer.saveAll = (key, item) => piece
 // Clients and Intake (GWG BLD 767, clients.js): Staff and Founders, the Clients tab, the Back Up Now card on Home.
 if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
-// Tending, formerly My Health (GWG BLD 840, health.js): every level; content from the Guide library, a Founder's own plan from the Founder library.
-// BLD 1015: libKeys hands a plan moved into The Grounded Way the keys to its own libraries (kept in the person's locked profile),
-// so The Grounded Way brings each new sealed library over by itself and never needs the Field Guide open.
-if (window.GGHealth) GGHealth.init({data: () => DATA, fld: () => FLD, fdr: () => FDR, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
-  libKeys: () => (KEYS && KEYS.guide ? {tier: TIER, codeId: CODEID || '', guide: KEYS.guide, founder: TIER === 'founder' ? (KEYS.founder || null) : null, giv: (BOX.guide && BOX.guide.iv) || '', fiv: TIER === 'founder' ? ((BOX.founder && BOX.founder.iv) || '') : ''} : null)});
+// BLD 1020 (Chris, firm, November 18, 2026: "the only thing i want on field guide is things for staff and founders only"):
+// Tending lives in The Grounded Way. The Field Guide no longer loads the Tending engine, and keeps whatever Tending logs it
+// holds (DATA.health) in its own locked store, untouched; nothing is deleted. Bring Your Tending Over (Settings) carries them
+// over once: it loads the engine (/shared/tend/health.js) for that moment only and runs the same tested Move My Plan merge
+// (newest entry wins, removed entries stay removed), with the keys to this device's libraries for the plan's own refresh.
+const TEND_JS = '/shared/tend/health.js?v=c151';
+const TC = {busy: false};
+function fgLoadJs(src){ return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = src; sc.onload = () => res(); sc.onerror = () => rej(new Error(src)); document.head.appendChild(sc); }); }
+async function fgTendEngine(){
+  if (!window.GGHealth) await fgLoadJs(TEND_JS);
+  GGHealth.init({data: () => DATA, fld: () => FLD, fdr: () => FDR, tier: () => TIER, save: () => save(), render: () => {}, go: () => {}, toast: m => toast(m),
+    libKeys: () => (KEYS && KEYS.guide ? {tier: TIER, codeId: CODEID || '', guide: KEYS.guide, founder: TIER === 'founder' ? (KEYS.founder || null) : null, giv: (BOX.guide && BOX.guide.iv) || '', fiv: TIER === 'founder' ? ((BOX.founder && BOX.founder.iv) || '') : ''} : null)});
+  return window.GGHealth;
+}
+// The newest change time anywhere in the Tending logs (each entry carries u).
+function tendNewest(o){ let n = 0; const walk = x => { if (!x || typeof x !== 'object') return; if (Array.isArray(x)){ x.forEach(walk); return; } for (const k in x){ if (k === 'u' && typeof x[k] === 'number'){ if (x[k] > n) n = x[k]; } else walk(x[k]); } }; walk(o); return n; }
+function tendHeld(){ const h = DATA && DATA.health; if (!h || typeof h !== 'object') return false;
+  return ['labs', 'marks', 'panels', 'notes', 'risk', 'wlog', 'myFoods'].some(k => Array.isArray(h[k]) && h[k].length) || ['days', 'lifts', 'log', 'shop'].some(k => h[k] && typeof h[k] === 'object' && Object.keys(h[k]).length) || !!(h.set && h.set.u); }
+// Shown once on a device whose Field Guide still holds Tending logs, and again only when something changed after the carry.
+function tendLeft(){ if (!tendHeld()) return false; const c = +((DATA.health.set || {}).carriedAt) || 0; return !c || tendNewest(DATA.health) > c; }
+async function tendCarry(){
+  if (TC.busy) return; TC.busy = true; render();
+  let ok = false;
+  try { const G = await fgTendEngine(); ok = !!(G && G.carry && await G.carry()); } catch(e){ ok = false; }
+  TC.busy = false;
+  if (ok){ DATA.health.set = DATA.health.set || {}; DATA.health.set.carriedAt = Date.now() + 1; save(); toast('Your Tending is in The Grounded Way, every log kept.'); }
+  else toast('The Grounded Way stayed closed. Your Tending stays safe here, ready any time.');
+  render();
+}
+function tendCarryCard(){
+  if (!tendLeft()) return '';
+  return `<div class="card" style="border-left:4px solid var(--sage)"><h3>Bring Your Tending Over</h3><p class="muted">Workouts, meals, and health numbers live in The Grounded Way. This Field Guide still holds Tending logs from before. One tap carries them into your profile in The Grounded Way, private on this device; anything already there stays, and the newest of each entry wins.</p>
+   <button class="btn btn-gold" style="margin-top:10px" data-act="tend-carry"${TC.busy ? ' disabled' : ''}>${TC.busy ? 'Bringing It Over...' : 'Bring My Tending Over'}</button></div>`;
+}
 // Books (GWG BLD 770, books.js): Founders only, the Books tab and the Set Aside for Taxes card on Home.
 if (window.GGBooks) GGBooks.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
@@ -1916,7 +1931,7 @@ function orPrintAgreement(){
 
 // ---------------- FOUNDER: Access manager, pricing (the Playbook lives in Business Documents) ----------------
 // Changes are made on a working copy ("draft") saved in this device's encrypted records.
-// Nothing changes for anyone until the files it gives you are uploaded to field-guide/ on the site.
+// Nothing changes for anyone until the files it gives you are uploaded to shared/lib/ on the site (BLD 1020; field-guide/ before).
 const WORDS = ["acorn", "alder", "amber", "anchor", "apple", "aspen", "aurora", "autumn", "badger", "balsam", "banner", "barley", "basil", "basin", "bay", "beacon", "beech", "berry", "birch", "bison", "bloom", "blossom", "bluff", "boulder", "bramble", "branch", "breeze", "briar", "brook", "brush", "buck", "bud", "burrow", "butte", "cabin", "candle", "canoe", "canyon", "cardinal", "cedar", "chapel", "cherry", "chestnut", "cinder", "clay", "cloud", "clover", "coast", "cobble", "comet", "copper", "coral", "cove", "crane", "creek", "crest", "crocus", "crow", "dahlia", "daisy", "dawn", "deer", "delta", "dew", "dove", "dune", "dusk", "eagle", "earth", "echo", "elder", "elm", "ember", "evergreen", "fable", "falcon", "fawn", "feather", "fern", "field", "finch", "fir", "flame", "flax", "flint", "flower", "forest", "fossil", "fox", "frost", "garden", "garnet", "glacier", "glade", "glen", "glow", "gourd", "grain", "granite", "grove", "gull", "harbor", "harvest", "haven", "hawk", "hazel", "hearth", "heath", "hemlock", "heron", "hickory", "hill", "hollow", "honey", "hops", "horizon", "iris", "island", "ivy", "jade", "jasper", "juniper", "kelp", "kestrel", "kettle", "kite", "lake", "lantern", "larch", "lark", "laurel", "leaf", "ledge", "lichen", "lilac", "lily", "linden", "lodge", "loon", "lotus", "lupine", "maple", "marigold", "marsh", "meadow", "mesa", "mint", "mist", "moon", "moss", "moth", "mountain", "nest", "nettle", "north", "nutmeg", "oak", "oasis", "ocean", "olive", "onyx", "orchard", "orchid", "osprey", "otter", "owl", "paddle", "pasture", "pearl", "pebble", "pecan", "pepper", "petal", "pine", "pinecone", "plover", "plum", "pond", "poplar", "poppy", "prairie", "prism", "quail", "quarry", "quill", "rain", "rainbow", "rapids", "raven", "reed", "reef", "ridge", "ripple", "river", "robin", "rock", "rose", "rowan", "rye", "sable", "saddle", "sage", "salmon", "sand", "sapling", "seed", "sequoia", "shade", "shell", "shore", "sierra", "sky", "slate", "snow", "sorrel", "sparrow", "spring", "sprout", "spruce", "star", "stone", "stream", "summit", "sun", "sunrise", "swallow", "swan", "tamarack", "teal", "thicket", "thistle", "thrush", "thunder", "tide", "timber", "torch", "trail", "trout", "tulip", "tundra", "twig", "valley", "vine", "violet", "walnut", "warbler", "water", "wheat", "willow", "wind", "winter", "wolf", "wren", "yarrow", "yew", "zephyr"];
 function wordsCode(){ const r = crypto.getRandomValues(new Uint32Array(4)); return [0,1,2].map(i => WORDS[r[i] % WORDS.length]).join('-') + '-' + (10 + r[3] % 90); }
 function oneYear(){ const d = new Date(); d.setFullYear(d.getFullYear() + 1); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -1924,7 +1939,7 @@ const effKeys = () => Object.assign({}, KEYS, DATA.founder.draft ? DATA.founder.
 const workCodes = () => DATA.founder.draft ? DATA.founder.draft.codes : CODES;
 function ensureDraft(){
   if (!DATA.founder.draft) DATA.founder.draft = {stamp:'', codes: JSON.parse(JSON.stringify(CODES)), keys:{}, libs:{}, newIds:{}};
-  const d = DATA.founder.draft; d.codes.links = d.codes.links || {}; d.codes.codes = d.codes.codes || []; return d;
+  const d = DATA.founder.draft; d.codes.links = d.codes.links || {}; d.codes.codes = d.codes.codes || []; if (d.libs) delete d.libs.kitchen; return d;
 }
 async function relink(d){
   const k = Object.assign({}, KEYS, d.keys), L = Object.assign({}, d.codes.links);
@@ -1939,23 +1954,11 @@ function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return 
 // so names stay off the site); Supporter codes get none, so the Field Guide never opens for them. Every code also gets
 // a record in the Founder library's Access list (FDR.access) carrying its stories wrap, so it opens Grounded Stories.
 // o: {org, n (place in the organization), quiet (the caller relinks, saves, and seals once at the end)}.
-// ---------------- FOUNDER: the Family Kitchen (GWG BLD 846) ----------------
-// A Family Kitchen code opens only the kitchen part of Tending on a family member's phone (Chris, October 25, 2026, "1").
-// Its library, lib-kitchen.js, is cut from the Guide library's healthJourney (dinners, shop lists, batches, plus the audio
-// key for Andrew's cook guide) and the plan's start Monday from this device, sealed with its own key. The key lives in the
-// Founder library (FDR.kitchen.key). Every Guide library update sealed here reseals lib-kitchen.js too.
-function kitchenPlain(g){ const h = (g && g.healthJourney) || {}, a = h.app || {}, me = DATA && DATA.health && DATA.health.set;
-  return {_kitchen: 1, _rev: (g && g._rev) || 0, _updated: today(), start: (me && me.start) || null, audio: (g && g.audio) || null,
-    healthJourney: {v: h.v || 1, title: 'Tending', tagline: h.tagline || '', lead: h.lead || '', hero: h.hero || null, doctor: h.doctor || '', app: {dinners: a.dinners || null, shop: a.shop || null, batches: a.batches || null}}}; }
-async function kitchenSeal(g){ if (!FDR || !FDR.kitchen || !FDR.kitchen.key || !g) return false; ensureDraft().libs.kitchen = await seal(await rawKey(FDR.kitchen.key), kitchenPlain(g)); return true; }
-async function kitchenReady(){
-  if (!FDR) return null; const g = await pendingPlain('guide'); if (!g || !g.healthJourney) return null;
-  if (!FDR.kitchen || !FDR.kitchen.key) FDR.kitchen = {key: newRaw(), made: today()};
-  await kitchenSeal(g); return FDR.kitchen.key;
-}
+// BLD 1020: the Family Kitchen code retired (Chris, November 18, 2026: "i said a long time ago to do this"); the Household
+// kitchen in The Grounded Way took its place (BLD 908, BLD 957), and lib-kitchen.js left the site.
 // ---------------- FOUNDER: Membership (GWG BLD 908) ----------------
 // Membership opens with a code on /home/ (shared/gg-member.js). Its content is the Member library, sealed into
-// field-guide/lib-member.js: window.GFG_MEMBER = {v: 1, made, rev, iv (a stamp that changes on every seal, so Ready to
+// shared/lib/lib-member.js (BLD 1020; field-guide/ before): window.GFG_MEMBER = {v: 1, made, rev, iv (a stamp that changes on every seal, so Ready to
 // Upload knows when the file is live), ws (the wrap salt), wraps: [{c, iv, ct}], lock: {iv, ct}}. lock is AES-GCM 256 of the
 // library under the Member lock key; each wrap is the lock key locked by one code (PBKDF2 SHA-256, 250,000 rounds, salt ws,
 // then AES-GCM of {k, kind, ends}).
@@ -2029,16 +2032,12 @@ async function mRotate(){
 const mHref = () => { const k = mKey(); return '../home/' + (k ? '#mk=' + String(k).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') + '&mt=' + (TIER === 'founder' ? 'founder' : 'staff') : ''); };
 function fgMemberCard(){ if (!(TIER === 'staff' || TIER === 'founder') || !mKey()) return ''; return `<div class="card spread fg-member" style="border-left:4px solid var(--sage)"><div><b>Membership</b> <span class="muted">Every Member part of The Grounded Way, open to you. It opens in your browser and stays open there for every profile on it.</span></div><a class="btn btn-gold btn-sm" href="../home/" target="_blank" rel="noopener" data-fgmember="1">Open Membership on This Browser</a></div>`; }
 document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[data-fgmember]'); if (!a) return; a.href = mHref(); setTimeout(() => { a.href = '../home/'; }, 0); }, true);
-// The Family Kitchen folds into Membership (decision 9): new kitchen codes are Member codes. The four kitchen codes in use
-// keep working; lib-kitchen.js is resealed only while a kitchen code is in use, and once the last one is cancelled it can
-// leave the site.
-const kitchenLive = () => accRecs().some(r => r.level === 'kitchen' && !r.cancelled && !accEnded(r)) || workCodes().codes.some(e => fgTier(e.tier) === 'kitchen');
 async function makeCode(kind, label, ends, o = {}){
   if (accWaits()) { alert(ACC_WAIT); return null; }
   const mem = kind === 'member' || kind === 'household';
   if (mem && !(await mEnsure())) { alert('Member codes are made on a Founder device.'); return null; }
-  const sup = kind === 'supporter' || mem, tier = kind === 'org' ? 'guide' : kind, k = sup ? null : tier === 'kitchen' ? await kitchenReady() : effKeys()[tier];
-  if (!sup && !k) { alert(tier === 'kitchen' ? 'The Family Kitchen needs Tending in the Guide library on this Founder device first.' : "This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
+  const sup = kind === 'supporter' || mem, tier = kind === 'org' ? 'guide' : kind, k = sup ? null : effKeys()[tier];
+  if (!sup && !k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
   if (kind === 'supporter' && !accKey()) { alert('Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).'); return null; }
   const code = wordsCode(), made = today();
   let e;
@@ -2054,7 +2053,7 @@ async function makeCode(kind, label, ends, o = {}){
     const A = accStore(), r = {id:e.id, level:e.tier, label, made};
     if (e.ends) r.ends = e.ends;
     if (o.org){ r.org = o.org; r.n = o.n; }
-    const w = tier === 'kitchen' ? null : await accWrap(code); if (w) Object.assign(r, w);
+    const w = await accWrap(code); if (w) Object.assign(r, w);
     if (M_KINDS.includes(tier) && mCfg()){ const mw = await mWrap(code, tier, e.ends); if (mw) r.mw = mw; }
     A.codes.push(r);
   }
@@ -2090,7 +2089,7 @@ async function rotateLevel(tier){
 // BLD 784 Member Code)}]}. The Story Vault's BLD 784 Member Codes move in as Supporter codes, labels kept, the first time
 // the list changes; until then they show here just the same. Names, levels, and organizations stay in the Founder library:
 // codes.js lines carry only the level, and stories/data.js wraps carry only a random tag.
-// Uploads: codes.js (field-guide folder) when a Founder, Staff, or Guide code changes; lib-founder.js (field-guide folder)
+// Uploads: codes.js (shared/lib folder) when a Founder, Staff, or Guide code changes; lib-founder.js (shared/lib folder)
 // for every change; data.js (stories folder) for every change, sealed by the Story Vault's Seal Grounded Stories.
 const ACC_LV = ['founder', 'staff', 'guide', 'member', 'supporter'];
 const ACC_WAIT = 'An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and the Access list is ready for changes again.';
@@ -2125,7 +2124,7 @@ function accStoriesDue(){
   return live.length !== S.size || live.some(c => !S.has(c));
 }
 const accName = r => r.label || (r.org ? 'Person ' + (r.n || '') : LEVEL_NAME[r.level] || 'Code');
-const accOpens = r => (r.level === 'member' || r.level === 'household') ? 'Membership' + (r.c ? ' and Grounded Stories' : '') : r.mw ? (r.c ? 'the Field Guide, Membership, and Grounded Stories' : 'the Field Guide and Membership') : r.level === 'kitchen' ? 'the Family Kitchen in Tending' + (r.c ? ' and Grounded Stories' : '') : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
+const accOpens = r => (r.level === 'member' || r.level === 'household') ? 'Membership' + (r.c ? ' and Grounded Stories' : '') : r.mw ? (r.c ? 'the Field Guide, Membership, and Grounded Stories' : 'the Field Guide and Membership') : r.level === 'kitchen' ? 'a Member code in its place (Family Kitchen codes retired in BLD 1020)' : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
 // Ends codes: takes their codes.js lines out (Founder, Staff, Guide), marks the records cancelled, and saves once.
 async function accCancel(ids){
   if (accWaits()) return alert(ACC_WAIT);
@@ -2347,7 +2346,7 @@ function vFounder(){
   // BLD 853: data.js first. Sealing it records the seal in the Founder library and reseals lib-founder.js, so a
   // lib-founder.js downloaded before it would be out of date and Ready to Upload would never clear.
   const fileRows = (storiesUp ? `<div class="list-row"><div class="lr-main"><b>data.js</b><br><small class="muted">Into the stories folder. Download this one first: sealing it fresh also updates lib-founder.js.</small></div><button class="btn btn-line btn-sm" data-act="acc-seal">Download</button></div>` : '')
-    + (d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b><br><small class="muted">Into the field-guide folder</small></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '')
+    + (d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs).filter(f => f !== 'kitchen')].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b><br><small class="muted">Into the shared/lib folder (the one home for every library)</small></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '')
     + (hwUp ? `<div class="list-row"><div class="lr-main"><b>lib-heartwood.js</b><br><small class="muted">Into the heartwood folder. Sealed ${esc(nice(hwUp.made))} in Seal Heartwood; it waits here while this page stays open.</small></div><button class="btn btn-line btn-sm" data-act="fdr-hwdl">Download</button></div>` : '');
   const head = `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>`;
   const shownH = `  ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
@@ -2357,7 +2356,7 @@ function vFounder(){
     <label class="f" for="fdr-sc">Staff code</label><input type="password" id="fdr-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
     <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="fdr-addstaff">Add Staff Access</button></div>`
     : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish Setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Guide libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}`;
-  const fgFiles = d ? [...(d.stamp ? ['codes.js'] : []), ...Object.keys(d.libs).map(f => 'lib-' + f + '.js')] : [];
+  const fgFiles = d ? [...(d.stamp ? ['codes.js'] : []), ...Object.keys(d.libs).filter(f => f !== 'kitchen').map(f => 'lib-' + f + '.js')] : [];
   const readyH = `  ${d || storiesUp || hwUp ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${d && Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live.</p>
     <ol class="acc-steps"><li>Download each file below${storiesUp ? ', data.js first' : ''}.</li>${fgFiles.length ? `<li>Upload ${listAnd(fgFiles)} to the <b>field-guide</b> folder in the site repo, replacing what's there.</li>` : ''}${storiesUp ? `<li>Upload data.js to the <b>stories</b> folder in the site repo, replacing what's there.</li>` : ''}${hwUp ? `<li>Upload lib-heartwood.js to the <b>heartwood</b> folder in the site repo, replacing what's there${hwUp.newKey ? ', together with lib-staff.js' : ''}.</li>` : ''}</ol>
     <p class="muted" style="font-size:14px">This card clears itself the next time you open the Field Guide after they're live.</p>
@@ -2383,7 +2382,7 @@ function vFounder(){
   const nFiles = (d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0) + (storiesUp ? 1 : 0) + (hwUp ? 1 : 0), accN = accRecs().filter(r => !r.cancelled).length + C.codes.filter(e => !accRecs().some(r => r.id === e.id)).length, orgN = accOrgs().length;
   const cards = [
     d || storiesUp || hwUp ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
-    {k: 'codes', title: 'Access Codes', desc: 'One list for every code: Founder, Staff, Guide, Member, Supporter, and Family Kitchen, codes for a household, and codes for an organization.', n: accN + (accN === 1 ? ' code in use' : ' codes in use') + (orgN ? ', ' + orgN + (orgN === 1 ? ' organization' : ' organizations') : '')},
+    {k: 'codes', title: 'Access Codes', desc: 'One list for every code: Founder, Staff, Guide, Member, and Supporter, codes for a household, and codes for an organization.', n: accN + (accN === 1 ? ' code in use' : ' codes in use') + (orgN ? ', ' + orgN + (orgN === 1 ? ' organization' : ' organizations') : '')},
     {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Guide for the yearly change.'},
     {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: UPD ? 'An update is ready to seal' : '', hot: !!UPD},
     window.GGHw ? {k: 'hw', title: 'Seal Heartwood', desc: 'Seal the couple app\'s content for the site, and keep its key in the Staff library.', n: GGHw.hasKey() ? '' : 'No Heartwood key yet'} : null, // GWG BLD 772 hook
@@ -9045,7 +9044,6 @@ function sgAct(a, v){
    - help is one line, a list of lines, or a list of [label, text] pairs. Nothing about watching or reading is saved. */
 const HPG = () => { const S = FLD && FLD.hospitalGuide; return S && Array.isArray(S.items) && S.items.length ? S : null; };
 const hpOpen = () => !!HPG();
-const hjOpen = () => !!(window.GGHealth && GGHealth.on());
 const hpHelpLines = h => (Array.isArray(h) ? h : h ? [h] : []).map(x => Array.isArray(x) ? x[0] + ': ' + (x[1] || '') : String(x));
 const hpGroups = () => (HPG().groups || []).map(g => ({key: g[0], name: g[1], items: HPG().items.filter(x => x.group === g[0]).sort((a, b) => (a.n || 0) - (b.n || 0))})).filter(g => g.items.length);
 const hpFind = id => HPG() ? HPG().items.find(x => x.id === id) || null : null;
@@ -11022,9 +11020,8 @@ async function sealUpdate(){
   // The pre-levels Staff code opens the Staff library through its salt. Keep it while the key is unchanged.
   if (!d.keys[U.lvl] && BOX[U.lvl] && BOX[U.lvl].salt) box.salt = BOX[U.lvl].salt;
   d.libs[U.lvl] = box;
-  if (U.lvl === 'guide' && kitchenLive()) await kitchenSeal(U.next); // the Family Kitchen follows every Guide library update while a kitchen code is in use (BLD 846, 908)
   if (U.lvl === 'founder') FDR = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
-  UPD = null; await persist(); render(); toast('Sealed. It is in Ready to Upload.'); fgSyncMoved();
+  UPD = null; await persist(); render(); toast('Sealed. It is in Ready to Upload.');
 }
 function vUpdateCard(){
   const U = UPD;
@@ -11055,6 +11052,7 @@ function vSettings(){
    <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="export">Back Up Everything</button><label class="btn btn-line" style="cursor:pointer">Load a Backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div></div>
   <div class="card"><h3>Change Passcode</h3><label class="f" for="cp0">Current passcode</label><input type="password" id="cp0" autocomplete="current-password"><label class="f" for="cp1">New passcode</label><input type="password" id="cp1" autocomplete="new-password"><label class="f" for="cp2">New passcode again</label><input type="password" id="cp2" autocomplete="new-password">
    <button class="btn btn-line" style="margin-top:12px" data-act="change-pass">Change Passcode</button><p class="muted" style="margin-top:8px;font-size:14px">Older backup files keep the passcode they were made with.</p></div>
+  ${tendCarryCard()}
   ${window.GFGNav ? GFGNav.installCard() : ''}
   <div class="card"><h3>Reset This Device</h3><p class="muted">Erases everything stored here. Download a backup first.</p><button class="btn btn-danger" style="margin-top:10px" data-act="reset">Reset This Device</button></div>`;
 }
@@ -11185,6 +11183,7 @@ async function fgMergePending(){
     const box = JSON.parse(txt); if (box.app !== 'grounded-field-guide') throw 0;
     const p = prompt('Enter the Field Guide passcode this backup was made with:'); if (p === null) return;
     const key = await derive(p, unb64(box.salt), false); const inner = await open(key, box);
+    if (inner.data && inner.data.health && !window.GGHealth){ try { await fgTendEngine(); } catch(e){} }
     const r = mergeData(DATA, fgPartsData(Object.assign(blankData(), inner.data)));
     DATA = Object.assign(blankData(), r.data); fgFounderNorm(DATA.founder);
     await persist(); localStorage.removeItem(FG_PENDING); toast(`Backup added: ${r.stats.added} new, ${r.stats.updated} updated. Nothing on this device was lost.`); go('home');
@@ -11238,7 +11237,8 @@ function mergeData(cur, inc){
   if (window.GGCli){ const cl = GGCli.merge(out, inc); stats.added += cl.added; stats.updated += cl.updated; }
   // Books (BLD 770): newest copy of each entry wins; deleted entries stay deleted.
   if (window.GGBooks){ const bk = GGBooks.merge(out, inc); stats.added += bk.added; stats.updated += bk.updated; }
-  // Tending (BLD 840 as My Health): newest copy of each entry wins; removed entries stay removed.
+  // Tending (BLD 840 as My Health): newest copy of each entry wins; removed entries stay removed. BLD 1020: fgMergePending
+  // loads the engine first when the backup carries Tending logs, so a restore never drops them.
   if (window.GGHealth){ const hm = GGHealth.merge(out, inc); stats.added += hm.added; stats.updated += hm.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));
@@ -11354,6 +11354,7 @@ document.addEventListener('click', async e => {
     case 'settings': closeMenu(); go('settings'); break;
     case 'export': closeMenu(); exportBackup(); break;
     case 'fg-pend': fgMergePending(); break;
+    case 'tend-carry': tendCarry(); break;
     case 'fg-pend-drop': fgDropPending(); break;
     case 'reset': resetDevice(); break;
     case 'guide': go('guides', {guide:v}); break;

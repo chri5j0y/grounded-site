@@ -4,7 +4,7 @@
 // (the figure stands inside the painting's own room: its floor and its light), the breathing rings (BLD 928), gold form guides
 // on the body at the key moment, and one clock for the figure, the breath, and Ava's count.
 //
-// How it rides along with the player (field-guide/health.js and stage.js, BLD 898):
+// How it rides along with the player (shared/tend/health.js and stage.js, BLD 898):
 //   The player still draws its SVG figure (GGMoves) on the stage, laid on the shared plan (data-dur, data-ph) and held to
 //   the one clock by clkSync. That SVG stays in place, unseen, as the master timeline: each frame the 3D figure reads its
 //   time, finds the breath phase it is in (from the plan), and shows the 3D move at the same point of the same phase. So the

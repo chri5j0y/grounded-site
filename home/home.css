@@ -3,7 +3,7 @@
    The look of the BLD 865 Home mockup (patches/bld865/home in grounded-workshop),
    every class prefixed hm- so it sits beside the site's style.css without a clash.
    Tokens live on .hm, with light and dark sets. #hm-tend carries the small
-   Field Guide kit that Tending (field-guide/health.js) draws with.
+   Field Guide kit that Tending (shared/tend/health.js) draws with.
    No dashes in any words here.
    ===================================================================== */
 .hm{
@@ -397,7 +397,7 @@ body.hm-bn .site-footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0
 .hm-back .hm-h2{font-size:clamp(32px,6vw,44px);}
 .hm-loading{padding:60px 16px;text-align:center;color:var(--ink-soft);}
 
-/* Tending, drawn by field-guide/health.js: the Field Guide's small kit, kept to #hm-tend */
+/* Tending, drawn by shared/tend/health.js: the Field Guide's small kit, kept to #hm-tend */
 #hm-tend{min-width:0;font-size:calc(18px * var(--scale));line-height:1.6;}
 #hm-tend h1,#hm-tend h2,#hm-tend h3,#hm-tend h4{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;line-height:1.15;margin:0;}
 #hm-tend h2{font-size:32px;} #hm-tend h3{font-size:25px;} #hm-tend h4{font-size:21px;}

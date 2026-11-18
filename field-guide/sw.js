@@ -1,6 +1,6 @@
 // GROUNDED FIELD GUIDE (TM): the offline copy (GWG BLD 797). (c) 2026 Grow With Grounded LLC.
 // Keeps the Field Guide working with no signal once it has opened here with a connection.
-//  The page, the sealed libraries (lib-guide.js, lib-staff.js, lib-founder.js, already encrypted), codes.js, and data
+//  The page, the sealed libraries (shared/lib: lib-guide.js, lib-staff.js, lib-founder.js, already encrypted), codes.js, and data
 //  files without a ?v=: network first, so updates arrive whenever there is a connection; the saved copy answers when
 //  the network is gone or too slow.
 //  Scripts and stylesheets with a ?v=, and fonts: saved copy first (a new ?v= is a new address).
@@ -11,8 +11,10 @@
 var TAG = new URL(self.location.href).searchParams.get('b') || '0';
 var NAME = 'gfg-' + TAG, PREFIX = 'gfg-';
 var SCOPE = self.registration.scope, SCOPE_PATH = new URL(SCOPE).pathname, ORIGIN = self.location.origin;
+// BLD 1020: the libraries live in /shared/lib/ (the old /field-guide/ address is read only until Chris uploads there once).
+var LIB_DIR = ORIGIN + '/shared/lib/';
 var LIBS = ['codes.js', 'lib-guide.js', 'lib-staff.js', 'lib-founder.js'];
-var LIB_RE = /\/field-guide\/(codes|lib-guide|lib-staff|lib-founder|lib-field)\.js$/;
+var LIB_RE = /\/(shared\/lib|field-guide)\/(codes|lib-guide|lib-staff|lib-founder)\.js$/;
 var MEDIA = /\.(mp3|m4a|aac|wav|ogg|oga|opus|flac|mp4|m4v|webm|mov)$/i;
 var ASSET = /\.(js|css|svg|png|webp|jpe?g|gif|ico|woff2?|json)$/i;
 var STILL = /\.(svg|png|webp|jpe?g|gif|ico|css)$/i;
@@ -71,7 +73,7 @@ function precache() {
       if (!okToKeep(r)) return;
       return Promise.all([cache.put(SCOPE, r.clone()), r.text()]).then(function (b) {
         var L = refs(b[1], SCOPE, false);
-        var libs = pool(LIBS.map(function (n) { return SCOPE + n; }), 2, function (h) { return save(h, true, false); });
+        var libs = pool(LIBS.map(function (n) { return LIB_DIR + n; }), 2, function (h) { return save(h, true, false); });
         var rest = pool(L, 6, function (h) {
           var u = new URL(h), local = u.pathname.indexOf(SCOPE_PATH) === 0 && /\.js$/.test(u.pathname), css = /\.css$/i.test(u.pathname);
           return save(h, u.searchParams.has('v') || FONT.test(u.pathname), local || css);
@@ -88,7 +90,7 @@ self.addEventListener('install', function (e) {
 // The last copy is cleared once this one holds the page and the Guide library; until then both answer.
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.open(NAME).then(function (c) {
-    return Promise.all([c.match(SCOPE), c.match(SCOPE + 'lib-guide.js')]);
+    return Promise.all([c.match(SCOPE), c.match(LIB_DIR + 'lib-guide.js')]);
   }).then(function (h) {
     if (!h[0] || !h[1]) return;
     return olderCaches().then(function (K) { return Promise.all(K.map(function (k) { return caches.delete(k); })); });

@@ -1,7 +1,7 @@
 /* =====================================================================
    SOUND (shared/gg-sound.js)   GWG BLD 991 Sound and Music
    One small sound engine for the site's players: the video player (shared/gg-learn.js), the Readings Library's Listen
-   (shared/gg-readings.js), and the workout and meditation players (field-guide/coach.js and field-guide/health.js).
+   (shared/gg-readings.js), and the workout and meditation players (shared/tend/coach.js and shared/tend/health.js).
    - One AudioContext for music, nature beds, and cues. Music and beds run through one bus that dips 4 dB while a
      sentence speaks (duck) and comes back over 0.6 seconds.
    - Nature beds: real recordings (audio.growwithgrounded.com/sound/v1), fetched once, decoded, and played by a looping

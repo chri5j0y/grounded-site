@@ -23,7 +23,7 @@
        data-at    a part number: step instead of looping (the dot travels that one arc at its own pace, then rests); -1 waits.
        data-anim  a CSS selector, read inside the host's parent: the element whose CSS animation is the breath clock (the
                   lesson player's circle, shared/gg-learn.js), so the window follows exactly what the narration follows.
-       data-dur   the svg's own SMIL timeline, which the workout player's one clock (field-guide/health.js clkSync) seeks and
+       data-dur   the svg's own SMIL timeline, which the workout player's one clock (shared/tend/health.js clkSync) seeks and
                   pauses, so the window, the figure, and Ava's count land together; data-loop is the same with no seeking.
        otherwise  its own clock from when it first shows.
    Breath Shapes (BLD 989): data-shape box, tri, or sigh still names the breath's shape; since BLD 1019 each shape is drawn on the
