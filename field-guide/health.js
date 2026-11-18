@@ -1386,7 +1386,8 @@ const LN = {
   // N and fell back to the device voice; the minutes stay on the card and the start screen.
   sesGo: t => t + '. We begin with the warm-up.',
   // BLD 931 (Chris, November 6, 2026, option 1): said once at the start of every workout.
-  focus: 'Grounded Fitness: breathe and form first, weight and speed come second.',
+  // BLD 1018 follow-up (Chris, November 17, 2026): the motto reads "breath and form come first".
+  focus: 'Grounded Fitness: breath and form come first, weight and speed come second.',
   // BLD 965 (Chris's 11/10 notes: "still no tips for water, safe moves"): said once at the start of every workout, after focus.
   safe: 'Move at your own pace, stop if anything hurts, and keep water close.',
   // BLD 965 (Chris: "finish strong"): one motivation line right after "Last move. Finish strong.", turning by day.
@@ -1980,7 +1981,7 @@ async function runSession(o){
   rerender(true);
   if (preRing(o, o.steps[0])) brHold(o, true);   // the first step's breath waits through the opening lines for its own line
   if (o.med && V && V.cue) await V.cue('bell-1.mp3', {gain: 0.55, wait: 2.5});   // BLD 991: a meditation opens with the bowl
-  if (!o.med && !o.prac){ await speak(o, o.focus || LN.focus); await speak(o, o.safe || LN.safe); }   // BLD 981: a young session's own lines   // BLD 931: breathe and form first; BLD 965: the safety line
+  if (!o.med && !o.prac){ await speak(o, o.focus || LN.focus); await speak(o, o.safe || LN.safe); }   // BLD 981: a young session's own lines   // BLD 931: breath and form come first; BLD 965: the safety line
   await speak(o, o.intro ? o.intro : o.med ? LN.mIntro(o.title) : o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : o.live || !o.mins ? LN.sesGo(o.title) : LN.ses(o.title, o.mins));
   if (o.open && !o.dead) await speak(o, o.open);
   if (!o.prac && lightLine('start')){ o.mline = lightLine('start'); rerender(true); await speak(o, o.mline); }
@@ -2316,7 +2317,7 @@ const waterAt = (o, k) => { if (!o || o.prac || o.med) return false; if (!o.wate
 const DROP = '<svg class="hj-drop" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 2.8C9 7 5.6 10.7 5.6 14.6a6.4 6.4 0 0 0 12.8 0C18.4 10.7 15 7 12 2.8z" fill="#3E8EC4"/><path d="M9.3 15.2a3 3 0 0 0 2.6 2.7" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const waterLine = o => { if (!o.run || !(o.between || o.rest)) return ''; if (!o.water) o.water = waterPlan(o); return o.water[brkKey(o)] ? `<p class="hj-xtip hj-wtip" data-hjwater>${DROP}<span>Water</span>${esc(WATER)}</p>` : ''; };
 const safeLine = st => suitcase(st) ? `<p class="hj-xtip hj-stip" data-hjsafe><span>Protect Your Back</span>${esc(SWITCH_DB)}</p>` : '';
-// BLD 931 (Chris, November 6, 2026: breathe and form first): one short form tip on the stage beside the breathing ring, from the
+// BLD 931 (Chris, November 6, 2026: breath and form come first): one short form tip on the stage beside the breathing ring, from the
 // move's own form line (else its first tip, or how), cut at a natural pause to about 44 letters.
 function shortTip(t){
   let s = String(t || '').replace(/\s+/g, ' ').trim(); const m = s.match(/^(.*?[.!?])(\s|$)/); if (m) s = m[1]; s = s.replace(/[.!?]+$/, '');

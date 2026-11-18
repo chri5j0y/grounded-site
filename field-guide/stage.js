@@ -238,7 +238,7 @@ function scene(state, opts){
   const label = o.label || cn || holdR ? `<div class="ggs-hud">${count}${holdR}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
   // BLD 928 (Chris's workout notes): the recommended weight, bottom right (reps stay top right), and a clear Break sign.
   const wt = o.weight && o.weight.line ? `<div class="ggs-wt" data-ggswt>${o.weight.cap ? `<b>${esc(o.weight.cap)}</b>` : ''}<span>${esc(o.weight.line)}</span></div>` : '';
-  // BLD 931 (Chris, November 6, 2026: breathe and form first): one short form tip beside the breathing ring.
+  // BLD 931 (Chris, November 6, 2026: breath and form come first): one short form tip beside the breathing ring.
   const ftip = o.ftip ? `<div class="ggs-ftip${showBreath && o.fig ? ' br' : ''}" data-ggsftip><b>Form</b><span>${esc(o.ftip)}</span></div>` : '';
   const brk = o.brk ? `<div class="ggs-break" data-ggsbreak>Break</div>` : '', bsub = o.brk && o.brk.sub ? `<div class="ggs-rsub" data-ggsbsub>${esc(o.brk.sub)}</div>` : '';
   const fig = o.fig ? `<div class="ggs-fig${showRing && s === 'rest' ? ' small' : ''}">${o.fig}</div>` : '';
