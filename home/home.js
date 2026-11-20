@@ -1554,7 +1554,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c171';
+  var PV_SRC = '/shared/page-videos.js?v=c173';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
