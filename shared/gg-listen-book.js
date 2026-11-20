@@ -1,9 +1,19 @@
 /* =====================================================================
-   IN THE END, THE AUDIOBOOK (shared/gg-listen-book.js)   BLD 1026, November 2026
-   A private listening copy of In the End, read aloud by Brian, for in-the-end-listen.html. It opens with the same
-   lock as Grounded Stories (shared/gg-stories.js and stories/data.js): any code on the Access list (Founder, Staff,
-   Guide, Supporter, or a code Chris makes for a friend) unwraps the stories key, and a device that already holds the
-   stories key opens straight away.
+   IN THE END, THE AUDIOBOOK (shared/gg-listen-book.js)   BLD 1026, November 2026; Founder and Supporter only, BLD 1029
+   A private listening copy of In the End, read aloud by Brian, for in-the-end-listen.html. The chapters are locked
+   with the stories key (shared/gg-stories.js and stories/data.js), and the page opens for Founder and Supporter codes
+   only (BLD 1029, Chris: "Gl"). Staff, Guide, and Member codes hold the stories key too, so the level is read here:
+     1. A typed code: codes.js (shared/lib, then field-guide) gives Founder, Staff, or Guide (and Organization); a
+        lib-member.js wrap gives Member or Household (and the Member wraps of Founder and Staff codes); the Staff code
+        from before levels opens lib-staff.js. A code that opens the stories and none of these is a Supporter code.
+        Founder and Supporter open the book; every other level reads "This listening copy opens with a Founder or
+        Supporter code." and the book stays closed (the code still opens Grounded Stories, as it always has).
+     2. The Founder tab in the Field Guide: In the End, Read Aloud opens this page with #bk=<stories key>&f=<the Founder
+        image key> in the address fragment (bk, so gg-stories.js leaves it to this file), which never reaches a server and is cleared at once. The image key opens
+        the Image Library list (shared/imglib/library.js), which only a Founder key opens, so that proves a Founder.
+   Once a Founder or Supporter is verified, this device keeps a mark (localStorage 'gg_book_lv'): {lv, h}, where h is
+   HMAC SHA-256(stories key, 'gg-book-listen|' + lv). The page opens by itself only with that mark and the same stories
+   key, so a device opened earlier by a Staff, Guide, or Member code shows the code box. Forget This Device clears it.
 
    The manifest (stories/in-the-end-audio.js) sets window.GG_BOOK_AUDIO = {v: 1, k: {round, folder}, iv, ct}:
      iv, ct: AES-GCM 256 with the stories key (base64) of JSON
@@ -17,10 +27,14 @@
    ===================================================================== */
 (function (root) {
   'use strict';
-  var BASE = 'https://audio.growwithgrounded.com/', LS = 'gg_book_ite', SPEEDS = [0.9, 1, 1.15, 1.3];
+  var BASE = 'https://audio.growwithgrounded.com/', LS = 'gg_book_ite', LV = 'gg_book_lv', SPEEDS = [0.9, 1, 1.15, 1.3], ITER = 250000;
+  var OPENS = { founder: 1, supporter: 1 }, IMGLIB = '/shared/imglib/library.js?v=c169';
+  var NOT = 'This listening copy opens with a Founder or Supporter code.';
   var subtle = root.crypto && root.crypto.subtle;
   var $ = function (s, r) { return (r || document).querySelector(s); };
-  function unb64(s) { return Uint8Array.from(atob(String(s || '')), function (c) { return c.charCodeAt(0); }); }
+  function unb64(s) { s = String(s || '').replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+  function b64(buf) { var s = ''; new Uint8Array(buf).forEach(function (b) { s += String.fromCharCode(b); }); return btoa(s); }
+  var enc = new TextEncoder(), dec = new TextDecoder();
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function clock(sec) {
     sec = Math.max(0, Math.floor(+sec || 0));
@@ -187,6 +201,7 @@
     $('#bk-forget').addEventListener('click', function () {
       try { A.pause(); } catch (e) {}
       try { root.localStorage.removeItem(LS); } catch (e) {}
+      lvSet(null);
       if (root.GGStories && GGStories.forget) GGStories.forget();
       Object.keys(URLS).forEach(function (j) { URL.revokeObjectURL(URLS[j]); }); URLS = {};
       location.reload();
@@ -210,6 +225,90 @@
     if (t0 > 0) status('Welcome back. Press Play to pick up at ' + clock(t0) + '.');
   }
 
+  // ---------------- who may open the book (BLD 1029) ----------------
+  function lvGet() { try { return JSON.parse(root.localStorage.getItem(LV) || 'null'); } catch (e) { return null; } }
+  function lvSet(o) { try { if (o) root.localStorage.setItem(LV, JSON.stringify(o)); else root.localStorage.removeItem(LV); } catch (e) {} }
+  function markOf(raw, lv) {
+    return subtle.importKey('raw', raw, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
+      .then(function (k) { return subtle.sign('HMAC', k, enc.encode('gg-book-listen|' + lv)); }).then(b64);
+  }
+  function keepMark(raw, lv) { return markOf(raw, lv).then(function (h) { lvSet({ lv: lv, h: h }); }); }
+  // True when this device kept a Founder or Supporter mark for the stories key it holds now.
+  function marked(raw) {
+    var o = lvGet(); if (!o || !OPENS[o.lv] || typeof o.h !== 'string') return Promise.resolve(false);
+    return markOf(raw, o.lv).then(function (h) { return h === o.h; }, function () { return false; });
+  }
+  function loadScript(url) { return new Promise(function (ok) { var s = document.createElement('script'); s.src = url; s.onload = function () { ok(true); }; s.onerror = function () { ok(false); }; document.head.appendChild(s); }); }
+  function loadLib(name, global) {
+    if (root[global]) return Promise.resolve(root[global]);
+    var t = Date.now();
+    return loadScript('/shared/lib/' + name + '.js?t=' + t).then(function () { return root[global] ? true : loadScript('/field-guide/' + name + '.js?t=' + t); }).then(function () { return root[global] || null; });
+  }
+  function pbk(pass, salt) {
+    return subtle.importKey('raw', enc.encode(String(pass).normalize('NFKC')), 'PBKDF2', false, ['deriveKey'])
+      .then(function (base) { return subtle.deriveKey({ name: 'PBKDF2', salt: unb64(salt), iterations: ITER, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']); });
+  }
+  // The first box this key opens, as parsed JSON, or null.
+  function firstOpen(k, boxes) {
+    var i = 0;
+    function next() {
+      if (i >= boxes.length) return Promise.resolve(null);
+      var b = boxes[i++]; if (!b || !b.iv || !b.ct) return next();
+      return subtle.decrypt({ name: 'AES-GCM', iv: unb64(b.iv) }, k, unb64(b.ct)).then(function (pt) { try { return JSON.parse(dec.decode(pt)); } catch (e) { return {}; } }, next);
+    }
+    return next();
+  }
+  var tierOf = function (t) { return t === 'own' + 'er' ? 'founder' : t === 'fie' + 'ld' ? 'guide' : t === 'org' ? 'guide' : t; };
+  // codes.js: the Field Guide's own reading of a code (trimmed and lowercase), and the three words and number form.
+  function codesLevel(code) {
+    return loadLib('codes', 'GFG_CODES').then(function (C) {
+      if (!C) throw new Error('later');
+      if (!C.salt || !(C.codes || []).length) return null;
+      var forms = [String(code).trim().toLowerCase()], n = GGStories.normCode(code); if (forms.indexOf(n) < 0) forms.push(n);
+      return Promise.all(forms.map(function (f) { return pbk(f, C.salt).then(function (k) { return firstOpen(k, C.codes); }); }))
+        .then(function (r) { var hit = r[0] || r[1]; return hit ? tierOf(hit.tier) || 'staff' : null; });
+    });
+  }
+  // lib-member.js: Member, Household, and the Member wraps of Founder and Staff codes (kind).
+  function memberLevel(code) {
+    return loadLib('lib-member', 'GFG_MEMBER').then(function (M) {
+      if (!M) throw new Error('later');
+      if (!M.ws || !(M.wraps || []).length) return null;
+      return pbk(GGStories.normCode(code), M.ws).then(function (k) { return firstOpen(k, M.wraps); })
+        .then(function (r) { return r ? tierOf(r.kind) || 'member' : null; });
+    });
+  }
+  // The Staff code from before levels opens lib-staff.js with its own salt.
+  function legacyStaff(code) {
+    return loadLib('lib-staff', 'GFG_STAFF').then(function (B) {
+      if (!B || !B.salt || !B.ct) return null;
+      return pbk(String(code).trim().toLowerCase(), B.salt).then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(B.iv) }, k, unb64(B.ct)); })
+        .then(function () { return 'staff'; }, function () { return null; });
+    });
+  }
+  // The level of a code that opens the stories: founder, staff, guide, member, household, or supporter.
+  function levelOf(code) {
+    return Promise.all([codesLevel(code), memberLevel(code)]).then(function (r) {
+      if (r[0]) return r[0];
+      if (r[1]) return r[1];
+      return legacyStaff(code).then(function (s) { return s || 'supporter'; });
+    });
+  }
+  // The Founder card's hand off: #bk=<stories key>&f=<Founder image key>. Resolves true when it proves a Founder.
+  function fromCard() {
+    var h = root.location.hash || '', k = /[#&]bk=([A-Za-z0-9+/=_-]+)/.exec(h), f = /[#&]f=([A-Za-z0-9+/=_-]+)/.exec(h);
+    if (!k) return Promise.resolve(false);
+    try { root.history.replaceState(root.history.state, '', root.location.pathname + root.location.search); } catch (e) {}
+    if (!f || !GGStories.remember(decodeURIComponent(k[1]))) return Promise.resolve(false);
+    var fk = unb64(decodeURIComponent(f[1]));
+    return (root.GG_IMGLIB ? Promise.resolve(true) : loadScript(IMGLIB)).then(function () {
+      var box = root.GG_IMGLIB; if (!box || !box.iv || !box.ct || fk.length !== 32) return false;
+      return subtle.importKey('raw', fk, { name: 'AES-GCM' }, false, ['decrypt'])
+        .then(function (ik) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(box.iv) }, ik, unb64(box.ct)); })
+        .then(function () { return GGStories.restore(); }).then(function (ok) { var raw = ok && keyBytes(); return raw ? keepMark(raw, 'founder').then(function () { return true; }) : false; });
+    }).catch(function () { return false; });
+  }
+
   function shown(open) { $('#bk-lock').hidden = open; $('#bk-app').hidden = !open; }
   function opened(raw) {
     return openManifest(raw).then(function (b) { BOOK = b; shown(true); draw(); return true; });
@@ -220,31 +319,30 @@
       e.preventDefault();
       if (!root.GGStories || !GGStories.normCode(inp.value)) { msg.className = 'bk-msg bk-try'; msg.textContent = 'Type the code just as you received it: three words and a number.'; inp.focus(); return; }
       btn.disabled = true; msg.className = 'bk-msg'; msg.textContent = 'Opening the book, one moment.';
-      GGStories.unlock(inp.value).then(function (ok) {
-        if (ok) { var raw = keyBytes(); if (raw) return opened(raw); }
-        return false;
-      }).then(function (ok) {
-        btn.disabled = false;
-        if (ok) return;
-        msg.className = 'bk-msg bk-try';
-        msg.textContent = "Let's try that once more: check each word and the number, like acorn-meadow-lantern-42.";
-        inp.focus(); inp.select();
-      }, function () {
-        btn.disabled = false; msg.className = 'bk-msg bk-try';
-        msg.textContent = "Let's try that once more: check each word and the number, like acorn-meadow-lantern-42.";
-      });
+      var code = inp.value, again = "Let's try that once more: check each word and the number, like acorn-meadow-lantern-42.";
+      function done(t) { btn.disabled = false; if (!t) return; msg.className = 'bk-msg bk-try'; msg.textContent = t; inp.focus(); inp.select(); }
+      Promise.all([GGStories.unlock(code), levelOf(code).catch(function (e) { return e && e.message === 'later' ? 'later' : null; })]).then(function (r) {
+        var raw = r[0] && keyBytes(), lv = r[1];
+        if (!raw) return done(again);
+        if (lv === 'later') return done('The book is still on its way. Try again in a moment.');
+        if (!OPENS[lv]) return done(NOT);
+        return keepMark(raw, lv).then(function () { return opened(raw); }).then(function () { done(''); inp.value = ''; }, function () { done(again); });
+      }, function () { done(again); });
     });
   }
 
   function mount() {
     lockBox();
     if (!subtle || !root.GGStories || !root.GG_BOOK_AUDIO) { shown(false); return Promise.resolve(false); }
-    return GGStories.restore().then(function (ok) {
+    return fromCard().then(function () { return GGStories.restore(); }).then(function (ok) {
       var raw = ok && keyBytes();
       if (!raw) { shown(false); return false; }
-      return opened(raw).catch(function () { shown(false); return false; });
+      return marked(raw).then(function (yes) {
+        if (!yes) { shown(false); return false; }
+        return opened(raw).catch(function () { shown(false); return false; });
+      });
     });
   }
 
-  root.GGBook = { version: 'c167', mount: mount, clock: clock, _state: function () { return { cur: CUR, book: BOOK, audio: A }; } };
+  root.GGBook = { version: 'c172', mount: mount, levelOf: levelOf, clock: clock, _state: function () { return { cur: CUR, book: BOOK, audio: A }; } };
 })(typeof window !== 'undefined' ? window : globalThis);
