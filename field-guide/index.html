@@ -2388,6 +2388,7 @@ function vFounder(){
     window.GGHw ? {k: 'hw', title: 'Seal Heartwood', desc: 'Seal the couple app\'s content for the site, and keep its key in the Staff library.', n: GGHw.hasKey() ? '' : 'No Heartwood key yet'} : null, // GWG BLD 772 hook
     window.GGVault ? {k: 'vault', title: 'The Story Vault', desc: 'Every story in one place: Vault, Early Preview, or Posted, and Seal Grounded Stories for the site.', n: GGVault.has() ? GGVault.count() + ' stories' : 'Arrives with the BLD 784 Founder update'} : null, // GWG BLD 784 hook
     ilOn() ? {title: 'Image Library', desc: 'Every Grounded painting in one place, with downloads for share cards and promo pieces.', n: 'Opens in a new tab', act: 'il-open'} : null, // GWG BLD 1027
+    bkOn() ? {title: 'In the End, Read Aloud', desc: 'The private listening copy of In the End, all 51 chapters, opened for you.', n: 'Opens in a new tab', act: 'bk-open'} : null, // GWG BLD 1029
     slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
     SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
@@ -2482,6 +2483,18 @@ async function ilOpen(){
   const k = await crypto.subtle.importKey('raw', unb64(FDR.audio.key), {name:'HMAC', hash:'SHA-256'}, false, ['sign']);
   const raw = b64(await crypto.subtle.sign('HMAC', k, enc.encode('gg-image-library|v1'))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   const a = document.createElement('a'); a.href = '/image-library.html#k=' + raw; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+}
+// ---------------- FOUNDER: In the End, Read Aloud (GWG BLD 1029) ----------------
+// Opens in-the-end-listen.html in a new tab, already open: the stories key (bk) and the Founder image key (f) ride in the
+// address fragment, which never reaches a server; the page clears it at once. The image key opens the Image Library list,
+// which only a Founder key opens, so the page knows a Founder sent it and keeps its Founder mark on that device.
+const bkOn = () => ilOn() && !!accKey();
+async function bkOpen(){
+  if (!bkOn()) return;
+  const u = x => String(x).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const k = await crypto.subtle.importKey('raw', unb64(FDR.audio.key), {name:'HMAC', hash:'SHA-256'}, false, ['sign']);
+  const f = u(b64(await crypto.subtle.sign('HMAC', k, enc.encode('gg-image-library|v1'))));
+  const a = document.createElement('a'); a.href = '/in-the-end-listen.html#bk=' + u(accKey()) + '&f=' + f; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
 }
 function slAct(a, v){
   switch (a){
@@ -11353,6 +11366,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('lg-') && lgAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a === 'il-open'){ ilOpen(); return; } // GWG BLD 1027
+  if (a === 'bk-open'){ bkOpen(); return; } // GWG BLD 1029
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && a.startsWith('ma-') && window.GGMa && GGMa.act(a, v)) return; // GWG BLD 949 hook
   if (a && a.startsWith('acc-') && await accAct(a, v)) return;

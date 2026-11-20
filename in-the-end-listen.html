@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="style.css?v=b956">
 <link rel="stylesheet" href="/shared/hero-fit.css?v=c015">
 <style>
-/* In the End, the Audiobook (BLD 1026): a private listening copy, opened with a Grounded Stories code. */
+/* In the End, the Audiobook (BLD 1026): a private listening copy, opened with a Founder or Supporter code (BLD 1029). */
 .bk-hero{min-height:clamp(240px,24vw,360px);padding:56px 0 64px;}
 .bk-body{padding:34px 0 64px;}
 .bk-body .wrap{max-width:820px;}
@@ -86,7 +86,7 @@
   <div class="wrap">
     <div id="bk-lock" class="bk-lock">
       <p>A private listening copy of <i>In the End</i>, read aloud.</p>
-      <p class="bk-small">Enter your Grounded Stories code to open it. This device remembers it after that.</p>
+      <p class="bk-small">Enter your Founder or Supporter code to open it. This device remembers it after that.</p>
       <form id="bk-form" class="bk-form" novalidate><label class="sr-only" for="bk-code">Your code</label>
         <input id="bk-code" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="acorn-meadow-lantern-42">
         <button class="btn btn-primary" type="submit">Open the Book</button><p id="bk-msg" class="bk-msg" aria-live="polite"></p></form>
@@ -109,13 +109,13 @@
 <script src="site.js?v=b934"></script>
 <script src="nav.js?v=c145" defer></script>
 <script src="shared/gg-stories.js?v=c171"></script>
-<script src="shared/gg-listen-book.js?v=c167"></script>
+<script src="shared/gg-listen-book.js?v=c172"></script>
 <script>
-// In the End, the Audiobook (BLD 1026): the stories file holds the code wraps, and the book's chapter list is locked with the same key.
+// In the End, the Audiobook (BLD 1026): the stories file holds the code wraps, and the book's chapter list is locked with the same key. Founder and Supporter codes open it (BLD 1029).
 (function () {
   var n = 0, t = Math.floor(Date.now() / 6e5);
   function both() { if (++n === 2 && window.GGBook) GGBook.mount(); }
-  ['stories/data.js?t=' + t, 'stories/in-the-end-audio.js?v=c167'].forEach(function (src) { var s = document.createElement('script'); s.src = src; s.onload = s.onerror = both; document.head.appendChild(s); });
+  ['stories/data.js?t=' + t, 'stories/in-the-end-audio.js?v=c172'].forEach(function (src) { var s = document.createElement('script'); s.src = src; s.onload = s.onerror = both; document.head.appendChild(s); });
 })();
 </script>
 </body>
