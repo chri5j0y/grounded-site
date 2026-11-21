@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c183', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c188', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c186';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -2475,7 +2475,7 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     var ls = soberOn() ? soberHtml(soberDate()) : !isKid(S.p) && h.parts.indexOf('sober') >= 0 && !soberDate() ? soberInviteHtml() : ''; if (ls && soberOn()) lsPre();
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + kidTreeHtml() + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + kidTreeHtml() + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + lead + (T.ready ? holTodayHtml() : '') + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml(T) + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -2564,8 +2564,9 @@
     /* BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (it was Monthly Bulk Together). */
     if (w.bulkKey) prep += '<article class="hm-wcard hm-tn-k">' + tile(w.bulkImage || PIMG + 'week-batch-sq.webp') + '<div class="tx"><span class="ey">Sunday, after prep</span><b>' + esc(w.bulkLabel || 'Weekly Batch') + '</b><small>' + esc(w.bulkSub || 'Burritos and one more for the week, Cook and Helper, side by side.') + '</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(w.bulkKey) + '">Open</button></article>';
     /* BLD 896: Holiday Sets. A ticked holiday about three weeks out ("Thanksgiving is in 3 weeks. Set it up?") and each set up one until its day. */
-    arr(w.hol).forEach(function (c) { prep = '<article class="hm-wcard hm-tn-k hm-whc">' + tile(PIMG + 'week-plate-sq.webp') + '<div class="tx"><span class="ey">' + esc(c.kick) + '</span><b>' + esc(c.line) + '</b><small>' + (c.planned ? 'For ' + esc(c.guests) + '. Shopping, prep, and every recipe, step by step.' : 'The shopping on your list, the prep on your calendar, and a calm voice for every recipe.') + '</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(c.key) + '">' + esc(c.btn) + '</button></article>' + prep; });
+    arr(w.hol).forEach(function (c) { prep = holCardHtml(c) + prep; });
     if (w.starts) find = '<p class="hm-sub" style="margin:0 4px 12px">Your plan begins ' + esc(niceDay(w.starts)) + '. Here is a look at the week ahead.</p>' + find;
+    find = holAheadHtml(w) + find;
     var mark = function (x) { return x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : ''; };
     var rows = w.days.map(function (d, di) {
       var isT = d.today === true || String(d.date || '').slice(0, 10) === td, din = obj(d.dinner), mv = obj(d.move);
@@ -2585,6 +2586,34 @@
     // Sunday Together Prep sit right under the week's heading, before the practices and the days, on every screen.
     return '<div class="hm-wgrid"><div class="hm-col hm-wmain">' + wkNavHtml(w) + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + find + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div>' + news + '</div><div class="hm-col hm-wside">' + prep + door + '</div></div>';
   }
+
+  /* BLD 1044a: one holiday card, on the Week tab and on Today. A set up holiday offers Open, Change the Guests, and Take It Off
+     (tap twice); a ticked one not yet set up offers Set It Up. */
+  function holCardHtml(c) {
+    var sure = S.holSure === c.id;
+    return '<article class="hm-wcard hm-tn-k hm-whc" data-hm-hol="' + esc(c.id) + '">' + tile(PIMG + 'week-plate-sq.webp') + '<div class="tx"><span class="ey">' + esc(c.kick) + '</span><b>' + esc(c.line) + '</b><small>' + (c.planned ? 'For ' + esc(c.guests) + (c.off ? ', with ' + esc(c.off) + (c.off === 1 ? ' dish' : ' dishes') + ' off the menu' : '') + '. Shopping, prep, and every recipe, step by step.' : 'The shopping on your list, the prep on your calendar, and a calm voice for every recipe.') + '</small>' +
+      (c.planned ? '<span class="hm-whacts"><button type="button" class="hm-linkbtn" data-hm-wk="holedit:' + esc(c.id) + '">Change the Guests</button><button type="button" class="hm-linkbtn" data-hm-holoff="' + esc(c.id) + '"' + (sure ? ' aria-live="polite"' : '') + '>' + (sure ? 'Tap Again to Take It Off' : 'Take It Off') + '</button></span>' : '') +
+      '</div><button type="button" class="hm-pill" data-hm-wk="' + esc(c.key) + '">' + esc(c.btn) + '</button></article>';
+  }
+  /* BLD 1044a (Chris, November 21, 2026: the Week opens on this week, so Thanksgiving next Thursday looked empty): on This Week, a
+     set up holiday in the week ahead gets one line naming its day, with See Next Week. */
+  function holAheadHtml(w) {
+    if ((S.wkOff || 0) !== 0 || !w || !w.end) return '';
+    var nx = addDays(w.end, 7), L = arr(w.hol).filter(function (c) { return c.planned && c.date > w.end && c.date <= nx; });
+    return L.map(function (c) { return '<div class="hm-wplan hm-wahead"><span class="tx"><b>Next Week: ' + esc(c.name) + '</b><small>' + esc(c.day) + '. The dinner, the prep, and the shopping are all on Next Week.</small></span><button type="button" class="hm-pill" data-hm-wkoff="1">See Next Week</button></div>'; }).join('');
+  }
+  /* BLD 1044a (Chris: "12"): a chosen holiday's countdown card on Today too, from about three weeks out. */
+  function holTodayHtml() {
+    if (!hasFn('holidays') || !tendReady() || !tendIsReady()) return '';
+    var h = hCall('holidays'), L = arr(h && h.cards);
+    return L.length ? '<div class="hm-thol">' + L.map(holCardHtml).join('') + '</div>' : '';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-hm-holoff]'); if (!b) return;
+    e.preventDefault(); var id = b.getAttribute('data-hm-holoff');
+    if (S.holSure !== id) { S.holSure = id; b.textContent = 'Tap Again to Take It Off'; return; }
+    S.holSure = null; if (hasFn('holClear') && hCall('holClear', id)) toast('Taken off your calendar. The set stays in Holidays and Gatherings whenever you want it.'); refreshPane();
+  });
 
   /* BLD 946 (Chris, November 8, 2026: "when you are on This Week, how can i get to Next Week?"): Back and Next on the Week tab,
      a whole week at a time, and This Week to come home. */
