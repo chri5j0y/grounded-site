@@ -1180,12 +1180,95 @@ function levelsOf(ci) {
   const Q = questionsFor(G.kind), out = {};
   PARTS6.forEach(p => {
     const vals = [];
-    (Q[p.key] || []).forEach((q, i) => { const a = (ci.ans || {})[p.key + '.' + i]; if (SCORE[a]) vals.push(q.rev ? 5 - SCORE[a] : SCORE[a]); });
+    (Q[p.key] || []).forEach((q, i) => {
+      // BLD 1036: a Class Check-in from student devices or Show of Hands scores from the whole room, the class average on the same scale
+      const av = ci.live && ci.live.avg ? ci.live.avg[p.key + '.' + i] : null;
+      if (typeof av === 'number' && av >= 1 && av <= 4) { vals.push(q.rev ? 5 - av : av); return; }
+      const a = (ci.ans || {})[p.key + '.' + i]; if (SCORE[a]) vals.push(q.rev ? 5 - SCORE[a] : SCORE[a]); });
     if (!vals.length) { out[p.key] = null; return; }
     const ten = Math.round(1 + (vals.reduce((x, y) => x + y, 0) / vals.length - 1) * 3);
     out[p.key] = ten >= 8 ? 'strength' : ten >= 5 ? 'steady' : 'edge';
   });
   return out;
+}
+/* ---------- Grounded Live in a Classroom grove (GWG BLD 1036, shared/gg-live.js) ----------
+   Start a Class Check-in: each student joins on their own device (a QR code or GROVE and four numbers), with no sign-in
+   and no name, and taps an answer. The teacher sees only how many have answered, then the class spread. Show of Hands is
+   the same check-in for a class without devices: the teacher taps + for the raised hands. Either way the class totals are
+   saved here, in the grove's locked part (the grove passcode and Back Up Everything cover them), and nothing is kept on
+   the Grounded server. The room is scored from the whole class: each question's class average on the same 1 to 4 scale,
+   so the tree, Shared Strengths, Growing Edges, and the Growth Plan work as they always do. A question the class answers
+   in very different ways is marked Good to Talk About Together. */
+const LIVE_W = {
+  card: 'Students Answer on Their Own Devices',
+  lead: 'Each student joins on a phone, tablet, or laptop with the QR code or a short code. No sign-in and no names. Students tap an answer, you see how many have answered, then the class spread. Only the class totals are saved, here on this device, locked with the grove.',
+  hands: 'Show of Hands is the same check-in for a class without devices: count the raised hands for each answer and tap + for each.',
+  whole: 'Scored from the whole class: each question\u2019s class average.',
+  talk: 'Good to Talk About Together',
+  talkLead: 'The class answered these in very different ways. That is good to know. Talk them over as a class, never about who answered which way.',
+  spread: 'The Class Spread',
+  legend: 'Class Check-ins show a bar for each part: the deeper the color, the more the class answered toward strength.'
+};
+const liveOn = () => !!(G && G.kind === 'classroom' && window.GGLive && GGLive.on());
+const LV_KEYS = ['n', 's', 'o', 'a', 'p'];
+function liveWhat(ci) {
+  const L = ci.live || {}, n = L.n || 0;
+  return (ci.quick ? 'Quick Class Check-in' : 'Full Class Check-in') + ', ' + (L.how === 'hands' ? 'Show of Hands' : 'on student devices') + ', ' + n + (n === 1 ? ' student' : ' students');
+}
+function liveCardHtml() {
+  const full = !!S.lvFull, chip = (id, label, on) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-act="lvsize" data-id="${id}">${label}</button>`;
+  return `<div class="card gv-live"><h3>${esc(LIVE_W.card)}</h3><p>${esc(LIVE_W.lead)}</p>
+    <div class="gv-chips" role="group" aria-label="How many questions">${chip('quick', 'Quick, 6 Questions', !full)}${chip('full', 'Full, 24 Questions', full)}</div>
+    <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="lvstart" data-id="devices">Start a Class Check-in</button><button class="btn btn-line btn-sm" data-act="lvstart" data-id="hands">Show of Hands</button></div>
+    <p class="muted">${esc(LIVE_W.hands)}</p></div>`;
+}
+function liveRun(mode, quick) {
+  if (!liveOn() || !vaultOpen()) return;
+  const K = KW(), list = qList(G.kind, quick), kids = kidsOn(), gid = G.id;
+  const questions = list.map(item => {
+    const q = item.q, part = PARTS6.find(p => p.key === item.part), kid = kids ? kidText(q) : '';
+    return { key: item.key, text: qText(q), kid: kid || '', say: kid || qText(q), kicker: part.name + ': ' + part.sub, choices: ANSWERS.map(a => a[1]).concat(['Pass']), scale: true };
+  });
+  GGLive.host({ kind: 'class', mode, title: (quick ? 'Quick ' : 'Full ') + K.checkin, sub: G.name || '', word: 'GROVE', quiet: quietInner(), changes: changesFor(G.kind), questions })
+    .then(r => {
+      if (!r) return;
+      if (!G || G.id !== gid || !vaultOpen()) { toast('Open this grove again to save the class totals.'); return; }
+      const spread = {}, avg = {}, split = [], ans = {};
+      let most = 0;
+      list.forEach((item, i) => {
+        const x = r.results[i] || { counts: [] }, c = LV_KEYS.map((k, j) => +(x.counts || [])[j] || 0), sp = GGLive.spread(c);
+        spread[item.key] = Object.fromEntries(LV_KEYS.map((k, j) => [k, c[j]]));
+        if (sp.avg != null) { avg[item.key] = Math.round(sp.avg * 100) / 100; ans[item.key] = ['n', 's', 'o', 'a'][Math.min(3, Math.max(0, Math.round(sp.avg) - 1))]; } else ans[item.key] = 'p';
+        if (sp.split) split.push(item.key);
+        most = Math.max(most, c.reduce((a, b) => a + b, 0));
+      });
+      ciSave({ quick, changes: r.changes || [], ans, live: { how: r.how, n: most, spread, avg, split } });
+    });
+}
+// One stacked bar: Not Yet (lightest) to Almost Always (deepest), then Pass; flip turns a gentle reverse question around.
+function spreadBar(sp, flip, label) {
+  const order = flip ? ['a', 'o', 's', 'n'] : ['n', 's', 'o', 'a'], tot = LV_KEYS.reduce((t, k) => t + ((sp || {})[k] || 0), 0);
+  if (!tot) return '<span class="gv-spread gv-spread-0"></span>';
+  const words = ANSWERS.map(([k, l]) => `${(sp[k] || 0)} ${l}`).concat([`${sp.p || 0} Pass`]).join(', ');
+  return `<span class="gv-spread" role="img" aria-label="${esc((label ? label + ': ' : '') + words)}">${order.map((k, i) => (sp[k] ? `<i class="gv-sp${i + 1}" style="flex:${sp[k]}"></i>` : '')).join('')}${sp.p ? `<i class="gv-sp0" style="flex:${sp.p}"></i>` : ''}</span>`;
+}
+function livePartsHtml(ci) {
+  const Q = questionsFor(G.kind), S2 = ci.live.spread || {};
+  return `<span class="gv-lv-parts">${PARTS6.map(p => {
+    const sum = { n: 0, s: 0, o: 0, a: 0, p: 0 };
+    (Q[p.key] || []).forEach((q, i) => { const x = S2[p.key + '.' + i]; if (!x) return; const f = q.rev ? { n: 'a', s: 'o', o: 's', a: 'n', p: 'p' } : null; LV_KEYS.forEach(k => { sum[f ? f[k] : k] += x[k] || 0; }); });
+    return `<span class="gv-lv-part"><small>${esc(p.name)}</small>${spreadBar(sum, false, p.name)}</span>`;
+  }).join('')}</span>`;
+}
+function liveSpreadHtml(ci) {
+  const Q = questionsFor(G.kind), L = ci.live, rows = [];
+  PARTS6.forEach(p => (Q[p.key] || []).forEach((q, i) => { const k = p.key + '.' + i; if (L.spread && L.spread[k]) rows.push({ k, q, p }); }));
+  const row = x => { const sp = L.spread[x.k]; return `<li><b>${esc(qText(x.q))}</b>${spreadBar(sp, false, qText(x.q))}<small class="muted">${esc(ANSWERS.map(([k, l]) => `${sp[k] || 0} ${l}`).concat([`${sp.p || 0} Pass`]).join(', '))}</small></li>`; };
+  const split = rows.filter(x => (L.split || []).includes(x.k));
+  let h = '';
+  if (split.length) h += `<h4>${esc(LIVE_W.talk)}</h4><p class="muted">${esc(LIVE_W.talkLead)}</p><ul class="gv-lv-rows">${split.map(row).join('')}</ul>`;
+  h += `<details class="gv-lv-all"><summary>${esc(LIVE_W.spread)}</summary><ul class="gv-lv-rows">${rows.map(row).join('')}</ul></details>`;
+  return h;
 }
 function qText(q) { return plainMode() && q.plain ? q.plain : q.q; }
 function kidText(q) { return plainMode() && q.kidPlain ? q.kidPlain : q.kid; }
@@ -1204,10 +1287,11 @@ function viewCheckin() {
   h += `<div class="card"><h3>Check In Together</h3><p>Answers in words: Not Yet, Sometimes, Often, Almost Always. When you don't agree, choose We See It Differently, and it becomes a Thing to Talk About. Pass skips a question with nothing lost.</p>
     <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="cistart" data-id="full">Full ${esc(K.checkin)}, 24 Questions</button><button class="btn btn-line btn-sm" data-act="cistart" data-id="quick">Quick Check-in, 6 Questions</button></div>
     <p class="muted">The full one takes ${esc(K.time)}. The quick one fits a weekly huddle or the end of a gathering.</p></div>`;
+  if (liveOn()) h += liveCardHtml();
   if (list.length) {
     h += resultsHtml(list[0]);
     h += seasonsHtml();
-    h += `<div class="card"><h3>Earlier Check-ins</h3><ul class="gv-fam-list">${list.map(c => `<li><div><b>${esc(longDate(c.date))}</b><span>${c.quick ? 'Quick Check-in' : 'Full Check-in'}</span></div><button class="btn btn-line btn-sm" data-act="ciview" data-id="${esc(c.id)}">Open</button></li>`).join('')}</ul></div>`;
+    h += `<div class="card"><h3>Earlier Check-ins</h3>${list.some(c => c.live) ? `<p class="muted">${esc(LIVE_W.legend)}</p>` : ''}<ul class="gv-fam-list">${list.map(c => `<li${c.live ? ' class="gv-lv-li"' : ''}><div><b>${esc(longDate(c.date))}</b><span>${c.live ? esc(liveWhat(c)) : c.quick ? 'Quick Check-in' : 'Full Check-in'}</span>${c.live ? livePartsHtml(c) : ''}</div><button class="btn btn-line btn-sm" data-act="ciview" data-id="${esc(c.id)}">Open</button></li>`).join('')}</ul></div>`;
   }
   return h + quietHtml() + srcFor('checkin');
 }
@@ -1239,10 +1323,11 @@ function ciAnswer(k) {
 // One save for a check-in, from the classic runner or the guided one (GWG BLD 886).
 function ciSave(ci) {
   const rec = { id: uid(), date: today(), at: new Date().toISOString(), quick: !!ci.quick, changes: (ci.changes || []).slice(), ans: Object.assign({}, ci.ans) };
+  if (ci.live) rec.live = ci.live;   // BLD 1036: the class totals (spread, average, split questions), never anyone's own answer
   const v = V(); v.checkins.push(rec); v.changes = rec.changes.slice();
   S.ci = null; S.view = rec.id; S.tab = 'checkin';
   const gNow = G;
-  return sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); return rec; });
+  return sealVault().then(() => { render(); toast(rec.live ? 'Class totals saved, locked with the grove.' : 'Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); return rec; });
 }
 function focusQ() { const t = $('#gv-qtext'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
 function resultsHtml(ci) {
@@ -1253,6 +1338,7 @@ function resultsHtml(ci) {
   const DEF = { strength: p => `${p.name} is a Shared Strength. Keep doing what grows it.`, edge: p => `${p.name} is where ${K.we} wants to grow next.` };
   let h = `<div class="card gv-results"><h3>${ci.quick ? 'Our Quick Check-in' : 'Our ' + esc(K.checkin)}, ${esc(longDate(ci.date))}</h3>`;
   if (W('results.intro')) h += `<p class="muted">${esc(Wk(W('results.intro'), G.kind))}</p>`;
+  if (ci.live) h += `<p class="muted gv-lv-how">${esc(liveWhat(ci))}. ${esc(LIVE_W.whole)}</p>`;
   h += resultScene(L);
   if (st.length) h += `<h4>Our Shared Strengths</h4><ul class="gv-rlist">${st.map(p => `<li style="--pc:${p.color}"><b>${p.name}</b> <span>${esc(line('strength', p.key) || DEF.strength(p))}</span></li>`).join('')}</ul>`;
   if (sd.length) h += `<h4>Steady</h4><p>${esc(list3(sd.map(p => p.name)))}. ${esc(sd.length === 1 ? (line('steady', sd[0].key) || 'Steady ground to grow from.') : 'Steady ground to grow from.')}</p>`;
@@ -1261,6 +1347,7 @@ function resultsHtml(ci) {
   if (none.length) h += `<p class="muted">${esc(list3(none.map(p => p.name)))}: passed this time.</p>`;
   const talk = []; PARTS6.forEach(p => (Q[p.key] || []).forEach((q, i) => { if ((ci.ans || {})[p.key + '.' + i] === 'd') talk.push(qText(q)); }));
   if (talk.length) h += `<h4>Things to Talk About</h4><p class="muted">${esc(Wk(W('results.talkIntro'), G.kind) || 'You saw these differently. That is good to know. Talk them over gently, never about who saw it which way.')}</p><ul>${talk.map(t => `<li>${esc(Wk(W('results.talkLead'), G.kind) || '')}${esc(t)}</li>`).join('')}</ul>`;
+  if (ci.live) h += liveSpreadHtml(ci);
   h += `<p class="gv-shape">${esc(Wk(W('results.oneShape'), G.kind) || (isFamily() ? 'Every family has parts still growing. Every grove has its own shape.' : 'Every group has parts still growing. Every grove has its own shape.'))}</p>`;
   if (ci.quick) h += `<p class="muted">${esc(Wk(W('results.quickLine'), G.kind) || 'A quick check-in is a snapshot of this week. The full check-in adds a ring to the grove.')}</p>`;
   h += lcAfterCheckin(ci);
@@ -1721,6 +1808,8 @@ document.addEventListener('click', e => {
   // check-in
   else if (act === 'cistart') withVault('', () => { if (b.dataset.classic !== '1' && gvCheckin(id === 'quick')) return; S.ci = { quick: id === 'quick', step: 'changes', i: 0, ans: {}, changes: [] }; S.tab = 'checkin'; render(); $('#app').scrollIntoView(); });
   else if (act === 'ciguided') { const c = S.ci; if (c) gvCheckin(c.quick, c); }
+  else if (act === 'lvsize') { S.lvFull = id === 'full'; render(); const f = document.querySelector('[data-act="lvsize"][data-id="' + id + '"]'); if (f) f.focus(); }
+  else if (act === 'lvstart') withVault('', () => liveRun(id === 'hands' ? 'hands' : 'devices', !S.lvFull));
   else if (act === 'cichange') { const c = S.ci.changes, i = c.indexOf(id); if (i >= 0) c.splice(i, 1); else { if (id === 'none') c.length = 0; else { const k = c.indexOf('none'); if (k >= 0) c.splice(k, 1); } c.push(id); } render(); }
   else if (act === 'cinext') { S.ci.step = 'q'; render(); focusQ(); }
   else if (act === 'cians') ciAnswer(id);
