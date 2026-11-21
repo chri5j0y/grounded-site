@@ -497,7 +497,7 @@
   var BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>';
   var SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/></svg>';
   var ROOT = (function () { try { var s = root.document && document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return root.location ? location.origin : ''; })();
-  var READ_JS = '/read.js?v=c030', LEARN_JS = '/shared/gg-learn.js?v=c171';
+  var READ_JS = '/read.js?v=c030', LEARN_JS = '/shared/gg-learn.js?v=c183';
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function css() { if (document.getElementById('gs-css')) return; var s = document.createElement('style'); s.id = 'gs-css'; s.textContent = CSS; document.head.appendChild(s); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -583,7 +583,7 @@
       return;
     }
     el.innerHTML = '<p><b>Members hear Grounded Stories in full,</b> with ' + PERKS + '. Grounded Membership opens them on the device where you entered your Member code.</p>'
-      + '<div class="gs-acts"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '">Become a Member</a><a class="gs-link" href="supporters.html">Welcome, Supporters</a></div><div class="gs-code-host" hidden></div>';
+      + '<div class="gs-acts"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '">Start Membership</a><a class="gs-link" href="supporters.html">Welcome, Supporters</a></div><div class="gs-code-host" hidden></div>';
   }
   function render() {
     var d = data(); css(); membersBar();
@@ -599,7 +599,7 @@
       if (unlocked()) earlyEl.innerHTML = E.length ? E.map(card).join('') : '<p class="gs-wait">New early previews arrive here first.</p>';
       else earlyEl.innerHTML = '<article class="card gs-invite"><h3>Members hear new stories first</h3><p>Early Previews are stories on their way to everyone. Members also receive ' + PERKS + '. Become a Member to receive your member code.</p>'
         + (E.length ? '<ul>' + E.map(function (s) { return '<li>' + esc(s.title) + '</li>'; }).join('') + '</ul>' : '')
-        + '<div class="card-actions" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;"><a class="btn btn-primary" href="' + SUBSCRIBE + '">Become a Member</a><button type="button" class="btn btn-secondary" data-gs="code">Enter Your Code</button></div></article>';
+        + '<div class="card-actions" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;"><a class="btn btn-primary" href="' + SUBSCRIBE + '">Start Membership</a><button type="button" class="btn btn-secondary" data-gs="code">Enter Your Code</button></div></article>';
     }
     var hP = document.getElementById('gs-posted-h'); if (hP) hP.hidden = !Pz.length;
     perks(d);
@@ -637,7 +637,7 @@
   var MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M9 11h6M9 15h6"/></svg>';
   function invite(h, p, rows) {
     return '<article class="card gs-invite"><h3>' + esc(h) + '</h3><p>' + esc(p) + '</p>' + (rows.length ? '<ul>' + rows.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' : '')
-      + '<div class="card-actions" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '">Become a Member</a></div></article>';
+      + '<div class="card-actions" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '">Start Membership</a></div></article>';
   }
   function letterCard(l) {
     var tag = 'The Monthly Letter'; if (isNew(l)) tag = 'New · ' + tag;
@@ -671,7 +671,7 @@
       } else cEl.innerHTML = invite('A printable card each month for members', 'A line from a Grounded Story and a practice to carry it into your week. Become a Member to receive your member code.', Cs.map(function (c) { return monthLabel(c.month) + ': ' + c.title; }));
     }
   }
-  var PRINT_JS = '/shared/gg-print.js?v=b939', SOURCES_JS = '/shared/gg-sources.js?v=c137';
+  var PRINT_JS = '/shared/gg-print.js?v=b939', SOURCES_JS = '/shared/gg-sources.js?v=c183';
   function warmPrint() { return need(SOURCES_JS, function () { return !!root.GGSources; }).then(function () { return need(PRINT_JS, function () { return !!root.GGPrint; }); }); }
   function cardModel(id) { var c = cardOf(id), t = ((data() || {}).cards || []).filter(function (x) { return x.id === id; })[0]; if (!c || !t) return null; return { month: t.month, line: c.line, story: c.story, practice: c.practice }; }
   function cardAct(g, id, btn) {
@@ -724,7 +724,7 @@
     } else if (!whole) {
       h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(LINES.members) + '</b> Enter your member code to read and hear it all.</p>'
         + '<div class="gs-acts"><button type="button" class="ggl-btn pri" data-gs="ov-code">Enter Your Code</button>'
-        + '<a class="ggl-btn" href="' + SUBSCRIBE + '">Become a Member</a>' + '</div></div>';
+        + '<a class="ggl-btn" href="' + SUBSCRIBE + '">Start Membership</a>' + '</div></div>';
     }
     if (whole && s.refs && s.refs.length) h += '<div class="gs-refs">' + s.refs.map(function (r) { return '<p>' + esc(r) + '</p>'; }).join('') + '</div>';
     var note = whole ? noteOf(s.id) : null;
@@ -745,7 +745,7 @@
     if (sampled(s)) return { eyebrow: 'From the Book', h: BOOK_LINE, sub: 'This story is one of forty in our book.', say: LINES.thanks, ok: true,
       buttons: [['book', 'Read the Rest in In the End', 'pri', BOOK_URL], ['read', 'Read the Opening', ''], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']] };
     return { eyebrow: 'Grounded Stories', h: LINES.members, sub: 'Enter your member code to keep listening.', say: LINES.members, ok: false,
-      buttons: [['code', 'Enter Your Code', 'pri']].concat([['join', 'Become a Member', '', SUBSCRIBE]], [['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
+      buttons: [['code', 'Enter Your Code', 'pri']].concat([['join', 'Start Membership', '', SUBSCRIBE]], [['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
   }
   function play(at) {
     if (!OV) return;
