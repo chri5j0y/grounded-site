@@ -767,11 +767,13 @@
     moneyOff(); plannerOff();
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
-    if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; document.documentElement.removeAttribute('data-tree'); closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
+    if (!a) { if (/^#(tending|privacy|more|tree|today|week|grow|library|me)/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'welcome'; document.documentElement.removeAttribute('data-tree'); document.documentElement.classList.remove('hm-young'); closeSheet(true); root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
     var changed = S.id !== a.id;
     S.id = a.id; S.p = GGP.get ? GGP.get(a.id) : a; S.tree = treeOfProfile(S.p);
     // BLD 976 (Chris, November 13, 2026: "bright bold fun kid colors"): the open tree names the page, so a tree can carry its own colors (Maple).
     try { document.documentElement.setAttribute('data-tree', S.tree || ''); } catch (e) {}
+    // BLD 1041: with a young tree open, the page's own menu and footer leave out Membership (home.css .hm-young).
+    try { document.documentElement.classList.toggle('hm-young', isYoung(S.p)); } catch (e) {}
     if (changed) { S.tendInit = false; S.words = null; S.paintedFor = null; LIB.load = null; if (SU.id !== a.id) SU.open = false; if (window.GGPlanner) GGPlanner.load(); }
     // BLD 907: the Home's own records follow re-filed practices (once a profile opens; a second pass changes nothing).
     if (changed && GGP.isOpen && GGP.isOpen(a.id)) { var hr0 = GGP.data(a.id, 'home'); if (hr0 && aliasHome(hr0)) saveHome(); }
@@ -828,8 +830,8 @@
     ['labs', 'hm-a-numbers', 'flask', 'Labs and Numbers', ['leaves']],
     ['sober', 'hm-a-sober', 'sun2', 'Living Sober', ['bark', 'leaves']]
   ];
-  function extrasHtml(on, attr) {
-    return '<div class="hm-tend6">' + EXTRAS.map(function (t) {
+  function extrasHtml(on, attr, skip) {
+    return '<div class="hm-tend6">' + EXTRAS.filter(function (t) { return !skip || skip.indexOf(t[0]) < 0; }).map(function (t) {
       var p = !!on[t[0]];
       return '<button class="hm-tg ' + t[1] + '" type="button" aria-pressed="' + p + '" ' + attr + '="' + t[0] + '">' + pb(t[2] === 'flask' ? PIMG + 'item-supplements-sq.webp' : PIMG + 'sober-card-card.webp') + '<span class="tx"><span class="hm-h3" style="display:block">' + esc(t[3]) + '</span><span class="hm-pts">' + t[4].map(function (x) { return '<span class="hm-pt hm-p-' + x + '">' + esc(plabel(x)) + '</span>'; }).join('') + '</span></span><span class="hm-sw" aria-hidden="true"></span></button>';
     }).join('') + '</div>';
@@ -1592,7 +1594,7 @@
   /* BLD 882 (Chris: "bring back UI and UX"): the pre-881 Home's look is the base again. Today opens on the big bright hero
      with the day and date; Week, Grow, and Library open on a painted banner with the tab's name. */
   var BANNER = { week: ['recipes', 'Every day of your week: meals, movement, practices, and family plans'], weekStart: ['recipes', 'Your practices, and A Sample Week of Meals'], weekTeen: ['recipes', 'Your practices for the week'], grow: ['tree', 'Tend four, grow two: your growth plan, your season, and your family'], library: ['library', 'Recipes, movement, quiet, and stories, all in one place'], checkin: ['mytree', 'How each part of your tree is growing'], learn: ['learn', 'Lessons and guides chosen for your tree'] };
-  var KBANNER = { week: ['My practices and play for the whole week', 'Your practices and workouts for the week'], grow: ['Tend four, grow two: my growth plan and my season', 'Tend four, grow two: your growth plan and your season'],
+  var KBANNER = { week: ['My practices for every day of the week', 'Your practices for every day of the week'], grow: ['Tend four, grow two: my growth plan and my season', 'Tend four, grow two: your growth plan and your season'],
     library: ['Recipes, moving and playing, calm, and stories, all for me', 'Recipes, workouts, calm, and stories, all in one place'], checkin: ['How each part of my tree is growing', 'How each part of your tree is growing'], learn: ['Short videos and lessons picked for me', 'Lessons and guides picked for your age'] };
   function bannerHtml(tab) {
     var b = BANNER[tab] || BANNER.grow;
@@ -1822,8 +1824,10 @@
     return PRAC_ART[part] || PIMG + 'practice-bark-sq.webp';
   }
   /* Today's cards for the plan, for any tree. kid: Maple and Aspen wording. */
-  function planItems(kid) {
-    var tree = S.tree, list = planList(S.id, tree); if (!list.length) return tierPlan([], kid);
+  function planItems(kid) { return tierPlan(planAll(kid), kid); }
+  // Every practice in the growth plan, before Start keeps one a part a day (BLD 1041: the young Week reads each day from it).
+  function planAll(kid) {
+    var tree = S.tree, list = planList(S.id, tree); if (!list.length) return [];
     var t = tendGet(S.id, tree), info = pracInfo(tree) || {}, plain = plainWording(S.id, tree);
     var items = list.map(function (it) {
       var pi = info[it.pid] || {}, line = plain && pi.pl ? pi.pl : pi.line || '', title = plain && pi.pn ? pi.pn : it.name, sl = slotOf(it.part, it.name, line), P = PART[it.part] || { n: '' };
@@ -1838,8 +1842,8 @@
         r: r, steps: steps, howTxt: steps.length ? '' : (plain && pi.pl ? pi.pl : pi.today || line), min: num(ri.min) || pi.min || null, doneToday: dToday, doneWeek: dw, last: lastDone(t, it.pid), kid: !!kid,
         vid: typeof ri.vid === 'string' && /^gg-[a-z0-9-]+$/.test(ri.vid) ? ri.vid : '' };
     });
-    // BLD 908: Start keeps one practice a day for each of the four; Membership opens the full plan.
-    return tierPlan(items, kid);
+    // BLD 908: Start keeps one practice a day for each of the four; Membership opens the full plan (planItems).
+    return items;
   }
   /* A practice checked or unchecked: the same mark GGTend.check makes, saved in the locked profile. */
   function togglePractice(pid, on, inTree) {
@@ -2141,7 +2145,8 @@
   /* ---------- Today: one list in day order ---------- */
   function treeItem(h, d) {
     var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), did = !!(ck && ck.date === today()) || !!d.tree;
-    return { key: 'tree', hour: 20.5, when: 'Evening', title: t.n + ' Check-in', sub: ck ? 'A short check-in to close the day' : 'Your first check-in plants your tree', btn: 'Check In', tint: 'gold', done: did, src: 'home' };
+    // BLD 1041: a kid's check-in is the full one, with their grown-up, so the card says so (it read "a short check-in").
+    return { key: 'tree', hour: 20.5, when: 'Evening', title: t.n + ' Check-in', sub: !ck ? 'Your first check-in plants your tree' : isKid(S.p) ? 'Check in with your grown-up and see how your tree is growing' : 'A short check-in to close the day', btn: 'Check In', tint: 'gold', done: did, src: 'home' };
   }
   function todayItems() {
     wayJoin();
@@ -2735,7 +2740,16 @@
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
   var GUIDES = { oak: ['/oak/guides.js?v=c128', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c128', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c126', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
-  function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
+  // BLD 1041 (the November 21 site test: a kid could reach no When Life Changes guide): Maple's guides (one list) and Aspen's (in
+  // groups) count and search on the Library like every tree's.
+  function guidesOf(tree) {
+    if (tree === 'maple' || tree === 'aspen') { var k = kidTopics(tree); return k.length ? k : null; }
+    var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null;
+  }
+  function kidTopics(tree) {
+    if (tree === 'maple') return arr(obj(window.MAPLE_GUIDES).topics);
+    var g = []; arr(obj(window.ASPEN_GUIDES).groups).forEach(function (x) { g = g.concat(arr(x.topics)); }); return g;
+  }
   // BLD 924: the count and search walk the same tracks Learn shows (tracksOf), with Welcome to The Grounded Way first.
   function learnOf(tree) {
     var T = tracksOf(tree); if (!T) return null;
@@ -2748,6 +2762,7 @@
     var g = GUIDES[S.tree], jobs = [load(LEARN_SRC), load(WELCOME_SRC)];
     // The guides files declare their words at the top level, so only one tree's file loads in a visit.
     if (g && (!LIB.guidesFor || LIB.guidesFor === S.tree)) { LIB.guidesFor = S.tree; jobs.push(load(g[0])); }
+    var kg0 = KID_GUIDES[S.tree]; if (kg0 && !window[kg0[1]]) jobs.push(load(kg0[0]));   // BLD 1041: a kid's guides (each file sets its own window name)
     jobs.push(loadTending());
     LIB.load = Promise.all(jobs);
     return LIB.load;
@@ -2867,10 +2882,22 @@
   ];
   // BLD 938: My Account joins the rows after Settings, for a grown-up, once Accounts are live
   function meRows() { var r = SHEET_ROWS.slice(), a = acctRows(); if (a.length) r.splice(3, 0, a[0]);
-    // BLD 963: Membership has its own row, first, for everyone but a kid (Kaden could not find it).
-    if (!isKid(S.p)) r.unshift(['membership', 'star', 'Membership', member() ? 'Your Membership, codes, and the welcome video' : 'What Membership opens, and how to begin']);
+    // BLD 963: Membership has its own row, first, for a grown-up (Kaden could not find it).
+    // BLD 1041 (Chris, November 21, 2026: "GL to ALL"): a young tree's sheet holds only what is theirs. Maple, Aspen, and Pine
+    // see no Membership and no Numbers (Labs and heart risk are for grown-ups); Maple and Aspen see no Household (the table,
+    // recipes, and shopping belong to the grown-up), and their Settings and Privacy lines speak to them.
+    if (!isYoung(S.p)) r.unshift(['membership', 'star', 'Membership', member() ? 'Your Membership, codes, and the welcome video' : 'What Membership opens, and how to begin']);
+    else r = r.filter(function (x) { return x[0] !== 'numbers' && !(isKid(S.p) && x[0] === 'household'); });
+    if (isKid(S.p)) r = r.map(function (x) {
+      if (x[0] === 'settings') return [x[0], x[1], x[2], 'Your Four and the music'];
+      if (x[0] === 'privacy') return [x[0], x[1], x[2], 'Kept safe on this device with your ' + (S.p && S.p.code === 'pics' ? 'picture code' : 'passcode')];
+      return x;
+    });
     return r; }
+  // BLD 1041: a young tree's sheet has no Membership or Numbers (and a kid's no Household), so an old address opens the sheet itself.
+  function sheetFor(sub) { return S.p && ((isYoung(S.p) && (sub === 'membership' || sub === 'numbers')) || (isKid(S.p) && sub === 'household')) ? '' : sub; }
   function openSheet(sub) {
+    sub = sheetFor(sub);
     var old = document.getElementById('hm-sheet'), keep = old && S.sheet === (sub || '') ? old : null;
     if (keep) return;
     if (old) old.remove();
@@ -2879,7 +2906,7 @@
     var head = sub ? '<div class="hm-sh-hd"><button type="button" class="hm-backbtn" data-hm-me="">' + I('back') + '<span>Back</span></button><h2 class="hm-h2" id="hm-sheet-t">' + esc(SUBS.me[sub]) + '</h2><button type="button" class="hm-x" data-hm="closeme" aria-label="Close">' + I('plus') + '</button></div>'
       : '<div class="hm-sh-hd"><span class="hm-me big" aria-hidden="true">' + esc(initials(S.p && S.p.name)) + '</span><h2 class="hm-h2" id="hm-sheet-t">' + esc(S.p && S.p.name || 'You') + '</h2><button type="button" class="hm-x" data-hm="closeme" aria-label="Close">' + I('plus') + '</button></div>';
     var band = '<picture class="hm-sh-band" aria-hidden="true"><source media="(max-width:699px)" srcset="' + PIMG + 'profile-band-family-narrow.webp"><img src="' + PIMG + 'profile-band-family-wide.webp" alt="" loading="lazy"></picture>';
-    var mcard = ''; if (!sub && !isKid(S.p) && window.GGMember && typeof window.GGMember.card === 'function') { try { mcard = '<div class="hm-sh-member">' + (window.GGMember.card() || '') + '</div>'; } catch (e) { mcard = ''; } }
+    var mcard = ''; if (!sub && !isYoung(S.p) && window.GGMember && typeof window.GGMember.card === 'function') { try { mcard = '<div class="hm-sh-member">' + (window.GGMember.card() || '') + '</div>'; } catch (e) { mcard = ''; } }
     var body = sub ? '<div class="hm-sheet-body" id="hm-sheet-body"></div>' : mcard +
       '<ul class="hm-sh-rows">' + meRows().map(function (r) { return '<li><button type="button" data-hm-me="' + r[0] + '"><span class="ic">' + I(r[1]) + '</span><span class="tx"><b>' + r[2] + (r[0] === 'account' ? acctDot() : '') + '</b><small>' + esc(r[3]) + '</small></span>' + I('arrow') + '</button></li>'; }).join('') + '</ul>' +
       '<button type="button" class="hm-done" data-hm="closeme">Done</button>';
@@ -2889,6 +2916,25 @@
     if (sub) fillSheet(sub);
     var sec = wrap.querySelector('.hm-sheet'); setTimeout(function () { try { sec.focus({ preventScroll: true }); } catch (e) {} }, 30);
   }
+  /* BLD 1041 (the November 21 site test: a K to 5 child saw Labs, Living Sober, and Tending setup in Settings): a kid's Settings
+     holds what is theirs: Your Four, with Change My Setup, and the music for their videos and check-ins (the same choice the
+     players keep on this device). Their grown-up keeps the rest in the grown-up's own profile. */
+  function musicNow() { try { var v = localStorage.getItem('gg-music'); return v === 'off' || v === 'medium' ? v : 'soft'; } catch (e) { return 'soft'; } }
+  function kidSettingsHtml() {
+    var mv = musicNow(), mus = [['soft', 'Soft'], ['medium', 'A Little Louder'], ['off', 'Quiet']];
+    return '<article class="hm-card hm-p-roots hm-sufour"><div class="hm-hd">' + pb(REP + 'your-four-sq.webp') + '<div style="min-width:0"><div class="hm-k">My Tree</div><h3 class="hm-h3">Your Four</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">The practices that help each part of your tree grow. Change them any time, with your grown-up.</p>' + suSummaryHtml() +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-setup="roots">' + I('sprout') + 'Change My Setup</button></div></article>' +
+      '<article class="hm-card hm-p-bark hm-kmus"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">Videos and Check-ins</div><h3 class="hm-h3">Music</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">Soft music plays under your videos and check-ins. Choose how it sounds on this device.</p>' +
+      '<div class="hm-lchips" role="group" aria-label="Music">' + mus.map(function (m) { return '<button type="button" class="hm-lchip" data-hm-kmus="' + m[0] + '" aria-pressed="' + (mv === m[0]) + '">' + esc(m[1]) + '</button>'; }).join('') + '</div></article>' +
+      (pvCan() ? '<article class="hm-card hm-p-roots" id="hm-pvcard"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">For Founders and Staff</div><h3 class="hm-h3">See It as a New Person</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">See The Grounded Way just as a person new to Grounded sees it, before Membership, in this browser tab only. Your own plan and days stay just as they are.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm="pvon">' + I('open') + 'Start the Preview</button></div></article>' : '') +
+      '<p class="hm-sub" style="margin-top:10px">Your grade and your words live in <button type="button" class="hm-linkbtn" data-hm-tool="settings">Tree Settings</button>.</p>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-kmus]'); if (!t) return;
+    var v = t.getAttribute('data-hm-kmus'); try { localStorage.setItem('gg-music', v); } catch (x) {}
+    document.querySelectorAll('[data-hm-kmus]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-hm-kmus') === v)); });
+    toast(v === 'off' ? 'Quiet it is. Your videos play with no music.' : 'Your music is set.');
+  });
   function fillSheet(sub) {
     var b = document.getElementById('hm-sheet-body'); if (!b) return;
     var h = homeRec();
@@ -2905,6 +2951,7 @@
         (fam || '<article class="hm-card hm-p-branches"><div class="hm-hd">' + pb(PEOPLE + 'household-sq.webp') + '<div><div class="hm-k">Your Family</div><div class="hm-sub">Add the people you tend with. Each one has a tree of their own.</div></div></div><div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm="addkid">' + I('plus') + 'Add a Family Member</button><button type="button" class="hm-btn line hm-p-branches" data-hm="addlove">' + I('love') + 'Someone I Love</button></div></article>');
       return;
     }
+    if (sub === 'settings' && isKid(S.p)) { b.innerHTML = kidSettingsHtml(); return; }
     if (sub === 'settings') {
       var on = {}; h.parts.forEach(function (k) { on[k] = true; });
       // BLD 907: Your Four, as set up one area at a time, with Change My Setup; Labs and Numbers and Living Sober stay as switches.
@@ -2914,7 +2961,7 @@
       b.innerHTML = acctSettingsCard() + '<details class="hm-fold" open><summary><span>My Day</span><small>Your Four and what shows on Today</small></summary>' +
         '<article class="hm-card hm-p-roots hm-sufour"><div class="hm-hd">' + pb(REP + 'your-four-sq.webp') + '<div style="min-width:0"><div class="hm-k">Choose What You Use</div><h3 class="hm-h3">Your Four</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">' + esc(promise()) + ' Each part keeps at least one practice, by the Grounded Plan or your own.</p>' + suSummaryHtml() +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-setup="roots">' + I('sprout') + 'Change My Setup</button></div>' +
-        '<h4 class="hm-label">Also</h4>' + extrasHtml(on, 'data-hm-setpart') +
+        '<h4 class="hm-label">Also</h4>' + extrasHtml(on, 'data-hm-setpart', isYoung(S.p) ? ['labs'] : null) +
         (h.hidden.tend ? '<div class="hm-quiet" style="margin-top:12px"><button type="button" data-hm="showtend">Show the Start Tending card again</button></div>' : '') + '</article>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tab="today=tending">' + I('sprout') + 'Tending Setup</button></div></details>' +
         (pvCan() ? '<article class="hm-card hm-p-roots" id="hm-pvcard"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">For Founders and Staff</div><h3 class="hm-h3">See It as a New Person</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">See The Grounded Way just as a person new to Grounded sees it, before Membership, in this browser tab only. Your own plan and days stay just as they are.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm="pvon">' + I('open') + 'Start the Preview</button></div></article>' : '') +
@@ -3032,14 +3079,19 @@
   function tourList() {
     // BLD 937: a grown-up's Library card names Grounded Money too (never a teen's or a kid's).
     var L = S.p && !isYoung(S.p) ? TOUR.map(function (c) { return c.k !== 'library' ? c : Object.assign({}, c, { d: c.d + ' Grounded Money, under Branches, keeps your monthly plan calm and clear.' }); }) : TOUR;
+    // BLD 1041: a teen's Week is their own days, day by day (youngWeekHtml), and their Settings holds no Membership or Numbers.
+    if (S.p && isYoung(S.p) && !member()) L = L.map(function (c) { return c.k === 'week' ? Object.assign({}, c, { d: YWEEK_TOUR }) : c.k === 'library' ? Object.assign({}, c, { note: 'Settings, top right on every tab, opens Household, Settings, Privacy, and this tour again.' }) : c; });
     if (member() || !S.p) return L;
     return L.map(function (c) { return c.k !== 'today' ? c : Object.assign({}, c, { d: 'Your whole day in order: a practice for each of your four, your movement, and quiet, with Right Now at the top. Do Tomorrow moves any practice to tomorrow.' }); });
   }
+  var YWEEK_TOUR = 'Every day of your week, day by day: the practice for each of your four, and the ones for any day this week. Back and Next move a week at a time.';
   var KTOUR = [
     { k: 'today', art: 'p-home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
     { k: 'tree', art: 'tend-fruit', ey: 'Check-in', t: 'Check-in', d: 'You tend four parts of your tree, and the trunk and fruit grow from your tending. A check-in shows how each part is doing.', tr: 'Check in with your grown-up and watch your tree light up!' },
-    { k: 'watch', art: 'p-tend-mind', ey: 'Watch', t: 'Watch', d: 'Short videos to breathe, feel calm and strong, and learn about your tree.', tr: 'Try Birthday Candle Sigh: sniff, sniff, whoosh!' }
+    { k: 'watch', art: 'p-tend-mind', ey: 'Learn', t: 'Learn', d: 'Short videos to breathe and feel calm and strong, lessons about your tree, and When Life Changes guides to share with your grown-up for the big moments.', tr: 'Try Balloon Belly Breathing: breathe in slow, and let your belly grow!' }
   ];
+  // BLD 1041: Maple and Aspen open six tabs now (BLD 981), so the kid tour adds Week, their days one by one.
+  KTOUR.splice(1, 0, { k: 'week', art: 'recipes', ey: 'Week', t: 'Week', d: 'Your whole week, day by day: the practice for each part of your tree, every day. Back and Next move a week at a time.', tr: 'Tap Week and find today. Every check mark shows!' });
   // BLD 970: each tour slide has its own painting now.
   var TOUR_AR = { 'tour-checkin-sq.webp': '1/1', 'tour-kids-sq.webp': '1/1', 'tour-grow-wide.webp': '2160/926', 'tour-learn-wide.webp': '16/9', 'tour-library-wide.webp': '5/2', 'tour-today-wide.webp': '5/2', 'tour-today-narrow.webp': '4/3', 'tour-week-wide.webp': '16/9', 'tour-week-narrow.webp': '2/3' };
   var TOUR_ART = { learn: [PIMG + 'tour-learn-wide.webp', PIMG + 'tour-learn-wide.webp'], 'p-home-morning': [PIMG + 'tour-today-wide.webp', PIMG + 'tour-today-narrow.webp'], recipes: [PIMG + 'tour-week-wide.webp', PIMG + 'tour-week-wide.webp'], 'tend-fruit': [PIMG + 'tour-kids-sq.webp', PIMG + 'tour-kids-sq.webp'], 'p-tend-mind': [PIMG + 'tour-checkin-sq.webp', PIMG + 'tour-checkin-sq.webp'], growth: [PIMG + 'tour-grow-wide.webp', PIMG + 'tour-grow-wide.webp'], library: [PIMG + 'tour-library-wide.webp', PIMG + 'tour-library-wide.webp'] };
@@ -4577,8 +4629,43 @@
   };
   /* The Week for Start: the week's practices and the Tomorrow list, then one invitation for meals and movement. */
   function startWeekHtml() {
+    if (S.id && isYoung(S.p)) return youngWeekHtml();
     var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '';
     return (wp ? '<div class="hm-wpracs">' + wp + '</div>' : '<p class="hm-sub" style="margin:0 4px 12px">Each day brings one practice for each of the four to Today, from your growth plan, taking turns through the ones you chose.</p>' + planDoorWeek()) + seedWeekCard() + (isYoung(S.p) ? '' : inviteHtml('tend', 'hm-p-leaves'));
+  }
+  /* BLD 1041 (the November 21 site test: a kid's and a teen's Week was one line, while the tour promised the days): Maple, Aspen,
+     and Pine see their own week, day by day. Each day holds the practice for each of the four, the same one Today brings that
+     day (the daily picks take turns, one a day for each part, in the plan's own order; a Member's plan brings every daily pick),
+     with a check on each one done. The weekly picks follow in Practices This Week. Back and Next move a week at a time. */
+  function dayIdxOf(ds) { var d = parse(ds); return d ? Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 864e5) : dayIndex(); }
+  function youngDay(all, ds, t) {
+    var x = obj(obj(t && t.days)[ds]), did = arr(x.d), out = [];
+    TEND4.forEach(function (k) {
+      var part = all.filter(function (y) { return y.part === k; }), pool = part.filter(function (y) { return y.r === 'd'; });
+      if (!pool.length) pool = member() ? [] : part;   // Start brings a part with no daily pick to the day all the same (tierPlan)
+      if (!pool.length) return;
+      var dn = pool.filter(function (y) { return did.indexOf(y.pid) >= 0; });
+      var keep = member() ? pool : dn.length ? dn : [pick(pool, dayIdxOf(ds))];
+      keep.forEach(function (y) { out.push({ y: y, done: did.indexOf(y.pid) >= 0 }); });
+    });
+    return out;
+  }
+  function youngWeekHtml() {
+    var all = planAll(isKid(S.p)), kid = isKid(S.p), td = today(), off = S.wkOff || 0, t = tendGet(S.id, S.tree);
+    var days = weekDays().map(function (d) { return addDays(d, off * 7); });
+    var nav = wkNavHtml({ days: [{ date: days[0] }] });
+    if (!all.length) return nav + '<p class="hm-sub" style="margin:0 4px 12px">' + (kid ? 'Choose your practices, and each day of your week fills in right here.' : 'Build your growth plan, and each day of your week fills in right here.') + '</p>' + planDoorWeek() + seedWeekCard();
+    var rows = days.map(function (ds) {
+      var L = youngDay(all, ds, t), isT = ds === td, dn = L.filter(function (z) { return z.done; }).length, x = parse(ds), nm = x ? DAYS[x.getDay()] : '';
+      var pills = L.map(function (z) { return '<span class="hm-wpill hm-ywp' + (z.done ? ' done' : '') + '" style="--c:var(--' + z.y.part + ');--cs:var(--' + z.y.part + '-s)"><small>' + esc(plabel(z.y.part, plainWording(S.id, S.tree)).split(':')[0]) + '</small> ' + esc(z.y.title) + (z.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</span>'; }).join('');
+      var note = ds < td ? (dn ? dn + ' of ' + L.length + ' done' : '') : isT ? 'Today' + (dn ? ', ' + dn + ' of ' + L.length + ' done' : '') : '';
+      return '<div class="hm-wday hm-yday' + (isT ? ' today' : '') + '"' + (isT ? ' aria-current="date"' : '') + ' data-date="' + esc(ds) + '"><span class="dn"><b class="full">' + esc(nm) + '</b><b class="abbr" aria-hidden="true">' + esc(nm.slice(0, 3)) + '</b><small>' + esc(shortDate(ds)) + '</small></span>' +
+        tile(L[0] && L[0].y.image || ART2.rest, 'sm') + '<div class="tx">' + (note ? '<span class="hm-ynote">' + esc(note) + '</span>' : '') + '<span class="hm-wsp">' + pills + '</span></div></div>';
+    }).join('');
+    var lead = kid ? 'Your practices for each day. A check shows each one you did. Tap Today to check one off.' : 'One practice for each of your four, every day, taking turns through the ones you chose. A check shows each one done.';
+    var wk = off === 0 ? thisWeekHtml(planItems(false), 'week') : '';
+    return '<div class="hm-yweek">' + nav + '<p class="hm-sub hm-ylead">' + esc(lead) + '</p><div class="hm-wlist">' + rows + '</div>' +
+      (wk ? '<div class="hm-wpracs">' + wk + '</div>' : '') + '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="today">' + I('sprout') + (kid ? 'Back to Today' : 'Open Today') + '</button></div></div>' + seedWeekCard();
   }
   /* ---------- BLD 867: trees and tools open inside the Home ----------
      A tap on a tree or a tool from the Home opens it in a full-page frame with a slim Back bar, so the person
@@ -5528,7 +5615,9 @@
      these shelves in later rounds. */
   var SET_AGE = { 'rel-weekly': 'grown', 'season-grief': 'grown', 'season-newparent': 'grown', 'season-retirement': 'grown', 'season-parentcare': 'grown', 'season-diagnosis': 'grown' };
   var AGE_TAGS = { kids: 'For Kids', teens: 'For Teens', all: 'All Ages', grown: 'For Grown-ups' };
-  function ageOfSet(p) { return (p && (p.age || SET_AGE[p.id] || (p.tradition ? 'teens' : ''))) || 'all'; }
+  // BLD 1041 (the November 21 site test: all six tradition sets read "For Teens" for grown-ups): a set by tradition is for
+  // every age that may open it, so it carries no age tag of its own (a kid's view still leaves it out, as above).
+  function ageOfSet(p) { return (p && (p.age || SET_AGE[p.id])) || 'all'; }
   function myAge() { var a = S.p && S.p.age; return a === 'maple' ? 'kids' : a === 'aspen' || a === 'pine' ? 'teens' : 'grown'; }
   function ageSets(G) {
     var me = myAge(), rank = function (a) { return a === me ? 0 : a === 'all' ? 1 : me === 'teens' ? (a === 'grown' ? 2 : 3) : me === 'grown' ? (a === 'teens' ? 2 : 3) : 2; };
@@ -5794,11 +5883,7 @@
   }
   function ldoneOf(id) { return !!(S.id && obj(homeRec().ldone)[id]); }
   function rowHtml(title, sub, cards) { return '<div class="hm-lrow"><h2 class="hm-label">' + esc(title) + '</h2>' + (sub ? '<p class="hm-sub hm-lrsub">' + esc(sub) + '</p>' : '') + '<div class="hm-lscroll">' + cards + '</div></div>'; }
-  function lifeTopics(tree) {
-    if (tree === 'maple') return arr(obj(window.MAPLE_GUIDES).topics);
-    if (tree === 'aspen') { var g = []; arr(obj(window.ASPEN_GUIDES).groups).forEach(function (x) { g = g.concat(arr(x.topics)); }); return g; }
-    return arr(guidesOf(tree));
-  }
+  function lifeTopics(tree) { return arr(guidesOf(tree)); }
   var KID_GUIDES = { maple: ['/maple/guides.js?v=b934', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=b934', 'ASPEN_GUIDES'] };
   var LT = { f: 'all', load: null, tree: null };
   function loadLearn() {
@@ -5834,6 +5919,7 @@
       return (ls.length ? '<div class="hm-lrow"><h2 class="hm-label">Lessons</h2><div class="hm-lgrid">' + ls.join('') + '</div></div>' : '') +
         (gs.length ? '<div class="hm-lrow"><h2 class="hm-label">When Life Changes</h2><div class="hm-lgrid">' + gs.join('') + '</div></div>' : '');
     }
+    if (isKid(S.p)) return kidRows();
     var out = '';
     if (f !== 'life') tr.forEach(function (x) { out += rowHtml(x.title || 'Lessons', x.who || '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
     if (f !== 'learn' && life.length) out += rowHtml('When Life Changes', 'Help for the big moments: loss, moves, new babies, hard seasons.', life.map(guideCard).join(''));
@@ -5849,7 +5935,18 @@
       '<div class="hm-kin"><div id="hm-learn" class="hm-learn kid">' + (tracksOf(S.tree) ? kidWatchBody() : '<p class="hm-loading">Opening your videos…</p>') + '</div></div></div></div></div>';
     void eve;
   }
+  /* BLD 1041: a kid's Learn has one search box over its videos, lessons, and When Life Changes guides, and a When Life Changes
+     row (the guides made for Maple or Aspen, each with Read the Guide and its videos). From the Library's When Life Changes
+     card, or a guide's Back to All Guides, that row leads. */
   function kidWatchBody() {
+    return '<label class="hm-search hm-lsearch"><span>Search Learn</span><input type="search" id="hm-lq" placeholder="Sleep, worry, moving, a new baby" autocomplete="off" enterkeyhint="search" value="' + esc(LT.q || '') + '"></label>' +
+      '<div id="hm-lres">' + learnRows() + '</div>';
+  }
+  function kidLifeRow() {
+    var life = lifeTopics(S.tree); if (!life.length) return '';
+    return rowHtml('When Life Changes', 'Guides for the big moments, like a move, a new baby, or missing someone. Open one with your grown-up.', life.map(guideCard).join(''));
+  }
+  function kidRows() {
     var seen = {}, ids = [];
     Object.keys(KMATCH).forEach(function (k) { arr(KMATCH[k]).forEach(function (id) { if (!seen[id] && GGN[id]) { seen[id] = 1; ids.push(id); } }); });
     var ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), lead = ed.edges.filter(isTend)[0] || ed.lead || 'none', today0 = pick(KMATCH[lead] || ids, dayIndex());
@@ -5857,7 +5954,8 @@
     var n = 0, out = today0 && GGN[today0] ? rowHtml('Today', '', vid(today0)) : '';
     out += rowHtml('Calm and Strong', 'Breathing, feelings, and kind moves.', ids.map(vid).join(''));
     arr(tracksOf(S.tree)).forEach(function (x) { out += rowHtml(x.title || 'Lessons', '', arr(x.lessons).filter(function (l) { return l && l.id; }).map(function (l) { return lessonCard(S.tree, l, n++); }).join('')); });
-    return out;
+    var lr = kidLifeRow();
+    return LT.f === 'life' ? lr + out : out + lr;
   }
   function playTreeLesson(id) {
     if (!tracksOf(S.tree)) { loadLearn().then(function () { if (tracksOf(S.tree)) playTreeLesson(id); }); return; }
