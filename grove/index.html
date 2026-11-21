@@ -667,6 +667,25 @@ select.gv-input{min-height:44px;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gv-lc-label{color:color-mix(in srgb,var(--rc) 45%,#F2EEE4);}}:root[data-theme="dark"] .gv-lc-label{color:color-mix(in srgb,var(--rc) 45%,#F2EEE4);}
 /* More tabs since Grove 1: on wider screens they wrap to a second row, never cut off at the sides */
 @media (min-width:641px){.tabs{flex-wrap:wrap;row-gap:0;}}
+/* Grounded Live in a Classroom grove (GWG BLD 1036): the class spread, Not Yet lightest to Almost Always deepest, Pass faint */
+.gv-live{border-left:4px solid var(--gold);}
+.gv-spread{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--line);margin:6px 0 2px;min-width:60px;}
+.gv-spread i{display:block;height:100%;}
+.gv-sp1{background:#E9DDC6;}.gv-sp2{background:#D4B57E;}.gv-sp3{background:#B0823A;}.gv-sp4{background:#6E4A14;}.gv-sp0{background:transparent;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gv-sp1{background:#4A3D2C;}:root:not([data-theme="light"]) .gv-sp2{background:#7A6238;}:root:not([data-theme="light"]) .gv-sp3{background:#B8893E;}:root:not([data-theme="light"]) .gv-sp4{background:#E8C27A;}}
+:root[data-theme="dark"] .gv-sp1{background:#4A3D2C;}:root[data-theme="dark"] .gv-sp2{background:#7A6238;}:root[data-theme="dark"] .gv-sp3{background:#B8893E;}:root[data-theme="dark"] .gv-sp4{background:#E8C27A;}
+.gv-lv-parts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:6px;}
+.gv-lv-part{min-width:0;}
+.gv-lv-part small{display:block;margin:0 !important;font-size:calc(12px * var(--scale)) !important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.gv-lv-part .gv-spread{min-width:0;height:10px;}
+.gv-fam-list span.gv-lv-parts{display:grid;}.gv-fam-list span.gv-spread{display:flex;}
+.gv-lv-rows{list-style:none;margin:8px 0;padding:0;display:flex;flex-direction:column;gap:12px;}
+.gv-lv-rows li{min-width:0;}
+.gv-lv-rows b{display:block;overflow-wrap:anywhere;font-weight:600;}
+.gv-lv-rows small{display:block;font-size:calc(14px * var(--scale));}
+.gv-lv-all{margin:12px 0;}
+.gv-lv-all summary{cursor:pointer;font-weight:600;}
+@media (max-width:520px){.gv-lv-parts{grid-template-columns:repeat(3,minmax(0,1fr));}}
 </style>
 <style>/* Grow With Grounded name in the header (session 20) */.brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1;color:var(--house,#8B5E1A);white-space:nowrap;}.foot-name{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;line-height:1.1;margin-top:8px;}@media (max-width:640px){.brand .brand-name{display:none;}}</style>
 <link rel="stylesheet" href="/shared/gg-footer.css?v=b756">
@@ -737,7 +756,9 @@ select.gv-input{min-height:44px;}
 <script src="/grove/class-data.js?v=c041"></script>
 <script src="/grove/classroom.js?v=c183"></script>
 <script src="/grove/share.js?v=c041"></script>
-<script src="/grove/app.js?v=c041"></script>
+<script src="/shared/gg-qr.js?v=b934"></script>
+<script src="/shared/gg-live.js?v=c184"></script>
+<script src="/grove/app.js?v=c184"></script>
 <script>
 /* Read aloud, built in like Maple */
 (function () {

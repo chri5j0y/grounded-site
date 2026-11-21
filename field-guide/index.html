@@ -699,6 +699,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="grovevisit.js?v=b907"></script>
 <script src="heartwood.js?v=b934"></script>
 <script src="member-acct.js?v=b950"></script>
+<script src="../shared/gg-live.js?v=c184"></script>
+<script src="live-fg.js?v=c184"></script>
 <script src="../shared/gg-stories.js?v=c183"></script>
 <script src="vault.js?v=c180"></script>
 <script src="offline.js?v=b798"></script>
@@ -1307,6 +1309,7 @@ if (window.GGHw) GGHw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, 
   pendingPlain: l => pendingPlain(l), updBusy: () => !!UPD, setUpd: u => { UPD = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
 // GWG BLD 949 hook: Membership on the Account (member-acct.js, GGMa): Members, seats, renewals, and the Member key, Founders only.
 if (window.GGMa) GGMa.init({tier: () => TIER, mKey: () => mKey(), render: () => render(), toast: m => toast(m)});
+if (window.GGLiveFG) GGLiveFG.init({data: () => DATA, save: () => save(), render: () => render(), toast: m => toast(m)}); // GWG BLD 1036 hook: Grounded Live
 // GWG BLD 784 hook: the Story Vault (vault.js, GGVault): Founders only, in the Founder tab. Its edits go into FDR.storyVault and
 // fdrKeep seals the Founder library into "Ready to Upload" (lib-founder.js), the way Seal It does.
 // BLD 785: every code lives in the Access list (accView); the Vault seals data.js with the wraps of every code in use.
@@ -2394,6 +2397,7 @@ function vFounder(){
     SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
     window.GGMa && TIER === 'founder' ? GGMa.card() : null, // GWG BLD 949 hook
+    window.GGLiveFG && TIER === 'founder' ? GGLiveFG.founderCard() : null, // GWG BLD 1036 hook: Grounded Insights
     {k: 'pricing', title: 'Private Pricing', desc: 'Rates and pricing notes for Chris and Kayti.'},
     {k: 'guide', title: 'What Guides See', desc: 'Which guides are open to Guides, Orientation, and the welcome.'},
     FLD ? {k: 'guides', title: 'Maple, Aspen, Pine, Birch, Sequoia, and Willow', desc: 'Open each guide to Guides, and keep the reporting info current.', n: mapleDue ? 'Maple reporting info is due for a recheck' : '', hot: !!mapleDue} : null
@@ -2406,6 +2410,7 @@ function vFounder(){
   if (C2 === 'hw') return back(GGHw.sealView()); // GWG BLD 772 hook
   if (C2 === 'vault') return back(GGVault.view()); // GWG BLD 784 hook
   if (C2 === 'macct' && window.GGMa) return back(GGMa.view()); // GWG BLD 949 hook
+  if (C2 === 'liveins' && window.GGLiveFG) return back(GGLiveFG.founderView()); // GWG BLD 1036 hook
   if (C2 === 'speak') return back(vSpeak());
   if (C2 === 'biz') return back(vBiz());
   if (C2 === 'pricing') return back(priceH);
@@ -11370,6 +11375,7 @@ document.addEventListener('click', async e => {
   if (a === 'bk-open'){ bkOpen(); return; } // GWG BLD 1029
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
   if (a && a.startsWith('ma-') && window.GGMa && GGMa.act(a, v)) return; // GWG BLD 949 hook
+  if (a && a.startsWith('lv-') && window.GGLiveFG && GGLiveFG.act(a, v)) return; // GWG BLD 1036 hook: Grounded Live
   if (a && a.startsWith('acc-') && await accAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
@@ -11682,7 +11688,10 @@ function dkSlideHTML(s, d, n, of){
 function vDK(){
   const L = DKL();
   const head = `<div class="page-head"><div class="eyebrow">Present &middot; Staff and Founders</div><h1>${esc(L ? L.title : 'Present')}</h1><p>${esc(L ? L.lead : 'Talks and decks for every tree.')}</p></div>`;
-  if (!L) return head + `<div class="card"><h3>The slides come with the Staff library</h3><p class="muted">The slides live in the Staff library. On a Founder device, open Founder, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
+  // Grounded Live (GWG BLD 1036 hook): quick polls for a seminar, with or without the slides
+  const lvCard = window.GGLiveFG ? GGLiveFG.card() : null;
+  if (lvCard && SEC.present === 'live') return secPage('present', 'Back to Present', GGLiveFG.view());
+  if (!L) return head + (lvCard ? secCards('present', [lvCard]) : '') + `<div class="card"><h3>The slides come with the Staff library</h3><p class="muted">The slides live in the Staff library. On a Founder device, open Founder, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
   const d = dkCur();
   if (V.dke && d) return dkEditHTML(d);
   const sel = V.dks = V.dks || Object.assign({deck: 'grounded', aud: 'hospice', fmt: 's', mode: 'live'}, DATA.settings.dkLast || {});
@@ -11701,7 +11710,7 @@ function vDK(){
    <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="dk-make">Make the Deck</button></div></div>`, savedH = `  <div class="card" style="margin-top:14px"><h3>Saved Decks</h3>${saved.length ? saved.map(x => { const D = dkDeckDef(x.deck) || {name: x.deck}; return `<div class="list-row"><div class="lr-main"><b>${esc(x.name)}</b><br><small class="muted">${esc(D.name)}, ${esc(dkAud(x.aud).toLowerCase())}, ${esc(dkFmt(x.fmt)[1].toLowerCase())}, ${esc(dkMode(x.mode).toLowerCase())}. ${dkShown(x).length} slides. Changed ${esc(nice(new Date(x.u || Date.now()).toISOString().slice(0, 10)))}.</small></div><div class="row"><button class="btn btn-line btn-sm" data-act="dk-open" data-v="${x.id}">Open</button><button class="btn btn-gold btn-sm" data-act="dk-go" data-v="${x.id}">${icon('play')} Present</button></div></div>`; }).join('') : '<p class="muted">Decks you save show here. They stay on this device, encrypted with your records, and travel in your backups.</p>'}</div>`;
   const cards = [
     {k: 'build', title: 'Build a Talk', desc: 'Choose a subject, who you are speaking to, how long you have, and where. Then make the deck.', n: dkDecks().length + (dkDecks().length === 1 ? ' subject' : ' subjects')},
-    {k: 'saved', title: 'Saved Decks', desc: 'Decks you saved, to open, change, or present.', n: saved.length + (saved.length === 1 ? ' deck' : ' decks')}];
+    {k: 'saved', title: 'Saved Decks', desc: 'Decks you saved, to open, change, or present.', n: saved.length + (saved.length === 1 ? ' deck' : ' decks')}, lvCard];
   const C = secPick('present', cards);
   if (C) return secPage('present', 'Back to Present', work + (C === 'build' ? build : savedH));
   return head + intro + work + secCards('present', cards);
