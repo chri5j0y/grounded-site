@@ -1768,3 +1768,8 @@ html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;-
 .hm-rv-list li{padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--card-2);}
 .hm-rv-list b{display:block;color:var(--ink);}
 .hm-rv-list small{display:block;color:var(--ink-soft);margin-top:2px;}
+/* BLD 1044a: the holiday card's Change the Guests and Take It Off, the Next Week line, and the card on Today. */
+.hm-whc .hm-whacts{display:flex;flex-wrap:wrap;gap:0 16px;margin-top:2px;}
+.hm-whc .hm-whacts .hm-linkbtn{--c:var(--kitchen,var(--leaves));font-size:14px;min-height:40px;text-align:left;}
+.hm-wahead{border-left-color:var(--kitchen,var(--leaves));}
+.hm-thol{margin:0 0 14px;}.hm-thol .hm-wcard:last-child{margin-bottom:0;}

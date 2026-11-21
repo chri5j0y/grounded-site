@@ -963,7 +963,7 @@ function vWeek(){
       ${mf ? `<button type="button" class="hj-pill calm" data-hja="go" data-hjv="medid:${esc(mf.id)}">${esc(mf.title)} <small>${esc(medMins(n))} min meditation${track === 'practice' ? ', evening' : ''}</small></button>` : ''}
       ${ownPills(d)}
       ${mmPills(d)}
-      ${holWeekDay(d).map(x => `<button type="button" class="hj-pill prep" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)}</button>`).join('')}
+      ${holWeekDay(d).map(x => `<button type="button" class="hj-pill ${x.day ? 'food' : 'prep'}" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)}${x.day && holDin(d) ? ' <small>dinner</small>' : ''}</button>`).join('')}
       ${remOn() && !H().set.remWk ? remindersFor(d, 'all').map(r => `<button type="button" class="hj-pill rem${S.remOpen === r.id ? ' on' : ''}" data-hja="remshow" data-hjv="${esc(r.id)}" aria-expanded="${S.remOpen === r.id}">${esc(r.title)}</button>`).join('') : ''}
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
     </div></div>`; }).join('');
@@ -1256,7 +1256,7 @@ function openKey(key){
   if (k === 'idea') return openIdea(a, b);
   if (k === 'head') return openOv(headOv(a));
   if (k === 'wl') return openOv(buildLevelWork(a, b));
-  if (/^hol(set|rec)?$/.test(k) && holAct(key)) return;
+  if (/^hol(set|rec|edit)?$/.test(k) && holAct(key)) return;
   markDone(key); toast('Marked done. Well done.'); rerender(true);
 }
 // BLD 881: each guide is built by its own *Ov function, so GGHealth.render can play one inside a sheet as well as full screen.
@@ -5152,7 +5152,7 @@ function apiToday(date){
     const L = arr(((APP() || {}).dinners || {}).lunches);
     if (L.length){ const i = lunchIx(d), x = lunchNut(L[i], d), key = 'idea:lunches:' + i;
       push({key, when: 'Midday', hour: 12, title: x.name, sub: (x.mins ? x.mins + ' minutes' : 'Lunch') + (nOk(x.nut) ? ', ' + nSf(x.nut) : ''), btn: arr(x.steps).length ? 'Make It' : 'Done', tint: TINT.meals, done: isDone(d, key), kind: 'meal'}); }
-    const dn = dinnerFor(addD(d, 1));
+    const dn = holDin(addD(d, 1)) ? null : dinnerFor(addD(d, 1));   // BLD 1044a: no head start for a dinner a holiday takes the place of
     if (dn && !dn.leftover){ const key = 'head:' + k, th = dn.thaw && dn.thaw.item;
       push({key, when: 'Tonight', hour: 20, title: 'Head Start for Tomorrow', sub: th ? 'Move ' + th + ' from the freezer to the fridge for ' + dn.name + '.' : 'Tomorrow is ' + dn.name + '. A quick look tonight makes dinner easy.', btn: 'Look Ahead', tint: TINT.cook, done: isDone(d, key), kind: 'headstart'}); }
   }
@@ -5174,7 +5174,7 @@ function apiToggle(key){
     if (on && (/^(work|wl):/.test(key) || key === 'walk')) checkOn('move'); if (on && (key === 'prac' || key === 'med' || /^(pracid|medid):/.test(key))) checkOn('still'); save(); }
   rerender(true); return {done: !!on};
 }
-const ITEM_RE = /^(menu|own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|walk|hol|holset|holrec)(:|$)/;
+const ITEM_RE = /^(menu|own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|walk|hol|holset|holrec|holedit)(:|$)/;
 function apiAct(key){
   key = String(key || ''); const [k, a, b] = key.split(':'); if (!H() || !FLDH()) return null;
   if (key === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); if (bareOn()){ toSetup(); return {section: 'setup'}; } return want('setup'); }
@@ -5185,7 +5185,7 @@ function apiAct(key){
   if (k === 'ownedit'){ const x = OWN().items.find(i => i.id === a); S.ownF = x ? JSON.parse(JSON.stringify(x)) : null; S.ownEd = x ? x.id : null; return want('own'); }
   if (k === 'supp' || k === 'out' || k === 'y' || k === 'rem' || k === 'walk') return apiToggle(key);
   if (k === 'idea' && !ideaOv(a, b)) return apiToggle(key);
-  if (/^hol(set|rec)?$/.test(k)){ const r = holAct(key); if (r) return r; }
+  if (/^hol(set|rec|edit)?$/.test(k)){ const r = holAct(key); if (r) return r; }
   const o = ovFor(key); if (o){ openOv(o); return {overlay: o.k, key: o.key}; }
   return apiToggle(key);
 }
@@ -5193,11 +5193,12 @@ function apiWeek(n){
   const h = H(); if (!FLDH() || !h || setupNeeded() || START()) return null;
   const off = Math.round(+n || 0), t0 = day0(new Date()), mon = addD(monOf(t0), off * 7), N = weekNo(mon), track = h.set.track || 'strength';
   const fw = off === 0 ? foodWeek(t0) : Math.max(1, N);
-  const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = U('food') ? dinnerFor(d) : null, wn = weekNo(d);
+  const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), hd = holDin(d), dn = U('food') && !hd ? dinnerFor(d) : null, wn = weekNo(d), hl = holWeekDay(d);
     const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses && !flowRest(d, false) ? practiceFor(d) : null, mf = U('mind') && MED() && H().set.medFreq && medOn(d) ? medFor(d) : null;
     const dk = dn ? 'cook:' + dn.wk + ':' + dn.id : null, mk = ses ? 'work:' + ses.id : pr ? 'pracid:' + pr.id : null;
-    return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0), hol: holWeekDay(d), own: ownDay(d, 'week'),
-      dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(dinnerArtName(dn) || ITEM_ART.cook), night: dinnerArtName(dn) ? WAY(dinnerArtName(dn)) : null} : null,
+    // BLD 1044a: a set up holiday is that day's dinner ("Thanksgiving"), in the plan dinner's place.
+    return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0), hol: hd ? hl.filter(x => x.key !== hd.key) : hl, own: ownDay(d, 'week'),
+      dinner: hd ? {title: hd.title, key: hd.key, hol: hd.id, mins: null, leftover: false, done: isDone(d, hd.key), image: WAY(holArt(hd.id)), night: WAY(holArt(hd.id))} : dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(dinnerArtName(dn) || ITEM_ART.cook), night: dinnerArtName(dn) ? WAY(dinnerArtName(dn)) : null} : null,
       move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id, ses), kind: wkKind(ses.id, ses), id: ses.id} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(flowArtName(pr)), kind: 'flow', id: pr.id, style: pr.style || ''} : null,
       // BLD 893: the meditation on its days, once a person has chosen how often (My Grounded Way Plan).
       med: mf ? {title: mf.title || 'Meditation', key: 'medid:' + mf.id, mins: medMins(wn), done: isDone(d, 'med'), kind: 'meditation', image: WAY(medArtFor(d)), id: mf.id, at: medAt().kick || 'Morning'} : null}; });
@@ -6215,53 +6216,83 @@ const holDays = (a, b) => { const x = parseD(a), y = parseD(b); return x && y ? 
 function holPlan(id){ const p = holSt().plans[id]; return p && p.date ? p : null; }
 function holNext(id){ const G = holUse(), p = holPlan(id); if (p && p.date >= today()) return p.date; return G ? G.next(id, today()) : null; }
 function holGuests(id){ const p = holPlan(id), s = holGet(id); return Math.max(1, Math.round(+(p && p.guests) || (s && +s.serves) || 6)); }
+// BLD 1044a (Chris, November 21, 2026: "remove the pumpkin pie.. that way the items are also removed from shopping list"): the
+// dishes a person took off a set up holiday's menu, kept in plans[id].off; shopping, prep, and the menu all read it.
+const holOff = id => { const p = holPlan(id); return p ? arr(p.off).filter(Boolean) : []; };
+// BLD 1044a (Chris: "12"): a ticked holiday sets itself up for 4 once it reaches the countdown window (about three weeks out),
+// once per day and device; Take It Off (holclear) marks that date skipped so it stays off. A day you choose (Mother's Day
+// brunch, a potluck) waits for its day. The save waits a tick so a Week or Today being drawn finishes first.
+const HOL_AUTO = {h: null, t: ''};
+function holAuto(){
+  const h = H(), G = window.GGHolidays, t = today(); if (!h || !G || !G.get || (HOL_AUTO.h === h && HOL_AUTO.t === t)) return;
+  if (setupNeeded() || !(U('food') || PUB())) return; HOL_AUTO.h = h; HOL_AUTO.t = t; holUse();
+  const st = holSt(); let ch = false;
+  st.on.forEach(id => { const s = G.get(id); if (!s || (s.when || {}).rule === 'pick') return; const p = st.plans[id]; if (p && p.date && p.date >= t) return;
+    const date = G.next(id, t), n = date ? holDays(t, date) : -1; if (n < 0 || n > HOL_LEAD || st.skip[id] === date) return;
+    st.plans[id] = {date, guests: 4, auto: 1, u: Date.now()}; if (s.choose && s.menu[0]) st.plans[id].pick = s.menu[0].id; ch = true; });
+  if (ch){ st.u = Date.now(); if (h.set.u) h.set.u = Date.now(); setTimeout(() => { try { save(); } catch(e){} }, 0); }
+}
+// BLD 1044a: the set up holiday that is this day's dinner (it takes the plan dinner's place, and that dinner's shopping steps aside).
+function holDin(d){
+  const G = holUse(); if (!G || !H() || !d) return null; holAuto(); const st = holSt(), k = ymd(d);
+  for (const id of Object.keys(st.plans)){ const p = st.plans[id], s = G.get(id); if (!s || !p || p.date !== k || (G.dinner && !G.dinner(id))) continue;
+    const t = G.tasks(id, p.date, p.pick, p.off).filter(x => !x.daysBefore)[0]; if (t) return {id, s, key: 'hol:' + id + ':' + t.i, title: s.name}; }
+  return null;
+}
 // The Shopping List for food week n is shopped the Saturday before that week; a set's buy day lands on the list shopped on or before it.
 const holWeek = date => Math.max(1, Math.floor((day0(parseD(date)) - addD(startMon(), -2)) / (7 * DAYMS)) + 1);
 const holSec = a => { if (SECX().includes(a)) return a; const m = {Proteins: 'Meat and Fish', 'Dairy and Eggs': 'Eggs, Dairy, and Milks', 'Grains and Beans': 'Pantry', Spices: 'Pantry'}[a]; return SECX().includes(m) ? m : 'Other'; };
 function holShopItems(n){
   const G = holUse(), out = [], st = holSt(); if (!G || !H()) return out;
+  holAuto();
   Object.keys(st.plans).forEach(id => { const p = st.plans[id], s = G.get(id); if (!s || !p || !p.date || holWeek(G.buyDate(id, p.date)) !== n) return;
-    G.shop(id, p.guests, p.pick).forEach((x, i) => out.push({id: 'h:' + id + ':' + i, store: 'grocer', sec: holSec(x.aisle), name: x.item, amt: x.amt || '', hamt: x.amt || '', price: 0, for: s.name, hol: id, done: false, n: 500 + out.length})); });
+    G.shop(id, p.guests, p.pick, p.off).forEach((x, i) => out.push({id: 'h:' + x.key, store: 'grocer', sec: holSec(x.aisle), name: x.item, amt: x.amt || '', hamt: x.amt || '', price: 0, for: s.name, hol: id, done: false, n: 500 + out.length})); });
   return out;
 }
 // Merges a set's items into the week's list, keeps what was checked or edited, and takes off the items of a set that was cleared.
+// BLD 1044a: item ids follow the item (h:<set>:<item and unit>), so a dish taken off the menu takes only its own items with it and
+// a shared item (butter, eggs) shrinks by that dish's amount; an item the person checked or edited stays as they left it.
 function holMerge(L, n){
   const want = holShopItems(n), has = L && arr(L.items).some(x => /^h:/.test(String(x.id || ''))); if (!want.length && !has) return L;
-  L = L || {seed: true, items: []}; const ids = new Set(want.map(x => x.id));
-  L.items = arr(L.items).filter(x => !/^h:/.test(String(x.id || '')) || ids.has(x.id));
-  want.forEach(x => { const ex = L.items.find(y => y.id === x.id); if (!ex) L.items.push(x); else if (ex.amt === ex.hamt){ ex.amt = x.amt; ex.hamt = x.amt; ex.for = x.for; } });
+  L = L || {seed: true, items: []}; const ids = new Set(want.map(x => x.id)), G = holUse();
+  const kept = x => { const p = x.hol && holPlan(x.hol); return !!(p && G && holWeek(G.buyDate(x.hol, p.date)) === n && (x.done || x.amt !== x.hamt)); };
+  L.items = arr(L.items).filter(x => !/^h:/.test(String(x.id || '')) || ids.has(x.id) || kept(x));
+  want.forEach(x => { const ex = L.items.find(y => y.id === x.id); if (!ex) L.items.push(x); else if (!ex.done && ex.amt === ex.hamt){ ex.amt = x.amt; ex.hamt = x.amt; ex.for = x.for; } });
   return L;
 }
 // Today and Week: the shopping day and each timeline task on its own day.
 function holAgenda(d){
-  const G = holUse(), out = []; if (!G || !H()) return out; const st = holSt(), k = ymd(d);
+  const G = holUse(), out = []; if (!G || !H()) return out; holAuto(); const st = holSt(), k = ymd(d);
   Object.keys(st.plans).forEach(id => { const p = st.plans[id], s = G.get(id); if (!s || !p || !p.date) return;
     if (G.buyDate(id, p.date) === k) out.push({key: 'hol:' + id + ':shop', k: 'hol', v: id, hour: 9.5, kick: 'Shopping day', title: 'Shop for ' + s.name, sub: 'Everything for ' + s.name + ' is on your Shopping List, marked ' + s.name + '.', btn: 'Open the List', hol: id});
-    G.tasks(id, p.date, p.pick).forEach(t => { if (t.date !== k) return;
-      out.push({key: 'hol:' + id + ':' + t.i, k: 'hol', v: id, hour: t.daysBefore ? 16 : 9 + t.i / 100, kick: t.daysBefore ? s.name + ' prep' : s.name, title: t.title,
+    // BLD 1044a (Chris: Next Week's November 26 "still does not show thanksgiving"): every task names its holiday:
+    // "Thanksgiving prep: Pie, potatoes, and the turkey rub" on the days before, "Thanksgiving" on the day itself.
+    G.tasks(id, p.date, p.pick, p.off).forEach(t => { if (t.date !== k) return;
+      out.push({key: 'hol:' + id + ':' + t.i, k: 'hol', v: id, hour: t.daysBefore ? 16 : 9 + t.i / 100, kick: t.daysBefore ? s.name + ' prep' : 'The Day', title: holTaskName(s, t), day: !t.daysBefore,
         sub: (t.mins ? 'About ' + t.mins + ' minutes. ' : '') + (t.steps.length ? 'A calm voice guides each step.' : ''), btn: t.steps.length ? 'Grounded Cooking' : 'Done', hol: id}); }); });
   return out;
 }
-function holWeekDay(d){ return holAgenda(d).map(x => ({key: x.key, title: x.title, set: (holGet(x.v) || {}).name || '', shop: /:shop$/.test(x.key), done: isDone(d, x.key)})); }
+const holTaskName = (s, t) => t.daysBefore ? s.name + ' prep: ' + t.title : t.title === 'The Day' ? s.name : s.name + ': ' + String(t.title).replace(/:\s*The Day$/, '');
+function holWeekDay(d){ return holAgenda(d).map(x => ({key: x.key, title: x.title, set: (holGet(x.v) || {}).name || '', shop: /:shop$/.test(x.key), day: !!x.day, done: isDone(d, x.key)})); }
 // The countdown cards: a ticked holiday about three weeks out, and every set up holiday until its day.
 function holCards(){
-  const G = holUse(); if (!G || !H()) return []; const st = holSt(), t = today(), out = [], seen = new Set();
+  const G = holUse(); if (!G || !H()) return []; holAuto(); const st = holSt(), t = today(), out = [], seen = new Set();
   st.on.concat(Object.keys(st.plans)).forEach(id => { if (seen.has(id)) return; seen.add(id); const s = G.get(id); if (!s) return;
     const p = holPlan(id), planned = !!(p && p.date >= t), date = planned ? p.date : G.next(id, t); if (!date) return;
     const n = holDays(t, date); if (n < 0 || (!planned && (n > HOL_LEAD || st.skip[id] === date || !st.on.includes(id)))) return;
     const away = G.away(date, t), when = away === 'today' ? s.name + ' is today.' : s.name + ' is ' + away + '.';
-    out.push({id, name: s.name, date, away, planned, days: n, guests: planned ? holGuests(id) : null, kick: planned ? 'Set for ' + holDay(date) : holDay(date),
+    out.push({id, name: s.name, date, away, planned, auto: planned && !!p.auto, days: n, guests: planned ? holGuests(id) : null, kick: planned ? 'Set for ' + holDay(date) : holDay(date), day: holDay(date), off: planned ? holOff(id).length : 0,
       line: planned ? when + ' Your list and prep are on the calendar.' : when + ' Set it up?', btn: planned ? 'Open' : 'Set It Up', key: 'holset:' + id}); });
   return out.sort((a, b) => a.days - b.days);
 }
 function holCardsHtml(){
   return holCards().map(c => `<div class="tn-card a-kitchen hj-holc"><div class="tn-pc"><div class="tn-scene"><img src="${esc(WAY(holArt(c.id)))}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
     <div class="tn-time">${esc(c.kick)}</div><h3>${esc(c.line)}</h3>${c.planned ? `<div class="tn-meta">For ${c.guests}. Shopping, prep, and every recipe, step by step.</div>` : `<div class="tn-meta">The shopping on your list, the prep on your calendar, and a calm voice for every recipe.</div>`}
-    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(c.key)}">${ic(c.planned ? 'arrow' : 'plus')}${esc(c.btn)}</button>${c.planned ? '' : `<button type="button" class="linkbtn" data-hja="holskip" data-hjv="${esc(c.id + '|' + c.date)}">Skip This Year</button>`}</div></div></div></div>`).join('');
+    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(c.key)}">${ic(c.planned ? 'arrow' : 'plus')}${esc(c.btn)}</button>${c.planned ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="holedit:${esc(c.id)}">Change the Guests</button><button type="button" class="linkbtn" data-hja="holclear" data-hjv="${esc(c.id)}">${S.holSure === c.id ? 'Tap Again to Take It Off' : 'Take It Off'}</button>` : `<button type="button" class="linkbtn" data-hja="holskip" data-hjv="${esc(c.id + '|' + c.date)}">Skip This Year</button>`}</div></div></div></div>`).join('');
 }
 // The kitchen guide for one timeline task (the steps it names, from each recipe) or one recipe.
 function holTaskOv(id, i){
-  const G = holUse(), s = G && G.get(id); if (!s) return null; const p = holPlan(id), date = (p && p.date) || holNext(id) || today(), t = G.tasks(id, date, p && p.pick).find(x => x.i === +i); if (!t) return null;
+  const G = holUse(), s = G && G.get(id); if (!s) return null; const p = holPlan(id), date = (p && p.date) || holNext(id) || today(), t = G.tasks(id, date, p && p.pick, p && p.off).find(x => x.i === +i); if (!t) return null;
   if (!t.steps.length) return null; const N = holGuests(id), ings = [], base = +s.serves || N;
   t.menus.forEach(m => { const r = G.recipe(id, m, N); if (r) r.ingredients.forEach(g => ings.push(t.menus.length > 1 ? g + ' (' + r.name + ')' : g)); });
   return {k: 'cook', idea: true, hol: id, key: 'hol:' + id + ':' + t.i, title: t.title, sub: s.name + ' · ' + holShort(t.date) + (t.mins ? ' · about ' + t.mins + ' min' : ''),
@@ -6279,6 +6310,7 @@ function holRecOv(id, mid){
 function holAct(key){
   const [k, id, b] = String(key || '').split(':'); if (!holGet(id)) return null;
   if (k === 'holset' || (k === 'hol' && b === 'shop' && !holPlan(id))){ S.holId = id; S.holEd = null; return holGo(); }
+  if (k === 'holedit'){ const p = holPlan(id); S.holId = id; S.holEd = {id, date: p ? p.date : holNext(id) || '', guests: holGuests(id)}; return holGo(); }   // BLD 1044a: Change the Guests
   if (k === 'hol' && b === 'shop'){ S.shopWk = holWeek(holUse().buyDate(id, holPlan(id).date)); S.shopEd = null; if (bareOn() || C.host === 'home') return want('shop'); S.sec = 'shop'; rerender(false); window.scrollTo(0, 0); return {section: 'shop'}; }
   const o = k === 'holrec' ? holRecOv(id, b) : holTaskOv(id, b); if (!o) return null; openOv(o); return {overlay: o.k, key: o.key};
 }
@@ -6315,16 +6347,19 @@ function vHolSet(G, s){
     <div class="tn-hhrow"><span>Guests at the table</span><div class="hj-stock"><button type="button" class="chip" data-hja="holg" data-hjv="-1" aria-label="One fewer"${N <= 1 ? ' disabled' : ''}>&minus;</button><span><b data-hjholn>${N}</b></span><button type="button" class="chip" data-hja="holg" data-hjv="1" aria-label="One more"${N >= 40 ? ' disabled' : ''}>+</button></div></div>
     <p class="tn-sub">The menu is written for ${esc(s.serves)}. The shopping list sizes every amount for your guests.</p>
     <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="holsave" data-hjv="${esc(id)}">${ic('check')}${planned ? 'Save the Change' : 'Set It Up'}</button>${ed ? `<button type="button" class="linkbtn" data-hja="holcancel">Close</button>` : ''}</div></div>`;
-  const tasks = planned ? G.tasks(id, p.date, p.pick) : [], buy = planned ? G.buyDate(id, p.date) : '';
-  const plan = planned ? `<div class="tn-card a-kitchen hj-holplan"><div class="tn-k">Set for ${esc(holDay(p.date))} · for ${N}${s.choose && p.pick ? ' · ' + esc((s.menu.find(m => m.id === p.pick) || {}).name || '') : ''}</div><p class="tn-sub">${esc(s.name + ' is ' + G.away(p.date, today()) + '.')}</p>
-    <ol class="hj-holtl">${[{date: buy, i: -1}].concat(tasks).sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : x.i - y.i).map(t => t.i < 0 ? `<li><b>${esc(holShort(buy))}</b><span>Shop: ${G.shop(id, p.guests, p.pick).length} items join Shop for Week ${letter(holWeek(buy))}, marked ${esc(s.name)}.</span><button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:shop">Open the List</button></li>`
+  const off = planned && !s.choose ? holOff(id) : [], tasks = planned ? G.tasks(id, p.date, p.pick, off) : [], buy = planned ? G.buyDate(id, p.date) : '';
+  const plan = planned ? `<div class="tn-card a-kitchen hj-holplan"><div class="tn-k">Set for ${esc(holDay(p.date))} · for ${N}${s.choose && p.pick ? ' · ' + esc((s.menu.find(m => m.id === p.pick) || {}).name || '') : ''}${off.length ? ' · ' + (s.menu.length - off.length) + ' of ' + s.menu.length + ' dishes' : ''}</div><p class="tn-sub">${esc(s.name + ' is ' + G.away(p.date, today()) + '.')}</p>
+    <ol class="hj-holtl">${[{date: buy, i: -1}].concat(tasks).sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : x.i - y.i).map(t => t.i < 0 ? `<li><b>${esc(holShort(buy))}</b><span>Shop: ${G.shop(id, p.guests, p.pick, off).length} items join Shop for Week ${letter(holWeek(buy))}, marked ${esc(s.name)}.</span><button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:shop">Open the List</button></li>`
       : `<li><b>${esc(holShort(t.date))}</b><span>${esc(t.title)}${t.mins ? ' · about ' + t.mins + ' min' : ''}</span>${t.steps.length ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:${t.i}">Grounded Cooking</button>` : ''}</li>`).join('')}</ol>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holedit" data-hjv="${esc(id)}">${ic('clock')}Change the Day or Guests</button><button type="button" class="linkbtn" data-hja="holclear" data-hjv="${esc(id)}">${S.holSure === id ? 'Tap Again to Take It Off My Calendar' : 'Take It Off My Calendar'}</button></div></div>` : '';
-  const menu = `<div class="tn-card a-kitchen"><div class="tn-k">The Menu</div><div class="hj-holmenu">${s.menu.map(m => { const r = G.recipe(id, m.id, N);
+  // BLD 1044a: once set up, each dish has Remove (its shopping and prep leave too) and, once removed, Add Back.
+  const canOff = planned && !s.choose, keepN = s.menu.length - off.length;
+  const menu = `<div class="tn-card a-kitchen"><div class="tn-k">The Menu</div>${canOff ? `<p class="tn-sub">Make the menu yours: Remove takes a dish off, with its shopping and its prep.</p>` : ''}<div class="hj-holmenu">${s.menu.map(m => { const r = G.recipe(id, m.id, N);
+    if (canOff && off.includes(m.id)) return `<div class="hj-holoff"><span><b>${esc(m.name)}</b><small>Off the menu</small></span><button type="button" class="tn-btn sm line" data-hja="holback" data-hjv="${esc(id + '|' + m.id)}" aria-label="${esc('Add Back ' + m.name)}">${ic('plus')}Add Back</button></div>`;
     return `<details class="hj-doc"${S.open['hol:' + id + ':' + m.id] ? ' open' : ''} data-hjd="hol:${esc(id)}:${esc(m.id)}"><summary><span>${esc(m.name)}<small>${esc([m.course ? m.course[0].toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></span></summary><div class="hj-body">
       ${m.makeAhead ? `<p class="hj-sub"><b>Make ahead:</b> ${esc(m.makeAhead)}</p>` : ''}${m.card ? `<div class="hj-holcard"><b>Reheat Card</b><p>${esc(m.card)}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-hja="holcard" data-hjv="${esc(id + '|' + m.id)}">Share the Card</button><button type="button" class="btn btn-line btn-sm" data-hja="holcardprint" data-hjv="${esc(id + '|' + m.id)}">Print the Card</button></div></div>` : ''}${m.note ? `<p class="hj-sub">${esc(m.note)}</p>` : ''}<ul class="hj-ing">${arr(r && r.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul>
       <ol class="hj-steps hj-holsteps">${arr(m.steps).map(x => `<li><div>${esc(x.say)}</div></li>`).join('')}</ol></div></details>
-      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Grounded Cooking: ${esc(m.name)}</button>${mmHolBtn(id, m.id)}</div>`; }).join('')}</div></div>`;
+      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Grounded Cooking: ${esc(m.name)}</button>${mmHolBtn(id, m.id)}${canOff && keepN > 1 ? `<button type="button" class="linkbtn hj-holrm" data-hja="holoff" data-hjv="${esc(id + '|' + m.id)}" aria-label="${esc('Remove ' + m.name)}">Remove</button>` : ''}</div>`; }).join('')}</div></div>`;
   const tips = arr(s.tips).length ? `<div class="tn-card"><div class="tn-k">For a Calm, Healthy Day</div><ul class="hj-ing">${s.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
   return `<div class="row" style="margin:0 0 12px"><button type="button" class="btn btn-line btn-sm" data-hja="holall">Every Holiday Set</button></div>
     <div class="tn-card a-kitchen hj-holtop"><div class="tn-k">${esc(G.whenText(id))}</div><h3>${esc(s.name)}</h3><p class="tn-sub">${esc(s.lead)}</p>${s.note ? `<p class="tn-sub">${esc(s.note)}</p>` : ''}</div>
@@ -6353,10 +6388,15 @@ function actHol(a, v){
       S.holEd.guests = Math.max(1, Math.min(40, S.holEd.guests + (+v || 0))); rerender(true); return true; }
     case 'holsave': { const id = v, s = holGet(id); if (!s) return true; const ed = S.holEd && S.holEd.id === id ? S.holEd : {date: (holPlan(id) || {}).date || holNext(id) || '', guests: holGuests(id)};
       if (!parseD(ed.date) || ed.date < today()){ toast('Choose the day first.'); return true; }
-      const st = holSt(), pk0 = s.choose ? ed.pick || (holPlan(id) || {}).pick || s.menu[0].id : null; st.plans[id] = {date: ed.date, guests: Math.max(1, +ed.guests || +s.serves || 6), u: Date.now()}; if (pk0) st.plans[id].pick = pk0; if (!st.on.includes(id)) st.on.push(id); delete st.skip[id];
+      const st = holSt(), pk0 = s.choose ? ed.pick || (holPlan(id) || {}).pick || s.menu[0].id : null, off0 = arr((st.plans[id] || {}).off); st.plans[id] = {date: ed.date, guests: Math.max(1, +ed.guests || +s.serves || 6), u: Date.now()}; if (pk0) st.plans[id].pick = pk0; if (off0.length && !s.choose) st.plans[id].off = off0; if (!st.on.includes(id)) st.on.push(id); delete st.skip[id];
       S.holEd = null; S.holSure = null; holKeep(); const G = holUse(), wk = holWeek(G.buyDate(id, ed.date));
       toast(s.name + ' is set: the shopping is on the list for Week ' + fwl(wk) + ', and the prep is on your calendar.'); rerender(true); return true; }
-    case 'holclear': if (S.holSure !== v){ S.holSure = v; rerender(true); return true; } delete holSt().plans[v]; S.holSure = null; S.holEd = null; holKeep(); toast('Taken off your calendar. The set stays here whenever you want it.'); rerender(true); return true;
+    case 'holclear': { if (S.holSure !== v){ S.holSure = v; rerender(true); return true; } const st = holSt(), p0 = st.plans[v]; if (p0 && p0.date) st.skip[v] = p0.date; delete st.plans[v]; S.holSure = null; S.holEd = null; holKeep(); toast('Taken off your calendar. The set stays here whenever you want it.'); rerender(true); return true; }
+    // BLD 1044a: Remove and Add Back for one dish of a set up holiday (its shopping and prep follow).
+    case 'holoff': case 'holback': { const [id, mid] = String(v).split('|'), s = holGet(id), p = holPlan(id), m = s && s.menu.find(x => x.id === mid); if (!s || !p || !m) return true;
+      const off = arr(p.off).filter(x => x !== mid && s.menu.some(y => y.id === x)); if (a === 'holoff'){ if (off.length >= s.menu.length - 1){ toast('Every set keeps at least one dish.'); return true; } off.push(mid); }
+      if (off.length) p.off = off; else delete p.off; p.u = Date.now(); holKeep();
+      toast(a === 'holoff' ? m.name + ' is off the menu, with its shopping and prep.' : m.name + ' is back on the menu, with its shopping and prep.'); rerender(true); return true; }
   }
   return false;
 }
@@ -6367,7 +6407,7 @@ function holIcs(stamp, e, fold){
     out.push(['BEGIN:VEVENT', 'UID:mh-hol-' + uidKey.replace(/[^a-z0-9-]/gi, '-') + '-' + when + '@growwithgrounded.com', 'DTSTAMP:' + stamp, 'DTSTART:' + when, 'DURATION:PT30M', 'SUMMARY:' + e('Tending: ' + title), 'DESCRIPTION:' + e(desc), 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + e(title), 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT'].map(fold).join('\r\n')); };
   Object.keys(st.plans).forEach(id => { const p = st.plans[id], s = G.get(id); if (!s || !p || !p.date || p.date < t) return;
     ev(id + '-shop', G.buyDate(id, p.date), 9.5, 'Shop for ' + s.name, 'Everything for ' + s.name + ' is on your Shopping List.');
-    G.tasks(id, p.date, p.pick).forEach(x => ev(id + '-' + x.i, x.date, x.daysBefore ? 16 : 9, x.title + (x.daysBefore ? ' (' + s.name + ')' : ''), s.name + (x.mins ? ', about ' + x.mins + ' minutes' : '') + '. Open Tending for the step by step guide.')); });
+    G.tasks(id, p.date, p.pick, p.off).forEach(x => ev(id + '-' + x.i, x.date, x.daysBefore ? 16 : 9, x.title + (x.daysBefore ? ' (' + s.name + ')' : ''), s.name + (x.mins ? ', about ' + x.mins + ' minutes' : '') + '. Open Tending for the step by step guide.')); });
   return out;
 }
 ACC.hol = 'a-kitchen'; SCN.hol = 'cook'; ITEM_ART.holiday = HOL_ART.day + '-sq';
@@ -6382,6 +6422,8 @@ document.addEventListener('input', e => { const t = e.target; if (!t || !t.datas
 .hj-holmenu details summary small{display:block;color:var(--ink-soft);font-size:13px;font-weight:400;margin-top:2px;}
 .hj-holgo{margin:-4px 0 14px;}.hj-holgo .tn-btn{max-width:100%;white-space:normal;text-align:left;}
 .hj-holup{display:grid;gap:12px;margin-bottom:14px;}
+.hj-holoff{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:10px 12px;margin:0 0 12px;border:1px dashed var(--line);border-radius:12px;}
+.hj-holoff span{min-width:0;overflow-wrap:anywhere;}.hj-holoff small{display:block;color:var(--ink-soft);font-size:13px;margin-top:2px;}
 .hj-holcard{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;}.hj-holcard p{white-space:pre-wrap;margin:6px 0 10px;}
 @media (max-width:520px){.hj-holtl li{grid-template-columns:1fr;gap:2px;}}
 `; document.head.appendChild(s); })();
@@ -6390,7 +6432,9 @@ Object.assign(window.GGHealth, {
   // BLD 896: Holiday Sets for hosts. holidays() -> {on, cards: [{id, name, date, away, planned, days, guests, kick, line, btn, key}]}.
   holidays(){ try { if (!H()) return null; holUse(); return {on: holSt().on.slice(), cards: holCards()}; } catch(e){ return null; } },
   holToggle(id){ if (!H()) return false; const r = holToggle(String(id || '')); rerender(true); return r; },
-  holOpen(id){ S.holId = id && holGet(id) ? id : null; S.holEd = null; }
+  holOpen(id){ S.holId = id && holGet(id) ? id : null; S.holEd = null; },
+  // BLD 1044a: Take It Off from a Home card (the Home asks twice first); the date is marked skipped so it stays off.
+  holClear(id){ const st = H() ? holSt() : null, p = st && st.plans[String(id || '')]; if (!p) return false; if (p.date) st.skip[id] = p.date; delete st.plans[id]; holKeep(); return true; }
 });
 // ---------- BLD 900, My Menu: add and swap recipes ----------
 // Chris, October 31, 2026: "if you chose a recipe.. you can add it to your calendar menu and add it to shopping list.. for ex i want to
@@ -6478,7 +6522,7 @@ function mmPlanned(d){
   const L = arr(din.lunches); if (L.length){ const i = lunchIx(d), x = L[i]; if (x) out.push({key: 'idea:lunches:' + i, meal: 'lunch', name: x.name, ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:lunches:' + i, x}); }
   return out;
 }
-const mmDinner = d => { const dn = dinnerFor(d); return dn && mmSwapOf(d, 'cook:' + dn.wk + ':' + dn.id) ? null : dn; };
+const mmDinner = d => { if (holDin(d)) return null; const dn = dinnerFor(d); return dn && mmSwapOf(d, 'cook:' + dn.wk + ':' + dn.id) ? null : dn; };   // BLD 1044a: a holiday dinner takes the plan dinner's place
 // Plain words for matching a Guide list's items to a recipe (its lines name stores and brands, so names rarely match exactly).
 const MM_STOP = new Set('fresh wild frozen large small medium whole raw cooked chopped minced sliced diced lean low no added organic boneless skinless and or of the a an with for plus to taste cup cups tbsp tsp lb lbs oz can cans pack bag dozen x extra virgin plain unsweetened natural light dark sodium free reduced pure baby mini thin thick peeled trimmed rinsed drained cut inch pieces piece into each about dinner night lunch lunches breakfast snack week weekly batch tonight sunday monday tuesday wednesday thursday friday saturday kirkland costco block part skim style bunch head jar jars packet packets package container bottle box loaf fillets fillet'.split(' '));
 const mmWords = t => new Set(mmKey(String(t || '').replace(/\d+/g, ' ')).split(' ').filter(w => w.length > 2 && !MM_STOP.has(w)));
@@ -6486,7 +6530,7 @@ const mmShare = (a, b) => { for (const w of a) if (b.has(w)) return true; return
 function mmRecWords(p){ const R = p.ref ? mmRecipe(p.ref) : null, x = R ? (R.x || R.r || {}) : p.x || {}, L = arr(x.ingredients).map(l => (mmParse(l) || {}).name || '').concat(arr(x.shop).map(g => g && g.name)); const w = new Set(); L.forEach(t => mmWords(t).forEach(v => w.add(v))); return w; }
 // Week n's swapped and still planned meals: null when nothing in that week is swapped.
 function mmHoldInfo(n){
-  const out = [], keep = []; mmWeekDays(n).forEach(d => mmPlanned(d).forEach(p => (mmSwapOf(d, p.key) ? out : keep).push(p)));
+  const out = [], keep = []; mmWeekDays(n).forEach(d => { const hd = holDin(d); mmPlanned(d).forEach(p => (mmSwapOf(d, p.key) || (hd && p.meal === 'dinner') ? out : keep).push(p)); });   // BLD 1044a: a holiday's plan dinner steps aside too
   if (!out.length) return null; const din = (APP() || {}).dinners || {};
   ['breakfasts', 'snacks'].forEach(t => arr(din[t]).forEach((x, i) => keep.push({name: x.name, ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:' + t + ':' + i, x})));
   return {out, keep, outN: new Set(out.map(p => p.name)), keepN: new Set(keep.map(p => p.name))};
