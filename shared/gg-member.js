@@ -513,6 +513,7 @@
     '.ggm-card{border:1px solid var(--line,#E2D8C3);border-left:4px solid var(--gold,#8B5E1A);border-radius:14px;padding:14px 16px;background:var(--card,#fff);color:var(--ink,#2C1810);box-sizing:border-box;max-width:100%}' +
     '.ggm-card b{display:block;font-size:1.05rem;margin:2px 0}.ggm-card small{display:block;color:var(--ink-soft,#6B5A4D);line-height:1.45}' +
     '.ggm-card .ggm-row{margin-top:10px}.ggm-card .ggm-b{padding:8px 14px;min-height:40px;font-size:.95rem}' +
+    '.ggm-card .ggm-book{margin-top:10px;padding-top:10px;border-top:1px solid var(--line,#E2D8C3);color:var(--ink,#2C1810)}.ggm-card .ggm-book code{font:700 .95rem/1.3 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em;background:color-mix(in srgb,var(--gold,#8B5E1A) 12%,transparent);border-radius:6px;padding:1px 6px;overflow-wrap:anywhere}.ggm-card .ggm-book a{color:inherit}' +
     '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggm-b:not(.l){color:#1F1A14}}:root[data-theme="dark"] .ggm-b:not(.l){color:#1F1A14}';
   function css() { if (document.getElementById('ggm-css')) return; var s = document.createElement('style'); s.id = 'ggm-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); }
   function kindName(k) { return KINDS[k] || 'Member'; }
@@ -530,10 +531,18 @@
     if (s.status === 'renew') return 'Membership has a fresh lock. Enter your code once more to keep going.';
     return 'Join Membership, or add your code here.';
   }
+  // BLD 1033 (Chris, November 21, 2026, "1"): the Member price on signed copies of In the End is a Stripe promotion code,
+  // shown only here, inside an open Membership (never during a trial, never to anyone else). The code is BOOK_MEMBER_CODE in
+  // shared/gg-books.js; while it is empty the line stays hidden.
+  function bookPerk() {
+    var C = window.GG_BOOKS || {}, c = typeof C.BOOK_MEMBER_CODE === 'string' ? C.BOOK_MEMBER_CODE.trim() : '';
+    if (ST.status !== 'member' || (REC && REC.trial) || !/^[A-Za-z0-9_]{3,40}$/.test(c)) return '';
+    return '<small class="ggm-book" data-ggm-book="1">Members: use code <code>' + esc(c) + '</code> at checkout for the Member price on signed copies. <a href="/books.html#get">See the Book</a></small>';
+  }
   function card(o) {
     css(); o = o || {};
     var on = ST.status === 'member', t = on || ST.status === 'start' || (REC && REC.trial) ? 'Membership' : 'Renew Membership';
-    return '<div class="ggm-card" data-ggm-card="1"><span class="ggm-ey">Grounded</span><b>' + esc(t) + '</b><small data-ggm-line="1">' + esc(statusLine()) + '</small>' +
+    return '<div class="ggm-card" data-ggm-card="1"><span class="ggm-ey">Grounded</span><b>' + esc(t) + '</b><small data-ggm-line="1">' + esc(statusLine()) + '</small>' + bookPerk() +
       '<div class="ggm-row">' + (on && REC && REC.trial ? '<a class="ggm-b" href="' + esc(JOIN) + '" data-ggm-see="1">Join Now</a><button type="button" class="ggm-b l" data-ggm="open">Membership on This Device</button>'
         : on ? '<button type="button" class="ggm-b l" data-ggm="open">Membership on This Device</button>'
         : ST.status === 'ended' && REC && REC.acct && REC.trial ? '<a class="ggm-b" href="' + esc(JOIN) + '" data-ggm-see="1">Join Now</a><button type="button" class="ggm-b l" data-ggm="open">I Have a Code</button>'
