@@ -4220,7 +4220,7 @@
   var KIT_SPACE = {
     get: function () {
       // BLD 957: Tending loads first when it is not on screen yet, so the kitchen always travels with a sync
-      if (kitOk() && !tendReady()) return loadTending().then(function () { if (!tendReady()) kitWhy('Tending could not open on this phone'); return tendReady() ? KIT_SPACE.get() : null; });
+      if (kitOk() && !tendReady()) return loadTending().then(function () { if (!tendReady()) kitWhy('Tending could not open on this device'); return tendReady() ? KIT_SPACE.get() : null; });
       if (!kitOk()) { kitWhy(!acctIn() ? 'not signed in' : 'open your profile first'); return null; }
       if (!tendReady() || !hasFn('kitchenCode')) { kitWhy('Tending is still loading'); return null; }
       // BLD 957: a phone that has not joined the Household kitchen yet (it has received another phone's kitchen) never
@@ -4275,8 +4275,8 @@
       }
       var ok = !!(info && !info.missing) && !!hCall('kitchenJoin', o.c), h = homeRec();
       h.kitHH = { in: o.c, out: hCall('kitchenCode') || '', at: Date.now(), err: ok ? 0 : 'missing' };
-      kitWhy(ok ? 'your menu matches the Household kitchen' : (o.lib ? 'the kitchen\'s recipes could not open here (' + (((kitDec(hCall('kitchenCode') || '') || {}).b) || 'none') + ')' : 'the kitchen came without its recipes; the phone that shares it needs the newest app'), ok);
-      return (took && GGP.save ? GGP.save(S.id) : Promise.resolve()).then(saveHome).then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } else toast('The Family Kitchen could not open on this phone yet. On the phone that shares it, tap Sync Now.'); });
+      kitWhy(ok ? 'your menu matches the Household kitchen' : (o.lib ? 'the kitchen\'s recipes could not open here (' + (((kitDec(hCall('kitchenCode') || '') || {}).b) || 'none') + ')' : 'the kitchen came without its recipes; the device that shares it needs the newest version'), ok);
+      return (took && GGP.save ? GGP.save(S.id) : Promise.resolve()).then(saveHome).then(function () { if (ok) { toast('Your Family Kitchen is up to date.'); render(); } else if (!isYoung(S.p)) toast('The Family Kitchen opens here once the device that shares it taps Sync Now.'); });
     }
   };
   var MKEYS = ['pid', 'lines', 'income', 'ideas', 'logs'];
@@ -5605,8 +5605,13 @@
   // BLD 976: the Welcome to The Grounded Way lessons (shared/learn-welcome.js gw-a, gw-t, gw-k) each have their own card painting.
   var GW_ART = ('gw-a-welcome gw-a-profile gw-a-four gw-a-checkin gw-a-today gw-a-grow gw-a-learn gw-a-tending gw-a-sober gw-a-settings ' +
     'gw-t-welcome gw-t-checkin gw-t-today gw-t-grow gw-t-learn gw-t-private gw-k-hello gw-k-mytree gw-k-checkin gw-k-watch gw-k-grownups').split(' ');
+  var OWN_CARD = ('mp-r-feelings mp-r-oops mp-r-sorry mp-r-turnoff as-r-right as-st-kind pn-r-right pn-st-angry-part pn-st-attention ' +
+    'gr-r-kindweeks gr-r-cozy gr-r-gather br-r-cool br-st-angry-part br-st-sleep br-st-attention ok-st-angry-part ok-st-sleep sq-st-sleep').split(' ');
   function lessonArt(app, id, i, title) {
     if (GW_ART.indexOf(String(id || '')) >= 0) return REP + id + '.webp';
+    // BLD 1038 (Chris, November 21, 2026: "a few of these videos don't have the images on the card yet"): the shelf lessons added in
+    // shared/learn-lessons.js open on their own painting; each card shows a 640 by 360 copy of it.
+    if (OWN_CARD.indexOf(String(id || '')) >= 0) return HERO + 'p/vid/' + app + '-' + id + '-card.webp';
     // BLD 986: a video with its own painted scenes shows its own first painting on the card.
     var own = planArt(app + ':' + id); if (own && !/\/(maple|aspen|pine|birch|oak|sequoia|willow|heartwood|grove)(-[a-z0-9]+)?\.webp/.test(own)) return own.replace(/(\/p\/vid\/[a-z0-9-]+)\.webp$/, '$1-card.webp');
     void i; var s = String(title || '');
