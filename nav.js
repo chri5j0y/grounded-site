@@ -199,7 +199,7 @@
   function wayBody() { return toolsBody(WAY_GROUPS); }
   // BLD 909: About holds Contact and Rates, so the top bar stays short. BLD 933: For Organizations lives only under Services.
   var ABOUT_ITEMS = [
-    { title: 'Books', desc: 'In the End: What Sitting with the Dying Taught Me about Living, December 21, 2026', href: HOME + '/books.html', icon: pic('/shared/books/in-the-end-cover-600.webp'), bg: '#E6E3EE' }, // BLD 1031
+    // BLD 1035: Books has its own place in the top bar now, so About keeps to the company.
     { title: 'About Us', desc: 'A life giving company: who we are and how we work', href: HOME + '/about.html', icon: pic('/shared/heroes/p/site-menu-tile-about-tile.webp'), bg: '#F1E6CC' },
     { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: pic('/shared/heroes/p/site-menu-tile-contact-tile.webp'), bg: '#F3E5CC' },
     { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: pic('/shared/heroes/p/site-menu-tile-rates-tile.webp'), bg: '#F1E6CC' }
@@ -349,6 +349,16 @@
     var about = links.filter(function (a) { return /^\s*about\s*$/i.test(a.textContent); })[0];
     var contact = links.filter(function (a) { return /^\s*contact\s*$/i.test(a.textContent); })[0];
     var st = document.createElement('style'); st.textContent = css + themed(GN_DARK); document.head.appendChild(st);
+    // BLD 1035 (Chris, November 21, 2026, "1"): Books takes Stories' place in the top bar; Grounded Stories lives in Resources.
+    // Every page's own menu already says Books; this also fixes any page still carrying the older Stories link.
+    links.forEach(function (a) {
+      if (/^\s*stories\s*$/i.test(a.textContent) && /stories(\.html)?$/.test(a.getAttribute('href') || '')) {
+        a.setAttribute('href', (a.getAttribute('href') || '').replace(/stories(\.html)?$/, 'books.html')); a.textContent = 'Books';
+        a.classList.remove('current'); a.removeAttribute('aria-current');
+      }
+      if (/^\s*books\s*$/i.test(a.textContent) && /^\/(books?)(\.html)?$|^\/book\/$/.test(location.pathname)) { a.classList.add('current'); a.setAttribute('aria-current', 'page'); }
+    });
+    if (link && here() === 'stories') { link.classList.add('current'); link.setAttribute('aria-current', 'page'); }
     // BLD 909: The Grounded Way gets its own menu, just before Tools
     var way = null;
     if (link) {
@@ -359,14 +369,14 @@
     }
     // Contact moves inside About (it stays in the footer and the Get in touch button too)
     if (about && contact) {
-      if (/(^|\s)current(\s|$)/.test(contact.className) || contact.getAttribute('aria-current') || /^\/(rates|books)(\.html)?$/.test(location.pathname)) { about.classList.add('current'); about.setAttribute('aria-current', 'page'); }
+      if (/(^|\s)current(\s|$)/.test(contact.className) || contact.getAttribute('aria-current') || /^\/rates(\.html)?$/.test(location.pathname)) { about.classList.add('current'); about.setAttribute('aria-current', 'page'); }
       contact.parentNode.removeChild(contact);
     }
     if (way) dropdown(menu, way, { id: 'gn-way-panel', label: 'The Grounded Way', aria: 'The Grounded Way', body: wayBody, all: ['What Is The Grounded Way?', HOME + '/the-grounded-way.html'], width: 640, cls: 'gn-svc' });
     if (link) dropdown(menu, link, { id: 'gn-panel', label: 'Resources', aria: 'Grounded resources', body: toolsBody, all: ['See All Resources', HOME + '/tools.html'], width: 640, cls: 'gn-svc' });
     if (svc) dropdown(menu, svc, { id: 'gn-svc-panel', label: 'Services', aria: 'Services', body: svcBody, all: ['See All Ceremonies', HOME + '/services.html'], width: 640, cls: 'gn-svc' });
     if (about && contact) dropdown(menu, about, { id: 'gn-about-panel', label: 'About', aria: 'About Grow With Grounded', body: aboutBody, all: ['Our Story', HOME + '/about.html#your-guides'], width: 420, cls: 'gn-svc gn-one' });
-    // one order on every site: The Grounded Way, Resources, Services, Stories, About
+    // one order on every site: The Grounded Way, Resources, Services, Books, About
     var tb = menu.querySelector('[aria-controls="gn-panel"]'), sb = menu.querySelector('[aria-controls="gn-svc-panel"]');
     if (tb && sb && (tb.compareDocumentPosition(sb) & Node.DOCUMENT_POSITION_PRECEDING)) tb.parentNode.insertBefore(sb, tb.nextSibling);
   }

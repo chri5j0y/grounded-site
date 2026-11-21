@@ -29,86 +29,162 @@
 <link rel="stylesheet" href="/style.css?v=b956">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"In the End","alternateName":"In the End: What Sitting with the Dying Taught Me about Living","author":{"@type":"Person","name":"Chris Joy"},"publisher":{"@type":"Organization","name":"Grow With Grounded","url":"https://growwithgrounded.com/"},"isbn":"9798982890207","bookFormat":"https://schema.org/Hardcover","numberOfPages":256,"datePublished":"2026-12-21","inLanguage":"en","image":"https://growwithgrounded.com/shared/books/in-the-end-cover.jpg","url":"https://growwithgrounded.com/books","description":"Forty true stories from the bedside: what sitting with the dying teaches us about living and loving well today."}</script>
 <style>
-/* BLD 1031: Books by Grow With Grounded (books.html, made by patches/bld1031/make_books_page.py in grounded-workshop). */
-.bks-hero{position:relative;overflow:hidden;color:#FFF6E6;padding:64px 0 72px;background:radial-gradient(120% 90% at 85% 10%,#3B4A78 0%,rgba(59,74,120,0) 60%),linear-gradient(160deg,#1E2440 0%,#2E2A3A 45%,#4A3320 100%);}
-.bks-hero-in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center;}
-.bks-hero .eyebrow{color:#FFD99A;}
-.bks-hero h1{font:700 clamp(52px,7vw,88px)/1 'Cormorant Garamond',Georgia,serif;margin:0;color:#FFF8EC;}
-.bks-subtitle{font:500 italic clamp(22px,2.6vw,30px)/1.25 'Cormorant Garamond',Georgia,serif;margin:10px 0 0;color:#FFF1D6;max-width:30ch;}
-.bks-by{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:15px;margin:16px 0 0;color:#FFE7BD;}
-.bks-one{font-size:19px;line-height:1.55;margin:18px 0 0;max-width:40ch;color:#F6EAD6;}
-.bks-acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:26px;}
+/* BLD 1035: Books by Grow With Grounded (books.html, made by patches/bld1035/make_books_page.py in grounded-workshop). StoryBrand order, a launch page with energy. */
+.bks-nw{white-space:nowrap;}
+#main>section{background:transparent;border-top:none;}
+#main>.bks-hero,#main>.bks-final{position:relative;overflow:hidden;color:#FFF6E6;background:radial-gradient(70% 70% at 78% 40%,rgba(227,178,90,.32) 0%,rgba(227,178,90,0) 60%),radial-gradient(120% 90% at 85% 0%,#3B4A78 0%,rgba(59,74,120,0) 60%),linear-gradient(165deg,#161B33 0%,#2A2540 40%,#4A3320 82%,#6A4622 100%);}
+.bks-hero{padding:72px 0 84px;}
+.bks-flies{position:absolute;inset:0;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.15) 0%,#000 55%);mask-image:linear-gradient(180deg,rgba(0,0,0,.15) 0%,#000 55%);background-image:radial-gradient(circle,rgba(255,226,140,.95) 0 1.5px,rgba(255,226,140,0) 5px),radial-gradient(circle,rgba(255,214,120,.85) 0 1.2px,rgba(255,214,120,0) 4px),radial-gradient(circle,rgba(255,236,170,.9) 0 2px,rgba(255,236,170,0) 6px),radial-gradient(circle,rgba(255,220,130,.7) 0 1px,rgba(255,220,130,0) 3.5px);background-size:523px 419px,389px 467px,701px 557px,293px 331px;background-position:61px 83px,233px 301px,417px 151px,141px 211px;animation:bks-glow 6s ease-in-out infinite alternate;}
+@keyframes bks-glow{from{opacity:.55;transform:translateY(0);}to{opacity:1;transform:translateY(-10px);}}
+@media (prefers-reduced-motion:reduce){.bks-flies{animation:none;}}
+.bks-hero-in{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center;}
+.bks-launch{display:inline-flex;align-items:center;gap:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;font-size:14.5px;color:#FFE3AE;background:rgba(255,255,255,.08);border:1px solid rgba(255,227,174,.35);border-radius:999px;padding:7px 16px;margin-bottom:22px;}
+.bks-launch-dot{width:9px;height:9px;border-radius:50%;background:#F2C46B;box-shadow:0 0 0 4px rgba(242,196,107,.25),0 0 14px #F2C46B;flex:0 0 auto;}
+.bks-hero h1{font:700 clamp(58px,8vw,104px)/.98 'Cormorant Garamond',Georgia,serif;margin:0;color:#FFF8EC;letter-spacing:-.5px;text-shadow:0 4px 30px rgba(0,0,0,.35);}
+.bks-subtitle{font:500 italic clamp(22px,2.6vw,31px)/1.25 'Cormorant Garamond',Georgia,serif;margin:12px 0 0;color:#FFE9C4;max-width:32ch;}
+.bks-by{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:15px;margin:18px 0 0;color:#F2C46B;}
+.bks-one{font-size:20px;line-height:1.55;margin:16px 0 0;max-width:40ch;color:#F6EAD6;}
+.bks-acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:28px;}
 .bks-acts .btn{margin:0;}
 .bks-quiet{color:#FFE7BD;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(255,231,189,.6);}
-.bks-when{margin:16px 0 0;font-size:16px;color:#EBDDC6;}
-.bks-hero .btn-primary{background:#E3B25A;color:#22180E;}
-.bks-hero .btn-primary:hover{background:#F0C474;}
-.bks-cover{perspective:1600px;display:flex;justify-content:center;}
-.bks-book{position:relative;width:100%;max-width:420px;transform:rotateY(-16deg) rotateX(3deg);transform-origin:40% 50%;border-radius:3px 6px 6px 3px;box-shadow:22px 26px 44px rgba(0,0,0,.45),4px 4px 10px rgba(0,0,0,.3);}
+.bks-quiet:hover{color:#fff;border-bottom-color:#fff;}
+.bks-when{margin:18px 0 0;font-size:16.5px;color:#EBDDC6;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;}
+.bks-when b{font-weight:600;}
+.bks-count{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;font-size:13.5px;color:#22180E;background:#F2C46B;border-radius:999px;padding:3px 12px;}
+.bks-count[hidden]{display:none;}
+.bks-hero .btn-primary,.bks-final .btn-primary{background:#E3B25A;color:#22180E;box-shadow:0 10px 26px rgba(227,178,90,.35);}
+.bks-hero .btn-primary:hover,.bks-final .btn-primary:hover{background:#F0C474;}
+.btn.bks-big{font-size:19px;padding:16px 34px;border-radius:999px;font-weight:700;letter-spacing:.2px;}
+.bks-cover{perspective:1800px;display:flex;justify-content:center;position:relative;}
+.bks-cover::before{content:"";position:absolute;left:12%;right:12%;bottom:-26px;height:40px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0));filter:blur(4px);}
+.bks-book{position:relative;width:100%;max-width:440px;transform:rotateY(-18deg) rotateX(4deg);transform-origin:40% 50%;border-radius:3px 6px 6px 3px;box-shadow:1px 0 0 #F4EEE2,3px 1px 0 #DCD3C2,5px 2px 0 #F2ECDF,7px 3px 0 #D6CCB9,9px 4px 0 #EEE7D8,11px 5px 0 #CFC4AF,30px 34px 54px rgba(0,0,0,.5),6px 6px 14px rgba(0,0,0,.3);transition:transform .5s ease;}
+.bks-cover:hover .bks-book{transform:rotateY(-10deg) rotateX(2deg);}
 .bks-book img{display:block;width:100%;height:auto;border-radius:3px 6px 6px 3px;}
-.bks-book::before{content:"";position:absolute;inset:0 auto 0 0;width:7%;border-radius:3px 0 0 3px;background:linear-gradient(90deg,rgba(0,0,0,.42),rgba(255,255,255,.16) 45%,rgba(0,0,0,.14) 75%,rgba(0,0,0,0));pointer-events:none;}
-.bks-book::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,rgba(255,255,255,.14),rgba(255,255,255,0) 40%);pointer-events:none;}
-.bks-why{padding:56px 0 48px;text-align:center;}
-.bks-lead-q{font:500 italic clamp(28px,3.4vw,40px)/1.2 'Cormorant Garamond',Georgia,serif;max-width:26ch;margin:0 auto 22px;text-wrap:balance;}
-.bks-back{max-width:62ch;margin:0 auto;}
-.bks-back p{font-size:19px;line-height:1.65;color:var(--ink-soft);margin:0 0 14px;}
-.bks-src{font-size:14.5px;color:var(--ink-soft);margin:10px 0 0;}
+.bks-book::before{content:"";position:absolute;inset:0 auto 0 0;width:7%;border-radius:3px 0 0 3px;background:linear-gradient(90deg,rgba(0,0,0,.45),rgba(255,255,255,.18) 45%,rgba(0,0,0,.14) 75%,rgba(0,0,0,0));pointer-events:none;}
+.bks-book::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,rgba(255,255,255,.16),rgba(255,255,255,0) 40%);pointer-events:none;}
+
+#main>.bks-stakes{background:linear-gradient(90deg,#8B5E1A,#A9772A 50%,#8B5E1A);color:#FFF8EC;padding:38px 0 40px;text-align:center;}
+.bks-stakes-line{font:600 italic clamp(28px,3.6vw,44px)/1.18 'Cormorant Garamond',Georgia,serif;margin:0 auto;max-width:26ch;text-wrap:balance;}
+.bks-stakes-sub{font-size:18.5px;line-height:1.55;margin:12px auto 0;max-width:56ch;color:#FBEBD0;}
+
+.bks-sec{padding:64px 0;}
+.bks-sec h2{font:600 clamp(32px,3.8vw,46px)/1.1 'Cormorant Garamond',Georgia,serif;text-align:center;max-width:24ch;margin:0 auto 18px;text-wrap:balance;}
+.bks-sec .eyebrow{text-align:center;}
+.bks-lead{font-size:19.5px;line-height:1.65;color:var(--ink-soft);max-width:62ch;margin:0 auto;text-align:center;}
+.bks-center{text-align:center;}
+.bks-src{font-size:14.5px;color:var(--ink-soft);margin:10px 0 0;text-align:center;}
 .bks-src a{color:inherit;}
-.bks-sec{padding:52px 0;}
-.bks-sec h2{font:600 clamp(30px,3.6vw,42px)/1.12 'Cormorant Garamond',Georgia,serif;text-align:center;max-width:24ch;margin:0 auto 22px;text-wrap:balance;}
-.bks-inside{background:var(--bg-deep);}
-.bks-three{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:980px;}
-.bks-three li{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px 20px;min-width:0;}
-.bks-three b{display:block;font:700 24px/1.15 'Cormorant Garamond',Georgia,serif;color:var(--ink);margin-bottom:6px;}
-.bks-three span{display:block;font-size:16.5px;line-height:1.55;color:var(--ink-soft);}
-.bks-three a{color:var(--gold);font-weight:600;}
-.bks-gal-h{font:600 28px/1.2 'Cormorant Garamond',Georgia,serif;text-align:center;margin:40px 0 18px;}
-.bks-gallery{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
-.bks-gallery li{margin:0;min-width:0;}
-.bks-gallery figure{margin:0;}
-.bks-gallery img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:14px;box-shadow:0 8px 20px rgba(44,24,16,.12);}
-.bks-gallery figcaption{margin-top:8px;font:600 italic 18px/1.25 'Cormorant Garamond',Georgia,serif;color:var(--ink);text-align:center;}
-.bks-guide-in{max-width:760px;text-align:center;}
-.bks-guide-in p{font-size:18.5px;line-height:1.6;color:var(--ink-soft);margin:0 auto 12px;max-width:60ch;}
-.bks-guide-in h2{margin-bottom:16px;}
-.bks-guide{border-top:1px solid var(--line);}
-.bks-plan{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:980px;}
-.bks-plan li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0;font-size:17px;line-height:1.5;color:var(--ink-soft);}
-.bks-plan li b:not(.bks-n){color:var(--ink);display:block;font:700 22px/1.2 'Cormorant Garamond',Georgia,serif;margin-bottom:2px;}
-.bks-n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--gold);color:#fff;font-weight:700;font-size:17px;flex:0 0 auto;}
-.bks-excerpt{background:var(--bg-deep);}
-.bks-ex-in{display:grid;grid-template-columns:340px minmax(0,1fr);gap:36px;align-items:start;}
-.bks-ex-in>img{width:100%;height:auto;border-radius:16px;box-shadow:0 10px 26px rgba(44,24,16,.14);}
-.bks-excerpt h2{text-align:left;margin:0 0 16px;max-width:none;}
-.bks-ex-text p{font:400 19px/1.7 Georgia,'Times New Roman',serif;color:var(--ink);margin:0 0 14px;max-width:62ch;}
-.bks-ex-more{font-style:italic;color:var(--ink-soft);margin:6px 0 0;}
-.bks-get h2{margin-bottom:24px;}
-.bks-ways{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;max-width:980px;margin:0 auto;}
-.bks-way{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:10px;min-width:0;}
+.bks-gifts{list-style:none;margin:36px auto 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:1040px;}
+.bks-gifts li{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 24px 26px;min-width:0;box-shadow:0 10px 28px rgba(44,24,16,.07);}
+.bks-gift-n{display:block;font-variant-numeric:lining-nums;font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.bks-gifts b{display:block;font:700 26px/1.15 'Cormorant Garamond',Georgia,serif;color:var(--ink);margin-bottom:8px;}
+.bks-gifts span:not(.bks-gift-n){display:block;font-size:17px;line-height:1.55;color:var(--ink-soft);}
+
+#main>.bks-quote{background:var(--bg-deep);padding:56px 0;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.bks-quote figure{margin:0 auto;max-width:900px;}
+.bks-quote blockquote{margin:0;position:relative;}
+.bks-quote blockquote::before{content:"\201C";display:block;font:700 96px/0.6 'Cormorant Garamond',Georgia,serif;color:var(--gold);opacity:.55;margin-bottom:14px;}
+.bks-quote blockquote p{font:500 italic clamp(30px,4vw,50px)/1.18 'Cormorant Garamond',Georgia,serif;color:var(--ink);margin:0;text-wrap:balance;}
+.bks-quote figcaption{margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:14px;color:var(--gold);}
+
+.bks-guide-in{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:center;max-width:1080px;}
+.bks-guide-text .eyebrow,.bks-guide-text h2,.bks-guide-text .bks-lead{text-align:left;margin-left:0;}
+.bks-guide-text p{font-size:18.5px;line-height:1.65;color:var(--ink-soft);margin:0 0 14px;max-width:60ch;}
+.bks-guide-text .bks-lead{color:var(--ink);font-size:20px;margin-bottom:16px;}
+.bks-facts{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
+.bks-facts li{display:flex;align-items:center;gap:18px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:16px;padding:16px 20px;min-width:0;}
+.bks-facts b{font:700 52px/1 'Cormorant Garamond',Georgia,serif;font-variant-numeric:lining-nums;color:var(--gold);min-width:1.4em;text-align:center;}
+.bks-facts span{font-size:17px;line-height:1.4;color:var(--ink);}
+
+#main>.bks-plan-sec{background:var(--bg-deep);}
+.bks-plan{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:1040px;}
+.bks-plan li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;min-width:0;font-size:17px;line-height:1.5;color:var(--ink-soft);}
+.bks-plan li b:not(.bks-n){color:var(--ink);display:block;font:700 23px/1.2 'Cormorant Garamond',Georgia,serif;margin-bottom:2px;}
+.bks-n{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--gold);color:#fff;font-weight:700;font-size:18px;flex:0 0 auto;}
+.bks-cta-row{display:flex;justify-content:center;margin-top:30px;}
+.bks-cta-row .btn{margin:0;}
+.bks-cta-left{justify-content:flex-start;margin-top:20px;}
+
+.bks-story{padding:56px 0;}
+.bks-story p{max-width:62ch;margin:0 auto;text-align:center;font:400 italic clamp(21px,2.2vw,25px)/1.6 'Cormorant Garamond',Georgia,serif;color:var(--ink);}
+
+#main>.bks-get{background:radial-gradient(80% 60% at 50% 0%,rgba(217,168,71,.16),rgba(217,168,71,0) 70%);border-top:1px solid var(--line);}
+.bks-ways{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;max-width:1040px;margin:10px auto 0;}
+.bks-way{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 28px 28px;display:flex;flex-direction:column;gap:10px;min-width:0;box-shadow:0 12px 30px rgba(44,24,16,.08);}
 .bks-way[hidden],.bks-get [hidden]{display:none !important;}
-.bks-way-main{border-top:5px solid var(--gold);}
-.bks-way h3{font:700 26px/1.15 'Cormorant Garamond',Georgia,serif;margin:0;}
+.bks-way-main{border:2px solid var(--gold);}
+.bks-tag{display:inline-block;align-self:flex-start;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;font-size:13.5px;color:#fff;background:var(--gold);border-radius:999px;padding:4px 12px;}
+.bks-tag-soft{background:var(--bg-deep);color:var(--gold);}
+.bks-way h3{font:700 29px/1.15 'Cormorant Garamond',Georgia,serif;margin:4px 0 0;}
 .bks-way p{margin:0;font-size:17px;line-height:1.55;color:var(--ink-soft);}
-.bks-way .btn{align-self:flex-start;margin-top:6px;}
-.bks-price{font:700 36px/1.1 'Cormorant Garamond',Georgia,serif !important;color:var(--ink) !important;}
+.bks-way .btn{align-self:flex-start;margin-top:8px;}
+.bks-price{font:700 42px/1.1 'Cormorant Garamond',Georgia,serif !important;color:var(--ink) !important;}
 .bks-price small{font:500 16px 'Barlow',sans-serif;color:var(--ink-soft);}
 .bks-stores{display:flex;flex-wrap:wrap;gap:10px;}
 .bks-stores .btn{margin:0;}
 .bks-soon{font-style:italic;}
-.bks-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:980px;margin:26px auto 0;padding:0;}
+.bks-isbn{font-size:15px !important;letter-spacing:.3px;}
+
+#main>.bks-excerpt{background:var(--bg-deep);}
+.bks-ex-in{display:grid;grid-template-columns:360px minmax(0,1fr);gap:40px;align-items:start;max-width:1080px;}
+.bks-ex-in>img{width:100%;height:auto;border-radius:18px;box-shadow:0 14px 34px rgba(44,24,16,.18);position:sticky;top:96px;}
+.bks-excerpt .eyebrow,.bks-excerpt h2,.bks-excerpt .bks-src{text-align:left;margin-left:0;}
+.bks-excerpt h2{margin:0 0 16px;max-width:none;}
+.bks-ex-text p{font:400 19px/1.75 Georgia,'Times New Roman',serif;color:var(--ink);margin:0 0 14px;max-width:62ch;}
+.bks-ex-text p:first-child::first-letter{float:left;font:700 64px/.8 'Cormorant Garamond',Georgia,serif;color:var(--gold);padding:6px 8px 0 0;}
+.bks-ex-more{font-style:italic;color:var(--ink-soft);margin:6px 0 0;}
+
+.bks-inside h2{max-width:26ch;}
+.bks-mosaic{list-style:none;margin:34px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(0,auto);gap:14px;}
+.bks-mosaic li{margin:0;min-width:0;position:relative;border-radius:16px;overflow:hidden;box-shadow:0 10px 26px rgba(44,24,16,.14);aspect-ratio:3/2;}
+.bks-mosaic li.bks-big-tile{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;}
+.bks-mosaic figure{margin:0;height:100%;}
+.bks-mosaic img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+.bks-mosaic li:hover img{transform:scale(1.04);}
+.bks-mosaic figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 10px;font:600 italic 18px/1.2 'Cormorant Garamond',Georgia,serif;color:#FFF8EC;background:linear-gradient(0deg,rgba(20,14,8,.78),rgba(20,14,8,0));text-shadow:0 1px 4px rgba(0,0,0,.6);}
+.bks-mosaic li.bks-big-tile figcaption{font-size:24px;padding:40px 20px 14px;}
+.bks-parts-wrap{max-width:1040px;margin:44px auto 0;}
+.bks-parts-h{font:600 30px/1.2 'Cormorant Garamond',Georgia,serif;text-align:center;margin:0 0 18px;}
+.bks-parts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.bks-parts li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:0;}
+.bks-parts small{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;font-size:13px;color:var(--gold);}
+.bks-parts b{display:block;font:700 22px/1.2 'Cormorant Garamond',Georgia,serif;color:var(--ink);margin-top:2px;}
+.bks-parts span{display:block;font-size:15.5px;color:var(--ink-soft);margin-top:2px;}
+#main>.bks-bonus{background:var(--bg-deep);}
+.bks-bonus-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:center;max-width:1040px;}
+.bks-bonus h2{text-align:left;margin:12px 0 12px;}
+.bks-bonus p{font-size:18.5px;line-height:1.6;color:var(--ink-soft);margin:0;}
+.bks-bonus a{color:var(--gold);font-weight:600;}
+.bks-prac{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px;}
+.bks-prac li{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:16.5px;color:var(--ink);}
+
+.bks-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:1040px;margin:10px auto 0;padding:0;}
 .bks-details div{background:var(--bg-deep);border-radius:14px;padding:12px 14px;min-width:0;}
 .bks-details dt{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;font-size:13.5px;color:var(--gold);}
 .bks-details dd{margin:2px 0 0;font-size:16.5px;line-height:1.4;color:var(--ink);overflow-wrap:anywhere;}
-.bks-more{padding:36px 0 56px;text-align:center;border-top:1px solid var(--line);}
+
+.bks-final{padding:64px 0;}
+.bks-final-in{position:relative;display:grid;grid-template-columns:260px minmax(0,1fr);gap:44px;align-items:center;max-width:900px;}
+.bks-final-in>img{width:100%;height:auto;border-radius:4px 7px 7px 4px;box-shadow:24px 28px 48px rgba(0,0,0,.5);transform:rotate(-3deg);}
+.bks-final h2{font:700 clamp(48px,6vw,72px)/1 'Cormorant Garamond',Georgia,serif;margin:0;color:#FFF8EC;}
+.bks-final-when{margin:14px 0 0;font-size:17px;color:#EBDDC6;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;}
+.bks-final .bks-acts{margin-top:22px;}
+
+.bks-more{padding:40px 0 60px;text-align:center;}
 .bks-more h2{font:600 30px/1.2 'Cormorant Garamond',Georgia,serif;margin:0 0 10px;}
 .bks-more p{max-width:60ch;margin:0 auto;font-size:18px;color:var(--ink-soft);}
 .bks-more a{color:var(--gold);font-weight:600;}
-@media (max-width:900px){.bks-gallery{grid-template-columns:repeat(2,minmax(0,1fr));}.bks-details{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media (max-width:820px){.bks-hero-in{grid-template-columns:1fr;gap:34px;text-align:center;}.bks-subtitle,.bks-one{margin-left:auto;margin-right:auto;}.bks-acts{justify-content:center;}.bks-book{max-width:340px;transform:rotateY(-10deg) rotateX(2deg);}.bks-three,.bks-plan{grid-template-columns:1fr;}.bks-ways{grid-template-columns:1fr;}.bks-ex-in{grid-template-columns:1fr;gap:22px;}.bks-ex-in>img{position:static;max-width:420px;margin:0 auto;}}
-@media (max-width:600px){.bks-hero{padding:40px 0 52px;}.bks-sec{padding:40px 0;}.bks-gallery{gap:12px;}.bks-gallery figcaption{font-size:16px;}.bks-book{max-width:72vw;}.bks-way .btn{align-self:stretch;text-align:center;}.bks-ex-text p{font-size:18px;}}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bks-gallery img,:root:not([data-theme="light"]) .bks-ex-in>img{box-shadow:0 8px 22px rgba(0,0,0,.45);}}
-:root[data-theme="dark"] .bks-gallery img,:root[data-theme="dark"] .bks-ex-in>img{box-shadow:0 8px 22px rgba(0,0,0,.45);}
-.bks-nw{white-space:nowrap;}
+
+@media (max-width:980px){.bks-mosaic{grid-template-columns:repeat(2,minmax(0,1fr));}.bks-mosaic li.bks-big-tile{grid-row:auto;aspect-ratio:3/2;}.bks-details{grid-template-columns:repeat(2,minmax(0,1fr));}.bks-parts{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:820px){.bks-hero-in{grid-template-columns:1fr;gap:40px;text-align:center;}.bks-subtitle,.bks-one{margin-left:auto;margin-right:auto;}.bks-acts,.bks-when{justify-content:center;}.bks-book{max-width:340px;transform:rotateY(-12deg) rotateX(3deg);}
+  .bks-gifts,.bks-plan{grid-template-columns:1fr;}.bks-ways{grid-template-columns:1fr;}.bks-guide-in{grid-template-columns:1fr;gap:28px;}.bks-ex-in{grid-template-columns:1fr;gap:24px;}.bks-ex-in>img{position:static;max-width:420px;margin:0 auto;}
+  .bks-bonus-in{grid-template-columns:1fr;gap:22px;}.bks-final-in{grid-template-columns:1fr;text-align:center;gap:28px;}.bks-final-in>img{max-width:200px;margin:0 auto;}.bks-final-when,.bks-final .bks-acts{justify-content:center;}}
+@media (max-width:600px){.bks-hero{padding:40px 0 60px;}.bks-sec{padding:46px 0;}.bks-launch{font-size:12.5px;letter-spacing:1.8px;padding:6px 12px;}.bks-book{max-width:68vw;}.bks-way .btn,.bks-acts .btn{align-self:stretch;text-align:center;}.bks-acts .btn{width:100%;}.bks-ex-text p{font-size:18px;}
+  .bks-mosaic{gap:10px;}.bks-mosaic figcaption{font-size:15.5px;padding:24px 10px 8px;}.bks-mosaic li.bks-big-tile figcaption{font-size:19px;}.bks-parts{grid-template-columns:1fr;}.bks-facts b{font-size:44px;}.bks-way{padding:22px 20px 24px;}.bks-cta-row .btn{width:100%;text-align:center;}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bks-mosaic li,:root:not([data-theme="light"]) .bks-ex-in>img,:root:not([data-theme="light"]) .bks-gifts li,:root:not([data-theme="light"]) .bks-way{box-shadow:0 10px 26px rgba(0,0,0,.45);}:root:not([data-theme="light"]) #main>.bks-stakes{background:linear-gradient(90deg,#5E3F12,#7A5419 50%,#5E3F12);}}
+:root[data-theme="dark"] .bks-mosaic li,:root[data-theme="dark"] .bks-ex-in>img,:root[data-theme="dark"] .bks-gifts li,:root[data-theme="dark"] .bks-way{box-shadow:0 10px 26px rgba(0,0,0,.45);}
+:root[data-theme="dark"] #main>.bks-stakes{background:linear-gradient(90deg,#5E3F12,#7A5419 50%,#5E3F12);}
+.bks-parts-lead{margin:-6px auto 18px;font-size:17.5px;}
 </style>
 </head>
 <body>
@@ -116,72 +192,122 @@
 <header class="topbar"><div class="wrap topbar-inner">
   <a class="brand" href="/index.html" aria-label="Grow With Grounded home"><svg class="brand-icon" aria-hidden="true" focusable="false" viewBox="0 0 3200 3536" preserveAspectRatio="xMidYMid meet"><use href="/shared/marks/grounded-logo.svg?v=b788#icon"/></svg> <span class="brand-name">Grow With Grounded<span class="tm" aria-hidden="true">&trade;</span></span> </a>
   <button class="menu-btn" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <nav class="site-menu" id="site-menu" aria-label="Main"><a href="/index.html">Home</a><a href="/tools.html">Resources</a><a href="/services.html">Services</a><a href="/stories.html">Stories</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav>
+  <nav class="site-menu" id="site-menu" aria-label="Main"><a href="/index.html">Home</a><a href="/tools.html">Resources</a><a href="/services.html">Services</a><a href="/books.html" class="current" aria-current="page">Books</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav>
 </div></header>
 <main id="main">
-<!-- BLD 1031 Books (StoryBrand order): header, why it matters (the back cover), what is inside with the paintings, the guide (the author), the plan, the story (the opening pages), the choices (How to Get It and the details), then more. -->
-<section class="bks-hero" aria-labelledby="bks-title"><div class="wrap bks-hero-in">
-  <div class="bks-hero-text">
-    <div class="eyebrow">Books by Grow With Grounded</div>
-    <h1 id="bks-title">In the End</h1>
-    <p class="bks-subtitle"><span class="bks-nw">What Sitting with the Dying</span> <span class="bks-nw">Taught Me about Living</span></p>
-    <p class="bks-by">By Chris Joy</p>
-    <p class="bks-one">Forty true stories from the bedside to help you live and love well today.</p>
-    <div class="bks-acts"><a class="btn btn-primary" href="#get">Get the Book</a><a class="bks-quiet" href="#opening">Read the Opening</a></div>
-    <p class="bks-when">Hardcover. Arrives December 21, 2026.</p>
+<!-- BLD 1035 Books (StoryBrand, Chris, November 4 and 21, 2026): header, stakes, value, the guide, the plan, the story, choices and price, then everything else (Read the Opening, a look inside, Practices for the Road, the details, the reader page). Made by patches/bld1035/make_books_page.py in grounded-workshop. -->
+
+<!-- The header: what it is, how it makes life better, one main button. -->
+<section class="bks-hero" aria-labelledby="bks-title">
+  <span class="bks-flies" aria-hidden="true"></span>
+  <div class="wrap bks-hero-in">
+    <div class="bks-hero-text">
+      <div class="bks-launch"><span class="bks-launch-dot" aria-hidden="true"></span><span>A New Book from Grow With Grounded</span></div>
+      <h1 id="bks-title"><span class="bks-nw">In the End</span></h1>
+      <p class="bks-subtitle"><span class="bks-nw">What Sitting with the Dying</span> <span class="bks-nw">Taught Me about Living</span></p>
+      <p class="bks-by">By Chris Joy</p>
+      <p class="bks-one">Forty true stories from the bedside to help you live and love well today.</p>
+      <div class="bks-acts"><a class="btn btn-primary bks-big" href="#get">Get the Book</a><a class="bks-quiet" href="#opening">Read the Opening</a></div>
+      <p class="bks-when"><b>Hardcover. Arrives December 21, 2026.</b> <span class="bks-count" data-bks-count hidden></span></p>
+    </div>
+    <div class="bks-cover"><div class="bks-book"><img src="/shared/books/in-the-end-cover-600.webp" srcset="/shared/books/in-the-end-cover-600.webp 600w, /shared/books/in-the-end-cover-1200.webp 1200w" sizes="(max-width:820px) 70vw, 440px" alt="The cover of In the End by Chris Joy: two rocking chairs on a farmhouse porch at dusk, a quilt over one chair, fireflies over the field." width="600" height="600" fetchpriority="high"></div></div>
   </div>
-  <div class="bks-cover"><div class="bks-book"><img src="/shared/books/in-the-end-cover-600.webp" srcset="/shared/books/in-the-end-cover-600.webp 600w, /shared/books/in-the-end-cover-1200.webp 1200w" sizes="(max-width:760px) 72vw, 420px" alt="The cover of In the End by Chris Joy: two rocking chairs on a farmhouse porch at dusk, a quilt over one chair, fireflies over the field." width="600" height="600" fetchpriority="high"></div></div>
+</section>
+
+<!-- Stakes (Chris to approve) -->
+<section class="bks-stakes" aria-label="Why it matters"><div class="wrap">
+  <p class="bks-stakes-line">Most of us wait too long to say what matters.</p>
+  <p class="bks-stakes-sub">The people in these rooms knew how to say it while there was time. Their stories can teach you too.</p>
 </div></section>
 
-<section class="bks-why" aria-labelledby="bks-why-h"><div class="wrap">
-  <h2 id="bks-why-h" class="bks-lead-q">What if the room where a life ends could teach us how to live?</h2>
-  <div class="bks-back">
-    <p>Chris Joy has spent years at the bedside, in farmhouses and memory care, ICU rooms and small apartments. He came to offer presence. He left with lessons. Again and again, the people there wanted one gift: permission to grieve. To say what matters. To pray their own way. To let go.</p>
-    <p>Forty stories, one at a time. Read one, sit with it, then go love your people while the day is still yours.</p>
-  </div>
+<!-- Value: how life gets better -->
+<section class="bks-sec bks-value" aria-labelledby="bks-value-h"><div class="wrap">
+  <div class="eyebrow">Why Read It</div>
+  <h2 id="bks-value-h">What if the room where a life ends could teach us how to live?</h2>
+  <p class="bks-lead">Chris Joy has spent years at the bedside, in farmhouses and memory care, ICU rooms and small apartments. He came to offer presence. He left with lessons. Again and again, the people there wanted one gift: permission to grieve. To say what matters. To pray their own way. To let go.</p>
   <p class="bks-src">From the back cover.</p>
-</div></section>
-
-<section class="bks-sec bks-inside" aria-labelledby="bks-in-h"><div class="wrap">
-  <h2 id="bks-in-h">What you will find inside.</h2>
-  <ul class="bks-three">
-    <li><b>Forty True Stories</b><span>Moments from farmhouses and memory care, ICU rooms and small apartments, each one short enough to read in a single sitting.</span></li>
-    <li><b>Practices for the Road</b><span>Simple ways to come back to center, with short guided videos on the <a href="/book">reader page</a>.</span></li>
-    <li><b>Paintings That Tell the Story</b><span>Gentle oil paintings of light, places, and quiet rooms beside the stories.</span></li>
-  </ul>
-  <h3 class="bks-gal-h">A look inside.</h3>
-  <ul class="bks-gallery">
-    <li><figure><img src="/shared/books/ite-divine-sign-480.webp" srcset="/shared/books/ite-divine-sign-480.webp 480w, /shared/books/ite-divine-sign-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="An eagle in flight over a country road and a small car, golden fields on each side." width="480" height="480" loading="lazy" decoding="async"><figcaption>Divine Sign</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-drift-away-480.webp" srcset="/shared/books/ite-drift-away-480.webp 480w, /shared/books/ite-drift-away-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="A river at sunrise beside a small white church, birds over the water." width="480" height="480" loading="lazy" decoding="async"><figcaption>Drift Away</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-beyond-six-months-480.webp" srcset="/shared/books/ite-beyond-six-months-480.webp 480w, /shared/books/ite-beyond-six-months-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="A person walking a path up a flowered hill toward one great tree at sunrise." width="480" height="480" loading="lazy" decoding="async"><figcaption>Beyond Six Months</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-dance-of-particles-480.webp" srcset="/shared/books/ite-dance-of-particles-480.webp 480w, /shared/books/ite-dance-of-particles-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="A woman resting in an armchair by a moonlit window, a lamp glowing beside her." width="480" height="480" loading="lazy" decoding="async"><figcaption>The Impossible Dance of Particles</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-enlightenment-480.webp" srcset="/shared/books/ite-enlightenment-480.webp 480w, /shared/books/ite-enlightenment-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="Two people walking a leafy path beside an old stone wall in autumn light." width="480" height="480" loading="lazy" decoding="async"><figcaption>Enlightenment</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-the-part-that-laughs-480.webp" srcset="/shared/books/ite-the-part-that-laughs-480.webp 480w, /shared/books/ite-the-part-that-laughs-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="A garden doorway framed in flowers, opening into a warm room." width="480" height="480" loading="lazy" decoding="async"><figcaption>The Part That Laughs</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-tell-them-i-love-them-480.webp" srcset="/shared/books/ite-tell-them-i-love-them-480.webp 480w, /shared/books/ite-tell-them-i-love-them-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="A man standing under a golden autumn tree outside a low brick building." width="480" height="480" loading="lazy" decoding="async"><figcaption>Tell Them I Love Them</figcaption></figure></li>
-    <li><figure><img src="/shared/books/ite-my-boundaries-have-gates-480.webp" srcset="/shared/books/ite-my-boundaries-have-gates-480.webp 480w, /shared/books/ite-my-boundaries-have-gates-900.webp 900w" sizes="(max-width:900px) 46vw, 240px" alt="An open white picket gate on a stone path to a farmhouse at sunrise." width="480" height="480" loading="lazy" decoding="async"><figcaption>My Boundaries Have Gates</figcaption></figure></li>
+  <ul class="bks-gifts">
+    <li><span class="bks-gift-n" aria-hidden="true">01</span><b>Say What Matters</b><span>Words of love and repair, said today, while the day is still yours.</span></li>
+    <li><span class="bks-gift-n" aria-hidden="true">02</span><b>Peace with the Big Questions</b><span>Faith, doubt, and everything in-between, met with honesty and calm.</span></li>
+    <li><span class="bks-gift-n" aria-hidden="true">03</span><b>Presence for Your People</b><span>Stories that show you how to sit with the people you love, in every season.</span></li>
   </ul>
 </div></section>
 
+<!-- The pull quote: the last lines of the back cover -->
+<section class="bks-quote" aria-label="From the back cover"><div class="wrap">
+  <figure>
+    <blockquote><p>Read one, sit with it, then go love your people while the day is still yours.</p></blockquote>
+    <figcaption>From the back cover of <i>In the End</i></figcaption>
+  </figure>
+</div></section>
+
+<!-- The guide: empathy and authority; the reader is the hero -->
 <section class="bks-sec bks-guide" aria-labelledby="bks-guide-h"><div class="wrap bks-guide-in">
-  <div>
+  <div class="bks-guide-text">
     <div class="eyebrow">About the Author</div>
     <h2 id="bks-guide-h">Written from years at the bedside.</h2>
+    <p class="bks-lead">Love and loss come to every family. This book meets you there, one gentle story at a time, so you can face your own seasons with more courage and more love.</p>
     <p>Chris Joy is a chaplain and the co-founder of Grow With Grounded. He has served at the bedside in hospice, in the ICU, and on a behavioral health unit. He lives in St.&nbsp;Cloud, Minnesota, with his family.</p>
     <p>In the End is the first book from Grow With Grounded, where the Grounded team walks with people and families through every season of life.</p>
   </div>
+  <ul class="bks-facts" aria-label="The book at a glance">
+    <li><b>40</b><span>True stories from the bedside</span></li>
+    <li><b>6</b><span>Parts, from Showing Up to The Chaplain&rsquo;s Own Heart</span></li>
+    <li><b>9</b><span>Practices for the Road, the bonus at the back</span></li>
+  </ul>
 </div></section>
 
-<section class="bks-sec" aria-labelledby="bks-plan-h"><div class="wrap">
+<!-- The plan -->
+<section class="bks-sec bks-plan-sec" aria-labelledby="bks-plan-h"><div class="wrap">
   <h2 id="bks-plan-h">Three simple steps.</h2>
   <ol class="bks-plan">
     <li><b class="bks-n" aria-hidden="true">1</b><span><b>Get your copy.</b> A signed hardcover, or from your favorite bookstore.</span></li>
     <li><b class="bks-n" aria-hidden="true">2</b><span><b>Read one story at a time.</b> Sit with it for a moment.</span></li>
     <li><b class="bks-n" aria-hidden="true">3</b><span><b>Go love your people.</b> While the day is still yours.</span></li>
   </ol>
+  <div class="bks-cta-row"><a class="btn btn-primary bks-big" href="#get">Get the Book</a></div>
 </div></section>
 
+<!-- The story: life after -->
+<section class="bks-story" aria-label="Picture this"><div class="wrap">
+  <p>Picture a quiet evening this winter, the book open in your lap. One story, a few slow minutes, and then you pick up the phone and say the thing you have been meaning to say. Tomorrow, another story. Little by little, the lessons from those rooms become the way you live and love.</p>
+</div></section>
+
+<!-- Choices and price -->
+<section id="get" class="bks-sec bks-get" aria-labelledby="bks-get-h"><div class="wrap">
+  <div class="eyebrow">Get the Book</div>
+  <h2 id="bks-get-h">How to Get It</h2>
+  <div class="bks-ways">
+    <article class="bks-way bks-way-main" data-gg-book="preorder-card" hidden>
+      <div class="bks-tag">Signed Hardcover</div>
+      <h3>A copy signed by Chris.</h3>
+      <p class="bks-price"><span data-gg-book="price">$39.99</span> <small>plus shipping, in the United States</small></p>
+      <p>Chris signs each copy and ships it to you as soon as the first printing arrives. A lasting gift for someone you love.</p>
+      <a class="btn btn-primary bks-big" data-gg-book="preorder" href="#get" hidden>Pre-order a Signed Copy</a>
+    </article>
+    <article class="bks-way bks-way-main" data-gg-book="arrives">
+      <div class="bks-tag">Coming December 21, 2026</div>
+      <h3><span class="bks-nw">In the End</span> arrives December 21, 2026.</h3>
+      <p>Signed copies from Chris and the store listings open right here soon. Until then, enjoy the opening pages.</p>
+      <a class="btn btn-primary" href="#opening">Read the Opening</a>
+    </article>
+    <article class="bks-way">
+      <div class="bks-tag bks-tag-soft">Bookstores</div>
+      <h3>From your favorite bookstore.</h3>
+      <div class="bks-stores">
+        <a class="btn btn-secondary" data-gg-store="bookshop" href="#get" hidden>Bookshop.org</a>
+        <a class="btn btn-secondary" data-gg-store="amazon" href="#get" hidden>Amazon</a>
+        <a class="btn btn-secondary" data-gg-store="bn" href="#get" hidden>Barnes and Noble</a>
+      </div>
+      <p class="bks-soon" data-gg-book="stores-soon">Bookshop.org, Amazon, and Barnes and Noble: coming soon.</p>
+      <p class="bks-isbn">ISBN 979-8-9828902-0-7</p>
+    </article>
+  </div>
+</div></section>
+
+<!-- Everything else: Read the Opening -->
 <section id="opening" class="bks-sec bks-excerpt" aria-labelledby="bks-ex-h"><div class="wrap bks-ex-in">
-  <img src="/shared/books/ite-grounded-in-coffee-480.webp" srcset="/shared/books/ite-grounded-in-coffee-480.webp 480w, /shared/books/ite-grounded-in-coffee-900.webp 900w" sizes="(max-width:760px) 92vw, 340px" alt="A painting of a small blue car pulled over beside a golden field under a bright sky." width="480" height="480" decoding="async">
+  <img src="/shared/books/ite-grounded-in-coffee-480.webp" srcset="/shared/books/ite-grounded-in-coffee-480.webp 480w, /shared/books/ite-grounded-in-coffee-900.webp 900w" sizes="(max-width:820px) 92vw, 360px" alt="A painting of a small blue car pulled over beside a golden field under a bright sky." width="480" height="480" loading="lazy" decoding="async">
   <div>
     <div class="eyebrow">Read the Opening</div>
     <h2 id="bks-ex-h">Grounded in Coffee</h2>
@@ -193,37 +319,56 @@
       <p>I had only a few minutes before my first visit, and I needed to show up calm, present, and actually useful to the family I was about to meet. So I pulled over near a quiet field, took a deep breath, and used the 5-4-3-2-1 grounding technique right there in the driver’s seat.</p>
     </div>
     <p class="bks-ex-more">The story continues in the book.</p>
+    <div class="bks-cta-row bks-cta-left"><a class="btn btn-primary" href="#get">Get the Book</a></div>
     <p class="bks-src">Story: Chris Joy, <i>Grounded in Coffee</i> &middot; <a href="https://chri5j0y.substack.com/p/grounded-in-coffee" target="_blank" rel="noopener">Read it on Grounded</a></p>
   </div>
 </div></section>
 
-<section id="get" class="bks-sec bks-get" aria-labelledby="bks-get-h"><div class="wrap">
-  <h2 id="bks-get-h">How to Get It</h2>
-  <div class="bks-ways">
-    <article class="bks-way bks-way-main" data-gg-book="preorder-card" hidden>
-      <div class="eyebrow">Signed Hardcover</div>
-      <h3>A copy signed by Chris.</h3>
-      <p class="bks-price"><span data-gg-book="price">$39.99</span> <small>plus shipping, in the United States</small></p>
-      <p>Chris signs each copy and ships it to you as soon as the first printing arrives.</p>
-      <a class="btn btn-primary" data-gg-book="preorder" href="#get" hidden>Pre-order a Signed Copy</a>
-    </article>
-    <article class="bks-way bks-way-main" data-gg-book="arrives">
-      <div class="eyebrow">Coming December 21, 2026</div>
-      <h3>In the End arrives December 21, 2026.</h3>
-      <p>Signed copies from Chris and the store listings open right here soon. Until then, enjoy the opening pages.</p>
-      <a class="btn btn-secondary" href="#opening">Read the Opening</a>
-    </article>
-    <article class="bks-way">
-      <div class="eyebrow">Bookstores</div>
-      <h3>From your favorite bookstore.</h3>
-      <div class="bks-stores">
-        <a class="btn btn-secondary" data-gg-store="bookshop" href="#get" hidden>Bookshop.org</a>
-        <a class="btn btn-secondary" data-gg-store="amazon" href="#get" hidden>Amazon</a>
-        <a class="btn btn-secondary" data-gg-store="bn" href="#get" hidden>Barnes and Noble</a>
-      </div>
-      <p class="bks-soon" data-gg-book="stores-soon">Bookshop.org, Amazon, and Barnes and Noble: coming soon.</p>
-    </article>
+<!-- Everything else: a look inside -->
+<section class="bks-sec bks-inside" aria-labelledby="bks-in-h"><div class="wrap">
+  <div class="eyebrow">A Look Inside</div>
+  <h2 id="bks-in-h">Farmhouses and memory care, ICU rooms and small apartments.</h2>
+  <p class="bks-lead bks-center">Gentle oil paintings of light and quiet places help tell each story.</p>
+  <ul class="bks-mosaic">
+    <li class="bks-big-tile"><figure><img src="/shared/books/stories/divine-sign.webp" alt="An eagle in flight over a country road and a small car, golden fields on each side." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Divine Sign</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/drift-away.webp" alt="A river at sunrise beside a small white church, birds over the water." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Drift Away</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/beyond-six-months.webp" alt="A person walking a path up a flowered hill toward one great tree at sunrise." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Beyond Six Months</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/my-boundaries-have-gates.webp" alt="An open white picket gate on a stone path to a farmhouse at sunrise." width="1200" height="800" loading="lazy" decoding="async"><figcaption>My Boundaries Have Gates</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/earl-and-dorothy.webp" alt="Two people standing beside an old green pickup truck in a golden field at sunset." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Earl and Dorothy</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/why-is-god-doing-this-to-me.webp" alt="Sunlight breaking through storm clouds over a prairie and a small white house." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Why Is God Doing This to Me?</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/tell-them-i-love-them.webp" alt="A man standing under a golden autumn tree outside a low brick building." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Tell Them I Love Them</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/welcome-home.webp" alt="A small home and an old red pickup truck under a glowing sunset sky." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Welcome Home</figcaption></figure></li>
+    <li><figure><img src="/shared/books/stories/enlightenment.webp" alt="Two people walking a leafy path beside an old stone wall in autumn light." width="1200" height="800" loading="lazy" decoding="async"><figcaption>Enlightenment</figcaption></figure></li>
+  </ul>
+  <div class="bks-parts-wrap">
+    <h3 class="bks-parts-h">Six parts, forty stories.</h3>
+    <p class="bks-lead bks-center bks-parts-lead">Grounded in Coffee opens the book, then six parts carry you from the bedside back into your own life.</p>
+    <ol class="bks-parts">
+      <li><small>Part One</small><b>Showing Up</b><span>Five stories</span></li>
+      <li><small>Part Two</small><b>The Words That Remain</b><span>Seven stories</span></li>
+      <li><small>Part Three</small><b>Faith, Doubt, and Everything In-Between</b><span>Eight stories</span></li>
+      <li><small>Part Four</small><b>Love, Repair, and Letting Go</b><span>Six stories</span></li>
+      <li><small>Part Five</small><b>The Wisdom They Share</b><span>Seven stories</span></li>
+      <li><small>Part Six</small><b>The Chaplain’s Own Heart</b><span>Six stories</span></li>
+    </ol>
   </div>
+</div></section>
+
+<!-- Everything else: the bonus -->
+<section class="bks-sec bks-bonus" aria-labelledby="bks-bonus-h"><div class="wrap bks-bonus-in">
+  <div>
+    <div class="bks-tag">The Bonus</div>
+    <h2 id="bks-bonus-h">Practices for the Road.</h2>
+    <p>Nine simple practices at the back of the book help you come back to center, and seven have short guided videos on the <a href="/book">reader page</a>.</p>
+  </div>
+  <ul class="bks-prac">
+    <li>Five, Four, Three, Two, One</li><li>Four, Seven, Eight Breathing</li><li>Lion&rsquo;s Breath</li><li>Name It</li><li>Listening Beneath the Words</li><li>Whose Is This?</li><li>Leave It Here</li><li>Saying What Matters</li><li>One Moment of Beauty</li>
+  </ul>
+</div></section>
+
+<!-- Everything else: the details -->
+<section class="bks-sec bks-detail-sec" aria-labelledby="bks-det-h"><div class="wrap">
+  <h2 id="bks-det-h">The Details</h2>
   <dl class="bks-details" aria-label="Book details">
     <div><dt>Format</dt><dd>Hardcover, case laminate</dd></div>
     <div><dt>Size</dt><dd>8.5 by 8.5 inches</dd></div>
@@ -232,14 +377,30 @@
     <div><dt>ISBN</dt><dd>979-8-9828902-0-7</dd></div>
     <div><dt>Publisher</dt><dd>Grow With Grounded</dd></div>
     <div><dt>Published</dt><dd>December 21, 2026</dd></div>
+    <div><dt>Author</dt><dd>Chris Joy</dd></div>
   </dl>
 </div></section>
+
+<!-- The last call -->
+<section class="bks-final" aria-labelledby="bks-final-h">
+  <span class="bks-flies" aria-hidden="true"></span>
+  <div class="wrap bks-final-in">
+    <img src="/shared/books/in-the-end-cover-600.webp" alt="" width="600" height="600" loading="lazy" decoding="async">
+    <div>
+      <h2 id="bks-final-h"><span class="bks-nw">In the End</span></h2>
+      <p class="bks-subtitle"><span class="bks-nw">What Sitting with the Dying</span> <span class="bks-nw">Taught Me about Living</span></p>
+      <p class="bks-final-when">Launch Day: December 21, 2026. <span class="bks-count" data-bks-count hidden></span></p>
+      <div class="bks-acts"><a class="btn btn-primary bks-big" href="#get">Get the Book</a></div>
+    </div>
+  </div>
+</section>
 
 <section class="bks-more" aria-labelledby="bks-more-h"><div class="wrap">
   <h2 id="bks-more-h">Already reading?</h2>
   <p>The <a href="/book">reader page</a> holds the Practices for the Road, with short guided videos. And a new Grounded Story arrives every Wednesday on <a href="/stories.html">Grounded Stories</a>.</p>
 </div></section>
 </main>
+<script>(function(){var L=new Date(2026,11,21),n=new Date();n=new Date(n.getFullYear(),n.getMonth(),n.getDate());var d=Math.round((L-n)/864e5),t=d>1?d+' days to launch':d===1?'Launch day is tomorrow':d===0?'Out today':'';if(!t)return;Array.prototype.forEach.call(document.querySelectorAll('[data-bks-count]'),function(e){e.textContent=t;e.removeAttribute('hidden');});})();</script>
 
 <footer class="site-footer"><div class="wrap">
   <a class="foot-brand" href="/index.html" aria-label="Grow With Grounded home"><svg class="foot-tree" aria-hidden="true" focusable="false" viewBox="0 0 4664 3536" preserveAspectRatio="xMidYMid meet"><use href="/shared/marks/grounded-logo.svg?v=b788#tree"/></svg> <span class="foot-name">Grow With Grounded<span class="tm" aria-hidden="true">&trade;</span></span> </a>
@@ -251,7 +412,7 @@
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="/site.js?v=b934"></script>
-<script src="/nav.js?v=c181" defer></script>
+<script src="/nav.js?v=c182" defer></script>
 <script src="/shared/gg-books.js?v=c180"></script>
 </body>
 </html>
