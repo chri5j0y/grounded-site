@@ -684,7 +684,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/grove-scene.js?v=b929"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
-<script src="share.js?v=c115"></script>
+<script src="share.js?v=c176"></script>
+<script src="share-studio.js?v=c176"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=c151"></script>
 <script src="ceremonies.js?v=b890"></script>
@@ -1135,7 +1136,7 @@ function render(){
   const treeTabs = tabs.filter(x => TREE_IDS.includes(x[0]));
   if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !(V.tab === 'trees' && treeTabs.length) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
   drawTabs(tabs, pathSub);
-  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
+  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => (window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '') + (window.GGStudio && (TIER === 'staff' || TIER === 'founder') ? GGStudio.view({founder: TIER === 'founder', staffClip: LIB && LIB.audio && LIB.audio.key, founderClip: TIER === 'founder' && FDR && FDR.audio && FDR.audio.key}) : '') /* GWG BLD 1030: the Marketing Studio below the Share Card Builder */, ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (pathSub ? `<button class="linkbtn path-back" data-tab="path">${icon('award')} Back to Your Path</button>` : '') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
   certCheck(); // a new certificate shows its congratulations (GWG BLD 797)

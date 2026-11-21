@@ -677,7 +677,7 @@ function inner(){
   const msgSel = `<select id="sc-msg" data-sc="msg"><optgroup label="Tagline"><option value="tag"${S.msg === 'tag' ? ' selected' : ''}>${esc(clip(sub.tagline || 'The tagline', 80))}</option></optgroup>
     ${groups.map(([l, list]) => `<optgroup label="${esc(l)}">${list.map(([m, i]) => `<option value="m:${i}"${S.msg === 'm:' + i ? ' selected' : ''}>${esc(clip(m.text, 80))}</option>`).join('')}</optgroup>`).join('')}
     <optgroup label="Your Words"><option value="own"${S.msg === 'own' ? ' selected' : ''}>Write My Own</option></optgroup></select>`;
-  return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Share Card Builder</h1><p>Make a card or banner for any platform, sized and ready to post.</p></div>
+  return `<div class="page-head"><div class="eyebrow">Grow With Grounded</div><h1>Share Card Builder</h1><p>Make a card or banner for any platform, sized and ready to post. For ads with any Grounded painting, open the <a href="#ms-root" data-ms-jump>Marketing Studio</a> below.</p></div>
   <div class="sc-wrap">
     <div class="card">
       <label class="f" for="sc-sub">Subject</label>
