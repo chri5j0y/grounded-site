@@ -95,6 +95,7 @@
 .bks-stores{display:flex;flex-wrap:wrap;gap:10px;}
 .bks-stores .btn{margin:0;}
 .bks-soon{font-style:italic;}
+.bks-member{max-width:980px;margin:16px auto 0;padding:14px 18px;border-radius:14px;background:var(--card);border:1px dashed var(--gold);font-size:17px;color:var(--ink);}.bks-member a{color:var(--gold);font-weight:700;margin-left:6px;}
 .bks-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:980px;margin:26px auto 0;padding:0;}
 .bks-details div{background:var(--bg-deep);border-radius:14px;padding:12px 14px;min-width:0;}
 .bks-details dt{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;font-size:13.5px;color:var(--gold);}
@@ -206,6 +207,7 @@
       <p>Chris signs each copy and ships it to you as soon as the first printing arrives.</p>
       <a class="btn btn-primary" data-gg-book="preorder" href="#get" hidden>Pre-order a Signed Copy</a>
     </article>
+    <!-- BLD 1032: the Member price on signed copies, shown when BOOK_MEMBER_URL is set (shared/gg-books.js) -->
     <article class="bks-way bks-way-main" data-gg-book="arrives">
       <div class="eyebrow">Coming December 21, 2026</div>
       <h3>In the End arrives December 21, 2026.</h3>
@@ -223,6 +225,7 @@
       <p class="bks-soon" data-gg-book="stores-soon">Bookshop.org, Amazon, and Barnes and Noble: coming soon.</p>
     </article>
   </div>
+  <p class="bks-member" data-gg-book="member" hidden><b>Members: a Member price on signed copies.</b> <a data-gg-book="member-link" href="#get">Get the Member Price</a></p>
   <dl class="bks-details" aria-label="Book details">
     <div><dt>Format</dt><dd>Hardcover, case laminate</dd></div>
     <div><dt>Size</dt><dd>8.5 by 8.5 inches</dd></div>
@@ -251,6 +254,6 @@
 </div></footer>
 <script src="/site.js?v=b934"></script>
 <script src="/nav.js?v=c175" defer></script>
-<script src="/shared/gg-books.js?v=c175"></script>
+<script src="/shared/gg-books.js?v=c177"></script>
 </body>
 </html>
