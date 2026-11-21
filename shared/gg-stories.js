@@ -84,6 +84,37 @@
   var ROUNDS = 250000, LS = 'gg_stories_key', SUBSCRIBE = 'https://growwithgrounded.com/the-grounded-way.html#ways'; // Chris, November 13, 2026: "remove every substack ask"; invites point to Grounded Membership
   var LINES = { opening: 'A story by Chris Joy, read by a narrator.', thanks: 'Thank you for listening.', members: 'Members hear the whole story.',
     note: 'The story behind the story, a note from Chris Joy, read by a narrator.', letterGrounded: 'A letter from Grow With Grounded, read by a narrator.', letterChris: 'A letter from Chris Joy, read by a narrator.' };
+  // BLD 1032 (Chris, November 21, 2026, "1"): the stories in the book In the End are samplers here, for everyone,
+  // Members and Supporters included: the painting, the opening (the first few paragraphs, about 250 words, whole
+  // sentences, all from the story's own public preview, so every spoken line is already recorded), then "Read the rest
+  // in In the End" to the Books page. Four stay whole as a taste (TASTE). Matched to the manuscript by title (and by
+  // file name for Please Help My Dad Die, Free to Go in the book). Stories outside the book are unchanged. The Story
+  // Vault's own Watch still plays every story whole. The sealed data.js is unchanged: the full text of book stories is
+  // still inside it (open stories in plain text, the rest locked); this list decides what the page shows.
+  var IN_BOOK = ['grounded-in-coffee', 'if-she-is-still-here', 'divine-sign', 'birth-plan', 'he-deserves-that', 'time-of-your-life',
+    'i-know-that-one-silly', 'the-recovery', 'love', 'drift-away', 'what-do-you-have-left', 'prayer', 'beyond-six-months',
+    'a-presence-that-cannot-be-boxed', 'why-is-god-doing-this-to-me', 'the-impossible-dance-of-particles', 'the-beautiful-hodgepodge',
+    'the-atypical-atheist', 'enlightenment', 'the-part-that-laughs', 'he-was-praying-too', 'free-to-go', 'please-help-my-dad-die',
+    'he-came-to-collect', 'off-duty', 'tell-them-i-love-them', 'welcome-home', 'jane', 'walter', 'earl-and-dorothy', 'marcus', 'sarah',
+    'david', 'grief-debt', 'my-boundaries-have-gates', 'i-can-use-both', 'permission-to-grieve', 'time-to-reset', 'caught-off-guard',
+    'a-little-roar', 'theresa'];
+  var TASTE = ['grounded-in-coffee', 'if-she-is-still-here', 'divine-sign', 'birth-plan'];
+  var BOOK_URL = '/books.html', SAMPLE_WORDS = 250, SAMPLE_PARAS = 3;
+  var BOOK_LINE = 'Read the rest in In the End.';
+  function inBook(s) { return !!s && IN_BOOK.indexOf(s.slug || slug(s.title)) >= 0; }
+  function sampled(s) { return inBook(s) && TASTE.indexOf(s.slug || slug(s.title)) < 0 && !isV(s.id); }
+  // The opening: whole paragraphs from the public preview, up to three and about 250 words; a long first paragraph ends at a sentence.
+  function sampler(s) {
+    var src = (s.preview && s.preview.length ? s.preview : s.full) || [], out = [], w = 0;
+    for (var i = 0; i < src.length && out.length < SAMPLE_PARAS; i++) {
+      var p = String(src[i]), pw = p.split(/\s+/).filter(Boolean).length;
+      if (w && w + pw > SAMPLE_WORDS * 1.25) break;
+      if (!w && pw > SAMPLE_WORDS * 1.4) { var S = sentences(p), keep = [], n = 0; S.forEach(function (x) { if (!keep.length || n < SAMPLE_WORDS) { keep.push(x); n += x.split(/\s+/).length; } }); out.push(keep.join(' ')); break; }
+      out.push(p); w += pw;
+      if (w >= SAMPLE_WORDS) break;
+    }
+    return out;
+  }
   // The three Supporter perks (BLD 787), named the same way in the members bar, the invites, and supporters.html.
   var PERKS = 'the Story Behind the Story, the Monthly Letter, and Reflection Cards';
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -180,7 +211,7 @@
   function spoken(story, paras, mode) {
     var out = [LINES.opening];
     (paras || []).forEach(function (p) { out = out.concat(sentences(p)); });
-    out.push(mode === 'preview' ? LINES.members : LINES.thanks);
+    out.push(mode === 'preview' && !(story && sampled(story)) ? LINES.members : LINES.thanks);
     return out;
   }
   // Minutes at the recorded pace: about 150 words a minute, plus the pause after each sentence and page.
@@ -349,8 +380,8 @@
   function unlocked() { return !!(KEY && OPENED); }
   function isV(id) { return !!(OV && OV.vault && (OV.s.id === id || OV.s.slug === id)); }
   function story(id) { if (isV(id)) return OV.s; var d = data(); if (!d) return null; for (var i = 0; i < d.list.length; i++) if (d.list[i].id === id || d.list[i].slug === id) return d.list[i]; return null; }
-  function full(id) { if (isV(id)) return true; var s = story(id); return !!s && (s.open || !!(OPENED && OPENED[s.id])); }
-  function paras(id) { if (isV(id)) return OV.s.paras || []; var s = story(id); if (!s) return []; if (s.open && s.full) return s.full; if (OPENED && OPENED[s.id]) return OPENED[s.id]; return s.preview || []; }
+  function full(id) { if (isV(id)) return true; var s = story(id); if (sampled(s)) return false; return !!s && (s.open || !!(OPENED && OPENED[s.id])); }
+  function paras(id) { if (isV(id)) return OV.s.paras || []; var s = story(id); if (!s) return []; if (sampled(s)) return sampler(s); if (s.open && s.full) return s.full; if (OPENED && OPENED[s.id]) return OPENED[s.id]; return s.preview || []; }
   function keyObj() { if (OV && OV.vault) return OV.vaultKey || null; var d = data(); if (!KEY || !d) return null; var k = d.k || {}; return { v: k.v || 1, round: k.round || 's1', folder: k.folder || 't', key: KEY }; }
 
   // A lesson for the shared player: the title scene speaks the opening line, then the story a page at a time.
@@ -358,7 +389,7 @@
   // o (BLD 787) plays another piece the same way: {paras, opening, eyebrow, id, sub} for the Story Behind the Story and the Monthly Letter.
   function lesson(s, mode, o) {
     o = o || {};
-    var P = o.paras || (mode === 'preview' ? (s.preview || []) : paras(s.id)), scenes = [], cur = [], size = 0, eb = o.eyebrow || 'Grounded Stories';
+    var P = o.paras || (mode === 'preview' ? (sampled(s) ? sampler(s) : s.preview || []) : paras(s.id)), scenes = [], cur = [], size = 0, eb = o.eyebrow || 'Grounded Stories';
     scenes.push({ k: 'title', hero: 'page-stories', heroNarrow: 'page-stories-narrow', eyebrow: eb, h: s.title, sub: o.sub != null ? o.sub : (s.sub || ''), beats: [o.opening || LINES.opening], hold: 1 });
     var PZ = o.paras ? null : pausesOf(s.pz || s.pause), curZ = [];
     function flush() {
@@ -408,6 +439,7 @@
     '.gs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:18px;}',
     '.gs-card{display:flex;flex-direction:column;}.gs-card h3{margin-top:4px;}.gs-card .story-quote{flex:0 0 auto;margin:8px 0 12px;}',
     '.gs-meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--ink-soft);}',
+    '.gs-bookline{margin:8px 0 0;font-size:15.5px;color:var(--ink-soft);}.gs-bookline a,.gs-booklink{color:var(--gold);font-weight:600;}',
     '.gs-tag{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);}',
     '.gs-card .card-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:6px;}',
     '.gs-card .btn{display:inline-flex;align-items:center;gap:8px;}.gs-card .btn svg{width:18px;height:18px;flex:none;}',
@@ -490,39 +522,41 @@
   // that cannot load, falls back to stories/img as before.
   var IMG = {}, PIC = {s002: 'story-birth-plan', s004: 'story-drift-away', s005: 'story-enlightenment', s006: 'story-grief-debt', s008: 'story-he-came-to-collect', s009: 'story-he-deserves-that', s010: 'story-he-was-praying-too', s011: 'story-in-the-beginning', s012: 'story-if-she-is-still-here-2', s013: 'story-love', s014: 'story-my-boundaries-have-gates', s015: 'story-please-help-my-dad-die', s016: 'story-prayer', s017: 'story-the-atypical-atheist', s019: 'story-the-impossible-dance-of-particles', s020: 'story-the-recovery', s021: 'story-total-bliss', s022: 'story-welcome-home', s085: 'story-off-duty', s129: 'story-one-wish', s130: 'story-time-of-your-life', s007: 'story-grounded-in-coffee'};
   function imgBase(id) { return ROOT + '/stories/img/' + encodeURIComponent(id); }
-  function picSrc(id) { return PIC[id] ? ROOT + '/shared/heroes/p/' + PIC[id] + '.webp' : ''; }
-  function imgSrc(id) { var k = IMG[id] || (PIC[id] ? 'p' : 'webp'); return k === 'p' ? picSrc(id) : imgBase(id) + '.' + k; }
+  // BLD 1032: two book stories with no Grounded Stories painting take their book painting, already public on the Books page.
+  var BOOKPIC = { s131: 'ite-beyond-six-months-900', s133: 'ite-tell-them-i-love-them-900' };
+  function picSrc(id) { return BOOKPIC[id] ? ROOT + '/shared/books/' + BOOKPIC[id] + '.webp' : PIC[id] ? ROOT + '/shared/heroes/p/' + PIC[id] + '.webp' : ''; }
+  function imgSrc(id) { var k = IMG[id] || (PIC[id] || BOOKPIC[id] ? 'p' : 'webp'); return k === 'p' ? picSrc(id) : imgBase(id) + '.' + k; }
   function imgTag(s, cls) {
     if (!s || !s.id || s.kind || IMG[s.id] === 'none') return '';
     return '<div class="' + cls + (IMG[s.id] ? ' gs-in' : '') + '" data-gsimg="' + esc(s.id) + '"><img src="' + imgSrc(s.id) + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async" onload="GGStories._imgOk(this)" onerror="GGStories._imgErr(this)"></div>';
   }
-  function imgOk(el) { var w = el.parentNode; if (!w) return; var src = el.getAttribute('src') || ''; IMG[w.getAttribute('data-gsimg')] = /\/heroes\/p\//.test(src) ? 'p' : /\.jpg$/.test(src) ? 'jpg' : 'webp'; w.classList.add('gs-in'); }
+  function imgOk(el) { var w = el.parentNode; if (!w) return; var src = el.getAttribute('src') || ''; IMG[w.getAttribute('data-gsimg')] = /\/heroes\/p\/|\/shared\/books\//.test(src) ? 'p' : /\.jpg$/.test(src) ? 'jpg' : 'webp'; w.classList.add('gs-in'); }
   function imgErr(el) {
     var w = el.parentNode; if (!w) return; var id = w.getAttribute('data-gsimg'), src = el.getAttribute('src') || '';
-    if (/\/heroes\/p\//.test(src)) { el.setAttribute('src', imgBase(id) + '.webp'); return; }
+    if (/\/heroes\/p\/|\/shared\/books\//.test(src)) { el.setAttribute('src', imgBase(id) + '.webp'); return; }
     if (/\.webp$/.test(src)) { el.setAttribute('src', imgBase(id) + '.jpg'); return; }
     IMG[id] = 'none'; var ban = w.closest && w.closest('.gs-ban-img'); if (ban) ban.classList.remove('gs-ban-img'); w.remove();
   }
   function card(s) {
     var L = LOOK[s.slug] || LOOK[slug(s.title)] || ['', ''], isFull = full(s.id), early = s.status === 'early';
-    var tag = early ? 'Early Preview' : isFull ? 'Full Story' : 'Preview';
+    var smp = sampled(s), tag = early ? 'Early Preview' : smp ? 'From the Book' : isFull ? 'Full Story' : 'Preview';
     if (isNew(s)) tag = 'New · ' + tag;
     return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(themesOf(s)) + '">' + imgTag(s, 'gs-img')
-      + '<div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(s.mins)) + ' min</span></div>'
+      + '<div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(smp ? mins(sampler(s)) : s.mins)) + ' min' + (smp ? ' opening' : '') + '</span></div>'
       + '<h3>' + esc(s.title) + '</h3>' + (s.sub ? '<p class="story-sub">' + esc(s.sub) + '</p>' : '')
       + (L[1] && slug(L[1]) !== slug(s.sub) ? '<p class="story-quote">&ldquo;' + esc(L[1]) + '&rdquo;</p>' : '')
       + '<div class="card-actions"><button type="button" class="btn btn-primary" data-gs="watch" data-id="' + esc(s.id) + '" aria-label="Watch ' + esc(s.title) + '">' + PLAY + 'Watch</button>'
       + '<button type="button" class="btn btn-secondary" data-gs="read" data-id="' + esc(s.id) + '" aria-label="Read ' + esc(s.title) + '">' + BOOK + 'Read</button>'
       + '<button type="button" class="btn btn-secondary gs-share" data-gs="share" data-id="' + esc(s.id) + '" aria-label="Share ' + esc(s.title) + '">' + SHARE + 'Share</button>'
-      + '' + '</div><p class="gs-smsg" role="status" aria-live="polite"></p></article>';
+      + '' + '</div>' + (smp ? '<p class="gs-bookline">The opening, from our book. <a href="' + BOOK_URL + '">' + esc(BOOK_LINE.replace(/\.$/, '')) + '</a></p>' : '') + '<p class="gs-smsg" role="status" aria-live="polite"></p></article>';
   }
   function membersBar() {
     var el = document.getElementById('gs-members'); if (!el) return;
     if (unlocked()) {
-      el.innerHTML = '<p><b>Unlocked on this device.</b> Every story here is open to you, in full, with ' + PERKS + '.</p><div class="gs-acts"><a class="gs-link" href="supporters.html">Welcome, Supporters</a><button type="button" class="gs-link" data-gs="forget">Forget This Device</button></div>';
+      el.innerHTML = '<p><b>Unlocked on this device.</b> Every Grounded Story is open to you in full, with ' + PERKS + '. Stories from our book In the End show their opening here, with the rest in the book.</p><div class="gs-acts"><a class="gs-link" href="supporters.html">Welcome, Supporters</a><button type="button" class="gs-link" data-gs="forget">Forget This Device</button></div>';
       return;
     }
-    el.innerHTML = '<p><b>Members hear every story in full,</b> with ' + PERKS + '. Grounded Membership opens them on the device where you entered your Member code.</p>'
+    el.innerHTML = '<p><b>Members hear Grounded Stories in full,</b> with ' + PERKS + '. Grounded Membership opens them on the device where you entered your Member code.</p>'
       + '<div class="gs-acts"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '">Become a Member</a><a class="gs-link" href="supporters.html">Welcome, Supporters</a></div><div class="gs-code-host" hidden></div>';
   }
   function render() {
@@ -530,9 +564,10 @@
     var openEl = document.getElementById('gs-open'), postEl = document.getElementById('gs-posted'), earlyEl = document.getElementById('gs-early');
     if (!d) { if (openEl) openEl.innerHTML = '<p class="gs-wait">The stories are on their way. Please check back in a moment.</p>'; return; }
     var inSer = function (s) { return s.status === 'posted' && Object.prototype.hasOwnProperty.call(SERIES, s.col); };
-    var O = d.list.filter(function (s) { return s.open && !inSer(s); }), Pz = newest(d.list.filter(function (s) { return !s.open && s.status === 'posted' && !inSer(s); })), E = newest(d.list.filter(function (s) { return s.status === 'early'; }));
+    var O = d.list.filter(function (s) { return s.open && !inSer(s) && !sampled(s); }), Pz = newest(d.list.filter(function (s) { return !s.open && s.status === 'posted' && !inSer(s) && !sampled(s); })), E = newest(d.list.filter(function (s) { return s.status === 'early'; }));
     if (openEl) openEl.innerHTML = O.map(card).join('');
-    series(d.list.filter(inSer), postEl);
+    series(d.list.filter(function (s) { return inSer(s) && !sampled(s); }), postEl);
+    bookSec(d.list.filter(function (s) { return s.status === 'posted' && sampled(s); }), postEl);
     if (postEl) postEl.innerHTML = Pz.map(card).join('');
     if (earlyEl) {
       if (unlocked()) earlyEl.innerHTML = E.length ? E.map(card).join('') : '<p class="gs-wait">New early previews arrive here first.</p>';
@@ -543,6 +578,17 @@
     var hP = document.getElementById('gs-posted-h'); if (hP) hP.hidden = !Pz.length;
     perks(d);
     filter(FILTER);
+  }
+  // BLD 1032: the stories from In the End, each with its painting and its opening, then the book.
+  function bookSec(L, postEl) {
+    var host = document.getElementById('gs-book');
+    if (!host) {
+      var before = document.getElementById('gs-series') || document.getElementById('gs-posted-h') || (postEl && postEl.parentNode); if (!before || !before.parentNode) return;
+      host = document.createElement('section'); host.id = 'gs-book'; host.setAttribute('aria-labelledby', 'gs-book-h'); before.parentNode.insertBefore(host, before);
+    }
+    host.innerHTML = L.length ? '<h2 class="gs-h" id="gs-book-h">From Our Book, In the End</h2><p class="gs-lead">The opening of each story. The rest is waiting in the pages of In the End, with forty stories and forty-seven paintings. <a class="gs-booklink" href="' + BOOK_URL + '">See the Book</a></p>'
+      + '<div class="gs-grid">' + newest(L).map(card).join('') + '</div>' : '';
+    host.hidden = !L.length;
   }
   // BLD 1002: each series with a Posted story gets its own section (heading, lead, cards by part, then the Vault's order) above More Stories.
   function series(L, postEl) {
@@ -646,7 +692,10 @@
       + '<p class="gs-copy">&copy; ' + y + ' Grow With Grounded LLC. All rights reserved. For Supporters of Grounded Stories.</p></div>';
     var P = paras(s.id), whole = full(s.id);
     var h = '<div class="gs-rd"><p class="gs-by">A story by Chris Joy.</p>' + P.map(function (p) { return '<p class="gs-p">' + esc(p) + '</p>'; }).join('');
-    if (!whole) {
+    if (!whole && sampled(s)) {
+      h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(BOOK_LINE) + '</b> This story is one of forty in our book, with forty-seven paintings.</p>'
+        + '<div class="gs-acts"><a class="ggl-btn pri" href="' + BOOK_URL + '">Read the Rest in In the End</a></div></div>';
+    } else if (!whole) {
       h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(LINES.members) + '</b> Enter your member code to read and hear it all.</p>'
         + '<div class="gs-acts"><button type="button" class="ggl-btn pri" data-gs="ov-code">Enter Your Code</button>'
         + '<a class="ggl-btn" href="' + SUBSCRIBE + '">Become a Member</a>' + '</div></div>';
@@ -667,6 +716,8 @@
     var note = whole && noteOf(s.id);
     if (whole) return { eyebrow: 'Thank You for Listening', h: s.title, sub: 'A story by Chris Joy.', say: LINES.thanks, ok: true,
       buttons: [].concat(note ? [['note', 'The Story Behind the Story', 'pri']] : [], [], [['read', 'Read the Story', note ? '' : 'pri'], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
+    if (sampled(s)) return { eyebrow: 'From the Book', h: BOOK_LINE, sub: 'This story is one of forty in our book, with forty-seven paintings.', say: LINES.thanks, ok: true,
+      buttons: [['book', 'Read the Rest in In the End', 'pri', BOOK_URL], ['read', 'Read the Opening', ''], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']] };
     return { eyebrow: 'Grounded Stories', h: LINES.members, sub: 'Enter your member code to keep listening.', say: LINES.members, ok: false,
       buttons: [['code', 'Enter Your Code', 'pri']].concat([['join', 'Become a Member', '', SUBSCRIBE]], [['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
   }
