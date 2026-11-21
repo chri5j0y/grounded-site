@@ -4621,7 +4621,7 @@
   var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
-  var CK_MOD = { oak: '/shared/checkin/oak.js?v=c187', sequoia: '/shared/checkin/sequoia.js?v=c187', birch: '/shared/checkin/birch.js?v=c187', pine: '/shared/checkin/pine.js?v=c187', maple: '/shared/checkin/maple.js?v=c187', aspen: '/shared/checkin/aspen.js?v=c187' };
+  var CK_MOD = { oak: '/shared/checkin/oak.js?v=c189', sequoia: '/shared/checkin/sequoia.js?v=c189', birch: '/shared/checkin/birch.js?v=c189', pine: '/shared/checkin/pine.js?v=c189', maple: '/shared/checkin/maple.js?v=c189', aspen: '/shared/checkin/aspen.js?v=c189' };
   var NOPLAN = {};
   var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
   var CK_WAIT = 0;   // when a check-in was asked for and is still loading (the tour waits for it)
@@ -4988,7 +4988,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=c187', ground: '/shared/home/groundwork.js?v=c183', next: '/shared/home/nextsteps.js?v=c183', legacy: '/shared/home/legacy.js?v=c183', guide: '/shared/home/grownup.js?v=c183', talk: '/shared/home/talk.js?v=c186', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=c189', ground: '/shared/home/groundwork.js?v=c183', next: '/shared/home/nextsteps.js?v=c183', legacy: '/shared/home/legacy.js?v=c183', guide: '/shared/home/grownup.js?v=c183', talk: '/shared/home/talk.js?v=c186', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {

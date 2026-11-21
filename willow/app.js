@@ -615,8 +615,41 @@ function startCheckin(quick, classic) {
   if (!r.started) { r.started = today(); r.role = t === a.id ? (r.role || 'person') : 'person'; persist(t); }
   const self = t === a.id;
   S.ck = { pid: t, role: roleOf(t), self, by: self ? 'self' : '', askWho: !self, quick: !!quick, i: 0, ans: {}, faith: r.faith ? JSON.parse(JSON.stringify(r.faith)) : { lives: [] }, faithEdit: !r.faith, note: '', done: false };
+  // BLD 1040: a guided check-in left part way picks up from the record's draft (wDraftOf), on the Pick Up card.
+  const dr = !classic && GUIDED() ? wDraftOf(t, !!quick) : null;
+  if (dr) S.ck = Object.assign(S.ck, dr.ck, { pid: t, quick: !!quick, i: 0, done: false });
   S.tab = 'checkin'; render(); scrollTop(true);
   if (!classic && GUIDED()) guided(); // GWG BLD 886: Guided is the way in; Read It All shows this classic form
+}
+/* BLD 1040, Save Every Check-in: the guided check-in keeps its answers so far in the person's own Willow record
+   (rec(id).ckDraft, inside the profile's encrypted vault, beside the check-ins and never one of them), with every answer.
+   Kept: who is answering, the faith step, the answers, and the note. An old draft is offered once (GGGuided.draftGone). */
+const W_DRAFT_KEYS = ['role', 'self', 'by', 'askWho', 'ans', 'faith', 'faithEdit', 'note', 'gFaith', 'gNote'];
+function wDraftOf(t, quick) {
+  const r = rec(t), b = r && r.ckDraft, d = b && b[quick ? 'quick' : 'full'];
+  if (!d || typeof d !== 'object' || !d.ck || typeof d.ck !== 'object') return null;
+  if (window.GGGuided && GGGuided.draftGone && GGGuided.draftGone(d.up, d.offered)) { wDraftClear(t, quick); return null; }
+  return JSON.parse(JSON.stringify(d));
+}
+function wDraftClear(t, quick, soon) {
+  const r = rec(t), b = r && r.ckDraft; if (!b || !b[quick ? 'quick' : 'full']) return;
+  delete b[quick ? 'quick' : 'full']; if (!Object.keys(b).length) delete r.ckDraft;
+  if (!soon) persist(t);
+}
+function wDraft(ck) {
+  const key = ck.quick ? 'quick' : 'full';
+  return {
+    load: () => { const d = wDraftOf(ck.pid, ck.quick); return d ? { a: {}, at: d.at, up: d.up, offered: !!d.offered } : null; },
+    save: x => {
+      if (S.ck !== ck) return; const r = rec(ck.pid); if (!r) return;
+      const snap = {}; W_DRAFT_KEYS.forEach(k => { if (ck[k] !== undefined) snap[k] = JSON.parse(JSON.stringify(ck[k])); });
+      r.ckDraft = r.ckDraft && typeof r.ckDraft === 'object' ? r.ckDraft : {};
+      r.ckDraft[key] = { ck: snap, at: x.at, up: x.up, offered: x.offered ? true : undefined };
+      persist(ck.pid);
+    },
+    clear: soon => wDraftClear(ck.pid, ck.quick, soon),
+    fresh: () => { const q = ck.quick; setTimeout(() => startCheckin(q), 30); }
+  };
 }
 function ckStem(ck) {
   if (ck.role === 'helper') { const h = helped()[0]; return C.stems.helper.replace('{name}', h ? h.name : 'them'); }
@@ -872,6 +905,7 @@ function gMain(ck) {
   const refresh = () => Q.forEach(q => { if (q.wq) { q.text = qText(ck, q.wq); q.say = gStemSay(ck) + ' ' + q.text; } });
   let done = false, H = null;
   H = GH = GGGuided.run({ tree: 'willow', kind, voice: 'brian', title: gTitle(ck), script, questions: Q, answers: gAnswersOf(ck), quietHtml: quietInner(),
+    draft: wDraft(ck),
     isEdge: (q, v) => q.r ? (v === 'often' || v === 'always') : v === 'rarely',
     onAnswer: (id, v) => {
       if (S.ck !== ck) return;

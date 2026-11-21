@@ -53,7 +53,7 @@
     '/shared/gg-life.js?v=b907',
     '/shared/gg-life-kit.js?v=b888',
     '/shared/practice-rhythm.js?v=b929',
-    '/shared/gg-guided.js?v=c187',
+    '/shared/gg-guided.js?v=c189',
     '/shared/guided/birch.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // 194
@@ -353,6 +353,8 @@
     var finished = false, saving = null;
     cur = GGGuided.run({ plain: plainFn, tree: TREE, kind: kind, title: GD_TITLE[kind], voice: 'brian', questions: gdQuestions(), quiet: CKB.quiet || undefined, script: firstScript || undefined,
       isEdge: gdEdge, onAnswer: gdSet,
+      // BLD 1040: answers so far are kept in the profile's vault with every answer, and offered back on the Pick Up card.
+      draft: GGGuided.vaultDraft(id, TREE + (quick ? ':quick' : ':full')),
       early: true,
         // BLD 1037: the record saves as the closing screen shows (opts.early); the plan or the end waits for the window to close.
         onDone: function () { finished = true; saving = save(); },

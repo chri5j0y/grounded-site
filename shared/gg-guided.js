@@ -32,6 +32,16 @@
      opts.early                 true: onDone runs as the closing screen shows with every question answered (BLD 1037)
      opts.onClose()             the player closed (after onDone too)
      opts.onReadAll(answers)    shows Read It All; the player closes, then this opens the tree's classic form
+     opts.draft                 BLD 1040, Save Every Check-in: where answers so far are kept, so a reload, the top Done, or
+                                a closed window never loses them. {load(), save(d), clear(soon), fresh()}: load returns
+                                {a: {id: value}, at, up, offered} or null; save(d) keeps d (each answer, the moment it is
+                                chosen); clear(soon) drops it (soon: the record's own save follows at once, so no save of
+                                its own); fresh(), optional, starts the check-in over the tree's own way (its first screen).
+                                With answers kept, the player opens on a calm card: Pick Up Where You Left Off, or Start
+                                Fresh. Answers kept more than 7 days are offered once, then cleared. A draft is never a
+                                check-in: it lives beside the records, in the same place (the profile's encrypted vault).
+                                ask: false keeps the answers with no card (a run opened from the tree's own form).
+                                GGGuided.vaultDraft(id, key) is the draft for a check-in kept in a profile's vault.
    GGGuided.lines(opts) returns every sentence the voice can say for that run, in order, each once:
      [{voice, text, clip, url, where}], for the recorder. opts.allKinds: true walks every kind in the script.
    GGGuided.close() closes the player on screen. GGGuided.open() is true while it shows.
@@ -57,7 +67,8 @@
    sentence, at https://audio.growwithgrounded.com/v1/<voice>/<name>.mp3). A missing clip plays the device voice
    (read.js GGRead.say, else speechSynthesis) for that sentence. Voice Off says nothing and fetches nothing
    (kept on this device as gg-guided-voice). Music: the soft Learn music, the same Volume setting (gg-music).
-   Privacy: answers live only in memory here and go to the tree through onAnswer and onDone.
+   Privacy: answers live only in memory here and go to the tree through onAnswer and onDone; opts.draft keeps answers so
+   far wherever the tree keeps its records (BLD 1040), on this device, encrypted wherever the records are.
    No crisis line or helpline is ever spoken here: the quiet line shows only as type (opts.quiet). No check-in here
    asks about harm: there is no safety kind and no safety step (GWG BLD 887).
    ===================================================================== */
@@ -76,6 +87,21 @@
   function partLabel(p) { var G = window.GGParts; if (G && G.label && G.has(p)) return G.label(p, { plain: PLAIN }); return PLAIN && p === 'roots' ? 'Roots: what grounds you' : PARTS[p]; }
   var RHY = { d: 'Daily', f: 'A Few Times a Week', w: 'Weekly', n: 'Now and Then' };
   var RESUME = ["Welcome back. We'll pick up right where you left off."];
+  var DRAFT_DAYS = 7;   // BLD 1040: answers kept longer than this are offered once, then cleared
+  var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function dayName(t) { var d = new Date(t); return isNaN(d) ? '' : DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate(); }
+  // BLD 1040: the draft for a check-in kept in a profile's vault (shared/gg-profiles.js): GGP.data(id).ckDraft[key]. The vault
+  // is one sealed box, so the draft is encrypted exactly as the check-in records are, and it is never one of them.
+  function vaultDraft(id, key) {
+    var G = window.GGP; if (!id || !key || !G || typeof G.data !== 'function' || !G.data(id)) return null;
+    var box = function (make) { var v = G.data(id); if (!v) return null; if (!v.ckDraft || typeof v.ckDraft !== 'object') { if (!make) return null; v.ckDraft = {}; } return v.ckDraft; };
+    var keep = function () { try { var p = G.save(id); if (p && p.catch) p.catch(function () {}); } catch (e) {} };
+    return {
+      load: function () { var b = box(); return b && b[key] ? JSON.parse(JSON.stringify(b[key])) : null; },
+      save: function (d) { var b = box(true); if (!b) return; b[key] = JSON.parse(JSON.stringify(d)); keep(); },
+      clear: function (soon) { var b = box(); if (!b || !b[key]) return; delete b[key]; if (!Object.keys(b).length) { var v = G.data(id); if (v) delete v.ckDraft; } if (!soon) keep(); }
+    };
+  }
   var QUIET = { grown: 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.',
     kid: 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.' };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -251,6 +277,17 @@
     var tipSkip = arr(s.tipSkip);
     var S = { tok: 0, screen: null, voiceOn: lsGet('gg-guided-voice') !== '0', tips: {}, midN: Math.floor(Math.random() * 7), timer: 0, closed: false, lock: null, el: null, pre: null, prevFocus: document.activeElement };
     var insheet = !!o.inSheet || document.documentElement.classList.contains('gg-insheet');
+    // BLD 1040: answers kept from a check-in left part way (opts.draft), waiting on the Pick Up card until chosen.
+    var DR = o.draft && typeof o.draft.load === 'function' ? o.draft : null, DV = null, PEND = {};
+    if (DR && Q.length) {
+      try { DV = DR.load(); } catch (e) { DV = null; }
+      if (DV && typeof DV === 'object' && DV.a && typeof DV.a === 'object') {
+        Q.forEach(function (q) { if (Object.prototype.hasOwnProperty.call(DV.a, q.id) && !Object.prototype.hasOwnProperty.call(A, q.id)) PEND[q.id] = DV.a[q.id]; });
+        DV.up = +DV.up || Date.parse(DV.at || '') || Date.now();
+        DV.old = Date.now() - DV.up > DRAFT_DAYS * 86400000;
+        if (DV.old && DV.offered) { try { DR.clear(); } catch (e) {} DV = null; PEND = {}; }
+      } else DV = null;
+    }
 
     /* the frame */
     var hero = HEROES.indexOf(o.tree) >= 0 ? o.tree : 'home';
@@ -377,7 +414,7 @@
       if (sc.k === 'mode') { n = 0; label = o.modeLabel || ''; }
       else if (sc.k === 'q') { n = sc.i; label = Q[sc.i].aside ? (Q[sc.i].label || '') : 'Question ' + numOf(sc.i) + ' of ' + NQ; }
       else if (sc.k === 'plan') { n = Q.length + sc.j; label = 'Growth Plan, Part ' + (sc.j + 1) + ' of ' + P.length; }
-      else if (sc.k === 'open' || sc.k === 'resume') { n = sc.k === 'resume' ? firstOpen() : 0; label = NQ > 1 ? NQ + ' Questions' : ''; }
+      else if (sc.k === 'open' || sc.k === 'resume' || sc.k === 'pick') { n = sc.k === 'resume' ? firstOpen() : 0; label = NQ > 1 ? NQ + ' Questions' : ''; }
       else if (sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply') { n = sc.from + 1; label = Q[sc.from].aside ? (Q[sc.from].label || '') : 'Question ' + numOf(sc.from) + ' of ' + NQ; }
       else if (sc.k === 'close') { n = Q.length; label = 'Every Question Answered'; }
       else if (sc.k === 'popen') { n = Q.length; label = 'Your Growth Plan'; }
@@ -392,14 +429,15 @@
       S.screen = sc; progress(sc);
       // BLD 1037 (the test runs, B1 and B4): with opts.early, the check-in saves the moment its closing screen shows with every
       // question answered, so closing the window or the page there keeps it. The last Done then only closes.
-      if (o.early && sc.k === 'close' && !P.length && Q.length && firstOpen() >= Q.length && !S.early) { S.early = true; if (typeof o.onDone === 'function') { try { o.onDone(result()); } catch (e) {} } }
+      if (o.early && sc.k === 'close' && !P.length && Q.length && firstOpen() >= Q.length && !S.early) { S.early = true; dropDraft(true); if (typeof o.onDone === 'function') { try { o.onDone(result()); } catch (e) {} } }
       bNext.hidden = true; bNext.disabled = false; bNext.onclick = null;
       bBack.hidden = false; bBack.disabled = !canBack(sc);
-      ({ mode: drawMode, q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, reply: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
+      ({ pick: drawPick, mode: drawMode, q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, reply: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
       stage.scrollTop = 0;
       var h = stage.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
     }
     function canBack(sc) {
+      if (sc.k === 'pick') return false;
       if (sc.k === 'q') return sc.i > 0;
       if (sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply') return true;
       if (sc.k === 'close') return Q.length > 0;
@@ -508,9 +546,53 @@
     function commit(q, v, move) {
       A[q.id] = v;
       if (typeof o.onAnswer === 'function') { try { o.onAnswer(q.id, v); } catch (e) {} }
+      keepDraft();
       if (move) go(after(qIndex(q.id)));
     }
     function go(sc) { if (!sc) return finish(); show(sc); }
+
+    /* BLD 1040, Save Every Check-in: answers so far are kept (opts.draft) with every answer, and dropped once the check-in
+       is saved. A check-in left part way opens on this card: Pick Up Where You Left Off, or Start Fresh. Shown, never spoken. */
+    var DS = { at: (DV && DV.at) || new Date().toISOString() };
+    // how many of the counted questions (not asides) hold an answer, in A and in the answers waiting on the card
+    function keptN() { var all = Object.assign({}, A, PEND); return Q.filter(function (q) { var v = all[q.id]; return !q.aside && v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && !v.length); }).length; }
+    function keepDraft() {
+      if (!DR || S.early || S.finished || S.closed) return;
+      var a = {}; Q.forEach(function (q) { if (answered(q)) a[q.id] = A[q.id]; });
+      if (!keptN()) return;
+      try { DR.save({ a: a, at: DS.at, up: Date.now() }); } catch (e) {}
+    }
+    function dropDraft(soon) { if (!DR) return; try { DR.clear(!!soon); } catch (e) {} }
+    function drawPick() {
+      var all = Object.assign({}, A, PEND), n = keptN();
+      var when = DV ? dayName(DV.up) : '';
+      var line = 'You answered ' + n + ' of ' + NQ + ' question' + (NQ === 1 ? '' : 's') + (when ? ' on ' + when : '') + '.';
+      var more = DV && DV.old ? 'Saved answers keep for one week. Pick them up now, or start fresh.' : 'Pick up where you left off, or start fresh.';
+      stage.innerHTML = '<section class="ggd-card ggd-pickup"><div class="ggd-eb">Welcome Back</div>'
+        + '<h2 id="ggd-h">Your answers are saved on this device.</h2><p class="ggd-help">' + esc(line) + ' ' + esc(more) + '</p>'
+        + '<div class="ggd-ans"><button type="button" class="ggd-opt ggd-a" data-pk="up" aria-pressed="false"><span class="ggd-k" aria-hidden="true">1</span><span class="ggd-ot">Pick Up Where You Left Off</span></button>'
+        + '<button type="button" class="ggd-opt ggd-a" data-pk="fresh" aria-pressed="false"><span class="ggd-k" aria-hidden="true">2</span><span class="ggd-ot">Start Fresh</span></button></div></section>';
+      var card = stage.firstChild; card.classList.add('ggd-go'); bBack.hidden = true;
+      // an old draft is offered this once: marked, so the next open clears it
+      if (DV && DV.old && !DV.offered) { DV.offered = true; try { var a0 = {}; Object.keys(all).forEach(function (k) { if (qIndex(k) >= 0) a0[k] = all[k]; }); DR.save({ a: a0, at: DS.at, up: DV.up, offered: true }); } catch (e) {} }
+      card.querySelector('[data-pk="up"]').addEventListener('click', pickUp);
+      card.querySelector('[data-pk="fresh"]').addEventListener('click', startFresh);
+    }
+    function pickUp() {
+      Object.keys(PEND).forEach(function (k) { A[k] = PEND[k]; if (typeof o.onAnswer === 'function') { try { o.onAnswer(k, PEND[k]); } catch (e) {} } });
+      PEND = {};
+      if (DV && DV.old) { DV.old = false; DS.at = new Date().toISOString(); }
+      keepDraft();
+      S.picked = true;
+      show(firstOpen() < Q.length ? { k: 'resume' } : P.length ? { k: 'popen' } : { k: 'close' });
+    }
+    function startFresh() {
+      PEND = {}; Object.keys(A).forEach(function (k) { delete A[k]; });
+      DS.at = new Date().toISOString(); DV = null;
+      dropDraft(false);
+      if (typeof DR.fresh === 'function') { close(true); try { DR.fresh(); } catch (e) {} return; }
+      begin();
+    }
 
     /* the optional first screen: how the person is answering (opts.modes, opts.onMode), for example On My Own or With Someone I Trust */
     function drawMode() {
@@ -677,6 +759,7 @@
     function finish() {
       if (S.closed) return;
       var r = result(); S.finished = true;
+      if (!S.early) dropDraft(true);
       if (!S.early && typeof o.onDone === 'function') { try { o.onDone(r); } catch (e) {} }
       close();
     }
@@ -695,7 +778,7 @@
     // Done in the top bar: on the last screen it finishes (saving), anywhere else it closes (answers so far went through onAnswer).
     // BLD 1037 (the grown-up test run, B1): a check-in with every question answered saves on Done from any screen, so the
     // answers are never lost after the app says the check-in is complete.
-    function doneTap() { var k = S.screen && S.screen.k; if (k === 'sum' || (k === 'close' && !P.length) || (!P.length && Q.length && k !== 'mode' && firstOpen() >= Q.length)) finish(); else close(); }
+    function doneTap() { var k = S.screen && S.screen.k; if (k === 'pick') { close(); return; } if (k === 'sum' || (k === 'close' && !P.length) || (!P.length && Q.length && k !== 'mode' && firstOpen() >= Q.length)) finish(); else close(); }
 
     /* controls, keys, focus, and the screen staying awake */
     el.addEventListener('click', function (e) {
@@ -727,6 +810,7 @@
         return;
       }
       var sc = S.screen, tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (sc && sc.k === 'pick' && /^[12]$/.test(e.key)) { var pb = stage.querySelectorAll('[data-pk]')[+e.key - 1]; if (pb) { e.preventDefault(); pb.click(); } return; }
       if (sc && sc.k === 'mode' && /^[1-9]$/.test(e.key)) { var mb = stage.querySelectorAll('[data-m]')[+e.key - 1]; if (mb) { e.preventDefault(); mb.click(); } return; }
       if (sc && sc.k === 'q' && /^[1-9]$/.test(e.key) && tag !== 'TEXTAREA' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         var bs = stage.querySelectorAll('.ggd-ans [data-v]'), b = bs[+e.key - 1]; if (b) { e.preventDefault(); b.click(); }
@@ -743,13 +827,17 @@
     CUR = api;
 
     /* where to begin: the open, or where the person left off, or the Growth Plan on its own */
-    var any = Q.some(answered), at = firstOpen();
-    if (Array.isArray(o.modes) && o.modes.length && o.askMode !== false && !any) show({ k: 'mode' });
-    else if (!Q.length && !P.length) show({ k: 'close' });
-    else if (!Q.length) show(seq(KP.open).length ? { k: 'popen' } : { k: 'plan', j: 0 });
-    else if (any && at < Q.length) show({ k: 'resume' });
-    else if (any && at >= Q.length) show(P.length ? { k: 'popen' } : { k: 'close' });
-    else show({ k: 'open' });
+    function begin() {
+      var any = Q.some(answered), at = firstOpen();
+      if (DR && DR.ask !== false && Q.length && keptN()) show({ k: 'pick' });   // BLD 1040: answers kept, the Pick Up card
+      else if (Array.isArray(o.modes) && o.modes.length && o.askMode !== false && !any) show({ k: 'mode' });
+      else if (!Q.length && !P.length) show({ k: 'close' });
+      else if (!Q.length) show(seq(KP.open).length ? { k: 'popen' } : { k: 'plan', j: 0 });
+      else if (any && at < Q.length) show({ k: 'resume' });
+      else if (any && at >= Q.length) show(P.length ? { k: 'popen' } : { k: 'close' });
+      else show({ k: 'open' });
+    }
+    begin();
     return api;
   }
 
@@ -760,5 +848,5 @@
   function clearFlag() {
     try { var u = new URL(location.href); if (!u.searchParams.has('guided')) return; u.searchParams.delete('guided'); history.replaceState(history.state, '', u.pathname + (u.searchParams.toString() ? '?' + u.searchParams.toString() : '') + u.hash); } catch (e) {}
   }
-  window.GGGuided = { run: run, lines: lines, clipName: clipName, clipUrl: clipUrl, sentences: sentences, flag: flag, clearFlag: clearFlag, open: function () { return !!CUR; }, close: function () { if (CUR) CUR.close(); }, version: V };
+  window.GGGuided = { run: run, vaultDraft: vaultDraft, draftDays: DRAFT_DAYS, draftGone: function (up, offered) { return !!offered && Date.now() - (+up || 0) > DRAFT_DAYS * 86400000; }, lines: lines, clipName: clipName, clipUrl: clipUrl, sentences: sentences, flag: flag, clearFlag: clearFlag, open: function () { return !!CUR; }, close: function () { if (CUR) CUR.close(); }, version: V };
 })();

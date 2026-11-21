@@ -36,7 +36,7 @@
     '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
     '/shared/gg-life.js?v=b907',     // Health and Ability: the example and tip lines under a question
     '/maple/life.js?v=b907',         // window.MAPLE_LIFE notes, read by those lines
-    '/shared/gg-guided.js?v=c187',   // the shared player (it loads gg-guided.css itself)
+    '/shared/gg-guided.js?v=c189',   // the shared player (it loads gg-guided.css itself)
     '/shared/guided/maple.js?v=b907', // window.GG_GUIDED.maple, every spoken line
     '/shared/kids/maple-practices.js?v=c187' // BLD 1037: the practices, for the Growth Plan (Home loads practice-rhythm.js)
   ];
@@ -205,10 +205,15 @@
     // A draft from older questions, or in another wording, starts fresh (restore, maple/guided.js 65).
     // A grown-up's wording pick on the start screen holds for that check-in; a lock always wins.
     var keep = isObj(d0) && d0.std === C.version && gradeKeys().indexOf(d0.grade) >= 0 && isObj(d0.answers)
-      && (d0.wording === homeW || (!locked && d0.pickW === true)) && Object.keys(d0.answers).some(function (k) { return (d0.answers[k] || []).some(Boolean); });
-    if (keep) { cur = checkin(ctx, H, d0, false); return H; }
+      && (d0.wording === homeW || (!locked && d0.pickW === true)) && Object.keys(d0.answers).some(function (k) { return (d0.answers[k] || []).some(Boolean); })
+      && !GGGuided.draftGone(d0.up || Date.parse(d0.started || ''), d0.offered);   // BLD 1040: an old draft is offered once
+    if (keep) { cur = checkin(ctx, H, d0, false, setup); return H; }
+    if (isObj(d0) && GGGuided.draftGone(d0.up || Date.parse(d0.started || ''), d0.offered) && kidRec(id).draft) { delete kidRec(id).draft; GGP.save(id); }
+    setup();
+    return H;
 
-    // A fresh start: the Before You Start screen, then the check-in.
+    // A fresh start: the Before You Start screen, then the check-in (and Start Fresh on the Pick Up card, BLD 1040).
+    function setup() {
     css();
     var savedGrade = gradeKeys().indexOf(String(kid0.grade || '')) >= 0 ? String(kid0.grade) : (function () { var c = kid0.checkins || [], l = c[c.length - 1]; return l && gradeKeys().indexOf(String(l.grade)) >= 0 ? String(l.grade) : null; })();
     var st = { mode: 'self', grade: savedGrade, pickW: null }, began = false;
@@ -241,7 +246,7 @@
         kid.draft = d;
         if (!savedGrade) kid.grade = st.grade;   // the grade is asked once and kept on the kid record
         GGP.save(id);
-        cur = checkin(ctx, H, d, true);
+        cur = checkin(ctx, H, d, true, setup);
       },
       onClose: function () { if (!began) closed(); }
     });
@@ -250,11 +255,21 @@
       var k = b.getAttribute('data-gck'), v = b.getAttribute('data-val');
       if (k === 'mode') st.mode = v; else if (k === 'grade') st.grade = v; else if (k === 'word') st.pickW = v;
     }, true);   // before the player redraws the form (its own handler draws it again on the next tick)
-    return H;
+    }
   }
 
+  // BLD 1040: the Pick Up card on the kid's own draft (kid.draft keeps the answers, put saves each one): the card's dates
+  // ride on the draft, Start Fresh drops it and opens Before You Start again. The finished check-in deletes it in finish.
+  function kidDraft(id, recOf, again) {
+    return {
+      load: function () { var dd = recOf().draft; return isObj(dd) ? { a: {}, at: dd.started, up: dd.up || Date.parse(dd.started || ''), offered: !!dd.offered } : null; },
+      save: function (x) { var dd = recOf().draft; if (!isObj(dd)) return; dd.up = x.up; if (x.offered) dd.offered = true; else delete dd.offered; GGP.save(id); },
+      clear: function (soon) { if (soon) return; var r = recOf(); if (r.draft) { delete r.draft; GGP.save(id); } },
+      fresh: typeof again === 'function' ? function () { setTimeout(again, 30); } : null
+    };
+  }
   // The check-in itself, on the draft d (kid.draft): every answer saves into the draft, Done builds the record.
-  function checkin(ctx, H, d, fresh) {
+  function checkin(ctx, H, d, fresh, again) {
     var id = ctx.id, C = CK(), kid0 = peekKid(id);
     var kind = (kid0.checkins || []).length ? 'full' : 'start', grown = d.mode === 'grown', plain = d.wording === 'plain';
     var Q = questions(d.grade, d.mode, d.wording, id), A = {};
@@ -297,6 +312,7 @@
     var p = GGGuided.run({
       tree: 'maple', kind: kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true, plain: plain,
       questions: Q, answers: A, script: script([kind], grown, plain), isEdge: isEdge, quiet: C.quiet || undefined, early: true,
+      draft: kidDraft(id, function () { return kidRec(id); }, again),
       onAnswer: put,
       onDone: function () { ended = 'done'; finish(); },
       onClose: function () {
