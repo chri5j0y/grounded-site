@@ -58,7 +58,7 @@
     '/shared/gg-life.js?v=b907',
     '/pine/life.js?v=b907',
     '/shared/practice-rhythm.js?v=b929',
-    '/shared/gg-guided.js?v=c030',
+    '/shared/gg-guided.js?v=c187',
     '/shared/guided/pine.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // 181
@@ -270,7 +270,16 @@
     // gdEdge (661): a Growing Edge answer is worth 0 points.
     function gdEdge(q, v) { var o = Q_OPTS.find(function (x) { return x[0] === v; }); return !!o && o[2] !== null && (q.rv ? 3 - o[2] : o[2]) === 0; }
     // gdKind (634)
-    var kind = quick ? 'quick' : d.history.some(function (e) { return e && !e.from && e.type !== 'quick' && e.scores; }) ? 'full' : 'start';
+    // BLD 1037 (the teen test run, C3): any check-in before, quick ones too, makes this one a return (full); a first-ever quick
+    // check-in opens with its own first line, never "welcome back".
+    var anyBefore = d.history.some(function (e) { return e && !e.from && e.scores; });
+    var kind = quick ? 'quick' : anyBefore ? 'full' : 'start';
+    var firstScript = null;
+    if (quick && !anyBefore && window.GG_GUIDED && GG_GUIDED.pine && GG_GUIDED.pine.kinds && GG_GUIDED.pine.kinds.quick) {
+      var G0 = GG_GUIDED.pine, Kq = Object.assign({}, G0.kinds.quick), op = (Kq.open || []).slice();
+      if (Array.isArray(op[0])) op[0] = op[0].filter(function (t) { return !/welcome back/i.test(t); });
+      Kq.open = op; firstScript = Object.assign({}, G0, { kinds: Object.assign({}, G0.kinds, { quick: Kq }) });
+    }
 
     /* the handle, the Roots words, and closing once */
     var cur = null, stage = 'checkin', ended = false, hadPlain = Object.prototype.hasOwnProperty.call(window, 'gwPlainOn'), oldPlain = window.gwPlainOn;
@@ -399,14 +408,16 @@
       return handle;
     }
     /* the check-in (gdBegin 660) */
-    var finished = false;
+    var finished = false, saving = null;
     function begin() {
       loadBank(); CK_BAND = bandNow(); ST_ANS = {}; ST_SENS = {};
       stage = 'checkin';
-      cur = GGGuided.run({ plain: plainFn, tree: TREE, kind: kind, title: GD_TITLE[kind], voice: 'jenny', questions: gdQuestions(), quiet: CKB.quiet || undefined,
+      cur = GGGuided.run({ plain: plainFn, tree: TREE, kind: kind, title: GD_TITLE[kind], voice: 'jenny', questions: gdQuestions(), quiet: CKB.quiet || undefined, script: firstScript || undefined,
         isEdge: gdEdge, onAnswer: gdSet,
-        onDone: function () { finished = true; cur = null; save().then(function () { if (ctx.plan === false) end(); else rhythm(planRun); }, function () { end(); }); },
-        onClose: function () { if (!finished) end(); } });
+        early: true,
+        // BLD 1037: the record saves as the closing screen shows (opts.early); the plan or the end waits for the window to close.
+        onDone: function () { finished = true; saving = save(); },
+        onClose: function () { cur = null; if (!finished) { end(); return; } saving.then(function () { if (ctx.plan === false) end(); else rhythm(planRun); }, function () { end(); }); } });
     }
     if (!gradeNow()) {
       // startCheckin and startQuick (617, 618) ask the grade first, once.

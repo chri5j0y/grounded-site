@@ -29,6 +29,7 @@
      opts.onAnswer(id, value)   each answer, the moment it is chosen
      opts.onPlan(part, names)   each Growth Plan step, when Next is tapped
      opts.onDone({answers, plan})   the last screen's Done (plan is null when the run has no plan steps)
+     opts.early                 true: onDone runs as the closing screen shows with every question answered (BLD 1037)
      opts.onClose()             the player closed (after onDone too)
      opts.onReadAll(answers)    shows Read It All; the player closes, then this opens the tree's classic form
    GGGuided.lines(opts) returns every sentence the voice can say for that run, in order, each once:
@@ -389,6 +390,9 @@
       if (S.closed) return;
       S.tok++; hush(); clearTimeout(S.timer); clearTimeout(S.adv);
       S.screen = sc; progress(sc);
+      // BLD 1037 (the test runs, B1 and B4): with opts.early, the check-in saves the moment its closing screen shows with every
+      // question answered, so closing the window or the page there keeps it. The last Done then only closes.
+      if (o.early && sc.k === 'close' && !P.length && Q.length && firstOpen() >= Q.length && !S.early) { S.early = true; if (typeof o.onDone === 'function') { try { o.onDone(result()); } catch (e) {} } }
       bNext.hidden = true; bNext.disabled = false; bNext.onclick = null;
       bBack.hidden = false; bBack.disabled = !canBack(sc);
       ({ mode: drawMode, q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, reply: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
@@ -673,7 +677,7 @@
     function finish() {
       if (S.closed) return;
       var r = result(); S.finished = true;
-      if (typeof o.onDone === 'function') { try { o.onDone(r); } catch (e) {} }
+      if (!S.early && typeof o.onDone === 'function') { try { o.onDone(r); } catch (e) {} }
       close();
     }
     function close(quiet) {
@@ -689,7 +693,9 @@
       if (!quiet && typeof o.onClose === 'function') { try { o.onClose(); } catch (e) {} }
     }
     // Done in the top bar: on the last screen it finishes (saving), anywhere else it closes (answers so far went through onAnswer).
-    function doneTap() { var k = S.screen && S.screen.k; if (k === 'sum' || (k === 'close' && !P.length)) finish(); else close(); }
+    // BLD 1037 (the grown-up test run, B1): a check-in with every question answered saves on Done from any screen, so the
+    // answers are never lost after the app says the check-in is complete.
+    function doneTap() { var k = S.screen && S.screen.k; if (k === 'sum' || (k === 'close' && !P.length) || (!P.length && Q.length && k !== 'mode' && firstOpen() >= Q.length)) finish(); else close(); }
 
     /* controls, keys, focus, and the screen staying awake */
     el.addEventListener('click', function (e) {

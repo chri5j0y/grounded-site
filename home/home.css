@@ -1754,3 +1754,17 @@ html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;-
 /* BLD 1016: the Shopping List and Sunday Together Prep lead the Week tab; on a phone they sit as two compact rows so both show
    in the first screen (the whole card stays one button). */
 @media (max-width:699px){ .hm-wmain .hm-wfind{gap:10px;margin:0 0 14px;} .hm-wmain .hm-wbig{flex-direction:row;align-items:center;border-radius:18px;} .hm-wmain .hm-wbig .pic{flex:0 0 92px;height:92px;} .hm-wmain .hm-wbig .pic::after,.hm-wmain .hm-wbig .ic,.hm-wmain .hm-wbig .go{display:none;} .hm-wmain .hm-wbig .tx{padding:10px 14px;} .hm-wmain .hm-wbig b{font-size:24px;} .hm-wmain .hm-wbig small{font-size:14px;} }
+/* BLD 1037: Review My Growth Plan, after a later check-in */
+.hm-rv{display:grid;gap:10px;}
+.hm-rv .hm-sub{margin:0;}
+.hm-rv-parts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.hm-rv-part{display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card-2);min-width:0;}
+.hm-rv-part b{font-size:15px;color:var(--ink);overflow-wrap:anywhere;}
+.hm-rv-part small{color:var(--ink-soft);font-size:14px;}
+.hm-rv-part.edge{border-color:color-mix(in srgb,var(--c) 60%,transparent);background:color-mix(in srgb,var(--c) 10%,var(--card-2));}
+.hm-rv-part.edge small{color:var(--ink);font-weight:600;}
+.hm-rv-lbl{margin:4px 0 0;font-weight:700;font-size:15px;color:var(--ink);}
+.hm-rv-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+.hm-rv-list li{padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--card-2);}
+.hm-rv-list b{display:block;color:var(--ink);}
+.hm-rv-list small{display:block;color:var(--ink-soft);margin-top:2px;}

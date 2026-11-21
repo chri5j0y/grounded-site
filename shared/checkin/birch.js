@@ -53,7 +53,7 @@
     '/shared/gg-life.js?v=b907',
     '/shared/gg-life-kit.js?v=b888',
     '/shared/practice-rhythm.js?v=b929',
-    '/shared/gg-guided.js?v=c030',
+    '/shared/gg-guided.js?v=c187',
     '/shared/guided/birch.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // 194
@@ -207,7 +207,16 @@
     // gdEdge (628): a Growing Edge answer is worth 0 points.
     function gdEdge(q, v) { var o = Q_OPTS.find(function (x) { return x[0] === v; }); return !!o && o[2] !== null && (q.rv ? 3 - o[2] : o[2]) === 0; }
     // gdKind (600)
-    var kind = quick ? 'quick' : d.history.some(function (e) { return e && !e.from && e.type !== 'quick' && e.scores; }) ? 'full' : 'start';
+    // BLD 1037 (the grown-up test run, C22): any check-in before, quick ones too, makes this one a return (full); a first-ever
+    // quick check-in opens with its own first line, never "welcome back".
+    var anyBefore = d.history.some(function (e) { return e && !e.from && e.scores; });
+    var kind = quick ? 'quick' : anyBefore ? 'full' : 'start';
+    var firstScript = null;
+    if (quick && !anyBefore && window.GG_GUIDED && GG_GUIDED.birch && GG_GUIDED.birch.kinds && GG_GUIDED.birch.kinds.quick) {
+      var G0 = GG_GUIDED.birch, Kq = Object.assign({}, G0.kinds.quick), op = (Kq.open || []).slice();
+      if (Array.isArray(op[0])) op[0] = op[0].filter(function (t) { return !/welcome back/i.test(t); });
+      Kq.open = op; firstScript = Object.assign({}, G0, { kinds: Object.assign({}, G0.kinds, { quick: Kq }) });
+    }
 
     /* the handle, the Roots words, and closing once */
     var cur = null, stage = 'checkin', ended = false, hadPlain = Object.prototype.hasOwnProperty.call(window, 'gwPlainOn'), oldPlain = window.gwPlainOn;
@@ -341,11 +350,13 @@
       return handle;
     }
     /* the check-in (gdBegin 630) */
-    var finished = false;
-    cur = GGGuided.run({ plain: plainFn, tree: TREE, kind: kind, title: GD_TITLE[kind], voice: 'brian', questions: gdQuestions(), quiet: CKB.quiet || undefined,
+    var finished = false, saving = null;
+    cur = GGGuided.run({ plain: plainFn, tree: TREE, kind: kind, title: GD_TITLE[kind], voice: 'brian', questions: gdQuestions(), quiet: CKB.quiet || undefined, script: firstScript || undefined,
       isEdge: gdEdge, onAnswer: gdSet,
-      onDone: function () { finished = true; cur = null; save().then(function () { if (ctx.plan === false) end(); else rhythm(planRun); }, function () { end(); }); },
-      onClose: function () { if (!finished) end(); } });
+      early: true,
+        // BLD 1037: the record saves as the closing screen shows (opts.early); the plan or the end waits for the window to close.
+        onDone: function () { finished = true; saving = save(); },
+      onClose: function () { cur = null; if (!finished) { end(); return; } saving.then(function () { if (ctx.plan === false) end(); else rhythm(planRun); }, function () { end(); }); } });
     return handle;
   }
 

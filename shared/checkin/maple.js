@@ -36,8 +36,9 @@
     '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
     '/shared/gg-life.js?v=b907',     // Health and Ability: the example and tip lines under a question
     '/maple/life.js?v=b907',         // window.MAPLE_LIFE notes, read by those lines
-    '/shared/gg-guided.js?v=c030',   // the shared player (it loads gg-guided.css itself)
-    '/shared/guided/maple.js?v=b907' // window.GG_GUIDED.maple, every spoken line
+    '/shared/gg-guided.js?v=c187',   // the shared player (it loads gg-guided.css itself)
+    '/shared/guided/maple.js?v=b907', // window.GG_GUIDED.maple, every spoken line
+    '/shared/kids/maple-practices.js?v=c187' // BLD 1037: the practices, for the Growth Plan (Home loads practice-rhythm.js)
   ];
   var PARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // maple/index.html PARTS 983, in order
   var CK = function () { return window.MAPLE_CHECKIN; };
@@ -295,7 +296,7 @@
     };
     var p = GGGuided.run({
       tree: 'maple', kind: kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true, plain: plain,
-      questions: Q, answers: A, script: script([kind], grown, plain), isEdge: isEdge, quiet: C.quiet || undefined,
+      questions: Q, answers: A, script: script([kind], grown, plain), isEdge: isEdge, quiet: C.quiet || undefined, early: true,
       onAnswer: put,
       onDone: function () { ended = 'done'; finish(); },
       onClose: function () {
@@ -308,5 +309,104 @@
     return p;
   }
 
-  window.GGCheckin.maple = { files: FILES, kinds: ['full'], run: run };
+  /* ---------- the Growth Plan (GWG BLD 1037): maple/guided.js planSteps, planMerge, and plan, here in Home ----------
+     Chris (November 21, 2026): after the check-in, walk through building the growth plan; with a plan already chosen,
+     review it with the new Growing Edges first. The practices are the one shared copy (shared/kids/maple-practices.js)
+     with maple/life.js laid on as the tree page lays it (ACTIVITIES, maple/index.html). The plan saves where the tree's
+     Growth Plan tab saves it (GGTend.setPlan on kid.tend.plan: {part: {selected, custom, own}}), so Today reads it. */
+  var ACTS = null;
+  function acts() {
+    if (ACTS) return ACTS;
+    var src = (window.GG_KIDS_PRAC || {}).maple; if (!Array.isArray(src)) return null;
+    var A = clone(src), L = window.MAPLE_LIFE || {};
+    (L.add || []).forEach(function (a) { if (!A.some(function (x) { return x.id === a.id; })) A.push(clone(a)); });
+    A.forEach(function (a) { var t = (L.acts || {})[a.id]; if (t) { a.life = (t.life || []).slice(); a.adapt = t.adapt; } });
+    return (ACTS = A);
+  }
+  function actW(a, plain) { return plain && a.plain ? Object.assign({}, a, a.plain) : a; }   // maple/index.html actW
+  function isK2(g) { g = String(g); return g === 'k2' || g === 'K' || g === '1' || g === '2'; }
+  function sameAct(a, n) { n = String(n || '').toLowerCase(); return a.title.toLowerCase() === n || !!(a.plain && a.plain.title && a.plain.title.toLowerCase() === n); }
+  // suggestedParts (maple/index.html): the parts with rain, then clouds, in the latest check-in.
+  function suggestedParts(answers) {
+    var w = function (k) { return (answers[k] || {}).w; };
+    return PARTS.filter(function (k) { return w(k) === 'rain'; }).concat(PARTS.filter(function (k) { return w(k) === 'cloud'; }));
+  }
+  function tends(k) { return !window.GGParts || !GGParts.tend || GGParts.tend(k); }
+  function partLabel(k, plain) { return window.GGParts && GGParts.label ? GGParts.label(k, { plain: plain }) : k; }
+  // normPlan (guided.js), with saved names read forward to this wording (mpNormTend), so a pick is never doubled.
+  function normPlan(P, plain) {
+    var A = acts() || [];
+    PARTS.forEach(function (k) {
+      var x = P[k] = isObj(P[k]) ? P[k] : {};
+      x.selected = Array.isArray(x.selected) ? x.selected : []; x.own = Array.isArray(x.own) ? x.own : []; x.custom = x.custom || '';
+      if (x.custom) { x.own.push(x.custom); x.custom = ''; }
+      x.selected = x.selected.map(function (n) { var a = A.filter(function (y) { return y.part === k && sameAct(y, n); })[0]; return a ? actW(a, plain).title : n; })
+        .filter(function (n, i, all) { return n && all.indexOf(n) === i; });
+    });
+    return P;
+  }
+  // planSteps (guided.js): Growing Edges first (rain, then clouds), then the other parts you tend; every pick chosen and shown
+  // first, then the rest up to eight, Health and Ability fits first. A saved pick with no practice here shows too, chosen.
+  function planSteps(kid, base, plain, id) {
+    var R = (window.GG_RHYTHM || {}).maple || {}, young = isK2(kid.grade), last = (kid.checkins || [])[(kid.checkins || []).length - 1] || {};
+    var sug = suggestedParts(last.answers || {}).filter(tends), order = sug.concat(PARTS.filter(function (k) { return tends(k) && sug.indexOf(k) < 0; }));
+    var life = lifeIds(id).length > 0 && window.GGLife && GGLife.order;
+    return order.map(function (k) {
+      var sel = base[k].selected, list = acts().filter(function (a) { return a.part === k; });
+      if (life) list = GGLife.order(list, function (a) { return { life: a.life || [], adapt: a.adapt || '' }; });
+      var chosen = list.filter(function (a) { return sel.indexOf(actW(a, plain).title) >= 0; }), open = list.filter(function (a) { return chosen.indexOf(a) < 0; });
+      var show = chosen.concat(open.slice(0, Math.max(0, 8 - chosen.length)));
+      var choices = show.map(function (a) { var w = actW(a, plain), r = R[k + '|' + w.title]; return { name: w.title, how: r && r.how ? undefined : (young ? [w.k2] : w.g35) }; });
+      sel.forEach(function (n) { if (!choices.some(function (c) { return c.name === n; })) choices.unshift({ name: n }); });
+      var edge = sug.indexOf(k) >= 0;
+      return { type: 'plan', part: k, max: 3, edge: edge, text: edge ? partLabel(k, plain) + ' could use a little love. Choose up to three to help it grow.' : undefined, choices: choices };
+    });
+  }
+  // planMerge (guided.js): a part's shown cards take the choices; anything else in the plan stays.
+  function planMerge(base, steps, picked) {
+    var P = clone(base);
+    steps.forEach(function (st) {
+      if (!picked || !Object.prototype.hasOwnProperty.call(picked, st.part)) return;
+      var shown = st.choices.map(function (c) { return c.name; });
+      P[st.part].selected = P[st.part].selected.filter(function (n) { return shown.indexOf(n) < 0; }).concat(picked[st.part] || []);
+    });
+    return P;
+  }
+  function planSize(P) { return PARTS.reduce(function (s, k) { var x = P[k] || {}; return s + (x.selected || []).length + (x.own || []).length + (x.lib || []).length; }, 0); }
+  // plan(ctx): ctx.review (a plan already chosen: Review My Growth Plan), ctx.onPlanSaved(plan), ctx.onClose({saved}).
+  function plan(ctx) {
+    ctx = ctx || {};
+    var id = ctx.id;
+    if (!id || !window.GGGuided || !window.GG_GUIDED || !window.GG_GUIDED.maple || !vault(id) || !acts()) return null;
+    var kid = kidRec(id), t = tendOf(kid), last = (kid.checkins || [])[(kid.checkins || []).length - 1] || {};
+    var plain = typeof ctx.plain === 'boolean' ? (plainLocked(kid, id) || ctx.plain) : kidWording(kid, id) === 'plain';
+    var base = normPlan(clone(isObj(t.plan) ? t.plan : {}), plain), steps = planSteps(kid, base, plain, id), cur = {}, picked = {};
+    steps.forEach(function (st) { cur[st.part] = base[st.part].selected.filter(function (n) { return st.choices.some(function (c) { return c.name === n; }); }); });
+    var sc = script(['plan'], last.mode === 'grown', plain);
+    if (ctx.review && sc.kinds.plan) sc.kinds.plan.open = [];   // a review opens on its first part: the open lines say "let's build"
+    var saved = false;
+    return GGGuided.run({
+      tree: 'maple', kind: 'plan', title: ctx.title || (ctx.review ? 'Review My Growth Plan' : 'Build My Growth Plan'), planTitle: 'My Growth Plan', voice: 'jenny', kid: true, plain: plain,
+      questions: steps, plan: cur, script: sc, quiet: false,
+      onPlan: function (part, names) { picked[part] = names; },
+      onDone: function (r) {
+        var P = planMerge(base, steps, r.plan || picked);
+        if (!planSize(P)) { if (typeof ctx.toast === 'function') ctx.toast('Pick 1 thing to practice, and it will be waiting in Today.'); return; }
+        var k2 = kidRec(id), t2 = tendOf(k2), old = isObj(t2.plan) ? t2.plan : {};
+        t2.plan = clone(P);
+        // GGTend.setPlan: library picks and own practices (a visit card's) stay when the plan is rebuilt.
+        Object.keys(old).forEach(function (k) { var L = (old[k] || {}).lib; if (L && L.length) { t2.plan[k] = t2.plan[k] || { selected: [] }; if (!t2.plan[k].lib) t2.plan[k].lib = L; } });
+        t2.planChosen = dkey();   // BLD 1037: the person chose their plan (the setup's starters were the backup until now)
+        saved = Promise.resolve(GGP.save(id)).then(function () { if (typeof ctx.onPlanSaved === 'function') { try { ctx.onPlanSaved(clone(t2.plan)); } catch (e) {} } });
+      },
+      onClose: function () {
+        setTimeout(function () {
+          var fin = function () { if (typeof ctx.onClose === 'function') { try { ctx.onClose({ saved: !!saved }); } catch (e) {} } };
+          if (saved) saved.then(fin, fin); else fin();
+        }, 0);
+      }
+    });
+  }
+
+  window.GGCheckin.maple = { files: FILES, kinds: ['full'], run: run, plan: plan };
 })();

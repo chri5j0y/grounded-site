@@ -41,7 +41,7 @@
     '/shared/gg-parts.js?v=b929',
     '/shared/gg-life.js?v=b907',
     '/shared/practice-rhythm.js?v=b929',
-    '/shared/gg-guided.js?v=c030',
+    '/shared/gg-guided.js?v=c187',
     '/shared/guided/sequoia.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // sequoia/app.js:195
@@ -297,7 +297,7 @@
     var o = {
       tree: TREE, kind: kind, voice: 'brian', plain: plainFn,
       title: TITLE[kind] || 'Check-in',
-      questions: qs, answers: have, quiet: (CKB().help || {}).quiet || undefined, isEdge: isEdge,
+      questions: qs, answers: have, quiet: (CKB().help || {}).quiet || undefined, isEdge: isEdge, early: true,
       onAnswer: function (qid, v) { var q = byId[qid]; if (q) answerQ(q.key, q.i, v); },
       onDone: function (r) {
         Object.keys(r.answers || {}).forEach(function (qid) { var q = byId[qid]; if (q && r.answers[qid]) answerQ(q.key, q.i, r.answers[qid]); });
