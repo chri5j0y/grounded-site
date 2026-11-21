@@ -677,8 +677,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=c030"></script>
-<script src="../shared/gg-sources.js?v=c137"></script>
-<script src="../shared/gg-learn.js?v=c171"></script>
+<script src="../shared/gg-sources.js?v=c183"></script>
+<script src="../shared/gg-learn.js?v=c183"></script>
 <script src="../shared/gg-parts.js?v=b929"></script>
 <script src="../shared/gg-print.js?v=b939"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
@@ -699,7 +699,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="grovevisit.js?v=b907"></script>
 <script src="heartwood.js?v=b934"></script>
 <script src="member-acct.js?v=b950"></script>
-<script src="../shared/gg-stories.js?v=c181"></script>
+<script src="../shared/gg-stories.js?v=c183"></script>
 <script src="vault.js?v=c180"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1105,7 +1105,7 @@ function tabsFor(){
   if (!LIB) return [...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
-  // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
+  // Guide yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
   const t = [['-','For Everyone'], ['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key'], ['books','Books','ledger']); // Books (GWG BLD 770, books.js): Founders only
@@ -1264,7 +1264,7 @@ if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER
 // holds (DATA.health) in its own locked store, untouched; nothing is deleted. Bring Your Tending Over (Settings) carries them
 // over once: it loads the engine (/shared/tend/health.js) for that moment only and runs the same tested Move My Plan merge
 // (newest entry wins, removed entries stay removed), with the keys to this device's libraries for the plan's own refresh.
-const TEND_JS = '/shared/tend/health.js?v=c171';
+const TEND_JS = '/shared/tend/health.js?v=c183';
 const TC = {busy: false};
 function fgLoadJs(src){ return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = src; sc.onload = () => res(); sc.onerror = () => rej(new Error(src)); document.head.appendChild(sc); }); }
 async function fgTendEngine(){
@@ -1745,7 +1745,7 @@ function vFieldHome(){
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988. When harm comes up, follow the Grounded Response Plan.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="rp-open">Response Plan</button><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
 }
 
-// Follow-ups due this week, for Guides (Staff and Founders see them on Home). Only people Field can open.
+// Follow-ups due this week, for Guides (Staff and Founders see them on Home). Only Guides can open.
 function fieldDue(){
   const due = [];
   DATA.clients.filter(c => !anyMe(c)).forEach(c => (c.followups || []).forEach(f => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f}); }));
@@ -8552,7 +8552,7 @@ function lgmState(){
 }
 // The Training card (Staff and Founders) and the Learn card (Guides) both open the training home.
 const lgmCardInfo = () => ({title: LGM().title || 'Walking with Illness and Disability: Guide Training', desc: LGG().lead || 'Lessons, scenarios, and the agreement for walking with people living with illness or disability.', n: trainNote(lgmState()), act: 'lg-mhome', accent: LG_C});
-// Field Home: a quiet card while the training is open and not yet complete, or due for renewal.
+// Guide Home: a quiet card while the training is open and not yet complete, or due for renewal.
 function lgHomeCard(){
   if (!lgOpen()) return '';
   const m = lgmState();
@@ -10084,7 +10084,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=c128', '../willow/guides.js?v=c116', '../sequoia/guides.js?v=c126', '../pine/guides.js?v=b924', '../birch/guides.js?v=c128'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b934', '../aspen/guides.js?v=b934', '../oak/guides.js?v=c128', '../willow/guides.js?v=c183', '../sequoia/guides.js?v=c126', '../pine/guides.js?v=b924', '../birch/guides.js?v=c128'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

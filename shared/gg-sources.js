@@ -20,7 +20,7 @@
      GGSources.lesson(app, lesson)    the line for a video: lesson.sources, or this file's list for its
                                       id, plus a Story line for every story scene in it
      GGSources.line(list, opts)       draw any list of source ids or {label, href} objects
-   Sealed lessons (Field library) carry their own sources: ['id', ...] or [{label, href}].
+   Sealed lessons (Guide library) carry their own sources: ['id', ...] or [{label, href}].
    Edit sources here.
    W1 and W2 (Willow Guide For Guides) added the credits marked below; sealed lessons carry their ids in sources.
    W4 (Willow Support for Right Now, BLD 717): public lessons carry their own sources list in shared/learn-lessons.js.

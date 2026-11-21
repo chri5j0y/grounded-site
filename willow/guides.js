@@ -6,7 +6,7 @@
    Helper): the side each guide was missing (Build B1, October 2026), so every guide speaks to
    the person facing it and to the person beside them. Two videos per guide: willow/guide-videos.js.
    Every guide has a short pro note (W1, GWG BLD 714). The full For Guides section and video for each guide are sealed
-   in Willow Guide (Field library), never in this public file.
+   in Willow Guide (Guide library), never in this public file.
    Under all of them: name the feeling first, then talk.
    ===================================================================== */
 (function(){

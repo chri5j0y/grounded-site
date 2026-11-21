@@ -49,7 +49,7 @@
      Learn's search. A tree without the view keeps them in Learn, one card per ring, as before.
    - The Learn top (GWG BLD 790): a search bar (title, blurb, and track name; listed tracks only, so low-key tracks follow
      their rules) and a tab for each category, All first. The category cards stay below as the All view.
-   - For Guides videos (W1, GWG BLD 714): a track with kind: 'forguides' (sealed in the Field library, one track per
+   - For Guides videos (W1, GWG BLD 714): a track with kind: 'forguides' (sealed in the Guide library, one track per
      ring, played by the Field Guide). The closing scene offers Open the Full Section (cfg.section), Watch Again,
      Next Video (the next guide in the ring), and Back to the Series, plus Get Your Certificate (cfg.cert) when the
      whole ring is counted.
@@ -182,7 +182,7 @@
   // battery, kind wishes rings, good things on a branch, the conversation turn, growth rings, the repair bridge, the Name It
   // dial, the circle of support, and a hand on the heart or roots on the body outline. The plan is c114; gg-gfx.js has its own
   // version (GFXJS), so a change to the drawings alone needs no new plan.
-  var GFXP = { p: null }, GFXV = 'c115', GFXJS = 'c148', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
+  var GFXP = { p: null }, GFXV = 'c115', GFXJS = 'c183', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
   function gfxLoad() {
     if (window.GG_GFX) return Promise.resolve(window.GG_GFX);
     if (GFXP.p) return GFXP.p;
@@ -993,7 +993,7 @@
   function medOf(l) { return !!l && l.section === 'meditation'; }
   /* BLD 991 Sound and Music: shared/gg-sound.js (one AudioContext for music, beds, and cues; the duck bus) and its plan of
      nature beds by scene (shared/gg-sound-plan.js). It loads with the player; a video with no bed fetches nothing more. */
-  var SNDV = 'c119', SNDP = null;
+  var SNDV = 'c151', SNDP = null;
   function needSound() {
     if (window.GGSound) return GGSound.ready();
     if (SNDP) return SNDP;
@@ -1076,7 +1076,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=c137'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=c183'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -2276,7 +2276,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c171'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c183'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
