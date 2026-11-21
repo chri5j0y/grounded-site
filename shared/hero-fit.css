@@ -6,8 +6,8 @@
    ps: on a computer the painting shows whole above the words, as on a tablet.
    pwx: pw on a wide screen (1500 and wider), ps on a smaller computer, where the words would reach the faces.
    November 21, 2026 (Chris: wide screens showed the painting boxed with dark bands): ps and the smaller computer pwx run the
-   painting the full width; on a short, wide window it is capped at 76vh and crops a little from the top and bottom, centered a
-   little above the middle (--pos-y), so heads stay in. */
+   painting the full width and show it whole, never cropped (Chris, November 21: the 76vh cap cut the painting on a wide
+   monitor, "still not right"); the words sit below the painting, as on a tablet. */
 
 /* phones */
 @media (max-width:700px){
@@ -37,7 +37,7 @@
 .pg-hero.pw.pl::before{background:linear-gradient(90deg,rgba(var(--shade-rgb,18,10,3),.72) 0%,rgba(var(--shade-rgb,18,10,3),.5) 34%,rgba(var(--shade-rgb,18,10,3),0) 58%);}
 .pg-hero.pw.pr::before{background:linear-gradient(270deg,rgba(var(--shade-rgb,18,10,3),.72) 0%,rgba(var(--shade-rgb,18,10,3),.5) 34%,rgba(var(--shade-rgb,18,10,3),0) 58%);}
 .pg-hero.ps,.pg-hero.ps.ph,.pg-hero.ps.strip{display:block;min-height:0;padding:0 0 40px;background-image:none !important;background-color:rgb(var(--shade-rgb,30,20,10));}
-.pg-hero.ps::before{content:"";position:relative;inset:auto;display:block;width:100%;aspect-ratio:var(--ar,16/9);max-height:76vh;margin:0 0 30px;background:var(--img) center var(--pos-y,38%)/cover no-repeat !important;}
+.pg-hero.ps::before{content:"";position:relative;inset:auto;display:block;width:100%;aspect-ratio:var(--ar,16/9);margin:0 0 30px;background:var(--img) center top/cover no-repeat !important;}
 .pg-hero.ps .pg-hero-in{padding-top:0;}
 .pg-hero.ps.ph .cer-actions{margin-top:22px;padding-top:0;}
 }
@@ -50,7 +50,7 @@
 }
 @media (min-width:1101px) and (max-width:1499px){
 .pg-hero.pwx,.pg-hero.pwx.ph,.pg-hero.pwx.strip{display:block;min-height:0;padding:0 0 40px;background-image:none !important;background-color:rgb(var(--shade-rgb,30,20,10));}
-.pg-hero.pwx::before{content:"";position:relative;inset:auto;display:block;width:100%;aspect-ratio:var(--ar,16/9);max-height:76vh;margin:0 0 30px;background:var(--img) center var(--pos-y,38%)/cover no-repeat !important;}
+.pg-hero.pwx::before{content:"";position:relative;inset:auto;display:block;width:100%;aspect-ratio:var(--ar,16/9);margin:0 0 30px;background:var(--img) center top/cover no-repeat !important;}
 .pg-hero.pwx .pg-hero-in{padding-top:0;}
 .pg-hero.pwx.ph .cer-actions{margin-top:22px;padding-top:0;}
 }
