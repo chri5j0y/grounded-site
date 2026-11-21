@@ -107,6 +107,7 @@
     { title: 'Rates', sub: 'What it costs, plainly', href: '/rates.html', keys: 'rates price prices cost costs fee fees how much pay payment deposit' },
     { title: 'About', sub: 'A life giving company: who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story life giving company' },
     { title: 'Resources', sub: 'Grounded Recipes, the Book Library, the Readings Library, Get Grounded Now, Grounded Stories, Heartwood, Willow, and helpers for a farewell', href: '/tools.html', keys: 'resources resource tools tool recipes books library readings stories companion apps heartwood willow farewell obituary eulogy' },
+    { title: 'In the End', sub: 'The first book from Grow With Grounded: forty true stories from the bedside and forty-seven paintings, December 21, 2026', href: '/books.html', keys: 'book books in the end chris joy hardcover signed copy pre-order preorder buy dying living bedside paintings author' },
     { title: 'Grounded Stories', sub: 'Real stories, narrated or to read', href: '/stories.html', keys: 'stories story grounded stories chaplain hospice bedside narrated watch read member members code substack early preview' },
     { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/contact.html', keys: 'contact email call reach out question' },
     { title: 'Book Library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },

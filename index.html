@@ -371,6 +371,16 @@ a.ht-wlc:hover{border-color:var(--gold);}
 .sb-steps b{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--gold);color:#fff;font-weight:700;font-size:19px;margin-bottom:8px}
 .sb-steps span{display:block;font:600 24px/1.2 'Cormorant Garamond',Georgia,serif}
 .sb-cta{text-align:center;margin-top:26px}
+/* BLD 1031: the book band, in the guide part */
+.sb-book{padding:44px 0;border-top:1px solid var(--line)}
+.sb-book-in{display:grid;grid-template-columns:240px minmax(0,1fr);gap:36px;align-items:center;max-width:900px}
+.sb-book-cover{display:block;perspective:1200px}
+.sb-book-cover img{display:block;width:100%;height:auto;border-radius:3px 6px 6px 3px;transform:rotateY(-12deg);box-shadow:16px 18px 32px rgba(44,24,16,.32),3px 3px 8px rgba(44,24,16,.2)}
+.sb-book h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,3.2vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:balance}
+.sb-book p{font-size:18px;line-height:1.55;color:var(--ink-soft);margin:0 0 16px;max-width:54ch}
+.sb-book p i{color:var(--ink)}
+.sb-book .btn{margin:0}
+@media (max-width:640px){.sb-book-in{grid-template-columns:1fr;gap:22px;text-align:center}.sb-book-cover{max-width:220px;margin:0 auto}.sb-book p{margin-left:auto;margin-right:auto}}
 .sb-story{padding:8px 0 24px}
 .sb-story p{max-width:62ch;margin:0 auto;text-align:center;font-size:19px;color:var(--ink-soft)}
 .sb-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
@@ -491,6 +501,17 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <h2 id="sb-guide-h">Made by the Grounded team, for every person and every season of life.</h2>
 </div></section>
 
+<!-- BLD 1031 Grounded Books: the guide part of the story, the Grounded team's first book. -->
+<section class="sb-book" aria-labelledby="sb-book-h"><div class="wrap sb-book-in">
+  <a class="sb-book-cover" href="/books.html" tabindex="-1" aria-hidden="true"><img src="/shared/books/in-the-end-cover-600.webp" alt="" width="600" height="600" loading="lazy" decoding="async"></a>
+  <div class="sb-book-text">
+    <div class="eyebrow">Our First Book</div>
+    <h2 id="sb-book-h">From the bedside to the page.</h2>
+    <p><i>In the End: What Sitting with the Dying Taught Me about Living</i>. Forty true stories and forty-seven paintings about living and loving well today. Arrives December 21, 2026.</p>
+    <a class="btn btn-secondary" href="/books.html">See the Book</a>
+  </div>
+</div></section>
+
 <!-- BLD 1017 Front Page Focus: the three steps, each shown with a small real screen from the app (a test profile, Sam, an Oak). -->
 <section class="sb-plan" aria-labelledby="sb-plan-h"><div class="wrap">
   <h2 id="sb-plan-h">Getting started is simple.</h2>
@@ -579,7 +600,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b934"></script>
-<script src="nav.js?v=c145" defer></script>
+<script src="nav.js?v=c175" defer></script>
 <script>
 /* BLD 934: the floating Contact button (kept from the old brochure script, which is gone): it rests while the header shows. */
 (function () {

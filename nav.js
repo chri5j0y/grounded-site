@@ -52,7 +52,8 @@
       { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: pic('/shared/heroes/p/site-menu-tile-book-library-tile.webp'), bg: '#F1E6CC' },
       { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: pic('/shared/heroes/p/site-menu-tile-readings-library-tile.webp'), bg: '#F1E6CC' },
       { id: 'ggn', title: 'Get Grounded Now', desc: 'Short guided videos to calm your body and come back to now', href: HOME + '/get-grounded-now.html', icon: pic('/shared/heroes/p/site-menu-tile-get-grounded-now-tile.webp'), bg: '#E3EFD6' },
-      { id: 'stories', title: 'Grounded Stories', desc: 'Real stories, narrated or to read', href: HOME + '/stories.html', icon: pic('/shared/heroes/p/site-menu-tile-grounded-stories-tile.webp'), bg: '#F1E6CC' }
+      { id: 'stories', title: 'Grounded Stories', desc: 'Real stories, narrated or to read', href: HOME + '/stories.html', icon: pic('/shared/heroes/p/site-menu-tile-grounded-stories-tile.webp'), bg: '#F1E6CC' },
+      { id: 'books', title: 'Books', desc: 'In the End, our first book: forty stories from the bedside', href: HOME + '/books.html', icon: pic('/shared/books/in-the-end-cover-600.webp'), bg: '#E6E3EE' } // BLD 1031
     ] },
     { name: 'Companion Apps', items: [
       { id: 'heartwood', title: 'Heartwood', desc: 'For couples: the app every couple Chris and Kayti marry receives', href: HOME + '/heartwood/', icon: pic('/shared/heroes/p/site-menu-tile-heartwood-tile.webp'), bg: '#E3EAF2' },
@@ -198,6 +199,7 @@
   function wayBody() { return toolsBody(WAY_GROUPS); }
   // BLD 909: About holds Contact and Rates, so the top bar stays short. BLD 933: For Organizations lives only under Services.
   var ABOUT_ITEMS = [
+    { title: 'Books', desc: 'In the End: What Sitting with the Dying Taught Me about Living, December 21, 2026', href: HOME + '/books.html', icon: pic('/shared/books/in-the-end-cover-600.webp'), bg: '#E6E3EE' }, // BLD 1031
     { title: 'About Us', desc: 'A life giving company: who we are and how we work', href: HOME + '/about.html', icon: pic('/shared/heroes/p/site-menu-tile-about-tile.webp'), bg: '#F1E6CC' },
     { title: 'Contact', desc: 'Reach out. We reply within two days', href: HOME + '/contact.html', icon: pic('/shared/heroes/p/site-menu-tile-contact-tile.webp'), bg: '#F3E5CC' },
     { title: 'Rates and Accessibility', desc: 'Everyone is welcome, whatever your budget', href: HOME + '/rates.html', icon: pic('/shared/heroes/p/site-menu-tile-rates-tile.webp'), bg: '#F1E6CC' }
@@ -357,7 +359,7 @@
     }
     // Contact moves inside About (it stays in the footer and the Get in touch button too)
     if (about && contact) {
-      if (/(^|\s)current(\s|$)/.test(contact.className) || contact.getAttribute('aria-current') || /^\/rates(\.html)?$/.test(location.pathname)) { about.classList.add('current'); about.setAttribute('aria-current', 'page'); }
+      if (/(^|\s)current(\s|$)/.test(contact.className) || contact.getAttribute('aria-current') || /^\/(rates|books)(\.html)?$/.test(location.pathname)) { about.classList.add('current'); about.setAttribute('aria-current', 'page'); }
       contact.parentNode.removeChild(contact);
     }
     if (way) dropdown(menu, way, { id: 'gn-way-panel', label: 'The Grounded Way', aria: 'The Grounded Way', body: wayBody, all: ['What Is The Grounded Way?', HOME + '/the-grounded-way.html'], width: 640, cls: 'gn-svc' });
@@ -483,7 +485,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=c132';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=c175';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
