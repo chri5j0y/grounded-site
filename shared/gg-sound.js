@@ -99,7 +99,9 @@
   function bed(f, db, fadeIn) {
     if (!f || !natureOn()) { bedOff(0.4); return; }
     var c = ctx(); if (!c) return;
-    var lvl = gainOf(12 + (isFinite(+db) ? +db : -11));
+    // BLD 1039 (Chris, November 21, 2026: "the crickets and nature sounds are a little loud"): every bed sits 6 dB softer
+    // (about half as loud), crickets 3 dB softer still.
+    var lvl = gainOf(12 + (isFinite(+db) ? +db : -11) - 6 - (/^crickets/.test(f) ? 3 : 0));
     var b = S.bed;
     if (b && b.file === f) { b.lvl = lvl; b.want = true; b.paused = false; if (b.g) ramp(b.g.gain, lvl, 0.8); return; }
     if (b) bedOff(2.5);

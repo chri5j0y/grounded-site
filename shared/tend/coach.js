@@ -19,7 +19,7 @@ let el = null, cur = null, musicEl = null;
 // bus that dips the music under Ava's lines (4 dB, 3 under her counts). Workout music plays as a playlist of its group
 // (shared/tend/health.js musicFor), crossfading over 4 seconds, through a Web Audio gain (phones ignore an audio volume).
 // BLD 1020: a root address, so this file works from any folder (it lives in shared/tend/).
-const SND_JS = '/shared/gg-sound.js?v=c151';
+const SND_JS = '/shared/gg-sound.js?v=c186';
 let sndP = null;
 function needSnd(){ if (window.GGSound) return Promise.resolve(window.GGSound); if (sndP) return sndP; sndP = new Promise(ok => { const s = document.createElement('script'); s.src = SND_JS; s.onload = () => ok(window.GGSound || null); s.onerror = () => { sndP = null; ok(null); }; document.head.appendChild(s); }); return sndP; }
 const G = () => window.GGSound || null;
