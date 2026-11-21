@@ -612,7 +612,7 @@
       var before = document.getElementById('gs-series') || document.getElementById('gs-posted-h') || (postEl && postEl.parentNode); if (!before || !before.parentNode) return;
       host = document.createElement('section'); host.id = 'gs-book'; host.setAttribute('aria-labelledby', 'gs-book-h'); before.parentNode.insertBefore(host, before);
     }
-    host.innerHTML = L.length ? '<h2 class="gs-h" id="gs-book-h">From Our Book, In the End</h2><p class="gs-lead">The opening of each story. The rest is waiting in the pages of In the End, with forty stories and forty-seven paintings. <a class="gs-booklink" href="' + BOOK_URL + '">See the Book</a></p>'
+    host.innerHTML = L.length ? '<h2 class="gs-h" id="gs-book-h">From Our Book, In the End</h2><p class="gs-lead">The opening of each story. The rest is waiting in the pages of In the End. <a class="gs-booklink" href="' + BOOK_URL + '">See the Book</a></p>'
       + '<div class="gs-grid">' + newest(L).map(card).join('') + '</div>' : '';
     host.hidden = !L.length;
   }
@@ -719,7 +719,7 @@
     var P = paras(s.id), whole = full(s.id);
     var h = '<div class="gs-rd"><p class="gs-by">A story by Chris Joy.</p>' + P.map(function (p) { return '<p class="gs-p">' + esc(p) + '</p>'; }).join('');
     if (!whole && sampled(s)) {
-      h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(BOOK_LINE) + '</b> This story is one of forty in our book, with forty-seven paintings.</p>'
+      h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(BOOK_LINE) + '</b> This story is one of forty in our book.</p>'
         + '<div class="gs-acts"><a class="ggl-btn pri" href="' + BOOK_URL + '">Read the Rest in In the End</a></div></div>';
     } else if (!whole) {
       h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(LINES.members) + '</b> Enter your member code to read and hear it all.</p>'
@@ -742,7 +742,7 @@
     var note = whole && noteOf(s.id);
     if (whole) return { eyebrow: 'Thank You for Listening', h: s.title, sub: 'A story by Chris Joy.', say: LINES.thanks, ok: true,
       buttons: [].concat(note ? [['note', 'The Story Behind the Story', 'pri']] : [], [], [['read', 'Read the Story', note ? '' : 'pri'], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
-    if (sampled(s)) return { eyebrow: 'From the Book', h: BOOK_LINE, sub: 'This story is one of forty in our book, with forty-seven paintings.', say: LINES.thanks, ok: true,
+    if (sampled(s)) return { eyebrow: 'From the Book', h: BOOK_LINE, sub: 'This story is one of forty in our book.', say: LINES.thanks, ok: true,
       buttons: [['book', 'Read the Rest in In the End', 'pri', BOOK_URL], ['read', 'Read the Opening', ''], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']] };
     return { eyebrow: 'Grounded Stories', h: LINES.members, sub: 'Enter your member code to keep listening.', say: LINES.members, ok: false,
       buttons: [['code', 'Enter Your Code', 'pri']].concat([['join', 'Become a Member', '', SUBSCRIBE]], [['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
