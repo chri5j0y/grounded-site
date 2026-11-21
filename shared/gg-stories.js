@@ -75,6 +75,10 @@
      GGStories.listenLetter(letter, keyObj): the Story Vault plays a letter; GGStories.listen plays a story with its note.
    Story pictures (BLD 787): stories/img/<story id>.webp, then .jpg, on each card (3 by 2) and behind the title in the story
    window; the picture area goes away cleanly when neither file is there. Public files, nothing sealed.
+   Book Sampler (BLD 1033): a Vault story with bookSampler: true (and samplerParas: 1 to 5, else 3) seals as a sampler: its
+   list entry carries book: 1 and preview holds only the opening (the same opening the page shows, cut from the public
+   preview); the rest of the story is never written into data.js, plain or locked. Its Story Behind the Story stays locked
+   as before. Nothing changes for a story without the mark. The page treats book: 1 like a story in IN_BOOK.
    ===================================================================== */
 (function (root) {
   'use strict';
@@ -101,12 +105,17 @@
   var TASTE = ['grounded-in-coffee', 'if-she-is-still-here', 'divine-sign', 'birth-plan'];
   var BOOK_URL = '/books.html', SAMPLE_WORDS = 250, SAMPLE_PARAS = 3;
   var BOOK_LINE = 'Read the rest in In the End.';
-  function inBook(s) { return !!s && IN_BOOK.indexOf(s.slug || slug(s.title)) >= 0; }
+  function inBook(s) { return !!s && (!!s.book || IN_BOOK.indexOf(s.slug || slug(s.title)) >= 0); }
   function sampled(s) { return inBook(s) && TASTE.indexOf(s.slug || slug(s.title)) < 0 && !isV(s.id); }
   // The opening: whole paragraphs from the public preview, up to three and about 250 words; a long first paragraph ends at a sentence.
+  // BLD 1033: a story sealed with the Book Sampler mark (book: 1) already carries only its opening.
   function sampler(s) {
-    var src = (s.preview && s.preview.length ? s.preview : s.full) || [], out = [], w = 0;
-    for (var i = 0; i < src.length && out.length < SAMPLE_PARAS; i++) {
+    if (s && s.book && s.preview && s.preview.length) return s.preview.slice();
+    return openingOf((s.preview && s.preview.length ? s.preview : s.full) || [], SAMPLE_PARAS);
+  }
+  function openingOf(src, most) {
+    var out = [], w = 0;
+    for (var i = 0; i < src.length && out.length < most; i++) {
       var p = String(src[i]), pw = p.split(/\s+/).filter(Boolean).length;
       if (w && w + pw > SAMPLE_WORDS * 1.25) break;
       if (!w && pw > SAMPLE_WORDS * 1.4) { var S = sentences(p), keep = [], n = 0; S.forEach(function (x) { if (!keep.length || n < SAMPLE_WORDS) { keep.push(x); n += x.split(/\s+/).length; } }); out.push(keep.join(' ')); break; }
@@ -280,16 +289,20 @@
       var paras = (s.paras || []).map(function (p) { return String(p).replace(/\s+/g, ' ').trim(); }).filter(Boolean);
       if (!paras.length) return;
       var open = !!s.open && s.status === 'posted', pv = previewCut(paras, s.preview);
+      // BLD 1033: Book Sampler, only the opening is written (never open, nothing locked but the Story Behind the Story).
+      var bk = s.bookSampler === true, sn = Math.min(5, Math.max(1, Math.round(+s.samplerParas) || SAMPLE_PARAS));
+      if (bk) { open = false; pv = { paras: openingOf(pv.paras.length ? pv.paras : paras, sn), cut: pv.cut }; }
       var sl = slug(s.title); if (slugs[sl]) sl += '-' + s.id; slugs[sl] = 1;
       var e = { id: String(s.id), slug: sl, title: String(s.title || ''), sub: String(s.sub || ''), col: String(s.col || ''), status: s.status, open: open,
         substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : pv.paras, posted: String(s.postedAt || '') };
+      if (bk) { e.book = 1; e.preview = pv.paras; }
       if (s.status !== 'early' && pv.cut) e.cut = 1; // the preview ends partway through a paragraph
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
       var tp = topicsOf(s.topics); if (tp) e.topics = tp;
       if (+s.part > 0) e.part = +s.part; // BLD 1002: a series story's place in its series
-      var pz = pausesOf(s.pause, paras.length); if (pz) e.pz = pz; // BLD 1002: the story's own pause marks, as timing in the voiced version
+      var pz = pausesOf(s.pause, bk ? pv.paras.length : paras.length); if (pz) e.pz = pz; // BLD 1002: the story's own pause marks, as timing in the voiced version
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
-      if (open) e.full = paras; else { locked[e.id] = paras; n++; }
+      if (bk) { /* the opening only, in preview */ } else if (open) e.full = paras; else { locked[e.id] = paras; n++; }
       // The Story Behind the Story (BLD 787): Chris's own note, sealed for members on every Posted and Early Preview story.
       var note = (Array.isArray(s.behind) ? s.behind : []).map(function (p) { return String(p).replace(/\s+/g, ' ').trim(); }).filter(Boolean);
       if (note.length) { locked['b:' + e.id] = note; n++; }
@@ -522,17 +535,30 @@
   // that cannot load, falls back to stories/img as before.
   var IMG = {}, PIC = {s002: 'story-birth-plan', s004: 'story-drift-away', s005: 'story-enlightenment', s006: 'story-grief-debt', s008: 'story-he-came-to-collect', s009: 'story-he-deserves-that', s010: 'story-he-was-praying-too', s011: 'story-in-the-beginning', s012: 'story-if-she-is-still-here-2', s013: 'story-love', s014: 'story-my-boundaries-have-gates', s015: 'story-please-help-my-dad-die', s016: 'story-prayer', s017: 'story-the-atypical-atheist', s019: 'story-the-impossible-dance-of-particles', s020: 'story-the-recovery', s021: 'story-total-bliss', s022: 'story-welcome-home', s085: 'story-off-duty', s129: 'story-one-wish', s130: 'story-time-of-your-life', s007: 'story-grounded-in-coffee'};
   function imgBase(id) { return ROOT + '/stories/img/' + encodeURIComponent(id); }
-  // BLD 1032: two book stories with no Grounded Stories painting take their book painting, already public on the Books page.
-  var BOOKPIC = { s131: 'ite-beyond-six-months-900', s133: 'ite-tell-them-i-love-them-900' };
-  function picSrc(id) { return BOOKPIC[id] ? ROOT + '/shared/books/' + BOOKPIC[id] + '.webp' : PIC[id] ? ROOT + '/shared/heroes/p/' + PIC[id] + '.webp' : ''; }
-  function imgSrc(id) { var k = IMG[id] || (PIC[id] || BOOKPIC[id] ? 'p' : 'webp'); return k === 'p' ? picSrc(id) : imgBase(id) + '.' + k; }
+  // BLD 1033 (Chris, November 21, 2026: "should probably use upgraded images from book with the Grounded Stories since they
+  // are more correct to story and look better"): every In the End story takes its final book painting,
+  // shared/books/stories/<slug>.webp (1200 by 800, cut from the square book painting on its people), found by the story's
+  // slug, so a book story posted later from the Vault finds its painting too. Please Help My Dad Die is Free to Go in the
+  // book. The older story paintings stay in shared/heroes/p (PIC), and stories/img stays the last fallback.
+  var BOOKPIC_AS = { 'please-help-my-dad-die': 'free-to-go' }, SLUGOF = {};
+  function bookPic(sl) { return sl && IN_BOOK.indexOf(sl) >= 0 ? ROOT + '/shared/books/stories/' + (BOOKPIC_AS[sl] || sl) + '.webp' : ''; }
+  function slugOfId(id) {
+    if (SLUGOF[id]) return SLUGOF[id];
+    var d = root.GG_STORIES, L = d && Array.isArray(d.list) ? d.list : [];
+    for (var i = 0; i < L.length; i++) if (L[i].id === id) return L[i].slug;
+    return '';
+  }
+  function picSrc(id, sl) { var b = bookPic(sl || slugOfId(id)); return b || (PIC[id] ? ROOT + '/shared/heroes/p/' + PIC[id] + '.webp' : ''); }
+  function imgSrc(id) { var k = IMG[id] || (picSrc(id) ? 'p' : 'webp'); return k === 'p' ? picSrc(id) : imgBase(id) + '.' + k; }
   function imgTag(s, cls) {
     if (!s || !s.id || s.kind || IMG[s.id] === 'none') return '';
+    var sl = s.slug || slug(s.title); if (sl) SLUGOF[s.id] = sl;
     return '<div class="' + cls + (IMG[s.id] ? ' gs-in' : '') + '" data-gsimg="' + esc(s.id) + '"><img src="' + imgSrc(s.id) + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async" onload="GGStories._imgOk(this)" onerror="GGStories._imgErr(this)"></div>';
   }
   function imgOk(el) { var w = el.parentNode; if (!w) return; var src = el.getAttribute('src') || ''; IMG[w.getAttribute('data-gsimg')] = /\/heroes\/p\/|\/shared\/books\//.test(src) ? 'p' : /\.jpg$/.test(src) ? 'jpg' : 'webp'; w.classList.add('gs-in'); }
   function imgErr(el) {
     var w = el.parentNode; if (!w) return; var id = w.getAttribute('data-gsimg'), src = el.getAttribute('src') || '';
+    if (/\/shared\/books\//.test(src) && PIC[id]) { el.setAttribute('src', ROOT + '/shared/heroes/p/' + PIC[id] + '.webp'); return; }
     if (/\/heroes\/p\/|\/shared\/books\//.test(src)) { el.setAttribute('src', imgBase(id) + '.webp'); return; }
     if (/\.webp$/.test(src)) { el.setAttribute('src', imgBase(id) + '.jpg'); return; }
     IMG[id] = 'none'; var ban = w.closest && w.closest('.gs-ban-img'); if (ban) ban.classList.remove('gs-ban-img'); w.remove();

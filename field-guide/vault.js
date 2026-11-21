@@ -12,6 +12,8 @@
 // Topics (BLD 786): topics: ['dying', 'grief', 'faith', 'kids'] (any, or none), the four filters on Grounded Stories. Four
 // switches on each story page set them; Seal Grounded Stories carries them into data.js. A story with no topics yet shows
 // the page's own choice (GGStories.themesOf) until a switch is touched. The BLD 786 Founder patch seeds every story.
+// Book Sampler (BLD 1033): bookSampler: true (and samplerParas: 1 to 5, else 3) on a story that lives in a book; Seal
+// Grounded Stories then writes only its opening into data.js (GGStories.seal). Nothing changes for a story without it.
 //
 // How edits save (the Update a Library pattern): each change is made to FDR.storyVault on this device, then, a moment
 // later, index.html's fdrKeep seals the whole Founder library with the Founder key into "Ready to Upload" (lib-founder.js),
@@ -121,7 +123,7 @@ function mainCopy(s){
 }
 function pills(s){
   const st = s.status === 'posted' ? 'sage' : s.status === 'early' ? 'gold' : '';
-  return `<span class="pill ${st}">${esc(stName(s.status))}</span>${mainCopy(s) ? ' <span class="pill">Other Copy</span>' : ''}${s.open ? ' <span class="pill sage">Open to Everyone</span>' : ''}${needsVoice(s) ? ' <span class="pill gold">Needs a Voice</span>' : ''}`;
+  return `<span class="pill ${st}">${esc(stName(s.status))}</span>${mainCopy(s) ? ' <span class="pill">Other Copy</span>' : ''}${s.open && !s.bookSampler ? ' <span class="pill sage">Open to Everyone</span>' : ''}${s.bookSampler ? ' <span class="pill gold">Book Sampler</span>' : ''}${needsVoice(s) ? ' <span class="pill gold">Needs a Voice</span>' : ''}`;
 }
 function listHTML(){
   const V = SV(); if (!V) return '';
@@ -165,7 +167,7 @@ function view(){
 function sealCard(V, n){
   const S = V.sealed, live = liveWraps(V).length;
   return `<div class="card" id="sv-seal" style="border-left:4px solid var(--gold)"><h3>Seal Grounded Stories</h3>
-   <p class="muted">Seals every Posted and Early Preview story, with its Story Behind the Story, and every Posted letter and Reflection Card into one file for the site, data.js: previews for everyone, the whole story for members, and the whole story for everyone where Open to Everyone is on. Vault stories stay right here.</p>
+   <p class="muted">Seals every Posted and Early Preview story, with its Story Behind the Story, and every Posted letter and Reflection Card into one file for the site, data.js: previews for everyone, the whole story for members, and the whole story for everyone where Open to Everyone is on. A Book Sampler story carries only its opening. Vault stories stay right here.</p>
    <p style="margin-top:8px">${n.posted} Posted and ${n.early} Early Preview stories, ${(V.letters || []).filter(l => l.status === 'posted').length} Posted letters, and ${(V.cards || []).filter(c => c.status === 'posted').length} Posted Reflection Cards, opened by ${live} ${live === 1 ? 'code' : 'codes'} from the Access list.${S && S.at ? ` Last sealed ${esc(nice(S.at))}.` : ''}</p>
    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-sva="seal"${UI.busy || waits() ? ' disabled' : ''}>${UI.busy ? 'Sealing...' : 'Seal Grounded Stories'}</button></div>
    ${UI.err ? `<p class="tipbox" style="border-left:3px solid var(--danger)">${esc(UI.err)}</p>` : ''}
@@ -182,7 +184,7 @@ function codesCard(){
 function storyView(V, s){
   const lock = waits() ? ' disabled' : '', cols = [...new Set(V.stories.map(x => x.col).filter(Boolean))];
   const sw = ST.map(([k, t]) => `<button type="button" class="btn btn-sm ${s.status === k ? 'btn-gold' : 'btn-line'}" data-sva="st" data-v="${k}" aria-pressed="${s.status === k}"${lock}>${t}</button>`).join('');
-  const pv = cutOf(s.paras || []), pvN = pv.cut ? 0 : pv.paras.length, pvTag = i => s.open ? '' : i < pvN ? ' <span class="pill">Preview</span>' : pv.cut && i === 0 ? ' <span class="pill">Opening Sentences Preview</span>' : '';
+  const pv = cutOf(s.paras || []), pvN = pv.cut ? 0 : pv.paras.length, smN = samplerN(s), pvTag = i => s.bookSampler ? (i < Math.min(pvN || 1, smN) ? ' <span class="pill gold">Sampler</span>' : '') : s.open ? '' : i < pvN ? ' <span class="pill">Preview</span>' : pv.cut && i === 0 ? ' <span class="pill">Opening Sentences Preview</span>' : '';
   const paras = (s.paras || []).map((p, i) => `<div class="sv-p"><label class="f" for="sv-p${i}">Paragraph ${i + 1}${pvTag(i)}</label>
      <textarea id="sv-p${i}" rows="${Math.min(12, Math.max(3, Math.ceil(p.length / 70)))}" data-svf="para" data-v="${i}"${lock}>${esc(p)}</textarea>
      <button type="button" class="linkbtn sv-small" data-sva="pdel" data-v="${i}"${lock}>Remove This Paragraph</button></div>`).join('');
@@ -195,6 +197,7 @@ function storyView(V, s){
   <div class="card"><h3>Where It Stands</h3><div class="row" style="margin-top:8px">${sw}</div>
    <p class="muted" style="font-size:14px;margin-top:8px">${{vault: 'Vault: kept here while you tend it. Visitors and members see it once you mark it Early Preview or Posted and seal.', early: 'Early Preview: members see the whole story first, often before it goes on Substack.', posted: 'Posted: on Grounded Stories, with a preview for everyone and the whole story for members.'}[s.status] || ''}</p>
    <label class="sv-tick"><input type="checkbox" data-svf="open"${s.open ? ' checked' : ''}${lock}> <span><b>Open to Everyone</b><br><small class="muted">The whole story plays and reads for every visitor once it is Posted.</small></span></label>
+   ${samplerHTML(s, lock)}
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:10px">${savedLine()}</p></div>
   <div class="card" id="sv-topics"><h3>Topics</h3><p class="muted" style="font-size:14px;margin-top:4px">Grounded Stories shows this story under each topic you choose, and always under All Stories.</p>
    ${(() => { const on = topicsNow(s); return TOPICS.map(([k, t]) => `<label class="sv-tick"><input type="checkbox" data-svf="topic" data-v="${k}"${on.includes(k) ? ' checked' : ''}${lock}> <span><b>${esc(t)}</b></span></label>`).join(''); })()}</div>
@@ -245,15 +248,25 @@ function behindVoice(s){
 // for a picture uploaded since.
 const PICS = new Set(['s002', 's003', 's004', 's005', 's006', 's007', 's008', 's009', 's010', 's011', 's012', 's013', 's014', 's015', 's016', 's017', 's019', 's020', 's021', 's022']);
 // BLD 970: a story with its own painting (GGStories.picSrc) shows it; the stories/img file stays the fallback.
-const picOf = id => (window.GGStories && GGStories.picSrc && GGStories.picSrc(id)) || '';
-const picImg = s => `<div class="sv-pic"><img src="${esc(picOf(s.id) || '../stories/img/' + s.id + '.webp')}" data-old="../stories/img/${esc(s.id)}.webp" alt="${esc(s.title)}" onerror="GGVault._picErr(this)" onload="this.parentNode.classList.add('sv-in')"></div>`;
+// BLD 1033: a story from In the End shows its book painting (found by the title's slug).
+const picOf = s => (window.GGStories && GGStories.picSrc && GGStories.picSrc(s.id, slugOf(s.title))) || '';
+const picImg = s => `<div class="sv-pic"><img src="${esc(picOf(s) || '../stories/img/' + s.id + '.webp')}" data-old="../stories/img/${esc(s.id)}.webp" alt="${esc(s.title)}" onerror="GGVault._picErr(this)" onload="this.parentNode.classList.add('sv-in')"></div>`;
+// BLD 1033: Book Sampler. A story that lives in a book is sealed with only its opening (samplerParas paragraphs of the
+// public preview, 1 to 5, else 3); Seal Grounded Stories leaves the rest out of data.js. Set in the Founder library, and here.
+const samplerN = s => Math.min(5, Math.max(1, Math.round(+s.samplerParas) || 3));
+function samplerHTML(s, lock){
+  const n = samplerN(s), opts = [1, 2, 3, 4, 5].map(k => `<option value="${k}"${k === n ? ' selected' : ''}>${k}</option>`).join('');
+  return `<label class="sv-tick"><input type="checkbox" data-svf="bookSampler"${s.bookSampler ? ' checked' : ''}${lock}> <span><b>Book Sampler</b><br><small class="muted">This story lives in a book. Grounded Stories shows its opening with Read the Rest in In the End, and Seal Grounded Stories writes only the opening.</small></span></label>
+   ${s.bookSampler ? `<label class="f" for="sv-smp">Opening Paragraphs</label><select id="sv-smp" data-svf="samplerParas"${lock}>${opts}</select>
+   <p class="muted" style="font-size:14px;margin-top:4px">At most about 250 words, from the part marked Preview, so every line is already recorded.</p>` : ''}`;
+}
 function picHTML(s){
-  const id = esc(s.id), own = !!picOf(s.id), has = own || PICS.has(s.id) || UI.pic === s.id;
+  const id = esc(s.id), own = !!picOf(s), book = /\/shared\/books\//.test(picOf(s)), has = own || PICS.has(s.id) || UI.pic === s.id;
   return `<div class="card" id="sv-pic"><h3>Picture</h3>${has ? picImg(s) : ''}
-   <p class="muted" style="font-size:14px;margin-top:8px">${own ? 'Picture: this story\'s own painting, placed in BLD 970. A new painting comes in with a build.' : `Picture: upload ${id}.jpg or ${id}.webp into the stories/img folder.`}</p>
+   <p class="muted" style="font-size:14px;margin-top:8px">${book ? 'Picture: this story\'s painting from In the End. A new painting comes in with a build.' : own ? 'Picture: this story\'s own painting, placed in BLD 970. A new painting comes in with a build.' : `Picture: upload ${id}.jpg or ${id}.webp into the stories/img folder.`}</p>
    ${has ? '' : `<div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-sva="piclook">Look for a Picture</button></div>`}</div>`;
 }
-function picErr(el){ const src = el.getAttribute('src') || ''; if (/\/heroes\/p\//.test(src)){ el.setAttribute('src', el.getAttribute('data-old')); return; } if (/\.webp$/.test(src)) el.setAttribute('src', src.replace(/\.webp$/, '.jpg')); else if (el.parentNode){ el.parentNode.hidden = true; if (UI.pic && el.closest('#sv-pic')){ const n = el.closest('#sv-pic').querySelector('.sv-pic + p'); if (n) n.textContent = 'The picture shows here once ' + UI.pic + '.jpg or ' + UI.pic + '.webp is in the stories/img folder on the site.'; } } }
+function picErr(el){ const src = el.getAttribute('src') || ''; if (/\/heroes\/p\/|\/shared\/books\//.test(src)){ el.setAttribute('src', el.getAttribute('data-old')); return; } if (/\.webp$/.test(src)) el.setAttribute('src', src.replace(/\.webp$/, '.jpg')); else if (el.parentNode){ el.parentNode.hidden = true; if (UI.pic && el.closest('#sv-pic')){ const n = el.closest('#sv-pic').querySelector('.sv-pic + p'); if (n) n.textContent = 'The picture shows here once ' + UI.pic + '.jpg or ' + UI.pic + '.webp is in the stories/img folder on the site.'; } } }
 
 // ---------- the Monthly Letter and Reflection Cards (BLD 787) ----------
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -530,13 +543,15 @@ document.addEventListener('input', e => {
     const el = document.getElementById('sv-bvoice'); if (el) el.innerHTML = behindVoice(s);
     const cb = document.querySelector('[data-sva="bclear"]'); if (cb && had !== !!P.length) cb.disabled = !P.length;
     keep(); return; }
-  if (k === 'open' || k === 'topic') return;
+  if (k === 'open' || k === 'topic' || k === 'bookSampler' || k === 'samplerParas') return;
   setField(s, k, t.value); keep();
 });
 document.addEventListener('change', e => {
   const t = e.target, k = t && t.getAttribute && t.getAttribute('data-svf'); if (!k || !SV() || !isFounder()) return;
   const s = cur(); if (!s || waits()) return;
   if (k === 'open'){ s.open = !!t.checked; rr(); keep(); return; }
+  if (k === 'bookSampler'){ if (t.checked) s.bookSampler = true; else { delete s.bookSampler; delete s.samplerParas; } rr(); keep(); return; }
+  if (k === 'samplerParas'){ const v = Math.round(+t.value) || 3; if (v === 3) delete s.samplerParas; else s.samplerParas = v; rr(); keep(); return; }
   if (k === 'topic'){ const v = t.getAttribute('data-v'), on = new Set(topicsNow(s)); if (t.checked) on.add(v); else on.delete(v); s.topics = TOPICS.map(x => x[0]).filter(x => on.has(x)); keep(); return; }
   if (k === 'para'){
     // Leaving a box: a blank line inside makes two paragraphs, and an empty box goes away.

@@ -1,13 +1,15 @@
 /* Grounded Books (GWG BLD 1031): the one place for how to get In the End.
    Paste each link between the quotes when it is ready. While a value is empty, its button stays hidden:
    BOOK_PREORDER_URL  the Stripe Payment Link for a signed hardcover from Chris
-   BOOK_MEMBER_URL    a second Stripe Payment Link with the Member price on signed copies (BLD 1032; optional)
+   BOOK_MEMBER_CODE   the Stripe promotion code for the Member price on signed copies (BLD 1033), letters, numbers, or _
+                      only. It shows only inside an open Membership (shared/gg-member.js, the Membership card on /home/),
+                      never on the Books page. Anyone who reads this file can see it, like any checkout code.
    BOOKSHOP_URL, AMAZON_URL, BN_URL  the store listings, once they are live
-   Every page with [data-gg-book] parts reads this file (books.html). Bump ?v= wherever it loads after a change. */
+   Every page with [data-gg-book] parts reads this file (books.html), and /home/ reads BOOK_MEMBER_CODE. Bump ?v= wherever it loads after a change. */
 window.GG_BOOKS = {
   BOOK_PREORDER_URL: '',
   BOOK_PRICE: '$39.99',
-  BOOK_MEMBER_URL: '',
+  BOOK_MEMBER_CODE: '',
   BOOKSHOP_URL: '',
   AMAZON_URL: '',
   BN_URL: ''
@@ -25,9 +27,6 @@ window.GG_BOOKS = {
     });
     Array.prototype.forEach.call(document.querySelectorAll('[data-gg-book="preorder-card"]'), function (el) { show(el, pre); });
     Array.prototype.forEach.call(document.querySelectorAll('[data-gg-book="arrives"]'), function (el) { show(el, !pre); });
-    var mem = ok(C.BOOK_MEMBER_URL);
-    Array.prototype.forEach.call(document.querySelectorAll('[data-gg-book="member"]'), function (el) { show(el, mem); });
-    Array.prototype.forEach.call(document.querySelectorAll('[data-gg-book="member-link"]'), function (a) { if (mem) { a.href = C.BOOK_MEMBER_URL.trim(); a.target = '_blank'; a.rel = 'noopener'; } });
     Array.prototype.forEach.call(document.querySelectorAll('[data-gg-book="price"]'), function (el) { if (C.BOOK_PRICE) el.textContent = C.BOOK_PRICE; });
     var any = false;
     [['bookshop', 'BOOKSHOP_URL'], ['amazon', 'AMAZON_URL'], ['bn', 'BN_URL']].forEach(function (s) {
