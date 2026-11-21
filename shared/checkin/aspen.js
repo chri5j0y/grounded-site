@@ -38,7 +38,7 @@
     '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
     '/shared/gg-life.js?v=b907',     // Health and Ability: the example and tip lines under a question
     '/aspen/life.js?v=b907',         // window.ASPEN_LIFE notes, read by those lines
-    '/shared/gg-guided.js?v=c187',   // the shared player (it loads gg-guided.css itself)
+    '/shared/gg-guided.js?v=c189',   // the shared player (it loads gg-guided.css itself)
     '/shared/guided/aspen.js?v=b907', // window.GG_GUIDED.aspen, every spoken line
     '/shared/kids/aspen-practices.js?v=c187' // BLD 1037: the practices, for the Growth Plan (Home loads practice-rhythm.js)
   ];
@@ -199,8 +199,15 @@
     var closed = function () { if (typeof ctx.onClose === 'function') { try { ctx.onClose(); } catch (e) {} } };
     var s0 = peekStu(id);
     // Pick up a check-in with answers (resume, guided.js 106); a stale or empty draft starts fresh.
-    if (anyAnswer(s0.draft) && !stale(s0.draft) && gradeOk(s0.draft.grade)) { cur = checkin(ctx, H); return H; }
+    // BLD 1040: an old draft is offered once (the Pick Up card), then cleared.
+    var gone = isObj(s0.draft) && GGGuided.draftGone(s0.draft.up || Date.parse(s0.draft.started || ''), s0.draft.offered);
+    if (anyAnswer(s0.draft) && !stale(s0.draft) && gradeOk(s0.draft.grade) && !gone) { cur = checkin(ctx, H, setup); return H; }
+    if (gone) { stuRec(id).draft = null; GGP.save(id); }
+    setup();
+    return H;
 
+    // A fresh start: Before You Start, then the check-in (and Start Fresh on the Pick Up card, BLD 1040).
+    function setup() {
     css();
     var savedGrade = gradeOk(s0.grade) ? s0.grade : null;
     var st = { mode: 'self', grade: savedGrade }, began = false;
@@ -229,7 +236,7 @@
         var sens = s.askSens !== false && !!C.sensitive[String(s.grade)];
         s.draft = { step: 'parts', page: 0, mode: st.mode, grade: s.grade, std: C.version, bank: C.bank, sens: sens, answers: {}, started: new Date().toISOString() };
         GGP.save(id);
-        cur = checkin(ctx, H);
+        cur = checkin(ctx, H, setup);
       },
       onClose: function () { if (!began) closed(); }
     });
@@ -238,11 +245,11 @@
       var k = b.getAttribute('data-gck'), v = b.getAttribute('data-val');
       if (k === 'mode') st.mode = v; else if (k === 'grade') st.grade = +v;
     }, true);   // before the player redraws the form (its own handler draws it again on the next tick)
-    return H;
+    }
   }
 
   // The check-in itself, on the student's draft (aspen/guided.js checkin 63).
-  function checkin(ctx, H) {
+  function checkin(ctx, H, again) {
     var id = ctx.id, C = CK(), s = stuRec(id), d = s.draft;
     var wd = wdOf(s, id, ctx);
     var kind = ownRings(s).length ? 'full' : 'start';
@@ -268,6 +275,13 @@
     return GGGuided.run({
       tree: 'aspen', kind: kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true, plain: wd === 'plain',
       questions: questions(d, wd, id), answers: A, script: script([kind], d.mode === 'grown', wd === 'plain'), isEdge: isEdge, quiet: C.quiet || undefined, early: true,
+      // BLD 1040: the Pick Up card on the student's own draft (onAnswer saves each answer into it); Start Fresh opens Before You Start.
+      draft: {
+        load: function () { var dd = stuRec(id).draft; return isObj(dd) ? { a: {}, at: dd.started, up: dd.up || Date.parse(dd.started || ''), offered: !!dd.offered } : null; },
+        save: function (x) { var dd = stuRec(id).draft; if (!isObj(dd)) return; dd.up = x.up; if (x.offered) dd.offered = true; else delete dd.offered; GGP.save(id); },
+        clear: function (soon) { if (soon) return; var st = stuRec(id); if (st.draft) { st.draft = null; GGP.save(id); } },
+        fresh: typeof again === 'function' ? function () { setTimeout(again, 30); } : null
+      },
       onAnswer: function (qid, v) {   // guided.js 91 to 96: every answer saves into the draft
         var st = stuRec(id), dd = st.draft; if (!isObj(dd)) return;
         var c = qid.indexOf(':'), key = qid.slice(0, c), i = +qid.slice(c + 1), qs = qsFor(dd.grade, key, dd.sens, wd);

@@ -41,13 +41,13 @@
     '/shared/gg-parts.js?v=b929',
     '/shared/gg-life.js?v=b907',
     '/shared/practice-rhythm.js?v=b929',
-    '/shared/gg-guided.js?v=c187',
+    '/shared/gg-guided.js?v=c189',
     '/shared/guided/sequoia.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // sequoia/app.js:195
   // sequoia/app.js:566
   var TITLE = { start: 'Your First Check-in', full: 'Check-in', season: 'Season Check-in', quick: 'Quick Check-in', week: 'Weekly Check-in', together: 'Check-in Together', observed: 'What I See', helper: 'My Own Check-in', plan: 'Your Growth Plan' };
-  var LEFT = null;   // a check-in closed part way: {sig, ans}, picked up when the same one starts again (sequoia/app.js:598)
+  // BLD 1040: a check-in left part way is kept in the profile's vault (GGGuided.vaultDraft), never in memory only.
   var NEVER_PLAIN = function () { return false; };   // gwPlainOn (sequoia/app.js:211)
 
   function CKB() { return window.SEQUOIA_CHECKIN || {}; }
@@ -286,22 +286,18 @@
     history(id);   // the page reads the record's history when the profile opens, before tend (profSync)
     var kind = quick ? 'quick' : fullKind(id);
     if (quick) ensure(id);   // the page's Today screen has filled the tend record before any check-in starts
-    var sig = [id, kind, 'self', '', quick ? 'q' : 'f'].join('|');
-    var ans = LEFT && LEFT.sig === sig ? LEFT.ans : {};
-    LEFT = { sig: sig, ans: ans };
+    var ans = {};
     var qs = gdQuestions(quick, !!ctx.plain), byId = {}, H = handle(), saved = null;
     qs.forEach(function (q) { byId[q.id] = q; });
-    var have = {}; qs.forEach(function (q) { var v = (ans[q.key] || {})[q.i]; if (v) have[q.id] = v; });
     function answerQ(key, i, v) { ans[key] = ans[key] || {}; ans[key][i] = v; }   // sqGdSet (sequoia/app.js:593)
     var undo = usePlain(ctx.plain), plainFn = function () { return !!ctx.plain; };
     var o = {
       tree: TREE, kind: kind, voice: 'brian', plain: plainFn,
       title: TITLE[kind] || 'Check-in',
-      questions: qs, answers: have, quiet: (CKB().help || {}).quiet || undefined, isEdge: isEdge, early: true,
+      questions: qs, answers: {}, quiet: (CKB().help || {}).quiet || undefined, isEdge: isEdge, early: true, draft: GGGuided.vaultDraft(id, TREE + (quick ? ':quick' : ':full')),
       onAnswer: function (qid, v) { var q = byId[qid]; if (q) answerQ(q.key, q.i, v); },
       onDone: function (r) {
         Object.keys(r.answers || {}).forEach(function (qid) { var q = byId[qid]; if (q && r.answers[qid]) answerQ(q.key, q.i, r.answers[qid]); });
-        LEFT = null;   // a finished check-in: the next one starts fresh (sequoia/app.js:846)
         saved = save(ctx, ans, quick);
       },
       onClose: function () {

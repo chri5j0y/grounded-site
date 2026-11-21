@@ -1969,6 +1969,17 @@ function gvChangesQ(K, cur) {
   return { id: 'changes', type: 'multi', aside: true, label: 'What’s Changed Lately', eb: 'Before the Questions', part: '', text: 'What’s changed lately?', say: false, lead: K.changes || null,
     help: 'Tap any that fit. This helps choose practices, and never changes a result.', options: changesFor(G.kind).map(c => ({ v: c.id, label: c.label, only: c.id === 'none' })) };
 }
+// BLD 1040, Save Every Check-in: answers so far are kept inside the grove's locked part (V().ckDraft), sealed with it the
+// same way as the check-ins, with every answer, and offered back on the Pick Up card. A draft is never one of the check-ins.
+function gvDraft(key, ask) {
+  const box = make => { const v = V(); if (!v) return null; if (!v.ckDraft || typeof v.ckDraft !== 'object') { if (!make) return null; v.ckDraft = {}; } return v.ckDraft; };
+  return {
+    ask,
+    load: () => { const b = box(); return b && b[key] ? JSON.parse(JSON.stringify(b[key])) : null; },
+    save: d => { const b = box(true); if (!b) return; b[key] = JSON.parse(JSON.stringify(d)); sealVault(); },
+    clear: soon => { const b = box(); if (!b || !b[key]) return; delete b[key]; if (!Object.keys(b).length) delete V().ckDraft; if (!soon) sealVault(); }
+  };
+}
 function gvCheckin(quick, from) {
   if (!GROVE_GUIDED() || !G || !vaultOpen()) return false;
   const kind = !quick && !V().checkins.length ? 'start' : quick ? 'quick' : 'full', K = gvK(kind);
@@ -1981,6 +1992,7 @@ function gvCheckin(quick, from) {
   const toClassic = () => { const list = qList(G.kind, st.quick); let i = list.findIndex(x => !st.ans[x.key]); if (i < 0) i = list.length - 1;
     S.ci = { quick: st.quick, step: st.changesSeen ? 'q' : 'changes', i, ans: Object.assign({}, st.ans), changes: st.changes.slice() }; S.tab = 'checkin'; render(); const a = $('#app'); if (a) a.scrollIntoView(); };
   H = GGGuided.run({ tree: 'grove', kind, voice: 'jenny', title: (quick ? 'Quick Check-in' : KW().checkin), script: GG_GUIDED.grove, questions: Q, answers, quietHtml: quietInner(),
+    draft: gvDraft(quick ? 'quick' : 'full', !from),
     isEdge: (q, v) => q.rev ? (v === 'o' || v === 'a') : v === 'n',
     onAnswer: (id, v) => { if (id === 'changes') { st.changes = (v || []).slice(); st.changesSeen = true; } else st.ans[id] = v; },
     onDone: () => { done = true; ciSave({ quick: st.quick, changes: st.changes, ans: st.ans }); },
