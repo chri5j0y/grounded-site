@@ -38,8 +38,9 @@
     '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
     '/shared/gg-life.js?v=b907',     // Health and Ability: the example and tip lines under a question
     '/aspen/life.js?v=b907',         // window.ASPEN_LIFE notes, read by those lines
-    '/shared/gg-guided.js?v=c030',   // the shared player (it loads gg-guided.css itself)
-    '/shared/guided/aspen.js?v=b907' // window.GG_GUIDED.aspen, every spoken line
+    '/shared/gg-guided.js?v=c187',   // the shared player (it loads gg-guided.css itself)
+    '/shared/guided/aspen.js?v=b907', // window.GG_GUIDED.aspen, every spoken line
+    '/shared/kids/aspen-practices.js?v=c187' // BLD 1037: the practices, for the Growth Plan (Home loads practice-rhythm.js)
   ];
   var PARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // aspen/index.html PARTS 1130, in order
   var GRADES = [6, 7, 8];
@@ -266,7 +267,7 @@
     };
     return GGGuided.run({
       tree: 'aspen', kind: kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true, plain: wd === 'plain',
-      questions: questions(d, wd, id), answers: A, script: script([kind], d.mode === 'grown', wd === 'plain'), isEdge: isEdge, quiet: C.quiet || undefined,
+      questions: questions(d, wd, id), answers: A, script: script([kind], d.mode === 'grown', wd === 'plain'), isEdge: isEdge, quiet: C.quiet || undefined, early: true,
       onAnswer: function (qid, v) {   // guided.js 91 to 96: every answer saves into the draft
         var st = stuRec(id), dd = st.draft; if (!isObj(dd)) return;
         var c = qid.indexOf(':'), key = qid.slice(0, c), i = +qid.slice(c + 1), qs = qsFor(dd.grade, key, dd.sens, wd);
@@ -288,5 +289,119 @@
     });
   }
 
-  window.GGCheckin.aspen = { files: FILES, kinds: ['full'], run: run };
+  /* ---------- the Growth Plan (GWG BLD 1037): aspen/guided.js planSteps, planMerge, and plan, here in Home ----------
+     Chris (November 21, 2026): after the check-in, walk through building the growth plan; with a plan already chosen,
+     review it with the new Growing Edges first. The practices are the one shared copy (shared/kids/aspen-practices.js),
+     with aspen/life.js and the moved practices added in the tree page's own order, so every index matches. The plan
+     saves where Today reads it (student.tend.plan: {part: {selected, custom, own}}, picksToTend), and the student's
+     picks (student.plan.picks) follow, as savePlan keeps them. */
+  var LIB = null;
+  function lib() {
+    if (LIB) return LIB;
+    var src = (window.GG_KIDS_PRAC || {}).aspen; if (!isObj(src)) return null;
+    var X = clone(src), PR = X.PRACTICES, LE = X.LEARN, PP = X.PLAIN_PR, ASL = window.ASPEN_LIFE || {}, LIFE = Object.assign({}, ASL.pr || {});
+    GRADES.forEach(function (g) { (ASL.add || []).forEach(function (a) {
+      var list = (PR[g] || {})[a.part]; if (!list || list.some(function (r) { return r[2] === a.row[2]; })) return;
+      list.push(a.row.slice()); var i = list.length - 1;
+      (LE[g][a.part] = LE[g][a.part] || [])[i] = (a.learn || []).slice();
+      LIFE[g + ':' + a.part + ':' + i] = { life: (a.life || []).slice(), adapt: a.adapt };
+    }); });
+    GRADES.forEach(function (g) { Object.keys((X.PRACTICES_MOVED || {})[g] || {}).forEach(function (k) { X.PRACTICES_MOVED[g][k].forEach(function (m) {
+      var list = PR[g][k] = PR[g][k] || []; if (list.some(function (r) { return r[2] === m[0][2]; })) return;
+      list.push(m[0].slice()); var i = list.length - 1, pid = g + ':' + k + ':' + i;
+      if (m[1]) (LE[g][k] = LE[g][k] || [])[i] = m[1].slice();
+      if (m[2]) PP[pid] = m[2];
+      if (ASL.pr && ASL.pr[m[3]]) LIFE[pid] = ASL.pr[m[3]];
+    }); }); });
+    return (LIB = { PR: PR, LE: LE, PP: PP, LIFE: LIFE });
+  }
+  function prText(g, k, i, plain) { var L = lib(), pr = ((L.PR[g] || {})[k] || [])[i]; if (!pr) return ''; var p = plain && L.PP[g + ':' + k + ':' + i]; return (p && p.t) || pr[2]; }
+  function learnRow(g, k, i, plain) { var L = lib(), R = ((L.LE[g] || {})[k] || [])[i]; if (!R) return null; var p = plain && L.PP[g + ':' + k + ':' + i]; return p && p.L ? R.map(function (x, j) { return p.L[j] != null ? p.L[j] : x; }) : R; }
+  function prIndex(g, k, name) { var list = (lib().PR[g] || {})[k] || []; for (var i = 0; i < list.length; i++) if (list[i][2] === name || prText(g, k, i, true) === name) return i; return -1; }
+  function tends(k) { return !window.GGParts || !GGParts.tend || GGParts.tend(k); }
+  function partLabel(k, plain) { return window.GGParts && GGParts.label ? GGParts.label(k, { plain: plain }) : k; }
+  function ringScore(ring, k) { var a = ((ring || {}).answers || {})[k]; return a && typeof a.score === 'number' ? a.score : null; }
+  // lowestTend (aspen/index.html): the two lowest of the four tended parts in the latest ring.
+  function lowestTend(ring) { return PARTS.filter(tends).map(function (k) { var v = ringScore(ring, k); return [k, v == null ? 5.5 : v]; }).sort(function (a, b) { return a[1] - b[1]; }).slice(0, 2).map(function (x) { return x[0]; }); }
+  function normPlan(P, g, plain) {
+    PARTS.forEach(function (k) {
+      var x = P[k] = isObj(P[k]) ? P[k] : {};
+      x.selected = Array.isArray(x.selected) ? x.selected : []; x.own = Array.isArray(x.own) ? x.own : []; x.custom = x.custom || '';
+      if (x.custom) { x.own.push(x.custom); x.custom = ''; }
+      x.selected = x.selected.map(function (n) { var i = prIndex(g, k, n); return i >= 0 ? prText(g, k, i, plain) : n; }).filter(function (n, i, all) { return n && all.indexOf(n) === i; });
+    });
+    return P;
+  }
+  function planSteps(s, base, plain, id) {
+    var g = s.grade, R = (window.GG_RHYTHM || {}).aspen || {}, rs = ownRings(s), last = rs[rs.length - 1] || null, L = lib();
+    var sug = last ? lowestTend(last) : [], order = sug.concat(PARTS.filter(function (k) { return tends(k) && sug.indexOf(k) < 0; }));
+    var life = lifeIds(id).length > 0 && window.GGLife && GGLife.order;
+    return order.map(function (k) {
+      var sel = base[k].selected, all = ((L.PR[g] || {})[k] || []).map(function (pr, i) { return i; });
+      var isP = function (i) { return sel.indexOf(prText(g, k, i, plain)) >= 0; };
+      var open = all.filter(function (i) { return !isP(i); });
+      if (life) open = GGLife.order(open, function (i) { return L.LIFE[g + ':' + k + ':' + i] || { life: [] }; });
+      var show = all.filter(isP).concat(open.slice(0, Math.max(0, 8 - all.filter(isP).length)));
+      var choices = show.map(function (i) {
+        var name = prText(g, k, i, plain), r = R[k + '|' + name], Lr = learnRow(g, k, i, plain), pr = L.PR[g][k][i];
+        return { name: name, idx: i, how: r && r.how ? undefined : (Lr ? String(Lr[1]).split('|') : []), min: r && r.min != null ? undefined : pr[1] };
+      });
+      sel.forEach(function (n) { if (!choices.some(function (c) { return c.name === n; })) choices.unshift({ name: n }); });
+      var sc = ringScore(last, k), edge = sug.indexOf(k) >= 0 && sc != null && sc < 5;
+      return { type: 'plan', part: k, max: 3, edge: edge, text: edge ? partLabel(k, plain) + ' is a Growing Edge. Choose up to three to help it grow.' : undefined, choices: choices };
+    });
+  }
+  function planMerge(base, steps, picked) {
+    var P = clone(base);
+    steps.forEach(function (st) {
+      if (!picked || !Object.prototype.hasOwnProperty.call(picked, st.part)) return;
+      var shown = st.choices.map(function (c) { return c.name; });
+      P[st.part].selected = P[st.part].selected.filter(function (n) { return shown.indexOf(n) < 0; }).concat(picked[st.part] || []);
+    });
+    return P;
+  }
+  function planSize(P) { return PARTS.reduce(function (n, k) { var x = P[k] || {}; return n + (x.selected || []).length + (x.own || []).length + (x.lib || []).length; }, 0); }
+  // plan(ctx): ctx.review (a plan already chosen: Review My Growth Plan), ctx.onPlanSaved(plan), ctx.onClose({saved}).
+  function plan(ctx) {
+    ctx = ctx || {};
+    var id = ctx.id;
+    if (!id || !window.GGGuided || !window.GG_GUIDED || !window.GG_GUIDED.aspen || !vault(id) || !lib()) return null;
+    var s = stuRec(id); if (!gradeOk(s.grade)) s.grade = 6;
+    var t = tendOf(s), rs = ownRings(s), last = rs[rs.length - 1] || {}, plain = wdOf(s, id, ctx) === 'plain';
+    var base = normPlan(clone(isObj(t.plan) ? t.plan : {}), s.grade, plain), steps = planSteps(s, base, plain, id), cur = {}, picked = {};
+    steps.forEach(function (st) { cur[st.part] = base[st.part].selected.filter(function (n) { return st.choices.some(function (c) { return c.name === n; }); }); });
+    var sc = script(['plan'], last.mode === 'grown', plain);
+    if (ctx.review && sc.kinds.plan) sc.kinds.plan.open = [];   // a review opens on its first part: the open lines say "let's build"
+    var saved = false;
+    return GGGuided.run({
+      tree: 'aspen', kind: 'plan', title: ctx.title || (ctx.review ? 'Review My Growth Plan' : 'Build My Growth Plan'), planTitle: 'My Growth Plan', voice: 'jenny', kid: true, plain: plain,
+      questions: steps, plan: cur, script: sc, quiet: false,
+      onPlan: function (part, names) { picked[part] = names; },
+      onDone: function (r) {
+        var P = planMerge(base, steps, r.plan || picked);
+        if (!planSize(P)) { if (typeof ctx.toast === 'function') ctx.toast('Pick 1 practice, and it will be waiting in Today.'); return; }
+        var st = stuRec(id), t2 = tendOf(st), old = isObj(t2.plan) ? t2.plan : {}, now = new Date().toISOString(), g = st.grade;
+        t2.plan = clone(P);
+        Object.keys(old).forEach(function (k) { var Lb = (old[k] || {}).lib; if (Lb && Lb.length) { t2.plan[k] = t2.plan[k] || { selected: [] }; if (!t2.plan[k].lib) t2.plan[k].lib = Lb; } });
+        // savePlan: the student's picks follow (this grade's practices by index, own practices and other grades as they were).
+        var prev = isObj(st.plan) && Array.isArray(st.plan.picks) ? st.plan.picks : [], keep = prev.filter(function (p) { return p && (p.own || p.grade !== g); }), picks = keep.slice();
+        PARTS.forEach(function (k) { (P[k].selected || []).forEach(function (n) {
+          var i = prIndex(g, k, n); if (i < 0) return;
+          var was = prev.filter(function (p) { return p && !p.own && p.part === k && p.grade === g && p.idx === i; })[0];
+          picks.push({ part: k, idx: i, grade: g, added: (was && was.added) || Date.now() });
+        }); });
+        st.plan = { picks: picks, created: (isObj(st.plan) && st.plan.created) || now, updated: now };
+        t2.planChosen = dayKey(now);   // BLD 1037: the person chose their plan (the setup's starters were the backup until now)
+        saved = Promise.resolve(GGP.save(id)).then(function () { if (typeof ctx.onPlanSaved === 'function') { try { ctx.onPlanSaved(clone(t2.plan)); } catch (e) {} } });
+      },
+      onClose: function () {
+        setTimeout(function () {
+          var fin = function () { if (typeof ctx.onClose === 'function') { try { ctx.onClose({ saved: !!saved }); } catch (e) {} } };
+          if (saved) saved.then(fin, fin); else fin();
+        }, 0);
+      }
+    });
+  }
+
+  window.GGCheckin.aspen = { files: FILES, kinds: ['full'], run: run, plan: plan };
 })();
