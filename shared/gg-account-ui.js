@@ -20,7 +20,7 @@
   'use strict';
   if (window.GGAccountUI) return;
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
-  var CSS = HERE + 'gg-account.css?v=c143', cssOn = false, cur = null, uid = 0;
+  var CSS = HERE + 'gg-account.css?v=c193', cssOn = false, cur = null, uid = 0;
   // BLD 1017: the Membership Trial rests until Terms and Privacy carry its sections (TRIAL_LIVE in shared/gg-account.js)
   function trialLive() { return !!(G() && G().trialLive && G().trialLive()); }
   // The Founding prices and their Stripe payment links (the same four links The Grounded Way page used, BLD 949)
@@ -64,6 +64,17 @@
   function field(id, label, type, ac, hint) {
     return '<label class="ga-f"><span>' + esc(label) + '</span><input id="' + id + '" type="' + type + '"' + (ac ? ' autocomplete="' + ac + '"' : '') + (type === 'email' ? ' inputmode="email" autocapitalize="off" spellcheck="false"' : '') + '>' + (hint ? '<small>' + esc(hint) + '</small>' : '') + '</label>';
   }
+  // BLD 1047: Sign in with Apple and Google, shown only when their flags and the server both say so
+  function provRow() { return '<div class="ga-prov" hidden></div>'; }
+  function provWire() {
+    var box = cur && cur.w.querySelector('.ga-prov'), c = cur; if (!box || !G().providers) return;
+    G().providers().then(function (pv) {
+      if (cur !== c || (!pv.apple && !pv.google)) return;
+      box.innerHTML = (pv.apple ? '<button type="button" class="ga-btn big line" data-sign="apple">Sign In With Apple</button>' : '') + (pv.google ? '<button type="button" class="ga-btn big line" data-sign="google">Sign In With Google</button>' : '') + '<p class="ga-or">or with your email</p>';
+      box.hidden = false;
+      Array.prototype.forEach.call(box.querySelectorAll('[data-sign]'), function (b) { b.addEventListener('click', function () { busy(b, true); G().signinWith(b.getAttribute('data-sign')).catch(function () { busy(b, false); say('Try again in a moment, or use your email.'); }); }); });
+    });
+  }
   function val(id) { var e = cur && cur.w.querySelector('#' + id); return e ? e.value : ''; }
   function on(sel, fn) { var e = cur && cur.w.querySelector(sel); if (e) e.addEventListener('click', function (ev) { ev.preventDefault(); fn(e); }); }
   function form(fn) { var f = cur.w.querySelector('form'); if (f) f.addEventListener('submit', function (ev) { ev.preventDefault(); fn(f.querySelector('button[type=submit]')); }); }
@@ -82,42 +93,47 @@
     // BLD 958: an invite on this device (a link from a parent) makes the account for the person it names; a teen or kid
     // account comes only this way. A kid's invite carries a sign in name, so a kid needs no email.
     var inv = o.token || joinWaiting(), kid = o.kid || joinKid();
-    var c = sheet(o.title || 'Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : o.lead || 'One email and password opens your tree on every device. Everything is locked on this device before it leaves, so only you can open it.');
+    var c = sheet(o.title || 'Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : o.lead || 'One email and one password open your tree on every device, and the same password opens your own profile. Everything is locked on this device before it leaves, so only you can open it. Your account costs nothing; Membership is the paid part on top.');
     var agree = '<a href="/terms.html" target="_blank" rel="noopener">Terms of Use</a> and the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>';
-    c.body.innerHTML = '<form novalidate>' + (kid ? '<p class="ga-note">Your sign in name: <b>' + esc(kid) + '</b></p>' : field('ga-em', 'Email', 'email', 'email')) + field('ga-pw', 'Password', 'password', 'new-password', 'At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your password is the key to your account, so keep it yours alone.') +
+    c.body.innerHTML = (kid || o.oauth ? '' : provRow()) + '<form novalidate>' + (kid ? '<p class="ga-note">Your sign in name: <b>' + esc(kid) + '</b></p>' : field('ga-em', 'Email', 'email', 'username')) + field('ga-pw', 'Password', 'password', 'new-password', 'At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your phone can save it and fill it with Face ID. Your password is the key to your account, so keep it yours alone.') +
       '<label class="ga-check"><input id="ga-ag" type="checkbox"><span>' + (inv ? 'I agree to the ' + agree + '.' : 'I am 18 or older, and I agree to the ' + agree + '.') + '</span></label>' +
       '<button type="submit" class="ga-btn big">Create My Account</button></form>' + (inv ? '' : '<p class="ga-note">Younger than 18? A parent adds you from their Grounded Household, and the invite opens your account.</p>') + '<div class="ga-alt"><button type="button" class="ga-link" data-go="signin">I Have an Account</button></div>';
-    on('[data-go=signin]', function () { V.signin({ then: o.then }); });
+    on('[data-go=signin]', function () { V.signin({ then: o.then, oauth: o.oauth, email: o.email }); });
+    if (o.email) { var ie = cur.w.querySelector('#ga-em'); if (ie) { ie.value = o.email; if (o.oauth) ie.readOnly = true; } }
+    provWire();
     form(function (btn) {
       if (!cur.w.querySelector('#ga-ag').checked) return say(inv ? 'Check the box to agree to the Terms of Use and the Privacy Policy.' : 'Check the box to say you are 18 or older and agree to the Terms of Use and the Privacy Policy.');
       busy(btn, true, 'Locking Your Keys');
       say('Making your keys on this device. This takes a few seconds.', true);
       var email = kid || val('ga-em');
-      G().signUp({ email: email, password: val('ga-pw'), adult: !inv, invite: inv || undefined }).then(function (r) {
+      G().signUp({ email: email, password: val('ga-pw'), adult: !inv, invite: inv || undefined, oauth: o.oauth || undefined }).then(function (r) {
         return showWords(r.words).then(function () {
           // A kid's account starts confirmed, so the invite joins the Household right away.
           if (kid && inv) return G().household.join(inv).then(function () { joinWait(null); joinKid(null); var d = sheet('You Are In', 'Welcome to your family’s Household. Your tree opens on every device you sign in on.'); d.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>'; return d.p; }, function () { close(); });
           if (o.then) return o.then();   // BLD 1017: Start Membership carries on to its choice
-          V.welcome(email);
+          V.welcome(email, !!o.oauth);
         });
       }).catch(fail(btn));
     });
     return c.p;
   };
-  V.welcome = function (email) {
-    var c = sheet('Your Account Is Ready', 'We sent a link to ' + email + '. Tap it to confirm your email, and your tree can grow on every device you sign in on.');
+  V.welcome = function (email, sure) {
+    // BLD 1047: confirm the email later; the tree is already growing
+    var c = sheet('Your Account Is Ready', sure ? 'Your email is confirmed, and your tree grows on every device you sign in on.' : 'Your tree is already growing. We sent a link to ' + email + '; tap it when you like to confirm your email.');
     c.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>';
     return c.p;
   };
   V.signin = function (o) {
     o = o || {};
-    var c = sheet('Sign In', 'Sign in with your Grounded Account email (or your sign in name) and password. Each profile still opens with its own passcode.');
-    c.body.innerHTML = '<form novalidate>' + field('ga-em', 'Email or Sign In Name', 'text', 'username') + field('ga-pw', 'Password', 'password', 'current-password') + '<button type="submit" class="ga-btn big">Sign In</button></form>' +
+    var c = sheet('Sign In', o.oauth ? 'Your email is confirmed. Type your Grounded password once, and your tree opens on this device. Your phone can save it and fill it with Face ID next time.' : 'Sign in with your Grounded Account email (or your sign in name) and password. The same password opens your own profile.');
+    c.body.innerHTML = (o.oauth ? '' : provRow()) + '<form novalidate>' + field('ga-em', 'Email or Sign In Name', 'text', 'username') + field('ga-pw', 'Password', 'password', 'current-password') + '<button type="submit" class="ga-btn big">Sign In</button></form>' +
       '<div class="ga-alt"><button type="button" class="ga-link" data-go="forgot">Forgot My Password</button><button type="button" class="ga-link" data-go="signup">Create My Account</button></div>';
-    on('[data-go=forgot]', function () { V.forgot(); }); on('[data-go=signup]', function () { V.signup(o.then ? { then: o.then, title: o.title, lead: o.lead } : undefined); });
+    on('[data-go=forgot]', function () { V.forgot(); }); on('[data-go=signup]', function () { V.signup(o.then ? { then: o.then, title: o.title, lead: o.lead } : o.oauth ? { oauth: o.oauth, email: o.email } : undefined); });
+    if (o.email) { var ie = cur.w.querySelector('#ga-em'); if (ie) { ie.value = o.email; if (o.oauth) ie.readOnly = true; } }
+    provWire();
     form(function (btn) {
       busy(btn, true, 'Opening Your Account');
-      G().signIn({ email: val('ga-em'), password: val('ga-pw') }).then(function () {
+      G().signIn({ email: val('ga-em'), password: val('ga-pw'), oauth: o.oauth || undefined }).then(function () {
         if (window.GGSync) GGSync.sync().catch(function () {});
         if (o.then) return o.then();   // BLD 1017: Start Membership carries on to its choice
         say('Welcome back. Your tree is coming in now.', true); setTimeout(close, 900);
@@ -144,20 +160,43 @@
       busy(btn, true, 'Opening Your Account');
       G().recover({ token: o.token, words: val('ga-rw'), password: val('ga-pw') }).then(function () {
         if (window.GGSync) GGSync.sync().catch(function () {});
-        say('Your new password is set, and your account is open on this device.', true); setTimeout(close, 1200);
+        say('Your new password is set, and your account and your tree are open on this device.', true); setTimeout(close, 1400);
       }).catch(fail(btn));
     });
     return c.p;
   };
+  // BLD 1047: Start Fresh says plainly what happens and when: the account is erased in 24 hours, at a time shown here,
+  // and the same email can make a new account right after.
   V.fresh = function (o) {
-    var c = sheet('Start Fresh', 'With the password and the Root Words both gone, no one can open what is locked in this account, including us. Start Fresh erases it in 24 hours, and you begin again with the same email. We send an email with a Keep My Account link first.');
+    var at = Date.now() + 864e5, w = G().whenText ? G().whenText(at) : '';
+    var c = sheet('Start Fresh', 'With the password and the Root Words both gone, no one can open what is locked in this account, including us. Start Fresh erases your account in 24 hours' + (w ? ', on ' + w : '') + '. After that, you can make a new account with the same email right away. We email you a Keep My Account link first, in case you find your Root Words.');
     c.body.innerHTML = '<form novalidate>' + field('ga-cf', 'Type START FRESH to confirm', 'text', 'off') + '<button type="submit" class="ga-btn big warm">Start Fresh</button></form>' +
-      '<p class="ga-note">This device keeps its own copy, still locked with each profile’s passcode.</p>';
+      '<p class="ga-note">This device keeps its own copy, still locked with each profile’s password or passcode.</p>';
     form(function (btn) {
       if (val('ga-cf').trim().toUpperCase() !== 'START FRESH') return say('Type START FRESH to confirm.');
       busy(btn, true);
-      G().startFresh(o.token).then(function () { busy(btn, false); say('Your account starts fresh in 24 hours. The Keep My Account link in your email stops it.', true); }).catch(fail(btn));
+      G().startFresh(o.token).then(function (r) {
+        var t = r && r.at ? G().whenText(r.at) : w;
+        c.body.innerHTML = '<div class="ga-card"><span class="ga-k">Starting Fresh</span><b class="ga-big">Your account is erased on ' + esc(t) + '.</b><small>Right after that, you can make a new Grounded Account with the same email. Until then, the Keep My Account link in your email keeps everything just as it is.</small></div><button type="button" class="ga-btn big" data-ga="close">Done</button>';
+        say('');
+      }).catch(fail(btn));
     });
+    return c.p;
+  };
+  // BLD 1047: back from Sign in with Apple or Google with a ticket: sign in (with the password) or create the account
+  V.oauth = function (o) {
+    var c = sheet('One Moment', '');
+    c.body.innerHTML = '<p class="ga-lead">Opening your sign in…</p>';
+    G().oauthWho(o.token).then(function (r) {
+      if (cur !== c) return;
+      return r.known ? V.signin({ oauth: o.token, email: r.email }) : V.signup({ oauth: o.token, email: r.email, title: 'Create My Account', lead: 'Your email is confirmed. Choose a password for your tree: it locks everything on this device, so only you can open it, and your phone can save it and fill it with Face ID.' });
+    }, function () { if (cur === c) V.oauthx(); });
+    return c.p;
+  };
+  V.oauthx = function () {
+    var c = sheet('Sign In', 'That sign in did not finish. Try again, or sign in with your email.');
+    c.body.innerHTML = '<button type="button" class="ga-btn big" data-go="signin">Sign In</button>';
+    on('[data-go=signin]', function () { V.signin(); });
     return c.p;
   };
   V.keep = function (o) {
@@ -252,7 +291,7 @@
     return c.p;
   };
   V.password = function () {
-    var c = sheet('Change My Password', 'Your Root Words stay the same. Other devices sign out unless you keep them signed in.');
+    var c = sheet('Change My Password', 'Your Root Words stay the same, and the new password opens your own profile too. Other devices sign out unless you keep them signed in.');
     c.body.innerHTML = '<form novalidate>' + field('ga-old', 'Password Now', 'password', 'current-password') + field('ga-pw', 'New Password', 'password', 'new-password', 'At least 10 characters.') +
       '<label class="ga-check"><input id="ga-keep" type="checkbox"><span>Keep my other devices signed in</span></label><button type="submit" class="ga-btn big">Change My Password</button></form>';
     form(function (btn) {

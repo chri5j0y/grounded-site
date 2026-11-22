@@ -47,6 +47,18 @@
      GGAccount.trial()                   the Membership Trial (BLD 1017): Promise of {live, can, trial: {status, started, ends}}
      GGAccount.trialStart()              Begin My 14 Days (POST /member/trial): Promise of {member, trial}; with an email still
                                          to be confirmed the trial waits (status waiting) and opens on the confirm
+   BLD 1047 One Password and Face ID:
+     GGAccount.configured()              true when this page knows where the server is (always on the site)
+     GGAccount.onKeys(fn)                fn({ak, password, accountId, why}) runs (and is waited for) while the account key is
+                                         in memory: why signup, signin, recover, or password (a new password). shared/gg-profiles.js
+                                         uses it so the account password also opens the person's own profile.
+     GGAccount.withKey(password, fn)     opens the account key with the password, here, runs fn(ak), then wipes it
+     signUp and signIn take o.keyed(ak, info) the same way, and o.oauth (a Sign in with Apple or Google ticket).
+     GGAccount.signinWith(provider)      'apple' or 'google': the browser goes to the provider and back to /home/#oauth=
+     GGAccount.providers()               Promise of {apple, google}: true only when the site flag below and the server both say so
+     GGAccount.oauthWho(ticket)          Promise of {email, known, provider}
+   SIGNIN_APPLE and SIGNIN_GOOGLE (below) keep Sign in with Apple and Google resting until Chris's steps are done
+   (grounded-workshop patches/bld1047/SIGNIN-STEPS.md). Tests turn them on with window.GG_SIGNIN_APPLE or GG_SIGNIN_GOOGLE.
    Membership buy buttons (links to buy.stripe.com) carry the signed in account by themselves, and the Welcome, Member page
    and the Membership note on The Grounded Way say how Membership opens on the account. This file loads only while
    Accounts are live (shared/gg-profiles.js ACCOUNTS_LIVE), so none of this runs before then.
@@ -62,6 +74,9 @@
   // words. Tests turn it on for one browser with window.GG_TRIAL_LIVE = true; nothing on the site sets that.
   var TRIAL_LIVE = true;
   function trialLive() { return TRIAL_LIVE === true || window.GG_TRIAL_LIVE === true; }
+  // BLD 1047: Sign in with Apple and Sign in with Google rest until each provider is set up (SIGNIN-STEPS.md)
+  var SIGNIN_APPLE = false, SIGNIN_GOOGLE = false;
+  function flagOn(p) { return p === 'apple' ? SIGNIN_APPLE === true || window.GG_SIGNIN_APPLE === true : p === 'google' ? SIGNIN_GOOGLE === true || window.GG_SIGNIN_GOOGLE === true : false; }
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var site = /(^|\.)growwithgrounded\.com$/.test(location.hostname);
   var CFG = { api: window.GG_ACCOUNT_API || (site ? 'https://api.growwithgrounded.com/v1' : ''), turnstile: null };
@@ -162,6 +177,7 @@
       full: 'Your account is full. Remove something you no longer need, then try again.',
       offline: 'Grounded keeps working on this device, and your changes send when the connection returns.',
       taken: 'This email already has a Grounded Account. Sign in, or choose Forgot My Password.',
+      fresh: 'This email\u2019s account is starting fresh. Once that time comes, this email can make a new account right away.',
       email: 'Check the email address and try again.',
       recent: 'Type your password once more to keep going.',
       signin: 'Sign in again to keep going.',
@@ -181,6 +197,9 @@
       server: 'Something went wrong on our side. Try again in a little while.'
     })[why] || 'Something went wrong. Try again in a little while.';
   }
+  // BLD 1047: when Start Fresh erases an account, said plainly in this device's own time
+  function whenText(at) { try { return new Date(at).toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' }).replace(/\u202f/g, ' '); } catch (e) { return new Date(at).toString(); } }
+  function freshWords(at) { return 'This email\u2019s account is erased on ' + whenText(at) + '. After that, this email can make a new account right away.'; }
   function api(method, path, body, opt) {
     opt = opt || {};
     if (!CFG.api) return Promise.reject(kind('setup'));
@@ -198,7 +217,7 @@
           return r.text().then(function (t) {
             var j = null; try { j = t ? JSON.parse(t) : {}; } catch (e) { j = { ok: false, why: 'server' }; }
             if (!r.ok || (j && j.ok === false)) {
-              var w = (j && j.why) || 'server', e = kind(w, words(w, j && j.seconds), { status: r.status, seconds: j && j.seconds, ver: j && j.ver, gone: j && j.gone, body: j });
+              var w = (j && j.why) || 'server', e = kind(w, w === 'fresh' && j && j.at ? freshWords(j.at) : words(w, j && j.seconds), { status: r.status, seconds: j && j.seconds, ver: j && j.ver, gone: j && j.gone, at: j && j.at, body: j });
               if (r.status === 401 && w === 'signin' && !opt.quiet401) lost();
               throw e;
             }
@@ -249,6 +268,32 @@
     }).then(function () { net = true; emit('state', 'in'); return info(); });
   }
 
+  /* ---------- BLD 1047: the account key, for a moment, for the profile that is the person's own ---------- */
+  var keyHooks = [];
+  function onKeys(fn) { keyHooks.push(fn); return function () { keyHooks = keyHooks.filter(function (f) { return f !== fn; }); }; }
+  function runKeys(ak, x) {
+    var o = Object.assign({ ak: ak }, x || {});
+    return keyHooks.reduce(function (pr, fn) { return pr.then(function () { return Promise.resolve().then(function () { return fn(o); }).catch(function (e) { console.error(e); }); }); }, Promise.resolve());
+  }
+  function withKey(password, fn) {
+    return akFromPassword(normPass(password)).then(function (x) {
+      return Promise.resolve().then(function () { return fn(x.ak, { accountId: A.accountId, email: A.email }); }).then(function (r) { wipe(x.ak); return r; }, function (e) { wipe(x.ak); throw e; });
+    });
+  }
+  function configured() { return !!CFG.api; }
+  // Sign in with Apple or Google: the browser goes to the provider and comes back to /home/#oauth=<ticket>
+  var provP = null;
+  function providers() {
+    if (!flagOn('apple') && !flagOn('google')) return Promise.resolve({ apple: false, google: false });
+    if (!provP) provP = api('GET', '/auth/oauth', null, { tries: 1 }).then(function (r) { return { apple: flagOn('apple') && !!r.apple, google: flagOn('google') && !!r.google }; }, function () { provP = null; return { apple: false, google: false }; });
+    return provP;
+  }
+  function signinWith(p) {
+    if (!flagOn(p) || !CFG.api) return Promise.reject(kind('setup'));
+    location.href = CFG.api + '/auth/oauth/' + (p === 'apple' ? 'apple' : 'google') + '/start';
+    return new Promise(function () {});
+  }
+  function oauthWho(t) { return api('POST', '/auth/oauth/who', { ticket: t }); }
   function okPassword(p) {
     p = normPass(p);
     if (p.length < 10) throw kind('weak', 'Choose a password of at least 10 characters. A short phrase of four or more words is strong and easy to remember.');
@@ -283,8 +328,11 @@
     }).then(function (j) {
       var pub = { kty: 'EC', crv: 'P-256', x: j[1].x, y: j[1].y };
       return Promise.all([seal(P.lock, ak, AAD.pw(id)), seal(R.lock, ak, AAD.root(id)), seal(K.DK, enc.encode(JSON.stringify(j[0])), AAD.priv(id))]).then(function (b) {
-        return api('POST', '/auth/signup', { accountId: id, email: email, pw_salt: b64u(pwSalt), proof: P.proof, pw_box: b64u(b[0]), root_salt: b64u(rootSalt), root_proof: R.proof, root_box: b64u(b[1]), pub: pub, priv_box: b64u(b[2]), device: dev(), terms_v: TERMS_V, privacy_v: PRIVACY_V, turnstile: o.turnstile, adult: o.invite ? undefined : o.adult !== false, invite: o.invite || undefined }).then(function (sr) {
+        return api('POST', '/auth/signup', { accountId: id, email: email, pw_salt: b64u(pwSalt), proof: P.proof, pw_box: b64u(b[0]), root_salt: b64u(rootSalt), root_proof: R.proof, root_box: b64u(b[1]), pub: pub, priv_box: b64u(b[2]), device: dev(), terms_v: TERMS_V, privacy_v: PRIVACY_V, turnstile: o.turnstile, adult: o.invite ? undefined : o.adult !== false, invite: o.invite || undefined, oauth: o.oauth || undefined }).then(function (sr) {
           return keep(ak, { accountId: id, email: email, confirmed: !!(sr && sr.confirmed), priv_box: b[2], pub: pub });
+        }).then(function () {
+          var x = { password: pw, accountId: id, email: email, why: 'signup' };
+          return (o.keyed ? Promise.resolve(o.keyed(ak, x)) : Promise.resolve()).then(function () { return runKeys(ak, x); });
         });
       });
     }).then(function () {
@@ -298,10 +346,13 @@
       return passKeys(pw, unb64u(s.salt));
     }).then(function (p) {
       P = p;
-      return api('POST', '/auth/finish', { email: email, proof: P.proof, device: dev() });
+      return api('POST', '/auth/finish', { email: email, proof: P.proof, device: dev(), oauth: o.oauth || undefined });
     }).then(function (r) {
       return open(P.lock, r.pw_box, AAD.pw(r.accountId)).then(function (ak) {
-        return keep(ak, { accountId: r.accountId, email: r.email || email, confirmed: r.confirmed, priv_box: r.priv_box, pub: r.pub }).then(function (i) { wipe(ak); return i; });
+        return keep(ak, { accountId: r.accountId, email: r.email || email, confirmed: r.confirmed, priv_box: r.priv_box, pub: r.pub }).then(function (i) {
+          var x = { password: pw, accountId: r.accountId, email: r.email || email, why: 'signin' };
+          return (o.keyed ? Promise.resolve(o.keyed(ak, x)) : Promise.resolve()).then(function () { return runKeys(ak, x); }).then(function () { wipe(ak); return i; }, function (e) { wipe(ak); throw e; });
+        });
       });
     });
   }
@@ -348,11 +399,14 @@
           });
         });
       }).then(function (f) {
-        return keep(ak, { accountId: f.accountId, email: f.email, confirmed: true, priv_box: f.priv_box, pub: f.pub });
+        return keep(ak, { accountId: f.accountId, email: f.email, confirmed: true, priv_box: f.priv_box, pub: f.pub }).then(function (i) {
+          return runKeys(ak, { password: pw, accountId: f.accountId, email: f.email, why: 'recover' }).then(function () { return i; });
+        });
       }).then(function (i) { wipe(ak); return i; });
     });
   }
-  function startFresh(token) { return api('POST', '/recover/fresh', { token: token, confirm: 'START FRESH' }); }
+  // BLD 1047: Start Fresh answers when it happens ({at}); the device sends its own time zone for the email's words
+  function startFresh(token) { var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {} return api('POST', '/recover/fresh', { token: token, confirm: 'START FRESH', tz: tz }); }
   function keepAcct(token) { return api('POST', '/recover/keep', { token: token }); }
 
   /* ---------- the password and Root Words ---------- */
@@ -372,9 +426,11 @@
       var salt = rand(16);
       return passKeys(pw, salt).then(function (P) {
         return seal(P.lock, x.ak, AAD.pw(A.accountId)).then(function (box) {
-          wipe(x.ak);
           return api('POST', '/account/password', { proof_old: x.proof, pw_salt: b64u(salt), proof: P.proof, pw_box: b64u(box), keep_devices: !!o.keepDevices });
-        });
+        }).then(function (r) {
+          // BLD 1047: the profile that opens with the password now opens with the new one
+          return runKeys(x.ak, { password: pw, old: normPass(o.old), accountId: A.accountId, email: A.email, why: 'password' }).then(function () { wipe(x.ak); return r; });
+        }, function (e) { wipe(x.ak); throw e; });
       });
     });
   }
@@ -553,7 +609,8 @@
 
   /* ---------- the address: #confirm=, #recover=, #keep=, #join= ---------- */
   function readHash() {
-    var m = /#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})/.exec(location.hash || ''), k = /[#&]kid=([A-Za-z0-9.]{3,24})/.exec(location.hash || '');
+    var m = /#(confirm|recover|keep|join|oauth)=([A-Za-z0-9_-]{43})/.exec(location.hash || ''), k = /[#&]kid=([A-Za-z0-9.]{3,24})/.exec(location.hash || '');
+    if (!m && /^#oauth-x=/.test(location.hash || '')) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} return { kind: 'oauthx', token: '', kid: '' }; }
     if (!m) return null;
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { location.hash = ''; }
     return { kind: m[1], token: m[2], kid: k ? k[1].toLowerCase() : '' };
@@ -574,6 +631,7 @@
   window.GGAccount = {
     v: V, KDF: KDF, ready: readyP, state: state, info: info, on: function (fn) { subs.push(fn); return function () { subs = subs.filter(function (f) { return f !== fn; }); }; },
     config: function (o) { Object.keys(o || {}).forEach(function (k) { CFG[k] = o[k]; }); return CFG; },
+    configured: configured, onKeys: onKeys, withKey: withKey, providers: providers, signinWith: signinWith, oauthWho: oauthWho, whenText: whenText,
     signUp: signUp, signIn: signIn, signOut: signOut, confirm: confirm, resend: resend, account: account,
     forgot: forgot, recover: recover, startFresh: startFresh, keep: keepAcct,
     changePassword: changePassword, rootWords: rootWords, newRootWords: newRootWords, changeEmail: changeEmail,

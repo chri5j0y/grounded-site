@@ -14,7 +14,7 @@
 (function () {
   'use strict';
   if (window.GGJoin) return;
-  var UI = '/shared/gg-account-ui.js?v=c143';
+  var UI = '/shared/gg-account-ui.js?v=c193';
   var uiP = null;
   function load(src) {
     return new Promise(function (ok) {

@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c191', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c193', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c192';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -859,15 +859,19 @@
         '<p class="hm-sub" style="margin:-4px 0 12px">Your stage picks your tree. Each one is built for its season of life.</p>' + sp +
         '<div class="hm-note hm-p-leaves" style="margin-top:12px">' + I('people') + '<span id="hm-stage-note">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode.</span></div></div>' +
       '<div class="hm-card hm-step hm-p-roots"><div class="hm-shd"><span class="hm-num">3</span><div><div class="hm-k">Step 3 of 3</div><h2 class="hm-h2">Tend Your Four</h2></div></div>' +
-        '<p class="hm-sub" style="margin:-4px 0 12px">Right after your passcode, you set up each part you tend, one at a time: ' + TEND4.map(function (k) { return esc(plabel(k, false)); }).join(', ') + '. Then a quick or full check-in.</p>' +
+        '<p class="hm-sub" style="margin:-4px 0 12px">Right after your ' + (oneAcct() ? 'account' : 'passcode') + ', you set up each part you tend, one at a time: ' + TEND4.map(function (k) { return esc(plabel(k, false)); }).join(', ') + '. Then a quick or full check-in.</p>' +
         '<p class="hm-promise-line">' + I('sprout') + '<span>' + esc(promise()) + '</span></p>' +
-        '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Choose My Passcode</button><div class="hm-sub" style="text-align:center">Next: your passcode and 12 Root Words, then your four, one at a time.</div></div></div>' +
+        (oneAcct() ? '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Save My Tree</button><div class="hm-sub" style="text-align:center">Next: your email and one password, then your four, one at a time. Your account costs nothing.</div></div></div>'
+          : '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Choose My Passcode</button><div class="hm-sub" style="text-align:center">Next: your passcode and 12 Root Words, then your four, one at a time.</div></div></div>') +
     '</div>';
     return '<div class="hm-wrap">' + hero + acctWelcome() + soberNote + promiseHtml() +
       '<div class="hm-plink"><a class="hm-link hm-p-leaves" href="#hm-privacy">' + I('shield') + 'How your privacy works</a><span class="hm-time">' + (back ? 'New here? Three short steps' : 'Three short steps · about a minute') + '</span></div>' +
       steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div></div>';
   }
   function afterWelcome() {}
+  // BLD 1047: a grown-up's own profile lives in a Grounded Account, with one password (shared/gg-profiles.js)
+  function oneAcct() { return !!(window.GGP && GGP.account && GGP.account.need && GGP.account.need()); }
+  function oneHere() { return !!(S.id && GGP.account && GGP.account.one && GGP.account.one(S.id)); }
   // BLD 939 (Chris: the crisis line belongs only where it fits): the quiet line shows on the Check-in tab only; check-ins,
   // Get Grounded Now, and Living Sober carry their own.
   function helpLine() { return '<p class="hm-help">' + (S.p && isKid(S.p) ? 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.' : 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.') + '</p>'; }
@@ -1338,10 +1342,12 @@
     return '<div class="hm-lay c2"><article class="hm-card hm-priv hm-p-leaves"><div class="hm-pv-hd">' + pb(PIMG + 'privacy-settings-sq.webp') + '<div><div class="hm-k">' + (open ? 'Settings and Privacy' : 'How Your Privacy Works') + '</div><h2 class="hm-h2" style="font-size:34px">Your Grounded Way Stays Yours</h2></div></div>' +
       '<div class="hm-set" style="margin-top:10px">' +
         '<div class="hm-row hm-p-leaves"><span class="ic2">' + I('eye') + '</span><div class="tx"><b>What is kept</b><small>Your name and picture, your check-ins and growth plan, the days you tend, your Tending plan, your Living Sober count, and any lab numbers you add.</small></div></div>' +
-        '<div class="hm-row hm-p-branches"><span class="ic2">' + I('phone') + '</span><div class="tx"><b>Where it lives</b><small>Saved in this browser, locked with your passcode. You hold the only key.</small></div></div>' +
-        '<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>Root Words</b><small>Twelve plain words that open The Grounded Way again if you forget your passcode. Keep them somewhere safe.</small></div></div>' +
-        '<div class="hm-row hm-p-roots"><span class="ic2">' + I('save') + '</span><div class="tx"><b>Save a Backup</b><small>One locked file you keep in your files, iCloud, or a drive. It opens with your passcode.</small></div></div>' +
-        '<div class="hm-row hm-p-bark"><span class="ic2">' + I('swap') + '</span><div class="tx"><b>Move to Another Device</b><small>Send your locked profile to the new device, then tap Bring In My Profile there and enter your passcode. Your tree comes with you.</small></div></div>' +
+        (oneAcct() || oneHere() ? '<div class="hm-row hm-p-branches"><span class="ic2">' + I('phone') + '</span><div class="tx"><b>Where it lives</b><small>In your Grounded Account, locked on this device before it leaves, so it comes to every device you sign in on. One password opens it, and you hold the only key.</small></div></div>' +
+          '<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>Root Words</b><small>Twelve plain words that open your account and your tree again if your password ever slips your mind. Keep them somewhere safe.</small></div></div>'
+          : '<div class="hm-row hm-p-branches"><span class="ic2">' + I('phone') + '</span><div class="tx"><b>Where it lives</b><small>Saved in this browser, locked with your passcode. You hold the only key.</small></div></div>' +
+          '<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>Root Words</b><small>Twelve plain words that open The Grounded Way again if you forget your passcode. Keep them somewhere safe.</small></div></div>') +
+        '<div class="hm-row hm-p-roots"><span class="ic2">' + I('save') + '</span><div class="tx"><b>Save a Backup</b><small>One locked file you keep in your files, iCloud, or a drive. It opens with your ' + (oneAcct() || oneHere() ? 'password' : 'passcode') + '.</small></div></div>' +
+        '<div class="hm-row hm-p-bark"><span class="ic2">' + I('swap') + '</span><div class="tx"><b>Move to Another Device</b><small>Send your locked profile to the new device, then tap Bring In My Profile there and enter your ' + (oneAcct() || oneHere() ? 'password' : 'passcode') + '. Your tree comes with you.</small></div></div>' +
         '<div class="hm-row hm-p-fruit"><span class="ic2">' + I('gear') + '</span><div class="tx"><b>Start Fresh</b><small>Manage My Profile removes a profile and its saved days from this device for good. Save a backup first to keep anything.</small></div></div>' +
       '</div>' +
       (open ? '<div class="hm-acts"><button class="hm-btn hm-p-leaves" type="button" data-hm="backup">' + I('save') + 'Save a Backup</button><button class="hm-btn line hm-p-leaves" type="button" data-hm="restore">' + I('open') + 'Load a Backup</button><button class="hm-btn line hm-p-bark" type="button" data-hm="move">' + I('swap') + 'Move to Another Device</button></div>' +
@@ -1349,7 +1355,7 @@
       '</article><div class="hm-col">' +
         '<article class="hm-card hm-a-numbers"><div class="hm-hd">' + pb(PIMG + 'health-numbers-sq.webp') + '<div><div class="hm-k">A Note on Health Numbers</div><h3 class="hm-h3">Talk It Over with Your Doctor</h3></div></div><div class="hm-sub">Plate rings, lab lines, and progress paths are research-informed estimates. They are here to help you notice and plan, and to bring to your doctor. Grounded offers guidance and support, and your doctor guides your medical choices.</div></article>' +
         '<article class="hm-card hm-p-trunk"><div class="hm-hd">' + pb(PIMG + 'kids-and-helpers-sq.webp') + '<div><div class="hm-k">Kids and Helpers</div><h3 class="hm-h3">A Key for Those Who Help</h3></div></div><div class="hm-sub">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode. In Birch, Sequoia, and Willow, a helper sees only what the person chooses to share.</div></article>' +
-        '<article class="hm-card hm-p-leaves"><div class="hm-hd">' + pb(PIMG + 'locked-tight-sq.webp') + '<div><div class="hm-k">Locked Tight</div><h3 class="hm-h3">How the Lock Works</h3></div></div><div class="hm-sub">Your saved data is sealed with its own key (AES 256). That key is locked with your passcode, and again with your Root Words, so either one opens it.</div><div class="hm-quiet" style="margin-top:10px"><a href="/privacy.html">Read the full Privacy Policy</a></div></article>' +
+        '<article class="hm-card hm-p-leaves"><div class="hm-hd">' + pb(PIMG + 'locked-tight-sq.webp') + '<div><div class="hm-k">Locked Tight</div><h3 class="hm-h3">How the Lock Works</h3></div></div><div class="hm-sub">' + (oneAcct() || oneHere() ? 'Your saved data is sealed with its own key (AES 256). That key is locked with your password, and again with your account key, which your Root Words open, so either one opens it. Face ID can open it on your own phone too.' : 'Your saved data is sealed with its own key (AES 256). That key is locked with your passcode, and again with your Root Words, so either one opens it.') + '</div><div class="hm-quiet" style="margin-top:10px"><a href="/privacy.html">Read the full Privacy Policy</a></div></article>' +
       '</div></div>';
   }
 
@@ -4250,7 +4256,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=c143';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=c193';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -4267,7 +4273,13 @@
       return true;
     }
     // BLD 958: a kid's invite also carries the kid's sign in name (&kid=name).
-    var m = /^#(confirm|recover|keep|join)=([A-Za-z0-9_-]{43})(?:&kid=([A-Za-z0-9.]{3,24}))?$/.exec(location.hash || '');
+    // BLD 1047: back from Sign in with Apple or Google (#oauth=<ticket>, or #oauth-x= when it did not finish)
+    if (/^#oauth-x=/.test(location.hash || '')) {
+      AH.hash = { kind: 'oauthx', token: '', kid: '' };
+      try { history.replaceState(null, '', location.pathname + location.search + (S.id ? '#today' : '')); } catch (e) {}
+      return true;
+    }
+    var m = /^#(confirm|recover|keep|join|oauth)=([A-Za-z0-9_-]{43})(?:&kid=([A-Za-z0-9.]{3,24}))?$/.exec(location.hash || '');
     if (!m) return false;
     AH.hash = { kind: m[1], token: m[2], kid: m[1] === 'join' && m[3] ? m[3].toLowerCase() : '' };
     try { history.replaceState(null, '', location.pathname + location.search + (S.id ? '#today' : '')); } catch (e) {}
@@ -4298,21 +4310,21 @@
     if (S.sheet === 'account') fillSheet('account');
     var sc = document.getElementById('hm-acset'); if (sc) sc.outerHTML = acctSettingsCard() || '<span id="hm-acset" hidden></span>';
   }
-  function acctRowLine() { return acctIn() ? (acctStatus().line || 'Your tree on every device') : 'Optional: your tree on every device you sign in on'; }
+  function acctRowLine() { return acctIn() ? (acctStatus().line || 'Your tree on every device') : 'Your tree on every device you sign in on'; }
   function acctRows() { return acctFor() ? [['account', 'shield', acctIn() ? 'My Account' : 'Sign In', acctRowLine()]] : []; }
   function acctSettingsCard() {
     if (!acctFor()) return '';
     return '<article class="hm-card hm-p-branches" id="hm-acset"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">My Account</div><h3 class="hm-h3">' + (acctIn() ? esc(GGAccount.info().email) : 'Your Tree on Every Device') + acctDot() + '</h3></div></div>' +
-      '<p class="hm-sub" style="margin:6px 0 12px">' + esc(acctIn() ? acctRowLine() : 'A Grounded Account is optional. It brings your tree to every device you sign in on, locked on this device first, so only you can open it.') + '</p>' +
+      '<p class="hm-sub" style="margin:6px 0 12px">' + esc(acctIn() ? acctRowLine() : 'Your Grounded Account holds your tree and brings it to every device you sign in on, locked on this device first, so only you can open it. One password opens it all. Your account costs nothing; Membership is the paid part on top.') + '</p>' +
       '<div class="hm-acts tight">' + (acctIn() ? '<button type="button" class="hm-btn sm hm-p-branches" data-hm-me="account">' + I('shield') + 'Open My Account</button>' :
         '<button type="button" class="hm-btn sm hm-p-branches" data-hm-acct="signup">' + I('sprout') + 'Create My Account</button><button type="button" class="hm-btn sm line hm-p-branches" data-hm-acct="signin">' + I('open') + 'Sign In</button>') + '</div></article>';
   }
   function acctFill(b) {
     if (!acctFor()) { b.innerHTML = '<p class="hm-sub">My Account is for grown-ups. A child or teen rides inside their grown-up\'s account.</p>'; return; }
     if (!acctIn()) {
-      b.innerHTML = '<article class="hm-card hm-p-branches hm-acct"><div class="hm-hd">' + pb(PEOPLE + 'account-sq.webp') + '<div style="min-width:0"><div class="hm-k">Optional</div><h3 class="hm-h3">Your Tree on Every Device</h3></div></div>' +
+      b.innerHTML = '<article class="hm-card hm-p-branches hm-acct"><div class="hm-hd">' + pb(PEOPLE + 'account-sq.webp') + '<div style="min-width:0"><div class="hm-k">My Account</div><h3 class="hm-h3">Your Tree on Every Device</h3></div></div>' +
         '<p class="hm-sub" style="margin:8px 0">A Grounded Account brings your profiles, Tending, check-ins, Family Kitchen, and Grounded Money to every phone, tablet, and computer you sign in on. Everything is locked on this device before it leaves, so only you can open it.</p>' +
-        '<p class="hm-sub" style="margin:0 0 12px">Grounded keeps working right here on this device either way, just as it does today.</p>' +
+        '<p class="hm-sub" style="margin:0 0 12px">One password opens your account and your own profile. Your account costs nothing; Membership is the paid part on top.</p>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm-acct="signup">' + I('sprout') + 'Create My Account</button><button type="button" class="hm-btn line hm-p-branches" data-hm-acct="signin">' + I('open') + 'Sign In</button></div></article>';
       return;
     }
@@ -4329,11 +4341,11 @@
         '<p class="hm-sub" style="margin:6px 0 12px">' + esc(st.line) + '</p>' +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-branches" data-hm-acct="sync">' + I('swap') + 'Sync Now</button><button type="button" class="hm-btn sm line hm-p-branches" data-hm-acct="account">' + I('shield') + 'My Devices</button></div></article>' +
       '<article class="hm-card hm-p-leaves"><div class="hm-k">Profiles in My Account</div><div class="hm-set" style="margin-top:6px">' + mine.concat(others).map(prow).join('') + '</div>' +
-        '<p class="hm-sub" style="margin-top:10px">Each profile still opens only with its own passcode. On a shared family computer, a signed in account brings a profile\'s data down only after that profile opens there.</p></article>' +
+        '<p class="hm-sub" style="margin-top:10px">Your own profile opens with your account password. Every other profile here still opens only with its own password or passcode, and on a shared family computer a signed in account brings a profile\'s data down only after that profile opens there.</p></article>' +
       '<article class="hm-card hm-p-roots"><div class="hm-k">Household</div><p class="hm-sub" style="margin:6px 0 12px">Up to 6 people, each with their own private account. Share the Family Kitchen and Grounded Money between you; everything else stays each person\'s own.</p>' +
         kitLine() + '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-roots" data-hm-acct="household">' + I('people') + 'Household</button></div></article>' +
       '<div class="hm-set">' +
-        '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="password"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Change My Password</b><small>Your Root Words stay the same.</small></span></button>' +
+        '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="password"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Change My Password</b><small>Your Root Words stay the same, and the new password opens your profile too.</small></span></button>' +
         '<button type="button" class="hm-row hm-p-trunk hm-acrow" data-hm-acct="account"><span class="ic2">' + I('key') + '</span><span class="tx"><b>Root Words and Devices</b><small>See My Root Words, New Root Words, Sign Out That Device, and Download My Account Data.</small></span></button>' +
         '<button type="button" class="hm-row hm-p-fruit hm-acrow" data-hm-acct="out"><span class="ic2">' + I('open') + '</span><span class="tx"><b>Sign Out</b><small>This device keeps its own locked copy.</small></span></button>' +
       '</div>' +
@@ -4580,7 +4592,7 @@
   }
   function acctWelcome() {
     if (!acctOn()) return '';
-    if (acctIn()) return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span><b>Signed in as ' + esc(GGAccount.info().email) + '.</b> ' + (hasProfiles() ? 'Open your profile with its own passcode, and its tree comes in.' : 'Your profiles are coming in now.') + '</span></div>';
+    if (acctIn()) return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span><b>Signed in as ' + esc(GGAccount.info().email) + '.</b> ' + (hasProfiles() ? 'Open your profile with your password, and its tree comes in.' : 'Your profiles are coming in now.') + '</span></div>';
     return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span>Already growing on another device? <button type="button" class="hm-linkbtn" data-hm-acct="signin">Sign In to My Account</button></span></div>';
   }
 
