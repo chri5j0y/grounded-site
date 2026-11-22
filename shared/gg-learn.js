@@ -533,7 +533,7 @@
       '.ln-brt i.ln-brs{animation:none;}',
       '.go .ln-brt i:first-child{animation:lnIn 10s linear infinite;}.go .ln-brt i:last-child{animation:lnOut 10s linear infinite;}',
       '@keyframes lnBr{0%{transform:scale(.45)}40%{transform:scale(1)}100%{transform:scale(.45)}}',
-      '@keyframes lnIn{0%,36%{opacity:1}40%,100%{opacity:0}}@keyframes lnOut{0%,38%{opacity:0}42%,96%{opacity:1}100%{opacity:0}}',
+      '@keyframes lnIn{0%,36%{opacity:1}38%,100%{opacity:0}}@keyframes lnOut{0%,38%{opacity:0}40%,96%{opacity:1}100%{opacity:0}}',   // BLD 1046a: one word at a time, the next full at the turn
       '.ln-wd{position:absolute;inset:0;padding:44px 80px;}.ln-wd h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:44px;margin:0 0 20px;}',
       '.ln-wd p{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:36px;line-height:1.15;margin:0 0 14px;padding-left:20px;border-left:5px solid #8B5E1A;}.ln-wd small{display:block;font-size:21px;color:#6B5A4D;margin-top:8px;}',
       '.ggl-small .ln-st-b{display:none;}.ggl-small .ln-story{padding:44px 54px;}.ggl-small .ln-story h3{font-size:66px;margin-top:14px;}.ggl-small .ln-st-l{font-size:52px;margin-top:26px;}.ggl-small .ln-st-n{font-size:26px;}.ggl-small .ln-st-l{transition-delay:1.2s !important;}.ggl-small .ln-story .ln-eb{font-size:28px;}',
@@ -1264,14 +1264,17 @@
     }
     function capOn(i) { host.querySelectorAll('.ln-cap .w').forEach(function (w, j) { w.classList.toggle('on', j === i); }); }
     function ringOff() { var r = $('.ln-wait', st); if (r) r.remove(); }
-    // A pause-and-do: a soft countdown ring, so people know it's their turn.
-    function waitRing(sec, t, go) {
+    // A pause-and-do: a soft countdown ring, so people know it's their turn. BLD 1046a: in a breath scene the breath ring (or
+    // the candle's glow) is the cue already, so the pill stays away; on a phone it sat over the breath words and the line under
+    // the ring. ms: the wait, when it differs from the pill's seconds (brWaitMs).
+    function waitRing(sec, t, go, ms) {
       ringOff();
+      P.nx = setTimeout(function () { if (t !== P.tok) return; ringOff(); go(); }, ms || sec * 1000);
+      if (isBr(P.sc)) return;
       var w = document.createElement('div'); w.className = 'ln-wait'; w.setAttribute('aria-hidden', 'true');
       w.innerHTML = '<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19" class="ln-wt0"/><circle cx="22" cy="22" r="19" class="ln-wt1" style="transition-duration:' + sec + 's"/></svg><span>Take your time</span>';
       st.appendChild(w);
       requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('run'); }); });
-      P.nx = setTimeout(function () { if (t !== P.tok) return; ringOff(); go(); }, sec * 1000);
     }
     // The rest between sentences (Chris, October 13, 2026, after listening to samples): 0.45 seconds, and 0.65 in Sequoia and Willow.
     var GAP = cfg.app === 'sequoia' || cfg.app === 'willow' ? 650 : 450;
@@ -1283,7 +1286,7 @@
         // BLD 911: once the breath clock is set, the next breath line waits for its own part of the breath, so a longer pause
         // written after a line gives way to it (a pause could push that line past its part, and it would wait a whole breath).
         gap = gap / sp + (b.p && !(P.brLock && isBr(sc) && brKindOf(B[i + 1])) ? b.p : 0) * 1000;
-        if (b.w) { P.ph = 'wait'; capOn(-1); return waitRing(b.w, t, function () { P.ph = 'say'; P.b = i + 1; step(); }); }
+        if (b.w) { P.ph = 'wait'; capOn(-1); return waitRing(b.w, t, function () { P.ph = 'say'; P.b = i + 1; step(); }, brWaitMs(i, b.w)); }
         P.nx = setTimeout(function () { if (t !== P.tok) return; P.b = i + 1; step(); }, gap);
       }
       function step() {
@@ -1337,7 +1340,8 @@
         ahead(i);
         return play(src, B[i].t, t, fin, l.audio ? '' : rec);
       }
-      if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); gfxAt(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
+      if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); gfxAt(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }, brWaitMs(i0, B[i0].w)); }
+      brPre();
       step();
     }
     /* BLD 908: the 3D figure in a figure scene. One WebGL canvas per player, laid over the stage (outside the scaled
@@ -1755,7 +1759,7 @@
       var r = Math.round(a / (a + o) * 1000) / 10, id = String(r).replace('.', '_'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
       if (!BRK[id]) {
         var el = document.createElement('style'); el.textContent = '@keyframes lnBr' + id + '{0%{transform:scale(.45)}' + q(r) + '{transform:scale(1)}100%{transform:scale(.45)}}'
-          + '@keyframes lnIn' + id + '{0%,' + q(r - 4) + '{opacity:1}' + q(r) + ',100%{opacity:0}}@keyframes lnOut' + id + '{0%,' + q(r - 2) + '{opacity:0}' + q(r + 2) + ',96%{opacity:1}100%{opacity:0}}';
+          + '@keyframes lnIn' + id + '{0%,' + q(r - 4) + '{opacity:1}' + q(r - 2) + ',100%{opacity:0}}@keyframes lnOut' + id + '{0%,' + q(r - 2) + '{opacity:0}' + q(r) + ',96%{opacity:1}100%{opacity:0}}';
         document.head.appendChild(el); BRK[id] = 1;
       }
       P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id };
@@ -1767,9 +1771,9 @@
       var T = a + s + o, ra = Math.round(a / T * 1000) / 10, rs = Math.round((a + s) / T * 1000) / 10, id = 's' + String(ra).replace('.', '_') + 'x' + String(rs).replace('.', '_'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
       if (!BRK[id]) {
         var el = document.createElement('style'); el.textContent = '@keyframes lnBr' + id + '{0%{transform:scale(.45)}' + q(ra) + '{transform:scale(.86)}' + q(rs) + '{transform:scale(1)}100%{transform:scale(.45)}}'
-          + '@keyframes lnIn' + id + '{0%,' + q(ra - 1) + '{opacity:1}' + q(ra) + ',100%{opacity:0}}'
-          + '@keyframes lnSip' + id + '{0%,' + q(ra - .5) + '{opacity:0}' + q(ra) + ',' + q(rs - .5) + '{opacity:1}' + q(rs) + ',100%{opacity:0}}'
-          + '@keyframes lnOut' + id + '{0%,' + q(rs - .5) + '{opacity:0}' + q(rs + 1) + ',96%{opacity:1}100%{opacity:0}}';
+          + '@keyframes lnIn' + id + '{0%,' + q(ra - 1) + '{opacity:1}' + q(ra - .5) + ',100%{opacity:0}}'
+          + '@keyframes lnSip' + id + '{0%,' + q(ra - .5) + '{opacity:0}' + q(ra) + ',' + q(rs - 1) + '{opacity:1}' + q(rs - .5) + ',100%{opacity:0}}'
+          + '@keyframes lnOut' + id + '{0%,' + q(rs - .5) + '{opacity:0}' + q(rs) + ',96%{opacity:1}100%{opacity:0}}';   // BLD 1046a: one word at a time
         document.head.appendChild(el); BRK[id] = 1;
       }
       P.brNames = { brc: 'lnBr' + id, i0: 'lnIn' + id, i1: 'lnOut' + id, is: 'lnSip' + id };
@@ -1782,9 +1786,9 @@
       var id = 'h' + [pa, ph, po].map(function (x) { return String(x).replace('.', '_'); }).join('x'), q = function (x) { return Math.max(0, Math.min(100, x)).toFixed(1) + '%'; };
       if (!BRK[id]) {
         var el = document.createElement('style'); el.textContent = '@keyframes lnBr' + id + '{0%{transform:scale(.45)}' + q(pa) + '{transform:scale(1)}' + q(ph) + '{transform:scale(1)}' + q(po) + '{transform:scale(.45)}100%{transform:scale(.45)}}'
-          + '@keyframes lnIn' + id + '{0%,' + q(pa - 1) + '{opacity:1}' + q(pa) + ',100%{opacity:0}}'
-          + (s ? '@keyframes lnHo' + id + '{0%,' + q(pa - .5) + '{opacity:0}' + q(pa) + ',' + q(ph - .5) + '{opacity:1}' + q(ph) + ',100%{opacity:0}}' : '')
-          + '@keyframes lnOut' + id + '{0%,' + q(ph - .5) + '{opacity:0}' + q(ph + 1) + ',' + q(r ? po - .5 : 96) + '{opacity:1}' + q(r ? po : 100) + ',100%{opacity:0}}'
+          + '@keyframes lnIn' + id + '{0%,' + q(pa - 1) + '{opacity:1}' + q(s ? pa - .5 : ph - .5) + ',100%{opacity:0}}'
+          + (s ? '@keyframes lnHo' + id + '{0%,' + q(pa - .5) + '{opacity:0}' + q(pa) + ',' + q(ph - 1) + '{opacity:1}' + q(ph - .5) + ',100%{opacity:0}}' : '')
+          + '@keyframes lnOut' + id + '{0%,' + q(ph - .5) + '{opacity:0}' + q(ph) + ',' + q(r ? po - 1 : 96) + '{opacity:1}' + q(r ? po - .5 : 100) + ',100%{opacity:0}}'   // BLD 1046a: one word at a time
           + (r ? '@keyframes lnRe' + id + '{0%,' + q(po - .5) + '{opacity:0}' + q(po) + ',' + q(99) + '{opacity:1}100%{opacity:0}}' : '');
         document.head.appendChild(el); BRK[id] = 1;
       }
@@ -1866,24 +1870,53 @@
     // before its part, until that line's clip or device voice really starts; then the part begins with the voice and runs
     // for the length the practice gives. With no voice at all the line starts at once, so the timer path stays as it was.
     // A voice that has not started in 4 seconds lets the circle go on by itself.
-    var BR_PZ = '.ln-brc, .ln-brt i, .ln-cd-glow, .ln-cd-all';
+    var BR_PZ = '.ln-brc, .ln-brt i, .ln-cd-glow, .ln-cd-all', BR_HAIR = 5;
+    /* BLD 1046a (Kayti, November 22, 2026: "The breathe in and out is glitching"): a breath scene that opens with a line of its
+       own ("Let's try one together, right now.") ran the ring on a clock of its own under that line, counting 1, 2, 3, then
+       jumped back to the start when the first breath line set the clock. Now the ring, its words, the candle glow, and the
+       figure rest at the start of the first breath line's part (the ring's dot at its start, no count yet) until that line's
+       voice begins, and then the breath begins with the voice. A scene whose first breath line comes after a pause-and-do, or
+       that has no breath line, keeps its own clock as before. */
+    function brRest(on) { Array.prototype.forEach.call(cv.querySelectorAll('svg.ln-ggbr'), function (s) { if (on) s.setAttribute('data-at', '-1'); else s.removeAttribute('data-at'); }); }
+    function brPre() {
+      var sc = P.sc, B = P.B || []; if (!P.playing || !sc || !isBr(sc) || P.brLock || P.brPz != null || brReduced()) return;
+      for (var j = P.b; j < B.length; j++) {
+        var k = brKindOf(B[j]); if (k) { var off = brOff(k) + BR_HAIR; brAnim(cv, off); brPlay(false); P.brPz = off; P.brPre = true; brRest(true); return; }
+        if (B[j].w) return;
+      }
+    }
+    /* BLD 1046a: a pause-and-do in a breath scene ends at the end of a whole breath, the one nearest its written seconds, so the
+       next line or the next scene never cuts a breath off part way (the clip played its ten seconds from part way through the
+       breath out, and the scene left with the next breath in just begun). The last line's wait leaves room for the scene's own
+       rest after it. A pause it can't fit near its seconds keeps its seconds. */
+    function brWaitMs(i, w) {
+      var ms = w * 1000, sc = P.sc; if (!sc || !isBr(sc) || !P.brLock || P.brPz != null || brReduced()) return ms;
+      var last = i >= P.B.length - 1, lead = last ? 900 : 0, to = (BR_CYC - brEl()) % BR_CYC, n = Math.max(0, Math.round((ms + lead - to) / BR_CYC)), T = to + n * BR_CYC, wt = T - lead;
+      if (last) { var hold = (P.tg ? 2600 : 0) + 900 + (+sc.hold || 0) * 1000; if (T < hold - (Date.now() - P.t0)) return ms; }
+      return wt >= ms * .5 && wt <= ms * 1.6 ? wt : ms;
+    }
     function brPlay(on) { Array.prototype.forEach.call(cv.querySelectorAll(BR_PZ), function (e) { e.style.animationPlayState = on ? '' : 'paused'; }); }
     function brHold(i) {
       var sc = P.sc; if (!sc || !isBr(sc) || !P.brLock || brReduced() || !P.B[i]) return;
       var k = brKindOf(P.B[i]); if (!k) return;
-      var off = ((brOff(k) - 20) % BR_CYC + BR_CYC) % BR_CYC;
-      clearTimeout(P.bz); brAnim(cv, off); brPlay(false); P.brPz = off; P.brLn = { off: off, tok: P.tok, i: i };
+      // BLD 1046a: a line that comes a moment late for its part (brWait lets it start at once) leaves the ring running on; the
+      // hold set it back to the start of the part, so the dot and the count stepped back about half a second.
+      if (P.brPz == null && (brEl() - brOff(k) + BR_CYC) % BR_CYC < (BR_SIP || BR_HOLD ? 700 : 120)) return;
+      // BLD 1046a: it waits just inside its part (it waited a hair before, so a wait of a moment flashed the last count of
+      // the part before, such as 6 of 6, with the words faded out between them).
+      var off = brOff(k) + BR_HAIR;
+      clearTimeout(P.bz); brAnim(cv, off); brPlay(false); P.brPz = off; P.brPre = false; P.brLn = { off: off, tok: P.tok, i: i };
       var t = P.tok; P.bz = setTimeout(function () { if (t === P.tok) brGo(true); }, 4000);
     }
     // A voice that starts after the circle went on by itself still sets the circle to its part.
     function brVoiced(t) {
       if (t !== P.tok) return;
-      if (P.brPz != null) return brGo();
+      if (P.brPz != null) { if (P.brPre) return; return brGo(); }   // BLD 1046a: an opening line's voice leaves the ring resting
       var L = P.brLn; if (L && L.tok === t && L.i === P.b) { P.brLn = null; brAnim(cv, L.off); P.brT0 = Date.now() - L.off; }
     }
     function brGo(keep) {
       clearTimeout(P.bz); if (!keep) P.brLn = null; if (P.brPz == null) return;
-      var off = P.brPz; P.brPz = null; P.brT0 = Date.now() - off; brPlay(true);
+      brRest(false); P.brPre = false; var off = P.brPz; P.brPz = null; P.brT0 = Date.now() - off; brPlay(true);
       if (window.CustomEvent) try { host.dispatchEvent(new CustomEvent('ggl-breath', { detail: { off: off, t: Date.now() } })); } catch (e) {}
     }
     // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
@@ -2276,7 +2309,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c186'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c192'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];
