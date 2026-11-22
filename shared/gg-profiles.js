@@ -99,6 +99,21 @@
      GGP.rootWords(id)               see (or make) the Root Words, after the passcode
      GGP.rootState(id)               'has', 'none', or '' (not for this profile)
 
+   One Password and Face ID (GWG BLD 1047)
+   - A grown-up's own profile in The Grounded Way lives in a Grounded Account (Willow, The Grove, Heartwood, and
+     Grounded Live need no account; neither do kids and teens, who ride with a grown-up). Its code is 'acct': the profile's
+     own key is locked with the account password (p.salt, p.wrap, the same PBKDF2 and AES-GCM), and again with a key made
+     from the account key (p.acct {a, iv, ct}: HKDF "gg-acct-v1 profile|<id>"), so the account's Root Words, a new password,
+     and signing in on a new device all open it, and there is one password and one set of Root Words. The account key is
+     only in memory for a moment (GGAccount.onKeys); nothing here can open p.acct without the password or the Root Words.
+   - A profile made before keeps its passcode, and moves over on its next unlock while signed in, once the account
+     password is typed too (One Password). Until then it opens as always.
+   - Face ID or fingerprint, where the browser offers a passkey with the PRF extension: the passkey's secret, made by the
+     phone and released only after Face ID, locks the profile's key on this device (localStorage gg-passkeys, a locked box
+     only). Nothing goes to our server. The password always still works.
+     GGP.account.need(opt)         true when making this profile asks for a Grounded Account
+     GGP.passkey.can()             Promise of true where Face ID unlock works in this browser
+
    The Family Planner key (GWG BLD 950, shared/gg-planner.js)
    - A family's planner is locked with its own key, kept inside each family
      member's vault (vault.planner). GGP.giveTo(id, pass, 'planner', rec)
@@ -176,10 +191,22 @@
     return subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, bytes).then(function (ct) { return { iv: b64(iv), ct: b64(new Uint8Array(ct)) }; });
   }
   function unseal(key, box) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(box.iv) }, key, unb64(box.ct)).then(function (pt) { return new Uint8Array(pt); }); }
+  // BLD 1047: a grown-up's own profile opens with the account password (code 'acct')
+  function isAcct(p) { return !!(p && p.code === 'acct'); }
+  function codeName(p) { return isAcct(p) ? 'password' : p && p.code === 'pics' ? 'picture code' : 'passcode'; }
+  function normPw(p, pass) { return isAcct(p) ? String(pass == null ? '' : pass).normalize('NFKC') : pass; }
+  // The words for a grown-up's code field, for one grown-up or a list to choose from
+  function gpName(list) { list = [].concat(list || []).filter(Boolean); var a = list.filter(isAcct).length; return !a ? 'passcode' : a === list.length ? 'password' : 'password or passcode'; }
   // passcode opens the profile's own key
   function rawFromPass(p, pass) {
-    return passKey(pass, unb64(p.salt)).then(function (k) { return unseal(k, p.wrap); }).catch(function () { throw new Error(p.code === 'pics' ? 'Those pictures did not match. Try again.' : 'That passcode did not work. Try again.'); });
+    return passKey(normPw(p, pass), unb64(p.salt)).then(function (k) { return unseal(k, p.wrap); }).catch(function () { throw new Error(p.code === 'pics' ? 'Those pictures did not match. Try again.' : isAcct(p) ? 'That password did not work. Try again.' : 'That passcode did not work. Try again.'); });
   }
+  /* BLD 1047: the account key's lock on a profile. base is the account key as an HKDF key (never readable), made for a
+     moment while the account key is in memory. */
+  function acctBase(ak) { return subtle.importKey('raw', ak, 'HKDF', false, ['deriveKey']); }
+  function acctKeyFor(base, pid) { return subtle.deriveKey({ name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info: enc.encode('gg-acct-v1 profile|' + pid) }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']); }
+  function acctSeal(p, base, accountId, raw) { return acctKeyFor(base, p.id).then(function (k) { return seal(k, raw); }).then(function (w) { p.acct = { a: accountId, iv: w.iv, ct: w.ct }; return p; }); }
+  function acctRaw(p, base) { if (!p || !p.acct || !p.acct.iv) return Promise.reject(new Error('none')); return acctKeyFor(base, p.id).then(function (k) { return unseal(k, p.acct); }); }
   function wrapRaw(pass, raw) {
     var salt = crypto.getRandomValues(new Uint8Array(16));
     return passKey(pass, salt).then(function (k) { return seal(k, raw); }).then(function (w) { return { salt: b64(salt), wrap: w }; });
@@ -215,7 +242,8 @@
     return rootP;
   }
   // Adults and High school have Root Words; Kids and Middle school keep the grown-up way.
-  function rootOk(p) { return !!(p && (p.age === 'adult' || p.age === 'pine') && p.code !== 'pics'); }
+  // BLD 1047: a profile that opens with the account password keeps the account's Root Words instead (one set).
+  function rootOk(p) { return !!(p && (p.age === 'adult' || p.age === 'pine') && p.code !== 'pics' && p.code !== 'acct'); }
   // New words lock the profile's key: p.rw beside the passcode lock, and the words inside the vault.
   function rootMake(p, raw, vault) {
     return needRoot().then(function (R) {
@@ -379,10 +407,11 @@
       if (open[o.grownId] && cur && cur.id === o.grownId) grownStep = Promise.resolve(open[o.grownId]);
       else grownStep = rawFromPass(grown, o.grownPass).then(function (gr) { return readVault(grown.id, gr).then(function (gd) { return { raw: gr, data: gd }; }); });
     }
+    var acctOn = o.code === 'acct' && o.acct && o.acct.base && o.age === 'adult';
     return grownStep.then(function (g) {
-      return wrapRaw(o.pass, raw).then(function (w) {
+      return wrapRaw(acctOn ? String(o.pass).normalize('NFKC') : o.pass, raw).then(function (w) {
         var p = {
-          id: id, name: o.name, avatar: o.avatar || '', age: o.age, code: o.code || 'text',
+          id: id, name: o.name, avatar: o.avatar || '', age: o.age, code: acctOn ? 'acct' : o.code === 'acct' ? 'text' : (o.code || 'text'),
           salt: w.salt, wrap: w.wrap, created: todayStr(),
           agreed: { date: todayStr(), terms: TERMS_V, privacy: PRIVACY_V, by: grown ? 'grownup' : 'self', grownup: grown ? grown.name : '' },
           grown: grown ? [grown.id] : [], shared: {}, helpers: helperOf ? [helperOf] : []
@@ -392,8 +421,9 @@
         if (o.carry) Object.keys(o.carry).forEach(function (k) { vault[k] = o.carry[k]; });
         // Root Words (GWG BLD 780): made now for adults and teens. If they cannot load, the profile is
         // made as before, and Manage My Profile offers Make My Root Words later.
-        return (rootOk(p) ? rootMake(p, raw, vault).catch(function () { return null; }) : Promise.resolve(null)).then(function () {
+        return (acctOn ? acctSeal(p, o.acct.base, o.acct.a, raw) : rootOk(p) ? rootMake(p, raw, vault).catch(function () { return null; }) : Promise.resolve(null)).then(function () {
           putP(p);
+          if (acctOn) acctCarry(id, true);   // BLD 1047: the account's own profile rides in the account from the start
           return writeVault(id, raw, vault);
         }).then(function () {
           // BLD 980: the key pair from the start, and what the household step may need (the grown-up's household key)
@@ -489,6 +519,7 @@
     '.ggp-qr{flex:none;width:156px;height:156px;background:#FFFFFF;border-radius:12px;padding:6px;}.ggp-qr svg{display:block;width:100%;height:100%;}' +
     '.ggp-bring{overflow-wrap:anywhere;word-break:break-word;}' +
     '.ggp-sep{border:0;border-top:1px solid var(--ggp-line);margin:18px 0 6px;}' +
+    '.ggp-form{margin:0;}.ggp-dlg input[readonly]{opacity:.8;}.ggp-prov{display:flex;flex-direction:column;gap:8px;margin:12px 0 4px;}.ggp-provb,.ggp-bio{width:100%;}' +
     '.ggp-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10001;background:#2C1810;color:#FAF7F2;padding:11px 18px;border-radius:999px;font:15px Barlow,system-ui,sans-serif;box-shadow:0 10px 26px rgba(0,0,0,.25);max-width:calc(100vw - 30px);text-align:center;}' +
     /* page features */
     '.ggp-story-save{display:inline-flex;align-items:center;gap:6px;font:600 14px Barlow,system-ui,sans-serif;background:none;border:1px solid currentColor;border-radius:999px;padding:6px 12px;color:#8B5E1A;cursor:pointer;margin-top:10px;}' +
@@ -584,11 +615,11 @@
     var who = (act && act.age === 'adult')
       ? '<input type="hidden" id="ggp-gid" value="' + act.id + '"><p class="ggp-small">Agreeing as ' + esc(act.name) + '.</p>'
       : (adults().length
-        ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + adults().map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
+        ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + adults().map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s ' + gpName(adults()) + '</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
         : '');
     var what = age === 'pine'
       ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended. Answers and journal entries stay private to the teen, locked with the teen\'s own passcode.</div>'
-      : '<div class="ggp-note">Grown-ups who agree can open ' + (kidName ? esc(kidName) + (/s$/i.test(kidName) ? '\'' : '\'s') : 'this') + ' profile with their own passcode, so every child has someone beside them when something is hard.</div>';
+      : '<div class="ggp-note">Grown-ups who agree can open ' + (kidName ? esc(kidName) + (/s$/i.test(kidName) ? '\'' : '\'s') : 'this') + ' profile with their own ' + gpName(act && act.age === 'adult' ? act : adults()) + ', so every child has someone beside them when something is hard.</div>';
     return '<hr class="ggp-sep"><p><b>A grown-up needs to agree.</b></p>' + what + who +
       '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am ' + esc(kidName || 'this child') + '\'s parent, guardian, or another responsible grown-up. I have read and agree to the ' + TERMS_LINKS + ' on their behalf.</span></label>';
   }
@@ -596,7 +627,7 @@
     var gid = $(d, '#ggp-gid'), gp = $(d, '#ggp-gpass');
     if (!gid) throw new Error('A grown-up needs their own profile first.');
     if (!$(d, '#ggp-agree').checked) throw new Error('The grown-up needs to check the box to agree.');
-    if (gp && !gp.value) throw new Error('Type the grown-up\'s passcode.');
+    if (gp && !gp.value) throw new Error('Type the grown-up\'s ' + codeName(getP(gid.value)) + '.');
     return { grownId: gid.value, grownPass: gp ? gp.value : null };
   }
 
@@ -666,8 +697,47 @@
           if (!st.age) return d.msg('Choose who this profile is for.');
           if (readList().some(function (p) { return p.name.toLowerCase() === st.name.toLowerCase(); })) return d.msg('There is already a profile with that name on this device. Add a last initial to tell them apart.');
           if (isMinor(st.age) && !adults().length) return noGrown(d);
+          // BLD 1047: a grown-up's own profile lives in a Grounded Account, with one password
+          if (st.age === 'adult' && !other && acctNeed(opt)) return step2acct(d);
+          st.acct = null;
           step2(d);
         };
+      }
+      // BLD 1047: the account step. Signed in: the account password opens this tree too. Signed out: Create My Account
+      // (or I Have an Account), real email and password fields, so the phone's saved passwords and Face ID fill them.
+      function step2acct(d) {
+        var inA = acIn(), info = inA && GGAccount.info();
+        var mode = inA ? 'in' : st.acctMode === 'signin' ? 'signin' : 'signup';
+        st.acct = { mode: mode, email: inA ? info.email : st.acct && st.acct.email || '' };
+        var em = esc(st.acct.email);
+        var body = mode === 'in'
+          ? '<h2 id="ggp-title">One Password</h2><p>Your Grounded Account password opens ' + (st.name ? esc(st.name) + (/s$/i.test(st.name) ? '\'' : '\'s') : 'this') + ' tree too, so there is one password to remember.</p>' +
+            '<form class="ggp-form" data-ggp-form novalidate action="#" method="post"><label class="ggp-l" for="ggp-aem">Email</label><input type="email" id="ggp-aem" name="username" autocomplete="username" value="' + em + '" readonly>' +
+            '<label class="ggp-l" for="ggp-apw">Password</label><input type="password" id="ggp-apw" name="password" autocomplete="current-password"><button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>'
+          : mode === 'signin'
+          ? '<h2 id="ggp-title">Sign In</h2><p>Sign in to your Grounded Account, and your tree comes to this device. The same password opens it.</p>' + provBox() +
+            '<form class="ggp-form" data-ggp-form novalidate action="#" method="post"><label class="ggp-l" for="ggp-aem">Email</label><input type="email" id="ggp-aem" name="username" autocomplete="username" inputmode="email" autocapitalize="off" spellcheck="false" value="' + em + '">' +
+            '<label class="ggp-l" for="ggp-apw">Password</label><input type="password" id="ggp-apw" name="password" autocomplete="current-password"><button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>' +
+            '<p class="ggp-small" style="margin-top:10px"><button type="button" class="ggp-link" data-amode="signup">Create My Account</button> &nbsp; <button type="button" class="ggp-link" data-aforgot>Forgot My Password</button></p>'
+          : '<h2 id="ggp-title">Save Your Tree</h2><p>Your Grounded Account keeps your tree and brings it to every device you sign in on. One email and one password open everything, and it is all locked on this device first, so only you can open it. Your account costs nothing; Membership is the paid part on top.</p>' + provBox() +
+            '<form class="ggp-form" data-ggp-form novalidate action="#" method="post"><label class="ggp-l" for="ggp-aem">Email</label><input type="email" id="ggp-aem" name="username" autocomplete="username" inputmode="email" autocapitalize="off" spellcheck="false" value="' + em + '">' +
+            '<label class="ggp-l" for="ggp-apw">Password</label><input type="password" id="ggp-apw" name="password" autocomplete="new-password"><span class="ggp-small">At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your phone can save it and fill it with Face ID.</span><button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>' +
+            '<p class="ggp-small" style="margin-top:10px">Already have an account? <button type="button" class="ggp-link" data-amode="signin">I Have an Account</button></p>';
+        d.show(body + HOURS() + '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-next>Next</button></div>');
+        provWire(d);
+        $(d, '[data-back]').onclick = function () { step1(d); };
+        d.el.querySelectorAll('[data-amode]').forEach(function (b) { b.onclick = function () { st.acct.email = $(d, '#ggp-aem').value.trim(); st.acctMode = b.dataset.amode; step2acct(d); }; });
+        var af = $(d, '[data-aforgot]'); if (af) af.onclick = function () { d.close(false); acctSheet('forgot'); };
+        function next() {
+          var e = $(d, '#ggp-aem').value.trim(), pw = $(d, '#ggp-apw').value;
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return d.msg('Check the email address and try again.');
+          if (!pw) return d.msg('Type your password.');
+          if (mode === 'signup' && pw.normalize('NFKC').length < 10) return d.msg('Choose a password of at least 10 characters. A short phrase of four or more words is strong and easy to remember.');
+          st.acct.email = e; st.pass = pw; st.hours = +$(d, '#ggp-hx').value;
+          step3(d);
+        }
+        $(d, '[data-next]').onclick = next;
+        var fm = $(d, '[data-ggp-form]'); formWire(fm, next);
       }
       function noGrown(d) {
         d.show('<h2 id="ggp-title">A grown-up comes first</h2><p>Profiles for kids and teens need a grown-up to agree to our terms. Please create the grown-up\'s own profile first, then add ' + esc(st.name) + '.</p>' +
@@ -711,15 +781,16 @@
       var lifeFrom = (function () { var v = opt.carry && lifeSrc && open[lifeSrc] && open[lifeSrc].data, l = v && v.life; return l && ((l.ids || []).length || l.none || l.rather || l.gentle) ? l : null; })();
       function step3(d) {
         var minor = isMinor(st.age);
+        var AM = st.acct && st.acct.mode;
         d.show('<h2 id="ggp-title">Almost There</h2>' +
           '<p>Grounded tools are for reflection and growth, alongside the doctors, therapists, and other professionals in your life.</p>' +
-          '<p class="ggp-small">Everything saved in this profile is locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + ', so only you can open it.</p>' +
+          '<p class="ggp-small">Everything saved in this profile is locked with ' + (st.age === 'maple' ? 'the picture code' : AM ? 'your password' : 'the passcode') + ', so only you can open it.</p>' +
           (minor ? grownBlock(st.name, st.age)
             : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +
           (lifeFrom && (!minor || opt.lifeFrom) ? '<hr class="ggp-sep"><p style="margin:0"><b>Bring ' + (opt.lifeWho ? esc(opt.lifeWho) + '\'s' : 'your') + ' Health and Ability choices?</b></p><label class="ggp-check" style="margin-top:6px"><input type="checkbox" id="ggp-life"> <span>Yes, copy them into the new profile, locked there too. You can change them any time.</span></label>' : '') +
-          '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Create profile</button></div>');
-        $(d, '[data-back]').onclick = function () { st.pass = null; step2(d); };
+          '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>' + (AM === 'signup' ? 'Create My Account' : AM === 'signin' ? 'Sign In' : AM ? 'Save My Tree' : 'Create profile') + '</button></div>');
+        $(d, '[data-back]').onclick = function () { st.pass = null; if (AM) step2acct(d); else step2(d); };
         $(d, '[data-go]').onclick = function () {
           var o = { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: st.age === 'maple' ? 'pics' : 'text', hours: st.hours, carry: opt.carry || null, helperOf: keep, tree: st.age === 'adult' && st.band && BAND[st.band].indexOf(st.tree) >= 0 ? st.tree : 'oak' };
           try { if (minor) Object.assign(o, readGrown(d)); else if (!$(d, '#ggp-agree').checked) throw new Error('Please check the box to agree.'); }
@@ -727,6 +798,7 @@
           var lb = $(d, '#ggp-life');
           if (lifeFrom && lb && lb.checked) { o.carry = Object.assign({}, o.carry || {}); o.carry.life = { ids: (lifeFrom.ids || []).slice(), none: !!lifeFrom.none, rather: !!lifeFrom.rather, gentle: !!lifeFrom.gentle, shareHelpers: false, set: todayStr() }; }
           else if (o.carry && o.carry.life) { o.carry = Object.assign({}, o.carry); delete o.carry.life; }
+          if (AM) return acctGo(d, o);
           run(d, function () { return createProfile(o); }).then(function (id) {
             var fin = function () {
               toast(st.name + '\'s profile is ready.');
@@ -742,6 +814,43 @@
             if (!rw && !hs) fin();
           }).catch(function () {});
         };
+      }
+      // BLD 1047: make the account (or sign in), then the profile that opens with its password
+      function acctGo(d, o) {
+        var A = st.acct, held = null, words = null, found = null;
+        var keyed = function (ak, x) { return acctBase(ak).then(function (b) { held = { base: b, a: x.accountId, pw: x.password }; }); };
+        AC.making = true;
+        run(d, function () {
+          var step = A.mode === 'in' ? GGAccount.withKey(st.pass, function (ak, x) { return keyed(ak, { accountId: x.accountId, password: String(st.pass).normalize('NFKC') }); }).catch(function (e) { if (e && e.why === 'nomatch') throw new Error('That password did not open your account. Try again.'); throw e; })
+            : A.mode === 'signup' ? GGAccount.signUp({ email: A.email, password: st.pass, adult: true, oauth: st.oauth || undefined, keyed: keyed }).then(function (r) { words = r && r.words; })
+            : GGAccount.signIn({ email: A.email, password: st.pass, oauth: st.oauth || undefined, keyed: keyed }).then(function () {
+                // a tree that already lives in this account comes down first, so no second one is made
+                return Promise.race([GGSync.sync().catch(function () {}), new Promise(function (ok) { setTimeout(ok, 15000); })]).then(function () { found = ownProfile(held.a); });
+              });
+          return step.then(function () {
+            if (!held) throw new Error('Something went wrong. Try again in a little while.');
+            if (found) return acctOpenOwn(found, held);
+            o.code = 'acct'; o.pass = held.pw; o.acct = { base: held.base, a: held.a };
+            return createProfile(o);
+          });
+        }).then(function (id) {
+          AC.making = false; st.oauth = null;
+          if (found) { d.close(true); if (!isAcct(getP(found.id))) { setTimeout(function () { openDialog({ id: found.id, reason: 'Welcome back. Your tree is here. Type its passcode once more, and your account password opens it from now on.' }); }, 250); AC.offer = { id: found.id, base: held.base, a: held.a, pw: held.pw, until: Date.now() + 300000 }; } else toast('Welcome back, ' + found.name + '. Your tree is here.'); return; }
+          var fin = function () {
+            toast(st.name + '\'s profile is ready.');
+            if (opt.onCreated) opt.onCreated(id);
+            try { window.dispatchEvent(new CustomEvent('ggp-created', { detail: { id: id, name: st.name } })); } catch (e) {}
+          };
+          var hs = houseHere() ? function () { return needHouse().then(function (H) { return H.setup(id); }).catch(function () {}); } : null;
+          if (words) after = acctWordsShow(words).catch(function () {}).then(hs).then(fin);
+          else if (hs) after = Promise.resolve().then(hs).then(fin);
+          d.close(true);
+          if (!words && !hs) fin();
+        }).catch(function (e) {
+          AC.making = false;
+          // signed up or in already: step back to One Password so nothing is made twice
+          if (acIn() && A.mode !== 'in') { A.mode = 'in'; st.acctMode = ''; }
+        });
       }
     });
   }
@@ -771,7 +880,12 @@
         d.el.querySelectorAll('[data-id]').forEach(function (b) { b.onclick = function () { askCode(d, getP(b.dataset.id)); }; });
         d.el.querySelectorAll('[data-legacy]').forEach(function (b) { b.onclick = function () { legacyOpen(d, legacy.filter(function (x) { return x.id === b.dataset.legacy; })[0]); }; });
       }
-      function finish(d, p) { d.close(true); toast('Welcome, ' + p.name + '.'); if (needsTerms(p)) setTimeout(function () { termsUpdate(p); }, 200); }
+      function finish(d, p, how) {
+        d.close(true); toast('Welcome, ' + p.name + '.');
+        if (needsTerms(p)) { setTimeout(function () { termsUpdate(p); }, 200); return; }
+        // BLD 1047: One Password first (a passcode profile while signed in), then Face ID next time, one at a time
+        setTimeout(function () { afterOpen(p.id, how); }, 700);
+      }
       function askCode(d, p) {
         var act = cur && getP(cur.id);
         if (act && act.id === p.id) { d.close(true); return; }
@@ -781,22 +895,34 @@
           run(d, function () { return openWithRaw(p.id, kr, cur.until); }).then(function () { finish(d, p); }).catch(function () {});
           return;
         }
-        var kid = p.code === 'pics', code = null;
+        var kid = p.code === 'pics', code = null, ac = isAcct(p), pk = !kid && pkGet(p.id);
+        // BLD 1047: a real sign in form, so the phone's saved passwords and Face ID fill the account password
+        var em = ac ? acctEmailFor(p) : '';
         d.show('<div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">' + av(p.avatar, p.name, 56) + '<h2 id="ggp-title" style="margin:0">Hi, ' + esc(p.name) + '</h2></div>' +
-          (kid ? '<p>Tap your three secret pictures.</p><div id="ggp-pad"></div>' : '<label class="ggp-l" for="ggp-pass">Passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">') +
+          (kid ? '<p>Tap your three secret pictures.</p><div id="ggp-pad"></div>'
+            : '<form class="ggp-form" data-ggp-form novalidate action="#" method="post">' +
+              (ac ? '<p class="ggp-small">Your Grounded Account password opens your tree.</p>' + (em ? '<label class="ggp-l" for="ggp-user">Email</label><input type="email" id="ggp-user" name="username" autocomplete="username" value="' + esc(em) + '" readonly>' : '') : '') +
+              '<label class="ggp-l" for="ggp-pass">' + (ac ? 'Password' : 'Passcode') + '</label><input type="password" id="ggp-pass" name="password" autocomplete="current-password">' +
+              '<button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>' +
+              (pk ? '<p style="margin:14px 0 0"><button type="button" class="ggp-b ggp-bio" data-bio>' + esc('Open With ' + bioName()) + '</button></p>' : '')) +
           HOURS() +
-          '<div class="ggp-row" style="justify-content:space-between"><button type="button" class="ggp-link" data-forgot>Forgot ' + (kid ? 'the pictures' : 'the passcode') + '?</button><span style="display:flex;gap:8px"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Open</button></span></div>');
+          '<div class="ggp-row" style="justify-content:space-between"><button type="button" class="ggp-link" data-forgot>Forgot ' + (kid ? 'the pictures' : ac ? 'the password' : 'the passcode') + '?</button><span style="display:flex;gap:8px"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Open</button></span></div>');
         $(d, '[data-back]').onclick = function () { pickPerson(d); };
         $(d, '[data-forgot]').onclick = function () { forgot(d, p); };
         function go() {
-          var pass = kid ? code : $(d, '#ggp-pass').value; if (!pass) return d.msg(kid ? 'Tap three pictures.' : 'Type the passcode.');
+          var pass = kid ? code : $(d, '#ggp-pass').value; if (!pass) return d.msg(kid ? 'Tap three pictures.' : ac ? 'Type your password.' : 'Type the passcode.');
           var hours = +$(d, '#ggp-hx').value;
-          run(d, function () { return rawFromPass(p, pass).then(function (raw) { return openWithRaw(p.id, raw, Date.now() + hours * 3600000); }); })
-            .then(function () { finish(d, p); }).catch(function () { if (kid && pad) pad.reset(); });
+          run(d, function () { return rawFromPass(p, pass).then(function (raw) { return openWithRaw(p.id, raw, Date.now() + hours * 3600000).then(function () { if (ac) acctMend(p.id, raw, pass); }); }); })
+            .then(function () { finish(d, p, kid ? null : { pass: pass }); }).catch(function () { if (kid && pad) pad.reset(); });
         }
         var pad = kid ? picPad(d, $(d, '#ggp-pad'), function (v) { code = v; if (v) go(); }) : null;
         $(d, '[data-go]').onclick = go;
-        var pi = $(d, '#ggp-pass'); if (pi) pi.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+        var fm = $(d, '[data-ggp-form]'); formWire(fm, go);
+        var bio = $(d, '[data-bio]');
+        if (bio) bio.onclick = function () {
+          run(d, function () { return pkOpen(p.id).then(function (raw) { return openWithRaw(p.id, raw, Date.now() + 8 * 3600000); }); })
+            .then(function () { finish(d, p, { bio: true }); }).catch(function () {});
+        };
       }
       // Root Words (GWG BLD 780): the 12 words open the profile's own key, then a new passcode is set.
       function rootForgot(d, p) {
@@ -814,10 +940,10 @@
       // then the name typed again removes it.
       function rmForgot(d, p) {
         p = getP(p.id) || p;
-        var ask = rmAsks()[p.id], ready = ask && Date.now() - ask.at >= RM_WAIT, nm = esc(p.name), warn = onlyWarn(p.id);
+        var ask = rmAsks()[p.id], ready = ask && Date.now() - ask.at >= RM_WAIT, nm = esc(p.name), warn = onlyWarn(p.id), cw = codeName(p);
         if (!ask) {
           d.show('<h2 id="ggp-title">Remove ' + nm + '\'s Profile?</h2>' +
-            '<p>' + nm + '\'s passcode or Root Words show it is ' + nm + '. Without them, removing this profile waits one week, so ' + nm + ' has time to see it. Opening the profile with its passcode during that week keeps it right here and ends the request.</p>' +
+            '<p>' + nm + '\'s ' + cw + ' or Root Words show it is ' + nm + '. Without them, removing this profile waits one week, so ' + nm + ' has time to see it. Opening the profile with its ' + cw + ' during that week keeps it right here and ends the request.</p>' +
             warn + '<label class="ggp-l" for="ggp-rmname">To ask, type the name ' + nm + '</label><input type="text" id="ggp-rmname" autocomplete="off">' +
             '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-ask>Ask to Remove</button></div>');
           $(d, '[data-back]').onclick = function () { forgot(d, p); };
@@ -829,14 +955,14 @@
         }
         if (!ready) {
           d.show('<h2 id="ggp-title">' + nm + '\'s Profile Waits One Week</h2>' +
-            '<p>Someone asked to remove this profile on ' + esc(dayText(ask.at)) + '. It can be removed on ' + esc(dayText(ask.at + RM_WAIT)) + '. Opening it with its passcode before then keeps it right here.</p>' + warn +
+            '<p>Someone asked to remove this profile on ' + esc(dayText(ask.at)) + '. It can be removed on ' + esc(dayText(ask.at + RM_WAIT)) + '. Opening it with its ' + cw + ' before then keeps it right here.</p>' + warn +
             '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b" data-keep>Keep This Profile</button></div>');
           $(d, '[data-back]').onclick = function () { askCode(d, p); };
           $(d, '[data-keep]').onclick = function () { rmAskSet(p.id, null); toast(p.name + '\'s profile stays right here.'); askCode(d, p); };
           return;
         }
         d.show('<h2 id="ggp-title">Remove ' + nm + '\'s Profile?</h2>' +
-          '<p>The week of waiting is done. Removing it erases ' + nm + '\'s profile and everything saved in it from this device, for good. A backup file made before still opens with the passcode or Root Words from then.</p>' + warn +
+          '<p>The week of waiting is done. Removing it erases ' + nm + '\'s profile and everything saved in it from this device, for good. A backup file made before still opens with the ' + cw + ' or Root Words from then.</p>' + warn +
           '<label class="ggp-l" for="ggp-rmname">To remove it, type the name ' + nm + '</label><input type="text" id="ggp-rmname" autocomplete="off">' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-keep>Keep This Profile</button><button type="button" class="ggp-b ggp-go" data-rmgo>Remove Profile</button></div>');
         $(d, '[data-keep]').onclick = function () { rmAskSet(p.id, null); toast(p.name + '\'s profile stays right here.'); askCode(d, p); };
@@ -848,6 +974,16 @@
       function forgot(d, p) {
         p = getP(p.id) || p;
         var hasRoot = rootOk(p) && !!(p.rw && p.rw.salt);
+        // BLD 1047: a profile that opens with the account password comes back through the account's Root Words
+        if (p.age === 'adult' && isAcct(p)) {
+          d.show('<h2 id="ggp-title">Forgot Your Password</h2><p>Your profile opens with your Grounded Account password. Your account\'s <b>Root Words</b> open it again: we email you a link, then you type your 12 Root Words and choose a new password. Everything in your tree stays.</p>' +
+            '<p class="ggp-small">A backup file from before opens with the password you had then.</p>' +
+            '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b" data-rm>Remove This Profile</button><button type="button" class="ggp-b ggp-go" data-acforgot>Send the Link</button></div>');
+          $(d, '[data-back]').onclick = function () { askCode(d, p); };
+          $(d, '[data-rm]').onclick = function () { rmForgot(d, p); };
+          $(d, '[data-acforgot]').onclick = function () { d.close(false); acctSheet('forgot'); };
+          return;
+        }
         if (p.age === 'adult') {
           d.show('<h2 id="ggp-title">Forgot your passcode</h2><p>Your profile is locked with a passcode only you know. It never leaves this device, so no one, including us, can open it without it.</p>' +
             (hasRoot ? '<p>Your <b>Root Words</b> can open it: the 12 words you kept when you made this profile. Then you choose a new passcode, and everything stays.</p><p class="ggp-small">A backup file from before also opens with the passcode or the Root Words you had then.</p>'
@@ -863,14 +999,14 @@
           (teen && hasRoot ? '<p>Your <b>Root Words</b> open your tree again, with everything in it: the 12 words you kept when you made this profile. Then you choose a new passcode.</p><div class="ggp-row" style="justify-content:flex-start;margin-top:0"><button type="button" class="ggp-b ggp-go" data-root>Use My Root Words</button></div><hr class="ggp-sep"><p class="ggp-small"><b>No Root Words?</b> A grown-up can clear your answers and journal so you can start fresh with a new passcode. Nobody, not even a grown-up, can open them. Your beds, days tended, and butterflies stay.</p>'
             : teen ? '<p>Your answers and journal are locked with your passcode, so nobody, not even a grown-up, can open them. A grown-up can clear them so you can start fresh with a new passcode. Your beds, days tended, and butterflies stay.</p>'
             : '<p>A grown-up who cares for ' + esc(p.name) + ' can open this profile with their own passcode, then set a new ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '.</p>') +
-          (ok.length ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + ok.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass">' : '<p class="ggp-note">There is no grown-up profile on this device yet.</p>') +
+          (ok.length ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + ok.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s ' + gpName(ok) + '</label><input type="password" id="ggp-gpass" autocomplete="current-password">' : '<p class="ggp-note">There is no grown-up profile on this device yet.</p>') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button>' + (ok.length ? '<button type="button" class="ggp-b ggp-go" data-go>' + (teen ? 'Clear and start fresh' : 'Open') + '</button>' : '') + '</div>');
         $(d, '[data-back]').onclick = function () { askCode(d, p); };
         var rb2 = $(d, '[data-root]'); if (rb2) rb2.onclick = function () { rootForgot(d, p); };
         if (!ok.length) return;
         $(d, '[data-go]').onclick = function () {
           var g = getP($(d, '#ggp-gid').value), gp = $(d, '#ggp-gpass').value;
-          if (!gp) return d.msg('Type the grown-up\'s passcode.');
+          if (!gp) return d.msg('Type the grown-up\'s ' + codeName(g) + '.');
           run(d, function () {
             return rawFromPass(g, gp).then(function (gr) { return readVault(g.id, gr).then(function (gd) { return { raw: gr, data: gd }; }); });
           }).then(function (G) {
@@ -991,14 +1127,14 @@
     var ok = grownOf(p), nm = esc(name || p.name);
     var what = removing ? 'removes ' + nm + '\'s profile' : 'changes ' + nm + '\'s age';
     d.show('<h2 id="ggp-title">A Grown-up Confirms</h2>' +
-      (ok.length ? '<p>Only a grown-up ' + what + '. A grown-up types their own passcode here.' + (age ? ' New age: ' + esc(ageName(age)) + '.' : '') + '</p><label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + ok.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
+      (ok.length ? '<p>Only a grown-up ' + what + '. A grown-up types their own ' + gpName(ok) + ' here.' + (age ? ' New age: ' + esc(ageName(age)) + '.' : '') + '</p><label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + ok.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s ' + gpName(ok) + '</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
         : '<p>A grown-up ' + what + '. Once a grown-up has a profile on this device, they confirm it here with their passcode.</p>') +
       '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button>' + (ok.length ? '<button type="button" class="ggp-b ggp-go" data-gok>Confirm</button>' : '') + '</div>');
     $(d, '[data-back]').onclick = function () { d.grownOk = null; if (back) back(); };
     if (!ok.length) return;
     function go() {
       var g = getP($(d, '#ggp-gid').value), gp = $(d, '#ggp-gpass').value;
-      if (!gp) return d.msg('Type the grown-up\'s passcode.');
+      if (!gp) return d.msg('Type the grown-up\'s ' + codeName(g) + '.');
       run(d, function () { return rawFromPass(g, gp).then(function (gr) { return readVault(g.id, gr).then(function (gd) { return { id: g.id, raw: gr, data: gd }; }); }); })
         .then(function (G) { done(G); }).catch(function () {});
     }
@@ -1010,6 +1146,7 @@
     readList().forEach(function (q) { if (q.grown && q.grown.indexOf(id) > -1) { q.grown = q.grown.filter(function (g) { return g !== id; }); putP(q); } if (q.helpers && q.helpers.indexOf(id) > -1) { q.helpers = q.helpers.filter(function (g) { return g !== id; }); putP(q); } });
     Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
     var wasActive = cur && cur.id === id;
+    pkSet(id, null);   // BLD 1047: its Face ID lock on this device goes too
     dropP(id); delete open[id];
     if (window.GGGrowth && GGGrowth.forget) GGGrowth.forget(id);
     if (window.GGHouse && GGHouse.forget) GGHouse.forget(id);   // BLD 980
@@ -1033,6 +1170,9 @@
         (isAdult ? '<label class="ggp-l" for="ggp-email">Email, optional</label><input type="email" id="ggp-email" value="' + esc(v.email || '') + '" placeholder="Fills in contact forms on this site"><span class="ggp-small">It stays in your locked profile and is only sent if you send a form.</span>' : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b ggp-go" data-save>Save changes</button></div>' +
         (cur.id === id || grownOpens(p.age) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>' + (grownOpens(p.age) ? 'Their Health and Ability' : 'Health and Ability') + '</b></p><p class="ggp-small">' + (grownOpens(p.age) ? 'Set it together with ' + esc(p.name) + ', so guides and practices that fit show first. It stays locked in this profile, and questions and scores stay the same.' : 'Choose what is part of your life right now, so guides and practices that fit show first. It stays locked in your profile, and questions and scores stay the same.') + '</p><button type="button" class="ggp-link" data-life>' + (grownOpens(p.age) ? 'Open Their Health and Ability' : 'Open Health and Ability') + '</button>' : '') +
+        (cur.id === id && isAcct(p) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>Keep It Safe</b></p><p class="ggp-small">One password opens your tree: your Grounded Account password. Your account\'s 12 Root Words open it again if the password ever slips your mind. A backup file keeps everything for a lost or broken phone.</p>' +
+          '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><button type="button" class="ggp-b" data-acwords>See My Root Words</button><button type="button" class="ggp-b" data-bkall>Save a Backup</button></div>' : '') +
+        (cur.id === id && p.age === 'adult' ? '<div data-bioset></div>' : '') +
         (cur.id === id && rootOk(p) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>Keep It Safe</b></p><p class="ggp-small">' + (v.rootWords ? 'Your 12 Root Words open your profile if the passcode is ever forgotten. See them again after your passcode.' : 'Make 12 Root Words that open your profile if the passcode is ever forgotten. Nothing leaves this device.') + ' A backup file keeps everything for a lost or broken phone.</p>' +
           '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><button type="button" class="ggp-b" data-rw>' + (v.rootWords ? 'See My Root Words' : 'Make My Root Words') + '</button><button type="button" class="ggp-b" data-bkall>Save a Backup</button></div>' +
           (v.rootWords ? '<p class="ggp-small" style="margin-top:8px"><button type="button" class="ggp-link" data-rwnew>Make a new set of Root Words</button></p>' : '') : '') +
@@ -1041,7 +1181,7 @@
         (isAdult && (p.helpers || []).length ? '<hr class="ggp-sep"><p><b>Helpers</b></p><p class="ggp-small">They open this profile in Willow, Birch, or Sequoia with their own passcode, and see only what you choose to share there.</p>' + (p.helpers || []).map(getP).filter(Boolean).map(function (h) { return '<p class="ggp-small" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>' + esc(h.name) + '</span>' + (cur.id === id ? '<button type="button" class="ggp-link" data-rmhelper="' + h.id + '">Remove</button>' : '') + '</p>'; }).join('') : '') +
         (grownOpens(p.age) ? '<hr class="ggp-sep"><p><b>Grown-ups who can open this profile</b></p><p class="ggp-small">' + (grown.length ? grown.map(function (g) { return esc(g.name); }).join(', ') : 'None yet') + '</p><button type="button" class="ggp-link" data-addgrown>Add another grown-up</button>' : '') +
         '<hr class="ggp-sep"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">' +
-        '<button type="button" class="ggp-link" data-code>Change ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '</button>' +
+        '<button type="button" class="ggp-link" data-code>' + (isAcct(p) ? 'Change My Password' : 'Change ' + (p.code === 'pics' ? 'picture code' : 'passcode')) + '</button>' +
         '<button type="button" class="ggp-b ggp-go" data-move>Move to Another Device</button>' +
         '<button type="button" class="ggp-link" data-backup>Download a locked backup</button>' +
         (isAdult && cur.id !== id ? '' : '<button type="button" class="ggp-link" data-rm style="color:var(--ggp-warn)">Remove this profile from this device</button>') + '</div>' +
@@ -1082,7 +1222,9 @@
       var ag = $(d, '[data-addgrown]'); if (ag) ag.onclick = function () { addGrown(d); };
       var lf = $(d, '[data-life]'); if (lf) lf.onclick = function () { lifeGo(function () { GGLife.dialog(lifeTree(p), { id: id, forChild: grownOpens(p.age) }); }); };
       d.el.querySelectorAll('[data-rmhelper]').forEach(function (b) { b.onclick = function () { var h = getP(b.dataset.rmhelper); if (!h || !confirm('Remove ' + h.name + ' as a helper? They will no longer open ' + p.name + '\'s profile.')) return; removeHelper(id, h.id); toast(h.name + ' is no longer a helper.'); view(d); }; });
-      $(d, '[data-code]').onclick = function () { changeCode(d); };
+      $(d, '[data-code]').onclick = function () { if (isAcct(p)) { d.close(true); acctSheet('password'); return; } changeCode(d); };
+      var acw = $(d, '[data-acwords]'); if (acw) acw.onclick = function () { d.close(true); acctSheet('account'); };
+      var bs = $(d, '[data-bioset]'); if (bs) bioSet(bs, id, function () { view(d); });
       $(d, '[data-backup]').onclick = function () { backup(id); };
       $(d, '[data-move]').onclick = function () { moveDialog(id); };
       var rwb = $(d, '[data-rw]'); if (rwb) rwb.onclick = function () { rootPass(d, false); };
@@ -1099,7 +1241,7 @@
       var warn = p.age === 'adult' ? onlyWarn(id, true) : '', own = cur.id === id;
       d.show('<h2 id="ggp-title">Remove ' + esc(p.name) + '\'s Profile?</h2>' +
         '<p>This erases ' + esc(p.name) + '\'s profile and everything saved in it from this device, for good. A backup file keeps a copy, opened with the passcode or Root Words from when it was made.</p>' + warn +
-        (own ? '<label class="ggp-l" for="ggp-rmpass">' + (p.code === 'pics' ? 'Your picture code' : 'Your passcode') + '</label>' + (p.code === 'pics' ? '<div id="ggp-pad"></div>' : '<input type="password" id="ggp-rmpass" autocomplete="current-password">') : '') +
+        (own ? '<label class="ggp-l" for="ggp-rmpass">' + (p.code === 'pics' ? 'Your picture code' : isAcct(p) ? 'Your password' : 'Your passcode') + '</label>' + (p.code === 'pics' ? '<div id="ggp-pad"></div>' : '<input type="password" id="ggp-rmpass" autocomplete="current-password">') : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-rmgo>Remove Profile</button></div>');
       $(d, '[data-back]').onclick = function () { view(d); };
       d.el.querySelectorAll('[data-addfor]').forEach(function (b) { b.onclick = function () { d.close(true); manage(b.dataset.addfor); setTimeout(function () { var g = document.querySelector('.ggp-dlg [data-addgrown]'); if (g) g.click(); }, 60); }; });
@@ -1107,7 +1249,7 @@
       if (own && p.code === 'pics') picPad(d, $(d, '#ggp-pad'), function (v) { code = v; });
       $(d, '[data-rmgo]').onclick = function () {
         var pass = own ? (p.code === 'pics' ? code : $(d, '#ggp-rmpass').value) : null;
-        if (own && !pass) return d.msg(p.code === 'pics' ? 'Tap your three pictures.' : 'Type your passcode.');
+        if (own && !pass) return d.msg(p.code === 'pics' ? 'Tap your three pictures.' : isAcct(p) ? 'Type your password.' : 'Type your passcode.');
         rmGo(d, pass);
       };
     }
@@ -1131,7 +1273,7 @@
     }
     function addGrown(d) {
       var others = adults().filter(function (a) { return (p.grown || []).indexOf(a.id) < 0; });
-      d.show('<h2 id="ggp-title">Add a grown-up</h2>' + (others.length ? '<p>The grown-up types their own passcode to confirm.</p><label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + others.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Their passcode</label><input type="password" id="ggp-gpass">' : '<p>Every grown-up on this device can already open this profile. Another grown-up can create their own profile first.</p>') +
+      d.show('<h2 id="ggp-title">Add a grown-up</h2>' + (others.length ? '<p>The grown-up types their own ' + gpName(others) + ' to confirm.</p><label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + others.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Their ' + gpName(others) + '</label><input type="password" id="ggp-gpass" autocomplete="current-password">' : '<p>Every grown-up on this device can already open this profile. Another grown-up can create their own profile first.</p>') +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button>' + (others.length ? '<button type="button" class="ggp-b ggp-go" data-go>Add</button>' : '') + '</div>');
       $(d, '[data-back]').onclick = function () { view(d); };
       if (!others.length) return;
@@ -1173,6 +1315,7 @@
   function rootWords(id) {
     id = id || (cur && cur.id); var p = getP(id);
     if (!p || !open[id] || !cur || cur.id !== id) return openDialog();
+    if (isAcct(p)) { acctSheet('account'); return Promise.resolve(false); }   // BLD 1047: one set of Root Words, the account's
     if (!rootOk(p)) { toast('A grown-up keeps ' + p.name + '\'s tree safe.'); return Promise.resolve(false); }
     return new Promise(function (resolve) {
       var words = null, made = false;
@@ -1192,7 +1335,7 @@
       }, function () { if (words) rootShow(id, words, !made).then(function () { resolve(true); }); else resolve(false); });
     });
   }
-  function rootState(id) { id = id || (cur && cur.id); var p = getP(id); if (!rootOk(p)) return ''; return p.rw && p.rw.salt ? 'has' : 'none'; }
+  function rootState(id) { id = id || (cur && cur.id); var p = getP(id); if (isAcct(p)) return 'has'; if (!rootOk(p)) return ''; return p.rw && p.rw.salt ? 'has' : 'none'; }
 
   /* ---------- gentle reminders after big moments (GWG BLD 780) ----------
      Once each, kept in the vault (vault.keepSafe): a first check-in in any tree, and a month of tending. */
@@ -1240,7 +1383,7 @@
       var blob = new Blob([JSON.stringify(file)], { type: 'application/json' }), a = document.createElement('a');
       a.href = URL.createObjectURL(blob); a.download = 'grounded-profile-' + slug(p.name) + '-' + todayStr() + '.json';
       document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 800);
-      toast('Backup downloaded. It stays locked with ' + (p.code === 'pics' ? 'the picture code' : 'the passcode') + '.');
+      toast('Backup downloaded. It stays locked with the ' + codeName(p) + '.');
     });
   }
   function restore(done) {
@@ -1254,7 +1397,7 @@
           if (ex && !confirm('This replaces ' + ex.name + '\'s profile on this device with the backup from ' + new Date(j.saved).toLocaleDateString() + '. Continue?')) return;
           putP(j.profile); if (j.box) localStorage.setItem(BOX + j.profile.id, JSON.stringify(j.box));
           if (cur && cur.id === j.profile.id) lock(true);
-          toast(j.profile.name + '\'s profile is restored. Open it with its passcode or Root Words.'); done && done();
+          toast(j.profile.name + '\'s profile is restored. Open it with its ' + (isAcct(j.profile) ? 'password' : 'passcode or Root Words') + '.'); done && done();
         } catch (e) { alert('That file is not a Grounded profile backup.'); }
       };
       r.readAsText(f);
@@ -1304,7 +1447,7 @@
     var M = window.GGMember, member = !!(M && M.has && M.has()), pics = p.code === 'pics', made = null;
     dialog(function (d) {
       d.show('<h2 id="ggp-title">Move to Another Device</h2>' +
-        '<p>' + (cur && cur.id === id ? 'Your profile' : esc(p.name) + '\'s profile') + ' goes as one locked file. On the other device it opens with ' + (pics ? 'the same picture code' : 'the same passcode' + (p.rw ? ' or Root Words' : '')) + '.</p>' +
+        '<p>' + (cur && cur.id === id ? 'Your profile' : esc(p.name) + '\'s profile') + ' goes as one locked file. On the other device it opens with ' + (pics ? 'the same picture code' : isAcct(p) ? 'the same password' : 'the same passcode' + (p.rw ? ' or Root Words' : '')) + '.</p>' +
         '<p class="ggp-step">1. Send the file</p>' +
         '<div class="ggp-row" style="justify-content:flex-start;margin-top:6px"><button type="button" class="ggp-b ggp-go" data-send disabled>Send My Profile</button></div>' +
         '<p class="ggp-small" id="ggp-how" style="margin-top:8px">Getting the file ready...</p>' +
@@ -1312,7 +1455,7 @@
         '<hr class="ggp-sep"><p class="ggp-step">2. On the other device</p>' +
         '<div class="ggp-qrrow"><div class="ggp-qr" id="ggp-qr" role="img" aria-label="QR code that opens Bring In My Profile"></div>' +
         '<div class="ggp-qrtext"><p class="ggp-small">Scan this with the camera, or open this link in the browser there:</p><p class="ggp-small"><a href="' + BRING_URL + '" class="ggp-bring" data-bringlink>' + BRING_SHOW + '</a></p><p class="ggp-small"><button type="button" class="ggp-link" data-copy>Copy Link</button></p></div></div>' +
-        '<ol class="ggp-steps"><li>The link opens Bring In My Profile.</li><li>Open the file you sent.</li><li>Enter your ' + (pics ? 'picture code' : 'passcode') + ', and everything is there.</li></ol>' +
+        '<ol class="ggp-steps"><li>The link opens Bring In My Profile.</li><li>Open the file you sent.</li><li>Enter your ' + codeName(p) + ', and everything is there.</li></ol>' +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Done</button></div>');
       $(d, '[data-x]').onclick = function () { d.close(true); };
       $(d, '[data-copy]').onclick = function () {
@@ -1345,8 +1488,8 @@
   function bringIn() {
     dialog(function (d) { first(d); });
     function first(d) {
-      d.show('<h2 id="ggp-title">Bring In My Profile</h2><p>Bring your profile here from your other device. It stays locked with its own passcode the whole way.</p>' +
-        '<ol class="ggp-steps"><li>Open the file you sent. On an iPhone or iPad it is in Files, usually in Downloads. On a computer, look in Downloads or your email.</li><li>Enter your passcode, and your profile opens here.</li></ol>' +
+      d.show('<h2 id="ggp-title">Bring In My Profile</h2><p>Bring your profile here from your other device. It stays locked the whole way, and opens with its own password or passcode.</p>' +
+        '<ol class="ggp-steps"><li>Open the file you sent. On an iPhone or iPad it is in Files, usually in Downloads. On a computer, look in Downloads or your email.</li><li>Enter your password or passcode, and your profile opens here.</li></ol>' +
         '<p class="ggp-small">A backup saved on this device? <button type="button" class="ggp-link" data-ldbk>Load a Backup</button></p>' +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-file>Open the File</button></div>');
       $(d, '[data-x]').onclick = function () { d.close(false); };
@@ -1382,7 +1525,7 @@
       var id = j.profile.id;
       try { putP(j.profile); localStorage.setItem(BOX + id, JSON.stringify(j.box)); } catch (e) { return d.msg('This device is out of space. Free some room and try again.'); }
       var step = cur && cur.id === id ? lock(true) : Promise.resolve(emit('change'));
-      step.then(function () { d.close(true); toast(j.profile.name + '\'s profile is here. Enter the ' + (j.profile.code === 'pics' ? 'picture code' : 'passcode') + ' to open it.'); setTimeout(function () { openDialog({ id: id }); }, 250); });
+      step.then(function () { d.close(true); toast(j.profile.name + '\'s profile is here. Enter the ' + codeName(j.profile) + ' to open it.'); setTimeout(function () { openDialog({ id: id }); }, 250); });
     }
   }
   // When a moved profile opens here, its Membership opens too (only when this browser has none open).
@@ -1475,7 +1618,7 @@
       html += '<div class="ggp-h">This device</div>' + item('switch', 'Who Is Tending?') + item('move', 'Move to Another Device') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacyOak().length;
-      html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
+      html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked so only you can open them.</small></div></div>';
       // BLD 929 (M14): one way to start. With no profile here: Begin The Grounded Way (the one setup) and Bring In My Profile
       // (Load a Backup waits inside it). Once a profile is on this device, Open a Profile and the backup items join.
       if (n) html += link('/home/', 'Open The Grounded Way') + item('open', 'Open a Profile') + item('bring', 'Bring In My Profile') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup');
@@ -1494,7 +1637,7 @@
         else if (act === 'bring') bringIn();
         else if (act === 'bk') backupGo('make');
         else if (act === 'ld') backupGo('pick');
-        else if (act === 'signout') { if (window.confirm('Sign out of your Grounded Account on this device? Your profiles stay here, locked with their passcodes.')) GGAccount.signOut({ erase: false }).then(function () { toast('Signed out. Everything here stays locked on this device.'); }, function () { toast('That did not sign out. Try again from My Account.'); }); }
+        else if (act === 'signout') { if (window.confirm('Sign out of your Grounded Account on this device? Your profiles stay here, still locked.')) GGAccount.signOut({ erase: false }).then(function () { toast('Signed out. Everything here stays locked on this device.'); }, function () { toast('That did not sign out. Try again from My Account.'); }); }
         else if (act === 'lock') lock().then(function () { toast('Locked. Everything is safe on this device.'); });
         else if (act === 'as') { var k = getP(b.dataset.id); openWithRaw(k.id, open[k.id].raw, cur.until).then(function () { toast('Now in ' + k.name + '\'s profile.'); }); }
       };
@@ -1724,8 +1867,8 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=c145', '/shared/gg-sync.js?v=b979'], CARRY = 'gg-acct-carry';
-  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub'];
+  var ACCT_SRC = ['/shared/gg-account.js?v=c193', '/shared/gg-sync.js?v=b979'], CARRY = 'gg-acct-carry';
+  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'acct', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub'];   // BLD 1047: acct
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
   function carryLoad() {
@@ -1769,6 +1912,7 @@
     } finally { AC.q--; }
     carrySave(); acctReg();
     if (moved) emit('change');
+    if (AC.held) heldTry();   // BLD 1047: signed in on a new device, the own profile opens once it is here
   }
   function regVault(id) {
     var p = getP(id); if (!p || !window.GGSync) return;
@@ -1875,6 +2019,214 @@
     carrySave(); acctReg(); GGSync.changed('acct:profiles'); GGSync.changed('p:' + id);
     return GGSync.sync();
   }
+  /* =====================================================================
+     BLD 1047 ONE PASSWORD AND FACE ID
+     ===================================================================== */
+  // Making a grown-up's own profile asks for a Grounded Account, except where Grounded needs no account
+  function acctNeed(opt) {
+    opt = opt || {};
+    if (!LIVE || opt.forOther || opt.noAccount || /^\/(willow|grove|heartwood|live)(\/|$)/.test(location.pathname)) return false;
+    return !!(AC.on && window.GGAccount && GGAccount.configured && GGAccount.configured());
+  }
+  // The account sheets (shared/gg-account-ui.js), loaded when needed
+  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c193', acctUiP = null;
+  function acctSheet(view, o) {
+    if (!acctUiP) acctUiP = new Promise(function (ok) {
+      if (window.GGAccountUI) return ok(window.GGAccountUI);
+      var s = document.createElement('script'); s.src = HOME + ACCT_UI_SRC;
+      s.onload = function () { ok(window.GGAccountUI || null); }; s.onerror = function () { acctUiP = null; ok(null); };
+      document.head.appendChild(s);
+    });
+    return acctUiP.then(function (U) { if (!U) { toast('Check the connection, then try again.'); return; } return U.open(view, o || {}); });
+  }
+  function acctEmailFor(p) { var i = window.GGAccount && GGAccount.info && GGAccount.info(); return i && p && p.acct && p.acct.a === i.accountId ? i.email : ''; }
+  // The grown-up profiles that are this account's own, on this device
+  function ownProfile(accountId) {
+    var l = readList().filter(function (p) { return p.age === 'adult' && acctCarried(p.id); });
+    return l.filter(function (p) { return isAcct(p) && p.acct && p.acct.a === accountId; })[0] || (l.length === 1 ? l[0] : null);
+  }
+  // Open the account's own profile with the account key (a new device, a sign in, Root Words); a passcode profile waits
+  function acctOpenOwn(p, held) {
+    if (!p || !isAcct(p) || !p.acct || p.acct.a !== held.a) return Promise.resolve(p && p.id);
+    return acctRaw(p, held.base).then(function (raw) { return openWithRaw(p.id, raw, Date.now() + 8 * 3600000); }).then(function () { return p.id; });
+  }
+  function acctCarry(id, quiet) {
+    if (!acIn()) return;
+    if (AC.ids.indexOf(id) < 0) AC.ids.push(id);
+    carrySave(); acctReg(); GGSync.changed('acct:profiles'); if (open[id]) GGSync.changed('p:' + id);
+    if (!quiet) GGSync.sync().catch(function () {});
+  }
+  // A passcode profile becomes the account's own: one password, one set of Root Words (the account's)
+  function toAcct(id, raw, password, base, accountId) {
+    var p = getP(id); if (!p || p.age !== 'adult') return Promise.resolve(false);
+    return wrapRaw(String(password).normalize('NFKC'), raw).then(function (w) {
+      var q = getP(id); q.salt = w.salt; q.wrap = w.wrap; q.code = 'acct'; delete q.rw;
+      return acctSeal(q, base, accountId, raw);
+    }).then(function (q) {
+      putP(q); acctCarry(id);
+      var o = open[id]; if (o && o.data && o.data.rootWords) { delete o.data.rootWords; return writeVault(id, raw, o.data); }
+    }).then(function () { emit('change'); return true; });
+  }
+  // A profile whose account lock went missing (an older page saved the list) gets it again from the password just typed
+  function acctMend(id, raw, pass) {
+    var p = getP(id);
+    if (!p || (p.acct && p.acct.iv) || !acIn() || !GGAccount.withKey) return;
+    GGAccount.withKey(pass, function (ak, x) { return acctBase(ak).then(function (b) { var q = getP(id); if (!q) return; return acctSeal(q, b, x.accountId, raw).then(function (q2) { putP(q2); }); }); }).catch(function () {});
+  }
+  function acctWordsShow(words) {
+    return needRoot().then(function (R) {
+      return R.show({ words: words, who: '', again: false, title: 'Your Root Words', lead: 'If your password ever slips your mind, these 12 words and your email open your Grounded Account and your tree again, with everything in place. Write them down or print the card, and keep them somewhere private.' });
+    });
+  }
+  // The account key, for a moment (GGAccount.onKeys): a new password reaches the own profile here; Root Words or a sign in
+  // on a new device open it; a sign in with a passcode profile open offers One Password, once the sheet is done.
+  function acctKeys(x) {
+    if (!x || !x.ak || !x.accountId) return;
+    return acctBase(x.ak).then(function (base) {
+      var mine = readList().filter(function (p) { return p.age === 'adult' && isAcct(p) && p.acct && p.acct.a === x.accountId; });
+      if (x.why === 'password' || x.why === 'recover') {
+        return mine.reduce(function (pr, p) {
+          return pr.then(function () { return acctRaw(p, base).then(function (raw) { return wrapRaw(String(x.password).normalize('NFKC'), raw).then(function (w) { var q = getP(p.id); if (!q) return; q.salt = w.salt; q.wrap = w.wrap; putP(q); }); }).catch(function () {}); });
+        }, Promise.resolve()).then(function () { if (x.why === 'recover' && !cur) return heldOpen({ base: base, a: x.accountId, pw: x.password }); });
+      }
+      if (AC.making) return;
+      var c = cur && getP(cur.id);
+      if (c && c.age === 'adult' && open[c.id] && !isAcct(c)) { AC.offer = { id: c.id, base: base, a: x.accountId, pw: x.password, until: Date.now() + 300000 }; offerSoon(); return; }
+      if (x.why === 'signin' && !cur) return heldOpen({ base: base, a: x.accountId, pw: x.password });
+    });
+  }
+  // Signed in on a new device: the own profile opens as soon as it comes down (for up to two minutes)
+  function heldOpen(h) {
+    AC.held = { base: h.base, a: h.a, pw: h.pw, until: Date.now() + 120000 };
+    return heldTry();
+  }
+  function heldTry() {
+    var h = AC.held; if (!h || Date.now() > h.until || cur) { if (h && (cur || Date.now() > h.until)) AC.held = null; return Promise.resolve(false); }
+    var p = ownProfile(h.a);
+    if (!p) return Promise.resolve(false);
+    AC.held = null;
+    if (!isAcct(p)) { AC.offer = { id: p.id, base: h.base, a: h.a, pw: h.pw, until: Date.now() + 300000 }; return Promise.resolve(false); }
+    return acctOpenOwn(p, h).then(function () { toast('Welcome back, ' + p.name + '. Your tree is here.'); return true; }, function () { return false; });
+  }
+  function offerSoon() { var n = 0; (function wait() { if (++n > 200) return; if (document.querySelector('.ga-wrap,.ggp-back,.ggr-back')) return setTimeout(wait, 600); afterOpen(AC.offer && AC.offer.id, null); })(); }
+  // After an unlock: One Password (a passcode profile while signed in), then Face ID next time, one at a time
+  var LATER = 'gg-onepass-later', BIO_NO = 'gg-passkey-later';
+  function laterGet(k, id) { try { var j = JSON.parse(localStorage.getItem(k)) || {}; return +j[id] || 0; } catch (e) { return 0; } }
+  function laterSet(k, id) { try { var j = JSON.parse(localStorage.getItem(k)) || {}; j[id] = Date.now(); localStorage.setItem(k, JSON.stringify(j)); } catch (e) {} }
+  function afterOpen(id, how) {
+    var p = getP(id); if (!p || !cur || cur.id !== id || p.age !== 'adult' || dlgOpen || document.querySelector('.ga-wrap')) return;
+    var off = AC.offer && AC.offer.id === id && Date.now() < AC.offer.until ? AC.offer : null;
+    if (!isAcct(p) && acIn() && acctCarried(id) && (off || Date.now() - laterGet(LATER, id) > 7 * 86400000)) return onePass(p, off, how);
+    if (how && how.bio) return;
+    pkSupported().then(function (ok) { if (ok && !pkGet(id) && Date.now() - laterGet(BIO_NO, id) > 30 * 86400000 && cur && cur.id === id && !dlgOpen) bioOffer(p); });
+  }
+  function onePass(p, off, how) {
+    dialog(function (d) {
+      var em = esc(GGAccount.info().email);
+      d.show('<h2 id="ggp-title">One Password</h2><p>From now on, your Grounded Account password opens ' + esc(p.name) + (/s$/i.test(p.name) ? '\'' : '\'s') + ' tree too: one password to remember, and your account\'s Root Words keep it safe. The passcode steps aside.</p>' +
+        (off ? '' : '<form class="ggp-form" data-ggp-form novalidate action="#" method="post"><label class="ggp-l" for="ggp-aem">Email</label><input type="email" id="ggp-aem" name="username" autocomplete="username" value="' + em + '" readonly><label class="ggp-l" for="ggp-apw">Account password</label><input type="password" id="ggp-apw" name="password" autocomplete="current-password"><button type="submit" hidden tabindex="-1" aria-hidden="true"></button></form>') +
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-later>Not Now</button><button type="button" class="ggp-b ggp-go" data-go>Use One Password</button></div>');
+      $(d, '[data-later]').onclick = function () { laterSet(LATER, p.id); AC.offer = null; d.close(false); };
+      function go() {
+        var o = open[p.id]; if (!o) return d.close(false);
+        run(d, function () {
+          if (off) return toAcct(p.id, o.raw, off.pw, off.base, off.a);
+          var pw = $(d, '#ggp-apw').value; if (!pw) throw new Error('Type your account password.');
+          return GGAccount.withKey(pw, function (ak, x) { return acctBase(ak).then(function (b) { return toAcct(p.id, o.raw, pw, b, x.accountId); }); })
+            .catch(function (e) { if (e && e.why === 'nomatch') throw new Error('That password did not open your account. Try again.'); throw e; });
+        }).then(function () { AC.offer = null; d.close(true); toast('One password now opens your tree.'); setTimeout(function () { afterOpen(p.id, null); }, 700); }).catch(function () {});
+      }
+      $(d, '[data-go]').onclick = go;
+      var fm = $(d, '[data-ggp-form]'); formWire(fm, go);
+    });
+  }
+
+  // A real form: Enter submits it (a submit the phone's saved passwords notice), and the dialog's own step runs
+  function formWire(fm, fn) {
+    if (!fm) return;
+    fm.addEventListener('submit', function (e) { e.preventDefault(); fn(); });
+    fm.querySelectorAll('input').forEach(function (i) { i.addEventListener('keydown', function (e) { if (e.key !== 'Enter' || e.isComposing) return; e.preventDefault(); fn(); }); });
+  }
+  /* ---------- Face ID or fingerprint: a passkey with the PRF extension, on this device only ---------- */
+  var PKS = 'gg-passkeys', pkCan = null;
+  function pkAll() { try { var j = JSON.parse(localStorage.getItem(PKS)); return j && typeof j === 'object' ? j : {}; } catch (e) { return {}; } }
+  function pkGet(id) { var r = pkAll()[id]; return r && r.cred && r.salt && r.iv && r.ct ? r : null; }
+  function pkSet(id, v) { var a = pkAll(); if (v) a[id] = v; else delete a[id]; try { if (Object.keys(a).length) localStorage.setItem(PKS, JSON.stringify(a)); else localStorage.removeItem(PKS); } catch (e) {} }
+  function bioName() {
+    var u = navigator.userAgent || '';
+    if (/iPhone|iPad/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1)) return 'Face ID';
+    if (/Macintosh|Mac OS X/.test(u)) return 'Touch ID';
+    if (/Windows/.test(u)) return 'Windows Hello';
+    return 'Fingerprint';
+  }
+  function pkSupported() {
+    if (pkCan) return pkCan;
+    var PKC = window.PublicKeyCredential;
+    if (!PKC || !navigator.credentials || !window.isSecureContext || !subtle || /^[\d.]+$|:/.test(location.hostname)) return (pkCan = Promise.resolve(false));
+    var uv = PKC.isUserVerifyingPlatformAuthenticatorAvailable ? PKC.isUserVerifyingPlatformAuthenticatorAvailable().catch(function () { return false; }) : Promise.resolve(false);
+    var caps = PKC.getClientCapabilities ? PKC.getClientCapabilities().catch(function () { return null; }) : Promise.resolve(null);
+    return (pkCan = Promise.all([uv, caps]).then(function (r) { return !!r[0] && !(r[1] && r[1]['extension:prf'] === false); }));
+  }
+  function pkKey(out, id) { return subtle.importKey('raw', out, 'HKDF', false, ['deriveKey']).then(function (b) { return subtle.deriveKey({ name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info: enc.encode('gg-passkey-v1|' + id) }, b, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']); }); }
+  function pkEval(credId, salt) {
+    return navigator.credentials.get({ publicKey: { challenge: crypto.getRandomValues(new Uint8Array(32)), rpId: location.hostname, allowCredentials: [{ type: 'public-key', id: credId }], userVerification: 'required', timeout: 60000, extensions: { prf: { eval: { first: salt } } } } })
+      .then(function (c) { var x = c && c.getClientExtensionResults && c.getClientExtensionResults(); var f = x && x.prf && x.prf.results && x.prf.results.first; if (!f) throw new Error('nprf'); return new Uint8Array(f); });
+  }
+  var PK_MISS = function (id) { return new Error(bioName() + ' did not open it this time. Your ' + codeName(getP(id)) + ' still works.'); };
+  function pkMake(id) {
+    var p = getP(id), o = open[id]; if (!p || !o) return Promise.reject(new Error('Open your profile first.'));
+    var salt = crypto.getRandomValues(new Uint8Array(32)), uidb = crypto.getRandomValues(new Uint8Array(16)), em = acctEmailFor(p), credId = null;
+    return navigator.credentials.create({ publicKey: {
+      rp: { name: 'Grow With Grounded', id: location.hostname }, user: { id: uidb, name: em || (p.name + ', Grounded'), displayName: p.name },
+      challenge: crypto.getRandomValues(new Uint8Array(32)), pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+      authenticatorSelection: { authenticatorAttachment: 'platform', residentKey: 'preferred', userVerification: 'required' }, timeout: 60000, attestation: 'none',
+      extensions: { prf: { eval: { first: salt } } } } }).then(function (c) {
+      var x = c.getClientExtensionResults ? c.getClientExtensionResults() : {}, pr = x && x.prf;
+      if (!pr || pr.enabled === false) { pkCan = Promise.resolve(false); throw new Error(bioName() + ' unlock is not ready in this browser yet. Your password works the same as always.'); }
+      credId = new Uint8Array(c.rawId);
+      // some phones answer the secret right away; the rest answer on a first unlock
+      return pr.results && pr.results.first ? new Uint8Array(pr.results.first) : pkEval(credId, salt);
+    }).then(function (out) { return pkKey(out, id); }).then(function (k) { return seal(k, o.raw); }).then(function (w) {
+      pkSet(id, { cred: b64(credId), salt: b64(salt), iv: w.iv, ct: w.ct, at: todayStr() }); return true;
+    });
+  }
+  function pkOpen(id) {
+    var r = pkGet(id); if (!r) return Promise.reject(PK_MISS(id));
+    return pkEval(unb64(r.cred), unb64(r.salt)).then(function (out) { return pkKey(out, id); }).then(function (k) { return unseal(k, r); }).catch(function () { throw PK_MISS(id); });
+  }
+  function bioOffer(p) {
+    var nm = bioName();
+    dialog(function (d) {
+      d.show('<h2 id="ggp-title">Open With ' + esc(nm) + ' Next Time?</h2><p>' + esc(nm) + ' on this device opens your profile in a moment. Your password still works too, every time.</p><p class="ggp-small">The ' + esc(nm) + ' key stays on this device, and nothing about it goes to our server.</p>' +
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-later>Not Now</button><button type="button" class="ggp-b ggp-go" data-go>Use ' + esc(nm) + '</button></div>');
+      $(d, '[data-later]').onclick = function () { laterSet(BIO_NO, p.id); d.close(false); };
+      $(d, '[data-go]').onclick = function () { run(d, function () { return pkMake(p.id); }).then(function () { d.close(true); toast(nm + ' opens your profile on this device now.'); }).catch(function () {}); };
+    });
+  }
+  // Manage My Profile: Face ID on this device, on or off
+  function bioSet(box, id, again) {
+    pkSupported().then(function (ok) {
+      if (!ok || !box.isConnected) return;
+      var nm = bioName(), on = !!pkGet(id);
+      box.innerHTML = '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>' + esc(nm) + ' on This Device</b></p><p class="ggp-small">' + (on ? esc(nm) + ' opens your profile on this device. Your password still works too.' : 'Open your profile with ' + esc(nm) + ' on this device. Your password still works too.') + '</p>' +
+        '<div style="margin-top:8px"><button type="button" class="ggp-b" data-bioturn>' + (on ? 'Turn Off ' : 'Turn On ') + esc(nm) + '</button></div>';
+      box.querySelector('[data-bioturn]').onclick = function () {
+        if (on) { pkSet(id, null); toast(nm + ' is off on this device.'); again(); return; }
+        pkMake(id).then(function () { toast(nm + ' opens your profile on this device now.'); again(); }, function (e) { toast((e && e.message) || 'Try again in a moment.'); });
+      };
+    });
+  }
+  // The Sign in with Apple and Google buttons (resting until their flags are on, shared/gg-account.js)
+  function provBox() { return '<div class="ggp-prov" data-prov hidden></div>'; }
+  function provWire(d) {
+    var box = $(d, '[data-prov]'); if (!box || !window.GGAccount || !GGAccount.providers) return;
+    GGAccount.providers().then(function (pv) {
+      if (!box.isConnected || (!pv.apple && !pv.google)) return;
+      box.innerHTML = (pv.apple ? '<button type="button" class="ggp-b ggp-provb" data-sign="apple">Sign In With Apple</button>' : '') + (pv.google ? '<button type="button" class="ggp-b ggp-provb" data-sign="google">Sign In With Google</button>' : '') + '<p class="ggp-small" style="margin:8px 0 0;text-align:center">or with your email</p>';
+      box.hidden = false;
+      box.querySelectorAll('[data-sign]').forEach(function (b) { b.onclick = function () { GGAccount.signinWith(b.dataset.sign).catch(function () { d.msg('Try again in a moment, or use your email.'); }); }; });
+    });
+  }
   function acctBoot() {
     if (!LIVE || !subtle) return Promise.resolve(false);
     var add = function (src, has) {
@@ -1889,6 +2241,7 @@
       if (!window.GGAccount || !window.GGSync) return false;
       AC.on = true;
       GGAccount.on(acctEvent);
+      if (GGAccount.onKeys) GGAccount.onKeys(acctKeys);   // BLD 1047
       return GGAccount.ready.then(function () { carryLoad(); AC.booted = true; acctReg(); if (acIn()) GGSync.sync().catch(function () {}); return true; });
     }).catch(function () { return false; });
   }
@@ -1900,6 +2253,7 @@
     // BLD 938: Accounts (hidden until ACCOUNTS_LIVE). ready: Promise of true once the account files run here.
     account: {
       live: LIVE, ready: AC.ready, carried: function (id) { return acctCarried(id); }, bring: acctBring,
+      need: acctNeed, one: function (id) { return isAcct(getP(id)); },   // BLD 1047
       profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); }
     },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
@@ -1928,6 +2282,7 @@
     moveOn: MOVE,
     move: moveDialog, bringIn: bringIn,
     lock: lock, openDialog: openDialog, createDialog: createDialog, manage: manage, backup: backup, restore: restore, toast: toast,
+    passkey: { can: pkSupported, has: function (id) { return !!pkGet(id); }, name: bioName },   // BLD 1047
     rootWords: rootWords, rootState: rootState, saveBackup: function () { backupGo('make'); },
     require: function (opt) {
       opt = opt || {};
