@@ -1773,3 +1773,14 @@ html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;-
 .hm-whc .hm-whacts .hm-linkbtn{--c:var(--kitchen,var(--leaves));font-size:14px;min-height:40px;text-align:left;}
 .hm-wahead{border-left-color:var(--kitchen,var(--leaves));}
 .hm-thol{margin:0 0 14px;}.hm-thol .hm-wcard:last-child{margin-bottom:0;}
+/* BLD 1041: a kid's and a teen's own Week, day by day; a kid's Music choice in Settings. */
+.hm-yweek .hm-ylead{margin:0 4px 12px;}
+.hm-yweek .hm-wlist{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.hm-ywp{white-space:normal;text-overflow:clip;line-height:1.3;}
+.hm-ywp small{font-weight:800;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;opacity:.85;}
+.hm-ywp .hm-wdone{display:inline-flex;vertical-align:-2px;}
+.hm-ynote{font-size:12.5px;color:var(--ink-soft);font-weight:600;}
+.hm-yday.today{box-shadow:0 0 0 2px var(--gold) inset;}
+.hm-kmus .hm-lchips{margin:0;}
+html.hm-young a[href$="the-grounded-way.html#ways"]{display:none !important;}
+@media (min-width:521px){ .hm-yday .dn{flex:0 0 128px;} }
