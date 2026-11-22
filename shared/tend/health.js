@@ -3558,7 +3558,7 @@ function vRisk(){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c145'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c191'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 // BLD 1015: the moved plan keeps the keys to its own libraries (w.libKeys: the Guide key, the Founder key for a Founder plan,
 // the access code's id, and which sealed file each copy came from), inside the person's locked profile, so The Grounded Way

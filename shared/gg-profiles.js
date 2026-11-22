@@ -265,7 +265,18 @@
     }, 900);
   }
 
-  /* ---------- session (survives page loads for 1, 8, or 24 hours) ---------- */
+  /* ---------- session (BLD 1042 Shared Device Privacy) ----------
+     An unlock stays while the person uses it, across page loads and tabs, and locks after IDLE with no use on any
+     Grounded page (a tap, a key, a scroll, or a voice or sound playing), or after its full length (8 hours) at the most.
+     The last use time sits in localStorage (SEEN, a time only), so every tab and the next page load read the same one.
+     Use is counted only while a profile is open in that tab, so a tap before a resume can never keep an old unlock. */
+  var IDLE = 20 * 60000, SEEN = 'gg-profiles-seen', seenAt = 0;
+  function seenRead() { var t = seenAt; try { var x = +localStorage.getItem(SEEN) || 0; if (x > t) t = x; } catch (e) {} return t; }
+  function seen(force) {
+    if (!cur) return; var n = Date.now(); if (!force && n - seenAt < 10000) return;
+    seenAt = n; try { localStorage.setItem(SEEN, String(n)); } catch (e) {}
+  }
+  function idleOver() { return Date.now() - seenRead() > IDLE; }
   function idb() { return new Promise(function (res, rej) { var r = indexedDB.open('gg-session', 1); r.onupgradeneeded = function () { r.result.createObjectStore('s'); }; r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; }); }
   function sessPut(v) { return idb().then(function (db) { return new Promise(function (res) { var t = db.transaction('s', 'readwrite'); t.objectStore('s').put(v, 'cur'); t.oncomplete = res; t.onerror = res; }); }).catch(function () {}); }
   function sessGet() { return idb().then(function (db) { return new Promise(function (res) { var q = db.transaction('s', 'readonly').objectStore('s').get('cur'); q.onsuccess = function () { res(q.result || null); }; q.onerror = function () { res(null); }; }); }).catch(function () { return null; }); }
@@ -282,6 +293,8 @@
     return readVault(id, raw).then(function (data) {
       open = {}; open[id] = { raw: raw, data: data };
       cur = { id: id, until: until };
+      if (!silent) seen(true);
+      rmAskClear(id);   // BLD 1042: the profile's own key opened it, so a removal request for it ends here
       var p = getP(id), jobs = [];
       var dropped = false;
       if (p && p.age === 'adult') Object.keys(data.keys || {}).forEach(function (kid) {
@@ -289,6 +302,8 @@
         if (!kp) { delete data.keys[kid]; dropped = true; return; }
         // Willow: a grown-up's key stays only while this helper is still on their list
         if (kp.age === 'adult' && (kp.helpers || []).indexOf(id) < 0) { delete data.keys[kid]; dropped = true; return; }
+        // BLD 1042: a teen's Pine opens only with the teen's own passcode, so a key kept from Maple or Aspen goes now
+        if (kp.age !== 'adult' && !grownOpens(kp.age)) { delete data.keys[kid]; dropped = true; return; }
         var kr = unb64(data.keys[kid]);
         jobs.push(readVault(kid, kr).then(function (kd) { open[kid] = { raw: kr, data: kd }; }).catch(function () {}));
       });
@@ -307,7 +322,7 @@
     });
   }
   function lock(silent) {
-    open = {}; cur = null;
+    open = {}; cur = null; seenAt = 0;
     return sessClear().then(function () {
       if (!silent) { try { localStorage.setItem(PING_LOCK, String(Date.now())); } catch (e) {} }
       emit('change');
@@ -315,11 +330,23 @@
   }
   function resume() {
     return sessGet().then(function (s) {
-      if (!s || !(s.until > Date.now()) || !getP(s.id)) { if (s) return sessClear(); return; }
+      if (!s || !(s.until > Date.now()) || !getP(s.id) || idleOver()) { if (s) return sessClear(); return; }
       return openWithRaw(s.id, s.raw, s.until, true).catch(function () { return sessClear(); });
     });
   }
-  setInterval(function () { if (cur && Date.now() > cur.until) lock(); }, 15000);
+  function idleCheck() { if (cur && (Date.now() > cur.until || idleOver())) lock(); }
+  setInterval(idleCheck, 15000);
+  // Coming back to a page checks first, before any tap can count as use.
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') idleCheck(); });
+  window.addEventListener('pageshow', idleCheck); window.addEventListener('focus', idleCheck);
+  ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll', 'input'].forEach(function (t) { window.addEventListener(t, function () { if (cur && !idleOver()) seen(); }, { capture: true, passive: true }); });
+  // A video, a meditation, or a check-in voice that plays counts as use, so a long practice keeps its place.
+  try {
+    var mp = window.HTMLMediaElement && HTMLMediaElement.prototype, mplay = mp && mp.play;
+    if (mplay && !mplay.ggSeen) { mp.play = function () { if (cur && !idleOver()) seen(); return mplay.apply(this, arguments); }; mp.play.ggSeen = true; }
+    var sp = window.SpeechSynthesis && SpeechSynthesis.prototype, sspeak = sp && sp.speak;
+    if (sspeak && !sspeak.ggSeen) { sp.speak = function () { if (cur && !idleOver()) seen(); return sspeak.apply(this, arguments); }; sp.speak.ggSeen = true; }
+  } catch (e) {}
   window.addEventListener('storage', function (e) {
     if (e.key === PING_LOCK) { if (cur) lock(true); }
     else if (e.key === PING_OPEN) { resume(); }
@@ -506,8 +533,8 @@
     document.body.appendChild(t); setTimeout(function () { t.remove(); }, 3400);
   }
   function ageName(a) { return (AGE[a] || AGE.adult).name; }
-  function untilText(u) { return new Date(u).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' }); }
-  var HOURS = function (id) { return '<label class="ggp-l" for="' + id + '">Stay unlocked on this device for</label><select id="' + id + '"><option value="1">1 hour</option><option value="8" selected>8 hours</option><option value="24">24 hours</option></select>'; };
+  // BLD 1042: an unlock lasts while it is used (IDLE, the session part above), 8 hours at the most. #ggp-hx holds the 8.
+  var HOURS = function () { return '<input type="hidden" id="ggp-hx" value="8"><p class="ggp-small ggp-stay">Stays open while you use it, and locks after 20 minutes away.</p>'; };
   var TERMS_LINKS = '<a href="' + HOME + '/terms.html" target="_blank" rel="noopener">Terms of Use</a> and <a href="' + HOME + '/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>';
 
   /* ---------- dialog shell ---------- */
@@ -654,7 +681,7 @@
           (kid ? '<p>' + esc(st.name) + ', tap three pictures in an order you will remember. That is your secret code.</p><div id="ggp-pad"></div><p class="ggp-small" id="ggp-again" style="text-align:center"></p>'
             : other ? '<p>At least ' + min + ' characters. Choose it together with ' + esc(st.name) + ' if you can, so it opens their own tree. ' + (keep ? 'You will still open it with your own passcode, as their helper.' : '') + '</p><label class="ggp-l" for="ggp-p1">Passcode</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">'
             : '<p>At least ' + min + ' characters. Only you will know it.</p><label class="ggp-l" for="ggp-p1">Passcode</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">') +
-          HOURS('ggp-h') +
+          HOURS() +
           (st.age === 'adult' || st.age === 'pine' ? '<p class="ggp-note"><b>Please remember your passcode.</b> It never leaves this device, so no one, including us, can recover it. Next you get 12 Root Words that can open ' + (other ? 'their' : 'your') + ' tree if the passcode is ever forgotten, and you can save a locked backup any time.</p>' : '') +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-next' + (kid ? ' disabled' : '') + '>Next</button></div>');
         $(d, '[data-back]').onclick = function () { step1(d); };
@@ -666,7 +693,7 @@
           else { first = null; d.msg('Those did not match. Let\'s start again.'); $(d, '#ggp-again').textContent = ''; setTimeout(function () { pad.reset(); }, 350); }
         });
         $(d, '[data-next]').onclick = function () {
-          st.hours = +$(d, '#ggp-h').value;
+          st.hours = +$(d, '#ggp-hx').value;
           if (!kid) {
             var p1 = $(d, '#ggp-p1').value, p2 = $(d, '#ggp-p2').value;
             if (p1.length < min) return d.msg('Your passcode needs at least ' + min + ' characters.');
@@ -757,13 +784,13 @@
         var kid = p.code === 'pics', code = null;
         d.show('<div style="display:flex;gap:12px;align-items:center;margin-bottom:6px">' + av(p.avatar, p.name, 56) + '<h2 id="ggp-title" style="margin:0">Hi, ' + esc(p.name) + '</h2></div>' +
           (kid ? '<p>Tap your three secret pictures.</p><div id="ggp-pad"></div>' : '<label class="ggp-l" for="ggp-pass">Passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">') +
-          HOURS('ggp-h') +
+          HOURS() +
           '<div class="ggp-row" style="justify-content:space-between"><button type="button" class="ggp-link" data-forgot>Forgot ' + (kid ? 'the pictures' : 'the passcode') + '?</button><span style="display:flex;gap:8px"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Open</button></span></div>');
         $(d, '[data-back]').onclick = function () { pickPerson(d); };
         $(d, '[data-forgot]').onclick = function () { forgot(d, p); };
         function go() {
           var pass = kid ? code : $(d, '#ggp-pass').value; if (!pass) return d.msg(kid ? 'Tap three pictures.' : 'Type the passcode.');
-          var hours = +$(d, '#ggp-h').value;
+          var hours = +$(d, '#ggp-hx').value;
           run(d, function () { return rawFromPass(p, pass).then(function (raw) { return openWithRaw(p.id, raw, Date.now() + hours * 3600000); }); })
             .then(function () { finish(d, p); }).catch(function () { if (kid && pad) pad.reset(); });
         }
@@ -782,23 +809,56 @@
             } });
         }).then(function (words) { if (words && found) newCode(d, getP(p.id), found, null, true); }, function (e) { d.msg(e.message); });
       }
+      // BLD 1042: removing a grown-up's profile from Forgot. The passcode or the Root Words prove it is them; with
+      // neither, anyone here may ask, the profile waits RM_WAIT days (its own passcode opening it clears the ask), and
+      // then the name typed again removes it.
+      function rmForgot(d, p) {
+        p = getP(p.id) || p;
+        var ask = rmAsks()[p.id], ready = ask && Date.now() - ask.at >= RM_WAIT, nm = esc(p.name), warn = onlyWarn(p.id);
+        if (!ask) {
+          d.show('<h2 id="ggp-title">Remove ' + nm + '\'s Profile?</h2>' +
+            '<p>' + nm + '\'s passcode or Root Words show it is ' + nm + '. Without them, removing this profile waits one week, so ' + nm + ' has time to see it. Opening the profile with its passcode during that week keeps it right here and ends the request.</p>' +
+            warn + '<label class="ggp-l" for="ggp-rmname">To ask, type the name ' + nm + '</label><input type="text" id="ggp-rmname" autocomplete="off">' +
+            '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-ask>Ask to Remove</button></div>');
+          $(d, '[data-back]').onclick = function () { forgot(d, p); };
+          $(d, '[data-ask]').onclick = function () {
+            if (!sameName($(d, '#ggp-rmname').value, p.name)) return d.msg('Type the name ' + p.name + ' to ask.');
+            rmAskSet(p.id, { at: Date.now() }); toast('Request saved. ' + p.name + '\'s profile can be removed on ' + dayText(Date.now() + RM_WAIT) + '.'); rmForgot(d, p);
+          };
+          return;
+        }
+        if (!ready) {
+          d.show('<h2 id="ggp-title">' + nm + '\'s Profile Waits One Week</h2>' +
+            '<p>Someone asked to remove this profile on ' + esc(dayText(ask.at)) + '. It can be removed on ' + esc(dayText(ask.at + RM_WAIT)) + '. Opening it with its passcode before then keeps it right here.</p>' + warn +
+            '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b" data-keep>Keep This Profile</button></div>');
+          $(d, '[data-back]').onclick = function () { askCode(d, p); };
+          $(d, '[data-keep]').onclick = function () { rmAskSet(p.id, null); toast(p.name + '\'s profile stays right here.'); askCode(d, p); };
+          return;
+        }
+        d.show('<h2 id="ggp-title">Remove ' + nm + '\'s Profile?</h2>' +
+          '<p>The week of waiting is done. Removing it erases ' + nm + '\'s profile and everything saved in it from this device, for good. A backup file made before still opens with the passcode or Root Words from then.</p>' + warn +
+          '<label class="ggp-l" for="ggp-rmname">To remove it, type the name ' + nm + '</label><input type="text" id="ggp-rmname" autocomplete="off">' +
+          '<div class="ggp-row"><button type="button" class="ggp-b" data-keep>Keep This Profile</button><button type="button" class="ggp-b ggp-go" data-rmgo>Remove Profile</button></div>');
+        $(d, '[data-keep]').onclick = function () { rmAskSet(p.id, null); toast(p.name + '\'s profile stays right here.'); askCode(d, p); };
+        $(d, '[data-rmgo]').onclick = function () {
+          if (!sameName($(d, '#ggp-rmname').value, p.name)) return d.msg('Type the name ' + p.name + ' to remove it.');
+          removeProfile(p.id).then(function () { toast('Profile removed.'); pickPerson(d); });
+        };
+      }
       function forgot(d, p) {
         p = getP(p.id) || p;
         var hasRoot = rootOk(p) && !!(p.rw && p.rw.salt);
         if (p.age === 'adult') {
           d.show('<h2 id="ggp-title">Forgot your passcode</h2><p>Your profile is locked with a passcode only you know. It never leaves this device, so no one, including us, can open it without it.</p>' +
             (hasRoot ? '<p>Your <b>Root Words</b> can open it: the 12 words you kept when you made this profile. Then you choose a new passcode, and everything stays.</p><p class="ggp-small">A backup file from before also opens with the passcode or the Root Words you had then.</p>'
-              : '<p>If you have a backup file from before, load it and use the passcode or Root Words you had then. Otherwise you can remove this profile and start a new one.</p>') +
-            '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b" data-rm>Remove this profile</button>' + (hasRoot ? '<button type="button" class="ggp-b ggp-go" data-root>Use My Root Words</button>' : '') + '</div>');
+              : '<p>If you have a backup file from before, load it and use the passcode or Root Words you had then. You can also make a new profile with another name right away, or remove this one after a week of waiting.</p>') +
+            '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b" data-rm>Remove This Profile</button>' + (hasRoot ? '<button type="button" class="ggp-b ggp-go" data-root>Use My Root Words</button>' : '') + '</div>');
           $(d, '[data-back]').onclick = function () { askCode(d, p); };
           var rb = $(d, '[data-root]'); if (rb) rb.onclick = function () { rootForgot(d, p); };
-          $(d, '[data-rm]').onclick = function () {
-            if (!confirm('Remove ' + p.name + '\'s profile and everything saved in it from this device? This cannot be undone.')) return;
-            removeProfile(p.id).then(function () { toast('Profile removed.'); pickPerson(d); });
-          };
+          $(d, '[data-rm]').onclick = function () { rmForgot(d, p); };
           return;
         }
-        var teen = p.age === 'pine', ok = adults();
+        var teen = p.age === 'pine', ok = grownOf(p);
         d.show('<h2 id="ggp-title">' + (teen ? 'Forgot your passcode' : 'A grown-up can help') + '</h2>' +
           (teen && hasRoot ? '<p>Your <b>Root Words</b> open your tree again, with everything in it: the 12 words you kept when you made this profile. Then you choose a new passcode.</p><div class="ggp-row" style="justify-content:flex-start;margin-top:0"><button type="button" class="ggp-b ggp-go" data-root>Use My Root Words</button></div><hr class="ggp-sep"><p class="ggp-small"><b>No Root Words?</b> A grown-up can clear your answers and journal so you can start fresh with a new passcode. Nobody, not even a grown-up, can open them. Your beds, days tended, and butterflies stay.</p>'
             : teen ? '<p>Your answers and journal are locked with your passcode, so nobody, not even a grown-up, can open them. A grown-up can clear them so you can start fresh with a new passcode. Your beds, days tended, and butterflies stay.</p>'
@@ -834,7 +894,7 @@
           (raw ? '' : '<p class="ggp-note">' + esc(p.name) + ', choose your new passcode yourself, so it stays private to you.</p>') +
           (kid ? '<div id="ggp-pad"></div><p class="ggp-small" id="ggp-again" style="text-align:center">Tap three pictures.</p>'
             : '<label class="ggp-l" for="ggp-p1">New passcode, at least ' + min + ' characters</label><input type="password" id="ggp-p1" autocomplete="new-password"><label class="ggp-l" for="ggp-p2">Type it again</label><input type="password" id="ggp-p2" autocomplete="new-password">') +
-          HOURS('ggp-h') +
+          HOURS() +
           '<div class="ggp-row"><button type="button" class="ggp-b ggp-go" data-go>Save and open</button></div>');
         var pad = kid ? picPad(d, $(d, '#ggp-pad'), function (v) {
           if (!v) return; if (!first) { first = v; $(d, '#ggp-again').textContent = 'Now the same three again.'; setTimeout(function () { pad.reset(); }, 350); }
@@ -843,7 +903,7 @@
         $(d, '[data-go]').onclick = function () {
           if (!kid) { var a = $(d, '#ggp-p1').value, b = $(d, '#ggp-p2').value; if (a.length < min) return d.msg('At least ' + min + ' characters.'); if (a !== b) return d.msg('The two do not match.'); val = a; }
           if (!val) return d.msg('Tap your three pictures twice.');
-          var hours = +$(d, '#ggp-h').value;
+          var hours = +$(d, '#ggp-hx').value;
           var fresh = null;
           run(d, function () {
             var r = raw || crypto.getRandomValues(new Uint8Array(32));
@@ -865,12 +925,12 @@
       }
       function legacyOpen(d, lp) {
         d.show('<h2 id="ggp-title">Welcome back, ' + esc(lp.name) + '</h2><p>Your Oak profile is moving into Grounded profiles, so it works across every Grounded tool. Your check-ins come with you, still locked with the same passcode.</p>' +
-          '<label class="ggp-l" for="ggp-pass">Your Oak passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">' + HOURS('ggp-h') +
+          '<label class="ggp-l" for="ggp-pass">Your Oak passcode</label><input type="password" id="ggp-pass" autocomplete="current-password">' + HOURS() +
           '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>' +
           '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-go>Move my profile</button></div>');
         $(d, '[data-back]').onclick = function () { pickPerson(d); };
         $(d, '[data-go]').onclick = function () {
-          var pass = $(d, '#ggp-pass').value, hours = +$(d, '#ggp-h').value;
+          var pass = $(d, '#ggp-pass').value, hours = +$(d, '#ggp-hx').value;
           if (!pass) return d.msg('Type your passcode.');
           if (!$(d, '#ggp-agree').checked) return d.msg('Please check the box to agree.');
           run(d, function () {
@@ -906,7 +966,47 @@
   /* =====================================================================
      MANAGE
      ===================================================================== */
+  /* ---------- BLD 1042 Shared Device Privacy: proof from a grown-up, the waiting removal, the only grown-up ---------- */
+  var RMASK = 'gg-profiles-rm', RM_WAIT = 7 * 86400000;
+  function rmAsks() { try { return JSON.parse(localStorage.getItem(RMASK)) || {}; } catch (e) { return {}; } }
+  function rmAskSet(id, v) { var a = rmAsks(); if (v) a[id] = v; else delete a[id]; try { if (Object.keys(a).length) localStorage.setItem(RMASK, JSON.stringify(a)); else localStorage.removeItem(RMASK); } catch (e) {} }
+  function rmAskClear(id) {
+    var a = rmAsks()[id]; if (!a) return; rmAskSet(id, null);
+    setTimeout(function () { toast('Your profile stays right here. The request to remove it, made ' + dayText(a.at) + ', is cleared.'); }, 600);
+  }
+  function dayText(t) { return new Date(t).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }); }
+  function sameName(a, b) { return String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase() && !!String(a || '').trim(); }
+  // A child's grown-ups who are on this device, or every grown-up here when none of them are.
+  function grownOf(p) { var g = (p.grown || []).map(getP).filter(function (x) { return x && x.age === 'adult'; }); return g.length ? g : adults(); }
+  // Kids (Maple and Aspen) whose only grown-up here is this one.
+  function onlyKids(id) { return readList().filter(function (k) { if (!grownOpens(k.age)) return false; var g = (k.grown || []).filter(function (x) { var q = getP(x); return q && q.age === 'adult'; }); return g.length === 1 && g[0] === id; }); }
+  function onlyWarn(id, canAdd) {
+    var ks = onlyKids(id), g = getP(id); if (!ks.length || !g) return '';
+    var names = ks.map(function (k) { return esc(k.name); }), list = names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0];
+    return '<div class="ggp-note ggp-only"><p style="margin:0 0 6px"><b>' + esc(g.name) + ' is the only grown-up for ' + list + ' on this device.</b></p><p style="margin:0">Add another grown-up first, so someone here can still open ' + (ks.length > 1 ? 'their profiles' : esc(ks[0].name) + '\'s profile') + ', help with a forgotten ' + (ks.length > 1 || ks[0].code === 'pics' ? 'code' : 'passcode') + ', and see ' + (ks.length > 1 ? 'their' : esc(ks[0].name) + '\'s') + ' days tended. ' + (canAdd ? '' : 'In ' + (ks.length > 1 ? 'each child\'s' : esc(ks[0].name) + '\'s') + ' profile: Manage My Profile, then Add another grown-up.') + '</p>' +
+      (canAdd ? '<p style="margin:8px 0 0;display:flex;flex-wrap:wrap;gap:8px">' + ks.filter(function (k) { return open[k.id]; }).map(function (k) { return '<button type="button" class="ggp-b" data-addfor="' + k.id + '">Add a Grown-up for ' + esc(k.name) + '</button>'; }).join('') + '</p>' : '') + '</div>';
+  }
+  // A grown-up confirms a change on a child's profile with their own passcode. done(G): G is { id, raw, data }.
+  function grownProof(d, p, done, name, age, removing, back) {
+    var ok = grownOf(p), nm = esc(name || p.name);
+    var what = removing ? 'removes ' + nm + '\'s profile' : 'changes ' + nm + '\'s age';
+    d.show('<h2 id="ggp-title">A Grown-up Confirms</h2>' +
+      (ok.length ? '<p>Only a grown-up ' + what + '. A grown-up types their own passcode here.' + (age ? ' New age: ' + esc(ageName(age)) + '.' : '') + '</p><label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + ok.map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
+        : '<p>A grown-up ' + what + '. Once a grown-up has a profile on this device, they confirm it here with their passcode.</p>') +
+      '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button>' + (ok.length ? '<button type="button" class="ggp-b ggp-go" data-gok>Confirm</button>' : '') + '</div>');
+    $(d, '[data-back]').onclick = function () { d.grownOk = null; if (back) back(); };
+    if (!ok.length) return;
+    function go() {
+      var g = getP($(d, '#ggp-gid').value), gp = $(d, '#ggp-gpass').value;
+      if (!gp) return d.msg('Type the grown-up\'s passcode.');
+      run(d, function () { return rawFromPass(g, gp).then(function (gr) { return readVault(g.id, gr).then(function (gd) { return { id: g.id, raw: gr, data: gd }; }); }); })
+        .then(function (G) { done(G); }).catch(function () {});
+    }
+    $(d, '[data-gok]').onclick = go;
+    $(d, '#ggp-gpass').addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+  }
   function removeProfile(id) {
+    rmAskSet(id, null);
     readList().forEach(function (q) { if (q.grown && q.grown.indexOf(id) > -1) { q.grown = q.grown.filter(function (g) { return g !== id; }); putP(q); } if (q.helpers && q.helpers.indexOf(id) > -1) { q.helpers = q.helpers.filter(function (g) { return g !== id; }); putP(q); } });
     Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
     var wasActive = cur && cur.id === id;
@@ -923,7 +1023,7 @@
       p = getP(id); var v = open[id].data, isAdult = p.age === 'adult', act = getP(cur.id);
       var kids = isAdult ? Object.keys(v.keys || {}).map(getP).filter(Boolean) : [];
       var grown = (p.grown || []).map(getP).filter(Boolean);
-      d.show('<div style="display:flex;gap:14px;align-items:center"><button type="button" class="ggp-pic" style="width:76px;height:76px" id="ggp-pick" aria-label="Change picture">' + av(p.avatar, p.name, 68) + '</button><div><h2 id="ggp-title" style="margin:0">' + esc(p.name) + '</h2><span class="ggp-small">' + ageName(p.age) + ' profile' + (cur.id === id ? ', unlocked until ' + untilText(cur.until) : ', opened by ' + esc(act.name)) + '</span></div></div>' +
+      d.show('<div style="display:flex;gap:14px;align-items:center"><button type="button" class="ggp-pic" style="width:76px;height:76px" id="ggp-pick" aria-label="Change picture">' + av(p.avatar, p.name, 68) + '</button><div><h2 id="ggp-title" style="margin:0">' + esc(p.name) + '</h2><span class="ggp-small">' + ageName(p.age) + ' profile' + (cur.id === id ? ', unlocked on this device' : ', opened by ' + esc(act.name)) + '</span></div></div>' +
         '<label class="ggp-l" for="ggp-name">Name</label><input type="text" id="ggp-name" maxlength="30" value="' + esc(p.name) + '">' +
         '<label class="ggp-l">Age</label><select id="ggp-age">' + AGES.map(function (a) { return '<option value="' + a.id + '"' + (a.id === p.age ? ' selected' : '') + '>' + a.name + ' (' + a.who + ')</option>'; }).join('') + '</select>' +
         (isAdult ? (function () { var t = treeOf(p), band = t === 'birch' ? 'young' : t === 'sequoia' ? 'older' : '', me = cur.id === id ? 'I am' : 'They are';
@@ -944,7 +1044,7 @@
         '<button type="button" class="ggp-link" data-code>Change ' + (p.code === 'pics' ? 'picture code' : 'passcode') + '</button>' +
         '<button type="button" class="ggp-b ggp-go" data-move>Move to Another Device</button>' +
         '<button type="button" class="ggp-link" data-backup>Download a locked backup</button>' +
-        '<button type="button" class="ggp-link" data-rm style="color:var(--ggp-warn)">Remove this profile from this device</button></div>' +
+        (isAdult && cur.id !== id ? '' : '<button type="button" class="ggp-link" data-rm style="color:var(--ggp-warn)">Remove this profile from this device</button>') + '</div>' +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Done</button></div>');
       $(d, '[data-x]').onclick = function () { d.close(true); };
       var olderBox = $(d, '#ggp-older'), youngBox = $(d, '#ggp-young');
@@ -959,15 +1059,24 @@
         if (!name) return d.msg('Add a name.');
         if (readList().some(function (x) { return x.id !== id && x.name.toLowerCase() === name.toLowerCase(); })) return d.msg('Another profile already has that name.');
         if ((p.age === 'adult') !== (age === 'adult')) return d.msg('A profile can move between school ages, but not between Adult and kids or teens. Create a new profile instead.');
-        if (grownOpens(p.age) && age === 'pine') {
-          if (!confirm('Moving to High school makes answers and journal private to ' + name + '. Grown-ups will no longer be able to open this profile. Continue?')) return;
+        // BLD 1042: only a grown-up changes a child's age (and so the tree): the grown-up who has this child open, or one
+        // of the child's grown-ups typing their own passcode here.
+        var byGrown = act && act.age === 'adult' && act.id !== id;
+        if (isMinor(p.age) && age !== p.age && !byGrown && !d.grownOk) return grownProof(d, p, function (G) { view(d); $(d, '#ggp-name').value = name; $(d, '#ggp-age').value = age; d.grownOk = G; $(d, '[data-save]').click(); }, name, age, false, function () { view(d); });
+        var G = d.grownOk && d.grownOk !== true ? d.grownOk : null; d.grownOk = null;
+        var toPine = grownOpens(p.age) && age === 'pine';
+        if (toPine) {
+          if (!confirm('Moving to High school makes answers and journal private to ' + name + ', opened only with ' + name + '\'s own passcode. Continue?')) return;
           Object.keys(open).forEach(function (o) { if (open[o].data.keys && open[o].data.keys[id]) { delete open[o].data.keys[id]; writeVault(o, open[o].raw, open[o].data); } });
-          
+          if (G && G.data.keys && G.data.keys[id]) { delete G.data.keys[id]; writeVault(G.id, G.raw, G.data); }
         }
         var q = getP(id); q.name = name; q.age = age;
         if (isAdult) { var ob = $(d, '#ggp-older'), yb = $(d, '#ggp-young'), ts = $(d, '#ggp-tree'); if (ob && ob.checked && ts && ts.value === 'sequoia') q.tree = 'sequoia'; else if (yb && yb.checked && ts && ts.value === 'birch') q.tree = 'birch'; else delete q.tree; }
         putP(q);
         if (isAdult) { v.email = ($(d, '#ggp-email').value || '').trim(); }
+        if (toPine && cur.id !== id) {   // the grown-up hands the key back: Pine opens with the teen's own passcode
+          return save(id).then(function () { delete open[id]; emit('change'); d.close(true); toast('Saved. ' + name + '\'s Pine opens with ' + name + '\'s own passcode.'); });
+        }
         save(id).then(function () { emit('change'); toast('Saved.'); view(d); });
       };
       var ag = $(d, '[data-addgrown]'); if (ag) ag.onclick = function () { addGrown(d); };
@@ -979,10 +1088,32 @@
       var rwb = $(d, '[data-rw]'); if (rwb) rwb.onclick = function () { rootPass(d, false); };
       var rwn = $(d, '[data-rwnew]'); if (rwn) rwn.onclick = function () { if (confirm('Make a new set of Root Words? The old set will no longer open this profile. Backups saved before keep the old set.')) rootPass(d, true); };
       var bka = $(d, '[data-bkall]'); if (bka) bka.onclick = function () { d.close(true); backupGo('make'); };
-      $(d, '[data-rm]').onclick = function () {
-        if (!confirm('Remove ' + p.name + '\'s profile and everything saved in it from this device? This cannot be undone unless you have a backup.')) return;
-        removeProfile(id).then(function () { d.close(true); toast('Profile removed.'); });
+      var rmb = $(d, '[data-rm]'); if (rmb) rmb.onclick = function () { rmManage(d); };
+    }
+    // BLD 1042: removing from Manage My Profile. A grown-up or a teen types their own passcode; a child's profile takes a
+    // grown-up (the one who has it open, or one typing their passcode). A grown-up who is a child's only grown-up sees
+    // that first, with a way to add another grown-up.
+    function rmManage(d) {
+      var kidP = grownOpens(p.age), act = getP(cur.id), byGrown = kidP && act && act.age === 'adult' && act.id !== id;
+      if (kidP && !byGrown) return grownProof(d, p, function () { rmGo(d, null); }, null, null, true, function () { view(d); });
+      var warn = p.age === 'adult' ? onlyWarn(id, true) : '', own = cur.id === id;
+      d.show('<h2 id="ggp-title">Remove ' + esc(p.name) + '\'s Profile?</h2>' +
+        '<p>This erases ' + esc(p.name) + '\'s profile and everything saved in it from this device, for good. A backup file keeps a copy, opened with the passcode or Root Words from when it was made.</p>' + warn +
+        (own ? '<label class="ggp-l" for="ggp-rmpass">' + (p.code === 'pics' ? 'Your picture code' : 'Your passcode') + '</label>' + (p.code === 'pics' ? '<div id="ggp-pad"></div>' : '<input type="password" id="ggp-rmpass" autocomplete="current-password">') : '') +
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-rmgo>Remove Profile</button></div>');
+      $(d, '[data-back]').onclick = function () { view(d); };
+      d.el.querySelectorAll('[data-addfor]').forEach(function (b) { b.onclick = function () { d.close(true); manage(b.dataset.addfor); setTimeout(function () { var g = document.querySelector('.ggp-dlg [data-addgrown]'); if (g) g.click(); }, 60); }; });
+      var code = null;
+      if (own && p.code === 'pics') picPad(d, $(d, '#ggp-pad'), function (v) { code = v; });
+      $(d, '[data-rmgo]').onclick = function () {
+        var pass = own ? (p.code === 'pics' ? code : $(d, '#ggp-rmpass').value) : null;
+        if (own && !pass) return d.msg(p.code === 'pics' ? 'Tap your three pictures.' : 'Type your passcode.');
+        rmGo(d, pass);
       };
+    }
+    function rmGo(d, pass) {
+      run(d, function () { return pass ? rawFromPass(getP(id), pass) : null; })
+        .then(function () { return removeProfile(id); }).then(function () { d.close(true); toast('Profile removed.'); }).catch(function () {});
     }
     // Root Words (GWG BLD 780): the passcode first, then the words (made now when there are none yet, or anew).
     function rootPass(d, anew) {
@@ -1320,7 +1451,7 @@
     function link(href, label) { return '<a class="ggp-item" role="menuitem" href="' + HOME + href + '">' + label + '</a>'; }
     if (p) {
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
-      html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
+      html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device, and locks after 20 minutes away.</small></div></div>';
       // BLD 963 (Kaden, through Chris, November 10, 2026: he could not find Membership, Household, and the rest): the account
       // places lead the menu, each opening its own sheet inside The Grounded Way. Sign Out shows once signed in to an account.
       var kidP = p.age === 'maple' || p.age === 'aspen', acc = LIVE && window.GGAccount && typeof GGAccount.state === 'function', inA = acc && GGAccount.state() !== 'out';
