@@ -339,6 +339,18 @@ var GGSend = (function () {
     for (var k in p) v[k] = p[k];
     return v;
   }
+  // BLD 1045: an answer placed in the middle of a sentence starts lowercase when its first word is an ordinary word ("His wife
+  // Ruth", "Fishing on the lake", "Patience"); names, places, days, months, and "I" keep their capitals ("Ruth Anderson", "Lake
+  // Mille Lacs", "Saturday, October 10").
+  var KEEP_CAP = /^(I|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|January|February|March|April|May|June|July|August|September|October|November|December|God|Lord|Jesus|Christmas|Easter|Thanksgiving)$/;
+  var LOWER_WORD = /^(his|her|their|the|a|an|my|our|its|your|this|that|these|those|he|she|they|we|you|in|on|at|with|by|for|to|and|of|from|husband|wife|son|sons|daughter|daughters|children|child|parents|mother|father|brother|brothers|sister|sisters|grandchildren|grandson|grandsons|granddaughter|granddaughters|grandparents|friends|family|everyone|being|always|never|how|what|kindness|patience|faith|love|hope|courage|honesty|generosity|hard|good)$/i;
+  function mid(t) {
+    t = String(t || ''); var m = t.match(/^([A-Z])([a-z’']*)(?:\s+([^\s,.;]+))?/); if (!m) return t;
+    var w = m[1] + m[2], nx = m[3] || '';
+    if (KEEP_CAP.test(w)) return t;
+    var low = LOWER_WORD.test(w) || (nx && /^[a-z]/.test(nx)) || (!nx && /(ing|ness|ence|ance|ity|ment|ion|ship|dom)$/.test(w));
+    return low ? m[1].toLowerCase() + t.slice(1) : t;
+  }
   function fill(t, extra) {
     var v = vals();
     return String(t || '').replace(/\{([A-Za-z]+)\}/g, function (m, k) {
@@ -354,6 +366,7 @@ var GGSend = (function () {
   function draftOf(shape) {
     var ans = {};
     QIDS.forEach(function (id) { ans[id] = String(st.a[id] || '').trim().replace(/\s*\n+\s*/g, ' ').replace(/[.;,]\s*$/, ''); });
+    ['city', 'death', 'born', 'loved', 'survived', 'preceded', 'service', 'memorials', 'thanks'].forEach(function (id) { ans[id] = mid(ans[id]); });
     ['early', 'work', 'married', 'remembered', 'faith'].forEach(function (id) { if (ans[id] && !/[.!?"”]$/.test(ans[id])) ans[id] += '.'; if (ans[id]) ans[id] = ans[id].charAt(0).toUpperCase() + ans[id].slice(1); });
     var toks = function (t) { return (t.match(/\{([A-Za-z]+)\}/g) || []).map(function (x) { return x.slice(1, -1); }).filter(function (k) { return QIDS.indexOf(k) > -1; }); };
     var tidy = function (t) { return fill(t, ans).replace(/\s+([.,;:])/g, '$1').replace(/([.!?]["”]?)\./g, '$1').replace(/\.{2,}/g, '.').replace(/\s{2,}/g, ' ').trim(); };

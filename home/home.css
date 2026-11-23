@@ -1784,3 +1784,26 @@ html[data-tree="maple"] .hm-kid,html[data-tree="maple"] .hm-ktree{--kb:#FFF6D6;-
 .hm-kmus .hm-lchips{margin:0;}
 html.hm-young a[href$="the-grounded-way.html#ways"]{display:none !important;}
 @media (min-width:521px){ .hm-yday .dn{flex:0 0 128px;} }
+
+/* BLD 1045 (Older Eyes): Text Size from Settings, the whole app scaled, as Willow's A+ does. */
+html.gg-ts-1 main.hm{zoom:1.12;}
+html.gg-ts-2 main.hm{zoom:1.25;}
+/* BLD 1045 (Older Eyes): the first-run tour fits a phone at 160% zoom (about 244px wide): Skip and Next stay on screen. */
+@media (max-width:360px){
+  .hm-tourwrap{padding:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));}
+  .hm-tour{max-height:calc(100vh - 12px);max-height:calc(100dvh - 12px);border-radius:20px;}
+  .hm-tour-pic{border-radius:20px 20px 0 0;max-height:26vh;max-height:26dvh;}
+  .hm-tour-hd{padding:12px 12px 0;}
+  .hm-tour-skip{min-width:0;padding:0 12px;}
+  .hm .hm-tour-t{font-size:32px;overflow-wrap:anywhere;}
+  .hm-tour-body{padding:6px 12px 2px;}
+  .hm-tour-d{font-size:16px;}
+  .hm-tour-ft{padding:12px;gap:6px;position:sticky;bottom:0;background:var(--card);border-radius:0 0 20px 20px;}
+  .hm-tour-b{min-width:0;padding:0 12px;gap:4px;letter-spacing:.4px;}
+  .hm-tour-sp{width:0;}
+  .hm-tour-dots{gap:4px;flex-wrap:wrap;justify-content:center;min-width:0;}
+  .hm-tour-dots i{width:7px;height:7px;}
+  .hm-tour-dots i.on{width:16px;}
+}
+/* BLD 1045: the Open My Growth Plan link on Today is a full 44px tap. */
+.hm-link.hm-tap{min-height:44px;}

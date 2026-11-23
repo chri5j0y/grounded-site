@@ -1302,7 +1302,7 @@
       var list = arr(def.restore).concat(arr(obj(P.NEW)[part])).filter(function (x) { return x && x[0] && !PRAC_SKIP.test(x[0]) && !WP_SKIP.test(x[0]) && !have[x[0]] && !(isYoung(S.p) && /driv/i.test(x[0] + ' ' + x[1])); });
       var x = pick(list, dayIndex()); if (!x) return;
       var t = TREES[S.tree];
-      el2.innerHTML = 'An idea from your ' + esc(t.n) + ' practices: <b>' + esc(x[0]) + '.</b> ' + esc(x[1]) + ' <a class="hm-link" href="' + t.href + '#plan">Open My Growth Plan ' + I('arrow') + '</a>';
+      el2.innerHTML = 'An idea from your ' + esc(t.n) + ' practices: <b>' + esc(x[0]) + '.</b> ' + esc(x[1]) + ' <a class="hm-link hm-tap" href="' + t.href + '#plan">Open My Growth Plan ' + I('arrow') + '</a>';
     });
   }
 
@@ -2881,7 +2881,7 @@
   var SHEET_ROWS = [
     ['numbers', 'flask', 'Numbers', 'Labs, LDL Path, My Heart Risk, PREVENT'],
     ['household', 'people', 'Household', 'The people at your table and your family'],
-    ['settings', 'gear', 'Settings', 'Your Four, voice, music, Tending setup'],
+    ['settings', 'gear', 'Settings', 'Your Four, text size, voice, music, Tending setup'],
     ['privacy', 'shield', 'Privacy', 'On this device, locked with your passcode'],
     ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Week, Check-in, Grow, Learn, and Library'],
     ['switch', 'swap', 'Who Is Tending?', 'Open another person on this device, or add one']
@@ -2895,7 +2895,7 @@
     if (!isYoung(S.p)) r.unshift(['membership', 'star', 'Membership', member() ? 'Your Membership, codes, and the welcome video' : 'What Membership opens, and how to begin']);
     else r = r.filter(function (x) { return x[0] !== 'numbers' && !(isKid(S.p) && x[0] === 'household'); });
     if (isKid(S.p)) r = r.map(function (x) {
-      if (x[0] === 'settings') return [x[0], x[1], x[2], 'Your Four and the music'];
+      if (x[0] === 'settings') return [x[0], x[1], x[2], 'Your Four, text size, and the music'];
       if (x[0] === 'privacy') return [x[0], x[1], x[2], 'Kept safe on this device with your ' + (S.p && S.p.code === 'pics' ? 'picture code' : 'passcode')];
       return x;
     });
@@ -2932,6 +2932,7 @@
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-setup="roots">' + I('sprout') + 'Change My Setup</button></div></article>' +
       '<article class="hm-card hm-p-bark hm-kmus"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">Videos and Check-ins</div><h3 class="hm-h3">Music</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">Soft music plays under your videos and check-ins. Choose how it sounds on this device.</p>' +
       '<div class="hm-lchips" role="group" aria-label="Music">' + mus.map(function (m) { return '<button type="button" class="hm-lchip" data-hm-kmus="' + m[0] + '" aria-pressed="' + (mv === m[0]) + '">' + esc(m[1]) + '</button>'; }).join('') + '</div></article>' +
+      textSizeHtml() +
       (pvCan() ? '<article class="hm-card hm-p-roots" id="hm-pvcard"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">For Founders and Staff</div><h3 class="hm-h3">See It as a New Person</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">See The Grounded Way just as a person new to Grounded sees it, before Membership, in this browser tab only. Your own plan and days stay just as they are.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm="pvon">' + I('open') + 'Start the Preview</button></div></article>' : '') +
       '<p class="hm-sub" style="margin-top:10px">Your grade and your words live in <button type="button" class="hm-linkbtn" data-hm-tool="settings">Tree Settings</button>.</p>';
   }
@@ -2940,6 +2941,22 @@
     var v = t.getAttribute('data-hm-kmus'); try { localStorage.setItem('gg-music', v); } catch (x) {}
     document.querySelectorAll('[data-hm-kmus]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-hm-kmus') === v)); });
     toast(v === 'off' ? 'Quiet it is. Your videos play with no music.' : 'Your music is set.');
+  });
+  // BLD 1045 (Older Eyes): Text Size for The Grounded Way, Normal, Larger, or Largest, kept on this device (gg-text-size, read in
+  // home/index.html's head so the page paints at its size). The whole app scales, the way Willow's A+ does.
+  function tsNow() { var v = 0; try { v = parseInt(localStorage.getItem('gg-text-size') || '0', 10) || 0; } catch (x) {} return Math.max(0, Math.min(2, v)); }
+  function tsApply(v) { var r = document.documentElement; r.classList.remove('gg-ts-1', 'gg-ts-2'); if (v) r.classList.add('gg-ts-' + v); }
+  function textSizeHtml() {
+    var v = tsNow(), sz = [['0', 'Normal'], ['1', 'Larger'], ['2', 'Largest']];
+    return '<article class="hm-card hm-p-bark hm-tsz"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">Reading and Display</div><h3 class="hm-h3">Text Size</h3></div></div><p class="hm-sub" style="margin:6px 0 10px">Make every word in The Grounded Way bigger. It stays this way on this device.</p>' +
+      '<div class="hm-lchips" role="group" aria-label="Text Size">' + sz.map(function (m) { return '<button type="button" class="hm-lchip" data-hm-ts="' + m[0] + '" aria-pressed="' + (String(v) === m[0]) + '">' + esc(m[1]) + '</button>'; }).join('') + '</div></article>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-ts]'); if (!t) return;
+    var v = +t.getAttribute('data-hm-ts') || 0; try { localStorage.setItem('gg-text-size', String(v)); } catch (x) {}
+    tsApply(v);
+    document.querySelectorAll('[data-hm-ts]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-hm-ts') === v)); });
+    toast(['Text is at its normal size.', 'Text is larger now.', 'Text is at its largest now.'][v]);
   });
   function fillSheet(sub) {
     var b = document.getElementById('hm-sheet-body'); if (!b) return;
@@ -2970,6 +2987,7 @@
         '<h4 class="hm-label">Also</h4>' + extrasHtml(on, 'data-hm-setpart', isYoung(S.p) ? ['labs'] : null) +
         (h.hidden.tend ? '<div class="hm-quiet" style="margin-top:12px"><button type="button" data-hm="showtend">Show the Start Tending card again</button></div>' : '') + '</article>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tab="today=tending">' + I('sprout') + 'Tending Setup</button></div></details>' +
+        textSizeHtml() +
         (pvCan() ? '<article class="hm-card hm-p-roots" id="hm-pvcard"><div class="hm-hd"><div style="min-width:0"><div class="hm-k">For Founders and Staff</div><h3 class="hm-h3">See It as a New Person</h3></div></div><p class="hm-sub" style="margin:6px 0 12px">See The Grounded Way just as a person new to Grounded sees it, before Membership, in this browser tab only. Your own plan and days stay just as they are.</p><div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm="pvon">' + I('open') + 'Start the Preview</button></div></article>' : '') +
         '<details class="hm-fold"' + (S.foldTend !== false ? ' open' : '') + ' id="hm-foldtend"><summary><span>Tending</span><small>Voice and music, what you use, reminders, and holidays</small></summary><div id="hm-tend" class="hm-sec" data-sec="settings"><p class="hm-loading">Opening…</p></div></details>' +
         '<p class="hm-sub" style="margin-top:10px">Health and Ability lives in <button type="button" class="hm-linkbtn" data-hm-tool="settings">Tree Settings</button>.</p>';
