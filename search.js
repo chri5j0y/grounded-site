@@ -181,7 +181,9 @@
   /* ---------- crisis words ---------- */
   var CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
   // Living Sober (GWG BLD 789): drinking and drug words add a short card of Living Sober help lines under any crisis card.
-  var SOBER = /\b(drink(s|ing)?|drank|drunk|alcohol\w*|beer|wine|liquor|booze|hungover|hangover|sober\w*|drugs?|pills?|opioids?|opiates?|heroin|fentanyl|meth|cocaine|overdos\w*|od|withdrawal|withdrawing|detox\w*|narcan|naloxone|rehab|relapse\w*|addict\w*|high on|blacked out|blackout)\b/;
+  // BLD 1043 (Chris, November 21, 2026, GL): the overdose safety card shows only for emergency words; sober, wine, beer, and
+  // alcohol searches find Living Sober with no card (the crisis line lives only with suicide, self-harm, safety, and abuse).
+  var OD = /\b(overdos\w*|od|narcan|naloxone|hard to wake|not breathing|blue lips|unresponsive|passed out|blacked out|blackout)\b/;
   var ABUSE = /abuse|abused|molest|rape|assault|touched me|hits me|hitting me|beat(s|ing)? me|domestic/;
 
   /* ---------- helpers ---------- */
@@ -237,7 +239,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js?v=b934'), load('/aspen/guides.js?v=b934'), load('/pine/guides.js?v=b924'), load('/birch/guides.js?v=c128'), load('/oak/guides.js?v=c128'), load('/sequoia/guides.js?v=c126'), load('/willow/guides.js?v=c183'), load('/grove/guides.js?v=b934'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=c197'), load('/aspen/guides.js?v=c197'), load('/pine/guides.js?v=c197'), load('/birch/guides.js?v=c197'), load('/oak/guides.js?v=c197'), load('/sequoia/guides.js?v=c197'), load('/willow/guides.js?v=c183'), load('/grove/guides.js?v=c197'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -426,11 +428,10 @@
   var SHOW = 5, uid = 0;
 
   function soberHTML(raw, crisisShown) {
-    if (!SOBER.test(raw)) return '';
+    if (!OD.test(raw)) return '';
     return '<div class="ss-crisis ss-sober" role="note"><b>If someone is hard to wake, breathing slowly, or has blue or gray lips, call <a href="tel:911">911</a> now.</b>' +
       '<p>If you have naloxone (Narcan), give it, and stay with them until help comes.</p>' +
       '<p>For treatment referral and information, any time: the SAMHSA National Helpline, <a href="tel:18006624357">1-800-662-4357</a>. For a question about a medicine, a drug, or a possible poisoning: Poison Control, <a href="tel:18002221222">1-800-222-1222</a>.</p>' +
-      (crisisShown ? '' : '<p>For a crisis or thoughts of suicide, call or text <a href="tel:988">988</a>, any time, day or night.</p>') +
       '<p>If you drink every day or take sedatives, talk with a doctor before you stop, so stopping stays safe.</p></div>';
   }
   function crisisHTML(raw) {

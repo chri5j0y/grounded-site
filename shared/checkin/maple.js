@@ -34,7 +34,7 @@
   var FILES = [
     '/maple/checkin.js?v=b907',      // window.MAPLE_CHECKIN, the question bank
     '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
-    '/shared/gg-life.js?v=b907',     // Health and Ability: the example and tip lines under a question
+    '/shared/gg-life.js?v=c197',     // Health and Ability: the example and tip lines under a question
     '/maple/life.js?v=b907',         // window.MAPLE_LIFE notes, read by those lines
     '/shared/gg-guided.js?v=c189',   // the shared player (it loads gg-guided.css itself)
     '/shared/guided/maple.js?v=b907', // window.GG_GUIDED.maple, every spoken line

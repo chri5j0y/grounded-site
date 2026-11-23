@@ -78,7 +78,7 @@ const LC_TOPICS = [
   "feel": "The first year can feel like freedom and a test at the same time. Nobody tells you when to sleep, eat, or study, and the first exam can land harder than anything in high school. Some people feel homesick for people and places they couldn't wait to leave. Others are commuting, working a job, raising a child, or starting at 22 or 25, and wonder if they fit at all. You might be the first in your family to do this, carrying hopes that aren't only yours. You might also love it, and feel guilty that you don't miss home more. Excitement, loneliness, pride, and doubt can all show up in the same week. That mix is normal, and it doesn't mean you chose wrong.",
   "self": {
    "first": [
-    "This week, find three places on a map or a website: the counseling center, tutoring or the writing center, and your advisor's office. Save 988 in your phone too; it works anywhere in the country.",
+    "This week, find three places on a map or a website: the counseling center, tutoring or the writing center, and your advisor's office.",
     "Pick one group, class, team, faith community, or club, and go three times before you decide.",
     "Set a steady wake time and protect 7 to 9 hours of sleep most nights. It holds up your mood, your memory, and your grades."
    ],
@@ -103,8 +103,7 @@ const LC_TOPICS = [
    "say": [
     "“How are you really doing? I'm asking because I want to know, not to check up.”",
     "“What's been good so far? What's been harder than you expected?”",
-    "“A rough first semester happens to a lot of people. It doesn't decide the rest.”",
-    "“If it ever gets heavy, you can call me, or call or text 988. Both, even.”"
+    "“A rough first semester happens to a lot of people. It doesn't decide the rest.”"
    ],
    "avoid": [
     "Opening every call with grades or money.",
@@ -117,7 +116,7 @@ const LC_TOPICS = [
     "Listen first. Ask, “Do you want ideas, or do you want me to listen?” and follow their answer.",
     "Point to campus help without taking over: advising, tutoring, counseling, financial aid, the clinic.",
     "At 18, school records and most health information belong to them. If they'd like you to see something, they can choose that; ask rather than assume.",
-    "If they sound low for more than a few weeks, stop eating, sleeping, or going to class, or talk about not wanting to live, encourage the counseling center or a doctor, and call or text 988 together if it's urgent.",
+    "If they sound low for more than a few weeks, stop eating, sleeping, or going to class, or talk about not wanting to live, encourage the counseling center or a doctor.",
     "Send something small from home: a card, a photo, a favorite snack. It says you're thinking of them without asking anything back."
    ],
    "you": "Their first year can be a hard year for you too: a quieter house, worry you can't fix, pride you don't always get to share with them. Name that to someone in your own life. If they use Birch, their answers stay private to them; you'll see only what they choose to share, and Birch sends no alerts. Your trust is part of what helps them find their footing."
@@ -133,8 +132,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low, anxious, or lonely for more than a few weeks, or it's getting in the way of classes, sleep, or eating: go to your campus counseling center, a health clinic, or a doctor.",
-   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time, anywhere in the country. Or text HOME to 741741 (in Minnesota, text MN to 741741). In Minnesota, you can also call **CRISIS (274747) from a cell phone.",
-   "Someone you're dating or with is controlling, threatening, or hurting you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522. Sexual assault: RAINN, 1-800-656-4673. In Minnesota: Day One, 1-866-223-1111.",
    "Drinking or drug use getting out of hand: SAMHSA National Helpline, 1-800-662-4357, any time.",
    "Questions about federal financial aid or student loans: Federal Student Aid Information Center, 1-800-433-3243, weekdays. Your school's financial aid office can help too.",
    "Danger right now: call 911."
@@ -143,10 +140,6 @@ const LC_TOPICS = [
    [
     "JED Foundation: Set to Go",
     "https://jedfoundation.org/set2go"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ],
    [
     "Federal Student Aid",
@@ -230,7 +223,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling stuck, hopeless, or like you have no future, for two weeks or more: talk with a doctor, a counselor, or someone you trust.",
-   "Feeling like there's no point, or thinking about not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Questions about military service or military life: Military OneSource, 800-342-9647, any time.",
    "Between jobs and need help with housing, food, or bills in Minnesota: dial 211, or call 1-800-543-7709.",
    "Danger right now: call 911."
@@ -309,7 +301,7 @@ const LC_TOPICS = [
    "help": [
     "Listen to the whole story before you share your view.",
     "Encourage them to check the details before they withdraw: an advisor, the registrar, and financial aid, about aid, loans, housing, and insurance.",
-    "If health, mental health, or a crisis is behind the change, ask gently how they're doing, and encourage a doctor or counselor. If they talk about not wanting to live, call or text 988 together.",
+    "If health, mental health, or a crisis is behind the change, ask gently how they're doing, and encourage a doctor or counselor.",
     "Help them keep a routine while they're between things, and invite them to things that have nothing to do with the decision.",
     "Notice what they're learning and how they're growing, out loud."
    ],
@@ -327,7 +319,6 @@ const LC_TOPICS = [
   "reach": [
    "Questions about federal financial aid or student loans when you change plans: Federal Student Aid Information Center, 1-800-433-3243, weekdays. Your school's financial aid office can help too.",
    "Feeling low, stuck, or anxious for two weeks or more: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays, for information and support.",
-   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Between things and need help with housing, food, or bills in Minnesota: dial 211, or call 1-800-543-7709.",
    "Danger right now: call 911."
   ],
@@ -406,7 +397,7 @@ const LC_TOPICS = [
     "Help them sort what truly matters this week from what can be good enough, if they'd like that.",
     "Protect rest when they're with you: a meal, a quiet evening, no questions about grades.",
     "If they're working to pay for school, talk honestly about the load, and whether any practical help is possible.",
-    "If low mood, numbness, or exhaustion lasts two weeks or more, encourage a doctor or counselor. If they talk about not wanting to live, call or text 988 together."
+    "If low mood, numbness, or exhaustion lasts two weeks or more, encourage a doctor or counselor."
    ],
    "you": "Look gently at your own expectations too, and ask whose goal this is. Warmth plus clear, reasonable expectations helps young adults do well. If they use Birch, their answers stay private to them, and you see only what they choose to share. Your steady love on a bad-grade day teaches more than any lecture."
   },
@@ -422,15 +413,10 @@ const LC_TOPICS = [
   "reach": [
    "Stress, exhaustion, numbness, or low mood that lasts two weeks or more, or gets in the way of sleep, eating, or people: talk with a doctor, your campus counseling center, or a counselor. Many workplaces offer an employee assistance program too.",
    "For information and support: NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays.",
-   "Feeling like you'll never be enough, or like there's no point: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Using alcohol or other drugs to get through the pressure: SAMHSA National Helpline, 1-800-662-4357, any time.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
    [
     "The Jed Foundation",
     "https://jedfoundation.org"
@@ -517,7 +503,6 @@ const LC_TOPICS = [
    "Questions about ADHD, learning differences, an evaluation, or medicine: talk with a doctor or pharmacist. For accommodations in college or training, contact the school's disability services office.",
    "Questions about accommodations at work: the Job Accommodation Network (askjan.org).",
    "Anxiety and low mood often come with ADHD. If they last two weeks or more, talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays, for information and support.",
-   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
@@ -597,7 +582,7 @@ const LC_TOPICS = [
     "Offer connections: people you know in work that interests them.",
     "If they're living with you, talk together about expectations, like rent, chores, and timelines, as adult to adult.",
     "Help them keep an eye on practical dates if they'd like: health insurance, loan grace periods, leases.",
-    "If they seem low, stuck, or withdrawn for two weeks or more, ask how they're really doing, and encourage a doctor or counselor. If they talk about not wanting to live, call or text 988 together."
+    "If they seem low, stuck, or withdrawn for two weeks or more, ask how they're really doing, and encourage a doctor or counselor."
    ],
    "you": "You may feel your own worry about their future, or pressure from people asking you about them. Bring that to your own people. If they use Birch, their answers stay private to them, and you see only what they choose to share. Your patience, and your belief that they'll find their way, matters more than any advice."
   },
@@ -612,7 +597,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low, stuck, or withdrawn for two weeks or more: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays, for information and support.",
-   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Questions about federal student loans and when payments start: Federal Student Aid Information Center, 1-800-433-3243, weekdays.",
    "Help with housing, food, or bills in Minnesota while you get settled: dial 211, or call 1-800-543-7709.",
    "Danger right now: call 911."
@@ -711,9 +695,9 @@ const LC_TOPICS = [
   "reach": [
    "Pay that's wrong or missing, unsafe tasks, or sick and safe time questions in Minnesota: Minnesota Department of Labor and Industry (dli.mn.gov).",
    "Harassment or unfair treatment at work: tell HR or a manager you trust, keep notes, and see the U.S. Equal Employment Opportunity Commission (eeoc.gov).",
-   "Someone at work touches you or pressures you sexually: it's not your fault. RAINN: 1-800-656-4673, or text HOPE to 64673, any time. In Minnesota, Day One: 1-866-223-1111.",
+   "Someone at work touches you or pressures you sexually: it's not your fault.",
    "Hurt at work: get medical help and tell your employer. Danger right now: call 911.",
-   "Stress or low mood that won't lift: NAMI HelpLine, 1-800-950-6264 (weekdays). Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Stress or low mood that won't lift: NAMI HelpLine, 1-800-950-6264 (weekdays)."
   ],
   "more": [
    [
@@ -809,7 +793,7 @@ const LC_TOPICS = [
    "Unemployment benefits in Minnesota: apply at uimn.org the week you lose your job or your hours are cut.",
    "Job search, resume help, and training: CareerOneStop (careeronestop.org) or your local workforce center.",
    "Help with rent, food, bills, and other local help in Minnesota: dial 211, or call 1-800-543-7709; you can also text your ZIP code to 898-211.",
-   "Low mood that won't lift: NAMI HelpLine, 1-800-950-6264 (weekdays). If it turns into hopelessness or thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: call 911."
+   "Low mood that won't lift: NAMI HelpLine, 1-800-950-6264 (weekdays)."
   ],
   "more": [
    [
@@ -907,7 +891,7 @@ const LC_TOPICS = [
   "reach": [
    "Career exploration, training, and apprenticeships: CareerOneStop (careeronestop.org) or your local workforce center.",
    "Questions about federal student aid before going back to school: Federal Student Aid Information Center, 1-800-433-3243 (weekdays), or studentaid.gov.",
-   "Stress or low mood that won't lift: NAMI HelpLine, 1-800-950-6264 (weekdays). Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Stress or low mood that won't lift: NAMI HelpLine, 1-800-950-6264 (weekdays)."
   ],
   "more": [
    [
@@ -1003,8 +987,7 @@ const LC_TOPICS = [
    "Scams, fake checks, or identity theft: report at reportfraud.ftc.gov, or identitytheft.gov for identity theft, and call your bank right away.",
    "Credit reports: AnnualCreditReport.com, the official site for all three credit bureaus.",
    "Help with rent, food, utilities, and other local help in Minnesota: dial 211, or call 1-800-543-7709; you can also text your ZIP code to 898-211.",
-   "Betting or gambling to make money back: Minnesota Problem Gambling Helpline, 1-800-333-4673, or text HOPE to 53342; National Problem Gambling Helpline, 1-800-MY-RESET (1-800-697-3738). Both any time.",
-   "Money stress that turns hopeless: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Betting or gambling to make money back: Minnesota Problem Gambling Helpline, 1-800-333-4673, or text HOPE to 53342; National Problem Gambling Helpline, 1-800-MY-RESET (1-800-697-3738). Both any time."
   ],
   "more": [
    [
@@ -1100,8 +1083,7 @@ const LC_TOPICS = [
    "Credit cards and other debt: a nonprofit credit counselor through the National Foundation for Credit Counseling (nfcc.org).",
    "Debt collectors, payday loans, or a problem with a lender: Consumer Financial Protection Bureau (consumerfinance.gov).",
    "Help with rent, food, utilities, and other local help in Minnesota: dial 211, or call 1-800-543-7709; you can also text your ZIP code to 898-211.",
-   "Debt from betting: Minnesota Problem Gambling Helpline, 1-800-333-4673, or text HOPE to 53342; National Problem Gambling Helpline, 1-800-MY-RESET (1-800-697-3738). Both any time.",
-   "Money stress that turns hopeless: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: call 911."
+   "Debt from betting: Minnesota Problem Gambling Helpline, 1-800-333-4673, or text HOPE to 53342; National Problem Gambling Helpline, 1-800-MY-RESET (1-800-697-3738). Both any time."
   ],
   "more": [
    [
@@ -1177,7 +1159,7 @@ const LC_TOPICS = [
    "help": [
     "Protect shared money: separate accounts, limits on shared cards, and no saved cards on shared devices.",
     "Offer to sit with them while they call or text a helpline.",
-    "Ask directly about mood. If they talk about not wanting to be alive, call or text 988 together.",
+    "Ask directly about mood.",
     "Get support for yourself: SMART Recovery Family and Friends, a support group, or the Minnesota helpline, which is there for family members and partners too.",
     "If you're a Birch helper, you see only what they choose to share. The betting question in Birch is never shown to a helper."
    ],
@@ -1195,7 +1177,6 @@ const LC_TOPICS = [
   "reach": [
    "Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342, any time. For people who bet, and for partners and families.",
    "National Problem Gambling Helpline: 1-800-MY-RESET (1-800-697-3738), or text 800GAM, any time.",
-   "Gambling losses leaving you hopeless or thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Owing money to someone who is threatening you: danger right now, call 911.",
    "If drinking or drugs are part of it too: SAMHSA National Helpline, 1-800-662-4357, any time."
   ],
@@ -1296,8 +1277,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Homesickness, loneliness, or a low mood that hasn't lifted after a couple of months, or that keeps you from sleep, work, or school: talk with a doctor, a counselor, or campus counseling if you're a student.",
-   "Thoughts of not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Someone you live with is hurting or controlling you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522. National Domestic Violence Hotline, 1-800-799-7233. In Minnesota, Day One, 1-866-223-1111.",
    "Short on rent, food, or bills in Minnesota: dial 211, or text your ZIP code to 898-211, any time.",
    "Danger right now: call 911."
   ],
@@ -1393,24 +1372,15 @@ const LC_TOPICS = [
    "branches|Respect Check"
   ],
   "reach": [
-   "A roommate threatens you, hurts you, controls you, or makes you afraid to go home: call 911 if you're in danger right now. In Minnesota, Day One, 1-866-223-1111, or text 612-399-9995, any time. National Domestic Violence Hotline, 1-800-799-7233.",
-   "A roommate you're dating is hurting or controlling you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522, any time.",
-   "A roommate seems really low, or talks about not wanting to be alive: call or text 988 with them, any time. The guide When a Friend Is Thinking About Suicide has more.",
+   "A roommate threatens you, hurts you, controls you, or makes you afraid to go home: call 911 if you're in danger right now.",
+   "The guide When a Friend Is Thinking About Suicide has more.",
    "Stress at home that keeps you from sleep, work, or school: talk with a counselor, campus counseling, or a doctor.",
    "In campus housing: your resident advisor, hall director, or housing office."
   ],
   "more": [
    [
-    "Love Is Respect: healthy relationships",
-    "https://www.loveisrespect.org"
-   ],
-   [
     "Minnesota Attorney General: Landlords and Tenants, Rights and Responsibilities",
     "https://ag.state.mn.us/Brochures/pubLandlordTenants.pdf"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ]
   ]
  },
@@ -1489,8 +1459,7 @@ const LC_TOPICS = [
    "A lease, deposit, or repair problem you can't solve with the landlord: in Minnesota, HOME Line answers renters' legal questions (homelinemn.org), and LawHelpMN lists legal aid (lawhelpmn.org). Elsewhere, look for your state's tenant hotline or legal aid.",
    "Short on rent, utilities, or food: in Minnesota, dial 211, or text your ZIP code to 898-211, any time.",
    "A rental listing that might be a scam: don't pay, and report it to the Federal Trade Commission at reportfraud.ftc.gov.",
-   "A gas smell, fire, or danger right now: leave, and call 911.",
-   "Money stress that turns into hopelessness or not wanting to be alive: call, text, or chat 988, any time."
+   "A gas smell, fire, or danger right now: leave, and call 911."
   ],
   "more": [
    [
@@ -1588,8 +1557,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "A low mood, anxiety, or substance use that came home with you, or that hasn't lifted: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays. SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "Thoughts of not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Someone at home is hurting, threatening, or controlling you: in Minnesota, Day One, 1-866-223-1111, any time. National Domestic Violence Hotline, 1-800-799-7233.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -1681,7 +1648,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Loneliness or a low mood that hasn't lifted after a few months, or that keeps you from sleep, work, or school: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays.",
-   "Thoughts of not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Need help finding housing, food, or local services: dial 211 in most of the US. In Minnesota, you can also text your ZIP code to 898-211.",
    "Moved with the military, or a service member's family: Military OneSource, 800-342-9647, any time.",
    "Danger right now: call 911."
@@ -1777,9 +1743,7 @@ const LC_TOPICS = [
    "Nowhere to sleep tonight, or danger right now: call 911.",
    "Shelter, rent help, food, and local services: dial 211 in most of the US. In Minnesota, dial 211 or 1-800-543-7709, or text your ZIP code to 898-211, any time.",
    "Ages 24 and under in a housing crisis: National Runaway Safeline, 1-800-786-2929 (1-800-RUNAWAY), any time.",
-   "Left or leaving a home where someone hurts or controls you: in Minnesota, Day One, 1-866-223-1111, or text 612-399-9995. National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788. Someone you're dating: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
-   "An eviction notice in Minnesota: HOME Line answers renters' legal questions (homelinemn.org), and LawHelpMN lists legal aid (lawhelpmn.org).",
-   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "An eviction notice in Minnesota: HOME Line answers renters' legal questions (homelinemn.org), and LawHelpMN lists legal aid (lawhelpmn.org)."
   ],
   "more": [
    [
@@ -1859,7 +1823,7 @@ const LC_TOPICS = [
     "Introduce them to one person you think they'd click with, and let it grow from there.",
     "Offer a ride, a reminder, or company for the first visit to a new group.",
     "Keep your own contact steady: a regular call, a standing meal, a walk.",
-    "If friendship talk comes with hopelessness, talk of being a burden, or pulling away from everyone, that's more than a social season. Encourage a doctor or counselor, and if they talk about not wanting to be alive, call or text 988 together."
+    "If friendship talk comes with hopelessness, talk of being a burden, or pulling away from everyone, that's more than a social season."
    ],
    "you": "You can't make friends for them, and you don't need to. A standing invitation, a warm introduction, and your own steady contact are real help. Respect their pace and their choices; they're building their own life."
   },
@@ -1875,7 +1839,6 @@ const LC_TOPICS = [
   "reach": [
    "Loneliness that has turned into weeks of low mood, or feeling like there's no point: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
    "In Minnesota, for help finding local groups, services, and more: dial 211, or call 1-800-543-7709.",
-   "Thoughts of not wanting to be alive: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
@@ -1955,8 +1918,7 @@ const LC_TOPICS = [
     "Keep a regular rhythm: a weekly call, a standing meal, a walk on the same day.",
     "Invite them into your circles: a game night, a team, a volunteer shift, a faith community if that's part of their life.",
     "Listen to understand, not to fix. Say back what you heard.",
-    "Notice the seasons that bring loneliness: a move, a new job, a breakup, a graduation, coming home from service, a new baby.",
-    "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be alive. That needs help now: call or text 988 together, or chat at 988lifeline.org."
+    "Notice the seasons that bring loneliness: a move, a new job, a breakup, a graduation, coming home from service, a new baby."
    ],
    "you": "You can be one connection among many. Your steady contact is real connection, and helping them build more than one is the goal. Keep reaching out even when they're slow to answer."
   },
@@ -1972,8 +1934,6 @@ const LC_TOPICS = [
   "reach": [
    "Loneliness that has turned into weeks of low mood, or feeling like there's no point: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
    "In Minnesota, for help finding local groups and services: dial 211, or call 1-800-543-7709.",
-   "Feeling hopeless, like a burden, or thoughts of not wanting to be alive: call or text 988, or chat at 988lifeline.org, any time. Veterans and service members: dial 988, then press 1. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -1992,10 +1952,6 @@ const LC_TOPICS = [
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -2013,7 +1969,7 @@ const LC_TOPICS = [
    "Most people now date longer before settling down than people did a generation ago. Years of meeting people, trying, and starting over are a normal part of this stage.",
    "Take the time you need. Being single, dating a lot, or taking a break are all fine ways to spend these years.",
    "Knowing what you value helps you choose well: how you want to feel with someone, not only what they look like on a screen.",
-   "Healthy dating feels safe, honest, and respectful, at your own pace. Love Is Respect helps people 13 to 26 with questions about any relationship, any time."
+   "Healthy dating feels safe, honest, and respectful, at your own pace."
   ],
   "feel": "Dating can be exciting, hopeful, and fun. It can also be tiring and confusing. You might swipe for weeks with little to show for it, get ghosted after a great conversation, or end up in a “talking stage” that never turns into anything clear. You might be nervous before a first date, unsure how to ask someone out, or wondering why everyone else seems to pair up so easily. Some people feel pressure from friends, family, or their own timeline to find someone soon. Others feel pressure to move faster than they want to. And some have never dated at all and wonder if something is wrong with them. Nothing is. People find each other at every age, in every way, and at their own pace.",
   "self": {
@@ -2037,7 +1993,7 @@ const LC_TOPICS = [
     "“I get to go at my own pace.”",
     "“I'm looking for someone who's good to me, and good for me.”"
    ],
-   "people": "To ask someone out: “I've really liked talking with you. Want to get coffee Saturday?” To slow things down: “I like you, and I want to take this slower.” To end it kindly: “I've enjoyed getting to know you, but I don't feel a match. I wish you well.” To a friend: “Can you be my check-in person for a first date Friday?” If something feels off in a relationship and you want to talk it through, Love Is Respect is there by call, text, or chat, any time."
+   "people": "To ask someone out: “I've really liked talking with you. Want to get coffee Saturday?” To slow things down: “I like you, and I want to take this slower.” To end it kindly: “I've enjoyed getting to know you, but I don't feel a match."
   },
   "helper": {
    "feel": "They may be hopeful, discouraged, or tired of the whole thing. They may feel pressure, including from family, to find someone, or embarrassed if they never have. They may not want to talk about dating with you at all, and as an adult, that's their choice. If you have opinions about who they're seeing, they may already sense it.",
@@ -2058,7 +2014,7 @@ const LC_TOPICS = [
     "Respect their choices and their privacy. They decide what to share.",
     "Offer to be a safety contact for a first date with someone new.",
     "Talk about healthy relationships in general terms, so signs of control are easier to spot: checking a phone, isolating from friends, threats, or pressure.",
-    "Know that most people who are ever hurt by a partner are first hurt before 25. If you see signs of control or fear, stay close, and share Love Is Respect.",
+    "Know that most people who are ever hurt by a partner are first hurt before 25.",
     "Keep your own relationship with them steady, whatever happens in their dating life."
    ],
    "you": "Your part isn't to choose for them. It's to be someone they can talk to without being judged, so that if anything ever goes wrong, you're one of the first people they call."
@@ -2073,26 +2029,10 @@ const LC_TOPICS = [
    "bark|Name It"
   ],
   "reach": [
-   "Questions about a relationship, or something that feels off: Love Is Respect, for people 13 to 26: call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time.",
-   "In Minnesota, Day One, for anyone being hurt by someone close to them: call 1-866-223-1111, or text 612-399-9995, any time.",
-   "Anything sexual that was forced or pressured: RAINN, 1-800-656-4673, or text HOPE to 64673, any time.",
    "Someone sharing or threatening to share an intimate image of you: stopncii.org. If it was taken before you were 18, use takeitdown.ncmec.org.",
-   "Feeling hopeless, or thoughts of not wanting to be alive: call or text 988, or chat at 988lifeline.org, any time.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/"
-   ],
-   [
-    "Day One",
-    "https://dayoneservices.org/domestic-violence/help-now/"
-   ],
-   [
-    "RAINN",
-    "https://rainn.org/help-and-healing/hotline/"
-   ],
    [
     "StopNCII",
     "https://stopncii.org"
@@ -2137,7 +2077,7 @@ const LC_TOPICS = [
     "“I was me before this relationship, and I'm still me.”",
     "“It won't always feel this heavy.”"
    ],
-   "people": "To a friend: “I'm having a rough day about the breakup. Can we just hang out?” To family: “I don't need advice right now. I just need you to know it's been hard.” To your ex, if you need to: “I need some space for a while. Please don't contact me for now.” If an ex threatens to hurt themselves unless you come back, take it seriously: call or text 988 for them, and if they're in danger right now, call 911. It is not your job to stay."
+   "people": "To a friend: “I'm having a rough day about the breakup. Can we just hang out?” To family: “I don't need advice right now. I just need you to know it's been hard.” To your ex, if you need to: “I need some space for a while."
   },
   "helper": {
    "feel": "They may be devastated, numb, angry, relieved, or embarrassed, and they may not want to talk about it. If they lived together or planned a future, they may also be facing a move, money stress, and a split friend group at the same time. Comments like “you'll find someone better” can make them feel unseen. They are an adult who gets to make their own choices, including whether to get back together.",
@@ -2158,8 +2098,7 @@ const LC_TOPICS = [
     "Offer company without pressure: a meal, a drive, a walk, a show together.",
     "Offer practical help if they want it: a truck for the move, a spare room for a few nights, help sorting a lease.",
     "Watch for two weeks or more of low mood, pulling away from everyone, sleep or eating changes, or heavier drinking or use. If you see that, encourage a doctor or counselor.",
-    "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the guide on controlling or abusive relationships.",
-    "If they share thoughts of not wanting to be alive, stay with them, listen, and call or text 988 together."
+    "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the guide on controlling or abusive relationships."
    ],
    "you": "Watching someone you love hurt is hard, and you can't speed it up. Your part is to take it seriously, keep them company, and help with the practical pieces when asked. Your steady presence is a reminder that love can be safe and lasting."
   },
@@ -2174,25 +2113,14 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low mood, numbness, or losing interest in things for two weeks or more: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
-   "An ex who is harassing, threatening, or stalking you: Love Is Respect, for people 13 to 26: call 1-866-331-9474 or text LOVEIS to 22522, any time. In Minnesota, Day One: 1-866-223-1111, or text 612-399-9995.",
    "An intimate image of you shared or threatened: stopncii.org. If it was taken before you were 18, use takeitdown.ncmec.org.",
    "Need a place to stay, or help with bills, in Minnesota: dial 211, or call 1-800-543-7709.",
-   "Thoughts of not wanting to be alive, for you or your ex: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911."
   ],
   "more": [
    [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/"
-   ],
-   [
     "StopNCII",
     "https://stopncii.org"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ],
    [
     "Minnesota 211",
@@ -2345,7 +2273,7 @@ const LC_TOPICS = [
     "“We get to build our own way of doing things.”",
     "“Asking for help early is wise.”"
    ],
-   "people": "To your partner: “Can we set aside an hour this weekend to talk about money, just to understand each other?” To family: “We love you, and we've decided to keep it small. We'd love you there.” To a friend: “Wedding planning is wearing me out. Can we do something that has nothing to do with it?” If disagreements ever turn into fear, threats, or control, that isn't a normal adjustment. Love Is Respect is there for people 13 to 26, by call, text, or chat, any time."
+   "people": "To your partner: “Can we set aside an hour this weekend to talk about money, just to understand each other?” To family: “We love you, and we've decided to keep it small. We'd love you there.” To a friend: “Wedding planning is wearing me out. Can we do something that has nothing to do with it?” If disagreements ever turn into fear, threats, or control, that isn't a normal adjustment."
   },
   "helper": {
    "feel": "They may be happy and stressed at once, pulled between two families, worried about money, or tired of being asked about plans. If you have doubts about their choice or their age, they may sense it and pull back. They're adults making their own commitment, and they're building their own traditions, which may differ from yours.",
@@ -2366,7 +2294,7 @@ const LC_TOPICS = [
     "Make room for the new family: share holidays, be flexible with traditions, and welcome their partner fully.",
     "Encourage premarital education or counseling as a gift, not a warning.",
     "Listen when they vent, without taking sides. Support the person, and don't get pulled into the argument.",
-    "If you see signs of fear, control, threats, or someone being cut off from friends and family, that's more than adjustment. Stay close, and share Love Is Respect."
+    "If you see signs of fear, control, threats, or someone being cut off from friends and family, that's more than adjustment."
    ],
    "you": "Your part is to bless the new household and respect its choices, even when they differ from yours. A welcome that's steady and warm is one of the best gifts a family or friend can give a new couple."
   },
@@ -2380,9 +2308,7 @@ const LC_TOPICS = [
    "branches|Shared Meal"
   ],
   "reach": [
-   "Fear, threats, control, or being hurt by a partner: Love Is Respect, for people 13 to 26: call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time. National Domestic Violence Hotline: 1-800-799-7233, or text START to 88788. In Minnesota, Day One: 1-866-223-1111.",
    "Stress or low mood that lasts two weeks or more: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
-   "Thoughts of not wanting to be alive: call or text 988, or chat at 988lifeline.org, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -2393,14 +2319,6 @@ const LC_TOPICS = [
    [
     "Preview Heartwood, the Couples App",
     "https://growwithgrounded.com/heartwood/"
-   ],
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/"
-   ],
-   [
-    "National Domestic Violence Hotline",
-    "https://www.thehotline.org/"
    ]
   ]
  },
@@ -2462,7 +2380,7 @@ const LC_TOPICS = [
     "Let them set some of the rhythm: how often you talk, when they visit, what they share.",
     "Notice and name what they're doing well. Young adults often hear far more about what's left to do.",
     "When values differ, stay curious. Ask what led them there, and share what matters to you without pressure.",
-    "If you're worried about their safety or mood, say so plainly and kindly, and share 988 (call, text, or chat). Helpers in Birch see only what the young adult chooses to share, and never private notes, so a warm, open question matters."
+    "Helpers in Birch see only what the young adult chooses to share, and never private notes, so a warm, open question matters."
    ],
    "you": "Letting a grown child steer their own life is a real loss and a real gift at the same time. It's okay to grieve the old closeness while you build a new one. Find your own people to talk with: a friend, your partner, a support group, or a counselor."
   },
@@ -2476,8 +2394,7 @@ const LC_TOPICS = [
    "bark|Name It"
   ],
   "reach": [
-   "If talking with your family has turned into fear, threats, or harm: in Minnesota, Day One, 1-866-223-1111, or text 612-399-9995, any time. Anywhere in the U.S.: the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
-   "Feeling low, stuck, or hopeless for two weeks or more: talk with a doctor or counselor. Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Feeling low, stuck, or hopeless for two weeks or more: talk with a doctor or counselor.",
    "Need help with housing, food, or bills while you get on your feet: in Minnesota, dial 211 (1-800-543-7709), or text your ZIP code to 898-211.",
    "For parents looking for guidance and support: NAMI HelpLine, 1-800-950-6264, weekdays.",
    "Danger right now: call 911."
@@ -2511,7 +2428,7 @@ const LC_TOPICS = [
    "We're with you in this. In one national survey, about 1 in 4 American adults said they had cut off contact with a family member.",
    "Some distance protects you, and some distance can be repaired. Both are real, and you get to take your time figuring out which this is.",
    "Estrangement is a grief with no funeral. Holidays, birthdays, and milestones can hurt the most, so plan for them.",
-   "If family has hurt or threatened you, your safety comes first. Help is there any time: Day One in Minnesota, the National Domestic Violence Hotline, and 911 in danger."
+   "If family has hurt or threatened you, your safety comes first."
   ],
   "feel": "Maybe you stepped back from a parent or sibling because being close kept hurting you. Maybe they stepped back from you, over a choice you made, a disagreement, or something you still don't understand. Maybe it's not a full break, just a tie so strained that every call leaves you shaken. You might feel relief and grief in the same week. Guilt, when someone says “but they're family.” Anger at what happened. Longing for the parent or family you wish you'd had. Worry about money, a place to stay, or who you'd call in an emergency. It can feel lonely when friends head home for the holidays. None of these feelings means you're doing it wrong.",
   "self": {
@@ -2555,9 +2472,8 @@ const LC_TOPICS = [
     "Invite them in: holidays, birthdays, Sunday dinners, ordinary weeknights. Belonging is the gift.",
     "Help with the practical things family might have covered: a ride, a reference, a couch for a week, a hand with forms.",
     "Remember the hard days: the anniversary of the break, Mother's Day or Father's Day, their birthday.",
-    "If there was abuse, believe them, and point them to Day One or the National Domestic Violence Hotline for safety planning.",
     "If you're the parent on the other side of the distance, a counselor can help you understand what happened. A short, respectful message that asks for nothing often keeps the door open better than pressure does.",
-    "Watch for signs of depression. If they seem hopeless, call, text, or chat 988 with them."
+    "Watch for signs of depression."
    ],
    "you": "You don't need the whole story to be kind. Being one steady person in their life can matter more than you'll ever know. Take care of yourself too, especially if their story stirs up your own family history."
   },
@@ -2572,23 +2488,13 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Danger right now: call 911.",
-   "Family threatening or hurting you: in Minnesota, Day One, 1-866-223-1111, or text 612-399-9995, any time. Anywhere in the U.S.: the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
    "No safe place to stay, ages 12 to 24: the National Runaway Safeline, 1-800-786-2929 (1-800-RUNAWAY), any time. In Minnesota, dial 211 (1-800-543-7709) for housing, food, and bills.",
-   "In school and cut off from parents: ask your financial aid office about unusual circumstances, or call the Federal Student Aid Information Center, 1-800-433-3243, weekdays.",
-   "Grief that turns into lasting sadness, or thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "In school and cut off from parents: ask your financial aid office about unusual circumstances, or call the Federal Student Aid Information Center, 1-800-433-3243, weekdays."
   ],
   "more": [
    [
     "Karl Pillemer, Fault Lines: family estrangement (Cornell)",
     "https://news.cornell.edu/stories/2020/09/pillemer-family-estrangement-problem-hiding-plain-sight"
-   ],
-   [
-    "National Domestic Violence Hotline",
-    "https://www.thehotline.org"
-   ],
-   [
-    "Day One",
-    "https://dayoneservices.org/domestic-violence/help-now/"
    ],
    [
     "National Runaway Safeline",
@@ -2618,15 +2524,14 @@ const LC_TOPICS = [
    "Finding out about a pregnancy you didn't plan can bring a rush of feelings at once. Whatever you feel first is allowed, and it can change.",
    "You don't have to sort everything out in one hour. Start with one safe person and accurate information.",
    "A doctor, nurse, or health clinic you trust can confirm the pregnancy, answer your medical questions, and talk through every option with you.",
-   "No one gets to pressure, threaten, or force you about a pregnancy, in any direction. If that's happening, help is there any time: Love Is Respect, Day One in Minnesota, and 911 in danger."
+   "No one gets to pressure, threaten, or force you about a pregnancy, in any direction."
   ],
   "feel": "Maybe you're staring at a test, or you just heard it from a doctor, or someone you're with just told you. Your mind might race, or go completely blank. Shock, fear, numbness, hope, guilt, excitement, and panic can all show up in the same hour, and they may shift from one day to the next. You might be thinking about money, school, work, a lease, a partner, or how your family or community will react. You might feel very alone, even with people nearby. If you're the partner, you may feel just as shaken, and unsure what your place is. All of this is a normal human response to big, unexpected news. Your feelings are allowed, and you deserve people who listen.",
   "self": {
    "first": [
     "Breathe. You don't have to tell everyone, or settle everything, today. Three slow breaths, each one out longer than in, can steady you enough for the next step.",
     "See a doctor, nurse, or health clinic you trust. They can confirm the pregnancy, look after your health, answer medical questions, and talk through every option. Write your questions down first, and bring someone with you if you'd like.",
-    "Tell one safe person: someone who listens more than they talk, and who will keep it private.",
-    "If anyone is pressuring, threatening, or hurting you, reach out to Love Is Respect (1-866-331-9474, or text LOVEIS to 22522) or, in Minnesota, Day One (1-866-223-1111). In danger right now, call 911."
+    "Tell one safe person: someone who listens more than they talk, and who will keep it private."
    ],
    "helps": [
     "Writing three short lists: what I know, what I need to find out, and who is in my corner.",
@@ -2663,8 +2568,7 @@ const LC_TOPICS = [
     "Offer practical help: a ride to an appointment, company in the waiting room, help writing questions for the doctor or clinic.",
     "Keep their news private. It's theirs to share, in their own timing.",
     "If you're the partner, say how you feel honestly and kindly, and listen just as carefully. Pressure, threats, or force in any direction are never okay.",
-    "If you see someone pressuring, threatening, or hurting them, help them reach Love Is Respect or Day One. In danger, call 911.",
-    "Watch their mood. If they seem overwhelmed or low, share the National Maternal Mental Health Hotline (call or text 1-833-852-6262). If they talk about not wanting to be alive, call, text, or chat 988 together.",
+    "Watch their mood. If they seem overwhelmed or low, share the National Maternal Mental Health Hotline (call or text 1-833-852-6262).",
     "In Birch, a helper sees only what the young adult chooses to share, and never private notes. Asking directly and kindly is how you'll know how they are."
    ],
    "you": "You may have strong feelings, hopes, or beliefs of your own about this. They're real, and they deserve a place too. Talk them through with your own friend, counselor, or someone you trust, so your time with the young adult can stay about listening."
@@ -2681,27 +2585,12 @@ const LC_TOPICS = [
   "reach": [
    "Medical questions: a doctor, nurse, or health clinic you trust. In Minnesota, dial 211 (1-800-543-7709), or text your ZIP code to 898-211, to find local clinics and help with insurance, food, and housing.",
    "Feeling overwhelmed, anxious, or low during a pregnancy: the National Maternal Mental Health Hotline, call or text 1-833-852-6262 (1-833-TLC-MAMA), any time, in English and Spanish.",
-   "Someone you're dating or with pressuring, threatening, or hurting you: Love Is Respect, call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time.",
-   "In Minnesota, anyone being hurt by someone close to them: Day One, 1-866-223-1111, or text 612-399-9995, any time.",
-   "Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
    [
     "National Maternal Mental Health Hotline (HRSA)",
     "https://mchb.hrsa.gov/national-maternal-mental-health-hotline"
-   ],
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/get-relationship-help-24-7-365/"
-   ],
-   [
-    "Day One",
-    "https://dayoneservices.org/domestic-violence/help-now/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -2765,7 +2654,6 @@ const LC_TOPICS = [
     "Help them keep a piece of their own life going: a class, a shift, a friendship.",
     "Know the signs of postpartum depression and anxiety in moms and in dads, and encourage a call to the doctor or the National Maternal Mental Health Hotline if sadness or worry lasts more than two weeks.",
     "If the baby's crying is wearing them down, offer to take a shift, and remind them it's always okay to put the baby down safely and step away.",
-    "If you see thoughts of harming themselves or the baby, call or text 988, or call 911 now.",
     "In Birch, a helper sees only what the young parent chooses to share, and never private notes. Ask directly and kindly how they're doing."
    ],
    "you": "If you're the grandparent, this may have changed your life too, and your feelings about it are real. Take care of your own rest, and find your own people to talk with, so you can be the steady help they need."
@@ -2781,11 +2669,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Sadness, anxiety, or scary thoughts that last more than two weeks, for moms and dads: the National Maternal Mental Health Hotline, call or text 1-833-852-6262, any time, in English and Spanish. Or talk with your doctor.",
-   "Postpartum Support International HelpLine, for parents and partners: 1-800-944-4773, weekdays. It's not a crisis line.",
-   "Thoughts of harming yourself or your baby: call or text 988, or call 911 now.",
+   "Postpartum Support International HelpLine, for parents and partners: 1-800-944-4773, weekdays.",
    "Help with food, diapers, housing, bills, and child care: in Minnesota, dial 211 (1-800-543-7709), or text your ZIP code to 898-211, any time.",
-   "Questions about your baby's health, feeding, or sleep: your baby's doctor or clinic.",
-   "Someone you're with controlling or hurting you: Love Is Respect, 1-866-331-9474 or text LOVEIS to 22522; in Minnesota, Day One, 1-866-223-1111, any time. Danger right now: 911."
+   "Questions about your baby's health, feeding, or sleep: your baby's doctor or clinic."
   ],
   "more": [
    [
@@ -2828,7 +2714,7 @@ const LC_TOPICS = [
    "Depression and anxiety after a baby are common, and they're treatable. About 1 in 8 mothers report symptoms of depression after giving birth, more among the youngest moms, and about 1 in 10 dads struggle too.",
    "A few teary, up-and-down days in the first couple of weeks are common. When sadness, worry, numbness, or scary thoughts last longer than two weeks, or feel heavy, it's time to reach out.",
    "Scary, unwanted thoughts are a symptom, not who you are. Telling a doctor about them is how you get help.",
-   "The National Maternal Mental Health Hotline is there for moms, dads, and partners, by call or text, any time: 1-833-852-6262. Thoughts of harming yourself or your baby: 988 or 911 now."
+   "The National Maternal Mental Health Hotline is there for moms, dads, and partners, by call or text, any time: 1-833-852-6262."
   ],
   "feel": "Everyone told you about the joy. Fewer people mentioned that you might feel flat, teary, on edge, or not like yourself at all. Maybe you can't sleep even when the baby sleeps. Maybe you worry constantly that something will happen to the baby, or picture terrible things you'd never want, and then feel ashamed for thinking them. Maybe you feel angry, numb, or far away from the baby, and guilty about that. Dads and partners can feel this too, sometimes as irritability, working all the time, drinking more, or pulling away. Many parents keep quiet because they're afraid of being judged, or of being seen as a bad parent. Feeling this way doesn't mean you love your baby less. It means you need support, and support works.",
   "self": {
@@ -2836,7 +2722,7 @@ const LC_TOPICS = [
     "Tell one person how you're really doing: your partner, a friend, a parent, your doctor, or the hotline.",
     "Call your own doctor, or your baby's doctor, and say it plainly: “I've been feeling low and anxious for more than two weeks, and I need help.” Doctors ask about this because it's common and it gets better with treatment.",
     "Call or text the National Maternal Mental Health Hotline, 1-833-852-6262, any time, in English and Spanish.",
-    "If you're having thoughts of harming yourself or your baby, call or text 988, or call 911 now. If you hear or see things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency: call 911 or go to an emergency room."
+    "If you hear or see things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency: call 911 or go to an emergency room."
    ],
    "helps": [
     "Protecting sleep: one longer stretch a night while someone else takes a feeding, when that's possible.",
@@ -2873,7 +2759,7 @@ const LC_TOPICS = [
     "Help make the call: to their doctor, the baby's doctor, or the National Maternal Mental Health Hotline. Offer to drive to the appointment and hold the baby in the waiting room.",
     "Protect their sleep: take a night feeding, or a morning, so they get one longer stretch.",
     "Bring food, do dishes, and handle errands without being asked.",
-    "Know the emergency signs: seeing or hearing things others don't, confusion, days without sleep, or thoughts of harming themselves or the baby. Call 911, or 988.",
+    "Know the emergency signs: seeing or hearing things others don't, confusion, days without sleep, or thoughts of harming themselves or the baby.",
     "In Birch, a helper sees only what the person chooses to share, and never private notes. Asking kindly and directly matters."
    ],
    "you": "Supporting a struggling new parent is hard work, especially if you're the other parent and short on sleep yourself. Watch your own mood too. The hotline is there for partners and family as well."
@@ -2889,10 +2775,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "National Maternal Mental Health Hotline, for moms, dads, and partners: call or text 1-833-852-6262 (1-833-TLC-MAMA), any time, in English and Spanish.",
-   "Postpartum Support International HelpLine: 1-800-944-4773, weekdays, for support and finding local help. It's not a crisis line.",
-   "Thoughts of harming yourself or your baby: call or text 988, or call 911 now. Seeing or hearing things others don't, confusion, or days without sleep: call 911 or go to an emergency room.",
-   "Your own doctor, your baby's doctor, or your clinic can screen for postpartum depression and anxiety and talk through treatment.",
-   "Text HOME to 741741 any time (in Minnesota, text MN to 741741). In Minnesota, a county crisis team: call **CRISIS (274747) from a cell phone."
+   "Postpartum Support International HelpLine: 1-800-944-4773, weekdays, for support and finding local help.",
+   "Seeing or hearing things others don't, confusion, or days without sleep: call 911 or go to an emergency room.",
+   "Your own doctor, your baby's doctor, or your clinic can screen for postpartum depression and anxiety and talk through treatment."
   ],
   "more": [
    [
@@ -2906,10 +2791,6 @@ const LC_TOPICS = [
    [
     "CDC: postpartum depressive symptoms, United States, 2018 (MMWR)",
     "https://www.cdc.gov/mmwr/volumes/69/wr/mm6919a2.htm"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -2927,7 +2808,7 @@ const LC_TOPICS = [
    "This is a real loss of a real baby and a hoped-for future, however early it happened, and however others respond.",
    "It's more common than most people know. About 1 in 10 confirmed pregnancies end in early loss, most often because of things no one caused and no one could have stopped.",
    "Your body may still be healing while your heart is breaking. Partners grieve too, sometimes differently.",
-   "It's okay to name your baby, hold a ritual, and grieve openly. If sadness stays heavy for weeks, or you think about not wanting to be alive, reach out: the National Maternal Mental Health Hotline, 1-833-852-6262, or 988."
+   "It's okay to name your baby, hold a ritual, and grieve openly."
   ],
   "feel": "Maybe it happened early, before many people knew. Maybe it happened later, or after your baby was born. You might feel empty, shocked, or numb. You might replay every day, looking for what you did wrong, even when nothing you did caused it. Your body may still feel pregnant, or show signs that hurt to see. Pregnant friends, baby announcements, or a store aisle can knock the wind out of you. If the pregnancy was a surprise, your feelings may be mixed, and that's allowed too. If you're the partner, people may ask how the other parent is and forget to ask about you. Some young adults grieve almost alone, because few people knew. All of it is grief, and it deserves room.",
   "self": {
@@ -2972,7 +2853,7 @@ const LC_TOPICS = [
     "Ask both partners how they're doing.",
     "Use the baby's name if they've shared one.",
     "Put the due date and the anniversary in your calendar, and reach out on those days.",
-    "Watch for grief that turns into depression or anxiety that lasts. Share the National Maternal Mental Health Hotline, and if they talk about not wanting to be alive, call, text, or chat 988 together.",
+    "Watch for grief that turns into depression or anxiety that lasts.",
     "In Birch, a helper sees only what the person chooses to share, and never private notes. Asking kindly and directly matters."
    ],
    "you": "Be gentle with yourself if you are also expecting or have small children; it's okay to love them and to step back a little for their sake. If you're the baby's grandparent, you're grieving too, and you deserve support of your own."
@@ -2989,8 +2870,7 @@ const LC_TOPICS = [
   "reach": [
    "Heavy bleeding, fever, or severe pain after a loss: call your doctor or clinic right away, or 911.",
    "Sadness, anxiety, or numbness that lasts, for moms, dads, and partners: the National Maternal Mental Health Hotline, call or text 1-833-852-6262, any time, in English and Spanish.",
-   "Postpartum Support International HelpLine, including support after a loss: 1-800-944-4773, weekdays. It's not a crisis line.",
-   "Thoughts of not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Postpartum Support International HelpLine, including support after a loss: 1-800-944-4773, weekdays.",
    "In Minnesota, Share and Missing GRACE offer pregnancy and infant loss support groups and resources."
   ],
   "more": [
@@ -3090,20 +2970,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Anxiety or panic that keeps you from work, school, people, or sleep for more than a few weeks: talk with a doctor or counselor.",
-   "Chest pain, fainting, or trouble breathing and you're not sure why: get medical help, or call 911.",
-   "Feeling overwhelmed and needing someone now: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "NAMI HelpLine, for information and next steps (not a crisis line): 1-800-950-6264, or text NAMI to 62640, weekdays."
+   "Chest pain, fainting, or trouble breathing and you're not sure why: get medical help, or call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Crisis Text Line",
-    "https://www.crisistextline.org/text-us/"
-   ],
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
@@ -3124,8 +2993,7 @@ const LC_TOPICS = [
   "quick": [
    "Depression can feel like sadness, or like nothing at all: numb, flat, stuck, or tired in a way sleep doesn't fix.",
    "It's common in these years. In a 2024 to 2025 national survey of college students, about 37 percent reported moderate to severe depressive symptoms.",
-   "It's an illness, not laziness or a character flaw, and it gets better with help. Lower the bar, take one small step, and tell one person.",
-   "If you're thinking about not wanting to be alive, call or text 988, or text HOME to 741741, today."
+   "It's an illness, not laziness or a character flaw, and it gets better with help. Lower the bar, take one small step, and tell one person."
   ],
   "feel": "Maybe things you used to love feel like nothing now. Getting out of bed takes everything, and the dishes, the email, and the bill all sit there. You sleep too much or can't sleep, eat more or barely eat. Texts go unanswered. You might look around and feel like everyone your age is moving forward while you're stuck in place. Some people feel sad and cry a lot. Others feel numb, empty, or irritable, and snap at people they love. You might tell yourself you're just lazy, or that you should be able to handle this on your own. Depression says things like that. They aren't the truth about you.",
   "self": {
@@ -3168,8 +3036,7 @@ const LC_TOPICS = [
     "Keep inviting, gently: a walk, a drive, a meal, a show together. Keep inviting even when they say no.",
     "Help with one practical thing: groceries, a ride, a form, a phone call they've been dreading.",
     "Offer to help them find a doctor or counselor, and follow up kindly. Let them lead the visit.",
-    "If they mention guns or a lot of medicine where they live, ask whether someone they trust could hold them for now.",
-    "If they share thoughts of suicide, stay with them, thank them for telling you, and call or text 988 together."
+    "If they mention guns or a lot of medicine where they live, ask whether someone they trust could hold them for now."
    ],
    "you": "Supporting someone who is depressed is tiring, and their mood can pull on yours. Keep your own sleep, walks, and people, and share the load with others who love them. If they use Birch, they choose what you see; private notes are never shown to a helper, and no alert goes to anyone, so your own checking in matters."
   },
@@ -3185,20 +3052,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling low, numb, or uninterested in most things for two weeks or more: talk with a doctor, a clinic, or a counselor, and tell someone you trust.",
-   "Thoughts of not wanting to be alive, or of killing yourself: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741). Veterans and service members: call 988, then press 1.",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "Danger right now: call 911.",
-   "NAMI HelpLine, for information and next steps (not a crisis line): 1-800-950-6264, or text NAMI to 62640, weekdays."
+   "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Crisis Text Line",
-    "https://www.crisistextline.org/text-us/"
-   ],
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
@@ -3263,7 +3119,6 @@ const LC_TOPICS = [
     "Encourage a doctor or counselor visit soon, and offer a ride or company. Ask about first-episode or early psychosis programs.",
     "Keep things calm and simple: a quiet room, a short sentence, one choice at a time.",
     "Ask whether they'd sign a release so their treatment team can talk with you. It's their choice.",
-    "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911.",
     "Learn about it. NAMI offers classes and support groups for families and friends."
    ],
    "you": "This can be one of the most frightening things to watch in someone you love. You don't have to understand it all to be helpful. Get support for yourself, through NAMI's family programs, a counselor, or people you trust. If they use Birch, they choose what you see; private notes are never shown, and no alert goes to anyone."
@@ -3279,10 +3134,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Noticing changes in sleep, thinking, or mood that last more than a week or two: see a doctor, a clinic, or a counselor, and ask about early treatment or a first-episode program.",
-   "Thoughts of not wanting to be alive, or of harming someone: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone. A mobile crisis team can talk with you or come to you.",
    "Danger right now: call 911.",
-   "NAMI HelpLine, for information, next steps, and programs for families (not a crisis line): 1-800-950-6264, or text NAMI to 62640, weekdays.",
    "SAMHSA National Helpline, for help finding treatment for mental health or substance use: 1-800-662-4357, any time, in English and Spanish."
   ],
   "more": [
@@ -3297,10 +3149,6 @@ const LC_TOPICS = [
    [
     "NAMI: Time Is Ticking on Early Psychosis",
     "https://www.nami.org/blog/time-is-ticking-on-early-psychosis/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -3379,10 +3227,7 @@ const LC_TOPICS = [
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, has blue or gray lips, or seems very confused: call 911 right away, give naloxone if you have it, and stay with them. Minnesota, like many states, has a law that protects people who call for help for an overdose in many situations.",
    "Feeling like you can't stop, or wanting to cut back: the SAMHSA National Helpline, 1-800-662-4357, any time, in English and Spanish. Or talk with a doctor.",
-   "If using something is how you're getting through thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Questions about a possible poisoning, a bad reaction, or mixing substances with medicine: Poison Help, 1-800-222-1222, any time.",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "Pressure from someone you're dating to drink or use: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522."
+   "Questions about a possible poisoning, a bad reaction, or mixing substances with medicine: Poison Help, 1-800-222-1222, any time."
   ],
   "more": [
    [
@@ -3477,9 +3322,7 @@ const LC_TOPICS = [
   "reach": [
    "ANAD Eating Disorders Helpline: 1-888-375-7767, weekdays. For people who are struggling and the people who love them.",
    "A doctor or clinic can check how your body is doing and help you find specialized treatment. In Minnesota, The Emily Program offers eating disorder treatment for adults.",
-   "Fainting, chest pain, confusion, or a racing or very slow heartbeat: call 911.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "NAMI HelpLine, for information and next steps (not a crisis line): 1-800-950-6264, weekdays."
+   "Fainting, chest pain, confusion, or a racing or very slow heartbeat: call 911."
   ],
   "more": [
    [
@@ -3572,7 +3415,6 @@ const LC_TOPICS = [
    "In Minnesota, for help comparing plans or checking for Medical Assistance or MinnesotaCare: MNsure, at mnsure.org.",
    "Help with bills, food, housing, and local clinics: Minnesota 211, dial 211 or call 1-800-543-7709, or text your ZIP code to 898-211, any time.",
    "A possible poisoning, or a question about a medicine taken by mistake: Poison Help, 1-800-222-1222, any time.",
-   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now, or a medical emergency: call 911."
   ],
   "more": [
@@ -4215,8 +4057,7 @@ const LC_TOPICS = [
   "quick": [
    "Joining is a big choice with real rewards and real costs. Taking time to ask questions is part of choosing well.",
    "Before you sign, understand what you're agreeing to, and ask for anything important to you, like a job or a training path, in writing.",
-   "The first year brings a new schedule, new rules, new people, and often a new place. Feeling homesick or unsure is common and passes for many.",
-   "Help is built in for service members and families, any time: Military OneSource at 800-342-9647, and 988 then press 1 for the Veterans and Military Crisis Line."
+   "The first year brings a new schedule, new rules, new people, and often a new place. Feeling homesick or unsure is common and passes for many."
   ],
   "feel": "Maybe you're thinking about joining and weighing it against school, work, or staying near home. Maybe you've signed and you're counting down to training, part excited, part nervous. Maybe you're already in, at your first duty station, in the Guard or Reserve with a drill weekend coming, or getting ready for a deployment. You might feel proud, scared, homesick, restless, or all of it in one day. People back home may be proud of you, worried about you, or not sure what to say. Some people find exactly the structure, purpose, and friendships they hoped for. Some find it harder than they expected, at least for a while. Both happen, and both are worth talking about.",
   "self": {
@@ -4259,8 +4100,7 @@ const LC_TOPICS = [
     "If they're deciding, help them gather questions and, if they want, go with them to meet a recruiter.",
     "Learn the basics yourself: how to send mail, what their training schedule looks like, and who to contact in an emergency.",
     "Keep your messages warm and steady, with news from home and room for theirs.",
-    "If they seem low, keep in touch and ask directly how they're doing. Military OneSource, 800-342-9647, also helps families, any time.",
-    "If they ever talk about not wanting to be here, stay with them and help them call 988 and press 1."
+    "If they seem low, keep in touch and ask directly how they're doing. Military OneSource, 800-342-9647, also helps families, any time."
    ],
    "you": "Letting someone you love go into service stirs a lot. Find your own people: other military families, Guard and Reserve family programs, or friends who will listen. Military OneSource serves families too."
   },
@@ -4275,9 +4115,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Military OneSource: 800-342-9647, any time, for service members, the Guard and Reserve, and families. They can connect you with someone to talk to.",
-   "Veterans and Military Crisis Line: call 988, then press 1, or text 838255, any time.",
-   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Someone you're with is controlling or hurting you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4288,10 +4125,6 @@ const LC_TOPICS = [
    [
     "Military OneSource",
     "https://www.militaryonesource.mil/"
-   ],
-   [
-    "Veterans Crisis Line",
-    "https://www.veteranscrisisline.net"
    ],
    [
     "Beyond the Yellow Ribbon, Minnesota National Guard",
@@ -4312,8 +4145,7 @@ const LC_TOPICS = [
   "quick": [
    "Coming home is a big change, even when you're glad to be back. Many young veterans find it harder than they expected, and it gets easier with time and support.",
    "Missing the purpose, structure, and closeness of your unit is common. It makes sense to look for a new mission and new people on purpose.",
-   "Benefits and support are there for you to use: a County Veterans Service Officer, the VA, and Military OneSource can help you sort them out.",
-   "Veterans and Military Crisis Line: call 988 and press 1, or text 838255, any time."
+   "Benefits and support are there for you to use: a County Veterans Service Officer, the VA, and Military OneSource can help you sort them out."
   ],
   "feel": "Maybe you finished your contract and you're out. Maybe you're back from a deployment and returning to the Guard or Reserve, a job, or school. Civilian life can feel slow, loose, or strangely quiet after the pace and purpose of service. You might miss your unit like family. You might feel older than your friends, or like people your age are worried about things that seem small. Some young veterans sleep badly, feel on edge in crowds, or notice they're drinking more. Some carry memories or choices they made, or saw, that sit heavy and are hard to talk about. Some feel proud, relieved, and lost all at once. Every one of these is part of coming home, and none of it means you're broken.",
   "self": {
@@ -4321,7 +4153,7 @@ const LC_TOPICS = [
     "Build a simple daily rhythm: a wake time, some movement, one thing you'll get done.",
     "Connect with a County Veterans Service Officer, or the Minnesota Department of Veterans Affairs, to learn the benefits and health care you've earned.",
     "Reach out to one person from your unit this week.",
-    "If nights are hard, anger flares, or drinking keeps growing, talk with the VA, a Vet Center, or a counselor early. Veterans and Military Crisis Line: 988, then press 1."
+    "If nights are hard, anger flares, or drinking keeps growing, talk with the VA, a Vet Center, or a counselor early."
    ],
    "helps": [
     "A new mission: school, training, a trade, a job, or service in your community.",
@@ -4356,8 +4188,7 @@ const LC_TOPICS = [
     "Make room. Let them set the pace for crowds, gatherings, and big plans.",
     "Help them connect with a County Veterans Service Officer, if they want help sorting out benefits.",
     "Invite them into community and activity, without pushing.",
-    "Notice changes: sleep, drinking, anger, pulling away. Ask directly and kindly how they're doing.",
-    "If they talk about not wanting to be here, stay with them and help them call 988 and press 1."
+    "Notice changes: sleep, drinking, anger, pulling away. Ask directly and kindly how they're doing."
    ],
    "you": "Families come home too. Roles shift, routines change, and you may feel shut out or worried. Military OneSource, 800-342-9647, serves families for a period after service; find your own people to talk with as well."
   },
@@ -4371,17 +4202,11 @@ const LC_TOPICS = [
    "bark|Five Senses Pause"
   ],
   "reach": [
-   "Veterans and Military Crisis Line: call 988, then press 1, or text 838255, any time.",
    "Military OneSource: 800-342-9647, any time, for service members and families.",
    "Nightmares, anger, or drinking that keep growing: talk with the VA, a Vet Center, or a counselor. SAMHSA's helpline, 1-800-662-4357, can point you to local help, any time.",
-   "In Minnesota, call **CRISIS (274747) from a cell phone for a county crisis team, any time.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "Veterans Crisis Line",
-    "https://www.veteranscrisisline.net"
-   ],
    [
     "Minnesota Department of Veterans Affairs",
     "https://mn.gov/mdva/"
@@ -4414,7 +4239,7 @@ const LC_TOPICS = [
    "Losing a parent, a friend, or someone your age can shake your whole sense of how the world works. Grief has its own shape and its own timeline.",
    "Grief can look like sadness, anger, numbness, guilt, relief, trouble focusing, or getting very busy. All of it is normal.",
    "Many people your age haven't been through a big loss yet, so friends may not know what to say. Look for at least one person who can sit with it.",
-   "After a death by suicide or overdose, grief often carries extra questions and guilt. It was not your fault. If you start having thoughts of not wanting to be here, call or text 988."
+   "After a death by suicide or overdose, grief often carries extra questions and guilt. It was not your fault."
   ],
   "feel": "Maybe your mom or dad died, suddenly or after a long illness, and you're trying to grieve while handling things no one taught you how to do. Maybe a friend, a roommate, a coworker, or someone you went to school with died, and it feels impossible that someone your age is just gone. You might feel crushing sadness, or nothing at all. You might be angry, at them, at a doctor, at the world. You might replay the last conversation or search for what you missed. Some people feel relief after a long illness, then guilt for the relief. School, work, and friends may expect you to bounce back fast, and people your age may avoid the subject because they don't know what to say. Grief can come in waves for years, sparked by a song, a date, or a milestone they won't be there for.",
   "self": {
@@ -4457,8 +4282,7 @@ const LC_TOPICS = [
     "Show up with something concrete: food, a ride, help with a task, a walk.",
     "Say the name of the person who died. Most grieving people want to hear it.",
     "Remember hard dates: the birthday, the anniversary, the first holidays.",
-    "Watch for signs of deeper trouble: drinking more, not eating or sleeping, or talk of not wanting to be here. Ask open questions, kindly, and listen. If they share thoughts of not wanting to be alive, stay with them and call or text 988 together.",
-    "If they talk about not wanting to be here, stay with them and call, text, or chat 988 together."
+    "Ask open questions, kindly, and listen."
    ],
    "you": "If you knew the person too, you're grieving as well. Let yourself. Being beside someone's grief can stir your own losses; find someone of your own to talk with."
   },
@@ -4472,10 +4296,7 @@ const LC_TOPICS = [
    "leaves|Sleep"
   ],
   "reach": [
-   "Thoughts of not wanting to be here, or of joining the person who died: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Grief that makes daily life hard for weeks on end, or that's tangled with drinking or drugs: talk with a doctor, a counselor, or your campus counseling center. SAMHSA's helpline, 1-800-662-4357, can point you to local help.",
-   "In Minnesota, call **CRISIS (274747) from a cell phone for a county crisis team, any time.",
-   "Veterans and service members: call 988, then press 1.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4577,9 +4398,8 @@ const LC_TOPICS = [
    "bark|Journal"
   ],
   "reach": [
-   "Questions tangled with depression, anxiety, or past harm: a counselor who respects faith can help. NAMI HelpLine: 1-800-950-6264, or text NAMI to 62640 (weekdays; not a crisis line).",
+   "Questions tangled with depression, anxiety, or past harm: a counselor who respects faith can help.",
    "A group or leader pressuring, controlling, or frightening you: talk with someone you trust outside that group. The guide Hurt by a Faith Community has more.",
-   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4609,14 +4429,13 @@ const LC_TOPICS = [
   ],
   "quick": [
    "Harm done in the name of faith can wound deeply. Your hurt is real, and it isn't a sign that something is wrong with you or your faith.",
-   "If a leader or anyone in a faith group touched you, threatened you, or pressured you sexually, that is never okay, and you can report it. RAINN: 1-800-656-4673. In Minnesota, Day One: 1-866-223-1111.",
+   "If a leader or anyone in a faith group touched you, threatened you, or pressured you sexually, that is never okay, and you can report it.",
    "What people did and what you hold sacred can be two different things. You can sort them out at your own pace.",
    "Healing can mean going back once things are made right, finding a new community, or stepping away. Each can be a healthy choice."
   ],
   "feel": "Maybe a leader shamed you in front of others, or told you your questions were sin. Maybe a group turned cold when your life changed, or when you made a choice they didn't like. Maybe you were pressured to give more money, time, or obedience than you could. Maybe you saw harm covered up, or a leader you trusted crossed a line with you. You might feel angry, grieved, anxious in religious places, or spiritually homeless. Some people feel afraid of God after being hurt by people who spoke in God's name. Some still love their faith and miss their community. Some want nothing to do with it right now. All of that makes sense when a place meant to be safe hurt you.",
   "self": {
    "first": [
-    "If anyone hurt you sexually or physically, or is threatening you: you can report it to the police, and get support from RAINN, 1-800-656-4673, or in Minnesota, Day One, 1-866-223-1111. Danger right now: call 911.",
     "Name what happened, even just to yourself, in a few plain sentences.",
     "Find one safe person outside the group to talk with.",
     "Give yourself permission to take space from people and places that stir the hurt."
@@ -4652,7 +4471,6 @@ const LC_TOPICS = [
    ],
    "help": [
     "Listen all the way through. Hold off on explaining or correcting.",
-    "If someone hurt them sexually or physically, support their choices about reporting and help them reach RAINN, Day One in Minnesota, or the police.",
     "Respect their pace and boundaries about faith, services, and family events.",
     "If they want a faith voice, help them find one outside the situation: a chaplain, a different leader, a wise friend.",
     "If fear, shame, or low mood hang on, encourage a counselor who understands religious harm."
@@ -4669,21 +4487,10 @@ const LC_TOPICS = [
    "branches|Ask for Help"
   ],
   "reach": [
-   "Sexual abuse or assault, by a leader or anyone: RAINN, 1-800-656-4673, or text HOPE to 64673, any time. In Minnesota, Day One: 1-866-223-1111, or text 612-399-9995.",
-   "Someone you're with controlling or hurting you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522. National Domestic Violence Hotline: 1-800-799-7233.",
-   "Fear, shame, or low mood that lasts two weeks or more: talk with a counselor or a doctor. NAMI HelpLine: 1-800-950-6264 (weekdays; not a crisis line).",
-   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Fear, shame, or low mood that lasts two weeks or more: talk with a counselor or a doctor.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "RAINN",
-    "https://www.rainn.org"
-   ],
-   [
-    "Day One, Minnesota",
-    "https://dayoneservices.org/domestic-violence/help-now/"
-   ],
    [
     "Exline and colleagues, religious and spiritual struggles (research)",
     "https://doi.org/10.1037/a0036465"
@@ -4762,8 +4569,7 @@ const LC_TOPICS = [
    "bark|Your Own Timeline"
   ],
   "reach": [
-   "Feeling lost that turns into hopelessness, or low mood most days for two weeks or more: talk with a counselor or doctor. NAMI HelpLine: 1-800-950-6264, or text NAMI to 62640 (weekdays; not a crisis line).",
-   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Feeling lost that turns into hopelessness, or low mood most days for two weeks or more: talk with a counselor or doctor.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4856,8 +4662,6 @@ const LC_TOPICS = [
    "To set up accommodations: your school's disability services or accessibility office. Ask how to register and what documentation they accept.",
    "If an accommodation isn't being followed: talk with disability services first. Your school also has a process for concerns about disability access.",
    "For help finding health, housing, and money resources in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "For a mental health condition: your campus counseling center, or the NAMI HelpLine, 1-800-950-6264, weekdays (not a crisis line).",
-   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4968,7 +4772,6 @@ const LC_TOPICS = [
    "For questions about disability rights at work, or to file a complaint: the U.S. Equal Employment Opportunity Commission, at eeoc.gov. Deadlines apply, so ask early.",
    "In Minnesota, for help with work, benefits, and health resources: Disability Hub MN, 1-866-333-2466.",
    "For help with bills or housing during a hard stretch: Minnesota 211, dial 211.",
-   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -5082,7 +4885,6 @@ const LC_TOPICS = [
    "Workshops for living well with a long-term condition or pain, led by people who live with one: the Self-Management Resource Center, at selfmanagementresource.com.",
    "For help at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
    "In Minnesota, for health, housing, and money resources: Disability Hub MN, 1-866-333-2466.",
-   "Feeling hopeless, or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now, or a medical emergency: call 911."
   ],
   "more": [
@@ -5171,8 +4973,7 @@ const LC_TOPICS = [
     "Ask them to share their early warning signs and what they'd like you to do. Agree on it while things are calm.",
     "Ask whether they'd sign a release so their treatment team can talk with you. It's their choice.",
     "Help with the steady things: rides to appointments, a quiet home, regular meals together.",
-    "Learn about the illness, and find support for yourself. NAMI's Family-to-Family classes are for family and friends.",
-    "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911."
+    "Learn about the illness, and find support for yourself. NAMI's Family-to-Family classes are for family and friends."
    ],
    "you": "Loving someone with a serious mental illness can be a long road, with good years and hard weeks. Get your own support, rest, and people. If they use Birch, they choose what you see; private notes are never shown, and no alert goes to anyone."
   },
@@ -5187,10 +4988,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Early warning signs coming back, or treatment not working: call your treatment team soon, before a crisis.",
-   "Thoughts of not wanting to be alive, or of harming someone: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone. A mobile crisis team can talk with you or come to you.",
    "Danger right now: call 911.",
-   "NAMI HelpLine, for information, peer programs, and classes for families (not a crisis line): 1-800-950-6264, weekdays.",
    "SAMHSA National Helpline, for help finding treatment: 1-800-662-4357, any time, in English and Spanish."
   ],
   "more": [
@@ -5201,10 +4999,6 @@ const LC_TOPICS = [
    [
     "SAMHSA: Working Definition of Recovery",
     "https://store.samhsa.gov/sites/default/files/d7/priv/pep12-recdef.pdf"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ],
   "life": [
@@ -5296,7 +5090,6 @@ const LC_TOPICS = [
    "In Minnesota, for help with health, housing, work, and money resources: Disability Hub MN, 1-866-333-2466.",
    "For help at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
    "For anxiety, depression, or burnout that lasts: talk with your doctor or a counselor, ideally one who works with autistic adults.",
-   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -5338,8 +5131,7 @@ const LC_TOPICS = [
   "quick": [
    "Deaf, deaf, and hard of hearing people live full lives in many ways: with sign language, speech, hearing aids, cochlear implants, captions, or a mix. Many in the Deaf community say “Deaf” with a capital D for their culture and language. You choose your own words.",
    "Listening and lip reading all day takes real energy. Planning quiet breaks is wise, not weak.",
-   "You can ask for access at school and work: interpreters, captions, written notes, seating, and meetings that work for you.",
-   "988 serves Deaf and hard of hearing people in ASL by videophone (use ASL Now on the 988 website), and you can also text 988."
+   "You can ask for access at school and work: interpreters, captions, written notes, seating, and meetings that work for you."
   ],
   "feel": "Maybe you've been Deaf all your life, with your own language and community, and the hearing world keeps forgetting you're there. Maybe your hearing is changing and you're still figuring out what that means. You might be tired after a day of straining to follow conversations, or quietly left out of the joke at the table. You might be tired of asking people to repeat themselves or to face you. You might also feel deep pride in your language, your culture, and your people. All of that can be true at once. Often the barrier is the room, the meeting, or the video without captions, and those can change.",
   "self": {
@@ -5354,8 +5146,7 @@ const LC_TOPICS = [
     "Planning breaks from listening. Listening fatigue is real, and a quiet half hour can restore a lot.",
     "Choosing places that work for you, like a quieter restaurant, a booth, good lighting, or meeting one on one.",
     "Finding community, like Deaf or hard of hearing groups, ASL events, or online spaces, if that fits you.",
-    "Keeping hearing appointments and checking your hearing tech, if you use it. Whether to use hearing aids or an implant is your choice, with your audiologist or doctor.",
-    "Knowing how to reach help your way: 988 by ASL videophone or by text, and 911 by text where it's available."
+    "Keeping hearing appointments and checking your hearing tech, if you use it. Whether to use hearing aids or an implant is your choice, with your audiologist or doctor."
    ],
    "tell": [
     "“My way of communicating is a real way of communicating.”",
@@ -5397,17 +5188,12 @@ const LC_TOPICS = [
    "bark|Name Your Gifts"
   ],
   "reach": [
-   "For a crisis, in ASL: 988 by videophone (use ASL Now on the 988 website), or text 988, any time.",
    "In Minnesota, for services for people who are Deaf, deafblind, or hard of hearing and their families: the Deaf and Hard of Hearing Services Division, at mn.gov/deaf-hard-of-hearing.",
    "For access at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
    "For health, housing, and money resources in Minnesota: Disability Hub MN, 1-866-333-2466.",
    "Danger right now: call 911, or text 911 where it's available."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline (ASL Now)",
-    "https://988lifeline.org/"
-   ],
    [
     "National Association of the Deaf",
     "https://www.nad.org"
@@ -5428,7 +5214,6 @@ const LC_TOPICS = [
   "lines": [],
   "sources": [
    "cdcdisab",
-   "asl988",
    "socialmodel"
   ]
  },
@@ -5508,7 +5293,6 @@ const LC_TOPICS = [
    "For access at school or work: your school's disability services office, or the Job Accommodation Network at askjan.org.",
    "For health, housing, and money resources in Minnesota: Disability Hub MN, 1-866-333-2466.",
    "Vision that's changing: see your eye doctor, and ask about low vision services.",
-   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -5592,7 +5376,6 @@ const LC_TOPICS = [
     "Treat their relationships the way you would anyone's: interest, respect, and an invitation to the next family dinner.",
     "Help with practical pieces if they ask, like rides or an accessible place to meet.",
     "If you're the partner, keep your own friends and rest, and talk about care openly together.",
-    "If you see signs of control, isolation, or threats, say what you notice gently, and share Love Is Respect.",
     "Point them to good benefits advice if marriage or moving in is on the horizon."
    ],
    "you": "Watching someone you love risk their heart is hard for any parent or friend. Trust them, and be a safe place to land. If they use Birch, they choose what you see."
@@ -5607,18 +5390,11 @@ const LC_TOPICS = [
    "bark|Something to Look Forward To"
   ],
   "reach": [
-   "If someone you're dating or with is controlling, threatening, or hurting you: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time.",
-   "In Minnesota, for anyone being hurt by someone close to them: Day One, 1-866-223-1111, any time.",
    "Before marrying or moving in together, if you receive disability benefits: Disability Hub MN, 1-866-333-2466, for benefits help.",
    "Questions about intimacy, medicines, or your body: your doctor or clinic.",
-   "Feeling hopeless, or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org"
-   ],
    [
     "Disability Hub MN",
     "https://disabilityhubmn.org/"
@@ -5637,7 +5413,6 @@ const LC_TOPICS = [
    "close"
   ],
   "lines": [
-   "loveisrespect",
    "dayone"
   ],
   "sources": [
@@ -5719,9 +5494,7 @@ const LC_TOPICS = [
   "reach": [
    "For help with bills, food, housing, and local services: Minnesota 211, dial 211 or call 1-800-543-7709, any time.",
    "For services for a family member with a disability in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "If a family member has a mental health condition: the NAMI HelpLine, 1-800-950-6264, weekdays, and NAMI's classes for families (not a crisis line).",
    "If a vulnerable adult is being hurt, neglected, or taken advantage of in Minnesota: MAARC, 1-844-880-1574, any time.",
-   "Feeling overwhelmed or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -5828,7 +5601,6 @@ const LC_TOPICS = [
    "For access at a faith community: ask its leaders directly, and bring a friend if that helps.",
    "In Minnesota, for health, housing, and money resources: Disability Hub MN, 1-866-333-2466.",
    "If you're carrying spiritual hurt that won't let go, a counselor can help alongside a faith leader.",
-   "Feeling hopeless, or having thoughts of not wanting to be alive: call or text 988, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -5937,7 +5709,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Keep sparkling water, tea, or other good drinks on hand when they visit.",
     "Ask what they'd like you to do if they're having a hard night, and do that.",
     "Learn a little about early sobriety. SMART Recovery Family and Friends welcomes people who love someone growing sober.",
-    "If they talk about wanting to harm themselves, call or text 988 together. If someone can't wake up or is breathing slowly, call 911."
+    "If someone can't wake up or is breathing slowly, call 911."
    ],
    "you": "Watching someone you love grow sober brings up a lot. Your feelings count too, including old hurt. Find your own support, keep your own rhythm, and remember that their sobriety is theirs to tend. Your part is warmth and steadiness. If they use Birch, they choose what you see, and no alert goes to anyone."
   },
@@ -5955,7 +5727,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Stopping alcohol, benzodiazepines, or other sedatives: talk with a doctor first. Shaking, sweating, seeing or hearing things, confusion, or a seizure after stopping need medical help right away. Call 911 for a seizure.",
    "Help finding treatment, a doctor, or support near you: the SAMHSA National Helpline, 1-800-662-4357, any time, in English and Spanish.",
    "If you use opioids or pills from anywhere but a pharmacy: after a break, your body's tolerance drops, so an old amount can be deadly. Keep naloxone (Narcan) close; it's sold without a prescription. If someone can't wake up or is breathing slowly, call 911.",
-   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Questions about mixing substances or medicines: Poison Help, 1-800-222-1222, any time."
   ],
   "more": [
@@ -6061,9 +5832,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, stay with them, and give naloxone (Narcan) if opioids may be involved. Minnesota, like many states, has a law that protects people who call for help for an overdose in many situations.",
    "A drink that tastes odd or a sudden, strange drunk feeling: tell a friend, get to safety, and call 911 if you feel very unwell.",
-   "Help finding treatment or support: the SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "Feeling pressured or hurt by someone you're dating: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
-   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Help finding treatment or support: the SAMHSA National Helpline, 1-800-662-4357, any time."
   ],
   "more": [
    [
@@ -6092,8 +5861,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "growing"
   ],
   "lines": [
-   "samhsa",
-   "loveisrespect"
+   "samhsa"
   ],
   "sources": [
    "arhe"
@@ -6171,19 +5939,13 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "bark|Self-Compassion Break"
   ],
   "reach": [
-   "Someone you're dating pressures you to drink or use, controls you, or scares you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522, any time.",
    "Help finding a peer group, treatment, or support near you: the SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "Loneliness that feels heavy, or thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
    [
     "SMART Recovery: meetings",
     "https://smartrecovery.org"
-   ],
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org"
    ]
   ],
   "life": [
@@ -6195,8 +5957,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "long"
   ],
   "lines": [
-   "samhsa",
-   "loveisrespect"
+   "samhsa"
   ],
   "sources": [
    "samhsarec"
@@ -6278,8 +6039,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them. After a break, tolerance drops, so an old amount of opioids can be deadly.",
    "Drank or used for more than a few days, especially alcohol, benzodiazepines, or other sedatives: talk with a doctor before stopping. Shaking, confusion, seeing or hearing things, or a seizure need medical help right away.",
    "Help finding treatment or support: the SAMHSA National Helpline, 1-800-662-4357, any time, in English and Spanish.",
-   "Questions about a possible poisoning or mixing substances: Poison Help, 1-800-222-1222.",
-   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Questions about a possible poisoning or mixing substances: Poison Help, 1-800-222-1222."
   ],
   "more": [
    [
@@ -6390,8 +6150,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them. After treatment, tolerance is lower, so an old amount of opioids can be deadly.",
    "A slip, or feeling close to one: call your treatment program, your therapist, your doctor, or a peer today. Every return counts.",
    "Help finding outpatient care, sober housing, medication, or support near you: the SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "In Minnesota, help with housing, food, or bills: dial 211.",
-   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "In Minnesota, help with housing, food, or bills: dial 211."
   ],
   "more": [
    [
@@ -6499,8 +6258,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Your parent can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them.",
    "A parent driving after drinking or using: stay out of the car, and call 911 if someone is in danger on the road.",
    "Help finding treatment for a parent, or support for you: the SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "Someone at home hurting you or a younger sibling: call 911 in danger. In Minnesota, Day One, 1-866-223-1111, any time. To report a child being hurt or neglected, call your county's child protection line or 911.",
-   "Feeling overwhelmed, or thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Someone at home hurting you or a younger sibling: call 911 in danger. To report a child being hurt or neglected, call your county's child protection line or 911."
   ],
   "more": [
    [
@@ -6605,8 +6363,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Help finding treatment, a therapist, or support: the SAMHSA National Helpline, 1-800-662-4357, any time.",
    "Eating that feels out of control, or restricting: the ANAD Eating Disorders Helpline, 1-888-375-7767, weekdays.",
    "Betting or gambling: the Minnesota Problem Gambling Helpline, 1-800-333-4673, or the National Problem Gambling Helpline, 1-800-MY-RESET, any time.",
-   "Debt that feels overwhelming: in Minnesota, dial 211 for help finding nonprofit credit guidance.",
-   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Debt that feels overwhelming: in Minnesota, dial 211 for help finding nonprofit credit guidance."
   ],
   "more": [
    [

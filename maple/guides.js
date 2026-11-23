@@ -103,7 +103,7 @@ const TOPICS = [
   faith: 'An old proverb says a gentle answer turns away wrath, and many traditions teach that peace is something we carry into a room. A slow breath and a quiet “You’re safe” can be a prayer all by itself.',
   after: ['Reconnect before you correct. A hug, a snack, or quiet time together comes first.', 'Later, talk briefly: what happened, what their body felt, and what might help next time.', 'Make it right together: clean up, a kind word, or a redo.', 'Make a calm-down plan while everyone is calm, and practice it.'],
   teach: ['Set up a calm corner and a quiet signal before you ever need them.', 'If you need to move the class, call for a second adult. Never leave the child alone.', 'Follow your school’s safety plan, and write down what happened soon after.', 'Reconnect privately the same day so the child knows the relationship is okay.'],
-  reach: ['Meltdowns happen most days, last a long time, or are getting worse.', 'Someone gets hurt, or the child talks about hurting themselves or not wanting to be alive. Call or text 988, or call 911 in an emergency.', 'Meltdowns seem tied to something that happened to them, or to trouble with sleep, hearing, or learning. Talk with your pediatrician or school counselor.'],
+  reach: ['Meltdowns happen most days, last a long time, or are getting worse.', 'Meltdowns seem tied to something that happened to them, or to trouble with sleep, hearing, or learning. Talk with your pediatrician or school counselor.'],
   more: [M.cmi, M.aap, M.nctsn] },
 
 { id: 'sadness', ring: 'inside', title: 'Sadness That Lingers', keys: 'sad sadness depressed down unhappy crying withdrawn lonely alone hopeless',
@@ -119,8 +119,8 @@ const TOPICS = [
   faith: 'Faith communities often know how to sit with sorrow. Lament, prayer, and simply being carried by a community can remind a child they are held even on dark days.',
   after: ['Check in each day, briefly and warmly.', 'Keep noticing changes in sleep, eating, and play.'],
   teach: ['Notice a child who has gone quiet or stopped playing, and let the family know gently.', 'Pair them with a kind classmate for a small job.'],
-  reach: ['Sadness lasts more than two weeks or gets in the way of daily life.', 'They talk about being better off gone, wanting to die, or hurting themselves: see the guide on when a child talks about wanting to die, and call their doctor or 988 right away.'],
-  more: [M.cmi, M.aap, M.lifeline] },
+  reach: ['Sadness lasts more than two weeks or gets in the way of daily life.'],
+  more: [M.cmi, M.aap] },
 
 { id: 'bedtime', ring: 'inside', title: 'Bedtime Fears and Nightmares', keys: 'nightmares bedtime dark monsters sleep scared at night',
   quick: ['Night fears are very common and usually pass with time.', 'Keep bedtime calm, predictable, and unplugged.', 'After a nightmare, comfort first and talk in the morning.', 'Take fears seriously without agreeing monsters are real.'],
@@ -360,7 +360,7 @@ const TOPICS = [
   faith: 'A faith community that meets mental illness with compassion can be a strong support for the whole family.',
   after: ['Check in on your child’s feelings regularly, especially during hard stretches.'],
   teach: ['Be a steady, warm adult. Kids in stressed homes often need school to feel predictable.'],
-  reach: ['NAMI offers family programs and a helpline. Call 988 if anyone is in crisis.'],
+  reach: ["NAMI offers family programs and a helpline."],
   more: [M.nami, M.cmi] },
 
 { id: 'addiction', ring: 'health', life: ["sober"], sober: ["love"], title: "When a Family Member Drinks or Uses", keys: 'addiction alcohol drugs drinking drunk drinks uses using substance use recovery rehab treatment sober sobriety slip relapse gambling betting',
@@ -553,7 +553,7 @@ const TOPICS = [
   faith: 'Many traditions teach reconciliation. Children learn it best when they see adults practice it.',
   after: ['Check in after tense stretches.'],
   teach: ['A child who seems on edge may be carrying home stress. A steady, kind classroom helps.'],
-  reach: ['If there is violence or fear at home, the National Domestic Violence Hotline is 1-800-799-7233. Call 911 in danger.'],
+  reach: ["If it keeps going, talk with your child’s doctor, a school counselor, or someone you trust."],
   more: [M.cmi, M.aap] },
 /* ---------------- SCHOOL ---------------- */
 { id: 'bullied', ring: 'school', title: 'Being Bullied', keys: 'bullying bullied mean teased picked on excluded someone is being mean',
@@ -1254,7 +1254,7 @@ const TOPICS = [
   plain: {"faith": "Families may find comfort in a memorial, a candle, a favorite song, or time in a place the person loved. Children may have big questions about where the person is now. Answer simply and honestly in your family’s own way, and lead with what is true in every home: love doesn’t end, and you are held."},
   after: ["Grief comes back on birthdays and holidays. Mark those days together with a memory, a walk, or a favorite meal.", "Watch for worry about other grown-ups who drink or take medicine. Reassure with simple, true words."],
   teach: ["Ask the family what words they are using, and use the same words.", "A grieving child may be tired, distracted, or quick to tears. Some grace and a quiet place help."],
-  reach: ["The Dougy Center has resources for children grieving any death, including a death from drinking or drugs.", "Talk with their doctor or school counselor if grief stays intense for many months, or school and friendships fall apart.", "If your child ever talks about wanting to die, stay with them and call or text 988.", "SAMHSA National Helpline: 1-800-662-4357, confidential and open any time, if someone else in the family needs help with drinking or drugs."],
+  reach: ["The Dougy Center has resources for children grieving any death, including a death from drinking or drugs.", "Talk with their doctor or school counselor if grief stays intense for many months, or school and friendships fall apart.", "SAMHSA National Helpline: 1-800-662-4357, confidential and open any time, if someone else in the family needs help with drinking or drugs."],
   more: [["The Dougy Center for Grieving Children and Families", "https://www.dougy.org"], ["SAMHSA National Helpline", "https://www.samhsa.gov/find-help/national-helpline"]] }
 /* ---------------- Living Sober guides end, GWG BLD 789 ---------------- */
 ];

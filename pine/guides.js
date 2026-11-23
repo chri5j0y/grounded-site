@@ -130,20 +130,10 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling lost, lonely, or not like yourself for two weeks or more: talk with your school counselor, your doctor, or an adult you trust. You don't need a big reason to ask.",
-   "Someone bullying, threatening, or hurting you, at school, online, or anywhere: tell an adult at school you trust. Childhelp, 1-800-422-4453 (call or text, any time). In Minnesota: Day One, 1-866-223-1111.",
-   "Feeling like there's no point, or thinking about not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Want to talk with someone your age? Teen Line: call 800-852-8336 (8 p.m. to midnight Central), or text TEEN to 839863.",
+   "Someone bullying, threatening, or hurting you, at school, online, or anywhere: tell an adult at school you trust.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
    [
     "The Jed Foundation",
     "https://jedfoundation.org"
@@ -225,16 +215,11 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Stress, worry, or low mood that lasts two weeks or more, or gets in the way of sleep, eating, or friends: talk with your school counselor or doctor.",
-   "Feeling like you'll never be enough, or like there's no point: tell an adult you trust today. Call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Want to talk with someone your age? Teen Line: call 800-852-8336 (8 p.m. to midnight Central), or text TEEN to 839863.",
+   "Feeling like you'll never be enough, or like there's no point: tell an adult you trust today.",
    "For grown-ups looking for guidance and support: NAMI HelpLine, 1-800-950-6264, weekdays.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
    [
     "The Jed Foundation",
     "https://jedfoundation.org"
@@ -319,7 +304,7 @@ const LC_TOPICS = [
   "reach": [
    "Questions about ADHD, learning differences, or medicine: talk with your doctor. For an evaluation or a school plan, ask your school counselor or the school's special education team.",
    "In Minnesota, PACER Center helps families and students with IEPs, 504 plans, and planning for life after high school.",
-   "Feeling hopeless, worn out, or like you'll never measure up, for two weeks or more: tell an adult you trust or your counselor. Thinking about not wanting to be alive: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Feeling hopeless, worn out, or like you'll never measure up, for two weeks or more: tell an adult you trust or your counselor.",
    "For grown-ups looking for guidance and support: NAMI HelpLine, 1-800-950-6264, weekdays.",
    "Danger right now: call 911."
   ],
@@ -417,8 +402,8 @@ const LC_TOPICS = [
   "reach": [
    "Any hit to the head: stop playing and get checked. Watch for headache, dizziness, confusion, or mood changes, and see a health care provider before returning.",
    "Pain that won't go away, or an injury that keeps coming back: tell your coach, athletic trainer, or doctor.",
-   "A coach, teammate, or anyone in your sport hurting you, threatening you, touching you in a way that feels wrong, or hazing: tell an adult you trust outside the team. Childhelp, 1-800-422-4453 (call or text, any time). In Minnesota: Day One, 1-866-223-1111. Danger right now: 911.",
-   "Low mood that lasts two weeks or more, or feeling like there's no point: tell an adult you trust, or call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "A coach, teammate, or anyone in your sport hurting you, threatening you, touching you in a way that feels wrong, or hazing: tell an adult you trust outside the team.",
+   "Low mood that lasts two weeks or more, or feeling like there's no point: tell an adult you trust.",
    "If food, weight, or training starts to feel like rules you can't break, tell someone you trust. ANAD Helpline: 1-888-375-7767, weekdays."
   ],
   "more": [
@@ -429,10 +414,6 @@ const LC_TOPICS = [
    [
     "AAP: sports specialization in young athletes",
     "https://publications.aap.org/pediatrics/article-pdf/138/3/e20162148/1344770/peds_20162148.pdf"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ]
   ]
  },
@@ -507,7 +488,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling stuck, hopeless, or like you have no future, for two weeks or more: talk with your school counselor or an adult you trust.",
-   "Feeling like there's no point, or thinking about not wanting to be alive: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Military families with questions about service or military life: Military OneSource, 800-342-9647, any time.",
    "Danger right now: call 911."
   ],
@@ -550,7 +530,7 @@ const LC_TOPICS = [
   "self": {
    "first": [
     "Before you go, learn three life skills you don't have yet: laundry, a simple meal, a budget, scheduling your own doctor visit.",
-    "Find out where help lives in your next place: the campus counseling center, a health clinic, a resident advisor, or the people program at work or in training. Save 988 in your phone; it works anywhere in the country.",
+    "Find out where help lives in your next place: the campus counseling center, a health clinic, a resident advisor, or the people program at work or in training.",
     "Make a plan with home: how and how often you'll talk, decided together."
    ],
    "helps": [
@@ -572,7 +552,6 @@ const LC_TOPICS = [
    "say": [
     "“I'm proud of you, and I'm going to miss you. Both are true.”",
     "“What are you most excited about? Most nervous about?”",
-    "“If it gets hard out there, call me. Or call or text 988. You don't need to tough it out alone.”",
     "“How often would you like to talk? Let's decide together.”"
    ],
    "avoid": [
@@ -583,7 +562,6 @@ const LC_TOPICS = [
    ],
    "help": [
     "Teach the basics before they go: money, laundry, cooking, making appointments, and handling a roommate conflict.",
-    "Talk about mental health before they leave: what low feels like for them, where counseling is, and that 988 works anywhere.",
     "Talk honestly about alcohol, parties, and consent, with respect, as you would with an adult.",
     "Once they turn 18, or start college, many school records and health information become theirs to share. Talk together about what, if anything, they'd like you to be able to see, and which forms that takes.",
     "Agree on a rhythm for staying in touch, and let them lead it.",
@@ -602,8 +580,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Homesick, lonely, or low for more than a few weeks, or it's getting in the way of classes, work, sleep, or eating: go to your campus counseling center, a doctor, or a trusted adult.",
-   "Feeling hopeless, or thinking about not wanting to be alive: call, text, or chat 988, any time, anywhere in the country. Or text HOME to 741741.",
-   "Someone hurting you, pressuring you, or controlling you, including someone you're dating: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522. Sexual assault: RAINN, 1-800-656-4673. In Minnesota: Day One, 1-866-223-1111.",
    "Drinking or drug use getting out of hand: SAMHSA National Helpline, 1-800-662-4357, any time.",
    "Military families: Military OneSource, 800-342-9647, any time.",
    "Danger right now: call 911."
@@ -612,10 +588,6 @@ const LC_TOPICS = [
    [
     "JED Foundation: Set to Go",
     "https://jedfoundation.org/set2go"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ],
    [
     "FERPA: when records become the student's",
@@ -698,24 +670,9 @@ const LC_TOPICS = [
   "reach": [
    "Sad, flat, or pulling away from everyone for two weeks or more: talk with a parent, your school counselor, or your doctor. You can ask for help yourself.",
    "If it's turned into repeated meanness, threats, or someone sharing things about you online: tell a trusted adult and see the bullying guide.",
-   "Teen Line, teens answering teens: call 800-852-8336 (evenings, 8 p.m. to midnight Central) or text TEEN to 839863.",
-   "Feeling like no one would care if you were gone, or thoughts of not wanting to be here: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Crisis Text Line",
-    "https://www.crisistextline.org/text-us/"
-   ],
    [
     "CDC: school connectedness and teen mental health",
     "https://www.cdc.gov/mmwr/volumes/73/su/su7304a9.htm"
@@ -781,8 +738,7 @@ const LC_TOPICS = [
     "Help find a side door into belonging: a team, club, class, job, youth group, or volunteer role built around something they like. Offer to drive.",
     "Make sure they have at least one trusted adult outside the family, and help them connect with that person.",
     "Plan time together that isn't about the problem: a meal, a drive, a game, an errand.",
-    "Pine keeps their answers private, so simply check in warmly: “Hey, how are you really doing?” and listen.",
-    "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be here. That needs help right away: call, text, or chat 988 together."
+    "Pine keeps their answers private, so simply check in warmly: “Hey, how are you really doing?” and listen."
    ],
    "you": "You can't make friends for them, and you don't need to. Your steady warmth is a real connection, and one trusted adult can change a whole year. Keep inviting, keep listening, and keep the bar low for what counts as a good step."
   },
@@ -797,17 +753,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Lonely most days for two weeks or more, or feeling down, numb, or not caring about things you used to enjoy: talk with a parent, your school counselor, or your doctor.",
-   "Teen Line, teens answering teens: call 800-852-8336 (evenings, 8 p.m. to midnight Central) or text TEEN to 839863.",
-   "NAMI HelpLine, for information and support (not a crisis line): 1-800-950-6264, weekdays.",
-   "Feeling like a burden, or thoughts of not wanting to be here: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
@@ -815,10 +763,6 @@ const LC_TOPICS = [
    [
     "US Surgeon General: Our Epidemic of Loneliness and Isolation",
     "https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -983,7 +927,7 @@ const LC_TOPICS = [
    ],
    "help": [
     "Talk about healthy relationships before there's a specific person: in the car, about a song, about friends.",
-    "Name the green flags and the red flags plainly. Love Is Respect has clear lists for teens and for parents.",
+    "Name the green flags and the red flags plainly.",
     "Make a ride plan: they can text you a code word anytime and you'll come, no lecture that night.",
     "Be clear that any adult or much older person pursuing a teen romantically, or asking for pictures, is never okay, and they should tell you right away.",
     "If you see warning signs of control or abuse, stay calm and close. See the dating abuse guide.",
@@ -1001,29 +945,14 @@ const LC_TOPICS = [
    "branches|Name Your Trusted Adult"
   ],
   "reach": [
-   "Questions about whether something is healthy, or worry about a relationship: Love Is Respect, call 1-866-331-9474, text LOVEIS to 22522, or chat at loveisrespect.org, any time.",
    "Someone pressuring or threatening you with a picture: you are not in trouble. Take It Down (takeitdown.ncmec.org) and the CyberTipline (report.cybertip.org or 1-800-843-5678).",
-   "An adult or much older person pursuing you romantically, or someone hurting you: tell a trusted adult, or call or text Childhelp, 1-800-422-4453.",
-   "In Minnesota, Day One, for anyone being hurt by someone close to them: 1-866-223-1111, or text 612-399-9995.",
-   "Forced or pressured into anything sexual: RAINN, 1-800-656-4673, any time.",
+   "An adult or much older person pursuing you romantically, or someone hurting you: tell a trusted adult.",
    "Danger right now: call 911."
   ],
   "more": [
    [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/"
-   ],
-   [
     "Take It Down (NCMEC)",
     "https://takeitdown.ncmec.org"
-   ],
-   [
-    "Day One",
-    "https://dayoneservices.org/domestic-violence/help-now/"
-   ],
-   [
-    "Childhelp",
-    "https://childhelphotline.org/"
    ]
   ]
  },
@@ -1065,7 +994,7 @@ const LC_TOPICS = [
     "“I was me before this relationship, and I'm still me.”",
     "“This heaviness will ease.”"
    ],
-   "people": "To a friend: “I'm having a rough day about the breakup. Can we just hang out?” To a parent or trusted adult: “I don't need advice right now. I just need you to know it's been hard.” To your ex, if you need to: “I need some space for a while. Please don't text me for now.” If an ex threatens to hurt themselves if you don't come back, take it seriously and tell a trusted adult right away, but it is not your job to stay. Call or text 988 for them, or for you."
+   "people": "To a friend: “I'm having a rough day about the breakup. Can we just hang out?” To a parent or trusted adult: “I don't need advice right now. I just need you to know it's been hard.” To your ex, if you need to: “I need some space for a while. Please don't text me for now.” If an ex threatens to hurt themselves if you don't come back, take it seriously and tell a trusted adult right away, but it is not your job to stay."
   },
   "helper": {
    "feel": "They may be devastated, numb, angry, or embarrassed, and may not want to talk about it with you at all. A first breakup can feel like the end of the world, partly because they have never been through one before and have no proof yet that it gets better. They may hole up in their room, stop eating, or look at their phone constantly. Comments like “you'll find someone else” can make them feel unseen.",
@@ -1086,8 +1015,7 @@ const LC_TOPICS = [
     "Offer company without pressure: a drive, a favorite meal, a walk, music together.",
     "Keep routines gently going: sleep, meals, school, practice. Allow a few soft days, then lean back toward normal.",
     "Watch for two weeks or more of low mood, pulling away from everyone, sleep or eating changes, or talk of hopelessness. If you see that, bring in a counselor or doctor.",
-    "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the dating abuse guide.",
-    "If they talk about not wanting to be here, stay with them, and call, text, or chat 988 together."
+    "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the dating abuse guide."
    ],
    "you": "Watching your teen hurt is hard, and you can't speed it up. Your part is to take it seriously, keep them company, and keep the everyday rhythms gently going. Your steady presence is proof that love can be safe and lasting."
   },
@@ -1102,25 +1030,10 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low mood, numbness, or losing interest in things for two weeks or more: talk with a parent, your school counselor, or your doctor.",
-   "Teen Line, teens answering teens: call 800-852-8336 (evenings, 8 p.m. to midnight Central) or text TEEN to 839863.",
-   "An ex who is harassing, threatening, stalking, or sharing pictures: Love Is Respect, 1-866-331-9474 or text LOVEIS to 22522. A private picture of you shared or threatened: Take It Down and the CyberTipline (report.cybertip.org or 1-800-843-5678).",
-   "Thoughts of not wanting to be here, for you or your ex: call, text, or chat 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
+   "A private picture of you shared or threatened: Take It Down and the CyberTipline (report.cybertip.org or 1-800-843-5678).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
    [
     "Take It Down (NCMEC)",
     "https://takeitdown.ncmec.org"
@@ -1306,11 +1219,7 @@ const LC_TOPICS = [
    "roots|What Holds Me Up"
   ],
   "reach": [
-   "Low mood, trouble sleeping, or losing interest in things you used to enjoy, lasting two weeks or more: tell a parent, school counselor, or doctor. In Minnesota, at 16 you can ask for counseling yourself.",
-   "Feeling like you can't go on, or thinking about not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Fighting at home that turns physical, or anyone hurting you: Childhelp, call or text 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings.",
-   "In Minnesota, a mental health crisis: call **CRISIS (274747) from a cell phone, any time."
+   "Low mood, trouble sleeping, or losing interest in things you used to enjoy, lasting two weeks or more: tell a parent, school counselor, or doctor. In Minnesota, at 16 you can ask for counseling yourself."
   ],
   "more": [
    [
@@ -1320,14 +1229,6 @@ const LC_TOPICS = [
    [
     "Child Mind Institute",
     "https://childmind.org/"
-   ],
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://childhelphotline.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -1404,9 +1305,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling low, left out, or angry most days for two weeks or more: talk with a school counselor or another adult you trust.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Anyone in the home who makes you feel unsafe, touches you in a way that isn't okay, or hurts you: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911. Tell an adult outside your home, like a school counselor, coach, or teacher.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+   "Tell an adult outside your home, like a school counselor, coach, or teacher."
   ],
   "more": [
    [
@@ -1416,10 +1315,6 @@ const LC_TOPICS = [
    [
     "Search Institute: developmental relationships",
     "https://searchinstitute.org/developmental-relationships"
-   ],
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://childhelphotline.org/"
    ]
   ]
  },
@@ -1496,10 +1391,8 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Loneliness or low mood that doesn't lift after a couple of months, or that keeps you from school or sleep: talk with the school counselor, a doctor, or another adult you trust.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911.",
    "If your family has lost its housing, you may have the right to stay at your old school, with rides, if that is best for you. Ask either school for its homeless liaison.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings.",
    "Military family on the move: Military OneSource, 800-342-9647, any time."
   ],
   "more": [
@@ -1510,10 +1403,6 @@ const LC_TOPICS = [
    [
     "HealthyChildren.org (American Academy of Pediatrics)",
     "https://www.healthychildren.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -1591,10 +1480,7 @@ const LC_TOPICS = [
   "reach": [
    "Military OneSource: 800-342-9647, any time, for service members and families, teens included. They can connect you with someone to talk to.",
    "Worry, low mood, or trouble sleeping that lasts two weeks or more: tell a counselor, a doctor, or another adult you trust.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Danger right now: call 911.",
-   "If anyone at home is hurting you: call or text Childhelp, 1-800-422-4453, any time.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+   "Danger right now: call 911."
   ],
   "more": [
    [
@@ -1694,12 +1580,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Someone can't wake up, isn't breathing well, or there is danger right now: call 911.",
-   "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support for the person using, or for your family.",
    "NACoA: Just for Teens, with words and help for teens who love someone who drinks or uses.",
-   "Low mood or worry that lasts two weeks or more: talk with a school counselor or doctor. In Minnesota, at 16 you can ask for counseling yourself.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+   "Low mood or worry that lasts two weeks or more: talk with a school counselor or doctor. In Minnesota, at 16 you can ask for counseling yourself."
   ],
   "more": [
    [
@@ -1709,10 +1592,6 @@ const LC_TOPICS = [
    [
     "SAMHSA National Helpline",
     "https://www.samhsa.gov/find-help/helplines/national-helpline"
-   ],
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://childhelphotline.org/"
    ],
    [
     "Pine: A Parent's Drinking or Using (Living Sober)",
@@ -1792,9 +1671,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling low, angry, or alone most days for two weeks or more: talk with a school counselor or doctor. In Minnesota, at 16 you can ask for counseling yourself.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "If anyone is hurting you, at home or anywhere: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings.",
    "Visiting a Minnesota state prison: the Department of Corrections explains how to apply and schedule visits. Applications can take weeks, so start early."
   ],
   "more": [
@@ -1809,10 +1685,6 @@ const LC_TOPICS = [
    [
     "Sesame Street in Communities: incarceration (for younger siblings)",
     "https://www.sesamestreetincommunities.org/topics/incarceration/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -1878,7 +1750,7 @@ const LC_TOPICS = [
     "Get help early if blowups keep happening, come with drinking or drugs, driving angry, talk of hurting someone or themselves, or seem tied to something bigger: their doctor or the school counselor.",
     "Pine keeps your teen's check-in private. You never see their answers. Reaching out gently and often is your part."
    ],
-   "you": "Blowups can stir up your own history: how fights went in the home you grew up in. If you feel your own temper rising, it's okay to say “I need a break too” and step away. If the blowups at home are between adults, or you feel unsafe, reach out for support for yourself as well. Day One (1-866-223-1111) talks with anyone in Minnesota facing violence at home."
+   "you": "Blowups can stir up your own history: how fights went in the home you grew up in. If you feel your own temper rising, it's okay to say “I need a break too” and step away. If the blowups at home are between adults, or you feel unsafe, reach out for support for yourself as well."
   },
   "faith": "For some families, faith offers ways back after a fight: a prayer for patience, the practice of forgiving, a youth leader or faith mentor to talk with. For others, a walk, a quiet minute, or a family tradition of making up does the same work. What matters is coming back to each other.",
   "practices": [
@@ -1891,28 +1763,12 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Danger right now, a weapon, or someone threatening to hurt someone: get to safety and call 911.",
-   "If someone at home is hurting you or threatening you: Childhelp, 1-800-422-4453 (call or text, any time). In Minnesota, Day One, 1-866-223-1111 (or text 612-399-9995). Tell a trusted adult at school, too.",
-   "If you're thinking about hurting yourself or not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, call **CRISIS (274747) from a cell phone for a county crisis team that can come to you during a mental health crisis at home.",
-   "Teen Line, teens answering teens: call 800-852-8336 or text TEEN to 839863 in the evening.",
    "If blowups keep happening, your school counselor or doctor can help you figure out what's underneath."
   ],
   "more": [
    [
     "Child Mind Institute",
     "https://childmind.org"
-   ],
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://childhelphotline.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
-   [
-    "Minnesota mental health crisis lines",
-    "https://www.mnmhaccess.com/Home/Crisis"
    ]
   ]
  },
@@ -1989,10 +1845,8 @@ const LC_TOPICS = [
    "bark|Speak Up About Your Mood"
   ],
   "reach": [
-   "If someone is hurting you, threatening you, or pressuring you to steal or lie: Childhelp, 1-800-422-4453 (call or text, any time). In Minnesota, Day One, 1-866-223-1111 (or text 612-399-9995).",
    "If someone online is threatening to share a picture of you, or demanding money: you are not in trouble. Report it to the CyberTipline, 1-800-843-5678 or report.cybertip.org, and use Take It Down at takeitdown.ncmec.org.",
    "If you owe money from betting or gambling: in Minnesota, the problem gambling helpline, 1-800-333-4673 (or text HOPE to 53342), any time.",
-   "If you're feeling hopeless or thinking about not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911.",
    "Your school counselor or doctor, if the lying, sneaking, or stealing keeps growing."
   ],
   "more": [
@@ -2007,10 +1861,6 @@ const LC_TOPICS = [
    [
     "Minnesota Alliance on Problem Gambling",
     "https://mnapg.org"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -2075,7 +1925,7 @@ const LC_TOPICS = [
     "Let the school know, with the teen's okay, and ask for a plan: a person to go to, a pass, flexibility on work.",
     "Say the name of the person who died, and mark the anniversary and birthday together, in a way the teen helps choose.",
     "Look for a teen grief group or grief camp nearby. Hospices and grief centers often host them.",
-    "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died. Bring in a counselor, and call or text 988 if they talk about not wanting to be alive.",
+    "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died.",
     "Pine keeps a teen's check-in private. Checking in warmly yourself is what helps."
    ],
    "you": "If you're the surviving parent, you're grieving too, maybe while handling everything else. Your teen doesn't need you to be fine. It's okay to cry in front of them and say, “I miss him too.” Find your own support, a group, a counselor, or friends, so you're not carrying it alone, and let other trusted adults share the load."
@@ -2090,9 +1940,6 @@ const LC_TOPICS = [
    "bark|Capture the Moment"
   ],
   "reach": [
-   "If you think about wanting to be with them, or not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911.",
-   "In Minnesota, call **CRISIS (274747) from a cell phone for a county crisis team.",
-   "Teen Line, teens answering teens: call 800-852-8336 or text TEEN to 839863 in the evening.",
    "Your school counselor, for a plan at school and to find a teen grief group.",
    "If hospice cared for the person who died, ask about its grief support for teens.",
    "A grief counselor, if grief stays heavy for months or keeps you from daily life."
@@ -2105,10 +1952,6 @@ const LC_TOPICS = [
    [
     "Judi's House: Childhood Grief in America",
     "https://judishouse.org/childhood-grief-in-america/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -2170,7 +2013,7 @@ const LC_TOPICS = [
     "Tell them what happened in plain words, before rumors do, and answer what you can.",
     "Let them go to the funeral, memorial, or vigil if they want to, and go with them.",
     "Help them limit time with the posts, rumors, and pictures, without taking away the friends who are grieving with them.",
-    "Watch for warning signs: pulling away, talk of not wanting to be alive or of joining their friend, giving things away, sudden calm after being very low, more drinking or drugs, or reckless driving. If you notice them, stay close, and call or text 988 together.",
+    "If you notice them, stay close.",
     "If there are guns or a lot of medicine at home, lock them up or keep them somewhere else for now.",
     "Pine keeps a teen's check-in private. Checking in warmly yourself is what helps."
    ],
@@ -2186,10 +2029,6 @@ const LC_TOPICS = [
    "roots|Hold Someone in Light"
   ],
   "reach": [
-   "If you're thinking about not wanting to be alive, or about joining your friend: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911.",
-   "If you're worried about a friend: you can call or text 988 to talk about how to help them, and tell a trusted adult today.",
-   "In Minnesota, call **CRISIS (274747) from a cell phone for a county crisis team.",
-   "Teen Line, teens answering teens: call 800-852-8336 or text TEEN to 839863 in the evening.",
    "Your school counselor, for support at school and help finding a teen grief group.",
    "A grief counselor, if guilt or shock stays heavy for weeks or keeps you from daily life."
   ],
@@ -2197,14 +2036,6 @@ const LC_TOPICS = [
    [
     "The Dougy Center for Grieving Children and Families",
     "https://www.dougy.org/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -2281,8 +2112,6 @@ const LC_TOPICS = [
    "branches|Shared Meal"
   ],
   "reach": [
-   "If grief brings thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911.",
-   "Teen Line, teens answering teens: call 800-852-8336 or text TEEN to 839863 in the evening.",
    "If hospice cared for your grandparent, ask about its grief support for teens and families.",
    "Your school counselor, if grief is affecting school, or to find a teen grief group.",
    "A grief counselor, if grief stays heavy for months, especially if your grandparent raised you."
@@ -2291,10 +2120,6 @@ const LC_TOPICS = [
    [
     "The Dougy Center for Grieving Children and Families",
     "https://www.dougy.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -2357,7 +2182,6 @@ const LC_TOPICS = [
     "Rebuild driving in small, planned steps, with you or another calm adult riding along, and a clear path back to driving on their own.",
     "Set driving agreements together: phone away, few or no passengers at first, limits on night driving, seat belts every time, and a ride home with no questions that night if they need one.",
     "Watch for stress that lasts: nightmares, avoiding cars completely, jumpiness, or pulling away for more than a few weeks. A counselor can help.",
-    "If a friend was hurt or killed, watch for guilt, reckless behavior, or talk of not wanting to be alive. Call or text 988 together if you're worried.",
     "If there are charges or legal questions, talk with a lawyer about next steps."
    ],
    "you": "A call about a crash is one of a parent's worst fears. Your own body may stay on high alert for days. Give yourself time to calm down before the big talks, and talk with another adult about your fear, so your teen gets your relief first."
@@ -2374,8 +2198,6 @@ const LC_TOPICS = [
   "reach": [
    "Emergency, or any concussion warning sign (a headache that gets worse, vomiting, confusion, hard to wake, slurred speech): call 911 or go to the emergency room.",
    "Your doctor, after any crash, even if you feel fine.",
-   "If guilt or grief brings thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Teen Line, teens answering teens: call 800-852-8336 or text TEEN to 839863 in the evening.",
    "A counselor, if fear, nightmares, or replaying it last more than a few weeks, or keep you out of cars.",
    "Your school counselor, if a classmate was hurt or killed and school feels heavy."
   ],
@@ -2470,9 +2292,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling down, numb, or not caring about things for two weeks or more: tell a parent, a school counselor, or your doctor.",
-   "Feeling like you can't go on, or thinking about not wanting to be here: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Teen Line, teens answering teens: call 800-852-8336 (8 p.m. to midnight Central) or text TEEN to 839863.",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911.",
    "If the illness is cancer, the National Cancer Institute has a guide written and tested with teens: When Your Parent Has Cancer.",
    "If you help care for someone at home, the American Association of Caregiving Youth has programs for teens who do."
@@ -2489,14 +2308,6 @@ const LC_TOPICS = [
    [
     "American Association of Caregiving Youth",
     "https://aacy.org/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ],
    [
     "Willow by Grow With Grounded, for hospice: the person and the people who love them",
@@ -2578,7 +2389,6 @@ const LC_TOPICS = [
    "Trouble sleeping most nights for weeks, loud snoring or gasping, or deep sleepiness even after enough sleep: talk with your doctor.",
    "Lying awake with worries that won't stop, or feeling down for two weeks or more: tell a parent, a school counselor, or your doctor.",
    "Too sleepy to drive: don't. Call someone for a ride.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
@@ -2669,8 +2479,6 @@ const LC_TOPICS = [
   "reach": [
    "If food, weight, or exercise starts to feel like rules you can't break: tell someone you trust, and see the Eating Disorders guide. ANAD Eating Disorders Helpline: 1-888-375-7767, Monday to Friday, 9 a.m. to 9 p.m. Central.",
    "Feeling down or anxious about your body most days for two weeks or more: tell a parent, a school counselor, or your doctor.",
-   "NAMI HelpLine, for questions and support: 1-800-950-6264, weekdays (not a crisis line).",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
@@ -2762,9 +2570,7 @@ const LC_TOPICS = [
    "ANAD Eating Disorders Helpline: 1-888-375-7767, Monday to Friday, 9 a.m. to 9 p.m. Central. For teens, families, and friends.",
    "Your doctor or school nurse can check how your body is doing and help you find treatment.",
    "In Minnesota, The Emily Program offers eating disorder treatment for teens and families.",
-   "Fainting, chest pain, confusion, or a racing or very slow heartbeat: call 911.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "NAMI HelpLine, for families looking for help: 1-800-950-6264, weekdays (not a crisis line)."
+   "Fainting, chest pain, confusion, or a racing or very slow heartbeat: call 911."
   ],
   "more": [
    [
@@ -2859,8 +2665,7 @@ const LC_TOPICS = [
    "Danger signs after a head injury: a headache that gets worse, repeated vomiting, unusual sleepiness or can't be woken, one pupil larger than the other, slurred speech, weakness or numbness, a seizure, or growing confusion. Call 911 or go to the emergency room right away.",
    "Any hit to the head with symptoms: stop playing and see a doctor or athletic trainer.",
    "Symptoms that last more than a few weeks, or trouble keeping up at school: go back to your doctor.",
-   "Feeling down or hopeless for two weeks or more: tell a parent, a school counselor, or your doctor.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Feeling down or hopeless for two weeks or more: tell a parent, a school counselor, or your doctor."
   ],
   "more": [
    [
@@ -2949,9 +2754,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling down, numb, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
-   "NAMI HelpLine, for questions and support: 1-800-950-6264, weekdays (not a crisis line).",
    "Danger right now, or a medical emergency: call 911.",
    "School supports and transition planning in Minnesota: PACER Center.",
    "Taking over your own health care: Got Transition has checklists for teens and families."
@@ -3054,10 +2856,7 @@ const LC_TOPICS = [
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
    "Feeling like you can't stop vaping, drinking, or using something: tell a doctor, school counselor, or trusted adult. The SAMHSA National Helpline, 1-800-662-4357, answers any time, in English and Spanish.",
-   "If using something is how you're getting through thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "A family member's drinking or drug use is weighing on you: NACoA, for teens, and a trusted adult.",
-   "Pressure from someone you're dating to drink or use: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522."
+   "A family member's drinking or drug use is weighing on you: NACoA, for teens, and a trusted adult."
   ],
   "more": [
    [
@@ -3075,10 +2874,6 @@ const LC_TOPICS = [
    [
     "NACoA: Just for Teens",
     "https://nacoa.org/families/just-4-teens/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -3155,28 +2950,12 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Anxiety that keeps you from school, friends, or sleep for more than a few weeks: talk with a school counselor or your doctor.",
-   "Chest pain, fainting, or trouble breathing and you're not sure why: get medical help, or call 911.",
-   "Feeling overwhelmed and needing someone now: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Teen Line, other teens who listen: call 800-852-8336 (evenings, 8 p.m. to midnight Central) or text TEEN to 839863.",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "NAMI HelpLine, for information and next steps (not a crisis line): 1-800-950-6264, weekdays."
+   "Chest pain, fainting, or trouble breathing and you're not sure why: get medical help, or call 911."
   ],
   "more": [
    [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
-   [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
-   ],
-   [
-    "Crisis Text Line",
-    "https://www.crisistextline.org/text-us/"
    ]
   ]
  },
@@ -3194,8 +2973,7 @@ const LC_TOPICS = [
   "quick": [
    "Depression can feel like sadness, or like nothing at all: numb, flat, or tired in a way sleep doesn't fix.",
    "It's common. In a 2023 national survey, about 4 in 10 high schoolers said they'd felt sad or hopeless almost every day for two weeks or more.",
-   "It's not weakness or laziness, and it gets better with help. Tell one adult, and talk with a doctor or counselor.",
-   "If you're thinking about not wanting to be alive, call or text 988, or text HOME to 741741, today."
+   "It's not weakness or laziness, and it gets better with help. Tell one adult, and talk with a doctor or counselor."
   ],
   "feel": "Maybe things you used to love feel like nothing now. Getting out of bed takes everything. You sleep too much or can't sleep, eat more or barely eat. School feels pointless, friends feel far away, and texts sit unanswered. Some people feel sad and cry a lot. Others feel numb, empty, or irritable, and snap at people they love. You might tell yourself you're just lazy or that nobody would get it. Depression says things like that. They aren't the truth about you.",
   "self": {
@@ -3253,25 +3031,9 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling low, numb, or uninterested in most things for two weeks or more: tell a trusted adult, and talk with your doctor or school counselor.",
-   "Thoughts of not wanting to be alive, or of killing yourself: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "Danger right now: call 911.",
-   "Teen Line, other teens who listen: call 800-852-8336 (evenings, 8 p.m. to midnight Central) or text TEEN to 839863.",
-   "NAMI HelpLine, for information and next steps (not a crisis line): 1-800-950-6264, weekdays."
+   "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Crisis Text Line",
-    "https://www.crisistextline.org/text-us/"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
-   ],
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
@@ -3494,7 +3256,6 @@ const LC_TOPICS = [
   "quick": [
    "Asking for counseling is a strong, smart move, the same as seeing a doctor for an injury.",
    "In Minnesota, if you're 16 or older, you can agree to outpatient mental health care, like counseling and therapy, on your own, without a parent's permission.",
-   "At any age, you can talk with your school counselor, and you can call or text 988 or text HOME to 741741.",
    "What you say in counseling mostly stays private. The main limit is safety, so ask at the start what would have to be shared."
   ],
   "feel": "Maybe you've been carrying something for a while and you think talking to someone might help, but you don't know where to start. You might worry about what your parents would think, whether it costs money, whether the counselor will tell anyone, or whether your problems are \"bad enough.\" Some teens have a parent who's all for it. Some have a parent who isn't sure, or a home where it's hard to bring up. Wanting help is a good sign. It means part of you is looking after you.",
@@ -3553,12 +3314,7 @@ const LC_TOPICS = [
    "bark|Tiny Next Step"
   ],
   "reach": [
-   "Thoughts of not wanting to be alive, or you need someone right now: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741). No permission needed at any age.",
-   "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911.",
-   "Teen Line, other teens who listen: call 800-852-8336 (evenings, 8 p.m. to midnight Central) or text TEEN to 839863.",
-   "NAMI HelpLine, for help finding counseling and next steps (not a crisis line): 1-800-950-6264, weekdays.",
-   "Someone is hurting you, at home or anywhere: Childhelp, 1-800-422-4453 (call or text), or in Minnesota, Day One, 1-866-223-1111. A school counselor can help too.",
    "This guide is general information, not legal advice. Your clinic or school counselor can tell you what applies to you."
   ],
   "more": [
@@ -3573,10 +3329,6 @@ const LC_TOPICS = [
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -3842,9 +3594,7 @@ const LC_TOPICS = [
   "reach": [
    "Feeling worse about your body after scrolling, or food and exercise starting to feel like rules you can't break: tell someone you trust. ANAD Eating Disorders Helpline, 1-888-375-7767, weekdays.",
    "Someone bullying, threatening, or embarrassing you online: save it, block, report it on the app, and tell a trusted adult. If it involves a picture of you: Take It Down (takeitdown.ncmec.org) and the CyberTipline, 1-800-843-5678. You are not in trouble.",
-   "Low mood or worry that has lasted two weeks or more: tell a parent, a school counselor, or your doctor.",
-   "Teen Line, teens answering teens: call 800-852-8336 (8 p.m. to midnight Central) or text TEEN to 839863.",
-   "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, MN to 741741). Danger right now: 911."
+   "Low mood or worry that has lasted two weeks or more: tell a parent, a school counselor, or your doctor."
   ],
   "more": [
    [
@@ -3914,8 +3664,7 @@ const LC_TOPICS = [
     "Get curious. Try the tool yourself, with them if they're willing.",
     "Talk about what AI can and can't do: it predicts words, it can be confidently wrong, and it tends to agree.",
     "Talk about privacy: what the app keeps, and what never to share.",
-    "Notice if it's replacing people, sleep, or help. If so, help them build one real connection: a club, a team, a mentor, a counselor.",
-    "Make sure they know real help lines: 988 and the Crisis Text Line are staffed by people, any time."
+    "Notice if it's replacing people, sleep, or help. If so, help them build one real connection: a club, a team, a mentor, a counselor."
    ],
    "you": "It may feel strange, or even sad, that a teen would rather talk to a machine. Try not to take it personally. Often it means they want to be heard without risk. Your steady, unhurried attention is the thing a chatbot can't give."
   },
@@ -3929,25 +3678,14 @@ const LC_TOPICS = [
    "bark|Phone Check"
   ],
   "reach": [
-   "Thoughts of not wanting to be alive, or of hurting yourself: talk to a person, now. Call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741). These are real people.",
    "Danger right now: call 911.",
-   "In Minnesota, call **CRISIS (274747) from a cell phone for a county crisis team, any time.",
-   "Teen Line, teens answering teens: call 800-852-8336 (8 p.m. to midnight Central) or text TEEN to 839863.",
    "If a chatbot, or someone pretending to be one, asks for pictures or sexual talk: stop, save it, and report it to the CyberTipline, 1-800-843-5678. You are not in trouble.",
-   "Feeling lonely or low for two weeks or more: tell a parent, a school counselor, or your doctor. The NAMI HelpLine, 1-800-950-6264, can help families find support (weekdays; not a crisis line)."
+   "Feeling lonely or low for two weeks or more: tell a parent, a school counselor, or your doctor."
   ],
   "more": [
    [
     "Common Sense Media: Teens and AI Companions",
     "https://www.commonsensemedia.org/press-releases/nearly-3-in-4-teens-have-used-ai-companions-new-national-survey-finds"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Teen Line",
-    "https://didihirsch.org/teenline/hotline-support/"
    ]
   ]
  },
@@ -4007,7 +3745,7 @@ const LC_TOPICS = [
     "If you bet, think about what your teen sees at home, and keep your accounts and cards secure.",
     "Watch for signs of trouble: missing money, borrowing, selling things, lying about where money went, or mood swings tied to results.",
     "If you see signs, call the Minnesota Problem Gambling Helpline together: 1-800-333-4673, or text HOPE to 53342.",
-    "Ask open questions about how they're feeling. If they talk about not wanting to be alive, call or text 988 together."
+    "Ask open questions about how they're feeling."
    ],
    "you": "Finding out a teen has lost money gambling can bring up anger, fear, and even guilt about your own habits. Get support for yourself too: the Minnesota helpline is there for families. Your calm matters more than having every answer."
   },
@@ -4024,7 +3762,6 @@ const LC_TOPICS = [
    "Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342, any time. For teens, adults, and families.",
    "Outside Minnesota: the National Council on Problem Gambling lists help in every state (ncpgambling.org).",
    "Owing money to someone who is threatening you: tell a trusted adult right away. Danger right now: call 911.",
-   "If gambling losses leave you feeling hopeless or not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time.",
    "If drinking or drugs are part of it too: SAMHSA National Helpline, 1-800-662-4357, any time."
   ],
   "more": [
@@ -4035,10 +3772,6 @@ const LC_TOPICS = [
    [
     "National Council on Problem Gambling",
     "https://www.ncpgambling.org"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -4313,8 +4046,8 @@ const LC_TOPICS = [
   "reach": [
    "Hurt at work: tell your manager and get medical help. Danger right now: call 911.",
    "Unsafe tasks, missing pay, or hours that break the rules: tell a parent or trusted adult, and contact the Minnesota Department of Labor and Industry (dli.mn.gov).",
-   "Someone at work touches you, pressures you, or makes sexual comments: that's not okay, and it's not your fault. Tell a trusted adult. RAINN: 1-800-656-4673, any time. In Minnesota, Day One: 1-866-223-1111.",
-   "Stress or low mood that won't lift: talk with your school counselor. Feeling overwhelmed, or thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Someone at work touches you, pressures you, or makes sexual comments: that's not okay, and it's not your fault. Tell a trusted adult.",
+   "Stress or low mood that won't lift: talk with your school counselor."
   ],
   "more": [
    [
@@ -4409,7 +4142,7 @@ const LC_TOPICS = [
    "Someone online asking for money, gift cards, codes, or your bank login: stop, don't pay, and tell a trusted adult. Report scams to the Federal Trade Commission at reportfraud.ftc.gov.",
    "Someone threatening to share a picture of you unless you pay: you are not in trouble. Tell a trusted adult, and contact the CyberTipline, 1-800-843-5678. Take It Down (takeitdown.ncmec.org) can help remove images. The guide Sextortion and Threats with a Picture has more.",
    "Betting or gambling to win money back: Minnesota problem gambling helpline, 1-800-333-4673, or text HOPE to 53342, any time.",
-   "Money worry that keeps you up at night, or feels hopeless: talk with your school counselor or a trusted adult. If it turns into not wanting to be here, call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Money worry that keeps you up at night, or feels hopeless: talk with your school counselor or a trusted adult.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4500,9 +4233,7 @@ const LC_TOPICS = [
   "reach": [
    "A trusted adult who welcomes questions: a parent, a youth leader, a chaplain, a faith mentor, or your school counselor.",
    "Questions that come with low mood, numbness, or losing interest in things for two weeks or more: talk with your school counselor or a doctor.",
-   "If faith or a faith community leaves you feeling scared, ashamed, or pushed out, see the guide Hurt by a Faith Community.",
-   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: call 911.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 (8 p.m. to midnight Central) or text TEEN to 839863."
+   "If faith or a faith community leaves you feeling scared, ashamed, or pushed out, see the guide Hurt by a Faith Community."
   ],
   "more": [
    [
@@ -4531,14 +4262,14 @@ const LC_TOPICS = [
   ],
   "quick": [
    "A faith community can be a place of real belonging, and people in it can still hurt you. Your hurt is real, and it's not your fault.",
-   "If a leader or anyone there touches you, threatens you, or asks you to keep a secret, that is never okay. Tell a trusted adult outside that group, or call or text Childhelp at 1-800-422-4453.",
+   "If a leader or anyone there touches you, threatens you, or asks you to keep a secret, that is never okay. Tell a trusted adult outside that group.",
    "What people did and what you hold sacred can be two different things. You can sort them out in your own time.",
    "Healing can mean going back once things are made right, finding a new community, or taking a break. Support is here whichever way you go."
   ],
   "feel": "Maybe someone at your place of worship shamed you in front of others, or said your questions meant something was wrong with you. Maybe you were told something hard in your life was a punishment. Maybe a group you belonged to turned cold after a family change, a mistake, or a rumor. Maybe a leader you trusted crossed a line. You might feel angry, embarrassed, scared, or numb. Some teens feel afraid of God after being hurt by people who spoke in God's name. Some still love their faith and miss their community. Some want nothing to do with it right now. Mixed feelings make sense when a place meant to be safe hurt you.",
   "self": {
    "first": [
-    "If anyone is hurting you, touching you, threatening you, or asking you to keep a secret: tell a trusted adult outside that group, like a parent, a school counselor, a coach, or a teacher. You can also call or text Childhelp, 1-800-422-4453, any time. Danger right now: call 911.",
+    "If anyone is hurting you, touching you, threatening you, or asking you to keep a secret: tell a trusted adult outside that group, like a parent, a school counselor, a coach, or a teacher.",
     "Name what happened, even just to yourself. Write one plain sentence about what hurt.",
     "Remember that the person who hurt you doesn't get the last word on who you are.",
     "Give yourself permission to take some space while you sort out how you feel."
@@ -4574,7 +4305,7 @@ const LC_TOPICS = [
    ],
    "help": [
     "Listen first, all the way through. Hold off on defending, explaining, or correcting.",
-    "If someone touched them, threatened them, or asked them to keep a secret, act: keep them away from that person, report it to your county or Tribal child protection agency in Minnesota, and call 911 if there's danger. Childhelp, 1-800-422-4453 (call or text), can talk you through it.",
+    "If someone touched them, threatened them, or asked them to keep a secret, act: keep them away from that person, report it to your county or Tribal child protection agency in Minnesota, and call 911 if there's danger.",
     "Talk with them before you talk with the group's leaders, and tell them what you'll do and why.",
     "Give them room. A break, a new community, or going back once things are made right can each be okay. Let their pace lead.",
     "If they want a faith voice, help them find one outside the situation: a chaplain, a different leader, a wise relative.",
@@ -4592,17 +4323,11 @@ const LC_TOPICS = [
    "branches|Name Your Trusted Adult"
   ],
   "reach": [
-   "Someone touching you, threatening you, or making you feel unsafe: tell a trusted adult outside that group. Childhelp: 1-800-422-4453, call or text, any time. Danger right now: call 911.",
+   "Someone touching you, threatening you, or making you feel unsafe: tell a trusted adult outside that group.",
    "In Minnesota, abuse of a minor can be reported to the county or Tribal child protection agency where the child lives.",
-   "Sexual abuse or assault: RAINN, 1-800-656-4673, any time. In Minnesota, Day One: 1-866-223-1111, or text 612-399-9995.",
-   "Fear, shame, or low mood that lasts two weeks or more: talk with your school counselor or a doctor.",
-   "Thoughts of not wanting to be here: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Fear, shame, or low mood that lasts two weeks or more: talk with your school counselor or a doctor."
   ],
   "more": [
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://childhelphotline.org/"
-   ],
    [
     "Minnesota DCYF: report abuse",
     "https://dcyf.mn.gov/individuals-and-families/report-abuse"
@@ -4688,7 +4413,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Feeling like nothing you do matters for two weeks or more, or losing interest in things you used to enjoy: talk with your school counselor or a doctor.",
-   "If it turns into feeling there's no point in living: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: call 911.",
    "Ways to serve: ask your school counselor, a coach, a youth leader, or your library. Minnesota 4-H, VolunteerMatch, and DoSomething list projects for teens."
   ],
   "more": [
@@ -4794,7 +4518,6 @@ const LC_TOPICS = [
    "A medical emergency, or danger right now: call 911.",
    "Questions about a medicine: your doctor or your pharmacist.",
    "Feeling down, numb, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Moving to adult health care: Got Transition has checklists for teens and families.",
    "School supports for a health condition in Minnesota: PACER Center, 952-838-9000."
   ],
@@ -4894,7 +4617,6 @@ const LC_TOPICS = [
    "New, severe, or different pain, or a medical emergency: call your doctor right away, or call 911.",
    "Pain or tiredness that keeps you from school or activities: talk with your doctor about a plan, and ask your school about a 504 plan.",
    "Feeling down, numb, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "School plans in Minnesota: PACER Center, 952-838-9000."
   ],
   "more": [
@@ -4997,8 +4719,7 @@ const LC_TOPICS = [
    "Questions about your IEP or 504 plan: your case manager, school counselor, or principal.",
    "Families in Minnesota working through IEPs, 504 plans, and transition: PACER Center, 952-838-9000.",
    "Finding services for work, housing, and living on your own in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "Feeling down or anxious for two weeks or more: tell a parent, your doctor, or a school counselor.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Feeling down or anxious for two weeks or more: tell a parent, your doctor, or a school counselor."
   ],
   "more": [
    [
@@ -5074,8 +4795,7 @@ const LC_TOPICS = [
     "Make sure their school plan covers what they need: captions, interpreters, a remote mic, notes, and seating.",
     "Face them, get their attention first, and keep your mouth visible. Repeat or text what others say in a group.",
     "Help them find Deaf friends and mentors. In Minnesota, the state's Deaf and Hard of Hearing Services can point you to programs and help.",
-    "Turn on captions at home, and plan family events so they can follow along.",
-    "Make sure they know 988 has an ASL option by videophone, and that they can text 988 too."
+    "Turn on captions at home, and plan family events so they can follow along."
    ],
    "you": "Some parents grieve when they learn their child is Deaf or hard of hearing, and many later find a rich community they didn't know about. Learning even a little sign, if your teen signs, says “I'm in your world too.” Pine keeps your teen's answers private."
   },
@@ -5089,17 +4809,12 @@ const LC_TOPICS = [
    "roots|Quiet Senses"
   ],
   "reach": [
-   "Feeling like you can't go on: text 988, or reach 988 in ASL by videophone (tap ASL Now on the 988 website). In Minnesota you can also text MN to 741741.",
    "Danger right now: call or text 911 where text to 911 is available, or have someone call for you.",
    "Feeling down, left out, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor, and ask for an interpreter if you need one.",
    "Help finding services and programs in Minnesota: Minnesota Deaf and Hard of Hearing Services.",
    "School plans in Minnesota: PACER Center, 952-838-9000."
   ],
   "more": [
-   [
-    "988 Lifeline (ASL Now)",
-    "https://988lifeline.org/"
-   ],
    [
     "Minnesota Deaf and Hard of Hearing Services",
     "https://mn.gov/deaf-hard-of-hearing/"
@@ -5184,7 +4899,6 @@ const LC_TOPICS = [
    "roots|Sacred Music"
   ],
   "reach": [
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911.",
    "Feeling down, left out, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor.",
    "Training, technology, and planning for work in Minnesota: State Services for the Blind.",
@@ -5281,7 +4995,6 @@ const LC_TOPICS = [
    "bark|Five Senses Pause"
   ],
   "reach": [
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Texting works if talking is hard.",
    "Danger right now: call 911.",
    "Feeling worn out, anxious, or down for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
    "Programs and support in Minnesota: Autism Society of Minnesota.",
@@ -5381,7 +5094,6 @@ const LC_TOPICS = [
    "A medical emergency: call 911, or follow the plan your care team gave you.",
    "Questions about your illness or treatment: your doctor, nurse, or care team, any time.",
    "Feeling hopeless, very scared, or down for two weeks or more: tell your parent, your care team, or the hospital psychologist or social worker.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Moving to adult care later on: Got Transition has checklists for teens and families."
   ],
   "more": [
@@ -5459,7 +5171,7 @@ const LC_TOPICS = [
     "Keep appointments steady, and help with the practical parts: rides, refills, insurance.",
     "Protect sleep, meals, movement, and time with people. They support recovery.",
     "Work with the school on a plan for attendance and catching up, especially after a hospital stay or program.",
-    "Learn about the condition. The NAMI HelpLine, 1-800-950-6264, offers information and support for families (not a crisis line)."
+    "Learn about the condition."
    ],
    "you": "Loving someone through a long-term condition can wear you down, and worry can become constant. Your own support matters: a friend, a counselor, or a family group. Pine keeps your teen's answers private. In Minnesota, at 16, a teen can ask for outpatient counseling on their own."
   },
@@ -5473,12 +5185,8 @@ const LC_TOPICS = [
    "branches|Name Your Trusted Adult"
   ],
   "reach": [
-   "Thoughts of ending your life, or you feel unsafe: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
    "Danger right now: call 911.",
    "Your warning signs are showing: tell your parent and your counselor or doctor today.",
-   "Want to talk to another teen: Teen Line, 800-852-8336, or text TEEN to 839863 (evenings).",
-   "Information and support for you or your family: NAMI HelpLine, 1-800-950-6264 (not a crisis line).",
    "In Minnesota, at 16 you can ask for outpatient counseling on your own."
   ],
   "more": [
@@ -5489,10 +5197,6 @@ const LC_TOPICS = [
    [
     "NAMI Minnesota",
     "https://namimn.org/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ]
   ]
  },
@@ -5573,11 +5277,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "An emergency with the person you help: call 911.",
-   "Feeling overwhelmed, down, or anxious for two weeks or more: tell a school counselor, a doctor, or another adult you trust.",
-   "Feeling like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Want to talk to another teen: Teen Line, 800-852-8336, or text TEEN to 839863 (evenings).",
-   "If someone at home is hurting you: Childhelp, call or text 1-800-422-4453, any time.",
-   "A family member's mental health condition: NAMI HelpLine, 1-800-950-6264, for information and support (not a crisis line)."
+   "Feeling overwhelmed, down, or anxious for two weeks or more: tell a school counselor, a doctor, or another adult you trust."
   ],
   "more": [
    [
@@ -5673,17 +5373,13 @@ const LC_TOPICS = [
    "roots|Quiet Senses"
   ],
   "reach": [
-   "Feeling hopeless, or like you can't go on: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911.",
    "Feeling down or anxious for two weeks or more: tell a parent, your doctor, or a school counselor.",
-   "If someone in a faith community is hurting you or threatening you: tell a trusted adult outside that group, or call or text Childhelp at 1-800-422-4453.",
+   "If someone in a faith community is hurting you or threatening you: tell a trusted adult outside that group.",
    "A trusted adult who welcomes questions: a parent, a youth leader, a chaplain, a faith mentor, or your school counselor."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ]
  }
 ];
@@ -5779,7 +5475,6 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Daily drinking, or daily pills like Xanax or opioids: talk with a doctor before you stop. Stopping suddenly can be dangerous.",
    "SAMHSA National Helpline, 1-800-662-4357, any time, for information and treatment options for teens and families.",
    "Vaping: text DITCHVAPE to 88709. In Minnesota, teens 13 to 17 can text Start My Quit to 36072 (My Life, My Quit).",
-   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age."
   ],
   "more": [
@@ -5887,10 +5582,8 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Someone can't wake up, is breathing slowly or strangely, or there is danger right now: call 911.",
    "Thinking about stopping after daily drinking, or daily pills like Xanax or opioids: talk with a doctor first. Stopping suddenly can be dangerous.",
    "SAMHSA National Helpline, 1-800-662-4357, any time, for treatment options and information for teens and families.",
-   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Poison Help, 1-800-222-1222, any time, for a question about something taken or mixed.",
-   "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+   "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age."
   ],
   "more": [
    [
@@ -5992,8 +5685,6 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
    "A ride with someone who has been drinking or using: skip it. Text your code word or call a grown-up.",
    "Poison Help, 1-800-222-1222, any time, if you're worried about something someone took.",
-   "Pressure from someone you're dating to drink or use: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
-   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "SAMHSA National Helpline, 1-800-662-4357, any time, for information and support."
   ],
   "more": [
@@ -6008,10 +5699,6 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "DEA: One Pill Can Kill",
     "https://www.dea.gov/onepill"
-   ],
-   [
-    "Love Is Respect",
-    "https://www.loveisrespect.org/"
    ]
   ]
  },
@@ -6099,11 +5786,8 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "reach": [
    "Someone can't wake up, isn't breathing well, or there is danger right now: call 911.",
-   "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "SAMHSA National Helpline, 1-800-662-4357, any time, for treatment and support for the parent, or for your family.",
-   "NACoA: Just for Teens, with words and help for teens who love someone who drinks or uses.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+   "NACoA: Just for Teens, with words and help for teens who love someone who drinks or uses."
   ],
   "more": [
    [
@@ -6205,8 +5889,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Teens: text DITCHVAPE to 88709 for help quitting. In Minnesota, teens 13 to 17: text Start My Quit to 36072 (My Life, My Quit).",
    "Adults: call 1-800-QUIT-NOW (1-800-784-8669).",
    "Your doctor, for a quit plan and medicine questions.",
-   "Swallowed vape liquid, or a child got into it: call Poison Help, 1-800-222-1222, any time. Danger right now: 911.",
-   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Swallowed vape liquid, or a child got into it: call Poison Help, 1-800-222-1222, any time. Danger right now: 911."
   ],
   "more": [
    [
@@ -6305,7 +5988,6 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Someone won't wake up, is breathing slowly or not at all, or has blue or gray lips: call 911 now. Give naloxone (Narcan) if you have it. Stay with them.",
    "Poison Help, 1-800-222-1222, any time, for questions about something someone took.",
    "Using pills to cope, or finding it hard to stop: tell a doctor or a trusted adult. SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age."
   ],
   "more": [
@@ -6415,16 +6097,9 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "reach": [
    "Someone won't wake up, is breathing slowly or not at all, or has blue or gray lips: call 911 now. Give naloxone (Narcan) if you have it. Stay with them.",
-   "Thoughts of not wanting to be alive, or the grief feels like too much: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
-   "Using pills or other drugs yourself and want help: SAMHSA National Helpline, 1-800-662-4357, any time.",
-   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+   "Using pills or other drugs yourself and want help: SAMHSA National Helpline, 1-800-662-4357, any time."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
    [
     "Dougy Center: grief support for teens",
     "https://www.dougy.org/"

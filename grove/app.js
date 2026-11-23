@@ -822,6 +822,8 @@ function quietInner() {
 }
 function quietHtml() { return `<p class="muted gv-quiet">${quietInner()}</p>`; }
 /* ---------- help, any time ---------- */
+// BLD 1043 (Chris, November 21, 2026, GL): MAARC shows only on a guide whose topic touches a vulnerable adult, never on every grove.
+const VULN = /vulnerable|elder|older|aging|dementia|memory|disab|caregiv|grandparent|parent moves in|nursing|assisted|hospital|serious illness|dying|hospice|neglect|exploit|scam|abuse/i;
 function helpCardHtml(more, hospice) {
   let first = '';
   if ((isFamily() && G.hard) || hospice) first = G && G.line && G.line.phone
@@ -1040,13 +1042,13 @@ function viewLife() {
   if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   let h = `<div class="section-head"><p class="gv-kicker">When Life Changes Together</p><h2>Guides for the changes we go through together</h2>
     <p>For a family, a class, a faith community, a group, or a team. Each guide has two views: For the Group, to read together, and For the Leader, for the grown-up, teacher, pastor, group leader, or team lead guiding the way. Each has two short videos, a few Together practices, and links to the guides in each person's own tree, in The Grounded Way.</p></div>`;
-  if (!LC.length) return h + `<div class="card"><p>The guides are on the way.</p></div>` + helpCardHtml(true);
+  if (!LC.length) return h + `<div class="card"><p>The guides are on the way.</p></div>` + helpCardHtml();
   lcStyle();
   h += `<input class="gv-input gv-lc-search" id="gv-lcq" type="search" placeholder="Search: a move, a new baby, hospice, a team..." aria-label="Search the guides" value="${esc(st.q)}" enterkeyhint="search">
     <div class="gv-chips" role="group" aria-label="Filter by topic"><button type="button" class="chip${st.ring === 'all' ? ' on' : ''}" aria-pressed="${st.ring === 'all'}" data-act="lc-ring" data-id="all">All Topics</button>${filled.map(r => `<button type="button" class="chip${st.ring === r.key ? ' on' : ''}" aria-pressed="${st.ring === r.key}" data-act="lc-ring" data-id="${r.key}" style="--rc:${r.color}">${esc(r.name)}</button>`).join('')}</div>`;
   if (G && G.lockOn && !vaultOpen()) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} Unlock the grove to see Picked for Us, from your check-in and What's Changed Lately. <button class="text-btn" data-act="unlock">Unlock</button></p>`;
   h += `<div id="gv-lclist">${lcListHtml()}</div>`;
-  return h + helpCardHtml(true) + `<p class="muted gv-lc-note">These guides offer spiritual guidance and emotional support for groups going through change, drawn from chaplaincy and trusted family, school, faith, and workplace organizations. For therapy, medical care, or legal advice, they point you to the right people.</p>`;
+  return h + helpCardHtml() + `<p class="muted gv-lc-note">These guides offer spiritual guidance and emotional support for groups going through change, drawn from chaplaincy and trusted family, school, faith, and workplace organizations. For therapy, medical care, or legal advice, they point you to the right people.</p>`;
 }
 function lcWatchedOne(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('grove', id)); } catch (e) { return false; } }
 function lcWatchedBoth(gid) { return lcWatchedOne('gr-g-' + gid + '-you') && lcWatchedOne('gr-g-' + gid + '-helper'); }
@@ -1109,7 +1111,7 @@ function lcDetail(t0) {
     <h3>When to reach out for more help</h3>${lcUl(t.reach)}
     ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}</ul>` : ''}
     <div class="gv-srcs">${lcSources(t0)}</div>
-    ${helpCardHtml(true, HOSPICE_FIRST.includes(t0.id))}
+    ${helpCardHtml(VULN.test(t0.id + ' ' + t0.title), HOSPICE_FIRST.includes(t0.id))}
     <p class="muted gv-lc-note">From When Life Changes Together in The Grove&trade; by Grow With Grounded. Spiritual guidance and emotional support; for therapy, medical care, or legal advice, it points you to the right people. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for your family or group.</p>
   </article>`;
 }
@@ -1273,7 +1275,7 @@ function liveSpreadHtml(ci) {
 function qText(q) { return plainMode() && q.plain ? q.plain : q.q; }
 function kidText(q) { return plainMode() && q.kidPlain ? q.kidPlain : q.kid; }
 function lockedHtml(what) {
-  return `<div class="card gv-locked"><h3>${icon('lock')} ${esc(what)} Is Locked</h3><p>The check-ins, the Growth Plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on this device only.</p><button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button></div>` + helpCardHtml(true);
+  return `<div class="card gv-locked"><h3>${icon('lock')} ${esc(what)} Is Locked</h3><p>The check-ins, the Growth Plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on this device only.</p><button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button></div>` + helpCardHtml();
 }
 function viewCheckin() {
   const K = KW();

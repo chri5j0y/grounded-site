@@ -163,14 +163,14 @@
     cpn: { name: 'Courageous Parents Network', how: 'Open the website', url: 'https://courageousparentsnetwork.org/', note: 'Videos, guides, and community for parents caring for a child with a serious medical condition.' }
   };
   Object.keys(LINES).forEach(function (k) { LINES[k].id = 'life-' + k; LINES[k].show = LINES[k].how; });
-  var KIDLINES = { health: ['pacer'], pain: ['pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami', 'pacer'], close: ['sibs', 'nami'] };
+  var KIDLINES = { health: ['pacer'], pain: ['pacer'], moving: ['pacer'], hearing: ['pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami', 'pacer'], close: ['sibs', 'nami'] };
   var LINEMAP = {
     maple: Object.assign({}, KIDLINES, { sober: ['nacoa'] }),
     aspen: Object.assign({}, KIDLINES, { sober: ['nacoa'] }),
-    pine: { sober: ['samhsa', 'nacoa', 'poison'], soberLove: ['nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
-    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
-    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
-    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
+    pine: { sober: ['samhsa', 'nacoa', 'poison'], soberLove: ['nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
+    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
+    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
+    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
   };
 
   /* ---------- Living Sober growth plan ideas (GWG BLD 789) ----------

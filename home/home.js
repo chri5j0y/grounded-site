@@ -2744,7 +2744,7 @@
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=c151';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
-  var GUIDES = { oak: ['/oak/guides.js?v=c128', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c128', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c126', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
+  var GUIDES = { oak: ['/oak/guides.js?v=c197', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c197', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c197', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   // BLD 1041 (the November 21 site test: a kid could reach no When Life Changes guide): Maple's guides (one list) and Aspen's (in
   // groups) count and search on the Library like every tree's.
@@ -5189,7 +5189,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=b907', '/shared/gg-sober.js?v=c192'];
+  var SOBER_JS = ['/shared/gg-life.js?v=c197', '/shared/gg-sober.js?v=c192'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -5684,7 +5684,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c192';
+  var LEARN_JS = '/shared/gg-learn.js?v=c197';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5896,7 +5896,7 @@
   function ldoneOf(id) { return !!(S.id && obj(homeRec().ldone)[id]); }
   function rowHtml(title, sub, cards) { return '<div class="hm-lrow"><h2 class="hm-label">' + esc(title) + '</h2>' + (sub ? '<p class="hm-sub hm-lrsub">' + esc(sub) + '</p>' : '') + '<div class="hm-lscroll">' + cards + '</div></div>'; }
   function lifeTopics(tree) { return arr(guidesOf(tree)); }
-  var KID_GUIDES = { maple: ['/maple/guides.js?v=b934', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=b934', 'ASPEN_GUIDES'] };
+  var KID_GUIDES = { maple: ['/maple/guides.js?v=c197', 'MAPLE_GUIDES'], aspen: ['/aspen/guides.js?v=c197', 'ASPEN_GUIDES'] };
   var LT = { f: 'all', load: null, tree: null };
   function loadLearn() {
     if (LT.load && LT.tree === S.tree) return LT.load;
@@ -6089,7 +6089,7 @@
      this or I'm helping someone, faith, practices, when to reach out, learn more, and the sources line. */
   var GREAD = { tree: '', id: '', self: true };
   var FAITH_H = { oak: 'Faith and the holy', sequoia: 'Faith and the holy', birch: 'Faith and meaning', pine: 'Faith and meaning' };
-  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=c128', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c128', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c126', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b924', 'PINE_GUIDES'] };
+  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=c197', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c197', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c197', 'PINE_GUIDES'] };
   function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
   function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
   function guideRead(id, tree) {

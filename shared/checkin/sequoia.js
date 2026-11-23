@@ -39,7 +39,7 @@
     '/sequoia/checkin.js?v=b929',
     '/sequoia/practices.js?v=c195',
     '/shared/gg-parts.js?v=b929',
-    '/shared/gg-life.js?v=b907',
+    '/shared/gg-life.js?v=c197',
     '/shared/practice-rhythm.js?v=c195',
     '/shared/gg-guided.js?v=c189',
     '/shared/guided/sequoia.js?v=b949'

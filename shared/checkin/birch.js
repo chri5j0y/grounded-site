@@ -50,7 +50,7 @@
     '/shared/gg-parts.js?v=b929',
     '/birch/checkin.js?v=b929',
     '/birch/practices.js?v=b949',
-    '/shared/gg-life.js?v=b907',
+    '/shared/gg-life.js?v=c197',
     '/shared/gg-life-kit.js?v=b888',
     '/shared/practice-rhythm.js?v=c195',
     '/shared/gg-guided.js?v=c189',
