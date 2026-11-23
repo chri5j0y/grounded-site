@@ -347,7 +347,7 @@ window.GG_RHYTHM = {
     "leaves|Evening Wind Down": {"r": "d", "min": 30, "how": ["An hour before bed, put screens away.", "Dim the lights, take a warm shower, and read something calm.", "In bed, breathe in for four and out for six, and let your body grow heavy."]},
     "leaves|Morning Daylight": {"r": "d", "min": 10, "how": ["Soon after you wake, step outside or sit by a bright window.", "Spend ten minutes in morning daylight.", "Walk, eat breakfast, or drink your coffee there."]},
     "leaves|Smart Nap": {"r": "d", "min": 20, "how": ["If you need a nap, set an alarm for twenty minutes.", "Nap before about 3 or 4 in the afternoon.", "Rise, stretch, and step into some light."]},
-    "leaves|Protein at Every Meal": {"r": "d", "min": 5, "how": ["Add one protein food to each meal.", "Choose from eggs, yogurt, beans, fish, chicken, tofu, cheese, or peanut butter."]},
+    "leaves|Protein at Every Meal": {"r": "d", "min": 5, "how": ["Add one protein food to each meal.", "Choose from eggs, yogurt, beans, fish, chicken, cheese, or peanut butter."]},
     "leaves|Water Within Reach": {"r": "d", "min": 2, "how": ["Fill a glass or bottle this morning.", "Keep it where you sit, and sip through the day.", "Finish it by lunch, then fill it again."]},
     "leaves|Easy Meals Plan": {"r": "w", "min": 15, "how": ["Write three easy meals you like.", "Check that the ingredients are in the house.", "Keep easy foods on hand for low-energy days."]},
     "leaves|Appetite Helpers": {"r": "d", "min": 10, "how": ["Plan five small meals or snacks instead of three big ones.", "Start with the foods you enjoy most.", "Keep easy favorites within reach."]},

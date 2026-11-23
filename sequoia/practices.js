@@ -727,7 +727,7 @@
   { p: 'leaves', n: 'Protein at Every Meal', d: 'Include a protein food at each meal to protect your muscles.',
     m: ['B', 'Daily', 'S', SRC.dga], f: { strand: 'nourish', chronic: 1 }, s: ['dga'],
     g: { why: "Older adults need enough protein to protect muscle and strength.",
-      today: "Add one protein food to each meal: eggs, yogurt, beans, fish, chicken, tofu, cheese, or peanut butter.",
+      today: "Add one protein food to each meal: eggs, yogurt, beans, fish, chicken, cheese, or peanut butter.",
       build: "Keep easy protein on hand: canned fish, cottage cheese, nuts, beans.",
       hard: "If chewing is hard, try soft proteins like eggs, yogurt, or soups. If you have kidney disease, ask your doctor how much protein is right for you." } },
   { p: 'leaves', n: 'Water Within Reach', d: 'Keep a glass or bottle of water nearby and sip through the day.',

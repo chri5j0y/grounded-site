@@ -52,7 +52,7 @@
     '/birch/practices.js?v=b949',
     '/shared/gg-life.js?v=b907',
     '/shared/gg-life-kit.js?v=b888',
-    '/shared/practice-rhythm.js?v=b929',
+    '/shared/practice-rhythm.js?v=c195',
     '/shared/gg-guided.js?v=c189',
     '/shared/guided/birch.js?v=b949'
   ];
@@ -275,7 +275,7 @@
     function rhythm(then) {   // gdRhythm 644
       if (window.GG_RHYTHM) { then(); return; }
       var done = false, go = function () { if (!done) { done = true; then(); } };
-      var s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b929'; s.onload = go; s.onerror = go; document.head.appendChild(s);
+      var s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=c195'; s.onload = go; s.onerror = go; document.head.appendChild(s);
     }
     function planRun() {
       if (ended) return;
