@@ -182,7 +182,7 @@
   // battery, kind wishes rings, good things on a branch, the conversation turn, growth rings, the repair bridge, the Name It
   // dial, the circle of support, and a hand on the heart or roots on the body outline. The plan is c114; gg-gfx.js has its own
   // version (GFXJS), so a change to the drawings alone needs no new plan.
-  var GFXP = { p: null }, GFXV = 'c115', GFXJS = 'c183', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
+  var GFXP = { p: null }, GFXV = 'c115', GFXJS = 'c202', GFX_KINDS = ['tree', 'body', 'wave', 'senses', 'tap', 'rail', 'box', 'tri', 'sigh', 'ring', 'circle', 'kind', 'rings', 'support', 'day', 'bridge', 'talk', 'cup', 'battery', 'dial', 'weather', 'branch'], GFX_SHAPES = { box: 1, tri: 1, sigh: 1, ring: 1 };
   function gfxLoad() {
     if (window.GG_GFX) return Promise.resolve(window.GG_GFX);
     if (GFXP.p) return GFXP.p;
@@ -296,7 +296,7 @@
     return p === 'in hold out rest' ? 'box' : p === 'in hold out' ? 'tri' : p === 'in sip out' ? 'sigh' : '';
   }
   function brRing(sc, opt, tone) { ringNeed(); var sh = brShape(sc); return '<svg class="ggbr ln-ggbr" viewBox="0 0 240 240" aria-hidden="true" data-anim=".ln-brc" data-ph="' + brParts(sc) + '" data-opt="' + opt + '" data-tone="' + tone + '"' + (sh ? ' data-shape="' + sh + '" data-sw="' + esc(brWordList(sc).join('|')) + '"' : '') + '></svg>'; }
-  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=c151'); el.async = true; document.head.appendChild(el); } catch (e) {} }
+  function ringNeed() { if (window.GGBreathRing || ringNeed.on) return; ringNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-breath-ring.js?v=c202'); el.async = true; document.head.appendChild(el); } catch (e) {} }
   function gfxNeed() { if (window.GGGfx || gfxNeed.on) return; gfxNeed.on = 1; try { var el = document.createElement('script'); el.src = url('/shared/gg-gfx.js?v=' + GFXJS); el.async = true; document.head.appendChild(el); } catch (e) {} }
   // A breathing exercise: a lesson whose own name is a breath (Box Breathing, Long Exhale Breathing, Physiological Sigh, Slow Bubble
   // Breath), never a prayer. A lesson can say so itself with breathEx.
@@ -647,7 +647,7 @@
      The same engine and figure data as the workout player (shared/fig3d, BLD 897), loaded only when a figure scene
      shows, and the same rules for when it draws: WebGL, not Save Data, not Simple Figure (gg-fig3d 'off'), and a real
      graphics chip unless the person turned 3D Figure on (gg-fig3d 'on'). */
-  var FIGV = 'c171', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files; BLD 998 c122: the body scan poses (bs-seat, bs-seat-f, bs-heart, bs-belly, bs-lie); BLD 1001 c123: bs-chair, bs-lie-belly; BLD 979 c135: the workout figure fixes (pull-through, 90/90, child's pose, arm circles back, step-up drive, press turn, breath hands); BLD 1018 c149: the Finish Stretch figures (sphinx, supine-twist, child-reach); BLD 1023 c155: the resting hand (palm up, thumb meets index) on every seated breath and body scan pose, reach-through, the 90/90 waistband; BLD 1028 c171: the plank pull-through hand closes on the dumbbell, and the drag passes behind the supporting arm
+  var FIGV = 'c202', F3 = { p: null, bad: false, ok: null }; // BLD 932: FIGV follows BLD 931's fig3d.js and figure files; BLD 998 c122: the body scan poses (bs-seat, bs-seat-f, bs-heart, bs-belly, bs-lie); BLD 1001 c123: bs-chair, bs-lie-belly; BLD 979 c135: the workout figure fixes (pull-through, 90/90, child's pose, arm circles back, step-up drive, press turn, breath hands); BLD 1018 c149: the Finish Stretch figures (sphinx, supine-twist, child-reach); BLD 1023 c155: the resting hand (palm up, thumb meets index) on every seated breath and body scan pose, reach-through, the 90/90 waistband; BLD 1028 c171: the plank pull-through hand closes on the dumbbell, and the drag passes behind the supporting arm
   function fig3Dark() { var t = document.documentElement.getAttribute('data-theme'); if (t) return t === 'dark'; try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; } }
   function fig3Able() {
     if (F3.bad) return false;
@@ -2309,7 +2309,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c192'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c202'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

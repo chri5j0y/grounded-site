@@ -204,7 +204,7 @@ function ringsHTML(o, red, P, mark){
 // The ring module, once (/shared/gg-breath-ring.js, a root address since BLD 1020), with this file's own version.
 function ringLoad(){
   if (window.GGBreathRing || ringLoad.on) return; ringLoad.on = 1;
-  try { const u = new URL('/shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c151';
+  try { const u = new URL('/shared/gg-breath-ring.js', SELF || location.href); u.search = '?v=c202';
     const el = document.createElement('script'); el.src = u.href; el.async = true; (document.head || document.documentElement).appendChild(el); } catch (e) {}
 }
 function phaseHTML(o, red){ return ringsHTML(o, red, o.phases, true); }
@@ -214,6 +214,7 @@ function breathHTML(o, red){
   return ringsHTML(o, red, [{k: 'in', d: i}, {k: 'out', d: e}], false);
 }
 
+const sideWord = (sd, arm) => (sd === 'L' ? 'Left' : 'Right') + (arm ? ' Arm' : ' Side');
 function scene(state, opts){
   const o = opts || {}, s = stOf(state), h = hourOf(o), id = 'ggs' + (++N), red = reduced();
   const sky = skyAt(h), lightA = ST[s][0];
@@ -226,7 +227,8 @@ function scene(state, opts){
   if (ml){ set = dusk(id); deck = 'floor'; if (!red) setTimeout(flKick, 30); }
   const tod = h >= 5 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'day' : h >= 17 && h < 21 ? 'evening' : 'night';
   const showRing = s === 'rest' || o.pct != null, showBreath = s === 'breathe' || o.inhale != null || (Array.isArray(o.phases) && o.phases.length > 0);
-  const side = o.side === 'L' || o.side === 'R' ? `<div class="ggs-side" data-ggsside><b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span></div>` : '<div class="ggs-side" data-ggsside hidden></div>';
+  // BLD 1052: sideArm names the arm (Left Arm, Right Arm) for a move done one arm at a time, such as Thread the Needle.
+  const side = o.side === 'L' || o.side === 'R' ? `<div class="ggs-side" data-ggsside><b>${o.side}</b><span>${sideWord(o.side, o.sideArm)}</span></div>` : '<div class="ggs-side" data-ggsside hidden></div>';
   const cn = o.count && +o.count.of > 0 ? o.count : null, cr = cn ? Math.max(0, Math.min(+cn.of, +cn.n || 0)) : 0;
   const count = cn ? `<div class="ggs-count"><b data-hjrep data-ggsrep>${cr || (cn.n === 0 ? '0' : '')}</b><span>of ${+cn.of}</span></div>` : '';   // BLD 1022: "0 of 5" while a set's words play before Go
   const prog = cn ? `<div class="ggs-prog" data-ggsprog data-of="${+cn.of}"><i style="width:${r1(cr / cn.of * 100)}%"></i>${Array.from({length: Math.max(0, cn.of - 1)}, (x, k) => `<b style="left:${r1((k + 1) / cn.of * 100)}%"></b>`).join('')}</div>` : '';
@@ -265,7 +267,7 @@ function update(el, opts){
     if (b && b.textContent !== String(o.rep || '')) b.textContent = o.rep || '';
     if (pg){ const n = +pg.getAttribute('data-of') || 1, i = pg.querySelector('i'); if (i) i.style.width = r1(Math.max(0, Math.min(1, (+o.rep || 0) / n)) * 100) + '%'; } }
   if (o.side !== undefined && c.side && o.side !== c.sd){ c.sd = o.side;
-    if (o.side === 'L' || o.side === 'R'){ c.side.hidden = false; c.side.innerHTML = `<b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span>`; } else c.side.hidden = true; }
+    if (o.side === 'L' || o.side === 'R'){ c.side.hidden = false; c.side.innerHTML = `<b>${o.side}</b><span>${sideWord(o.side, o.sideArm)}</span>`; } else c.side.hidden = true; }
 }
 
 // ---------- BLD 899: the meditation stage ----------

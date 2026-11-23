@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'c171';
+const V = 'c202';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -164,6 +164,9 @@ function pick3d(svgId){
 function sided(id){
   const d = defOf(id); if (!d || !d.other) return {id, pair: false};
   const base = /-other$/.test(id) && defOf(d.other) ? d.other : id, alt = defOf(base) && defOf(base).other;
+  // BLD 1052: a Flow step, warm-up, or cooldown hold says which half it is in (half2): the first half shows the move as
+  // defined (written to match the side its words name first) and the second half its partner, whichever side goes first.
+  if (typeof L.ctx.half2 === 'boolean') return {id: L.ctx.half2 && alt && has(alt) ? alt : base, pair: true};
   return {id: L.ctx.side === 'R' && alt && has(alt) ? alt : base, pair: true};
 }
 function defOf(id){ try { const G = window.GG3D; return (G && G.get && G.get(id)) || moveDef(id) || null; } catch(e){ return null; } }

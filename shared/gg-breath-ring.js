@@ -217,6 +217,8 @@
         return ((+an.currentTime - (+tm.delay || 0)) % +tm.duration + +tm.duration) % +tm.duration / 1000;
       } catch (e) { return null; }
     }
+    // BLD 1052: the workout player's one clock, read directly when the player offers it (smooth on a slow frame).
+    if (svg.hasAttribute('data-dur') && typeof window.GGPlayerClock === 'function') { var pc = window.GGPlayerClock(svg); if (pc != null) return pc; }
     if ((svg.hasAttribute('data-dur') || svg.hasAttribute('data-loop')) && svg.getCurrentTime) { try { return svg.getCurrentTime(); } catch (e) {} }
     if (!S.t0) S.t0 = now; return (now - S.t0) / 1000;
   }

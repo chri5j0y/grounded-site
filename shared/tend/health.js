@@ -1457,6 +1457,18 @@ const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
 // A warm-up or cooldown hold done on each side (Couch Stretch, Figure-4): Ava says Switch sides at the halfway point.
 // An alternating warm-up (Dead Bugs, 6 per side) flows side to side with no Switch sides (BLD 891).
 const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
+// BLD 1052 (Kayti, November 21, 2026, Thread the Needle in a Flow: "needs to switch arms half way through"): a Flow step held on
+// each side switches at the halfway point too. The Left Side or Right Side chip (Left Arm or Right Arm for a move that names
+// its arms) shows the side at work, the figure turns to it, and Ava says Switch sides or Switch arms. In a Flow the side the
+// words name first goes first; in a warm-up or cooldown an arm move does the same (Thread the Needle: the right arm first).
+// A move that flows side to side with the breath, or changes direction, keeps flowing as before.
+const FLOW_ALT = /keep alternating|keep going|with the breath|switch directions|reverse the direction|easy rhythm|back and forth|return, and switch/i;
+const prHalf = x => { const h = String(x.how || ''); return !FLOW_ALT.test(h) && !/breath|nostril/i.test(x.name || '') && /halfway|then switch (sides|legs|feet|arms|hands|to the (left|right))|seconds, then switch\b/i.test(h); };
+const armMove = x => /thread the needle/i.test(x.name || '') || /switch (arms|hands|to (the|your) (left|right) arm)|(left|right) arm halfway|then the (left|right) arm/i.test([x.how].concat(arr(x.steps)).join(' '));
+// The side named first; with none named, d (an arm move starts with the right arm, as its figure does).
+const firstOf = (x, d) => { const t = [x.how].concat(arr(x.steps)).join(' ').toLowerCase(), r = t.search(/\bright\b/), l = t.search(/\bleft\b/); return r >= 0 && (l < 0 || r < l) ? 'R' : l >= 0 ? 'L' : d; };
+// The half code runTimer takes: the first side ('L' or 'R'), and 'a' for arms.
+const halfCode = st => st.half ? (st.first === 'R' ? 'R' : 'L') + (st.arm ? 'a' : '') : '';
 // BLD 979: a library may keep every set in the lighter weeks (workouts.lightKeepsSets: a step lighter weight, the same work
 // and the same minutes; Chris, November 16, 2026: "32 too short for a person w my goals"). BLD 979 follow-up (Chris, November 17:
 // "they all still short"): every workout keeps every set in the lighter weeks, a plan's older saved copy, public Tending, Member
@@ -1486,14 +1498,14 @@ const pubMove = x => { const id = x && x.move; if (!id || !PUB()) return {}; con
 function wuStep(x, part, ph){
   const r0 = x.reps && typeof x.reps === 'object' ? (x.reps[ph] || x.reps['1'] || '') : x.reps, rs = String(r0 == null ? '' : r0), n = parseInt(rs, 10) || 0;
   const way = !!n && (x.way === true || (x.side !== true && /each way|each direction|both ways/i.test(rs))), side = !way && !!n && (x.side === true || x.per === true || /each side|per side/i.test(rs)), alt = altMove(x), mv = pubMove(x);
-  return {t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part, fig: x.fig || x.name, half: halfSide(x),
+  return {t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part, fig: x.fig || x.name, half: halfSide(x), arm: armMove(x), first: armMove(x) ? firstOf(x, 'R') : '',
     wreps: n > 0 ? n : 0, wbreath: x.unit === 'breaths', tempo: +x.tempo || +mv.tempo || 0, wturn: side && !alt ? 'side' : way ? 'way' : '', walt: alt && (side || /each side|per side/i.test(rs)),
     form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath)};
 }
 // How many counts a warm-up item takes per turn (0: it keeps its timer). Counted only with Voice Counts Reps on and a tempo.
 const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= 20 ? n : 0; };
 // BLD 979 follow-up: a Flow session's card, start screen, and opening line say its own clock (prSteps, as buildPractice plays it).
-const prSteps = ss => arr(ss && ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
+const prSteps = ss => arr(ss && ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath, half: prHalf(x), arm: prHalf(x) && armMove(x), first: prHalf(x) ? firstOf(x, armMove(x) ? 'R' : 'L') : ''}));
 const FLM = new WeakMap();
 function flowMins(ss){ if (!ss || typeof ss !== 'object') return 0; if (FLM.has(ss)) return FLM.get(ss); const st = prSteps(ss);
   const m = st.length ? Math.max(1, Math.round((planSecs(st, 0, 1, {prac: true}) + lineSecs(LN.pIntro(ss.title || 'Flow', 20)) + lineSecs(LN.pOut)) / 60)) : +ss.mins || 0; FLM.set(ss, m); return m; }
@@ -1641,7 +1653,7 @@ function planSecs(steps, i0, set0, o){
   let s = 0; const at = i0 || 0;
   steps.forEach((st, i) => { if (i < at) return; const nx = steps[i + 1];
     if (st.t === 'time'){ const wn = wuN(st, o), turns = st.wturn ? 2 : 1;
-      s += (wn ? wn * st.tempo * turns + lineSecs(LN.go) + (st.wturn ? lineSecs(LN.sw) + 1 : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine ? lineSecs(st.breathLine) : 0) : st.secs) + (st.lines ? arr(st.lines).reduce((a, l) => a + lineSecs(l) + 0.8, 0) : lineSecs(o ? tLine(o, st) : LN.time(st))) + (st.half && !wn ? lineSecs(LN.sw) : 0);
+      s += (wn ? wn * st.tempo * turns + lineSecs(LN.go) + (st.wturn ? lineSecs(LN.sw) + 1 : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine ? lineSecs(st.breathLine) : 0) : st.secs) + (st.lines ? arr(st.lines).reduce((a, l) => a + lineSecs(l) + 0.8, 0) : lineSecs(o ? tLine(o, st) : LN.time(st))) + (st.half && !wn && !(o && o.prac) ? lineSecs(LN.sw) : 0);   // BLD 1052: a Flow's Switch is said inside its timer
       if (!st.lines && st.part === 'Cooldown' && steps[i - 1] && steps[i - 1].part !== 'Cooldown' && !(o && o.prac)) s += lineSecs(LN.cool);
       if (nx && nx.t === 'ex') s += GET_READY; return; }
     const first = i === at ? (set0 || 1) : 1, left = Math.max(0, st.sets - first + 1), sides = st.side ? 2 : 1;
@@ -1703,14 +1715,15 @@ async function runTimer(o, ms, kind, half, onTick){
   // last seconds. One soft sound as a Break begins (when Ava is not speaking) and one as the next move begins.
   if ((kind === 'rest' || kind === 'between') && !o.dead){ const V = VO(); if (V && V.soft && !(V.busy && V.busy())) V.soft('break'); }
   // BLD 897: a hold done on each side shows the Left Side chip (and the figure on its left side) until the half, then the right.
-  if (half) o.side = 'L'; rerender(true);
+  const h0 = String(half || '')[0] === 'R' ? 'R' : 'L', hArm = String(half || '')[1] === 'a';   // BLD 1052: the first side, and arms
+  if (half) o.side = h0; rerender(true);
   while (!o.dead && !o.skip){
     if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
     const left = o.end - Date.now(); if (left <= 0) break;
     if (kind && preTick(o, left)) continue;   // BLD 931: the next move's instructions in the Break's last seconds
     const s = Math.ceil(left / 1000);
     if ((kind === 'rest' || kind === 'between') && s === 10 && !said10 && ms > 15000){ said10 = true; if (!o.spk && !preNear(o, left)) speak(o, LN.ten); }
-    if (half && !saidHalf && left <= o.tot / 2){ saidHalf = true; o.side = 'R'; speak(o, LN.sw); rerender(true); }
+    if (half && !saidHalf && left <= o.tot / 2){ saidHalf = true; o.side = h0 === 'R' ? 'L' : 'R'; speak(o, hArm ? LN.swarm : LN.sw); rerender(true); }
     if (onTick) onTick(left);
     document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
     ystarTick(o, left);
@@ -1862,6 +1875,14 @@ function clkSync(o){
       if (hold && !s.animationsPaused()) s.pauseAnimations(); else if (!hold && s.animationsPaused()) s.unpauseAnimations(); } catch(e){} });
 }
 setInterval(() => { const o = S.ov; if (o && o.clk && o.mode === 'auto' && !o.fin) clkSync(o); }, 100);
+// BLD 1052 (Kayti, November 21, 2026, Long Breath Out: "The breathe in and out is glitching"; reproduced on an iPad size
+// screen with the 3D figure on): the breath window read its time from the svg's own SMIL timeline, which falls behind or runs
+// ahead of the one clock whenever drawing is slow, and clkSync then set it straight every 100 ms, so the water stepped back
+// and the words flickered at a turn. The window now reads the one clock itself, every frame (shared/gg-breath-ring.js asks
+// window.GGPlayerClock for a host with data-dur); the figure still follows the timeline as before.
+function clkNow(o){ const c = o && o.clk; if (!c) return null; if (o.brH && !c.beat) return 0; const el = ((c.p != null ? c.p : Date.now()) - c.t0) / 1000; return el < 0 ? 0 : el; }
+window.GGPlayerClock = svg => { try { const o = S.ov; if (!o || !o.clk || o.mode !== 'auto' || o.fin || !svg.closest('.hj-stagebox')) return null;
+  const d = +svg.getAttribute('data-dur'), e = clkNow(o); return e == null || !(d > 0) ? null : e % d; } catch(e){ return null; } };
 // Chris, November 12, 2026: "make sure all breathe work videos sync voice and breathe graphics": the voice leads the breath
 // circle. A step whose circle shows while its line is spoken (every Flow step, a breathing cooldown) holds the circle, the
 // figure, and the Breathe In word at the start of the breath until the line's recording or device voice really starts; then
@@ -1909,9 +1930,9 @@ async function beats(o, n, t, keep){
 }
 // A counted warm-up or cooldown item: its form and breath lines, then Go, then each rep counted at its tempo; a per side or two way item turns at the half.
 async function wuCount(o, st){
-  const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = true; if (st.wturn === 'side') o.side = 'L';
+  const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = true; const w0 = st.first === 'R' ? 'R' : 'L'; if (st.wturn === 'side') o.side = w0;
   for (let k = 0; k < turns && !o.dead && !o.skip; k++){
-    if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.way2 = st.wturn === 'way'; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
+    if (k){ o.side = st.wturn === 'side' ? (w0 === 'R' ? 'L' : 'R') : ''; o.way2 = st.wturn === 'way'; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? (st.arm ? LN.swarm : LN.sw) : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
     else { if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } if (st.breathLine && !o.dead && !o.skip){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); } await speak(o, LN.go); }
     await beats(o, n, st.tempo, !!st.wbreath);
   }
@@ -1956,7 +1977,7 @@ const MU2 = 'https://audio.growwithgrounded.com/music/v2/';
 const muFiles = g => Array.from({length: g === 'classical' ? 15 : 7}, (x, k) => (g === 'classical' ? 'calm-classical-' : g + '-') + (k + 1) + '.mp3');
 function musicGroupFiles(o){
   if (o.med) return muFiles('classical');
-  if (o.prac){ const st = o.style || 'daily'; return st === 'yoga' || st === 'taichi' ? muFiles('move-world') : st === 'stretch' ? muFiles('move-folk').concat(muFiles('move-earth')) : muFiles(new Date().getHours() < 12 ? 'move-morning' : 'move-earth'); }
+  if (o.prac) return CALM_MU.slice();   // BLD 1052: every Flow plays the calm group
   if (o.young) return KID_BANDS.includes(o.young) ? muFiles('move-morning').concat(muFiles('move-folk')) : muFiles('move-lofi').concat(muFiles('move-folk'));
   if (/\bgroup\b/i.test(o.title || '')) return muFiles('move-folk').concat(muFiles('move-morning'));
   let ses = null; try { ses = sesById(o.s); } catch(e){}
@@ -1967,6 +1988,13 @@ function musicGroupFiles(o){
   if (k === 'cardio') return muFiles('move-lofi').concat(['move-folk-5.mp3', 'move-folk-6.mp3']);
   return muFiles('move-lofi');
 }
+// BLD 1052 (Kayti, November 21, 2026: "Music is to fast beat for the calm down flow needs to be calm meditative not jazz"):
+// every Flow, and the cooldown of every workout, plays the calm group: five slow ambient tracks with no beat, already on R2
+// and credited in shared/gg-sources.js (chosen by measuring each track's pulse and drum energy; patches/bld1052/music.md).
+// At the first cooldown move the workout's music crossfades to it (GGVoice.music, 4 seconds).
+const CALM_MU = ['move-earth-1.mp3', 'move-earth-5.mp3', 'move-world-2.mp3', 'move-world-4.mp3', 'move-earth-7.mp3'];
+function calmMusic(o){ if (!o || o.prac || o.med || o.calm) return; o.calm = true; o.music = CALM_MU.map(f => MU2 + f); o.mstart = 0;
+  const V = VO(); if (V && V.musicOn && V.musicOn()) V.music(o.music, 0); }
 function musicFor(o){
   const L = musicGroupFiles(o).map(f => MU2 + f), key = String(o.key || '') + ':' + String(o.s || o.title || '') + ':' + ymd(new Date());
   let h = 0; for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
@@ -1999,11 +2027,12 @@ async function runSession(o){
     const st = o.steps[o.i]; o.skip = false; o.skipMove = false; o.mline = ''; const bh = preRing(o, st) && brHold(o, true); rerender(true);
     if (st.t === 'time'){ o.preOn = false;
       await partBell(o);
+      if (!o.prac && st.part === 'Cooldown') calmMusic(o);
       if (!o.prac && st.part === 'Cooldown' && o.steps[o.i - 1] && o.steps[o.i - 1].part !== 'Cooldown') await speak(o, LN.cool);
       if (st.lines){ for (const ln of st.lines){ if (o.dead || o.skip) break; o.line = ln; rerender(true); await hold(o); await speak(o, ln); if (!(VO() && VO().on())) await snooze(o, Math.min(4000, lineSecs(ln) * 1000)); await snooze(o, 800); } o.line = ''; }
       else { if (bh) brArm(o); await speak(o, tLine(o, st), false, bh ? () => brGo(o, 'voice') : null); if (bh) brGo(o, 'end'); }
       await hold(o); if (o.dead) break;
-      if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else { if (tShort(o, st)){ const fb = !preRing(o, st) && brHold(o); speak(o, st.form, false, fb ? () => brGo(o, 'voice') : null).then(() => { if (fb) brGo(o, 'end'); }); } await runTimer(o, st.secs * 1000, '', st.half); } }
+      if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else { if (tShort(o, st)){ const fb = !preRing(o, st) && brHold(o); speak(o, st.form, false, fb ? () => brGo(o, 'voice') : null).then(() => { if (fb) brGo(o, 'end'); }); } await runTimer(o, st.secs * 1000, '', halfCode(st)); } }
       if (o.jumpTo != null) continue;
       o.done.push(o.i); o.i++; o.set = 1; o.skip = false;
       const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, GET_READY); }
@@ -2134,14 +2163,14 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c171';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c202';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
 const fig3dName = (o, st) => { const n = (o.swap && st.swap) || st.name || ''; return o.way2 && /arm circles/i.test(n) ? n + ' Backward' : n; };
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
-  return {art, kind: 'move', category: cat, workout: o.s || '', name: fig3dName(o, st), side: o.stage === 'start' ? '' : o.side || '', age: youngAge(o), fig: o.young ? st.fig || '' : ''}; }
+  return {art, kind: 'move', category: cat, workout: o.s || '', name: fig3dName(o, st), side: o.stage === 'start' ? '' : o.side || '', half2: st && st.t === 'time' && o.stage !== 'start' ? !!o.side && o.side !== (st.first === 'R' ? 'R' : 'L') : undefined, age: youngAge(o), fig: o.young ? st.fig || '' : ''}; }
 // BLD 985: a session for kids (ages 4 to 10) plays with the kid 3D figure, a session for teens (11 to 17) with the teen figure.
 const youngAge = o => o && o.young ? (KID_BANDS.includes(o.young) ? 'kid' : 'teen') : '';
 function fig3d(){
@@ -2493,7 +2522,7 @@ function vAuto(o, top){
   // BLD 1022 (Chris's iPad photo of Overhead Press, Set 2 of 3: no count and no breathing circle): a counted set shows its
   // count from the moment the set begins, while its words play before Go ("0 of 5"), not only from the first count.
   const cntShow = cntOf || (st.t === 'ex' && o.count && o.ring && !o.run && !still && !o.sw && !o.hf ? repN(st) : 0);
-  const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', label: pill, count: cntShow ? {n: o.rep || 0, of: cntShow} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
+  const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', sideArm: !!st.arm, label: pill, count: cntShow ? {n: o.rep || 0, of: cntShow} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
     breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined,
     ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined,
     // BLD 1018: a timed hold, carry, balance, or stretch shows its seconds left in a small ring in the badge corner.
