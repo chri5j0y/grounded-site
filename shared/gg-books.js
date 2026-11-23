@@ -10,8 +10,8 @@
 window.GG_BOOKS = {
   // BLD 1050: The Complete Grounded Cookbook download at /cookbook. COOKBOOK_ON true opens it (with the Worker's COOKBOOK_ON "1",
   // grounded-workshop patches/bld1050/DEPLOY1050.md); COOKBOOK_BUY_URL is the Stripe Payment Link for the $19.99 ebook.
-  COOKBOOK_ON: false,
-  COOKBOOK_BUY_URL: '',
+  COOKBOOK_ON: true,
+  COOKBOOK_BUY_URL: 'https://buy.stripe.com/fZucN427y8Uc1SU7z07kc04',
   COOKBOOK_PRICE: '$19.99',
   BOOK_PREORDER_URL: '',
   BOOK_PRICE: '$39.99',
