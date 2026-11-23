@@ -5,8 +5,14 @@
                       only. It shows only inside an open Membership (shared/gg-member.js, the Membership card on /home/),
                       never on the Books page. Anyone who reads this file can see it, like any checkout code.
    BOOKSHOP_URL, AMAZON_URL, BN_URL  the store listings, once they are live
+   COOKBOOK_ON, COOKBOOK_BUY_URL      BLD 1050: the cookbook download page (cookbook.html) and its $19.99 Stripe link
    Every page with [data-gg-book] parts reads this file (books.html), and /home/ reads BOOK_MEMBER_CODE. Bump ?v= wherever it loads after a change. */
 window.GG_BOOKS = {
+  // BLD 1050: The Complete Grounded Cookbook download at /cookbook. COOKBOOK_ON true opens it (with the Worker's COOKBOOK_ON "1",
+  // grounded-workshop patches/bld1050/DEPLOY1050.md); COOKBOOK_BUY_URL is the Stripe Payment Link for the $19.99 ebook.
+  COOKBOOK_ON: false,
+  COOKBOOK_BUY_URL: '',
+  COOKBOOK_PRICE: '$19.99',
   BOOK_PREORDER_URL: '',
   BOOK_PRICE: '$39.99',
   BOOK_MEMBER_CODE: '',

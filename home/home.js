@@ -2800,6 +2800,8 @@
       ['/grove/', treeArt('grove'), 'The Grove', 'Families and groups, growing together'], ['/willow/', treeArt('willow'), 'Willow', 'For the last season of life'], ['/heartwood/', treeArt('heartwood'), 'Heartwood', 'Couples, for the first years together']];
     // BLD 935 (audit M13): a teen's More to Explore keeps the everyday ones and The Grove (no Willow, no Heartwood).
     if (isYoung(S.p)) more = more.filter(function (m) { return m[0] !== '/willow/' && m[0] !== '/heartwood/'; });
+    // BLD 1050: Members find The Complete Grounded Cookbook here once its download opens (shared/gg-books.js COOKBOOK_ON).
+    if (member() && window.GG_BOOKS && window.GG_BOOKS.COOKBOOK_ON === true) more.push(['/cookbook', '/shared/books/complete-cookbook-cover-600.webp', 'The Complete Grounded Cookbook', 'All 400 recipes, PDF and EPUB, included with Membership']);
     if (soberDate() || homeRec().parts.indexOf('sober') >= 0) more.unshift(['/living-sober.html', PIMG + 'sober-explore-card.webp', 'Living Sober', 'Today, Ride the Wave, milestones']);
     var h = homeRec(); if (h.season && TREES[h.season]) more.unshift([TREES[h.season].href, treeArt(h.season), TREES[h.season].n, TREES[h.season].who]);
     return '<label class="hm-search"><span>Search everything</span><input type="search" id="hm-q" placeholder="Grief, salmon, sleep, a Morning Quiet" autocomplete="off" enterkeyhint="search"></label>' +
