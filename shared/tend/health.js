@@ -1251,7 +1251,7 @@ function openKey(key){
   if (k === 'prepsec'){ S.prepWk = +a || null; if (bareOn() || C.host === 'home') return want('prep'); S.sec = 'prep'; rerender(false); window.scrollTo(0, 0); return; }
   if (k === 'prep') return openPrep(a, +b);
   if (k === 'cook') return openCook(a, b);
-  if (k === 'menu') return openOv(mmOv(a));   // BLD 900: a meal added to My Menu
+  if (k === 'menu'){ const o = mmOv(a); return o ? openOv(o) : apiToggle('menu:' + a); }   // BLD 900: a meal added to My Menu (BLD 1051: Eating Out and Leftovers Night simply check off)
   // BLD 881: a lunch or any idea, the head start for tomorrow, and a workout from any level open their guides too.
   if (k === 'idea') return openIdea(a, b);
   if (k === 'head') return openOv(headOv(a));
@@ -6457,6 +6457,9 @@ const MM_MEALS = [['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Di
 const MM_NAME = Object.fromEntries(MM_MEALS);
 const MM_HOUR = {breakfast: 7.5, lunch: 12, snack: 15, extra: 15.5, dinner: 17};
 const MM = {sheet: null, undo: null};
+// BLD 1051: two nights with no recipe to cook, so nothing joins the Shopping List.
+const MM_X = {left: 'Leftovers Night', out: 'Eating Out'};
+const mmIsX = ref => /^x:/.test(String(ref || ''));
 function MENU(){ const h = H(); if (!h) return {items: []}; const m = h.menu = h.menu && typeof h.menu === 'object' && !Array.isArray(h.menu) ? h.menu : {};
   m.items = arr(m.items).filter(x => x && x.id && parseD(x.date)); return m; }
 const mmSave = () => { MENU().u = Date.now(); save(); };
@@ -6469,6 +6472,7 @@ function mmRecipe(ref){
   if (k === 'r'){ const r = recOf(a); return r && arr(r.steps).length ? {ref, src: 'r', r, name: r.name, meal: r.meal || 'dinner', mins: r.mins, base: +r.serves || 6, goals: arr(r.goals), fits: arr(r.fits)} : null; }
   if (k === 'h'){ const G = holUse(), s = G && G.get(a), m = s && arr(s.menu).find(x => x.id === b); return m && arr(m.steps).length ? {ref, src: 'h', set: s, m, name: m.name, meal: 'extra', mins: m.mins, base: +m.serves || +s.serves || 4, goals: [], fits: []} : null; }
   if (k === 'g'){ const wks = din.weeks || {}; for (const w of Object.keys(wks).sort()){ const x = arr((wks[w] || {}).dinners).find(z => z && z.id === a); if (x && arr(x.steps).length) return {ref, src: 'g', wk: w, x, name: x.name, meal: 'dinner', mins: x.mins, base: +x.serves || 6, goals: arr(x.goals), fits: arr(x.fits)}; } return null; }
+  if (k === 'x') return MM_X[a] ? {ref, src: 'x', x: {}, name: MM_X[a], meal: 'dinner', mins: null, base: 1, goals: [], fits: []} : null;   // BLD 1051: Leftovers Night, Eating Out
   if (k === 'i'){ const x = arr(din[a])[+b]; return x && arr(x.steps).length ? {ref, src: 'i', ty: a, i: +b, x, name: x.name, meal: {breakfasts: 'breakfast', lunches: 'lunch', snacks: 'snack'}[a] || 'extra', mins: x.mins, base: +x.serves || 6, goals: arr(x.goals), fits: arr(x.fits)} : null; }
   return null;
 }
@@ -6500,7 +6504,7 @@ function mmSum(amts){ const P = amts.map(a => { const m = /^(\d+\s+\d+\/\d+|\d+\
 // Every added recipe for one list, merged into shopping lines {name, amt, sec, for}.
 function mmShopRows(entries){
   const P = TP(), recs = [];
-  entries.forEach(e => { const R = mmRecipe(e.ref); if (!R) return; const N = Math.max(1, +e.serves || mmTable());
+  entries.forEach(e => { const R = mmRecipe(e.ref); if (!R || R.src === 'x') return; const N = Math.max(1, +e.serves || mmTable());
     if (R.src === 'h') recs.push({name: R.name, rows: mmHolRows(R, N)});
     else if (R.src === 'i' && !arr(R.x.ingredients).length) recs.push({name: R.name, rows: arr(R.x.shop).map(g => ({name: g.name, amt: g.amt || '', sec: g.sec || 'Other'}))});
     else recs.push({name: R.name, ings: mmIngs(R, N)}); });
@@ -6570,15 +6574,15 @@ function mmFor(x){ return x && x.mmx && x.mmx.for ? (x.for ? x.for + ', ' + x.mm
 const mmOwn = ref => { const [k, a, b] = String(ref || '').split(':'); return k === 'r' ? recOwnName(a) : k === 'h' && REC_HOL.has(a + '-' + b) ? 'p:rec-hol-' + a + '-' + b + '-sq' : ''; };
 const mmArt = e => mmOwn(e.ref) || mmRule(e);
 const mmRule = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'ppl-meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : m === 'sauce' ? 'prep-together-sq' : dinnerArtName({name: e.name}) || 'ppl-todays-plate-sq'; };
-const mmSub = e => (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
+const mmSub = e => e.ref === 'x:out' ? 'A night off from the kitchen. Nothing to shop for.' : e.ref === 'x:left' ? 'This week\'s leftovers, warmed through, with a big bowl of vegetables.' : (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
 function mmAgenda(d){ if (!H() || !U('food')) return []; const k = ymd(d);
-  return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Grounded Cooking', did: true})); }
+  return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: mmIsX(e.ref) ? 'Done' : 'Grounded Cooking', did: true})); }
 const mmDayList = d => mmAgenda(d).map(x => ({key: x.key, id: x.v, title: x.title, meal: x.kick, done: isDone(d, x.key), swap: !!x.mm.swap}));
 function mmPills(d){ return mmDayList(d).map(x => `<button type="button" class="hj-pill food hj-mmp" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)} <small>${esc(x.meal)}${x.done ? ', done' : ''}</small></button>`).join(''); }
 function mmToday(date){
   const out = apiToday(date); if (!Array.isArray(out) || !mmReady() || !U('food')) return out; const d = dayOf(date), d1 = addD(d, 1), tn = dinnerFor(d1);
   const L = out.filter(x => !(/^idea:lunches:/.test(x.key) && mmSwapOf(d, x.key)) && !(/^head:/.test(x.key) && tn && mmSwapOf(d1, 'cook:' + tn.wk + ':' + tn.id)));
-  mmAgenda(d).forEach(x => L.push({key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: 'Grounded Cooking', done: isDone(d, x.key), tint: x.mm.meal === 'dinner' ? TINT.cook : TINT.meals, kind: x.mm.meal === 'dinner' ? 'cook' : 'meal', image: WAY(mmArt(x.mm)), menu: x.v}));
+  mmAgenda(d).forEach(x => L.push({key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: x.btn, done: isDone(d, x.key), tint: x.mm.meal === 'dinner' ? TINT.cook : TINT.meals, kind: x.mm.meal === 'dinner' ? 'cook' : 'meal', image: WAY(mmArt(x.mm)), menu: x.v}));
   return L.map((x, i) => [x, i]).sort((a, b) => (a[0].hour - b[0].hour) || (a[1] - b[1])).map(x => x[0]);
 }
 function mmWeek(n){
@@ -6592,7 +6596,7 @@ function mmWeek(n){
 }
 // ---- the kitchen guide for an added meal ----
 function mmOv(id){
-  const e = MENU().items.find(x => x.id === id), R = e && mmRecipe(e.ref); if (!R) return null; const N = Math.max(1, +e.serves || mmTable()), key = 'menu:' + e.id, idea = e.meal !== 'dinner';
+  const e = MENU().items.find(x => x.id === id), R = e && mmRecipe(e.ref); if (!R || R.src === 'x') return null; const N = Math.max(1, +e.serves || mmTable()), key = 'menu:' + e.id, idea = e.meal !== 'dinner';
   let o = null;
   if (R.src === 'r'){ const x = ideaOf(R.r); if (!x) return null; Object.assign(x, {ingredients: mmIngs(R, N), serves: undefined, meal: e.meal === 'extra' ? R.meal : e.meal});
     o = {k: 'cook', idea, key, title: R.name, sub: (R.mins ? R.mins + ' minutes · ' : '') + 'for ' + N, data: x}; }
@@ -6638,9 +6642,10 @@ function mmSwap(target, ref){
   if (/^menu:/.test(target)){ e = M.items.find(x => x.id === target.slice(5)); if (!e) return null; date = e.date; old = e.name; }
   else { const i = target.lastIndexOf('|'), key = target.slice(0, i); date = target.slice(i + 1); const d = parseD(date); if (!d) return null;
     const p = mmPlanned(d).find(x => x.key === key); old = p ? p.name : ''; e = M.items.find(x => x.swap === key && x.date === date) || null;
+    if (!e && mmPlannedRef(d, key) === ref) return {e: {name: R.name, date}, old, back: true, d: {gone: 0, came: 0}};   // BLD 1051: already the plan
     if (!e){ mmSnap(); const nw = {id: 'm' + uid(), date, meal: p ? p.meal : 'dinner', ref, name: R.name, mins: R.mins || null, serves: mmTable(), wk: mmListWeek(date), swap: key, u: Date.now()};
       const wk = mmWeeksOf(nw), b = mmLists(wk); M.items.push(nw); mmSave(); return {e: nw, old, d: mmDiff(b, mmLists(wk))}; } }
-  mmSnap(); const wk0 = mmWeeksOf(e), back = e.swap && (mmPlanned(parseD(e.date)).find(x => x.key === e.swap) || {}).ref === ref;
+  mmSnap(); const wk0 = mmWeeksOf(e), back = e.swap && mmPlannedRef(parseD(e.date), e.swap) === ref;
   const nw = Object.assign({}, e, {ref, name: R.name, mins: R.mins || null, wk: mmListWeek(e.date), u: Date.now()}), wk = wk0.concat(mmWeeksOf(nw)), b = mmLists(wk);
   // Swapping back to the planned recipe simply returns the day to the plan.
   if (back) M.items.splice(M.items.indexOf(e), 1); else Object.assign(e, nw);
@@ -6648,6 +6653,69 @@ function mmSwap(target, ref){
 }
 function mmRemove(id){ const M = MENU(), e = M.items.find(x => x.id === id); if (!e) return null; mmSnap(); const wk = mmWeeksOf(e), b = mmLists(wk); M.items.splice(M.items.indexOf(e), 1); mmSave(); return {e, d: mmDiff(b, mmLists(wk))}; }
 function mmUndo(){ if (MM.undo == null) return false; try { MENU().items = JSON.parse(MM.undo); } catch(e){ return false; } MM.undo = null; mmSave(); return true; }
+// ---- BLD 1051, Swap Any Meal, Your Way (Chris, November 23, 2026: "need a way to be able to swap out a meal when one comes up
+// that is not a good fit ... for ex tonight is turkey and 3 bean chili, but it is thanksgiving thursday so i will swap", then
+// "GL 1051"). Swap opens right from a dinner on Today and in the Week: three Suggested dinners that keep the week balanced (fish
+// twice, lean red meat once at most), Leftovers Night, Eating Out, a holiday set when one falls on that day, Move to Another Night,
+// a search of every dinner, and Back to the Plan. Every change is a My Menu swap (DATA.health.menu), so the Shopping List, prep,
+// sync, and Undo all follow as they do for BLD 900. A week off balance gets one quiet line, never a block.
+// The planned dinner's own ref ('x:left' for a Leftovers Night), so Swap can tell a swap back to the plan.
+function mmPlannedRef(d, key){ const p = d && mmPlanned(d).find(x => x.key === key); if (!p) return ''; return p.ref || (p.x && (p.x.leftover || p.x.id === 'leftovers') ? 'x:left' : ''); }
+// One night's dinner: the plan's slot, any swap on it, and what is on the menu now (null on a holiday dinner or with no plan).
+function mmDinSlot(date){ const d = parseD(date); if (!d || holDin(d)) return null; const p = mmPlanned(d).find(x => x.meal === 'dinner'); if (!p) return null;
+  const e = mmSwapOf(d, p.key), pref = mmPlannedRef(d, p.key); return {d, date: ymd(d), p, e, pref, ref: e ? e.ref : pref, name: e ? e.name : p.name}; }
+function mmProt(ref){ const R = mmRecipe(ref); if (!R) return ''; return R.src === 'r' ? R.r.protein || '' : R.src === 'g' ? R.x.protein || '' : ''; }
+// A recipe fits the household's food needs and typed allergies (public Tending; the Guide library's dinners are already chosen to fit).
+function mmFitsPlan(r){ const P = TP(); if (!PUB() || !P || !P.fitsAll) return true; const x = recOf(r.id); return x ? P.fitsAll(x, planSet()) : true; }
+function mmBal(n){ let fish = 0, red = 0; mmWeekDays(n).forEach(d => { const s = mmDinSlot(ymd(d)), pr = s ? mmProt(s.ref) : ''; if (pr === 'fish') fish++; if (pr === 'redmeat') red++; }); return {fish, red}; }
+const mmNum2 = n => ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven'][n] || String(n);
+function mmBalLine(n){ const b = mmBal(n), out = [];
+  if (b.red > 1) out.push('This week has ' + mmNum2(b.red) + ' lean beef dinners.');
+  if (b.fish < 2) out.push(b.fish === 1 ? 'This week has one fish dinner.' : 'This week has ' + mmNum2(b.fish) + ' fish dinners.');
+  return out.join(' ').replace(/^./, c => c.toUpperCase()); }
+// Three dinners that keep the week balanced and step aside from the nights around it, steady for the day.
+function mmSuggest(slot){
+  const n = mmMealWeek(slot.d), days = mmWeekDays(n), inWeek = new Set(), stat = {fish: 0, red: 0};
+  days.forEach(d => { const s = mmDinSlot(ymd(d)); if (!s) return; if (s.ref) inWeek.add(s.ref); if (s.date === slot.date) return; const pr = mmProt(s.ref); if (pr === 'fish') stat.fish++; if (pr === 'redmeat') stat.red++; });
+  if (slot.pref) inWeek.add(slot.pref);
+  const nb = [addD(slot.d, -1), addD(slot.d, 1)].map(d => { const s = mmDinSlot(ymd(d)); return s ? mmProt(s.ref) : ''; });
+  let L = recipesAll().filter(r => r.meal === 'dinner' && !inWeek.has(mmRefOfR(r)) && mmFitsPlan(r)).map(r => ({r, ref: mmRefOfR(r), pr: mmProt(mmRefOfR(r))})).filter(x => !(x.pr === 'redmeat' && stat.red >= 1));
+  const near = L.filter(x => !nb.includes(x.pr)); if (near.length >= 3) L = near;
+  const k0 = Math.round(day0(slot.d) / DAYMS), rot = L.length ? L.slice(k0 % L.length).concat(L.slice(0, k0 % L.length)) : [], out = [];
+  if (stat.fish < 2){ const f = rot.find(x => x.pr === 'fish'); if (f) out.push(f); }
+  rot.forEach(x => { if (out.length < 3 && !out.includes(x) && !out.some(y => y.pr === x.pr)) out.push(x); });
+  rot.forEach(x => { if (out.length < 3 && !out.includes(x)) out.push(x); });
+  return out.slice(0, 3);
+}
+// The other nights of that food week, from today on, that a dinner can move to.
+function mmMoveDays(slot){ const t = today(); return mmWeekDays(mmMealWeek(slot.d)).map(d => ymd(d)).filter(k => k !== slot.date && k >= t && mmDinSlot(k)); }
+function mmSetNight(slot, ref){ const target = slot.p.key + '|' + slot.date;
+  if (ref === slot.pref){ if (slot.e){ const M = MENU(), i = M.items.indexOf(slot.e); if (i >= 0) M.items.splice(i, 1); } return; }
+  mmSwap(target, ref); }
+// Move: the two nights trade dinners (each keeps its own day's Shopping List), with one Undo for both.
+function mmMove(a, b){ const A = mmDinSlot(a), B = mmDinSlot(b); if (!A || !B || !A.ref || !B.ref) return null; const snap = JSON.stringify(MENU().items), wk = [mmMealWeek(A.d), mmMealWeek(B.d)], before = mmLists(wk);
+  mmSetNight(A, B.ref); mmSetNight(mmDinSlot(b), A.ref); MM.undo = snap; mmSave(); return {a: A, b: B, d: mmDiff(before, mmLists(wk))}; }
+function mmOpenDin(date){ const s = mmDinSlot(date); if (!s) return false; MM.sheet = {kind: 'dswap', date: s.date, q: ''}; mmPaint(); return true; }
+function mmDRows(s){ const slot = mmDinSlot(s.date); if (!slot) return ''; const q = String(s.q || '').toLowerCase().split(/\s+/).filter(Boolean); if (!q.length) return '';
+  const L = recipesAll().filter(r => r.meal === 'dinner' && mmRefOfR(r) !== slot.ref && mmFitsPlan(r) && q.every(w => (r.name + ' ' + r.ing.join(' ')).toLowerCase().includes(w)));
+  if (!L.length) return `<p class="hj-mmsub">Try another word, like chicken, beans, or salmon.</p>`;
+  return L.slice(0, 40).map(r => `<button type="button" class="hj-mmrow" data-mma="dpick" data-mmv="${esc(mmRefOfR(r))}"><b>${esc(r.name)}</b><small>${esc(r.mins ? r.mins + ' min' : 'Dinner')}</small></button>`).join(''); }
+function mmDinHtml(s){
+  const slot = mmDinSlot(s.date); if (!slot) return `${mmHead('Swap Dinner', mmLong(s.date))}<p class="hj-mmsub">This night's dinner is set by a holiday. Change it from the holiday card.</p>`;
+  const sug = mmSuggest(slot), bal = mmBalLine(mmMealWeek(slot.d)), mv = mmMoveDays(slot), hol = (holCards() || []).filter(c => c.date === slot.date && !c.planned);
+  const row = x => `<button type="button" class="hj-mmrow" data-mma="dpick" data-mmv="${esc(x.ref)}"><b>${esc(x.r.name)}</b><small>${esc([MM_PROT[x.pr] || '', x.r.mins ? x.r.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></button>`;
+  return `${mmHead('Swap Dinner', mmLong(slot.date))}
+    <div class="hj-mmcur"><small>On the menu now</small><b>${esc(slot.name)}</b>${slot.e ? `<small>The plan had ${esc(slot.p.name)}.</small><div class="hj-mmbtns" style="margin-top:8px"><button type="button" class="hj-mmline" data-mma="dback">Back to the Plan</button></div>` : ''}</div>
+    ${bal ? `<p class="hj-mmsub">${esc(bal)}</p>` : ''}
+    ${sug.length ? `<div class="hj-mmq">Suggested</div><div class="hj-mmlist">${sug.map(row).join('')}</div>` : ''}
+    <div class="hj-mmq">A Simple Night</div><div class="hj-mmchips">${slot.ref !== 'x:left' ? mmChip('dpick', 'x:left', 'Leftovers Night', false) : ''}${slot.ref !== 'x:out' ? mmChip('dpick', 'x:out', 'Eating Out', false) : ''}${hol.map(c => mmChip('dhol', c.key, 'Set Up ' + c.name, false)).join('')}</div>
+    ${mv.length ? `<div class="hj-mmq">Move to Another Night</div><div class="hj-mmchips">${mv.map(k => mmChip('dmove', k, mmDayName(k), false)).join('')}</div>` : ''}
+    <label class="hj-mmfld"><span>Search every dinner by name or ingredient</span><input id="hj-mmq" type="search" data-mmi="dq" value="${esc(s.q)}" placeholder="Chicken, lentils, salmon..." autocomplete="off"></label>
+    <div class="hj-mmlist" id="hj-mmlist">${mmDRows(s)}</div>
+    <p class="hj-mmsub">The Shopping List and prep follow every change.</p>`;
+}
+const MM_PROT = {fish: 'Fish', poultry: 'Chicken and Turkey', beans: 'Beans', lentils: 'Lentils', eggs: 'Eggs', yogurt: 'Yogurt', redmeat: 'Lean Beef', mixed: 'Mixed'};
+function mmDinDone(kick, name, lines, slot){ const b = slot ? mmBalLine(mmMealWeek(slot.d)) : ''; mmDone(kick, name, lines.concat(b ? [b] : []), true); }
 // ---- the sheet: Add to My Menu, Swap, and what changed ----
 const mmDayName = s => { const d = parseD(s); if (!d) return ''; const t = today(), n = Math.round((day0(d) - day0(new Date())) / DAYMS); return s === t ? 'Today' : n === 1 ? 'Tomorrow' : DOW[d.getDay()] + ', ' + MONTHS[d.getMonth()].slice(0, 3) + ' ' + d.getDate(); };
 const mmLong = s => { const d = parseD(s); return d ? (s === today() ? 'Today, ' : '') + DOWL[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() : ''; };
@@ -6664,13 +6732,14 @@ function mmOpenSwap(target){
   MM.sheet = {kind: 'swap', target, cur, curName: cn, meal, date, q: '', goals: [], fits: []}; mmPaint(); setTimeout(() => { const q = document.getElementById('hj-mmq'); if (q) try { q.focus({preventScroll: true}); } catch(e){} }, 30); return true; }
 function mmChoices(s){
   const q = String(s.q || '').toLowerCase().split(/\s+/).filter(Boolean);
-  return recipesAll().filter(r => (s.meal === 'extra' || r.meal === s.meal) && mmRefOfR(r) !== s.cur && s.goals.every(g => r.goals.includes(g)) && s.fits.every(f => r.fits.includes(f))
+  return recipesAll().filter(r => (s.meal === 'extra' || r.meal === s.meal) && mmRefOfR(r) !== s.cur && mmFitsPlan(r) && s.goals.every(g => r.goals.includes(g)) && s.fits.every(f => r.fits.includes(f))
     && q.every(w => (r.name + ' ' + r.ing.join(' ')).toLowerCase().includes(w))); }
 const mmChip = (a, v, l, on) => `<button type="button" class="hj-mmc${on ? ' on' : ''}" aria-pressed="${!!on}" data-mma="${a}" data-mmv="${esc(v)}">${esc(l)}</button>`;
 const mmHead = (k, t) => `<div class="hj-mmhd"><div style="min-width:0"><div class="hj-mmk">${esc(k)}</div><h3 id="hj-mmt">${esc(t)}</h3></div><button type="button" class="hj-mmx" data-mma="close" aria-label="Close">&times;</button></div>`;
 function mmRowsHtml(s){ const L = mmChoices(s); if (!L.length) return `<p class="hj-mmsub">Clear the search or a filter to see more recipes.</p>`;
   const ML = Object.fromEntries(R_MEALS); return L.slice(0, 80).map(r => `<button type="button" class="hj-mmrow" data-mma="pick" data-mmv="${esc(mmRefOfR(r))}"><b>${esc(r.name)}</b><small>${esc([ML[r.meal] || 'Dinner', r.mins ? r.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></button>`).join(''); }
 function mmSheetHtml(s){
+  if (s.kind === 'dswap') return mmDinHtml(s);
   if (s.kind === 'add'){ const t = today(), days = Array.from({length: 14}, (x, i) => ymd(addD(day0(new Date()), i))), inList = days.includes(s.date);
     return `${mmHead('Add to My Menu', s.name)}
       <div class="hj-mmq" id="hj-mmq1">Day</div><div class="hj-mmchips" role="group" aria-labelledby="hj-mmq1">${days.map(k => mmChip('day', k, mmDayName(k), s.date === k)).join('')}${mmChip('dayother', '', inList ? 'Another Day' : mmDayName(s.date), !inList)}</div>
@@ -6720,13 +6789,24 @@ function mmAct(a, v){
       mmDone('Swapped', r.e.name, [(r.old ? r.old + ' becomes ' : '') + r.e.name + ' for ' + mmLong(r.e.date) + '.', ch.length ? 'The Shopping List follows along: ' + ch.join(', and ') + '.' : 'The Shopping List already holds what it needs.'], true); return; }
     case 'remove': { const r = mmRemove(v); if (!r) return; if (S.ov && S.ov.mm === v) closeOv();
       mmDone('Removed from My Menu', r.e.name, [mmLong(r.e.date) + ' is back to the plan.', r.d.gone ? mmCount(r.d.gone, 'item steps', 'items step') + ' off the Shopping List.' : 'The Shopping List is up to date.'], true); return; }
+    case 'dpick': { if (!s || s.kind !== 'dswap') return; const slot = mmDinSlot(s.date); if (!slot) return; const wk = [mmMealWeek(slot.d)], b = mmLists(wk);
+      MM.undo = JSON.stringify(MENU().items); mmSetNight(slot, v); mmSave(); const d = mmDiff(b, mmLists(wk)), nm = (mmRecipe(v) || {}).name || '';
+      if (S.ov && S.ov.k === 'cook') closeOv();
+      const ch = [d.gone ? mmCount(d.gone, 'item steps', 'items step') + ' off the list' : '', d.came ? mmCount(d.came, 'item joins', 'items join') + ' it' : ''].filter(Boolean);
+      mmDinDone(v === slot.pref ? 'Back to the Plan' : 'Swapped', nm, [slot.name + ' becomes ' + nm + ' for ' + mmLong(slot.date) + '.', ch.length ? 'The Shopping List follows along: ' + ch.join(', and ') + '.' : 'The Shopping List already holds what it needs.'], slot); return; }
+    case 'dback': if (s && s.kind === 'dswap'){ const slot = mmDinSlot(s.date); if (slot && slot.pref) mmAct('dpick', slot.pref); } return;
+    case 'dmove': { if (!s || s.kind !== 'dswap') return; const r = mmMove(s.date, v); if (!r){ toast('That night is set already. Choose another night.'); return; }
+      if (S.ov && S.ov.k === 'cook') closeOv();
+      mmDinDone('Moved', r.a.name, [r.a.name + ' moves to ' + mmLong(v) + ', and ' + r.b.name + ' moves to ' + mmLong(s.date) + '.', r.d.gone || r.d.came ? 'The Shopping List follows along.' : 'The Shopping List already holds what it needs.'], r.a); return; }
+    case 'dhol': MM.sheet = null; mmPaint(); apiAct(v); rerender(true); return;
     case 'undo': if (mmUndo()) mmDone('My Menu', 'Back as it was', ['The menu and the Shopping List are just as they were.'], false); return;
   }
 }
 document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-mma]'); if (!t || !D()) return; e.preventDefault(); mmAct(t.dataset.mma, t.dataset.mmv || ''); });
 document.addEventListener('input', e => { const t = e.target, s = MM.sheet; if (!t || !t.dataset || !t.dataset.mmi || !s || !t.closest || !t.closest('#hj-mm')) return;
   if (t.dataset.mmi === 'date'){ if (parseD(t.value) && t.value >= today()){ s.date = t.value; s.other = true; const p = document.querySelector('#hj-mm .hj-mmsub'); if (p) p.textContent = mmListLine(s.date) + ' It shows on ' + mmLong(s.date) + ' with Grounded Cooking.'; } return; }
-  if (t.dataset.mmi === 'q'){ s.q = t.value; const b = document.getElementById('hj-mmlist'); if (b) b.innerHTML = mmRowsHtml(s); } });
+  if (t.dataset.mmi === 'q'){ s.q = t.value; const b = document.getElementById('hj-mmlist'); if (b) b.innerHTML = mmRowsHtml(s); }
+  if (t.dataset.mmi === 'dq'){ s.q = t.value; const b = document.getElementById('hj-mmlist'); if (b) b.innerHTML = mmDRows(s); } });
 document.addEventListener('change', e => { const t = e.target; if (t && t.dataset && t.dataset.mmi === 'date' && MM.sheet && t.closest && t.closest('#hj-mm')) mmPaint(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && MM.sheet){ e.stopPropagation(); e.preventDefault(); MM.sheet = null; mmPaint(); } }, true);
 ACC.menu = 'a-kitchen'; SCN.menu = 'cook';
@@ -6765,6 +6845,9 @@ Object.assign(window.GGHealth, {
   // true when it opened, otherwise 'setup' (Tending is not started yet) or 'recipe' (the ref is unknown). menu() lists the added meals.
   menuOpen(ref, o){ if (!H() || !FLDH()) return 'setup'; if (!mmReady()) return 'setup'; return mmOpenAdd(String(ref || ''), o || {}) ? true : 'recipe'; },
   menuSwap(target){ return mmReady() ? mmOpenSwap(String(target || '')) : false; },
+  // BLD 1051: dinnerSwap(date) opens Swap Dinner for that night; dinnerSwapOk(date) is true when that night's dinner can change.
+  dinnerSwap(date){ return mmReady() ? mmOpenDin(String(date || today())) : false; },
+  dinnerSwapOk(date){ try { return mmReady() && String(date || '') >= today() && !!mmDinSlot(String(date)); } catch(e){ return false; } },
   menu(){ return H() ? JSON.parse(JSON.stringify(MENU().items)) : []; },
   // The Shopping List for food week n as it reads (n defaults to the list for today): [{id, name, amt, for, done, menu}].
   shopItems(n){ if (!H() || !FLDH()) return []; const N = +n || foodWeek(new Date()), L = shopList(N); return arr(L && L.items).map(x => ({id: x.id, name: x.name, amt: mmAmt(x), for: mmFor(x), done: !!x.done, menu: !!(x.mm || x.mmx), store: x.store, sec: x.sec, aisle: aisleOf(x, N)})); },

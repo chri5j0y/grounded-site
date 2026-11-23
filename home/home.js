@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c195', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c196', '/shared/gentle-public.js?v=c151'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c201', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c196', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c192';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -2382,6 +2382,10 @@
     return '<button class="hm-ck" type="button" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" data-hm-done="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(label || 'Done') + '</span></button>';
   }
   var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Grounded Cooking': 'play', Done: 'check' };
+  /* BLD 1051 (Chris, November 23, 2026: "need a way to be able to swap out a meal when one comes up that is not a good fit"):
+     Swap on tonight's dinner and on each dinner in the Week, for grown-ups, from today on. It opens Swap Dinner in Tending. */
+  function dswapOk(date) { var k = String(date || '').slice(0, 10); return !isYoung(S.p) && /^\d{4}-\d{2}-\d{2}$/.test(k) && hasFn('dinnerSwapOk') && !!hCall('dinnerSwapOk', k); }
+  function dswapBtn(x) { return x.src === 'tend' && x.kind === 'cook' && /^(cook|menu):/.test(String(x.hkey || '')) && dswapOk(today()) ? '<button type="button" class="hm-linkbtn hm-tswap" data-hm-dswap="' + esc(today()) + '" aria-label="' + esc('Swap tonight\'s dinner: ' + x.title) + '">' + I('swap') + 'Swap</button>' : ''; }
   function itemHtml(x) {
     if (x.src === 'plan') return pracCardHtml(x, { dt: 1 });
     if (x.src === 'spirit') return pracCardHtml(x, { plain: true, dt: 1 });
@@ -2389,7 +2393,7 @@
     return '<article class="hm-titem hm-card edge lift ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
       '<div class="hm-pc"><div class="scene">' + '<img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
       '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') + thenHtml(x) + altHtml(x) +
-      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-go="' + esc(x.key) + '">' + I(GO_ICON[x.btn] || 'arrow') + esc(x.btn) + '</button>' + doneBtn(x) + dtBtn(x) + '</div></div></div></article>';
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-go="' + esc(x.key) + '">' + I(GO_ICON[x.btn] || 'arrow') + esc(x.btn) + '</button>' + doneBtn(x) + dtBtn(x) + dswapBtn(x) + '</div></div></div></article>';
   }
   /* Right Now: the next thing that is due, in a bold color block with a big button (Tending's own Right Now card, BLD 857). */
   function nowHtml(items) {
@@ -2583,6 +2587,7 @@
       var isT = d.today === true || String(d.date || '').slice(0, 10) === td, din = obj(d.dinner), mv = obj(d.move);
       return '<div class="hm-wday' + (isT ? ' today' : '') + '"' + (isT ? ' aria-current="date"' : '') + ' data-date="' + esc(String(d.date || '').slice(0, 10)) + '"><span class="dn"><b class="full">' + esc(String(d.dayName || d.day || '')) + '</b><b class="abbr" aria-hidden="true">' + esc(String(d.day || '').slice(0, 3)) + '</b><small>' + esc(shortDate(d.date)) + '</small></span>' + tile(din.title ? (din.night || FOOD_ROT[di % FOOD_ROT.length]) : mv.title ? (mv.kind === 'flow' && mv.image || PIMG + 'week-workout-day-sq.webp') : obj(d.med).title ? PIMG + 'week-meditation-day-sq.webp' : ART2.rest, 'sm') + '<div class="tx">' +
         (din.title ? '<button type="button" class="hm-wdin" data-hm-wk="' + esc(din.key || '') + '"' + (din.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ' dinner: ' + din.title + (din.key ? ', open to cook' : '')) + '">' + esc(din.title) + mark(din) + '</button>' : '') +
+        (din.title && dswapOk(d.date) ? '<button type="button" class="hm-linkbtn hm-wswap" data-hm-dswap="' + esc(String(d.date || '').slice(0, 10)) + '" aria-label="' + esc('Swap ' + (d.dayName || d.day || '') + ' dinner: ' + din.title) + '">' + I('swap') + 'Swap</button>' : '') +
         (mv.title ? '<button type="button" class="hm-wmove" data-hm-wk="' + esc(mv.key || '') + '"' + (mv.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ': ' + mv.title + (mv.key ? ', start it' : '')) + '">' + esc(mv.title) + mark(mv) + '</button>' : '') +
         weekExtra(d) +
         (!din.title && !mv.title && !obj(d.med).title && !arr(d.own).length && !arr(d.menu).length ? '<span class="hm-wnone">A day to rest</span>' : '') +
@@ -3021,7 +3026,7 @@
 
   /* ---------- clicks ---------- */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-wkoff],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share],[data-hm-new]');
+    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-dswap],[data-hm-wkoff],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share],[data-hm-new]');
     if (!t || !t.closest('.hm')) return;
     // BLD 976 (Chris, November 12, 2026: "no button do anything"): a kid's three tabs each go to their own place:
     // My Tree to Today, Check-in opens the check-in, Watch opens the videos.
@@ -3038,6 +3043,7 @@
     if (t.hasAttribute('data-hm-go')) { itemGo(t.getAttribute('data-hm-go')); return; }
     if (t.hasAttribute('data-hm-new')) { if (hasFn('newsSeen')) hCall('newsSeen'); refreshPane(); return; }
     if (t.hasAttribute('data-hm-wkoff')) { var wo = +t.getAttribute('data-hm-wkoff'); S.wkOff = wo === 0 ? 0 : Math.max(-52, Math.min(52, (S.wkOff || 0) + wo)); refreshPane(); try { var nv = document.querySelector('#hm-pane .hm-wnav'); if (nv && nv.scrollIntoView) nv.scrollIntoView({block: 'nearest'}); } catch (e2) {} return; }
+    if (t.hasAttribute('data-hm-dswap')) { if (hasFn('dinnerSwap') && !hCall('dinnerSwap', t.getAttribute('data-hm-dswap'))) toast('That dinner is set already. Open it from the Week.'); return; }
     if (t.hasAttribute('data-hm-wk')) { var wk = t.getAttribute('data-hm-wk'); if (wk && hasFn('act')) hCall('act', wk); return; }
     if (t.hasAttribute('data-hm-tree')) { var tw = t.getAttribute('data-hm-tree'); if (tw === 'history') { seasonOpen(); return; } if ((tw === 'checkin' || tw === 'quick') && openCheckin(tw === 'quick' ? 'quick' : 'full')) return; openTreeSheet(tw); return; }
     if (t.hasAttribute('data-hm-share')) { shareCard(t.getAttribute('data-hm-share')); return; }
