@@ -5120,26 +5120,34 @@ var WO_FEET = function(y, f, toe){ return {x: .11, y: y, z: 0, f: f, toe: toe, p
 var WO_FLAT = WO_FEET(.072, 72), WO_BALL = {x: .11, y: .136, z: .037, f: 45, toe: 90, pole: [0, 0, 1]};
 var WOH = {hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down', lift: 0};
 function woStep(zr, zl, p, t, n, feet, on){ return ext(WOH, {p: p, t: t, n: n, ra: wh(zr), la: wh(zl), rl: feet, ll: feet, fitArm: {r: .95, by: 'p1', span: .25}, on: on}); }
+// BLD 1052 (Chris, November 23, 2026, Full Body Tempo: "the body kind of looks pretty funny in this shape"; the knees dropped
+// toward the mat and the body folded into a ball with the head under the hips): the hips stay high and the legs stay long,
+// knees soft, as the hands walk out. The hips travel on an arc about the feet (the legs keep their length), the chest and
+// head follow in one line toward the hands, and the fit sets the torso so the arms stay long on each body.
+function woHip(zr, zl){ var k = Math.max(0, Math.min(1, ((zr + zl) / 2 - .5) / .875)), a = (-2 + 60 * k) * Math.PI / 180, r = .74 + .13 * k;
+  return {p: [R3(.12 + r * Math.cos(a)), R3(.05 + r * Math.sin(a))], t: [R3(66 + 40 * k), R3(14 + 92 * k)], n: R3(10 + 92 * k)}; }
+function R3(x){ return Math.round(x * 1000) / 1000; }
+function woS(zr, zl, feet, on){ var h = woHip(zr, zl); return ext(WOH, {p: h.p, t: h.t, n: h.n, ra: wh(zr), la: wh(zl), rl: feet, ll: feet, fitArm: {r: .95, by: 't1', span: 30}, on: on}); }
 var WO_TOES = {x: .11, y: .168, z: .086, f: 22, toe: 64, pole: [0, -1, .2]};
 var WO_PLANK = ext(WOH, {p: [.47, .88], t: [106, 106], n: 102, fitArm: {r: .95, by: 't', span: 12}, ra: wh(1.375), la: wh(1.375), rl: WO_TOES, ll: WO_TOES, on: 'hR hL tR tL'});
-G.define('walk-out', {name: 'Inchworm', tempo: 10, own: true, steps: 12, dur: [2.2, 2, 1.1, 1.1, 1.1, 1.2, 1.5, 1.5, 1.5, 1.5, 1.2, 1.1, 1.1, 1.1, 2, 2.2], props: ['mat'], glow: {abs: [.8, .8], delts: [.7, .7], hams: [.6, .6], chest: [.4, .4], triceps: [.4, .4]}, cam: {view: 'side', turn: 22, el: 12, zoom: 1},
+G.define('walk-out', {name: 'Inchworm', tempo: 10, own: true, steps: 12, dur: [2.2, 2, 1.1, 1.1, 1.1, 1.2, 1.5, 1.5, 1.5, 1.5, 1.2, 1.1, 1.1, 1.1, 2, 2.2], props: [{id: 'mat', z: .38, len: 2.3}], glow: {abs: [.8, .8], delts: [.7, .7], hams: [.6, .6], chest: [.4, .4], triceps: [.4, .4]}, cam: {view: 'side', turn: 22, el: 12, zoom: 1},
   form: [{when: [.42, .6], line: ['foot.R', 'upperarm01.R'], ext: .1, say: 'one long line', at: 'root', side: -1}],
   k: [
     {b: 'stand', br: 'out', on: 'fR fL', lift: 0, p: [.925, -.062], t: [180, 180], n: 180, rl: WO_FLAT, ll: WO_FLAT, ra: [4, 8, 8], la: [4, 8, 8], hR: 'flat', hL: 'flat', e: .2},
     {br: 'out', via: true, on: 'fR fL', lift: 0, p: [.87, -.12], t: [112, 98], n: 92, rl: WO_FLAT, ll: WO_FLAT, ra: [16, 16, 16], la: [16, 16, 16], hR: 'flat', hL: 'flat', pnR: 'in', pnL: 'in', e: .4},
-    ext(woStep(.5, .5, [.8, -.12], [42, 26], 22, WO_FLAT, 'hL fR fL'), {br: 'in'}),
-    ext(woStep(.8, .5, [.74, .08], [55, 46], 40, WO_FLAT, 'hR fR fL'), {via: true, br: 'out'}),
-    ext(woStep(.8, .8, [.68, .22], [66, 60], 54, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
-    ext(woStep(1.1, .8, [.62, .38], [79, 75], 70, WO_BALL, 'hR tR tL'), {via: true, br: 'out'}),
-    ext(woStep(1.1, 1.1, [.55, .56], [90, 88], 85, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
-    ext(woStep(1.375, 1.1, [.47, .76], [96, 96], 93, WO_BALL, 'hR tR tL'), {via: true, br: 'out', fitArm: {r: .95, by: 'p0', span: .06}}),
+    ext(woS(.5, .5, WO_FLAT, 'hL fR fL'), {br: 'in'}),
+    ext(woS(.8, .5, WO_FLAT, 'hR fR fL'), {via: true, br: 'out'}),
+    ext(woS(.8, .8, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
+    ext(woS(1.1, .8, WO_BALL, 'hR tR tL'), {via: true, br: 'out'}),
+    ext(woS(1.1, 1.1, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
+    ext(woS(1.375, 1.1, WO_BALL, 'hR tR tL'), {via: true, br: 'out'}),
     ext(WO_PLANK, {br: 'in', on: 'hR tR tL', e: 1}),
-    ext(woStep(1.375, 1.1, [.47, .76], [96, 96], 93, WO_BALL, 'hL tR tL'), {via: true, br: 'out', fitArm: {r: .95, by: 'p0', span: .06}}),
-    ext(woStep(1.1, 1.1, [.55, .56], [90, 88], 85, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
-    ext(woStep(.8, 1.1, [.62, .38], [79, 75], 70, WO_BALL, 'hR tR tL'), {via: true, br: 'out'}),
-    ext(woStep(.8, .8, [.68, .22], [66, 60], 54, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
-    ext(woStep(.5, .8, [.74, .08], [55, 46], 40, WO_FLAT, 'hR fR fL'), {via: true, br: 'out'}),
-    ext(woStep(.5, .5, [.8, -.12], [42, 26], 22, WO_FLAT, 'fR fL'), {br: 'in'}),
+    ext(woS(1.375, 1.1, WO_BALL, 'hL tR tL'), {via: true, br: 'out'}),
+    ext(woS(1.1, 1.1, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
+    ext(woS(.8, 1.1, WO_BALL, 'hR tR tL'), {via: true, br: 'out'}),
+    ext(woS(.8, .8, WO_BALL, 'hL tR tL'), {via: true, br: 'in'}),
+    ext(woS(.5, .8, WO_FLAT, 'hR fR fL'), {via: true, br: 'out'}),
+    ext(woS(.5, .5, WO_FLAT, 'fR fL'), {br: 'in'}),
     {br: 'in', via: true, on: 'fR fL', lift: 0, p: [.87, -.12], t: [112, 98], n: 92, rl: WO_FLAT, ll: WO_FLAT, ra: [16, 16, 16], la: [16, 16, 16], hR: 'flat', hL: 'flat', pnR: 'in', pnL: 'in', e: .4}
   ]});
 
@@ -5345,15 +5353,23 @@ G.define('cat-cow', A(SLOW, {name: 'Cat Cow', props: ['mat'], glow: {back: [.6, 
     K(FOURS, {br: 'in', t: [118, 86], n: 52, e: .5}),
     K(FOURS, {br: 'out', t: [87, 101], n: 116, e: .8})
   ]}));
-// Thread the Needle: from hands and knees the right arm slides under along the mat and that shoulder rests down
-// (out breath); the arm then reaches up to the ceiling as the chest opens (in breath). The left hand stays planted.
+// Thread the Needle: from hands and knees the right arm sweeps up to the ceiling as the chest opens (in breath), then comes
+// down past the chest and threads under the body along the mat, palm up, until the right shoulder and the side of the head
+// rest down (out breath). The left hand and both knees stay planted, and the hips stay over the knees.
+// BLD 1052 (Kayti, November 21, 2026: "Not clear on proper movement"): written as four keys, so the arm travels close to the
+// body (a passing key with the hand under the shoulder) instead of swinging out in front, and the threaded arm truly lies
+// along the mat under the chest with the shoulder and ear down.
 var TN = K(FOURS, {fitArm: null});
-TWO('thread-needle', A(SLOW, {name: 'Thread the Needle', props: ['mat'], glow: {upper: [.6, .6], obliques: [.5, .5], rotator: [0, .5]}, cam: {yaw: 26, el: 18, zoom: 1.02},
+var TN_MID = {x: .12, y: .22, z: .4, f: 30, pole: [.6, .4, -1]};
+var TN_UNDER = {x: -.42, y: .03, z: .3, f: 'flat', pole: [0, 1, -.4]};
+var TN_UP = {x: .2, y: 1.17, z: .44, f: 180, pole: [1, 0, -.3]};
+var TN_T = {br: 'in', t: [98, 60], n: 44, tw: 58, hy: 48, ht: 10, ra: TN_UNDER, hR: 'relax', pnR: 'up', on: 'hL kR kL', e: .8};
+var TN_O = {br: 'in', t: [102, 102], n: 104, tw: -42, hy: -40, ra: TN_UP, pnR: 'back', hR: 'reach', on: 'hL kR kL', e: .6};
+var TN_M = {via: true, t: [100, 86], n: 80, tw: 6, hy: 4, ra: TN_MID, hR: 'relax', pnR: 'in', on: 'hL kR kL', e: .5};
+// Each end is held a moment (a repeated key), so the threaded rest and the open reach both read clearly.
+TWO('thread-needle', {name: 'Thread the Needle', tempo: 10, bp: [4, 6], dur: [1.4, 1.6, 1, 2, 2.6, 1.4], rest: 0, props: ['mat'], glow: {upper: [.6, .6], obliques: [.5, .5], rotator: [0, .5]}, cam: {yaw: 62, el: 18, zoom: 1.02},
   form: [{when: 'out', line: ['knee*', 'root'], say: 'hips stay over knees', at: 'root', side: -1}],
-  k: [
-    K(TN, {br: 'in', t: [100, 78], n: 70, tw: 42, hy: 30, ra: [2, 2, 2], raO: [-40, -42, -42], pnR: [0, .7, -.7], hR: 'relax', on: 'hL kR kL', e: .8}),
-    K(TN, {br: 'out', t: [102, 104], n: 100, tw: -38, hy: -34, ra: [180, 180, 180], raO: [0, 0, 0], pnR: 'back', hR: 'reach', on: 'hL kR kL', e: .6})
-  ]}));
+  k: [K(TN, TN_T), K(TN, TN_M, {br: 'in'}), K(TN, TN_O), K(TN, TN_O, {br: 'out'}), K(TN, TN_M, {br: 'out'}), K(TN, TN_T, {br: 'out'})]});
 // Child's Pose: knees wide, hips back toward the heels, arms long on the mat, forehead down; the back widens on
 // each in breath and the hips settle on each out breath.
 var CPH = {x: .27, y: .03, z: .72, f: 'flat', pole: [0, 1, 0]};
@@ -5836,11 +5852,16 @@ TWO('chair-hamstring', A(SLOW, {name: 'Seated Hamstring Stretch (Chair)', props:
 // Seated Hamstring Stretch on the floor (BLD 900, the cooldown's words): sit tall with the left leg long and the right
 // knee bent, foot flat beside the long knee; hinge forward from the hips with a long back toward the long leg's shin.
 // The chair version (chair-hamstring) is chosen by the words "chair" (names.js).
-var FHH = function(y, z){ return {x: .11, y: y, z: z, f: 60, pole: [.4, 0, -1]}; };
+// BLD 1052 (Chris, November 23, 2026, Full Body Tempo: "the arms are just doing a weird thing and the kind of foot disappeared"):
+// the bent leg's knee rests open to the side with its foot on its outer edge, the sole against the long leg's inner thigh, so
+// both feet show on the mat; both hands reach along the long leg to rest on the shin (the right hand crosses to the long
+// leg's side, x below zero); the back stays long and the head follows the spine as the body hinges from the hips.
+var FHH = function(x, y, z){ return {x: x, y: y, z: z, f: 'flat', pole: [.3, .2, -1]}; };
+var FHF = {x: .005, y: .052, z: .03, f: 88, fr: 88, pole: [1, .25, .35]};
 TWO('floor-hamstring', A(SLOW, {name: 'Seated Hamstring Stretch (Floor)', props: ['mat'], glow: {hams: [.9, 0], back: [.2, .2]}, cam: {yaw: 20, el: 10, zoom: 1},
   form: [{when: 'out', line: ['root', 'spine01'], say: 'long back, hinge from the hips', at: 'spine01', side: 1}],
-  k: [K({b: 'floor', br: 'in', t: [136, 124], n: 116, ll: [90, 90, 172], rl: {x: -.02, y: .07, z: .14, f: 60, fr: 60, pole: [1, -.15, .5]}, ra: FHH(.24, .36), la: FHH(.2, .44), hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', on: 'p fR', e: 1}),
-    K({b: 'floor', br: 'out', t: [146, 136], n: 130, ll: [90, 90, 172], rl: {x: -.02, y: .07, z: .14, f: 60, fr: 60, pole: [1, -.15, .5]}, ra: FHH(.27, .3), la: FHH(.23, .38), hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', on: 'p fR', e: .7})]}));
+  k: [K({b: 'floor', br: 'in', t: [150, 144], n: 138, ll: [90, 90, 172], rl: FHF, ra: FHH(-.05, .14, .34), la: FHH(.17, .195, .38), hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', fitArm: {r: .95, by: 't', span: 10}, on: 'p fR', e: 1}),
+    K({b: 'floor', br: 'out', t: [142, 136], n: 130, ll: [90, 90, 172], rl: FHF, ra: FHH(-.05, .135, .44), la: FHH(.17, .19, .48), hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', fitArm: {r: .95, by: 't', span: 10}, on: 'p fR', e: .7})]}));
 TWO('chair-figure-4', A(SLOW, {name: 'Seated Figure Four', props: ['chair'], glow: {glutes: [0, .9]}, cam: {yaw: 30, el: 10, zoom: 1},
   form: [{when: 'out', line: ['root', 'spine01'], say: 'long back, lean gently', at: 'spine01', side: 1}],
   k: [K(SEAT, {br: 'in', t: [164, 168], n: 166, rl: {x: -.04, y: .58, z: .26, f: 150, fr: 70, pole: [1, .3, .3]}, on: 'p fL', e: 1}),

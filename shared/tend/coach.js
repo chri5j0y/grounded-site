@@ -68,6 +68,12 @@ function plNext(){
 function plPlay(list, start){
   const key = list.join('|');
   if (PL.on && PL.key === key){ const e = PL.E[PL.k]; if (e){ const p = e.a.play(); if (p) p.catch(() => {}); plLevel(e, MU_LEVEL, 1); } return; }
+  // BLD 1052: a new playlist while one plays (a workout reaching its cooldown) crossfades over MU_X seconds.
+  const was = PL.on && PL.E[PL.k];
+  if (was && !PL.x){ PL.key = key; PL.list = list.slice(); PL.i = Math.max(0, +start || 0) % list.length; PL.x = true; PL.k = 1 - PL.k;
+    if (!PL.E[PL.k]) PL.E[PL.k] = plEl();
+    plStart(PL.E[PL.k], PL.list[PL.i], MU_X); plLevel(was, 0, MU_X);
+    setTimeout(() => { try { if (PL.E[PL.k] !== was) was.a.pause(); } catch(x){} PL.x = false; }, MU_X * 1000 + 200); return; }
   plStop(0.4); PL.key = key; PL.list = list.slice(); PL.i = Math.max(0, +start || 0) % list.length; PL.on = true; PL.x = false;
   if (!PL.E[PL.k]) PL.E[PL.k] = plEl();
   plStart(PL.E[PL.k], PL.list[PL.i], 2);
