@@ -37,10 +37,10 @@
   var TREE = 'sequoia';
   var FILES = [
     '/sequoia/checkin.js?v=b929',
-    '/sequoia/practices.js?v=b929',
+    '/sequoia/practices.js?v=c195',
     '/shared/gg-parts.js?v=b929',
     '/shared/gg-life.js?v=b907',
-    '/shared/practice-rhythm.js?v=b929',
+    '/shared/practice-rhythm.js?v=c195',
     '/shared/gg-guided.js?v=c189',
     '/shared/guided/sequoia.js?v=b949'
   ];

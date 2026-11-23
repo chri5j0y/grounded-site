@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'b908';
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c194', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c141', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c142', '/shared/gentle-public.js?v=c151'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c154', '/shared/tend/coach.js?v=c186', '/shared/tend/health.js?v=c195', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c195', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c192';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -466,7 +466,7 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b929', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b949', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b929', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b949', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=b929', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b949', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=c195', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b949', 'PINE_PRACTICES'] };
   var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
@@ -2838,7 +2838,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c194';
+  var RECIPES_JS = '/recipes/recipes.js?v=c195';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
