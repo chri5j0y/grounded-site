@@ -171,8 +171,7 @@ const TOPICS = [
   "reach": [
    "Sadness, worry, or frightening thoughts after a baby that last more than two weeks: call or text the National Maternal Mental Health Hotline, 1-833-852-6262, any time. It is for parents, partners, and families.",
    "Talk with the baby's doctor or the parent's own doctor about sleep, feeding, or mood. These are common questions.",
-   "Thoughts of harming yourself or the baby: call or text 988, or call 911 now.",
-   "If anyone in the home is being hurt or is unsafe, call 911 when there is danger. For a child, call or text Childhelp, 1-800-422-4453."
+   "If anyone in the home is being hurt or is unsafe, call 911 when there is danger."
   ],
   "more": [
    [
@@ -307,8 +306,7 @@ const TOPICS = [
   "reach": [
    "Lost a home, or worried about rent or a place to stay: call or text 211 for local help with housing, food, and bills.",
    "A move for military orders: Military OneSource, 800-342-9647, any time, for service members and families.",
-   "Sadness, worry, or loneliness that lasts two weeks or more: talk with a doctor or a school counselor.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Danger right now: call 911."
+   "Sadness, worry, or loneliness that lasts two weeks or more: talk with a doctor or a school counselor."
   ],
   "more": [
    [
@@ -494,17 +492,12 @@ const TOPICS = [
   ],
   "reach": [
    "Conflict that keeps rising, or a child who stays very unhappy for weeks: talk with a family therapist, ideally one who knows stepfamilies.",
-   "If anyone in the home is being hurt or is unsafe: call 911 in danger. For a child, call or text Childhelp, 1-800-422-4453. For an adult, the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
-   "Thoughts of not wanting to be alive: call or text 988, any time."
+   "If anyone in the home is being hurt or is unsafe: call 911 in danger."
   ],
   "more": [
    [
     "Patricia Papernow, Surviving and Thriving in Stepfamily Relationships",
     "https://www.stepfamilyrelationships.com/"
-   ],
-   [
-    "National Domestic Violence Hotline",
-    "https://www.thehotline.org"
    ]
   ],
   "sources": [
@@ -589,7 +582,7 @@ const TOPICS = [
    ],
    "you": "Caring for a parent while raising children is one of the heaviest loads a grown-up can carry. Rest is part of caregiving. Ask for help before you need it, and find someone to talk with who isn't in the middle of it."
   },
-  "faith": "For many families, a grandparent carries faith and tradition: prayers at meals, songs, holidays, and stories of how the family came to be. Living together can be a chance to pass those on, or to share them in new ways. It can also stir old differences, when generations practice faith differently or not at all. Faith can be a comfort or a strain. A grandparent's own faith community can be a lifeline, and helping them stay connected keeps an important root alive.",
+  "faith": "For many families, a grandparent carries faith and tradition: prayers at meals, songs, holidays, and stories of how the family came to be. Living together can be a chance to pass those on, or to share them in new ways. It can also stir old differences, when generations practice faith differently or not at all. Faith can be a comfort or a strain.",
   "practices": [
    "ask-the-elders",
    "generations-together",
@@ -628,8 +621,7 @@ const TOPICS = [
   "reach": [
    "Worried about health, medicines, falls, or memory: talk with the grandparent's doctor.",
    "If an older adult is being neglected, exploited, or harmed: call the Minnesota Adult Abuse Reporting Center (MAARC), 1-844-880-1574, any time. Danger right now: 911.",
-   "Caregiver strain: the Family Caregiver Alliance and the Alzheimer's Association (helpline 1-800-272-3900, any time) offer information and support.",
-   "Thoughts of not wanting to be alive, for anyone in the home: call or text 988, any time."
+   "Caregiver strain: the Family Caregiver Alliance and the Alzheimer's Association (helpline 1-800-272-3900, any time) offer information and support."
   ],
   "more": [
    [
@@ -786,19 +778,11 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "If anyone in either home is being hurt or is unsafe: call 911 in danger. For an adult, the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788. For a child, call or text Childhelp, 1-800-422-4453.",
-   "A child who stays very sad, angry, or withdrawn for weeks: talk with their doctor or a school counselor.",
-   "Thoughts of not wanting to be alive, for a child or a grown-up: call or text 988, any time."
+   "If anyone in either home is being hurt or is unsafe: call 911 in danger.",
+   "A child who stays very sad, angry, or withdrawn for weeks: talk with their doctor or a school counselor."
   ],
   "more": [
-   [
-    "National Domestic Violence Hotline",
-    "https://www.thehotline.org"
-   ],
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://www.childhelphotline.org/"
-   ]
+   
   ],
   "sources": [
    "amato01"
@@ -947,7 +931,6 @@ const TOPICS = [
   "reach": [
    "Military OneSource: 800-342-9647, any time, for service members and families, children included.",
    "Worry, sadness, or trouble sleeping that lasts two weeks or more, in a child or a grown-up: talk with a doctor or a school counselor.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Service members and veterans can press 1 after dialing.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -1086,7 +1069,7 @@ const TOPICS = [
   ],
   "reach": [
    "Your child's doctor or school counselor can help when clashes feel constant or someone is getting hurt.",
-   "When a child is being hurt by a brother or sister again and again, treat it as a safety matter and reach out for help. Childhelp National Child Abuse Hotline: 1-800-422-4453.",
+   "When a child is being hurt by a brother or sister again and again, treat it as a safety matter and reach out for help.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -1174,7 +1157,7 @@ const TOPICS = [
     "Give more choices as they show they can handle them.",
     "Know their friends and invite them over.",
     "Watch for warning signs that last two weeks or more: deep sadness, no interest in things they loved, big changes in sleep, eating, or grades, talk of hopelessness, or dropping all friends.",
-    "Talk with their doctor or school counselor early if you are worried. Thoughts of suicide: call or text 988 together."
+    "Talk with their doctor or school counselor early if you are worried."
    ],
    "you": "Parenting a teen can stir your own teenage years and leave you feeling unneeded. You are still needed, just in a new way. Find support from other parents of teens, keep up your own friendships, and take your own walks and rest. A steady grown-up is the best home base a teen can have."
   },
@@ -1220,16 +1203,11 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "Thoughts of suicide, or a teen who seems hopeless: call or text 988, any time, together if you can. Danger right now: 911.",
-   "Crisis Text Line: text HOME to 741741 (in Minnesota, MN to 741741). Some teens find texting easier than talking.",
+   "Some teens find texting easier than talking.",
    "Your teen's doctor or school counselor can help when sadness, worry, or withdrawal lasts more than two weeks.",
    "NAMI HelpLine: 1-800-950-6264, for families with questions about a teen's mental health."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
    [
     "HealthyChildren.org (American Academy of Pediatrics)",
     "https://www.healthychildren.org/"
@@ -1660,8 +1638,6 @@ const TOPICS = [
   ],
   "reach": [
    "Your child's doctor can help when storms are very frequent, very intense, or come with sleep, eating, or attention worries.",
-   "If anyone at home is being hurt, or a grown-up is afraid of losing control: call 911 for danger right now, or the Childhelp National Child Abuse Hotline, 1-800-422-4453, for support and guidance.",
-   "If anyone talks about wanting to hurt themselves or to die: call or text 988, any time.",
    "NAMI HelpLine: 1-800-950-6264, for families with questions about a child's mental health."
   ],
   "more": [
@@ -1754,11 +1730,11 @@ const TOPICS = [
     "Call or text 211 for local help with food, rent, utilities, and more. Ask the school about meal programs.",
     "Keep a daily rhythm: wake at the same time, move your body, get outside, eat well, and set job search hours.",
     "Spend the extra time with your kids: walks to school, meals, homework, play.",
-    "Watch for signs of depression: deep sadness, hopelessness, sleeping much more or less. Talk with your doctor, and call or text 988 for thoughts of not wanting to be alive."
+    "Watch for signs of depression: deep sadness, hopelessness, sleeping much more or less."
    ],
    "you": "You are more than your work. Your kindness, skills, humor, and love stay with you through any job change. Find people to talk to, keep moving and getting outside, and celebrate small steps forward, like a good conversation, an application sent, or a new skill learned."
   },
-  "faith": "For many families, a faith community is a lifeline in a job loss: people who help with meals, job leads, and prayer, and a sense of being known beyond a job title. Many traditions teach that a person's worth is a gift, never earned by work, and honor work and rest as both holy. For others, losing work stirs questions about why, or shame in front of their community. Faith can be a resource or a stressor. With children, invite rather than assume: a prayer, a family blessing, or a quiet moment of thanks, as one way among several to feel steady.",
+  "faith": "Many traditions teach that a person's worth is a gift, never earned by work, and honor work and rest as both holy. For others, losing work stirs questions about why, or shame in front of their community. Faith can be a resource or a stressor. With children, invite rather than assume: a prayer, a family blessing, or a quiet moment of thanks, as one way among several to feel steady.",
   "practices": [
    "family-meeting",
    "next-right-step",
@@ -1803,8 +1779,7 @@ const TOPICS = [
    "Call or text 211, any time, for local help with food, rent, heat, utilities, and more.",
    "Minnesota Unemployment Insurance (uimn.org), to apply for benefits.",
    "CareerOneStop, from the U.S. Department of Labor, for job search help and local workforce centers.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Danger right now: 911.",
-   "If job loss stress has turned into danger at home: call 911. The National Domestic Violence Hotline is 1-800-799-7233, or text START to 88788."
+   "If job loss stress has turned into danger at home: call 911."
   ],
   "more": [
    [
@@ -1869,14 +1844,12 @@ const TOPICS = [
   "quick": [
    "Mental health struggles are common, real, and treatable. Help works, and recovery happens.",
    "It is nobody's fault, and it is never a child's job to fix.",
-   "Children do best with simple, honest words, steady routines, and other caring grown-ups close by.",
-   "Thoughts of suicide or self-harm are an emergency: call or text 988, any time. Danger right now: 911."
+   "Children do best with simple, honest words, steady routines, and other caring grown-ups close by."
   ],
   "feel": "Someone you love seems far away, even when they are in the room. A parent stays in bed, a teen stops eating with the family, a partner is wound so tight with worry that the house holds its breath. Moods may swing, or flatten. Everyone else adjusts: kids get quiet, a partner picks up the slack, plans get canceled. Family members may feel worried, frustrated, sad, confused, or guilty for feeling frustrated. Children may wonder if they caused it, or try hard to be perfect so they won't make it worse. And still, families come through these seasons. With help, honesty, and steady love, people heal and homes grow warm again.",
   "together": {
    "first": [
     "Talk with the person who is struggling, with kindness: “I've noticed you seem weighed down. I care about you. How are you, really?”",
-    "Help them connect with care: their doctor, a licensed therapist, or a crisis line if it is urgent.",
     "Tell the children, simply and honestly, what is happening and that help is on the way.",
     "Keep daily routines steady for the children: meals, school, bedtime, and time outside."
    ],
@@ -1970,24 +1943,14 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "Thoughts of suicide or self-harm, for anyone at home: call or text 988, or chat at 988lifeline.org, any time. Danger right now: 911.",
-   "Crisis Text Line: text HOME to 741741 (in Minnesota, MN to 741741).",
    "NAMI HelpLine: 1-800-950-6264, for information, support, and local family programs.",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referrals for mental health and substance use.",
    "Your doctor, or your child's doctor, is a good first call for a mental health concern."
   ],
   "more": [
    [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
-   [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
-   ],
-   [
-    "Crisis Text Line",
-    "https://www.crisistextline.org/"
    ]
   ],
   "sources": [
@@ -1997,7 +1960,6 @@ const TOPICS = [
    "together": {
     "first": [
      "Talk with the person who is struggling, with kindness: “I've noticed you seem weighed down. I care about you. How are you, really?”",
-     "Help them connect with care: their doctor, a licensed therapist, or a crisis line if it is urgent.",
      "Tell the children, simply and honestly, what is happening and that help is on the way.",
      "Keep daily routines steady for the children: meals, school, bedtime, and time outside."
     ],
@@ -2140,8 +2102,7 @@ const TOPICS = [
   "reach": [
    "Your child's teacher and school counselor are partners, especially in the first weeks.",
    "Your child's doctor can help when worry causes daily stomachaches or headaches, or keeps a child home from school.",
-   "Ask the school about meal programs, fee waivers, and supplies. Call or text 211 for local help with school supplies and more.",
-   "If a child or teen talks about hurting themselves or not wanting to be alive: call or text 988, any time. Danger right now: 911."
+   "Ask the school about meal programs, fee waivers, and supplies. Call or text 211 for local help with school supplies and more."
   ],
   "more": [
    [
@@ -2282,7 +2243,6 @@ const TOPICS = [
   "reach": [
    "Questions about the illness and treatment: ask the medical team. Many hospitals have social workers and child life specialists who help families talk with children.",
    "Sadness, worry, or trouble sleeping that lasts two weeks or more, in a child or a grown-up: talk with a doctor or school counselor.",
-   "Thoughts of not wanting to be alive: call or text 988, any time. Danger right now: call 911.",
    "If an ill or vulnerable adult is being neglected, exploited, or harmed: call MAARC, 1-844-880-1574."
   ],
   "more": [
@@ -2425,8 +2385,7 @@ const TOPICS = [
   "reach": [
    "Questions about care or what you're seeing: ask the nurse or doctor. Ask for the hospital's social worker, child life specialist, or chaplain.",
    "If someone in the hospital is an older or vulnerable adult who may be neglected, exploited, or harmed at home or in a facility: call MAARC, 1-844-880-1574.",
-   "Sadness, worry, or trouble sleeping that lasts two weeks or more: talk with a doctor or school counselor.",
-   "Thoughts of not wanting to be alive: call or text 988. Danger right now: call 911."
+   "Sadness, worry, or trouble sleeping that lasts two weeks or more: talk with a doctor or school counselor."
   ],
   "more": [
    [
@@ -2563,7 +2522,6 @@ const TOPICS = [
    "Your hospice's 24/7 line first, day or night, before 911, for anything hospice can help with: pain, breathing, a fall, a change, or a question. In The Grove, turn on We Are in a Hard Season in Settings to keep it at the top of the help card.",
    "Willow, Grow With Grounded's tree for the person in hospice and the people who love them: what matters, stories and letters, bedside ideas, readings, and guides. A remembered willow stays in your grove.",
    "If an ill or vulnerable adult may be neglected, exploited, or harmed: call the Minnesota Adult Abuse Reporting Center (MAARC), 1-844-880-1574, any time.",
-   "Thoughts of not wanting to be alive, for anyone in the family: call or text 988, any time.",
    "Danger right now, or an emergency hospice can't help with: call 911."
   ],
   "more": [
@@ -2742,8 +2700,8 @@ const TOPICS = [
    "Questions about the condition, care, or equipment: talk with the person's doctor and care team.",
    "Disability Hub MN helps Minnesotans with disabilities and their families find services, benefits, and support.",
    "PACER Center helps Minnesota families of children with disabilities with school supports and planning.",
-   "If a vulnerable adult may be neglected, exploited, or harmed: call MAARC, 1-844-880-1574, any time. For a child: call or text Childhelp, 1-800-422-4453.",
-   "Caregiver strain or sadness that lasts two weeks or more: talk with a doctor. Thoughts of not wanting to be alive: call or text 988. Danger: 911."
+   "If a vulnerable adult may be neglected, exploited, or harmed: call MAARC, 1-844-880-1574, any time.",
+   "Caregiver strain or sadness that lasts two weeks or more: talk with a doctor."
   ],
   "more": [
    [
@@ -2845,7 +2803,7 @@ const TOPICS = [
    ],
    "you": "Money stress can wear on a grown-up's body and spirit. You are not your bank balance. Sleep, a walk, and one honest conversation a week with someone you trust can help you keep going."
   },
-  "faith": "For many families, faith communities are a lifeline when money is tight: food pantries, meals, a helping fund, and people who show up. Prayer, gratitude, and simple traditions can steady a home. For others, money worries bring shame, or a sense of being judged, or questions about why hard times come. Faith can be a comfort or a strain. Many traditions say plainly that a person's worth is never measured by money, and that sharing what we have is sacred.",
+  "faith": "Prayer, gratitude, and simple traditions can steady a home. For others, money worries bring shame, or a sense of being judged, or questions about why hard times come. Faith can be a comfort or a strain. Many traditions say plainly that a person's worth is never measured by money, and that sharing what we have is sacred.",
   "practices": [
    "family-meeting",
    "stop-doing",
@@ -2889,8 +2847,7 @@ const TOPICS = [
   "reach": [
    "Call or text 211, any time, for local help with food, rent, heat, utilities, and more.",
    "Ask the school about meal programs, fee waivers, and supplies.",
-   "Money worry with no way out, or thoughts of not wanting to be alive: call or text 988, any time.",
-   "If money stress has turned into danger at home: call 911. The National Domestic Violence Hotline is 1-800-799-7233, or text START to 88788.",
+   "If money stress has turned into danger at home: call 911.",
    "If an older or vulnerable adult is being financially exploited: call MAARC, 1-844-880-1574."
   ],
   "more": [
@@ -3058,10 +3015,9 @@ const TOPICS = [
   ],
   "reach": [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support referrals for substance use and mental health. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first.",
-   "SMART Recovery Family and Friends and NACoA, for family members and teens affected by someone's drinking. NAMI HelpLine: 1-800-950-6264, for families living with mental illness (not a crisis line).",
-   "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
+   "SMART Recovery Family and Friends and NACoA, for family members and teens affected by someone's drinking.",
    "An overdose, or danger right now: call 911.",
-   "If a child is unsafe or not being looked after: call or text Childhelp, 1-800-422-4453. If a vulnerable adult is being neglected or harmed: call MAARC, 1-844-880-1574."
+   "If a vulnerable adult is being neglected or harmed: call MAARC, 1-844-880-1574."
   ],
   "more": [
    [
@@ -3208,7 +3164,7 @@ const TOPICS = [
     "Keep routines and gentle limits. Steady days help grieving children feel safe.",
     "Let the school know, and ask the teacher and school counselor to watch for hard days.",
     "Offer choices about the funeral, keepsakes, and rituals, and let children help plan if they want to.",
-    "Watch for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor, and call or text 988 if anyone talks about not wanting to be alive.",
+    "Watch for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor.",
     "If hospice served your family, call them. Most offer grief support to the family for a year or more."
    ],
    "you": "You are grieving too. Your family doesn't need you to be fine. It helps them to see that you can be sad and still be here. Find support of your own: a friend who will listen, a grief group, a grief counselor, or your faith community if you have one. Let other trusted adults share the load with the kids."
@@ -3259,8 +3215,6 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "If anyone talks about not wanting to be alive, or wanting to be with the person who died: call or text 988, any time. Danger right now: 911.",
-   "Crisis Text Line: text HOME to 741741 (in Minnesota, text MN to 741741).",
    "If hospice served your family, call the hospice. Most offer grief support for the family for a year or more.",
    "A children's grief group or grief center near you, and a grief counselor if grief stays very heavy for many months.",
    "Your child's school counselor, to plan for hard days at school."
@@ -3316,7 +3270,7 @@ const TOPICS = [
      "Keep routines and gentle limits. Steady days help grieving children feel safe.",
      "Let the school know, and ask the teacher and school counselor to watch for hard days.",
      "Offer choices about the funeral, keepsakes, and rituals, and let children help plan if they want to.",
-     "Watch for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor, and call or text 988 if anyone talks about not wanting to be alive.",
+     "Watch for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor.",
      "If hospice served your family, call them. Most offer grief support to the family for a year or more."
     ],
     "you": "You are grieving too. Your family doesn't need you to be fine. It helps them to see that you can be sad and still be here. Find support of your own: a friend who will listen, a grief group, a grief counselor, or a community you trust. Let other trusted adults share the load with the kids."
@@ -3450,7 +3404,6 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "If anyone talks about not wanting to be alive: call or text 988, any time. Danger right now: 911.",
    "If hospice served your family, many hospices hold remembrance gatherings and holiday grief sessions. Call and ask.",
    "A grief support group, many of which meet more often around the holidays.",
    "A grief counselor, if grief seems stuck or grows heavier with each holiday."
@@ -3724,7 +3677,6 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "If anyone talks about not wanting to be alive, or wanting to be with the person who died: call or text 988, any time. Danger right now: 911.",
    "A grief group or grief counselor, if hard dates bring grief that stays heavy for weeks.",
    "If hospice served your family, many hospices hold yearly remembrance gatherings. Call and ask.",
    "For a team: your employee assistance program, if your workplace has one."
@@ -3864,7 +3816,6 @@ const TOPICS = [
   ],
   "reach": [
    "Disaster Distress Helpline, for anyone distressed by a disaster or a violent event: call or text 1-800-985-5990.",
-   "If anyone talks about not wanting to be alive: call or text 988, any time. Danger right now: 911.",
    "Fear, bad sleep, or not wanting to go to school or work that lasts more than a few weeks: a school counselor or a doctor.",
    "Your employee assistance program, for a team, if your workplace has one."
   ],
@@ -4018,8 +3969,7 @@ const TOPICS = [
    "Disaster Distress Helpline, for anyone distressed after a disaster: call or text 1-800-985-5990, any time.",
    "211, for local help with shelter, food, housing, and money.",
    "The American Red Cross, for shelter, supplies, and recovery help.",
-   "FEMA's disaster assistance, when a disaster has been declared in your area.",
-   "If anyone talks about not wanting to be alive: call or text 988, any time."
+   "FEMA's disaster assistance, when a disaster has been declared in your area."
   ],
   "more": [
    [
@@ -4083,7 +4033,7 @@ const TOPICS = [
    "classroom:loss"
   ],
   "quick": [
-   "Follow your school's crisis plan first. The crisis team and the family decide what is shared, and when.",
+   "Follow your school's crisis plan first.",
    "Tell the class in your own room, in simple, true words, with time for questions and quiet.",
    "Keep the day steady and gentle: the usual routine, with room for feelings, breaks, and the school counselors.",
    "Every feeling is welcome, including not feeling much. Watch for students who need more, and walk them to the counselors."
@@ -4131,18 +4081,15 @@ const TOPICS = [
     "Sharing details beyond what the school and the family have approved, including how the person died.",
     "Repeating rumors, or letting the talk turn to blame.",
     "Telling students to “be strong” or to get back to normal right away.",
-    "Starting a memorial in the classroom without checking with the school's crisis team first.",
-    "Trying to be every student's only support. Your school counselors and crisis team are there for this."
+    "Trying to be every student's only support."
    ],
    "help": [
-    "Follow your school's crisis plan, and use the words the crisis team gives you. If there is any danger right now, call 911 and follow the plan.",
     "Tell the class in your own room, in small groups if you can, never over a loudspeaker. Leave time for questions and quiet.",
     "Keep the routine with flexibility: shorter lessons, postponed tests, a quiet spot, permission to step out.",
     "Let the school counselors know right away about students who seem hit hard: close friends, students with recent losses, and anyone you're worried about.",
-    "Talk with the crisis team about the empty desk, the student's belongings, and how the class will remember, so every loss is honored in the same way.",
     "Make sure families get the school's letter the same day, so children can talk about it at home."
    ],
-   "you": "You are allowed to grieve. You don't need to hide every tear; showing calm sadness teaches students that grief is safe. Ask for help with your class if you need a break. Lean on your colleagues, the crisis team, and your employee assistance program if your school has one."
+   "you": "You are allowed to grieve. You don't need to hide every tear; showing calm sadness teaches students that grief is safe. Ask for help with your class if you need a break."
   },
   "byKind": {
    "classroom": "Follow your school's crisis plan and tell the counselor first. Use only the words the school and the family have approved, and let the school counselors lead on any student who needs more."
@@ -4190,9 +4137,6 @@ const TOPICS = [
   ],
   "reach": [
    "Danger right now: 911, and your school's crisis plan.",
-   "Your school's crisis team and school counselors, first, for the class and for any student who needs more.",
-   "If anyone talks about not wanting to be alive: call or text 988, any time.",
-   "Crisis Text Line: text HOME to 741741 (in Minnesota, text MN to 741741).",
    "For staff: your employee assistance program, if your school has one."
   ],
   "more": [
@@ -4484,7 +4428,6 @@ const TOPICS = [
   "reach": [
    "The school nurse, for health questions and any rules for the room.",
    "The school counselors, for the class's feelings and for any student who is very worried.",
-   "Your school's crisis plan and crisis team, if the illness becomes very serious.",
    "Danger right now: 911."
   ],
   "more": [
@@ -4888,8 +4831,7 @@ const TOPICS = [
   "reach": [
    "The school counselor, for a student who seems lonely for weeks, or for exclusion that is on purpose and repeated.",
    "The student's family, through your school, so home and school can support the same plan.",
-   "The principal, when exclusion turns into bullying, threats, or harm.",
-   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable. Danger right now: 911."
+   "The principal, when exclusion turns into bullying, threats, or harm."
   ],
   "more": [
    [
@@ -5170,8 +5112,7 @@ const TOPICS = [
   "reach": [
    "The school counselor, for a student whose worry is very strong, lasts beyond test season, or keeps them from school.",
    "The student's family, through your school, so home and school can support the same calm plan.",
-   "The school's testing coordinator and each student's plan, for accommodations.",
-   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable."
+   "The school's testing coordinator and each student's plan, for accommodations."
   ],
   "more": [
    [
@@ -5309,7 +5250,7 @@ const TOPICS = [
    "The student's family, through your school, about what helps.",
    "Military families: Military OneSource, 800-342-9647, and the school's military family liaison where there is one.",
    "Help with food, housing, or money: 211.",
-   "If a student shares harm at home: report as the law and your school require, or call Childhelp, 1-800-422-4453. Danger right now: 911."
+   "If a student shares harm at home: report as the law and your school require."
   ],
   "more": [
    [
@@ -5447,8 +5388,7 @@ const TOPICS = [
   "reach": [
    "Your school's technology and bullying plans, the school counselor, and the principal.",
    "The families of the students involved, through your school, as the plans say.",
-   "Threats, pictures of a student, or an adult asking a student for secrets or images: the school's safety plan and the authorities, right away. Danger right now: 911.",
-   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable."
+   "Threats, pictures of a student, or an adult asking a student for secrets or images: the school's safety plan and the authorities, right away. Danger right now: 911."
   ],
   "more": [
    [
@@ -5592,8 +5532,7 @@ const TOPICS = [
   "reach": [
    "The school counselor, for a student whose big feelings are frequent, intense, or lasting.",
    "Your school's behavior and safety plans, and each student's plan.",
-   "The student's family, through your school, so home and school can use the same calm words.",
-   "If a student speaks of not wanting to be alive, or of hurting themselves: the school counselor at once, and 988 (call, text, or chat) if no one is reachable. Danger right now: 911."
+   "The student's family, through your school, so home and school can use the same calm words."
   ],
   "more": [
    [
@@ -5793,14 +5732,10 @@ const TOPICS = [
   ],
   "reach": [
    "Your faith body, denomination, or network often has people who walk with congregations between leaders. Ask what they offer.",
-   "If the leaving involves harm or misconduct by a leader, report it to the authorities and to your faith body. A vulnerable adult at risk: MAARC, 1-844-880-1574. A child at risk: call 911 or your county's child protection line.",
-   "If anyone in the group speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+   "If the leaving involves harm or misconduct by a leader, report it to the authorities and to your faith body. A vulnerable adult at risk: MAARC, 1-844-880-1574. A child at risk: call 911 or your county's child protection line."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "bridges91",
@@ -5997,18 +5932,12 @@ const TOPICS = [
   ],
   "reach": [
    "Many hospices offer grief support to the whole community, not only to their own families. Call your local hospice and ask.",
-   "If anyone speaks of not wanting to be alive after this death: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "After a death by suicide, 988 can also help the people left behind.",
    "Danger right now: call 911."
   ],
   "more": [
    [
     "The Dougy Center: grief support for children and families",
     "https://www.dougy.org/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ]
   ],
   "sources": [
@@ -6205,14 +6134,10 @@ const TOPICS = [
   "reach": [
    "Your faith body, denomination, or network may offer trained mediators or conflict coaches. Many communities also have a local mediation center.",
    "If conflict turns into threats, harassment, or abuse, put safety first and involve the authorities. Danger right now: 911.",
-   "If a vulnerable adult is being exploited or mistreated: MAARC, 1-844-880-1574.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time."
+   "If a vulnerable adult is being exploited or mistreated: MAARC, 1-844-880-1574."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "pranis",
@@ -6359,8 +6284,7 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "If a newcomer is in a hard season, connect them with the community's leaders for personal support, and with local help: dial 211 for help with food, housing, and bills.",
-   "If someone speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+   "If a newcomer is in a hard season, connect them with the community's leaders for personal support, and with local help: dial 211 for help with food, housing, and bills."
   ],
   "more": [
    [
@@ -6530,17 +6454,12 @@ const TOPICS = [
   ],
   "reach": [
    "If members need ongoing support after a support group ends: a grief group through a local hospice, NAMI's HelpLine, 1-800-950-6264, or SAMHSA's National Helpline, 1-800-662-4357, for mental health and substance use support.",
-   "For local help with food, housing, and bills: dial 211.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+   "For local help with food, housing, and bills: dial 211."
   ],
   "more": [
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ]
   ],
   "sources": [
@@ -6850,14 +6769,10 @@ const TOPICS = [
   ],
   "reach": [
    "If a member's talking comes from a crisis or deep pain, offer a private conversation, and the right support beyond the group.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
    "Many faith bodies and community organizations offer training in group facilitation for leaders."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "woolley10",
@@ -7038,14 +6953,9 @@ const TOPICS = [
   "reach": [
    "Many faith bodies and community organizations offer trained facilitators for especially hard conversations.",
    "If a conversation reveals harm, abuse, or exploitation, follow up privately and report as the law requires. A vulnerable adult at risk: MAARC, 1-844-880-1574. Danger right now: 911.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
    "NAMI HelpLine, 1-800-950-6264, for a member or family facing mental health concerns."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
    [
     "NAMI HelpLine",
     "https://www.nami.org/nami-helpline"
@@ -7193,16 +7103,12 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "If anyone was harmed, abused, or exploited, report as the law and your organization require. A vulnerable adult at risk: MAARC, 1-844-880-1574. A child: Childhelp, 1-800-422-4453, and your county child protection. Danger right now: 911.",
+   "If anyone was harmed, abused, or exploited, report as the law and your organization require. A vulnerable adult at risk: MAARC, 1-844-880-1574.",
    "Your faith body, denomination, or network, especially when a leader is involved.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
    "Money handled wrongly: your organization's leaders, and the authorities where the law requires."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "toussaint",
@@ -7359,7 +7265,6 @@ const TOPICS = [
   ],
   "reach": [
    "If someone who has been away shares a crisis, a loss, or a hard season, offer private support, and connect them with the right help.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
    "Help with food, housing, or bills: 211.",
    "If a vulnerable adult who has been away may be at risk: MAARC, 1-844-880-1574. Danger right now: 911."
   ],
@@ -7567,14 +7472,10 @@ const TOPICS = [
   ],
   "reach": [
    "Your faith body, denomination, or network often has people who walk with small and changing congregations. Ask what they offer.",
-   "If the work is wearing someone down, share it: no one person needs to hold a community up alone.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+   "If the work is wearing someone down, share it: no one person needs to hold a community up alone."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "woolever04",
@@ -7769,14 +7670,10 @@ const TOPICS = [
   "reach": [
    "Your faith body, denomination, or network may offer training and support for volunteer leaders. Ask what they have.",
    "Exhaustion or low mood that lasts two weeks or more: talk with your doctor or a mental health professional.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "maslach",
@@ -7977,19 +7874,10 @@ const TOPICS = [
   ],
   "reach": [
    "Harm to a child: call 911 or your county's child protection line. A vulnerable adult at risk: MAARC, 1-844-880-1574. Danger right now: 911.",
-   "Childhelp National Child Abuse Hotline: 1-800-422-4453, for questions about child abuse and how to report it.",
-   "Your faith body, denomination, or network often has a safe church office or a process for reporting a leader's misconduct.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Your faith body, denomination, or network often has a safe church office or a process for reporting a leader's misconduct."
   ],
   "more": [
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://www.childhelphotline.org/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "exline",
@@ -8177,14 +8065,10 @@ const TOPICS = [
   ],
   "reach": [
    "Your faith body, denomination, or network may offer trained facilitators or mediators for congregations in conflict. Ask what they have.",
-   "If disagreement turns into threats or anyone feels unsafe: call 911.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "If disagreement turns into threats or anyone feels unsafe: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "fisher81",
@@ -8378,19 +8262,10 @@ const TOPICS = [
   ],
   "reach": [
    "Harm to a child: call 911 or your county's child protection line. A vulnerable adult at risk: MAARC, 1-844-880-1574. Danger right now: 911.",
-   "Childhelp National Child Abuse Hotline: 1-800-422-4453, for questions about child abuse and how to report it.",
-   "Your faith body, denomination, or network usually has a process for concerns about a leader's conduct, and people who walk with congregations through this. Ask for them.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Your faith body, denomination, or network usually has a process for concerns about a leader's conduct, and people who walk with congregations through this. Ask for them."
   ],
   "more": [
-   [
-    "Childhelp National Child Abuse Hotline",
-    "https://www.childhelphotline.org/"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "smithfreyd14",
@@ -8579,14 +8454,10 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "Your faith body, denomination, or network often has people with experience guiding mergers, moves, and building projects. Ask what they offer.",
-   "If anyone in the community speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+   "Your faith body, denomination, or network often has people with experience guiding mergers, moves, and building projects. Ask what they offer."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "bridges91",
@@ -8709,14 +8580,10 @@ const TOPICS = [
   "reach": [
    "For the patient's family: your hospice's own 24/7 line comes first for anything about symptoms or comfort, and the hospice bereavement team for grief support afterward.",
    "For the team: your organization's employee assistance program (EAP), the chaplain or spiritual support team, and peer support.",
-   "If anyone on the team speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "bartels",
@@ -8754,7 +8621,6 @@ const TOPICS = [
    "reach": [
     "For the patient's family: your hospice's own 24/7 line comes first for anything about symptoms or comfort, and the hospice bereavement team for grief support afterward.",
     "For the team: your organization's employee assistance program (EAP), the chaplain or support team, and peer support.",
-    "If anyone on the team speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
     "Danger right now: call 911."
    ]
   }
@@ -8882,7 +8748,6 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP) is usually open to staff who are leaving as well as staying. Ask how long it continues after a layoff.",
    "For someone who lost their job in Minnesota: Unemployment Insurance at uimn.org, and dial 211 for local help with food, housing, and bills.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
@@ -9020,14 +8885,10 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP), and a chaplain or grief support if your workplace has one.",
    "Many hospices offer grief support to the community. Call your local hospice and ask.",
-   "If the coworker died by suicide, or anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "doka",
@@ -9155,17 +9016,12 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP): short-term support for stress, sleep, and mood, usually at no cost to staff.",
    "Exhaustion or low mood that lasts two weeks or more: talk with your doctor or a mental health professional.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
    [
     "World Health Organization: burn-out, an occupational phenomenon",
     "https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
    ]
   ],
   "sources": [
@@ -9290,14 +9146,10 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP): short-term support for stress and work relationships, usually at no cost to staff.",
    "Human resources: for harassment, discrimination, threats, or conflict that stays stuck. Many organizations also offer mediation.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Threats or danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "fisher81",
@@ -9416,14 +9268,10 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP): short-term support for stress and big changes at work, usually at no cost to staff.",
    "Human resources: for questions about roles, policies, or concerns that need a neutral voice.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "tuckman65",
@@ -9542,14 +9390,10 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP): short-term support for stress, sleep, and overwhelm, usually at no cost to staff.",
    "Exhaustion, low mood, or poor sleep that lasts two weeks or more: talk with your doctor or a mental health professional.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "maslach",
@@ -9672,14 +9516,10 @@ const TOPICS = [
    "Serious injury or danger right now: call 911.",
    "Your organization's employee assistance program (EAP): short-term support after a frightening event, usually at no cost to staff.",
    "Human resources and your safety officer: reporting, workers' compensation, and planning a return to work.",
-   "Shakiness, poor sleep, or replaying the event that lasts more than a few weeks: talk with your doctor or a mental health professional.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+   "Shakiness, poor sleep, or replaying the event that lasts more than a few weeks: talk with your doctor or a mental health professional."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "pfa06",
@@ -9807,14 +9647,10 @@ const TOPICS = [
   "reach": [
    "Your organization's employee assistance program (EAP): many offer grief support for employees, usually at no cost to staff.",
    "Human resources: bereavement leave, flexible schedules, and other options.",
-   "Many hospices offer grief support groups to the whole community. Call your local hospice and ask.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911."
+   "Many hospices offer grief support groups to the whole community. Call your local hospice and ask."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "doka",
@@ -9944,14 +9780,10 @@ const TOPICS = [
    "For hospice patients and families: the hospice's own 24/7 line comes first for anything about symptoms or comfort.",
    "For the team: your organization's employee assistance program (EAP), peer support team, chaplain or spiritual support team, and ethics committee or ethics consult service.",
    "Guilt, numbness, nightmares, or replaying a case that lasts more than a few weeks: talk with your doctor or a mental health professional who understands this work.",
-   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ]
+   
   ],
   "sources": [
    "jameton",
@@ -9964,7 +9796,6 @@ const TOPICS = [
     "For hospice patients and families: the hospice's own 24/7 line comes first for anything about symptoms or comfort.",
     "For the team: your organization's employee assistance program (EAP), peer support team, chaplain or support team, and ethics committee or ethics consult service.",
     "Guilt, numbness, nightmares, or replaying a case that lasts more than a few weeks: talk with your doctor or a mental health professional who understands this work.",
-    "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
     "Danger right now: call 911."
    ]
   }
@@ -10108,9 +9939,7 @@ var TOPICS = [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information, in English and Spanish.",
    "SMART Recovery Family and Friends, for family members affected by someone's drinking or drug use. NACoA, for children and teens growing up with a family member's drinking or drug use.",
    "Stopping alcohol or sedative pills suddenly can be dangerous. Talk with a doctor first.",
-   "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
-   "An overdose, someone who won't wake up, or danger right now: call 911. Poison Control: 1-800-222-1222.",
-   "If a child is unsafe or not being looked after: Childhelp, 1-800-422-4453."
+   "An overdose, someone who won't wake up, or danger right now: call 911. Poison Control: 1-800-222-1222."
   ],
   "more": [
    [
@@ -10284,9 +10113,7 @@ var TOPICS = [
   "reach": [
    "NACoA: for children and teens affected by a family member's drinking or drug use. SMART Recovery Family and Friends: for families affected by someone's drinking or drug use.",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
-   "Teach every child: if a grown-up won't wake up or is hard to wake, call 911. Poison Control: 1-800-222-1222.",
-   "Thoughts of not wanting to be alive, for anyone at home: call or text 988, any time.",
-   "If a child is unsafe or not being looked after: Childhelp, 1-800-422-4453."
+   "Teach every child: if a grown-up won't wake up or is hard to wake, call 911. Poison Control: 1-800-222-1222."
   ],
   "more": [
    [
@@ -10425,8 +10252,7 @@ var TOPICS = [
   "reach": [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
    "SMART Recovery Family and Friends and NACoA: for families and teens affected by someone's drinking.",
-   "If someone has had too much and won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222.",
-   "Thoughts of not wanting to be alive: call or text 988, any time."
+   "If someone has had too much and won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222."
   ],
   "more": [
    [
@@ -10560,9 +10386,7 @@ var TOPICS = [
   "reach": [
    "SMART Recovery Family and Friends: for family members affected by someone's drinking or drug use. NACoA for teens.",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
-   "If anyone at home is being hurt or threatened: call 911. The National Domestic Violence Hotline: 1-800-799-7233, any time.",
-   "Thoughts of not wanting to be alive: call or text 988, any time.",
-   "If a child is unsafe or not being looked after: Childhelp, 1-800-422-4453."
+   "If anyone at home is being hurt or threatened: call 911."
   ],
   "more": [
    [
@@ -10690,8 +10514,7 @@ var TOPICS = [
    "Your organization's employee assistance program (EAP): confidential support for employees and often their families.",
    "Human resources: for leave, return to work, and accommodations under your organization's policies.",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
-   "Someone at work who won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222.",
-   "Thoughts of not wanting to be alive: call or text 988, any time."
+   "Someone at work who won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222."
   ],
   "more": [
    [
@@ -10780,8 +10603,7 @@ var TOPICS = [
     "Make every gathering one everyone can enjoy fully, with sober drinks set out first.",
     "Open your space to recovery meetings and family groups, and list them where people can find them.",
     "Offer meaningful service, gently, at the person's own pace.",
-    "Train greeters and leaders to welcome warmly, remember names, and keep stories private.",
-    "Keep help numbers close: SAMHSA, 988, 911, and local meetings."
+    "Train greeters and leaders to welcome warmly, remember names, and keep stories private."
    ],
    "you": "You don't need a recovery program to be a recovery-friendly community. You need grace, plain words, and a welcome that doesn't need explaining. Take care of your own heart too; this work can stir your own family's story."
   },
@@ -10839,8 +10661,7 @@ var TOPICS = [
      "Make every gathering one everyone can enjoy fully, with sober drinks set out first.",
      "Open your space to recovery meetings and family groups, and list them where people can find them.",
      "Offer meaningful service, gently, at the person's own pace.",
-     "Train greeters and leaders to welcome warmly, remember names, and keep stories private.",
-     "Keep help numbers close: SAMHSA, 988, 911, and local meetings."
+     "Train greeters and leaders to welcome warmly, remember names, and keep stories private."
     ],
     "you": "You don't need a recovery program to be a recovery-friendly community. You need kindness, plain words, and a welcome that doesn't need explaining. Take care of your own heart too; this work can stir your own family's story."
    }
@@ -10869,7 +10690,6 @@ var TOPICS = [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
    "SMART Recovery Family and Friends, for families affected by someone's drinking or drug use. NACoA, for children and teens.",
    "If someone won't wake up, is very hard to wake, or is breathing slowly: call 911. Naloxone (Narcan) reverses an opioid overdose. Poison Control: 1-800-222-1222.",
-   "Thoughts of not wanting to be alive: call or text 988, any time.",
    "A vulnerable adult being harmed or neglected: MAARC, 1-844-880-1574."
   ],
   "more": [

@@ -84,7 +84,7 @@ const LC_TOPICS = [
     you: "Their anxiety can stir your own. Keep your own practices, and remember you are a companion, not a cure." },
   faith: "Many traditions hold words for anxious hearts: a breath prayer, a psalm, a practice of handing over what you can't control. You can reach for peace from right where you are.",
   practices: ["leaves|Breathe", "bark|Meditation", "bark|Mindfulness", "leaves|Movement"],
-  reach: ["Panic attacks, or anxiety that keeps you from work, sleep, or relationships for more than a few weeks.", "Any thoughts of harming yourself: call or text 988."],
+  reach: ["Panic attacks, or anxiety that keeps you from work, sleep, or relationships for more than a few weeks."],
   more: [L.nami, L.apa], kids: "worry" },
 
 { id: "sadness", ring: "inside", title: "Sadness That Lingers", keys: "depression depressed sad low numb empty hopeless tired down", parts: ["fruit", "leaves", "branches"],
@@ -101,8 +101,8 @@ const LC_TOPICS = [
     you: "Supporting someone who is depressed is tiring. Keep your own supports, and share the load with others." },
   faith: "Lament is one of the oldest forms of prayer. Your tradition likely has room for sorrow that doesn't resolve quickly. Being carried by a community on dark days is itself a kind of faith.",
   practices: ["leaves|Sleep", "leaves|Movement", "branches|Friends", "bark|Talk With a Therapist"],
-  reach: ["Sadness lasting more than two weeks, or getting in the way of daily life.", "Thoughts of death or suicide: call or text 988 now."],
-  more: [L.nami, L.lifeline], kids: "sadness" },
+  reach: ["Sadness lasting more than two weeks, or getting in the way of daily life."],
+  more: [L.nami], kids: "sadness" },
 
 { id: "loneliness", ring: "inside", title: "Loneliness", keys: "lonely alone isolated no friends disconnected", parts: ["branches", "fruit"],
   quick: ["Loneliness is a signal, like hunger, telling you that you need connection.", "Start small and repeat: the same coffee shop, the same class, the same walk.", "Reach out first. Most people are waiting for someone else to.", "Being alone and being lonely are different. Both are okay to name."],
@@ -135,7 +135,7 @@ const LC_TOPICS = [
     you: "If you work in a caring profession, burnout may be showing up in you too. Check your own tank." },
   faith: "Many traditions practice sabbath: a regular time to stop, rest, and remember you are more than what you produce.",
   practices: ["leaves|Sleep", "leaves|Breathe", "bark|Playing", "roots|Ritual"],
-  reach: ["Exhaustion that doesn't improve with rest, or signs of depression.", "Thoughts of escaping your life or not being here: call or text 988."],
+  reach: ["Exhaustion that doesn't improve with rest, or signs of depression."],
   more: [L.apa, L.caregiver] },
 
 { id: "anger", ring: "inside", title: "Anger That Runs Hot", keys: "anger angry rage irritable temper resentment snapping", parts: ["bark", "branches"],
@@ -169,7 +169,7 @@ const LC_TOPICS = [
     you: "Listening to confession is holy work. Keep what you hear confidential unless someone is in danger." },
   faith: "Most traditions have paths of confession, forgiveness, and restoration. Grace doesn't erase responsibility; it makes it possible to carry.",
   practices: ["roots|Prayer", "branches|Make Peace", "bark|Talk With a Therapist", "bark|Journal"],
-  reach: ["Shame tied to trauma or abuse.", "Thoughts that you'd be better off dead: call or text 988."],
+  reach: ["Shame tied to trauma or abuse."],
   more: [L.apa, L.gg] },
 
 { id: "lost", ring: "inside", title: "Feeling Lost or Without Purpose", keys: "purpose meaning lost direction stuck empty why", parts: ["trunk", "fruit"],
@@ -289,7 +289,7 @@ const LC_TOPICS = [
     you: "Their grief may touch your own losses. Take care of that, too." },
   faith: "Share what your tradition teaches about love and death if it comforts you, and let yourself have the questions that come too. Rituals, prayers for the dead, and remembrance days can hold what words can't.",
   practices: ["branches|Friends", "roots|Ritual", "bark|Write Your Story", "leaves|Sleep"],
-  reach: ["Grief that stays intense or gets worse after many months, or keeps you from daily life.", "Thoughts of wanting to join them: call or text 988."],
+  reach: ["Grief that stays intense or gets worse after many months, or keeps you from daily life."],
   more: [L.wyg, L.dougy], kids: "family-death" },
 
 { id: "parent-death", ring: "loss", title: "Your Parent Died", keys: "mom dad mother father parent died death grief", parts: ["roots", "branches", "trunk"],
@@ -323,7 +323,7 @@ const LC_TOPICS = [
     you: "Being near this grief is hard. Stay anyway. Get support for yourself." },
   faith: "Many parents wrestle with the sacred after a child dies. Anger and silence can be prayers. Faith communities at their best simply stay, sit, and carry.",
   practices: ["branches|Friends", "roots|Ritual", "bark|Talk With a Therapist", "bark|Journal"],
-  reach: ["The Compassionate Friends supports bereaved parents and siblings.", "Any thoughts of not wanting to live: call or text 988."],
+  reach: ["The Compassionate Friends supports bereaved parents and siblings."],
   more: [L.tcf, L.dougy], kids: "family-death" },
 
 { id: "pregnancy-loss", ring: "loss", title: "Pregnancy or Infant Loss", keys: "miscarriage stillbirth infant loss baby died pregnancy loss", parts: ["roots", "fruit", "leaves"],
@@ -340,7 +340,7 @@ const LC_TOPICS = [
     you: "Be gentle if you are also expecting or have small children." },
   faith: "Many traditions have blessings, prayers, or naming rituals for babies who died. A faith leader can help create one if yours doesn't.",
   practices: ["roots|Ritual", "leaves|Sleep", "branches|Friends"],
-  reach: ["Postpartum Support International helpline: 1-800-944-4773.", "Deep sadness that lingers, or any thoughts of harming yourself: call or text 988."],
+  reach: ["Postpartum Support International helpline: 1-800-944-4773."],
   more: [L.share, L.psi], kids: "baby-loss"/* BLD787 pages-pregnancy-loss start */, pages: [["Making Memories with Your Baby", "ok-pg-baby-memories"]] /* BLD787 pages-pregnancy-loss end */ },
 
 { id: "suicide-loss", ring: "loss", title: "After a Suicide Loss", keys: "suicide loss died by suicide survivor grief why", parts: ["roots", "bark", "branches"],
@@ -442,7 +442,7 @@ const LC_TOPICS = [
     you: "Your fear for them is real. Find your own place to put it." },
   faith: "Prayers for healing, anointing, and blessings can bring deep comfort. It's also okay to bring fear and anger to the sacred.",
   practices: ["leaves|See the Doctor Early", "roots|Prayer", "branches|Family", "leaves|Breathe"],
-  reach: ["Ask your care team about counseling, social work, or chaplain support.", "Deep depression or hopelessness: tell your doctor, or call or text 988."],
+  reach: ["Ask your care team about counseling, social work, or chaplain support.", "Deep depression or hopelessness: tell your doctor."],
   more: [L.nami, L.convo], kids: "family-illness" },
 
 { id: "chronic", ring: "health", title: "Chronic Illness or Pain", keys: "chronic pain illness disability long term autoimmune fatigue", parts: ["leaves", "bark", "trunk"],
@@ -459,7 +459,7 @@ const LC_TOPICS = [
     you: "Long illness is a marathon. Pace your own support too." },
   faith: "Many traditions speak of strength in weakness and of presence in suffering. You may find new ways to pray and practice with a body that needs care.",
   practices: ["leaves|See the Doctor Early", "leaves|Breathe", "bark|Mindfulness", "bark|Write Your Story"],
-  reach: ["Pain with depression or hopelessness.", "Any thoughts of suicide: call or text 988."],
+  reach: ["Pain with depression or hopelessness."],
   more: [L.apa, L.nami], kids: "family-illness" },
 
 { id: "own-death", ring: "health", title: "Facing Your Own Death", keys: "dying terminal my death end of life hospice prognosis afraid to die", parts: ["roots", "trunk", "fruit"],
@@ -629,7 +629,7 @@ const LC_TOPICS = [
     you: "Their decision is theirs. Keep your friendship steady." },
   faith: "Many traditions hold both justice and forgiveness. Neither needs to be rushed. Anger at being wronged is a holy response.",
   practices: ["bark|Talk With a Therapist", "branches|Make Peace", "leaves|Sleep"],
-  reach: ["Depression, or thoughts of harming yourself or someone else: call or text 988."],
+  reach: ["If it stays heavy, talk with your doctor, a counselor, or someone you trust."],
   more: [L.apa] },
 
 { id: "infertility", ring: "family", title: "Infertility", keys: "infertility trying to conceive ivf cant get pregnant childless", parts: ["fruit", "roots", "leaves"],
@@ -714,8 +714,8 @@ const LC_TOPICS = [
     you: "Keep their child's story private." },
   faith: "Many traditions speak of steadfast love that doesn't give up. That love can include professional help and firm limits.",
   practices: ["branches|Family", "bark|Talk With a Therapist", "roots|Prayer"],
-  reach: ["Your child talks about suicide: call or text 988 now.", "Safety threats: call 911."],
-  more: [L.nami, L.lifeline] },
+  reach: ["Safety threats: call 911."],
+  more: [L.nami] },
 
 /* ================= WORK AND MONEY ================= */
 { id: "job-loss", ring: "work", title: "Losing Your Job", keys: "fired laid off job loss unemployed work career", parts: ["trunk", "fruit", "branches"],
@@ -851,8 +851,8 @@ const LC_TOPICS = [
     you: "Hearing these stories can affect you too." },
   faith: "Many traditions offer confession, lament, and restoration. Chaplains are trained to walk with moral injury.",
   practices: ["roots|Prayer", "branches|Make Peace", "bark|Talk With a Therapist", "branches|Colleagues"],
-  reach: ["Veterans: call 988 and press 1.", "Thoughts of suicide: call or text 988."],
-  more: [L.voa, L.lifeline] },
+  reach: ["If it stays heavy, talk with your doctor, a counselor, or someone you trust."],
+  more: [L.voa] },
 
 { id: "forgiveness", ring: "faith", title: "Forgiving Someone, or Yourself", keys: "forgive forgiveness resentment hurt grudge reconcile", parts: ["roots", "branches", "bark"],
   quick: ["Forgiveness is releasing a debt, not excusing harm.", "Forgiveness and reconciliation are different. You can forgive without returning.", "It's usually a process, not a moment.", "Forgiving yourself is often the hardest."],
@@ -1004,7 +1004,7 @@ const LC_TOPICS = [
     you: "Hearing about trauma can stir up your own. Take care of yourself too." },
   faith: "Many sacred texts are full of people crying out after terror and loss. Lament, silence, and simply being held by a community can all be sacred responses.",
   practices: ["bark|Slow Exhale", "bark|Name It", "leaves|Two Hours Outdoors", "roots|Lament"],
-  reach: ["Nightmares, flashbacks, or avoidance that last longer than a month, or get in the way of daily life.", "Thoughts of hurting yourself: call or text 988."],
+  reach: ["Nightmares, flashbacks, or avoidance that last longer than a month, or get in the way of daily life."],
   more: [L.ptsd, L.apa] },
 { id: "disability", ring: "health", title: "Living with a New Disability", keys: "disability injury wheelchair vision hearing loss stroke amputation chronic limitation adapting accessibility", parts: ["leaves", "trunk", "branches"],
   quick: ["Adjusting to a new disability often brings grief, and grief is a healthy response.", "Your worth was never about what your body could do.", "Practical help, like tools, benefits, and accessible spaces, can open up a lot of life.", "Other people living with the same disability are often the best guides."],
@@ -1020,7 +1020,7 @@ const LC_TOPICS = [
     you: "Caring for someone adjusting to disability is a big change for you too." },
   faith: "Many traditions hold that every person carries sacred worth, whatever their body can do. Some communities have learned from disabled members to slow down and make room for everyone.",
   practices: ["bark|Self-Compassion Break", "branches|Support Group", "bark|Values Sort", "bark|Tiny Next Step"],
-  reach: ["Sadness or hopelessness that doesn't lift.", "Thoughts of not wanting to live: call or text 988."],
+  reach: ["Sadness or hopelessness that doesn't lift."],
   more: [L.disabilityhub, L.nami] },
 { id: "assault", ring: "safety", title: "After a Sexual Assault", keys: "sexual assault rape abuse violated consent attacked harassed survivor", parts: ["bark", "leaves", "branches"],
   quick: ["What happened was not your fault. Nothing you did or wore makes it your fault.", "You get to decide what happens next, including whether to report.", "Free, confidential help is available any time, day or night.", "Healing takes time, and support makes a real difference."],
@@ -1052,7 +1052,7 @@ const LC_TOPICS = [
     you: "Watch for the other parent too. Partners can struggle quietly." },
   faith: "Many traditions welcome a new child with blessing and community. Being carried by others in this season is part of that welcome.",
   practices: ["leaves|Sleep", "branches|Ask for Help", "leaves|Morning Daylight", "bark|Self-Compassion Break"],
-  reach: ["Sadness, anxiety, or scary thoughts that last more than two weeks: call the National Maternal Mental Health Hotline, 1-833-852-6262, any time.", "Thoughts of harming yourself or your baby: call or text 988, or call 911 now."],
+  reach: ["Sadness, anxiety, or scary thoughts that last more than two weeks: call the National Maternal Mental Health Hotline, 1-833-852-6262, any time."],
   more: [L.psi, L.mmh] },
 { id: "incarceration", ring: "family", title: "When Someone You Love Is Incarcerated", keys: "jail prison incarcerated arrested sentence inmate visiting family of prisoner", parts: ["branches", "bark", "fruit"],
   quick: ["Having someone you love in jail or prison is a real loss, even though they're still alive.", "Many families feel shame, but you haven't done anything wrong.", "Staying connected, when it's safe, often helps everyone.", "You deserve support too."],
@@ -1068,7 +1068,7 @@ const LC_TOPICS = [
     you: "Supporting a family through this can be long. Pace yourself." },
   faith: "Many traditions call people to visit the prisoner and care for their families, and to hold both justice and mercy.",
   practices: ["branches|Support Group", "branches|One Reach-Out a Day", "roots|Lament", "bark|Tiny Next Step"],
-  reach: ["If the stress is affecting your health or your children, reach out to a counselor.", "Thoughts of suicide: call or text 988."],
+  reach: ["If the stress is affecting your health or your children, reach out to a counselor."],
   more: [L.mndoc, L.nami] },
 { id: "moving", ring: "work", title: "Moving to a New Place", keys: "move moving relocation new town new city homesick starting over no friends", parts: ["branches", "trunk", "leaves"],
   quick: ["Moving is one of life's big stressors, even when it's a good change.", "Homesickness is a form of grief for places and people.", "It usually takes months, not weeks, to feel at home.", "Small, regular routines help a new place become yours."],
@@ -1084,10 +1084,10 @@ const LC_TOPICS = [
     you: "Being a welcomer is a quiet gift to your whole community." },
   faith: "Many traditions honor the stranger and the traveler. Faith communities are often among the first places newcomers find belonging.",
   practices: ["branches|Clubs", "branches|Neighbors", "roots|Sit Spot", "bark|Something to Look Forward To"],
-  reach: ["Loneliness or low mood that doesn't lift after several months.", "Thoughts of suicide: call or text 988."],
+  reach: ["Loneliness or low mood that doesn't lift after several months."],
   more: [L.nami, L.m211] },
 { id: "military", ring: "work", title: "Coming Home From Military Service", keys: "veteran military service deployment coming home transition civilian ptsd moral injury va", parts: ["trunk", "branches", "bark"],
-  quick: ["Leaving military life is a big transition, even when you're glad to be home.", "Many veterans miss the purpose and closeness of their unit.", "Help built for veterans is free, and it works.", "Veterans Crisis Line: call 988 and press 1, or text 838255."],
+  quick: ["Leaving military life is a big transition, even when you're glad to be home.", "Many veterans miss the purpose and closeness of their unit.", "Help built for veterans is free, and it works."],
   feel: "Civilian life may feel slow, confusing, or lonely. You may miss the structure and the people. Some veterans carry memories, injuries, or moral injury that are hard to talk about.",
   self: { first: ["Connect with your local County Veterans Service Officer, or the Minnesota Department of Veterans Affairs.", "Reach out to one person from your unit.", "Build a simple daily routine."],
     helps: ["Veteran peer groups.", "Finding a new mission, like work, service, or learning.", "Physical activity and good sleep."],
@@ -1100,8 +1100,8 @@ const LC_TOPICS = [
     you: "Families go through the transition too. Veteran family support is available." },
   faith: "Many traditions have rituals for warriors returning home, to honor their service and help them lay down what they carried. Chaplains can help with moral injury.",
   practices: ["bark|Purpose Statement", "branches|Support Group", "roots|Moral Repair Letter", "leaves|Walk or Jog"],
-  reach: ["Veterans Crisis Line: call 988 and press 1, or text 838255, any time.", "Nightmares, anger, or drinking that keep growing: talk with the VA or a counselor."],
-  more: [L.vcl, L.mdva, L.ptsd] },
+  reach: ["Nightmares, anger, or drinking that keep growing: talk with the VA or a counselor."],
+  more: [L.mdva, L.ptsd] },
 
 /* ================= ADDED IN SESSION 7 ================= */
 { id: "self-harm", ring: "safety", title: "Self-Harm", keys: "self harm self-harm self injury selfharm cutting burning hurting myself on purpose scratching my child is cutting teen cutting 988", parts: ["bark", "branches", "fruit"],
@@ -1135,7 +1135,7 @@ const LC_TOPICS = [
     you: "Loving someone with an eating disorder is exhausting. Caregiver support groups, like ANAD’s, can help." },
   faith: "Many traditions treat the shared table as sacred and the body as a gift. Recovery can be a way of receiving that gift again.",
   practices: ["leaves|Sleep", "bark|Self-Compassion Break", "branches|Support Group", "bark|Talk With a Therapist"],
-  reach: ["See a doctor soon for weight changes, dizziness, fainting, missed periods, or making yourself throw up.", "Call 911 for fainting, chest pain, a racing or uneven heartbeat, or confusion.", "ANAD Eating Disorders Helpline: 1-888-375-7767. National Alliance for Eating Disorders Helpline: 1-866-662-1235. Thoughts of suicide: call or text 988."],
+  reach: ["See a doctor soon for weight changes, dizziness, fainting, missed periods, or making yourself throw up.", "Call 911 for fainting, chest pain, a racing or uneven heartbeat, or confusion.", "ANAD Eating Disorders Helpline: 1-888-375-7767. National Alliance for Eating Disorders Helpline: 1-866-662-1235."],
   more: [['ANAD', 'https://anad.org'], ['National Alliance for Eating Disorders', 'https://www.allianceforeatingdisorders.com'], ['The Emily Program (Minnesota)', 'https://emilyprogram.com']], kids: "food-worries" },
 
 { id: "accident", ring: "health", title: "After a Car Accident or Sudden Injury", keys: "car accident crash wreck collision injured injury hit by a car trauma er icu hospital concussion brain injury at fault guilt insurance", parts: ["leaves", "bark", "branches"],
@@ -1152,7 +1152,7 @@ const LC_TOPICS = [
     you: "If someone you love is badly hurt, you are in a crisis too. Eat, sleep when you can, and let others help." },
   faith: "Many people pray for healing, give thanks for the helpers, or wrestle with why. All of it belongs. A hospital chaplain can sit with you.",
   practices: ["leaves|Sleep", "bark|Slow Exhale", "branches|Ask for Help", "roots|Prayer"],
-  reach: ["Go to the ER for a headache that gets worse, repeated vomiting, confusion, slurred speech, weakness, or a seizure.", "Talk with your doctor if fear, nightmares, or flashbacks last more than a month.", "If someone died in the crash, see the grief guides too. Thoughts of suicide: call or text 988."],
+  reach: ["Go to the ER for a headache that gets worse, repeated vomiting, confusion, slurred speech, weakness, or a seizure.", "Talk with your doctor if fear, nightmares, or flashbacks last more than a month.", "If someone died in the crash, see the grief guides too."],
   more: [L.ptsd, ['CDC HEADS UP: Concussion', 'https://www.cdc.gov/heads-up/'], ['Brain Injury Alliance of Minnesota', 'https://www.braininjurymn.org']], kids: "accident" },
 
 { id: "porn", ring: "health", title: "Pornography That’s Hard to Stop", keys: "porn pornography compulsive sexual behavior sex addiction lust partner found porn husband watches porn wife watches porn betrayal shame accountability", parts: ["roots", "bark", "branches"],
@@ -1186,11 +1186,11 @@ const LC_TOPICS = [
     you: "Living with ADHD affects partners and families too. Couples and family support can help everyone." },
   faith: "Many traditions teach that each person is made with purpose and gifts. A late diagnosis can be a chance to make peace with who you are, and to stop fighting yourself.",
   practices: ["bark|Self-Compassion Break", "bark|Values Sort", "leaves|Movement", "bark|Tiny Next Step"],
-  reach: ["See your doctor if focus, mood, or daily life feel out of control.", "Anxiety and depression often come with ADHD. Get help for those too. Thoughts of suicide: call or text 988."],
+  reach: ["See your doctor if focus, mood, or daily life feel out of control.", "Anxiety and depression often come with ADHD. Get help for those too."],
   more: [['CHADD', 'https://chadd.org'], ['Understood (for adults, too)', 'https://www.understood.org'], L.nami], kids: "attention" },
 
 { id: "gambling", ring: "health", title: "Gambling That’s Out of Control", keys: "gambling gamble betting sports betting casino lottery scratch tickets slots poker fantasy sports online betting apps debt chasing losses gambling addiction problem gambling", parts: ["leaves", "branches", "fruit"],
-  quick: ["Gambling disorder is a real, treatable addiction.", "In Minnesota, treatment is often free for gamblers and their families. Call 1-800-333-4673 (HOPE).", "Put barriers in place: block betting apps and sites, and let someone else hold the money for a while.", "Gambling problems raise the risk of suicide. If you feel hopeless, call or text 988."],
+  quick: ["Gambling disorder is a real, treatable addiction.", "In Minnesota, treatment is often free for gamblers and their families. Call 1-800-333-4673 (HOPE).", "Put barriers in place: block betting apps and sites, and let someone else hold the money for a while.", "Gambling problems raise the risk of suicide."],
   feel: "Chasing losses. Hiding bets or money. Promising to stop and not being able to. Shame, panic about debt, and a hope that the next win will fix everything.",
   self: { first: ["Call the Minnesota Problem Gambling Helpline at 1-800-333-4673, or text HOPE to 53342.", "Block gambling apps and sites, and ask about self-exclusion at casinos and betting sites.", "Tell one person the full truth about the money."],
     helps: ["Counseling with a gambling treatment provider.", "SMART Recovery, or another support group.", "Free financial counseling to face the debt with a plan."],
@@ -1203,7 +1203,7 @@ const LC_TOPICS = [
     you: "You can get free counseling in Minnesota as an affected family member, even if they won’t go." },
   faith: "Many recovery paths draw on surrender, honesty, and community. Grace can meet you in the middle of the mess, and so can people who have been there.",
   practices: ["branches|Support Group", "bark|Talk With a Therapist", "roots|Prayer", "bark|Tiny Next Step"],
-  reach: ["Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342. Outside Minnesota: 1-800-GAMBLER.", "Thoughts of suicide: call or text 988. Call 911 if you are in danger."],
+  reach: ["Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342. Outside Minnesota: 1-800-GAMBLER."],
   more: [['Minnesota Alliance on Problem Gambling', 'https://mnapg.org'], ['GetGamblingHelp.com (Minnesota)', 'https://getgamblinghelp.com'], ['National Council on Problem Gambling', 'https://www.ncpgambling.org']], kids: "addiction" }
 ];
 
@@ -1288,8 +1288,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   ],
   "reach": [
    "Fatigue that is new, getting worse, or comes with new symptoms: tell your doctor.",
-   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor.",
-   "Thoughts of not wanting to live: call or text 988, any time. In danger right now, call 911."
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1386,7 +1385,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "Questions about work, benefits, and services in Minnesota: Disability Hub MN, 1-866-333-2466.",
    "Ideas for accommodations at work: the Job Accommodation Network, askjan.org.",
    "If you believe you are being treated unfairly at work because of a disability: the U.S. Equal Employment Opportunity Commission, eeoc.gov, or a lawyer.",
-   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1478,7 +1477,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Help with services, equipment, and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
    "If your children seem worried, withdrawn, or are carrying a lot at home: talk with their school counselor or doctor.",
-   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1565,8 +1564,8 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "For families of children and young adults with any disability, birth to 21, including school plans: PACER Center, 952-838-9000.",
    "Help finding services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "Information and peer support if your child has a mental health condition: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640. Not a crisis line.",
-   "Exhaustion, sadness, or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Information and peer support if your child has a mental health condition: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640.",
+   "Exhaustion, sadness, or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1657,8 +1656,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Changes in hearing, ringing in the ears, or sudden hearing loss: see a doctor or audiologist soon. Sudden loss needs quick attention.",
    "Help with services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "988 in ASL: tap ASL Now on the 988 website to reach a counselor who signs, by videophone, or text 988, any time.",
-   "Sadness or loneliness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness or loneliness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1668,10 +1666,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    [
     "NIDCD: hearing loss in adults",
     "https://www.nidcd.nih.gov/health/age-related-hearing-loss"
-   ],
-   [
-    "988 Lifeline (ASL Now)",
-    "https://988lifeline.org/"
    ],
    [
     "Disability Hub MN",
@@ -1749,7 +1743,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Sudden changes in vision, flashes, a curtain over your sight, or eye pain: get medical help right away.",
    "Help with services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1837,7 +1831,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Questions about an evaluation, or about anxiety, sleep, or mood that often come with autism: talk with your doctor.",
    "Help with services and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
-   "Sadness or exhaustion that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness or exhaustion that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -1918,8 +1912,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "bark|Hope Map"
   ],
   "reach": [
-   "Thoughts of suicide, or a mental health crisis: call or text 988, any time. Text MN to 741741. In danger right now, call 911.",
-   "Information and peer support, for you or your family: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640, weekdays 10 a.m. to 10 p.m. Eastern. Not a crisis line.",
+   "Information and peer support, for you or your family: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640, weekdays 10 a.m. to 10 p.m. Eastern.",
    "Warning signs returning, or side effects you can't live with: call your prescriber or treatment team soon. Talk with your doctor before stopping a medicine."
   ],
   "more": [
@@ -1934,10 +1927,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    [
     "SAMHSA: what recovery means",
     "https://store.samhsa.gov/sites/default/files/d7/priv/pep12-recdef.pdf"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ],
   "kids": "family-mental-health"
@@ -2013,7 +2002,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "New signs of a stroke, like sudden face drooping, arm weakness, or trouble speaking: call 911 right away.",
    "Help with services, work, and support in Minnesota: Disability Hub MN, 1-866-333-2466, and the Brain Injury Alliance of Minnesota.",
-   "Sadness, anger, or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness, anger, or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -2111,7 +2100,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Help with rides, services, and support in Minnesota: Disability Hub MN, 1-866-333-2466.",
    "Hard questions, spiritual struggle, or feeling abandoned: a chaplain, spiritual director, or faith leader you trust.",
-   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor. Thoughts of not wanting to live: call or text 988, any time."
+   "Sadness or hopelessness that won't lift: talk with your doctor or a counselor."
   ],
   "more": [
    [
@@ -2209,7 +2198,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Stopping alcohol, or sedatives like Xanax or Valium, after daily use: talk with a doctor first. Stopping suddenly can cause seizures. Medical detox is there when it's needed.",
    "Help finding treatment or support: SAMHSA National Helpline, 1-800-662-4357, confidential, any hour, every day of the year.",
-   "Thoughts of suicide: call or text 988. Someone won't wake up, or danger right now: call 911. Poison Control: 1-800-222-1222."
+   "Someone won't wake up, or danger right now: call 911. Poison Control: 1-800-222-1222."
   ],
   "more": [
    [
@@ -2308,8 +2297,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Signs of dangerous withdrawal, like confusion, seeing or hearing things, a seizure, a racing heart, or a high fever: call 911.",
    "Stopping alcohol or sedatives after daily use: talk with a doctor first. Medical detox is there when it's needed. SAMHSA National Helpline: 1-800-662-4357, any hour.",
-   "If you used opioids: after even a short break, an old amount can be deadly. Keep naloxone (Narcan) close; it is sold without a prescription. Someone won't wake up: call 911.",
-   "Thoughts of suicide: call or text 988. Poison Control: 1-800-222-1222."
+   "If you used opioids: after even a short break, an old amount can be deadly. Keep naloxone (Narcan) close; it is sold without a prescription. Someone won't wake up: call 911."
   ],
   "more": [
    [
@@ -2408,7 +2396,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Cravings or thoughts of using that keep growing, or a slip: reach out the same day, to your person, your group, your doctor, or the SAMHSA National Helpline, 1-800-662-4357.",
    "Low mood, worry, or old memories that won't settle: a therapist can help with what sits underneath.",
-   "Thoughts of suicide: call or text 988. Danger right now, or someone who won't wake up: call 911."
+   "Danger right now, or someone who won't wake up: call 911."
   ],
   "more": [
    [
@@ -2508,7 +2496,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Cravings that feel unmanageable, or keep growing: reach out today, to your doctor, your group, or the SAMHSA National Helpline, 1-800-662-4357. Medication for addiction treatment can ease cravings for some people; ask your doctor.",
    "If you used opioids and are thinking of using again: your tolerance is lower now, and an old amount can be deadly. Keep naloxone (Narcan) close, and reach out first.",
-   "Thoughts of suicide: call or text 988. Danger right now, or someone who won't wake up: call 911."
+   "Danger right now, or someone who won't wake up: call 911."
   ],
   "more": [
    [
@@ -2600,7 +2588,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "If opioids were involved: tolerance drops after a break, so an old amount can stop breathing. Keep naloxone (Narcan) close; it is sold without a prescription. Someone won't wake up: call 911.",
    "After several days of heavy drinking, or daily sedatives: talk with a doctor before stopping again. Stopping suddenly can cause seizures.",
-   "Help today: SAMHSA National Helpline, 1-800-662-4357, any hour. Thoughts of suicide: call or text 988. Poison Control: 1-800-222-1222."
+   "Help today: SAMHSA National Helpline, 1-800-662-4357, any hour."
   ],
   "more": [
    [
@@ -2699,8 +2687,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   ],
   "reach": [
    "Old trauma, grief, or memories that keep surfacing: a therapist who works with trauma can help. Ask your doctor, or the SAMHSA National Helpline, 1-800-662-4357, for names near you.",
-   "Low mood that lasts two weeks or more, or panic that won't settle: talk with your doctor.",
-   "Thoughts of suicide: call or text 988. Danger right now: call 911."
+   "Low mood that lasts two weeks or more, or panic that won't settle: talk with your doctor."
   ],
   "more": [
    [
@@ -2794,8 +2781,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   ],
   "reach": [
    "Hard conversations that keep going badly, or a family stuck in old patterns: a family therapist can help everyone be heard.",
-   "Any danger at home, from anyone: National Domestic Violence Hotline, 1-800-799-7233. Danger right now: call 911.",
-   "Cravings that grow during hard talks: reach out to your person, your group, or the SAMHSA National Helpline, 1-800-662-4357. Thoughts of suicide: call or text 988."
+   "Cravings that grow during hard talks: reach out to your person, your group, or the SAMHSA National Helpline, 1-800-662-4357."
   ],
   "more": [
    [
@@ -2881,8 +2867,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   ],
   "reach": [
    "Cravings that spike around work or social events: talk with your person, your group, or the SAMHSA National Helpline, 1-800-662-4357.",
-   "Confidential support at work: your employer's employee assistance program, if you have one.",
-   "Loneliness that keeps deepening, or thoughts of suicide: call or text 988."
+   "Confidential support at work: your employer's employee assistance program, if you have one."
   ],
   "more": [
    [
@@ -2977,7 +2962,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Eating that feels out of control, or weight changes that worry you: talk with your doctor. Eating disorders are treatable, and help is there.",
    "Spending, debt, or gambling that keeps growing: a reputable nonprofit financial counselor, or the Minnesota problem gambling helpline, 1-800-333-4673.",
-   "Feeling pulled back toward drinking or using: your person, your group, or the SAMHSA National Helpline, 1-800-662-4357. Thoughts of suicide: call or text 988."
+   "Feeling pulled back toward drinking or using: your person, your group, or the SAMHSA National Helpline, 1-800-662-4357."
   ],
   "more": [
    [
@@ -3023,7 +3008,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "feel": "Worried, angry, lonely, embarrassed, and tired of hoping. Afraid of the next phone call, or of what tonight will bring. Torn between love and protecting yourself. Many partners blame themselves, or feel they should be able to fix it. The truth is kinder: you didn't cause it, and your own care matters.",
   "self": {
    "first": [
-    "Check safety: if you ever feel afraid of your partner, call the National Domestic Violence Hotline, 1-800-799-7233, and make a safety plan.",
     "Notice the pattern for a week: when they drink or use, what comes before, and what comes after.",
     "Find your own support this week: SMART Recovery Family and Friends, a trusted friend, or a therapist."
    ],
@@ -3069,18 +3053,13 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "leaves|Sleep"
   ],
   "reach": [
-   "Feeling afraid of your partner, or any violence: National Domestic Violence Hotline, 1-800-799-7233. Danger right now: call 911.",
    "If your partner uses opioids: keep naloxone (Narcan) at home; it is sold without a prescription. Someone won't wake up or is breathing very slowly: call 911 and give naloxone.",
-   "Treatment options for your partner, and support for you: SAMHSA National Helpline, 1-800-662-4357, any hour. Thoughts of suicide, theirs or yours: call or text 988."
+   "Treatment options for your partner, and support for you: SAMHSA National Helpline, 1-800-662-4357, any hour."
   ],
   "more": [
    [
     "SMART Recovery Family and Friends",
     "https://smartrecovery.org/family/"
-   ],
-   [
-    "National Domestic Violence Hotline",
-    "https://www.thehotline.org"
    ]
   ],
   "kids": "sober-grown-up-drinks"
@@ -3156,7 +3135,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "bark|Self-Compassion Break"
   ],
   "reach": [
-   "Grief that feels unbearable, or thoughts of not wanting to live: call or text 988, any time. Danger right now: call 911.",
    "If you or others in your circle use: keep naloxone (Narcan) at home. Someone won't wake up: call 911 and give naloxone. SAMHSA National Helpline: 1-800-662-4357.",
    "Grief that stays heavy for months, or keeps you from daily life: a grief therapist can help."
   ],
@@ -3172,10 +3150,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    [
     "The Dougy Center (for grieving children and families)",
     "https://www.dougy.org"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ],
   "kids": "sober-loved-one-dies",

@@ -130,7 +130,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low mood, poor sleep, or little interest in things you used to enjoy, lasting two weeks or more: talk with your doctor. Depression is not a normal part of aging, and it is very treatable.",
-   "Feeling you have no place or use anymore, or like a burden: tell someone you trust. If it turns into not wanting to be here, call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Feeling you have no place or use anymore, or like a burden: tell someone you trust.",
    "Danger right now: call 911.",
    "Drinking more to fill the days, or new trouble with sleep or appetite: tell your doctor or pharmacist.",
    "To find local classes, programs, and volunteer roles: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
@@ -223,16 +223,12 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low mood, poor sleep, or little interest in almost everything, lasting two weeks or more: talk with your doctor. Depression is not a normal part of aging, and it is very treatable.",
-   "Feeling like a burden, or that others would be better off without you: tell someone you trust today, and call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Feeling like a burden, or that others would be better off without you: tell someone you trust today.",
    "Danger right now: call 911.",
    "To find local programs, classes, and volunteer roles: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "A chaplain, counselor, or spiritual director, when the questions run deep."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org/"
-   ],
    [
     "Eldercare Locator",
     "https://eldercare.acl.gov/home"
@@ -317,8 +313,7 @@ const LC_TOPICS = [
    "Eldercare Locator, 1-800-677-1116 (call or text), to find local programs, rides, and help.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "Before starting volunteer work that is hard on the body, talk with your doctor, especially after a fall, a new diagnosis, or a change in medicines.",
-   "Serving that leaves you exhausted, low, or unable to rest: talk with someone you trust. A low mood that lasts two weeks or more: talk with your doctor.",
-   "Thoughts of not wanting to be here: call or text 988, any time. Veterans: dial 988, then press 1. Danger right now: 911."
+   "Serving that leaves you exhausted, low, or unable to rest: talk with someone you trust. A low mood that lasts two weeks or more: talk with your doctor."
   ],
   "more": [
    [
@@ -402,8 +397,7 @@ const LC_TOPICS = [
   "reach": [
    "Minnesota Aging Pathways, 1-800-333-2433, weekdays: questions about benefits and services in Minnesota.",
    "Eldercare Locator, 1-800-677-1116 (call or text): help near you, anywhere in the US.",
-   "Your doctor, if pain, exhaustion, or low mood lasts two weeks or more.",
-   "Call or text 988 any time if you think about not wanting to be here. Veterans: 988, then press 1."
+   "Your doctor, if pain, exhaustion, or low mood lasts two weeks or more."
   ],
   "more": [
    [
@@ -438,7 +432,7 @@ const LC_TOPICS = [
    "Feeling like a burden is common in later life, especially when you need more help than before.",
    "Love has always gone both ways. Letting people help you now lets them give back.",
    "You still give: your listening, your stories, your blessing, your presence.",
-   "If it turns into thinking others would be better off without you, tell someone today, and call or text 988."
+   "If it turns into thinking others would be better off without you, tell someone today."
   ],
   "feel": "Guilt each time you ask for a ride. Apologizing over and over. Saying no to help you need, so no one has to bother. You may feel useless after years of being the one who helped, or embarrassed to need help with the body's private things. Some people go quiet and pull away, thinking it is kinder. It feels like a fact. It is a feeling, and feelings can change.",
   "self": {
@@ -477,10 +471,9 @@ const LC_TOPICS = [
    "help": [
     "Ask before you do: “How would you like this done?”",
     "Share the load with siblings, friends, and local services, so help comes from more than one person.",
-    "Ask for their help, their advice, and their stories.",
-    "If they speak of ending their life, stay with them and call or text 988 together. Ask the crisis line how to make the home safer for now, and let their doctor know."
+    "Ask for their help, their advice, and their stories."
    ],
-   "you": "Helping every day can wear you down, and hearing “I'm a burden” can hurt. Both can sit beside love. Take real breaks, ask others to share the load, and call or text 988 yourself any time for advice on how to help."
+   "you": "Helping every day can wear you down, and hearing “I'm a burden” can hurt. Both can sit beside love. Take real breaks, ask others to share the load."
   },
   "faith": "Many traditions teach that a person's worth is a gift, not something earned by being useful, and many honor elders as a blessing to their people. If faith is part of your life, you might bring this feeling to prayer, or let your faith community take a turn helping. If it isn't, the same truth holds: you matter for who you are.",
   "practices": [
@@ -491,21 +484,12 @@ const LC_TOPICS = [
    "bark|Reason to Get Up"
   ],
   "reach": [
-   "Call or text 988 any time if you think others would be better off without you, or about ending your life. Veterans: 988, then press 1.",
    "Call 911 if you are in danger right now.",
    "Your doctor, if low mood, poor sleep, or appetite changes last two weeks or more.",
    "Eldercare Locator, 1-800-677-1116 (call or text): rides, meals, and help at home, so help comes from more than one person. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "If someone close makes you feel like a burden through threats, neglect, or pressure about money: in Minnesota, MAARC, 1-844-880-1574, any time."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Veterans Crisis Line",
-    "https://www.veteranscrisisline.net"
-   ],
    [
     "Eldercare Locator",
     "https://eldercare.acl.gov/home"
@@ -585,7 +569,6 @@ const LC_TOPICS = [
    "roots|Ritual"
   ],
   "reach": [
-   "Call or text 988 any time if you think about joining your partner, or about ending your life. Veterans: 988, then press 1.",
    "Call 911 if you are in danger right now.",
    "Your doctor, especially in the first months, and if sleep, appetite, or weight change.",
    "A grief counselor, if grief stays intense or grows heavier after many months, or keeps you from daily life.",
@@ -677,7 +660,6 @@ const LC_TOPICS = [
   "reach": [
    "Loneliness or low mood that settles in and stays for two weeks or more: talk with your doctor. It is common, and help works.",
    "Grief that stays as sharp as the first weeks after many months: talk with your doctor or a grief counselor.",
-   "Thoughts of not wanting to live: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Danger right now: call 911.",
    "Eldercare Locator, 1-800-677-1116 (call or text): programs, groups, and rides near you.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays 8 to 4:30, for programs and groups close to home."
@@ -694,10 +676,6 @@ const LC_TOPICS = [
    [
     "Eldercare Locator",
     "https://eldercare.acl.gov/home"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -769,7 +747,6 @@ const LC_TOPICS = [
   "reach": [
    "The Compassionate Friends supports parents, grandparents, and siblings after a child of any age dies.",
    "Grief that stays as sharp as the first weeks after many months, or keeps you from eating, sleeping, or seeing people: talk with your doctor or a grief counselor. Help works.",
-   "Thoughts of not wanting to live, or of wanting to be with your child: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Danger right now: call 911.",
    "Eldercare Locator, 1-800-677-1116 (call or text), for help close to home. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays 8 to 4:30."
   ],
@@ -785,10 +762,6 @@ const LC_TOPICS = [
    [
     "What's Your Grief",
     "https://whatsyourgrief.com"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -860,7 +833,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Grief that stays as sharp as the first weeks after many months, or keeps you from daily life: talk with your doctor or a grief counselor. Help works.",
-   "Thoughts of not wanting to live: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Danger right now: call 911.",
    "Eldercare Locator, 1-800-677-1116 (call or text), for grief groups and help close to home. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays 8 to 4:30."
   ],
@@ -872,10 +844,6 @@ const LC_TOPICS = [
    [
     "Eldercare Locator",
     "https://eldercare.acl.gov/home"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -930,8 +898,7 @@ const LC_TOPICS = [
    "help": [
     "Keep asking, and keep saying their person's name.",
     "Offer to find a grief group or counselor with them, and offer a ride. Let them choose.",
-    "Help them bring it up with their doctor, if they'd like you there.",
-    "If you hear a wish to die or to join their person, stay with them, listen, and call or text 988 together."
+    "Help them bring it up with their doctor, if they'd like you there."
    ],
    "you": "Long grief can wear on the people walking beside it, and their loss may be yours too. Keep your own supports. You don't have to fix it. Staying near is enough."
   },
@@ -945,15 +912,10 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Grief that stays as sharp as the first weeks after many months, or keeps you from eating, sleeping, or getting through the day: talk with your doctor or a grief counselor.",
-   "Thoughts of wanting to die, or to join the one who died: call or text 988, any time. Veterans: call 988, then press 1.",
    "Danger right now: call 911.",
    "Grief groups and services near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
    [
     "National Institute on Aging",
     "https://www.nia.nih.gov/health"
@@ -1031,7 +993,6 @@ const LC_TOPICS = [
   "reach": [
    "Holiday sadness that lasts long after the day, or grows heavier each year: talk with your doctor or a counselor.",
    "Community meals, rides, and events near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -1115,7 +1076,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Grief that keeps you from eating, sleeping, or daily life for weeks: talk with your doctor or a counselor.",
-   "Thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1. Danger right now: call 911.",
    "Meals, visitors, rides, and other help near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
   "more": [
@@ -1201,7 +1161,6 @@ const LC_TOPICS = [
   "reach": [
    "Ask your doctor or clinic about a nurse, a social worker, or a chaplain who can help you understand the news and plan ahead.",
    "Low mood for two weeks or more, or losing interest in things you usually enjoy: tell your doctor. It responds well to help, at any age.",
-   "Thoughts of not wanting to live: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Rides, meals, and help at home anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text).",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "New symptoms that frighten you, or danger right now: call 911."
@@ -1302,7 +1261,6 @@ const LC_TOPICS = [
    "Pain that is new, worse, or different, or that keeps you from what matters to you: tell your doctor or nurse.",
    "Questions about pain medicines, or how they mix with your other medicines or with alcohol: ask your pharmacist or doctor.",
    "Sudden, severe pain, chest pain, or pain with trouble breathing: call 911.",
-   "Pain wearing you down until you feel you can't go on: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Rides to appointments and help at home anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text).",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
@@ -1486,8 +1444,7 @@ const LC_TOPICS = [
    "Sudden hearing loss in one or both ears: see a doctor right away.",
    "Ringing, ear pain, or dizziness that won't go away: tell your doctor.",
    "Pulling back from people, or sadness that doesn't lift for two weeks or more: talk with your doctor.",
-   "To find hearing services and help near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
-   "Thoughts of not wanting to live: call or text 988. Veterans: 988, then press 1."
+   "To find hearing services and help near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433."
   ],
   "more": [
    [
@@ -1578,8 +1535,7 @@ const LC_TOPICS = [
    "Sudden vision loss, flashes of light, a shadow or curtain over your sight, or eye pain: get emergency help right away.",
    "Changes in your sight you haven't had checked: see an eye doctor.",
    "Sadness, worry, or pulling back from people that doesn't lift: talk with your doctor.",
-   "To find low vision services, rides, and help near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
-   "Thoughts of not wanting to live: call or text 988. Veterans: 988, then press 1."
+   "To find low vision services, rides, and help near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433."
   ],
   "more": [
    [
@@ -1668,8 +1624,7 @@ const LC_TOPICS = [
   "reach": [
    "To find rides and transportation near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
    "Health, eyes, or medicines that may affect driving: talk with a doctor or pharmacist.",
-   "Low mood, pulling away, or staying home most days after stopping: talk with your doctor.",
-   "Thoughts of not wanting to live: call or text 988. Veterans: 988, then press 1."
+   "Low mood, pulling away, or staying home most days after stopping: talk with your doctor."
   ],
   "more": [
    [
@@ -1757,7 +1712,7 @@ const LC_TOPICS = [
   "reach": [
    "Confusion that comes on suddenly, or seems to be getting worse: call the doctor right away.",
    "An emergency, or something that feels seriously wrong: call 911.",
-   "Low mood that lasts two weeks or more: talk with your doctor. Thoughts of ending your life: call or text 988, any time.",
+   "Low mood that lasts two weeks or more: talk with your doctor.",
    "More help at home after a hospital stay: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433."
   ],
   "more": [
@@ -1845,7 +1800,7 @@ const LC_TOPICS = [
   "reach": [
    "Weight loss you didn't plan, or an appetite that stays low: tell your doctor.",
    "Trouble chewing or swallowing, or sore teeth or gums: see your doctor or dentist.",
-   "Low mood or grief that has taken your appetite for weeks: talk with your doctor. Thoughts of ending your life: call or text 988, any time.",
+   "Low mood or grief that has taken your appetite for weeks: talk with your doctor.",
    "Serious illness: eating less can be part of the illness itself. Ask the doctor, nurse, or hospice team what it means and what helps.",
    "Meals at home or community dining nearby: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433."
   ],
@@ -1936,7 +1891,7 @@ const LC_TOPICS = [
    "Memory changes that get in the way of daily life, or that others notice: talk with your doctor.",
    "Confusion that comes on suddenly: call your doctor right away, or 911 in an emergency.",
    "Questions about memory, any hour: Alzheimer's Association 24/7 Helpline, 1-800-272-3900.",
-   "Worry or low mood that won't lift: talk with your doctor. Thoughts of ending your life: call or text 988, any time.",
+   "Worry or low mood that won't lift: talk with your doctor.",
    "Help finding services nearby: Eldercare Locator, 1-800-677-1116. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433."
   ],
   "more": [
@@ -2030,7 +1985,6 @@ const LC_TOPICS = [
    "Alzheimer's Association 24/7 Helpline: 1-800-272-3900, for you or your family, any time.",
    "Eldercare Locator: 1-800-677-1116 (call or text), for help and services near you.",
    "In Minnesota, Minnesota Aging Pathways: 1-800-333-2433, weekdays.",
-   "If the news brings thoughts of not wanting to live: call or text 988. Veterans: 988, then press 1. Danger right now: 911.",
    "If someone is taking advantage of you, in Minnesota call MAARC, 1-844-880-1574, any time."
   ],
   "more": [
@@ -2074,8 +2028,7 @@ const LC_TOPICS = [
   "quick": [
    "In later life, depression often shows up as lost interest, tiredness, aches, or \"not myself\" more than sadness.",
    "Depression is not a normal part of getting older, and it is not a weakness.",
-   "It responds well to treatment in later life. Start with your doctor.",
-   "If hope feels gone, call or text 988 today. Veterans: 988, then press 1."
+   "It responds well to treatment in later life. Start with your doctor."
   ],
   "feel": "Flat, heavy, or empty. The things you used to enjoy, like the garden, the phone calls, or the card game, don't pull at you anymore. Sleep and appetite change. You may feel tired in a way rest doesn't fix, have more aches, or feel short with people. Many people say, \"I'm just not myself,\" or blame it on age.",
   "self": {
@@ -2129,20 +2082,10 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Low mood, or lost interest in things you usually enjoy, lasting two weeks or more: talk with your doctor.",
-   "Thoughts of not wanting to be here, or of ending your life: call or text 988, any time.",
-   "Veterans Crisis Line: 988, then press 1, or text 838255.",
    "Danger right now: call 911.",
    "Eldercare Locator: 1-800-677-1116 (call or text), for services near you. In Minnesota, Minnesota Aging Pathways: 1-800-333-2433."
   ],
   "more": [
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
-   ],
-   [
-    "Veterans Crisis Line",
-    "https://www.veteranscrisisline.net"
-   ],
    [
     "NAMI (National Alliance on Mental Illness)",
     "https://www.nami.org"
@@ -2222,7 +2165,6 @@ const LC_TOPICS = [
   "reach": [
    "Worry that fills most of your day, keeps you from sleep, or keeps you home for more than a few weeks: talk with your doctor.",
    "Chest pain or trouble breathing: call your doctor or 911, to be sure.",
-   "Any thoughts of harming yourself: call or text 988. Veterans: 988, then press 1.",
    "Worry about money pressure from a caller or message: the National Elder Fraud Hotline, 1-833-372-8311, weekdays.",
    "Worry about memory: the Alzheimer's Association Helpline, 1-800-272-3900, any time.",
    "Eldercare Locator: 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways: 1-800-333-2433."
@@ -2261,7 +2203,7 @@ const LC_TOPICS = [
    "Memories set aside for years often return in later life, around retirement, illness, loss, or the deaths of old friends.",
    "For many veterans, war memories come back this way, decades later. It is common, and it makes sense.",
    "You don't have to tell the whole story to get help. You set the pace.",
-   "Help works at any age. Veterans Crisis Line: 988, then press 1, or text 838255."
+   "Help works at any age."
   ],
   "feel": "Memories that come uninvited, by day or in dreams. Feeling on edge, startled by a loud noise, a smell, or something on the news. Strong feelings that seem to come out of nowhere: sadness, anger, guilt, or grief for people long gone. Some people find themselves avoiding reminders, or feeling far away from the people around them.",
   "self": {
@@ -2314,8 +2256,6 @@ const LC_TOPICS = [
    "branches|Support Group"
   ],
   "reach": [
-   "Veterans Crisis Line: 988, then press 1, or text 838255, any time. Chat at VeteransCrisisLine.net.",
-   "Anyone: call or text 988, any time, for thoughts of not wanting to live or feeling overwhelmed.",
    "Danger right now: call 911.",
    "Memories, nightmares, or feeling on edge that get in the way of sleep, daily life, or the people you love: talk with your doctor or a counselor.",
    "Eldercare Locator: 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways: 1-800-333-2433."
@@ -2324,10 +2264,6 @@ const LC_TOPICS = [
    [
     "National Center for PTSD (VA)",
     "https://www.ptsd.va.gov"
-   ],
-   [
-    "Veterans Crisis Line",
-    "https://www.veteranscrisisline.net"
    ],
    [
     "VA Mental Health: get help",
@@ -2416,8 +2352,7 @@ const LC_TOPICS = [
    "Help planning a move, rides, meals, and services in a new area anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text), or your local Area Agency on Aging.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays, for help weighing housing options.",
    "Your doctor, if sleep, appetite, or mood change in the months after the move.",
-   "If someone is pressuring you to sell, move, or sign papers, in Minnesota call MAARC, 1-844-880-1574, any time. Elsewhere, call the Eldercare Locator to reach Adult Protective Services.",
-   "If a move stirs thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+   "If someone is pressuring you to sell, move, or sign papers, in Minnesota call MAARC, 1-844-880-1574, any time. Elsewhere, call the Eldercare Locator to reach Adult Protective Services."
   ],
   "more": [
    [
@@ -2604,8 +2539,7 @@ const LC_TOPICS = [
    "Minnesota Office of Ombudsman for Long-Term Care, 1-800-657-3591 (weekdays, 8 to 4): help with concerns and your rights in a nursing home or assisted living. Outside Minnesota, find your state's ombudsman through the National Consumer Voice for Quality Long-Term Care.",
    "Help weighing options and finding services: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "If someone is being hurt, neglected, or taken advantage of, in Minnesota call MAARC, 1-844-880-1574, any time. Call 911 if there is danger right now.",
-   "If low mood, confusion, or not eating lasts beyond the first weeks: tell the nurse and the doctor.",
-   "If the move stirs thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+   "If low mood, confusion, or not eating lasts beyond the first weeks: tell the nurse and the doctor."
   ],
   "more": [
    [
@@ -2701,8 +2635,7 @@ const LC_TOPICS = [
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays, for benefits and Medicare questions.",
    "Your state's SHIP, for unbiased Medicare counseling, including programs that help with Medicare costs.",
    "NCOA's BenefitsCheckUp, an online check for programs you may qualify for.",
-   "If someone is pressuring you about money, in Minnesota call MAARC, 1-844-880-1574, any time. For fraud, the National Elder Fraud Hotline, 1-833-372-8311, weekdays.",
-   "If money worry brings thoughts of not wanting to live, call or text 988 any time. Veterans: 988, then press 1."
+   "If someone is pressuring you about money, in Minnesota call MAARC, 1-844-880-1574, any time. For fraud, the National Elder Fraud Hotline, 1-833-372-8311, weekdays."
   ],
   "more": [
    [
@@ -2998,7 +2931,6 @@ const LC_TOPICS = [
    "roots|Sabbath Hour"
   ],
   "reach": [
-   "Call or text 988 any time if you feel hopeless or think about ending your life. Veterans: 988, then press 1.",
    "Call 911 if anyone is in danger right now, including if your partner becomes aggressive and you can't stay safe.",
    "Eldercare Locator, 1-800-677-1116 (call or text): respite, adult day programs, meals, and help at home. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "If your partner has memory loss: the Alzheimer's Association 24/7 Helpline, 1-800-272-3900.",
@@ -3094,8 +3026,7 @@ const LC_TOPICS = [
   "reach": [
    "If you are worried that a grandchild is being hurt or neglected, call 911 for danger right now, or your county's child protection line.",
    "If someone in the family is pressuring you for money or frightening you: in Minnesota, MAARC, 1-844-880-1574, any time.",
-   "Eldercare Locator, 1-800-677-1116 (call or text): local programs, including help with technology and rides. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
-   "Call or text 988 any time if being cut off from grandchildren leaves you hopeless, or thinking about ending your life."
+   "Eldercare Locator, 1-800-677-1116 (call or text): local programs, including help with technology and rides. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
   "more": [
    [
@@ -3187,7 +3118,6 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Call 911 if a child or anyone is in danger right now.",
-   "Call or text 988 any time if you, or the children, feel hopeless or think about ending a life. Veterans: 988, then press 1.",
    "Eldercare Locator, 1-800-677-1116 (call or text), to reach your Area Agency on Aging. Many support grandparents 55 and older raising grandchildren. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "A kinship navigator program in your state: Grandfamilies.org and the Grandfamilies and Kinship Support Network list them.",
    "If anyone pressures you for money, threatens you, or takes advantage of you: in Minnesota, MAARC, 1-844-880-1574, any time.",
@@ -3294,7 +3224,6 @@ const LC_TOPICS = [
    "bark|Self-Compassion Break"
   ],
   "reach": [
-   "Call or text 988 any time if the grief turns into hopelessness, or thoughts of ending your life. Veterans: 988, then press 1.",
    "Call 911 if anyone is in danger right now.",
    "A counselor or therapist who works with families, for you, or for both of you if your child is ever willing.",
    "If contact with family includes threats, pressure about money, or someone taking advantage of you: in Minnesota, MAARC, 1-844-880-1574, any time.",
@@ -3384,8 +3313,6 @@ const LC_TOPICS = [
    "leaves|Sleep"
   ],
   "reach": [
-   "If your grown child is in crisis or talks about ending their life, call or text 988 any time. You can call for them, or with them. Call 911 if anyone is in danger right now.",
-   "Call or text 988 any time if your own worry turns into hopelessness. Veterans: 988, then press 1.",
    "If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential, and it is not a betrayal to ask for help.",
    "Families of people with addiction: SMART Recovery Family and Friends and SAMHSA's National Helpline can point you to support.",
    "Eldercare Locator, 1-800-677-1116 (call or text): local counseling and help. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
@@ -3674,7 +3601,6 @@ const LC_TOPICS = [
    "leaves|Steady Wake Time"
   ],
   "reach": [
-   "Call or text 988 any time if the weight of this turns into thoughts of not wanting to live. Veterans: 988, then press 1.",
    "Call 911 if you are in danger right now. If a spouse or ex is hurting, scaring, or taking from you: in Minnesota, MAARC, 1-844-880-1574, any time; any state, Adult Protective Services.",
    "Your doctor, if low mood, poor sleep, or appetite changes last two weeks or more.",
    "A lawyer and a financial planner of your own for money and legal questions. The Eldercare Locator can point you to legal help near you: 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
@@ -3692,10 +3618,6 @@ const LC_TOPICS = [
    [
     "Eldercare Locator",
     "https://eldercare.acl.gov/home"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -3870,7 +3792,6 @@ const LC_TOPICS = [
   "reach": [
    "Loneliness that has turned into lasting sadness, little interest in things, or poor sleep: talk with your doctor. Depression is common in later life, and help works.",
    "Senior centers, meal programs, rides, and visiting programs near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -3970,7 +3891,6 @@ const LC_TOPICS = [
   "reach": [
    "Groups, classes, senior centers, volunteer programs, and rides near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "Pulling back from friends and things you used to enjoy, with low mood that lasts two weeks or more: talk with your doctor. Depression is common in later life, and help works.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: call 988, then press 1.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -4011,7 +3931,7 @@ const LC_TOPICS = [
    "Military service shapes a whole life. In later life, many veterans feel it more, not less: pride, gratitude, grief, and sometimes old pain.",
    "Service memories often return in later life, around retirement, illness, or the deaths of the people you served with. It is common, and it makes sense.",
    "Other veterans understand without needing to be told. Veteran groups and peer support are worth seeking out at any age.",
-   "VA health care and benefits have grown in recent years. A County Veterans Service Officer can help you check what you may qualify for. Veterans Crisis Line: 988, then press 1."
+   "VA health care and benefits have grown in recent years. A County Veterans Service Officer can help you check what you may qualify for."
   ],
   "feel": "Pride in what you did and who you served with. Missing the closeness of your unit, and the clear sense of purpose. Grief as the people you served with pass away. Old memories, good and hard, coming back with more quiet time. Some veterans feel unseen, as if their service is forgotten. Some carry injuries, illnesses linked to their service, or things they have never told anyone. Many feel all of these at once.",
   "self": {
@@ -4050,8 +3970,7 @@ const LC_TOPICS = [
     "Help them connect with a County Veterans Service Officer, and go along if they'd like.",
     "Offer rides to veteran groups, reunions, or the VA.",
     "Mark the dates that matter to them: Veterans Day, Memorial Day, unit anniversaries.",
-    "Help them record or write their story, if they want to.",
-    "Keep the Veterans Crisis Line close: 988, then press 1."
+    "Help them record or write their story, if they want to."
    ],
    "you": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA, Vet Centers, and veteran family groups. Your steady interest and respect matter more than having the right words."
   },
@@ -4065,18 +3984,12 @@ const LC_TOPICS = [
    "roots|Ritual"
   ],
   "reach": [
-   "Veterans Crisis Line: call 988, then press 1, or text 838255, any time. Chat at VeteransCrisisLine.net. You don't need to be enrolled in VA care to call. Families can call too.",
-   "Anyone: call or text 988, any time, for thoughts of not wanting to live or feeling overwhelmed.",
    "Danger right now: call 911.",
    "VA health care and benefits: your County Veterans Service Officer, or the Minnesota Department of Veterans Affairs.",
    "Memories, sleep, or mood that get in the way of daily life: talk with your doctor, the VA, or a Vet Center.",
    "Eldercare Locator: 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways: 1-800-333-2433."
   ],
   "more": [
-   [
-    "Veterans Crisis Line",
-    "https://www.veteranscrisisline.net"
-   ],
    [
     "Minnesota Department of Veterans Affairs",
     "https://mn.gov/mdva/"
@@ -4167,7 +4080,6 @@ const LC_TOPICS = [
    "branches|Clubs"
   ],
   "reach": [
-   "Feeling worthless, or that life isn't worth living: call or text 988, any time. Veterans: call 988, then press 1. Danger right now: call 911.",
    "Low mood that lasts, or losing interest in things: talk with your doctor. Depression is common in later life, and help works.",
    "In Minnesota, if someone is hurting, neglecting, or taking advantage of you: MAARC, 1-844-880-1574, any time.",
    "Roles, groups, and services near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays."
@@ -4262,7 +4174,6 @@ const LC_TOPICS = [
   "reach": [
    "A chaplain, spiritual director, or faith leader, when questions, guilt, or fear weigh heavily. Hospitals, hospices, and many care homes have chaplains for people of any faith or none.",
    "Your doctor, if low mood, poor sleep, or losing interest in almost everything lasts two weeks or more.",
-   "Call or text 988 any time if you think about ending your life. Veterans: 988, then press 1. Danger right now: call 911.",
    "Eldercare Locator, 1-800-677-1116 (call or text), for rides and local help, including getting to worship. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
   "more": [
@@ -4355,7 +4266,6 @@ const LC_TOPICS = [
    "Your doctor or nurse: for questions about your health, your treatment choices, palliative care, and hospice.",
    "A lawyer, for legal questions about documents. Your clinic can help with the health care directive itself.",
    "A chaplain, counselor, or faith leader, for fear, grief, and peace.",
-   "Call or text 988 any time if you think about ending your life. Veterans: 988, then press 1. Danger right now: call 911.",
    "Eldercare Locator, 1-800-677-1116 (call or text), for local help. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
   "more": [
@@ -4448,8 +4358,7 @@ const LC_TOPICS = [
    "help": [
     "Listen to the whole story before you respond.",
     "If they want to make amends, help with the practical part: finding an address, writing a letter, a ride, and check together that contact is safe for everyone.",
-    "Remind them of the good they have done, specifically and truthfully.",
-    "If guilt grows into hopelessness, help them reach a chaplain, counselor, or their doctor, and know when to call 988."
+    "Remind them of the good they have done, specifically and truthfully."
    ],
    "you": "Their regrets may stir your own, or touch old hurts between you. If they apologize to you, you can take time before you answer. Get support for yourself, too."
   },
@@ -4465,7 +4374,6 @@ const LC_TOPICS = [
   "reach": [
    "A chaplain, counselor, or spiritual director, when a regret weighs on your conscience or keeps you up at night.",
    "Your doctor, if low mood, guilt, or poor sleep lasts two weeks or more. Depression is very treatable in later life.",
-   "Call or text 988 any time if regret turns to hopelessness or thoughts of ending your life. Veterans, including those carrying memories from service: 988, then press 1. Danger right now: call 911.",
    "Eldercare Locator, 1-800-677-1116 (call or text), for local counseling and support. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
   "more": [
@@ -4480,10 +4388,6 @@ const LC_TOPICS = [
    [
     "Shay Moral Injury Center (Volunteers of America)",
     "https://www.voa.org/moral-injury-center"
-   ],
-   [
-    "988 Suicide and Crisis Lifeline",
-    "https://988lifeline.org"
    ]
   ]
  },
@@ -4557,7 +4461,7 @@ const LC_TOPICS = [
    "branches|Pass On a Skill"
   ],
   "reach": [
-   "If looking back brings up more than you want to carry alone, stop and call someone you trust, or call or text 988, any time. Veterans, especially if memories from service return: 988, then press 1.",
+   "If looking back brings up more than you want to carry alone, stop and call someone you trust.",
    "If you are in hospice or palliative care, ask whether a chaplain, social worker, or volunteer can help with legacy or life story work.",
    "Eldercare Locator, 1-800-677-1116 (call or text), for local programs, classes, and volunteer roles where your know-how is welcome. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, weekdays."
   ],
@@ -4660,7 +4564,6 @@ const LC_TOPICS = [
    "Questions about your medicines, or how they mix with each other or with alcohol: ask your pharmacist or doctor.",
    "Feeling overwhelmed by many doctors and plans: ask your main doctor or nurse who can help you see the whole picture, such as a care coordinator or social worker.",
    "Chest pain, trouble breathing, or a sudden change: call 911.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Rides, meals, and help at home anywhere in the US: Eldercare Locator, 1-800-677-1116.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, for help at home and planning ahead.",
    "Workshops for living well with long-term conditions: the Self-Management Resource Center can help you find one."
@@ -4760,7 +4663,6 @@ const LC_TOPICS = [
   "reach": [
    "Fatigue that is new, much worse, or comes with other changes: tell your doctor or nurse. Bring a week of energy notes.",
    "Questions about whether a medicine adds to your tiredness: ask your pharmacist or doctor.",
-   "Feeling hopeless, or so worn down you think about ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Help at home, meals, and rides anywhere in the US: Eldercare Locator, 1-800-677-1116.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
    "Workshops for living well with long-term conditions and fatigue: the Self-Management Resource Center can help you find one."
@@ -4862,8 +4764,7 @@ const LC_TOPICS = [
    "In Minnesota: Disability Hub MN, 1-866-333-2466, for help with health, housing, independent living, and money resources.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433, for help at home and planning ahead.",
    "Anywhere in the US: Eldercare Locator, 1-800-677-1116, for local services.",
-   "If someone is hurting you, neglecting you, or taking your money in Minnesota: MAARC, 1-844-880-1574. Danger right now: call 911.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Deaf and hard of hearing callers can reach a counselor in ASL through the 988 website. Veterans: dial 988, then press 1."
+   "If someone is hurting you, neglecting you, or taking your money in Minnesota: MAARC, 1-844-880-1574. Danger right now: call 911."
   ],
   "more": [
    [
@@ -4961,8 +4862,7 @@ const LC_TOPICS = [
    "Your county case manager or social worker, for services, waiting lists, and support at home.",
    "A lawyer who knows disability planning, for questions about guardianship, supported decision-making, wills, and trusts.",
    "Help for you as a caregiver: Eldercare Locator, 1-800-677-1116, or in Minnesota, Minnesota Aging Pathways, 1-800-333-2433.",
-   "If you believe a vulnerable adult is being hurt, neglected, or taken advantage of in Minnesota: MAARC, 1-844-880-1574. Danger right now: call 911.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1."
+   "If you believe a vulnerable adult is being hurt, neglected, or taken advantage of in Minnesota: MAARC, 1-844-880-1574. Danger right now: call 911."
   ],
   "more": [
    [
@@ -5059,7 +4959,6 @@ const LC_TOPICS = [
    "Signs of a new stroke, even if they go away: sudden loss of balance, trouble seeing, a drooping face, arm weakness, or trouble speaking. Call 911 right away and note the time.",
    "Questions about recovery, therapy, and what to practice at home: ask your doctor and your rehab team.",
    "Low mood, flatness, or worry most days: tell your doctor or nurse. Help works.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Help at home, rides, and meals anywhere in the US: Eldercare Locator, 1-800-677-1116.",
    "In Minnesota: Minnesota Aging Pathways, 1-800-333-2433. Disability Hub MN, 1-866-333-2466, for equipment, housing, and independent living resources."
   ],
@@ -5158,7 +5057,6 @@ const LC_TOPICS = [
    "Symptoms that are slowly getting worse, like more swelling or more breathlessness: follow your written plan and call your doctor or nurse.",
    "Questions about oxygen equipment, supplies, and safe use: call your oxygen supplier.",
    "Questions about medicines: ask your pharmacist or doctor.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Help at home, rides, and meals anywhere in the US: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433."
   ],
   "more": [
@@ -5273,7 +5171,6 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Confusion, a fall, a seizure, or very slow breathing after drinking: call 911.",
    "Treatment and support near you: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential, and they can point you to help in your area.",
    "Questions about alcohol and your medicines: ask your pharmacist or doctor. Poison Control, 1-800-222-1222, any time.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Senior centers, meals, rides, and visiting programs: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433."
   ],
   "more": [
@@ -5381,8 +5278,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Questions about a pill, a mix, or a possible overdose: Poison Control, 1-800-222-1222, any time.",
    "Before stopping daily drinking, or sleep or anxiety pills like Xanax or Valium: talk with your doctor. Stopping suddenly can cause seizures.",
    "Treatment and support for pills or drinking: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
-   "Questions about any medicine: ask your pharmacist or doctor.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1."
+   "Questions about any medicine: ask your pharmacist or doctor."
   ],
   "more": [
    [
@@ -5488,11 +5384,9 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "reach": [
    "Your child is very hard to wake, breathing slowly, or has blue or gray lips: call 911, give naloxone (Narcan) if you have it, and stay with them.",
-   "Your child is in crisis or talks about ending their life: call or text 988, any time, for them or with them. Danger right now: 911.",
    "Treatment and support near your child, or for your family: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
    "Families of people who drink or use: SMART Recovery Family and Friends offers groups in person and online.",
-   "A grown child, or anyone, pressures you for money, takes it, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential. Danger right now: 911.",
-   "Your own worry turns into hopelessness: call or text 988, any time. Veterans: dial 988, then press 1."
+   "A grown child, or anyone, pressures you for money, takes it, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential. Danger right now: 911."
   ],
   "more": [
    [
@@ -5599,7 +5493,6 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "reach": [
    "A parent arrives intoxicated, a child is in danger, or someone is very hard to wake or breathing slowly: call 911.",
    "Treatment and support for the children's parent, or for your family: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
-   "A grandchild, or you, has thoughts of ending a life: call or text 988, any time. Veterans: dial 988, then press 1.",
    "Groups for families: SMART Recovery Family and Friends, and NACoA for kids and teens.",
    "Help for grandfamilies, rides, and respite near you: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
    "If you believe a vulnerable adult is being harmed or exploited, including pressure for money: in Minnesota, MAARC, 1-844-880-1574, any time."
@@ -5717,8 +5610,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "A strong craving, or a return to drinking or using: tell someone you trust today, and reach for your people. Every return to the path counts.",
    "Treatment, support, or a new group near you: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
    "Before stopping daily drinking, or sleep or anxiety pills: talk with your doctor. Stopping suddenly can cause seizures.",
-   "Someone is very hard to wake or breathing slowly: call 911, give naloxone (Narcan) if you have it, and stay with them.",
-   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1."
+   "Someone is very hard to wake or breathing slowly: call 911, give naloxone (Narcan) if you have it, and stay with them."
   ],
   "more": [
    [

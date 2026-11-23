@@ -1096,7 +1096,7 @@
     var N = (l.scenes || []).length + 1; // the closing scene is the last one
     host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div>' + wmark(cfg) + '<div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
-      + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Support any time:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
+      + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Support any time:</b> ' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
       + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
       + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><button class="ggl-btn quiet" data-g="read" aria-expanded="false">Read Instead</button>' + (BRX ? chimeBtn() : '') + '<span class="ggl-cn"></span></div>'
       + '<section class="ln-read" hidden tabindex="-1" aria-label="Read Instead"></section>'
@@ -2167,7 +2167,7 @@
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
-      return script(url('/shared/gg-life.js?v=b907'), function () { return !!window.GGLife; });
+      return script(url('/shared/gg-life.js?v=c197'), function () { return !!window.GGLife; });
     });
   }
   // The tracks of shared/learn-life.js (group: 'life'), with the videos that fit the person's choice first
