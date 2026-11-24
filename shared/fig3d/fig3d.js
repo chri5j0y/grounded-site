@@ -4437,20 +4437,23 @@ G.define('skater', {name: 'Skater Steps', tempo: 1.3, base: 'stand', mirror: tru
       la: [10, 18], ra: [10, 18], ao: 12, hR: 'relax', hL: 'relax', e: .5}
   ]});
 
-// Lateral shuffle: a quarter squat, feet low and quick: three steps to the right and three back. Chest up.
+// Lateral shuffle: a low athletic stance, feet about shoulder width, chest up, hands loose and ready in front. Two quick
+// shuffles to the right and two back. BLD 1057 (Chris, November 24, 2026: "Lateral shuffle looks goofy, try to smooth
+// out"): a narrower stance (no lunge), each foot skims just off the floor (no hop), the feet never cross or touch, and the
+// hips glide at one steady speed at one low height while the feet step under them: the lead foot reaches out, then the
+// trail foot follows in.
 function shuffle(){
-  // Stance centers out and back (two shuffle steps each way, the lead foot first, then the trail foot).
-  var C = [0, -.2, -.4, -.2], ks = [], half = .25;
+  var C = [0, -.18, -.36, -.18], ks = [], half = .2, gain = .18, arm = {ra: [24, 72], la: [24, 72], hR: 'relax', hL: 'relax', ao: 10};
   for (var j = 0; j < 4; j++){
-    var c = C[j], dir = j < 2 ? -1 : 1, nc = c + .2 * dir, lead = dir < 0 ? 'R' : 'L';
+    var c = C[j], dir = j < 2 ? -1 : 1, nc = c + gain * dir, lead = dir < 0 ? 'R' : 'L';
     var r0 = c - half, l0 = c + half, r1 = nc - half, l1 = nc + half;
-    // lead foot up, lead foot down (wide), trail foot up, trail foot down.
-    var S = lead === 'R' ? [[r1, l0, 'R'], [r1, l0, ''], [r1, l1, 'L'], [r1, l1, '']] : [[r0, l1, 'L'], [r0, l1, ''], [r1, l1, 'R'], [r1, l1, '']];
-    var P = [c + .07 * dir, c + .11 * dir, nc - .04 * dir, nc];
+    // lead foot skims out, lead foot down (a little wider), trail foot skims in, trail foot down (back to shoulder width).
+    var S = lead === 'R' ? [[r1 + .07, l0, 'R'], [r1, l0, ''], [r1, l1 - .07, 'L'], [r1, l1, '']] : [[r0, l1 - .07, 'L'], [r0, l1, ''], [r1 + .07, l1, 'R'], [r1, l1, '']];
     for (var i = 0; i < 4; i++){
       var q = S[i], fr = q[2] === 'R' ? lift(-q[0], .02) : step(-q[0], .02), fl = q[2] === 'L' ? lift(q[1], .02) : step(q[1], .02);
+      if (q[2] === 'R') fr.y = .1; if (q[2] === 'L') fl.y = .1;
       fr.pole = fl.pole = [.5, 0, 1];
-      ks.push(k({br: j < 2 ? 'in' : 'out', via: i % 2 === 0, on: q[2] === 'R' ? 'fL' : q[2] === 'L' ? 'fR' : 'fR fL', p: [.79, -.13], px: P[i] + .2, t: [158, 162], n: 170, rl: fr, ll: fl, e: .8}));
+      ks.push(k(Object.assign({br: j < 2 ? 'in' : 'out', via: i % 2 === 0, on: q[2] === 'R' ? 'fL' : q[2] === 'L' ? 'fR' : 'fR fL', p: [.8, -.12], px: c + dir * gain * (i + 1) / 4 + .18, t: [160, 163], n: 170, rl: fr, ll: fl, e: .5}, arm)));
     }
   }
   // Start on a planted stance: rotate so key 0 has both feet down.
@@ -4914,8 +4917,11 @@ G.define('star-side-plank', {name: 'Star Side Plank', tempo: 10, bp: [4, 6], pro
 // little toward the hips (elbow under the shoulder), and the camera sits a little higher and further round (turn -40,
 // el 12) so the bend at the elbow reads: on the forearm, never a straight arm.
 var RT_ARM = {x: .445, y: .062, z: .321, el: [.565, .062, .081], f: 90}, RT_AN = null;
-var RT_UP = {x: -.25, y: 1.14, z: .1, f: 180, pole: [-1, 0, .2]}, RT_MID = {x: -.36, y: .62, z: .46, f: 130, pole: [0, .5, 1]},
-  RT_LOW = {x: -.31, y: .34, z: .46, f: 45, pole: [0, .3, 1]}, RT_UNDER = {x: -.25, y: .15, z: .16, f: 70, pole: [0, -.3, 1]};
+// BLD 1057 (Chris, November 24, 2026: "thread the needle arms are weird, moves are wonky, smooth it out"): on the way down the
+// elbow folded and the hand passed close in front of the face. Now the arm comes down long, out in front of the chest at
+// shoulder height, then low in front of the chest, and only bends as the hand threads under the body: one easy arc.
+var RT_UP = {x: -.25, y: 1.14, z: .1, f: 180, pole: [-1, 0, .2]}, RT_MID = {x: -.37, y: .68, z: .7, f: 130, pole: [0, .5, 1]},
+  RT_LOW = {x: -.35, y: .3, z: .58, f: 45, pole: [0, .3, 1]}, RT_UNDER = {x: -.25, y: .15, z: .16, f: 70, pole: [0, -.3, 1]};
 var RT = ext(SIDEP, {ra: RT_ARM, an: RT_AN, p: [.369, 0], hL: 'reach'});
 G.define('reach-through', {name: 'Side Plank Reach-Through', tempo: 3, dur: [1.7, .9, .8, .8, .9, 1.7], props: ['mat'], glow: {obliques: [1, 1], abs: [.6, .6], delts: [.5, .5], lats: [.4, .4]}, cam: {view: 'front', turn: -40, el: 12, zoom: 1},
   form: [{when: 'in', line: ['foot.R', 'upperarm01.L'], ext: .1, say: 'hips stay high', at: 'root', side: 1}],
@@ -5093,8 +5099,11 @@ G.define('pull-down', {name: 'High Band Pull-Down', tempo: 3, dur: [1, 1.3], pro
     ext(PDK, {br: 'in', t: [180, 178], n: 180, ra: [8, 150, 160], la: [8, 150, 160], raO: [26, 0, 0], laO: [26, 0, 0], e: 1})]});
 // Pallof press: a band anchored at chest height to the right; hold the handle at the chest, press it straight out,
 // hold for a breath without turning, and bring it back. Square hips and shoulders.
+// BLD 1057 (Chris, November 24, 2026: "pallof press confusing. stand to side? dont understand"): the camera stands off the
+// front corner, so the band is seen coming in from the side and the hands are seen pressing straight out from the chest
+// and back (from the front the press came straight at the viewer and could not be seen).
 var PALK = {b: 'stand', p: [.9, -.062], rl: {x: .16, y: .072, z: 0, f: 72}, ll: {x: .16, y: .072, z: 0, f: 72}, hR: 'grip', hL: 'grip', pnR: 'in', pnL: 'in'};
-G.define('pallof', {name: 'Pallof Press', tempo: 3, top: [1], props: [{id: 'band', anchor: [-1.05, 1.15, .1]}], glow: {obliques: [1, 1], abs: [.7, .7], glutes: [.3, .3]}, cam: {view: 'front', turn: 30, el: 8, zoom: 1},
+G.define('pallof', {name: 'Pallof Press', tempo: 3, top: [1], props: [{id: 'band', anchor: [-1.05, 1.15, .1]}], glow: {obliques: [1, 1], abs: [.7, .7], glutes: [.3, .3]}, cam: {yaw: 45, el: 15, zoom: 1},
   form: [{when: 'hold', level: ['upperarm01.R', 'upperarm01.L'], say: 'square, no turning', at: 'neck01', side: 1}],
   k: [ext(PALK, {br: 'out', ra: {x: .02, y: 1.13, z: .18, pole: [1, -1, -.2], f: 90}, la: {x: .02, y: 1.13, z: .18, pole: [1, -1, -.2], f: 90}, e: .5}),
     ext(PALK, {br: 'in', ra: {x: .02, y: 1.16, z: .47, pole: [1, -1, -.2], f: 90}, la: {x: .02, y: 1.16, z: .47, pole: [1, -1, -.2], f: 90}, fitArm: {r: .94, by: 'p1', span: .15}, e: 1})]});
@@ -5360,16 +5369,23 @@ G.define('cat-cow', A(SLOW, {name: 'Cat Cow', props: ['mat'], glow: {back: [.6, 
 // body (a passing key with the hand under the shoulder) instead of swinging out in front, and the threaded arm truly lies
 // along the mat under the chest with the shoulder and ear down.
 var TN = K(FOURS, {fitArm: null});
-var TN_MID = {x: .12, y: .22, z: .4, f: 30, pole: [.6, .4, -1]};
+// BLD 1057 (Chris, November 24, 2026: "thread the needle arms are weird, moves are wonky, smooth it out"): the hand came out
+// from under the body and swung up past the head with the elbow folding over it. Now the arm travels one easy arc: it slides
+// back along the mat to under its own shoulder (low), opens out to the side at shoulder height with the arm long, and rises
+// to the ceiling; the same arc in reverse threads it under. The elbow keeps pointing up and back the whole way (one pole
+// family, no flip), and the chest and head turn with the hand.
+var TN_MID = {x: .1, y: .1, z: .4, f: 30, pole: [.3, 1, -.6]};
+var TN_SIDE = {x: .64, y: .88, z: .44, f: 165, pole: [1, 0, -.3]};
 var TN_UNDER = {x: -.42, y: .03, z: .3, f: 'flat', pole: [0, 1, -.4]};
 var TN_UP = {x: .2, y: 1.17, z: .44, f: 180, pole: [1, 0, -.3]};
 var TN_T = {br: 'in', t: [98, 60], n: 44, tw: 58, hy: 48, ht: 10, ra: TN_UNDER, hR: 'relax', pnR: 'up', on: 'hL kR kL', e: .8};
 var TN_O = {br: 'in', t: [102, 102], n: 104, tw: -42, hy: -40, ra: TN_UP, pnR: 'back', hR: 'reach', on: 'hL kR kL', e: .6};
 var TN_M = {via: true, t: [100, 86], n: 80, tw: 6, hy: 4, ra: TN_MID, hR: 'relax', pnR: 'in', on: 'hL kR kL', e: .5};
+var TN_S = {via: true, t: [101, 94], n: 90, tw: -22, hy: -20, ra: TN_SIDE, hR: 'reach', pnR: 'fwd', on: 'hL kR kL', e: .55};
 // Each end is held a moment (a repeated key), so the threaded rest and the open reach both read clearly.
-TWO('thread-needle', {name: 'Thread the Needle', tempo: 10, bp: [4, 6], dur: [1.4, 1.6, 1, 2, 2.6, 1.4], rest: 0, props: ['mat'], glow: {upper: [.6, .6], obliques: [.5, .5], rotator: [0, .5]}, cam: {yaw: 62, el: 18, zoom: 1.02},
+TWO('thread-needle', {name: 'Thread the Needle', tempo: 10, bp: [4, 6], dur: [1, .9, 1.1, 1, 1.4, 1.2, 2, 1.4], rest: 0, props: ['mat'], glow: {upper: [.6, .6], obliques: [.5, .5], rotator: [0, .5]}, cam: {yaw: 62, el: 18, zoom: 1.02},
   form: [{when: 'out', line: ['knee*', 'root'], say: 'hips stay over knees', at: 'root', side: -1}],
-  k: [K(TN, TN_T), K(TN, TN_M, {br: 'in'}), K(TN, TN_O), K(TN, TN_O, {br: 'out'}), K(TN, TN_M, {br: 'out'}), K(TN, TN_T, {br: 'out'})]});
+  k: [K(TN, TN_T), K(TN, TN_M, {br: 'in'}), K(TN, TN_S, {br: 'in'}), K(TN, TN_O), K(TN, TN_O, {br: 'out'}), K(TN, TN_S, {br: 'out'}), K(TN, TN_M, {br: 'out'}), K(TN, TN_T, {br: 'out'})]});
 // Child's Pose: knees wide, hips back toward the heels, arms long on the mat, forehead down; the back widens on
 // each in breath and the hips settle on each out breath.
 var CPH = {x: .27, y: .03, z: .72, f: 'flat', pole: [0, 1, 0]};
