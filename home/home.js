@@ -59,7 +59,7 @@
   var V = 'b908';
   var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c202', '/shared/tend/health.js?v=c203', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c196', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c202';
+  var GGN_SRC = '/shared/ggn.js?v=c204';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -1575,7 +1575,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c202';
+  var PV_SRC = '/shared/page-videos.js?v=c204';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -5113,7 +5113,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=c189', ground: '/shared/home/groundwork.js?v=c183', next: '/shared/home/nextsteps.js?v=c183', legacy: '/shared/home/legacy.js?v=c183', guide: '/shared/home/grownup.js?v=c183', talk: '/shared/home/talk.js?v=c202', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=c189', ground: '/shared/home/groundwork.js?v=c183', next: '/shared/home/nextsteps.js?v=c183', legacy: '/shared/home/legacy.js?v=c183', guide: '/shared/home/grownup.js?v=c183', talk: '/shared/home/talk.js?v=c204', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -5710,7 +5710,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c202';
+  var LEARN_JS = '/shared/gg-learn.js?v=c204';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5852,7 +5852,7 @@
      and guides; each tree screen opens as a sheet with the app's own header, never as a second app. Every picture here
      is one of Grounded's own paintings (Chris: "do NOT go back to these graphics! i woked hard to make graphics we have").
      ===================================================================== */
-  var ART_JS = '/shared/learn-art.js?v=c163';
+  var ART_JS = '/shared/learn-art.js?v=c204';
   function heroSrc(im) { return /\//.test(im) ? HERO + im + '.webp' : im === 'marriage' ? '/heartwood/hero-wide.webp' : HERO + im + '-wide.webp'; }
   // A lesson's painting: the first painting in its art plan (shared/learn-art.js), or the tree's own painting.
   // A lesson card's painting by its topic (BLD 911: the art plans spread paintings across scenes, so the first one can miss
