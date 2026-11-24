@@ -2957,7 +2957,7 @@ function USE(){ if (START()) return PART_IDS.filter(x => x === 'move' || x === '
 const U = id => USE().includes(id);
 
 // ---------- icons: inline SVG, 24 box, 1.9 stroke, round caps and joins (the concept set) ----------
-const ICO = {today: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>',
+const ICO = {swap: '<rect x="2.5" y="5" width="7" height="13" rx="1.8"/><rect x="14.5" y="5" width="7" height="13" rx="1.8"/><path d="M10.5 9.5h3M12 8l1.5 1.5L12 11"/>', today: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>',
   week: '<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/>',
   plate: '<circle cx="13" cy="12.5" r="7.5"/><circle cx="13" cy="12.5" r="4"/><path d="M3 4v5.5a1.5 1.5 0 0 0 1.5 1.5v9M3 4v4M5.9 4v4"/>',
   kitchen: '<path d="M4 11h16v5.5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M2 11h20M9 7.5c0-1.2 1-1.4 1-2.6M13 7.5c0-1.2 1-1.4 1-2.6"/>',
@@ -4748,8 +4748,14 @@ function vMonth(){
   sx.hol.filter(h => h.day).forEach(h => det.push(line('m-hol', 'Holiday', h.title, go(h.key, 'Open the Set'))));
   if (sx.move) det.push(line('m-move', 'Move', sx.move.title + (sx.move.done ? ', done' : ''), go(sx.move.key, 'Start')));
   if (sx.med) det.push(line('m-move', 'Meditation', sx.med.title + (sx.med.done ? ', done' : ''), go(sx.med.key, 'Begin')));
-  if (sx.dinner) det.push(line('m-food', 'Dinner', sx.dinner.title + (sx.dinner.done ? ', cooked' : ''), go(sx.dinner.key, 'Cook It')));
-  arr(sx.menu).forEach(m => det.push(line('m-food', m.meal + ' · My Menu', m.title + (m.done ? ', done' : ''), go(m.key, 'Grounded Cooking'))));
+  // BLD 1053 (Chris, November 24, 2026: "click on the day on the monthly calendar, you see the dinner, have a swap button there,
+  // that way we can look far ahead and customize our month"): Swap beside Cook It, for grown-ups, from today on; it opens the
+  // same Swap Dinner sheet as the Week, and the swap is kept on that date.
+  const mSwap = !TEEN() && (() => { try { return mmReady() && sel >= today() && !!mmDinSlot(sel); } catch(e){ return false; } })();
+  const mSwapBtn = t => mSwap ? `<button type="button" class="tn-btn sm line" data-hja="mswap" data-hjv="${esc(sel)}" aria-label="${esc('Swap dinner, ' + DOWL[sd.getDay()] + ': ' + t)}">${ic('swap')}Swap</button>` : '';
+  // a swapped night shows its dinner under My Menu, so Swap stays beside it there too (to swap again or go Back to the Plan)
+  if (sx.dinner) det.push(line('m-food', 'Dinner', sx.dinner.title + (sx.dinner.done ? ', cooked' : ''), go(sx.dinner.key, 'Cook It') + mSwapBtn(sx.dinner.title)));
+  arr(sx.menu).forEach(m => det.push(line('m-food', m.meal + ' · My Menu', m.title + (m.done ? ', done' : ''), go(m.key, 'Grounded Cooking') + (!sx.dinner && /^dinner$/i.test(String(m.meal || '')) ? mSwapBtn(m.title) : ''))));
   sx.prep.forEach(p => det.push(line('m-prep', 'Prep', p.title, go(p.key, 'Open'))));
   sx.hol.filter(h => h.prep).forEach(h => det.push(line('m-prep', 'Holiday prep', h.title, go(h.key, 'Open'))));
   if (sx.shop) det.push(line('m-shop', 'Shopping', sx.shop.title + ' · ' + sx.shop.n + (sx.shop.n === 1 ? ' item' : ' items') + (sx.shop.own ? ', ' + sx.shop.own + ' of your own' : ''), go(sx.shop.key, 'Open the List')));
@@ -4776,6 +4782,7 @@ function actOwn(a, v){
     case 'sec': if (v !== 'own' || !bareOn() || C.host !== 'home' || !C.section) return false; S.ownF = null; S.ownEd = null; ownGoSec('own'); return true;
     case 'wkview': S.wkView = v === 'month' ? 'month' : 'week'; S.mOff = 0; S.mSel = null; rerender(true); return true;
     case 'mon': S.mOff = (S.mOff || 0) + (+v || 0); S.mSel = null; rerender(true); return true;
+    case 'mswap': { const k = String(v || '').slice(0, 10); if (!TEEN() && mmReady() && k >= today()) mmOpenDin(k); return true; }
     case 'mday': { const d = parseD(v); if (!d) return true; const t = day0(new Date()); S.mOff = (d.getFullYear() - t.getFullYear()) * 12 + d.getMonth() - t.getMonth(); S.mSel = v; rerender(true); ownFocus('hj-mdet'); return true; }
     case 'mgo': { v = String(v || ''); if (/^shop:/.test(v)){ S.shopWk = +v.split(':')[1] || null; S.shopEd = null; ownGoSec('shop'); return true; }
       if (window.GGHealth && GGHealth.act) GGHealth.act(v); else apiAct(v); return true; }
