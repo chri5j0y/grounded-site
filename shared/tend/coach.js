@@ -114,7 +114,13 @@ function fetchClip(voice, text, ms){
   return p;
 }
 // BLD 898: decoded short lines for words on the beat, with the silence before the voice measured once.
-const BUF = new Map(), SCH = [];
+// BLD 1057 (Chris, November 24, 2026, his Member workout: "why not count on band face pull?", "pallof press ... also not
+// counting?"): every line the player measures is decoded into BUF, and a line that failed to load (a slow moment on the
+// phone's connection) used to push out the oldest entry once BUF held 80, and the oldest were Ava's counts, primed first. A
+// count pushed out was fetched again only as its set began, and a count still on its way at its beat is left out, so later
+// in a workout a whole set could go by with few or no counts. The counts (every line given to prime) are now pinned: they
+// stay decoded for the whole workout and are never pushed out.
+const BUF = new Map(), SCH = [], PIN = new Set();
 function decoded(voice, text){
   const k = voice + '|' + text; if (BUF.has(k)) return BUF.get(k);
   const e = {done: false, v: null}; BUF.set(k, e);
@@ -124,7 +130,7 @@ function decoded(voice, text){
       const ab = await (await fetch(url)).arrayBuffer(), buf = await new Promise((ok, no) => { const p = c.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
       const d = buf.getChannelData(0), n = d.length; let i = 0; while (i < n && Math.abs(d[i]) < 0.01) i++;
       e.v = {buf, lead: Math.max(0, i / buf.sampleRate - 0.01)};
-    } catch(x){} finally { e.done = true; if (!e.v){ BUF.delete(k); if (BUF.size > 80) BUF.delete(BUF.keys().next().value); } }
+    } catch(x){} finally { e.done = true; if (!e.v){ BUF.delete(k); if (BUF.size > 80) for (const o of BUF.keys()) if (!PIN.has(o)){ BUF.delete(o); break; } } }
   })();
   return e;
 }
@@ -201,7 +207,7 @@ const V = window.GGVoice = {
   // line so its first word sounds at `when` (a Date.now() time): Web Audio starts it at that instant, past its lead in.
   // A line still on its way is left out (a late count would pull the rep off the beat); a line with no recording is
   // spoken by the device voice at the beat. Returns how it went: 'clip', 'device', 'drop', or 'off'.
-  prime(voice, texts){ if (!V.on()) return; (texts || []).forEach(t => { if (t) decoded(voice, t); }); },
+  prime(voice, texts){ if (!V.on()) return; (texts || []).forEach(t => { if (t){ PIN.add(voice + '|' + t); decoded(voice, t); } }); },
   // BLD 931 (Chris's workout notes, November 6, 2026: the Break counts down, then instructions play before the clock): how long
   // a line plays, in seconds (its decoded recording, start to end), so the player can start the next move's instructions that
   // many seconds before a Break ends. Resolves null when the line has no recording or the voice is off.

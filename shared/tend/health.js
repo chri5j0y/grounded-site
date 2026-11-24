@@ -1356,7 +1356,10 @@ function actTool(a, v){
 // for reps written as words, 60 seconds the longest rest, a weight line, an honest time estimate, and color and a stage
 // (shared/tend/stage.js, GGStage) for every player, with a morning palette.
 const VO = () => window.GGVoice || null;
-const NUMW = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+// BLD 1057 (Chris, November 24, 2026: "please voice the count whenever possible"): Ava counts to Thirty (an alternating or
+// per side set can pass Twenty, and so can a Lateral Shuffle's trips); COUNT_MAX is the top count with a recording.
+const NUMW = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty',
+  'Twenty-one', 'Twenty-two', 'Twenty-three', 'Twenty-four', 'Twenty-five', 'Twenty-six', 'Twenty-seven', 'Twenty-eight', 'Twenty-nine', 'Thirty'], COUNT_MAX = 30;
 // Reps that are a number ("10 to 12", "8 per side", "10 total") are counted; reps written as words ("2 to 3 short of your best") are I Tap Done.
 const REPS_RE = /^\s*(\d+)(\s*to\s*\d+)?\s*(reps?|seconds?|per side|each side|total|each)?\s*$/i;
 const repWords = st => !REPS_RE.test(String(st.reps));
@@ -1419,7 +1422,20 @@ const LN = {
 };
 const pushOf = () => { const d = new Date(); return LN.push[(d.getDate() + d.getMonth()) % LN.push.length]; };
 // An alternating move counts every rep, both sides together (8 each side counts to Sixteen); past Twenty it is I Tap Done.
-const repN = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10) * (st.alt && st.per && !/total/i.test(String(st.reps)) ? 2 : 1); return n > 0 && n <= 20 ? n : 0; };
+// BLD 1057: a timed set is never counted as reps here (its seconds are not reps; a short hold or a shuffle's trips count
+// through holdN), and counts run to COUNT_MAX.
+const repN = st => { if (repWords(st) || st.kind === 'time') return 0; const n = parseInt(String(st.reps), 10) * (st.alt && st.per && !/total/i.test(String(st.reps)) ? 2 : 1); return n > 0 && n <= COUNT_MAX ? n : 0; };
+// BLD 1057 (Chris, November 24, 2026: "usually she'll count reps, but sometimes it's helpful if she counts a hold"; "Lateral
+// shuffle"): with Voice Counts Reps on, a timed move in a workout counts aloud when that fits it: a Lateral Shuffle counts its
+// trips (each shuffle over and back is one count, stepsFor sets trips and the tempo so the set keeps its seconds), and a hold
+// of 10 seconds or less is counted second by second. A longer hold keeps its timer, and Ava counts its last five seconds
+// down (lastFive). Flow, Gentle practices, warm-ups, and cooldowns keep their own timers.
+// The time estimate keeps the breath line allowance it always had (a timed set of 20 seconds or less), so every measured
+// session keeps its minutes and its recorded "About N minutes" line.
+const repEst = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10) * (st.alt && st.per && !/total/i.test(String(st.reps)) ? 2 : 1); return n > 0 && n <= 20 ? n : 0; };
+const TRIP_SECS = 3, TRIP_RE = /\blateral shuffles?\b/i;
+const holdN = (st, o) => { if (!st || st.t !== 'ex' || st.kind !== 'time' || !o || !o.count || o.prac) return 0; if (st.trips) return st.trips; const w = workSecs(st); return w > 0 && w <= 10 ? w : 0; };
+const holdT = st => st.trips ? workSecs(st) / st.trips : 1;
 const workSecs = st => secsOf(st) * (st.alt && st.per ? 2 : 1);
 // BLD 891, Auto Flow (Chris, October 29, 2026: "any ways to keep it hands free.. no one wants to have to tap or touch screen during
 // workouts"): every rep runs at the move's tempo (seconds per rep, from the move; 3 when it has none), counted aloud or timed
@@ -1483,7 +1499,9 @@ function stepsFor(ses, ph, light, w0){
       form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath),
       // BLD 915: a one arm move done on each side names the arm (arm), and may start on the right (first: 'R'); the
       // Finish Strong block is the workout's last move, called out before it begins.
-      first: x.first === 'R' ? 'R' : '', arm: !!x.arm, fin: /^finish strong$/i.test(b.title || '')}); }));
+      first: x.first === 'R' ? 'R' : '', arm: !!x.arm, fin: /^finish strong$/i.test(b.title || '')});
+    // BLD 1057: a Lateral Shuffle counts its trips over and back, about 3 seconds each, in the set's own seconds.
+    const e = out[out.length - 1]; if (e.kind === 'time' && (TRIP_RE.test(e.name || '') || x.fig === 'shuffle')){ const w = workSecs(e), n = Math.max(1, Math.round(w / TRIP_SECS)); if (w > 0 && n <= COUNT_MAX){ e.trips = n; e.tempo = w / n; } } }));
   // The last move flows straight into the cooldown.
   for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
   arr((ses && ses.cooldown) || w.cooldown).forEach(x => out.push(wuStep(x, 'Cooldown', ph)));
@@ -1503,7 +1521,7 @@ function wuStep(x, part, ph){
     form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath)};
 }
 // How many counts a warm-up item takes per turn (0: it keeps its timer). Counted only with Voice Counts Reps on and a tempo.
-const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= 20 ? n : 0; };
+const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= COUNT_MAX ? n : 0; };
 // BLD 979 follow-up: a Flow session's card, start screen, and opening line say its own clock (prSteps, as buildPractice plays it).
 const prSteps = ss => arr(ss && ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath, half: prHalf(x), arm: prHalf(x) && armMove(x), first: prHalf(x) ? firstOf(x, armMove(x) ? 'R' : 'L') : ''}));
 const FLM = new WeakMap();
@@ -1585,7 +1603,7 @@ function allLines(){
       else { add(AVA, LN.ex(st)); if (st.fin){ add(AVA, LN.fin); LN.push.forEach(t => add(AVA, t)); } if (!st.form && !st.breathLine) add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); }
     }); })); });
-  for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
+  for (let k = 1; k <= COUNT_MAX; k++) add(AVA, LN.count(k));
   [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
@@ -1636,7 +1654,7 @@ function allLinesPub(){
         if (st.t === 'time'){ add(AVA, st.form && !st.lines ? LN.tname(st) : LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
         else { add(AVA, LN.ex(st)); if (!st.form && !st.breathLine) add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
           if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); }); });
-  for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
+  for (let k = 1; k <= COUNT_MAX; k++) add(AVA, LN.count(k));
   [...LN.half, ...LN.weight, LN.swing, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, LN.larm, LN.rarm, LN.swarm, LN.feel, LN.focus, LN.safe, WATER].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
@@ -1662,7 +1680,7 @@ function planSecs(steps, i0, set0, o){
     // instructions (its name and sets, side, form and breath lines, Go) play inside the Break before it, and a set's
     // "Set 2 of 3" and Go inside the rest; the Break grows only when its lines run longer. So a Break costs the longer of
     // its own time and its lines, and the lines are never counted twice.
-    const intro = (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue && !st.form && !st.breathLine ? lineSecs(st.cue) : 0) + (st.fin ? lineSecs(LN.fin) + lineSecs(LN.push[0]) : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine && repN(st) && (!o || o.count) ? lineSecs(st.breathLine) : 0) : lineSecs(LN.set(2, 3))) + (st.side ? lineSecs(LN.left) : 0) + lineSecs(LN.go) + PRE_MARGIN;
+    const intro = (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue && !st.form && !st.breathLine ? lineSecs(st.cue) : 0) + (st.fin ? lineSecs(LN.fin) + lineSecs(LN.push[0]) : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine && repEst(st) && (!o || o.count) ? lineSecs(st.breathLine) : 0) : lineSecs(LN.set(2, 3))) + (st.side ? lineSecs(LN.left) : 0) + lineSecs(LN.go) + PRE_MARGIN;
     const pv = i > at ? steps[i - 1] : null, brk = !pv ? 0 : pv.t === 'ex' ? (pv.restAfter || 0) : GET_READY, open = brk ? lineSecs(LN.nextRest(brk, st.name)) + PRE_GAP : 0;
     const perSet = sides * work + (st.side ? lineSecs(LN.sw) + Math.max(SWITCH, lineSecs(LN.right) + lineSecs(LN.go) + PRE_MARGIN) : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
     const restCost = Math.max(st.rest, lineSecs(LN.rest(st.rest)) + PRE_GAP + lineSecs(LN.set(2, 3)) + (st.side ? lineSecs(LN.left) : 0) + lineSecs(LN.go) + PRE_MARGIN);
@@ -1734,6 +1752,16 @@ async function runTimer(o, ms, kind, half, onTick){
   if (kind && !o.dead) lg(o, {e: 'zero', kind, skip: !!o.skip});
   o.run = false; o.rest = false; o.sw = false; if (half) o.side = '';
 }
+// BLD 1057: Ava counts a long hold's last five seconds down (Five, Four, Three, Two, One, the count recordings), each started on
+// its second by Web Audio (GGVoice.at), so it lands on the clock. Nothing else speaks during a hold (Ten seconds is said in
+// Breaks only, and the countdown beeps were retired in BLD 1018). A count cut off by Pause is not said again.
+function lastFive(o){
+  const V = VO(), vo = o.voice || AVA, said = {}; if (!V || !V.at) return null; if (V.prime) V.prime(vo, [5, 4, 3, 2, 1].map(k => LN.count(k)));
+  return left => { if (o.paused || o.dead) return;
+    for (let k = 5; k >= 1; k--) if (!said[k] && left <= k * 1000 + 150 && left > k * 1000 - 400){ said[k] = 1; lg(o, {e: 'down', k}); V.at(vo, LN.count(k), o.end - k * 1000); } };
+}
+// BLD 1057: the next set's counts are made ready during the Break, so each is decoded well before its beat.
+function primeCounts(o, st){ const V = VO(), n = o && o.count && st ? repN(st) || holdN(st, o) : 0; if (n && V && V.prime) V.prime(o.voice || AVA, Array.from({length: n}, (x, k) => LN.count(k + 1))); }
 async function waitTap(o){ o.wait = true; rerender(true); while (o.wait && !o.dead && !o.skip) await sleep(120); o.wait = false; }
 // ---------- BLD 931: the next move's instructions play in the Break's last seconds ----------
 // (Chris's workout notes, November 6, 2026, option 1: "the Break counts down 3, 2, 1, then the exercise does not start;
@@ -1814,7 +1842,10 @@ async function doSet(o, st){
     if (o.side) await ins(o, o.side === 'L' ? (st.arm ? LN.larm : LN.left) : (st.arm ? LN.rarm : LN.right));
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
     const lead = o.set === 1 && k === 0;
-    if (st.kind === 'time'){ setOn(o); if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); } await ins(o, LN.go); o.preOn = false; lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
+    if (st.kind === 'time'){ setOn(o); if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); } await ins(o, LN.go); o.preOn = false;
+      const hn = holdN(st, o);   // BLD 1057: a shuffle's trips or a short hold counted aloud; a longer hold counts its last five seconds down
+      if (hn){ lg(o, {e: 'hcount', n: hn}); o.rep = 0; o.ring = true; await beats(o, hn, holdT(st)); o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
+      else { lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, '', false, o.count && !o.prac ? lastFive(o) : null); o.ring = false; } }
     else if (o.count && repN(st)){ // Chris (November 1, 2026): every instruction first, then Go, then the count.
       setOn(o);
       if (lead && st.form){ lg(o, {e: 'form'}); await ins(o, st.form); }
@@ -1958,7 +1989,7 @@ async function between(o, nx, secs){
   const wd = waterAt(o, o.i + '|b'), fo = nx.fin ? [LN.fin, pushOf()] : []; o.finOpen = nx.fin ? nx : null;
   const open = [LN.nextRest(secs, nx.name)].concat(fo, wd ? [WATER] : []);
   (async () => { for (const l of open){ if (o.dead || (l !== open[0] && o.pre && o.pre.started)) break; await speak(o, l); } })();
-  preArm(o, preLines(o, nx, 1, 0), open);
+  preArm(o, preLines(o, nx, 1, 0), open); primeCounts(o, nx);
   await runTimer(o, secs * 1000, 'between'); await preDone(o);
   o.between = false; o.skip = false;
 }
@@ -2012,7 +2043,7 @@ async function runSession(o){
   const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = []; o.tips = tipPlan(o);
   if (V){ V.unlock(); V.onlost = soundLost; }
   // BLD 898: Ava's counts download and decode now, so every count is ready for its beat.
-  if (V && V.prime && !o.prac) V.prime(o.voice || AVA, Array.from({length: 20}, (x, k) => LN.count(k + 1)));
+  if (V && V.prime && !o.prac) V.prime(o.voice || AVA, Array.from({length: COUNT_MAX}, (x, k) => LN.count(k + 1)));
   const mf = musicFor(o); o.music = mf.list; o.mstart = mf.start;
   if (V){ if (V.musicReset) V.musicReset(); V.music(o.music, o.mstart); }
   rerender(true);
@@ -2054,7 +2085,7 @@ async function runSession(o){
       // BLD 979 (Chris, November 12, 2026: "it cut off the part about too hard or too easy"): a Break line starts only when
       // it ends before the next set's instructions begin, so no line is ever cut off; a line that cannot fit is left out.
       (async () => { await speak(o, LN.rest(r)); if (wd && !o.dead && !(o.pre && o.pre.started)) await speak(o, WATER); for (const l of rl){ if (!o.rest || o.dead || o.pre && o.pre.started) break; if (!(await fitsRest(o, l))) continue; await speak(o, l); } })();
-      preArm(o, preLines(o, st, o.set + 1, 0), [LN.rest(r), wd ? WATER : '']);
+      preArm(o, preLines(o, st, o.set + 1, 0), [LN.rest(r), wd ? WATER : '']); primeCounts(o, st);
       await runTimer(o, r * 1000, 'rest'); await preDone(o); if (o.dead) break; if (o.jumpTo != null){ o.rest = false; continue; } o.skip = false; o.set++; continue; }
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
     const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await partBell(o); await between(o, nx, st.restAfter); }
@@ -2163,7 +2194,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c202';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c207';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
@@ -2518,10 +2549,10 @@ function vAuto(o, top){
   const brkOn = !!(o.run && (o.rest || o.between) && !o.sw), nextSub = st.t === 'ex' ? (o.between ? 'Next Up: ' + (o.swap && st.swap ? st.swap : st.name) : o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : '';
   const flip = o.side === 'L', pill = brkOn ? '' : st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : st.fin && st.sets === 1 ? 'Last Move' : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
-  const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
+  const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) || holdN(st, o) : wuN(st, o)) || 0 : 0;
   // BLD 1022 (Chris's iPad photo of Overhead Press, Set 2 of 3: no count and no breathing circle): a counted set shows its
   // count from the moment the set begins, while its words play before Go ("0 of 5"), not only from the first count.
-  const cntShow = cntOf || (st.t === 'ex' && o.count && o.ring && !o.run && !still && !o.sw && !o.hf ? repN(st) : 0);
+  const cntShow = cntOf || (st.t === 'ex' && o.count && o.ring && !o.run && !still && !o.sw && !o.hf ? repN(st) || holdN(st, o) : 0);
   const sop = Object.assign({kid: kidTouch(o, st, cntOf, still), fig: st.candle ? medOp(o).fig : moveFig(st, flip, still, fex), med: st.candle ? medPaint(o) : undefined, side: o.side || '', sideArm: !!st.arm, label: pill, count: cntShow ? {n: o.rep || 0, of: cntShow} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined,
     breathCount: !!o.prac && st.t === 'time' && !st.candle && /breath|breathing|pranayama/i.test(st.name || '') && !(br && br[0] < 1.5), weight: o.sw ? undefined : wChip(st) || undefined, brk: brkOn ? {sub: nextSub} : undefined,
     ftip: !still && !o.sw && !brkOn && !o.prac && !st.candle && !st.lines && (st.t === 'ex' || o.run || o.rep) ? ftipOf(st) || undefined : undefined,
