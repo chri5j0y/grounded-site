@@ -5869,7 +5869,15 @@
     'gw-t-welcome gw-t-checkin gw-t-today gw-t-grow gw-t-learn gw-t-private gw-k-hello gw-k-mytree gw-k-checkin gw-k-watch gw-k-grownups').split(' ');
   var OWN_CARD = ('mp-r-feelings mp-r-oops mp-r-sorry mp-r-turnoff as-r-right as-st-kind pn-r-right pn-st-angry-part pn-st-attention ' +
     'gr-r-kindweeks gr-r-cozy gr-r-gather br-r-cool br-st-angry-part br-st-sleep br-st-attention ok-st-angry-part ok-st-sleep sq-st-sleep').split(' ');
+  // BLD 1056 (Chris, November 24, 2026: the Walkthrough row showed the same tree picture on five cards): each Grounded Way
+  // Walkthrough lesson (the Member library's walk-way track) has its own card painting, chosen from the app paintings.
+  var WY_ART = { 'wy-welcome': 'app-welcome-hero-wide', 'wy-begin': 'profile-band-family-wide', 'wy-today': 'tour-today-wide',
+    'wy-practices': 'custom-practices-sq', 'wy-beside': 'living-sober-hero-lake-wide', 'wy-tending': 'move-walk-start',
+    'wy-kitchen': 'tour-week-wide', 'wy-hour': 'quiet-garden-morning-sq', 'wy-tree': 'tour-grow-wide', 'wy-plan': 'full-growth-plan-sq',
+    'wy-library': 'tour-library-wide', 'wy-move': 'promise-device-sq', 'wy-numbers': 'health-numbers-sq', 'wy-more': 'privacy-settings-sq',
+    'wy-family': 'tour-kids-sq' };
   function lessonArt(app, id, i, title) {
+    if (WY_ART[String(id || '')]) return PIMG + WY_ART[String(id)] + '.webp';
     if (GW_ART.indexOf(String(id || '')) >= 0) return REP + id + '.webp';
     // BLD 1038 (Chris, November 21, 2026: "a few of these videos don't have the images on the card yet"): the shelf lessons added in
     // shared/learn-lessons.js open on their own painting; each card shows a 640 by 360 copy of it.
