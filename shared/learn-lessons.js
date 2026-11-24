@@ -14122,12 +14122,10 @@ window.GG_LEARN = {
         {
          "id": "ok-ls-craving",
          "n": 3,
-         "title": "Surfing a Craving",
+         "title": "Ride the Wave",
          "mins": 4,
          "blurb": "Ride a craving like a wave: notice it, find it, breathe, and watch it pass.",
-         "sources": [
-          "bowen09"
-         ],
+         "sources": [],
          "life": [
           "sober"
          ],
@@ -14136,7 +14134,7 @@ window.GG_LEARN = {
            "k": "title",
            "hero": "oak",
            "eyebrow": "Growing a Healthy Tree, Lesson 3",
-           "h": "Surfing a Craving",
+           "h": "Ride the Wave",
            "sub": "Ride the wave until it passes.",
            "say": "This lesson is for the moments when a craving shows up, strong and loud. Cravings are normal, and you can ride one like a wave. Here is how."
           },
@@ -14170,7 +14168,7 @@ window.GG_LEARN = {
           },
           {
            "k": "flow",
-           "h": "Surfing the urge",
+           "h": "Ride the wave",
            "steps": [
             [
              "Notice",
@@ -14192,11 +14190,11 @@ window.GG_LEARN = {
            "cue": {
             "at": [1, 3, 4, 5]
            },
-           "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
+           "say": "Here is how to ride it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady. And watch it rise, peak, and fall, the way you would watch a wave come in at the beach."
           },
           {
            "k": "big",
-           "h": "Surf one now",
+           "h": "Ride one now",
            "sub": "Notice. Find it. Breathe. Watch.",
            "beats": [
             "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone.",
@@ -26956,12 +26954,10 @@ window.GG_LEARN = {
     {
      "id": "sq-ls-craving",
      "n": 3,
-     "title": "Surfing a Craving",
+     "title": "Ride the Wave",
      "mins": 4,
      "blurb": "Ride a craving like a wave: notice it, find it, breathe, and watch it pass.",
-     "sources": [
-      "bowen09"
-     ],
+     "sources": [],
      "life": [
       "sober"
      ],
@@ -26970,7 +26966,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "sequoia",
        "eyebrow": "Growing a Healthy Tree, Lesson 3",
-       "h": "Surfing a Craving",
+       "h": "Ride the Wave",
        "sub": "Ride the wave until it passes.",
        "say": "This lesson is for the moments when a craving shows up, strong and loud. Cravings are normal, and you can ride one like a wave. Here is how."
       },
@@ -27004,7 +27000,7 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "Surfing the urge",
+       "h": "Ride the wave",
        "steps": [
         [
          "Notice",
@@ -27026,11 +27022,11 @@ window.GG_LEARN = {
        "cue": {
         "at": [1, 3, 4, 5]
        },
-       "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
+       "say": "Here is how to ride it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady. And watch it rise, peak, and fall, the way you would watch a wave come in at the beach."
       },
       {
        "k": "big",
-       "h": "Surf one now",
+       "h": "Ride one now",
        "sub": "Notice. Find it. Breathe. Watch.",
        "beats": [
         "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone.",
@@ -33394,12 +33390,10 @@ window.GG_LEARN = {
     {
      "id": "pn-ls-urge",
      "n": 2,
-     "title": "Surfing an Urge",
+     "title": "Ride the Wave",
      "mins": 3,
      "blurb": "An urge to vape, drink, or use is a wave. Here is how to ride it out.",
-     "sources": [
-      "bowen09"
-     ],
+     "sources": [],
      "life": [
       "sober"
      ],
@@ -33408,7 +33402,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "pine",
        "eyebrow": "Growing a Healthy Tree, Lesson 2",
-       "h": "Surfing an Urge",
+       "h": "Ride the Wave",
        "sub": "Ride the wave until it passes.",
        "say": "This lesson is for when an urge hits. To vape, to drink, to use, or to grab your phone and scroll. Urges are normal, and you can ride one like a wave."
       },
@@ -33420,7 +33414,7 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "Surf it",
+       "h": "Ride it",
        "steps": [
         [
          "Notice",
@@ -33442,11 +33436,11 @@ window.GG_LEARN = {
        "cue": {
         "at": [1, 2, 3, 4]
        },
-       "say": "Here is how. Notice it, and say to yourself, an urge is here. Find where you feel it in your body. Breathe slowly, like a surfer riding a wave. And watch it rise, peak, and fall."
+       "say": "Here is how. Notice it, and say to yourself, an urge is here. Find where you feel it in your body. Breathe slowly into that spot. And watch it rise, peak, and fall."
       },
       {
        "k": "big",
-       "h": "Surf one now",
+       "h": "Ride one now",
        "sub": "Even a small urge works.",
        "beats": [
         "Let's practice with any small urge you notice right now, like the urge to check your phone.",
@@ -38658,12 +38652,10 @@ window.GG_LEARN = {
     {
      "id": "br-ls-craving",
      "n": 3,
-     "title": "Surfing a Craving",
+     "title": "Ride the Wave",
      "mins": 4,
      "blurb": "Ride a craving like a wave: notice it, find it, breathe, and watch it pass.",
-     "sources": [
-      "bowen09"
-     ],
+     "sources": [],
      "life": [
       "sober"
      ],
@@ -38672,7 +38664,7 @@ window.GG_LEARN = {
        "k": "title",
        "hero": "birch",
        "eyebrow": "Growing a Healthy Tree, Lesson 3",
-       "h": "Surfing a Craving",
+       "h": "Ride the Wave",
        "sub": "Ride the wave until it passes.",
        "say": "This lesson is for the moments when a craving shows up, strong and loud. Cravings are normal, and you can ride one like a wave. Here is how."
       },
@@ -38706,7 +38698,7 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "Surfing the urge",
+       "h": "Ride the wave",
        "steps": [
         [
          "Notice",
@@ -38728,11 +38720,11 @@ window.GG_LEARN = {
        "cue": {
         "at": [1, 3, 4, 5]
        },
-       "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
+       "say": "Here is how to ride it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady. And watch it rise, peak, and fall, the way you would watch a wave come in at the beach."
       },
       {
        "k": "big",
-       "h": "Surf one now",
+       "h": "Ride one now",
        "sub": "Notice. Find it. Breathe. Watch.",
        "beats": [
         "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone.",

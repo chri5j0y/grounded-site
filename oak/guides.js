@@ -2425,7 +2425,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "id": "sober-cravings",
   "ring": "sober",
   "title": "Cravings and Triggers",
-  "keys": "cravings craving urge urges triggers triggered want to drink want to use tempted temptation pull urge surfing halt hungry angry lonely tired stress payday friday night bar party pain pills dentist prescription opioids alcohol drinking using staying sober sobriety relapse prevention slip",
+  "keys": "cravings craving urge urges triggers triggered want to drink want to use tempted temptation pull halt hungry angry lonely tired stress payday friday night bar party pain pills dentist prescription opioids alcohol drinking using staying sober sobriety relapse slip",
   "parts": [
    "bark",
    "leaves",

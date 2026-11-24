@@ -5752,8 +5752,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "sources": [
    "samhsarec",
-   "nidatreat",
-   "bowen09"
+   "nidatreat"
   ]
  },
  {
@@ -6070,7 +6069,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "sources": [
    "randles13",
    "neff",
-   "witkiewitz04",
    "narcanotc"
   ]
  },

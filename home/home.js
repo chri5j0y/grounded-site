@@ -466,7 +466,7 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b929', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b949', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=c195', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b949', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=c209', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=c209', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=c209', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=c209', 'PINE_PRACTICES'] };
   var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
@@ -1230,7 +1230,7 @@
       (lsVid(F.video) ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-a-sober" data-hm-ls="watch:' + esc(F.video) + '">' + I('play') + 'Watch the Practice</button></div>' : '') +
       '<div class="hm-ls4steps">' + steps + '</div><div class="hm-src" id="hm-ls4src">' + (F.credit ? esc(F.credit) + '.' : '') + '</div></div>');
     // The Sources line (shared/gg-sources.js): Practice: Chris Joy, then the research behind the steps.
-    if (arr(F.sources).length) load('/shared/gg-sources.js?v=c183').then(function () {
+    if (arr(F.sources).length) load('/shared/gg-sources.js?v=c209').then(function () {
       var el = document.getElementById('hm-ls4src'); if (!el || !window.GGSources || typeof GGSources.line !== 'function') return;
       try { var h = GGSources.line(F.sources, { practice: true }); if (h) el.innerHTML = h; } catch (e) {}
     });
@@ -2747,9 +2747,9 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=c151';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=c209';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
-  var GUIDES = { oak: ['/oak/guides.js?v=c197', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c197', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c197', 'PINE_GUIDES'] };
+  var GUIDES = { oak: ['/oak/guides.js?v=c209', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c209', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c209', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   // BLD 1041 (the November 21 site test: a kid could reach no When Life Changes guide): Maple's guides (one list) and Aspen's (in
   // groups) count and search on the Library like every tree's.
@@ -5710,7 +5710,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c207';
+  var LEARN_JS = '/shared/gg-learn.js?v=c209';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -6014,7 +6014,7 @@
   }
   /* BLD 911 (Chris: "when i chose a vid from When life changes.. i am forced to a new page and then hard to find way back"):
      a guide's two videos (For You and For the Helper) play in the same window on Learn; Read the Guide opens the written guide. */
-  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=c128', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b939', sequoia: '/sequoia/guide-videos.js?v=c126', pine: '/pine/guide-videos.js?v=b949', birch: '/birch/guide-videos.js?v=c126' };
+  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=c209', aspen: '/aspen/guide-videos.js?v=b939', maple: '/maple/guide-videos.js?v=b939', sequoia: '/sequoia/guide-videos.js?v=c126', pine: '/pine/guide-videos.js?v=c209', birch: '/birch/guide-videos.js?v=c209' };
   function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
   function playGuide(id, side, tree0) {
     var tree = tree0 && GUIDE_JS[tree0] ? tree0 : S.tree, src = GUIDE_JS[tree]; if (!src) { toast('This guide waits in Learn.'); goTo('learn'); return; }
@@ -6123,7 +6123,7 @@
      this or I'm helping someone, faith, practices, when to reach out, learn more, and the sources line. */
   var GREAD = { tree: '', id: '', self: true };
   var FAITH_H = { oak: 'Faith and the holy', sequoia: 'Faith and the holy', birch: 'Faith and meaning', pine: 'Faith and meaning' };
-  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=c197', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c197', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c197', 'PINE_GUIDES'] };
+  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=c209', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c209', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c209', 'PINE_GUIDES'] };
   function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
   function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
   function guideRead(id, tree) {
@@ -6152,7 +6152,7 @@
       if (box && document.getElementById('hm-mdlg')) { box.innerHTML = html; var tt = document.getElementById('hm-mdlg-t'); if (tt) tt.textContent = T.title; box.scrollTop = 0; }
       else mDialog(T.title, html);
     };
-    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=c183')]).then(go);
+    Promise.all([load(g[0]), load('/shared/gg-sources.js?v=c209')]).then(go);
   }
   window.GGHome.member = member;
   window.GGHome.openWho = openWho;

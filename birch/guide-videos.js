@@ -13110,8 +13110,7 @@ window.GG_LEARN_GUIDES.birch = {
    "blurb": "For the young adult in their first year sober: your body, cravings, your people, and the new life you are growing.",
    "sources": [
     "samhsarec",
-    "nidatreat",
-    "bowen09"
+    "nidatreat"
    ],
    "scenes": [
     {
@@ -13834,8 +13833,7 @@ window.GG_LEARN_GUIDES.birch = {
    "blurb": "For the young adult after a slip or a return to use: kindness, safety, and getting back on your path.",
    "sources": [
     "randles13",
-    "neff",
-    "witkiewitz04"
+    "neff"
    ],
    "scenes": [
     {

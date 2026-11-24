@@ -583,8 +583,7 @@
     nguyen18: ["Nguyen, Ryan, and Deci, solitude as an approach to affective self-regulation (Personality and Social Psychology Bulletin, 2018)", "https://doi.org/10.1177/0146167217733073"],
     meyers04: ["Robert J. Meyers and Brenda L. Wolfe, Get Your Loved One Sober: Alternatives to Nagging, Pleading, and Threatening (Hazelden, 2004)", "https://openlibrary.org/search?q=Get+Your+Loved+One+Sober+Meyers+Wolfe"],
     bryant07: ["Fred B. Bryant and Joseph Veroff, Savoring: A New Model of Positive Experience (2007)", "https://openlibrary.org/search?q=Savoring+A+New+Model+of+Positive+Experience"],
-    // Living Sober Every Day (GWG BLD 850): Ride the Wave and What Your Body Regains.
-    mbrp21: ["Sarah Bowen, Neha Chawla, Joel Grow, and G. Alan Marlatt, Mindfulness-Based Relapse Prevention for Addictive Behaviors, second edition (Guilford, 2021)", "https://www.guilford.com/books/Mindfulness-Based-Relapse-Prevention-for-Addictive-Behaviors/Bowen-Chawla-Grow-Marlatt/9781462545315", "a"],
+    // Living Sober Every Day (GWG BLD 850): What Your Body Regains.
     niaaahang: ["NIAAA, Hangovers (fact sheet): alcohol suppresses vasopressin, so the body lets go of water", "https://www.niaaa.nih.gov/publications/brochures-and-fact-sheets/hangovers"],
     ebrahim13: ["Ebrahim, Shapiro, Williams, and Fenwick, alcohol and sleep I: effects on normal sleep (Alcoholism: Clinical and Experimental Research, 2013)", "https://doi.org/10.1111/acer.12006"],
     brown88: ["Brown and Schuckit, changes in depression among abstinent alcoholics (Journal of Studies on Alcohol, 1988)", "https://doi.org/10.15288/jsa.1988.49.412"],
@@ -597,9 +596,6 @@
     // Living Sober (GWG BLD 789): every helper's new sources, one id per work.
     // Kept ids. kelly10 also stands for kellywesterhoff10; meyers02 for craft and sqsocraft; narcanotc for fdanarcan23 (see ALIAS).
     kelly10: ["Kelly and Westerhoff, does it matter how we refer to individuals with substance-related conditions? A randomized study of two commonly used terms (International Journal of Drug Policy, 2010)", "https://doi.org/10.1016/j.drugpo.2009.10.010"],
-    bowen09: ["Bowen and Marlatt, surfing the urge: brief mindfulness-based intervention for college student smokers (Psychology of Addictive Behaviors, 2009)", "https://doi.org/10.1037/a0017127", "a"],
-    marlatt85: ["G. Alan Marlatt and Judith R. Gordon, Relapse Prevention: Maintenance Strategies in the Treatment of Addictive Behaviors (Guilford, 1985)", ""],
-    witkiewitz04: ["Witkiewitz and Marlatt, relapse prevention for alcohol and drug problems: that was Zen, this is Tao (American Psychologist, 2004)", "https://pubmed.ncbi.nlm.nih.gov/?term=Relapse+prevention+for+alcohol+and+drug+problems+that+was+Zen+this+is+Tao"],
     randles13: ["Randles and Tracy, nonverbal displays of shame predict a return to drinking and declining health (Clinical Psychological Science, 2013)", "https://doi.org/10.1177/2167702612470645"],
     prochaska83: ["Prochaska and DiClemente, stages and processes of self-change of smoking: toward an integrative model of change (Journal of Consulting and Clinical Psychology, 1983)", "https://digitalcommons.uri.edu/psy_facpubs/572"],
     meyers02: ["Meyers, Miller, Smith, and Tonigan, a randomized trial of two methods for engaging treatment-refusing drug users through concerned significant others, the CRAFT approach (Journal of Consulting and Clinical Psychology, 2002)", "https://doi.org/10.1037/0022-006X.70.5.1182"],
@@ -1118,14 +1114,13 @@
     "maple:sober-staying-safe": ["narcanotc"],
     "maple:sober-loved-one-dies": ["dougy"],
     "oak:sober-change": ["rollnick08", "asamaw", "narcanotc"],
-    "oak:sober-cravings": ["bowen09", "marlatt85"],
     "oak:sober-first-30": ["asamaw", "fdabenzo20", "cdcnaloxone", "narcanotc"],
     "oak:sober-first-year": ["dennis07", "samhsarec"],
     "oak:sober-healing": ["khantzian97", "felitti98", "vanderkolk14", "pennebaker"],
     "oak:sober-overdose-grief": ["doka", "feigelman12"],
     "oak:sober-partner": ["craft", "meyers02"],
     "oak:sober-repair": ["lewicki16", "tangney"],
-    "oak:sober-slip": ["marlatt85", "tangney", "neff", "cdcnaloxone"],
+    "oak:sober-slip": ["tangney", "neff", "cdcnaloxone"],
     "oak:sober-work-friends": ["litt09"],
     "grove:sober-family": ["samhsarec", "sevencs"],
     "grove:sober-kids-talk": ["sevencs"],
@@ -1177,7 +1172,6 @@
     // end BLD 739
     // Living Sober practices (GWG BLD 789).
     "morning rhythm": ["huberman25"],
-    "surf the wave": ["bowen09"],
     "slow, low, and long": ["nestor20"],
     "easy run by heart rate": ["maf180", "ratey08"],
     "sauna and cool water": ["wimhof20", "linehan15"],
@@ -1186,7 +1180,6 @@
     "evening wind down": ["huberman25"],
     "let the good sink in": ["hanson09"],
     "feel it, name it, move it": ["lieberman"],
-    "ride the wave": ["bowen09"],
     "move it out": ["ratey08", "cdcpa"]
     // end BLD 789
   };

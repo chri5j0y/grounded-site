@@ -18591,10 +18591,7 @@ window.GG_LEARN_GUIDES.oak = {
    "title": "Cravings and Triggers",
    "sideName": "For You",
    "mins": 4,
-   "sources": [
-    "bowen09",
-    "marlatt85"
-   ],
+   "sources": [],
    "scenes": [
     {
      "k": "title",
@@ -18614,7 +18611,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "It rises, peaks, and passes.",
      "body": "Like a wave.",
-     "say": "Here's something research on cravings has found. A craving acts like a wave. It rises, it peaks, and it passes, often within minutes, whether or not you act on it. Each time you ride one without acting on it, the next one tends to be a little smaller."
+     "say": "Here's something worth knowing. A craving acts like a wave. It rises, it peaks, and it passes, often within minutes, whether or not you act on it. Each time you ride one without acting on it, the next one tends to be a little smaller."
     },
     {
      "k": "big",
@@ -18728,9 +18725,7 @@ window.GG_LEARN_GUIDES.oak = {
    "title": "Cravings and Triggers",
    "sideName": "For the Helper",
    "mins": 3,
-   "sources": [
-    "bowen09"
-   ],
+   "sources": [],
    "scenes": [
     {
      "k": "title",
@@ -18861,7 +18856,6 @@ window.GG_LEARN_GUIDES.oak = {
    "sideName": "For You",
    "mins": 4,
    "sources": [
-    "marlatt85",
     "tangney",
     "neff",
     "cdcnaloxone"
@@ -18885,7 +18879,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "The \"I've blown it\" trap",
      "body": "One slip, or a long stretch? The next hour decides.",
-     "say": "Watch for one trap. After a slip, a voice often says, I've blown it, so why stop now. Research finds that voice is what turns one slip into a long stretch. The next hour matters more than the last one. Stop where you are, if you can safely, and reach out."
+     "say": "Watch for one trap. After a slip, a voice often says, I've blown it, so why stop now. You can answer it: one slip is one moment. The next hour matters more than the last one. Stop where you are, if you can safely, and reach out."
     },
     {
      "k": "card",
@@ -18992,7 +18986,6 @@ window.GG_LEARN_GUIDES.oak = {
    "sideName": "For the Helper",
    "mins": 4,
    "sources": [
-    "marlatt85",
     "cdcnaloxone"
    ],
    "scenes": [
