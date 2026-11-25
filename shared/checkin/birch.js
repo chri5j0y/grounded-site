@@ -53,7 +53,7 @@
     '/shared/gg-life.js?v=c197',
     '/shared/gg-life-kit.js?v=b888',
     '/shared/practice-rhythm.js?v=c209',
-    '/shared/gg-guided.js?v=c189',
+    '/shared/gg-guided.js?v=c210',
     '/shared/guided/birch.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];   // 194

@@ -1950,7 +1950,7 @@
       a.onpause = function () { if (!armed || once || a.ended || t !== P.tok || (isFinite(a.duration) && a.currentTime >= a.duration - 0.1)) return; ok = true; lost(t); };
       bgNudge();
       a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) { guard(a.duration * 1000 / sp + 3000); } };
-      a.src = LEAD ? src + '#t=' + LEAD : src; // start just before the first word
+      a.src = src; // from its own start: an iPhone jumps when a start time is asked for (BLD 1067)
       // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
       try { a.defaultPlaybackRate = sp; a.playbackRate = sp; } catch (e) {}
       guard(est * 2.4 + 6000);

@@ -296,7 +296,7 @@
       c.watch = setInterval(function () { if (P.cc !== c) return clearInterval(c.watch); if (!a.paused && a.currentTime >= end) done(); }, 25);
     };
     a.onended = done; a.onerror = fail;
-    a.src = cut[0] ? url + '#t=' + cut[0] : url;
+    a.src = url; // from its own start: an iPhone jumps when a start time is asked for (BLD 1067)
     ahead(P.i + 1);
     try { a.defaultPlaybackRate = speed(); a.playbackRate = speed(); } catch (e) {}
     c.arm();

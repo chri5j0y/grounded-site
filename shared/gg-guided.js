@@ -351,7 +351,7 @@
       AU.onended = done1; AU.onerror = fall;
       AU.onloadedmetadata = function () { if (isFinite(AU.duration) && AU.duration > 0) { clearTimeout(S.guard); S.guard = setTimeout(done1, AU.duration * 1000 / sp + 3000); } };
       var src = clipUrl(voice, text);
-      AU.src = who[0] ? src + '#t=' + who[0] : src;
+      AU.src = src; // each clip plays from its own start; an iPhone jumps when a start time is asked for (BLD 1067)
       try { AU.defaultPlaybackRate = sp; AU.playbackRate = sp; } catch (e) {}
       clearTimeout(S.guard); S.guard = setTimeout(fall, 8000); // a clip that has not started in 8 seconds gives way to the device voice
       var pr = AU.play(); if (pr && pr.then) pr.then(function () { if (tok === S.tok && !once && !fell) { clearTimeout(S.guard); S.guard = setTimeout(done1, est(text) * 2.4 + 6000); } }).catch(function (e) { if (!e || e.name !== 'AbortError') fall(); });
@@ -366,7 +366,7 @@
     function say(list, onLine, done, quiet) {
       var tok = S.tok, L = [];
       list.forEach(function (t, i) { sentences(t).forEach(function (x, j) { L.push({ t: x, i: i, first: j === 0 }); }); });
-      var k = 0, GAP = o.tree === 'willow' || o.tree === 'sequoia' ? 650 : 450;
+      var k = 0, GAP = o.tree === 'willow' || o.tree === 'sequoia' ? 550 : 350; // 100 ms less, for the lead silence each clip now keeps (BLD 1067)
       (function next() {
         if (tok !== S.tok) return;
         if (k >= L.length) { if (done) done(); return; }
