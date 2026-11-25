@@ -5816,8 +5816,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "early"
   ],
   "sources": [
-   "graham24",
-   "bowen09"
+   "graham24"
   ],
   "keys": "quit vaping stop vaping vape juul elf bar puff bar disposable nicotine pouches zyn nicotine addiction can't stop vaping cravings withdrawal irritable can't focus headache sleep quit date ditchvape this is quitting my life my quit text to quit nicotine gum patch doctor hitting my vape every hour vaping at school vaping in the bathroom",
   "parts": [

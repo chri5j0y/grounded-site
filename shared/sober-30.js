@@ -399,9 +399,7 @@
    "arc": "basics",
    "audio": "sober30",
    "voice": "brian",
-   "sources": [
-    "bowen09"
-   ],
+   "sources": [],
    "life": [
     "sober"
    ],
@@ -427,7 +425,7 @@
     },
     {
      "k": "big",
-     "h": "Surf a small one",
+     "h": "Ride a small one",
      "sub": "Notice. Find it. Breathe.",
      "beats": [
       "Let's practice with any small urge you feel right now.",
@@ -4029,9 +4027,7 @@
    "arc": "growing",
    "audio": "sober30",
    "voice": "brian",
-   "sources": [
-    "bowen09"
-   ],
+   "sources": [],
    "life": [
     "sober"
    ],
@@ -8374,11 +8370,7 @@
   "arc": "wave",
   "audio": "sober30",
   "voice": "brian",
-  "sources": [
-   "bowen09",
-   "mbrp21",
-   "marlatt85"
-  ],
+  "sources": [],
   "life": [
    "sober"
   ],
@@ -8387,7 +8379,7 @@
     "k": "title",
     "h": "Ride the Wave",
     "sub": "An urge rises, peaks, and passes.",
-    "say": "Welcome. For the next ten minutes, we will ride this urge together. An urge is like a wave. It rises, it peaks, and it passes, often within fifteen to thirty minutes. You are the surfer, and you can ride it."
+    "say": "Welcome. For the next ten minutes, we will ride this urge together. An urge is like a wave. It rises, it peaks, and it passes, often within fifteen to thirty minutes. You can ride this one, breath by breath."
    },
    {
     "k": "big",
@@ -8455,7 +8447,7 @@
       "w": 35
      },
      {
-      "t": "Let your breath be your surfboard. Steady, and slow.",
+      "t": "Let your breath carry you. Steady, and slow.",
       "w": 35
      },
      {
@@ -8545,7 +8537,7 @@
 };
   // Where the site lives, from this script's own address, so the apps (/oak/, /birch/, /sequoia/) and the page share one path.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=c030', LEARN = '/shared/gg-learn.js?v=c207';
+  var READ = '/read.js?v=c030', LEARN = '/shared/gg-learn.js?v=c209';
   var ACC = '#4E7D6A';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }

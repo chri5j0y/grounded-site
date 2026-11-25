@@ -13884,8 +13884,7 @@ window.GG_LEARN_GUIDES.pine = {
    "mins": 4,
    "blurb": "For you, if you want to quit vaping: a plan, a swap for every trigger, and support in your pocket.",
    "sources": [
-    "graham24",
-    "bowen09"
+    "graham24"
    ],
    "scenes": [
     {
