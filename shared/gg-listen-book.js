@@ -28,7 +28,7 @@
 (function (root) {
   'use strict';
   var BASE = 'https://audio.growwithgrounded.com/', LS = 'gg_book_ite', LV = 'gg_book_lv', SPEEDS = [0.9, 1, 1.15, 1.3], ITER = 250000;
-  var OPENS = { founder: 1, supporter: 1 }, IMGLIB = '/shared/imglib/library.js?v=c173';
+  var OPENS = { founder: 1, supporter: 1 }, IMGLIB = '/shared/imglib/library.js?v=c211';
   var NOT = 'This listening copy opens with a Founder or Supporter code.';
   var subtle = root.crypto && root.crypto.subtle;
   var $ = function (s, r) { return (r || document).querySelector(s); };
