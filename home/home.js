@@ -5906,7 +5906,10 @@
     return null;
   }
   // BLD 970 Round 5: a guide whose video opens on its own painting (shared/heroes/p/vid/) shows that painting's card copy (640 by 360).
-  function guideArt(tree, id) { var p = GPFX[tree], a = p && (planArt(tree + ':' + p + '-g-' + id + '-you') || planArt(tree + ':' + p + '-g-' + id + '-helper')); return a ? a.replace(/(\/p\/vid\/[a-z0-9-]+)\.webp$/, '$1-card.webp') : treeArt(tree); }
+  // Chris, November 26, 2026 ("1 is ok"): a guide with no painted video yet can carry its own card painting here, shared by every
+  // tree that holds the guide (shared/heroes/p/vid/guide-<id>-card.webp, 640 by 360, the 1440 wide copy beside it). Its video keeps its look.
+  var GUIDE_CARD = { 'unplugged-day': 1, 'own-pace': 1 };
+  function guideArt(tree, id) { if (GUIDE_CARD[id]) return HERO + 'p/vid/guide-' + id + '-card.webp'; var p = GPFX[tree], a = p && (planArt(tree + ':' + p + '-g-' + id + '-you') || planArt(tree + ':' + p + '-g-' + id + '-helper')); return a ? a.replace(/(\/p\/vid\/[a-z0-9-]+)\.webp$/, '$1-card.webp') : treeArt(tree); }
   // BLD 924 (Chris: "make an excellent guide walk thru that is built for the grounded way"): the age group's Welcome to
   // The Grounded Way series leads Learn (grown-ups on Birch, Oak, Sequoia; teens on Pine; kids with a grown-up on Maple and
   // Aspen), and the old Start Here and Using <Tree> tracks, which walked the retired tree apps, are left out (Willow and The Grove keep their own).
