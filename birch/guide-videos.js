@@ -14777,7 +14777,7 @@ window.GG_LEARN_GUIDES.birch = {
    "scenes": [
     {
      "k": "paint",
-     "img": "p/prac/birch-sabbath-hour-sq",
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-0",
      "side": "b",
      "eyebrow": "When Life Changes",
      "h": "An Unplugged Day Each Week",
@@ -14800,7 +14800,7 @@ window.GG_LEARN_GUIDES.birch = {
      "h": "What people noticed",
      "sub": "More time with people, and a lift in mood.",
      "say": "In a large study, adults who stepped away from social media for four weeks felt a little happier, and spent more time with friends and family. In another, students who kept social apps to about thirty minutes a day for three weeks felt less lonely and less down.",
-     "img": "p/prac/oak-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-2"
     },
     {
      "k": "points",
@@ -14846,7 +14846,7 @@ window.GG_LEARN_GUIDES.birch = {
       "Through the week, keep social apps to about thirty minutes a day.",
       "After four weeks, notice your mood, your sleep, and your time with people."
      ],
-     "img": "p/prac/birch-morning-daylight-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-3"
     },
     {
      "k": "big",
@@ -14869,28 +14869,28 @@ window.GG_LEARN_GUIDES.birch = {
       "That's the feeling of an unplugged stretch beginning."
      ],
      "say": "Let's try a small version now. If a phone or tablet is near you, set it in another room. If you are watching on your phone, turn it face down and listen. For a minute or two, notice what your body does. Maybe a reach for your pocket. Maybe an itch to check. Maybe some quiet. Take one slow breath, and notice the room around you. That's the feeling of an unplugged stretch beginning.",
-     "img": "p/prac/birch-phone-check-sq"
+     "img": "pb/sb-birch-br-g-unplugged-day-you-4"
     },
     {
      "k": "big",
      "h": "Fill it with what restores you.",
      "sub": "People, outdoors, movement, rest.",
      "say": "An unplugged stretch works best when it is full of good things. A long walk. A meal with no rush. A board game. A nap. A visit. Plan it ahead, so the time feels like a gift.",
-     "img": "p/prac/birch-sabbath-hour-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-5"
     },
     {
      "k": "big",
      "h": "Start with an evening.",
      "sub": "The itch to check fades.",
      "say": "The first few weeks, the itch to check is strong. That is normal, and it fades. Start with one evening if a whole day feels like a lot, and let people know how to reach you if something comes up.",
-     "img": "p/prac/birch-evening-wind-down-sq"
+     "img": "pb/sb-birch-br-g-unplugged-day-you-6"
     },
     {
      "k": "big",
      "h": "Your time, given back.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Your time, given back to you, once a week. The full guide has more, whenever you want it.",
-     "img": "p/prac/birch-sabbath-hour-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-7"
     }
    ]
   },
@@ -14910,7 +14910,7 @@ window.GG_LEARN_GUIDES.birch = {
    "scenes": [
     {
      "k": "paint",
-     "img": "p/prac/oak-family-sq",
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-0",
      "side": "b",
      "eyebrow": "When Life Changes",
      "h": "An Unplugged Day Each Week",
@@ -14927,7 +14927,7 @@ window.GG_LEARN_GUIDES.birch = {
      "h": "Join them.",
      "sub": "Invite them into something good.",
      "say": "The kindest help is company. Put your own phone away too, and invite them into something good. A walk, a meal, a game. Joining in works far better than keeping watch.",
-     "img": "p/prac/sequoia-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-1"
     },
     {
      "k": "points",
@@ -14969,7 +14969,7 @@ window.GG_LEARN_GUIDES.birch = {
       "And notice the good out loud.",
       "That was a good evening."
      ],
-     "img": "p/prac/oak-evening-wind-down-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-2"
     },
     {
      "k": "big",
@@ -14992,27 +14992,27 @@ window.GG_LEARN_GUIDES.birch = {
       "Send it when the video ends."
      ],
      "say": "Let's try something now. Think of one person you could share an unplugged evening with this month. Picture what would fill it. A meal, a walk, a game, a story. Now plan the first words of your invite. Want to put the phones away Friday night and cook together? Send it when the video ends.",
-     "img": "p/prac/oak-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-3"
     },
     {
      "k": "big",
      "h": "Kids watch what grown-ups do.",
      "sub": "Your example speaks loudest.",
      "say": "If kids or teens live with you, your example speaks loudest. When grown-ups unplug too, the whole household follows more easily.",
-     "img": "p/prac/oak-evening-wind-down-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-4"
     },
     {
      "k": "big",
      "h": "Keep your own rest too.",
      "say": "Helping someone rest is a good reason to rest yourself. Keep your own unplugged stretch, and let it fill you up too.",
-     "img": "p/prac/birch-sabbath-hour-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-5"
     },
     {
      "k": "big",
      "h": "Rest is better together.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Rest is better together. The full guide has more, whenever you want it.",
-     "img": "p/prac/sequoia-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-6"
     }
    ]
   }
@@ -15037,7 +15037,7 @@ window.GG_LEARN_GUIDES.birch = {
    "scenes": [
     {
      "k": "paint",
-     "img": "p/prac/birch-your-own-timeline-sq",
+     "img": "pb/sb-birch-br-g-own-pace-you-0",
      "side": "b",
      "eyebrow": "When Life Changes",
      "h": "Your Own Pace",
@@ -15053,14 +15053,14 @@ window.GG_LEARN_GUIDES.birch = {
      "h": "Highlights and behind the scenes",
      "sub": "Your inside, their outside.",
      "say": "Every brain compares. Online, though, we compare our behind the scenes with everyone else's highlights. Jobs, trips, engagements, apartments. It can make your own good road look small.",
-     "img": "p/prac/birch-phone-check-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-1"
     },
     {
      "k": "big",
      "h": "A kinder answer works.",
      "sub": "Self-compassion steadies you.",
      "say": "Here is what helps. Answering yourself with kindness, the way you would a friend, lowers stress and low mood. Programs that teach it show real gains across many trials. And keeping social apps to about thirty minutes a day helped young adults feel less lonely in just three weeks.",
-     "img": "p/prac/birch-self-compassion-break-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-2"
     },
     {
      "k": "points",
@@ -15107,7 +15107,7 @@ window.GG_LEARN_GUIDES.birch = {
       "Pick one small step for next week, your own.",
       "And keep social apps to about thirty minutes a day."
      ],
-     "img": "p/prac/birch-morning-daylight-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-3"
     },
     {
      "k": "big",
@@ -15131,7 +15131,7 @@ window.GG_LEARN_GUIDES.birch = {
       "Take one slow breath."
      ],
      "say": "Let's try the self-compassion break now. Put a hand on your heart. Say quietly, this is hard right now. Others feel this too. I'm in good company. May I be kind to myself. Take one slow breath.",
-     "img": "p/prac/birch-self-compassion-break-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-4"
     },
     {
      "k": "big",
@@ -15149,21 +15149,21 @@ window.GG_LEARN_GUIDES.birch = {
       "Hold on to that list. It's your real road."
      ],
      "say": "Now list three ways you've grown this year. A skill, a friendship, a lesson, a hard thing you got through. And pick one small step for next week. Yours, at your own pace. Hold on to that list. It's your real road.",
-     "img": "p/prac/birch-your-own-timeline-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-5"
     },
     {
      "k": "big",
      "h": "Every road has its own timing.",
      "sub": "People start, stop, and start over.",
      "say": "People move, start, stop, and start over on very different timelines. Your next step only needs to fit your own road.",
-     "img": "p/prac/birch-sabbath-hour-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-6"
     },
     {
      "k": "big",
      "h": "Your road. Your pace.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Your road, your pace. The full guide has more, whenever you want it.",
-     "img": "p/prac/birch-morning-daylight-sq"
+     "img": "pb/sb-birch-br-g-own-pace-you-7"
     }
    ]
   },
@@ -15183,7 +15183,7 @@ window.GG_LEARN_GUIDES.birch = {
    "scenes": [
     {
      "k": "paint",
-     "img": "p/prac/birch-friendship-repair-sq",
+     "img": "pb/sb-birch-br-g-own-pace-you-0",
      "side": "b",
      "eyebrow": "When Life Changes",
      "h": "Your Own Pace",
@@ -15200,7 +15200,7 @@ window.GG_LEARN_GUIDES.birch = {
      "h": "Listen first.",
      "sub": "\"It feels like everyone is ahead of you.\"",
      "say": "Start by listening. Reflect back what you hear. It feels like everyone is ahead of you right now. Feeling understood often eases the sting more than any pep talk.",
-     "img": "p/prac/birch-loving-kindness-sq"
+     "img": "pb/sb-birch-br-g-own-pace-helper-1"
     },
     {
      "k": "points",
@@ -15242,7 +15242,7 @@ window.GG_LEARN_GUIDES.birch = {
       "And celebrate small steps.",
       "Theirs, at their pace."
      ],
-     "img": "p/prac/oak-family-sq"
+     "img": "pb/sb-birch-br-g-own-pace-helper-2"
     },
     {
      "k": "big",
@@ -15261,20 +15261,20 @@ window.GG_LEARN_GUIDES.birch = {
       "Specific, honest praise is a gift that lasts."
      ],
      "say": "Let's try this now. Think of the person you're helping. Name three ways you've seen them grow this year. Pick one to tell them this week, in your own words. Specific, honest praise is a gift that lasts.",
-     "img": "p/prac/birch-friendship-repair-sq"
+     "img": "pb/sb-birch-br-g-own-pace-helper-3"
     },
     {
      "k": "big",
      "h": "Your own pace too.",
      "say": "Notice your own comparing too. When you speak kindly about your own road, the people around you learn to do the same.",
-     "img": "p/prac/birch-your-own-timeline-sq"
+     "img": "pb/sb-birch-br-g-own-pace-helper-4"
     },
     {
      "k": "big",
      "h": "Walk beside, at their pace.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Walk beside them, at their pace. The full guide has more, whenever you want it.",
-     "img": "p/prac/birch-morning-daylight-sq"
+     "img": "pb/sb-birch-br-g-own-pace-helper-5"
     }
    ]
   }

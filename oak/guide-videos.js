@@ -20540,7 +20540,7 @@ window.GG_LEARN_GUIDES.oak = {
    "scenes": [
     {
      "k": "paint",
-     "img": "p/prac/oak-sabbath-hour-sq",
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-0",
      "side": "b",
      "eyebrow": "When Life Changes",
      "h": "An Unplugged Day Each Week",
@@ -20563,7 +20563,7 @@ window.GG_LEARN_GUIDES.oak = {
      "h": "What people noticed",
      "sub": "More time with people, and a lift in mood.",
      "say": "In a large study, adults who stepped away from social media for four weeks felt a little happier, and spent more time with friends and family. In another, students who kept social apps to about thirty minutes a day for three weeks felt less lonely and less down.",
-     "img": "p/prac/oak-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-2"
     },
     {
      "k": "points",
@@ -20609,7 +20609,7 @@ window.GG_LEARN_GUIDES.oak = {
       "Through the week, keep social apps to about thirty minutes a day.",
       "After four weeks, notice your mood, your sleep, and your time with people."
      ],
-     "img": "p/prac/oak-morning-daylight-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-3"
     },
     {
      "k": "big",
@@ -20632,28 +20632,28 @@ window.GG_LEARN_GUIDES.oak = {
       "That's the feeling of an unplugged stretch beginning."
      ],
      "say": "Let's try a small version now. If a phone or tablet is near you, set it in another room. If you are watching on your phone, turn it face down and listen. For a minute or two, notice what your body does. Maybe a reach for your pocket. Maybe an itch to check. Maybe some quiet. Take one slow breath, and notice the room around you. That's the feeling of an unplugged stretch beginning.",
-     "img": "p/prac/birch-phone-check-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-4"
     },
     {
      "k": "big",
      "h": "Fill it with what restores you.",
      "sub": "People, outdoors, movement, rest.",
      "say": "An unplugged stretch works best when it is full of good things. A long walk. A meal with no rush. A board game. A nap. A visit. Plan it ahead, so the time feels like a gift.",
-     "img": "p/prac/oak-sabbath-hour-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-5"
     },
     {
      "k": "big",
      "h": "Start with an evening.",
      "sub": "The itch to check fades.",
      "say": "The first few weeks, the itch to check is strong. That is normal, and it fades. Start with one evening if a whole day feels like a lot, and let people know how to reach you if something comes up.",
-     "img": "p/prac/oak-evening-wind-down-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-6"
     },
     {
      "k": "big",
      "h": "Your time, given back.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Your time, given back to you, once a week. The full guide has more, whenever you want it.",
-     "img": "p/prac/oak-sabbath-hour-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-7"
     }
    ]
   },
@@ -20673,7 +20673,7 @@ window.GG_LEARN_GUIDES.oak = {
    "scenes": [
     {
      "k": "paint",
-     "img": "p/prac/oak-family-sq",
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-0",
      "side": "b",
      "eyebrow": "When Life Changes",
      "h": "An Unplugged Day Each Week",
@@ -20690,7 +20690,7 @@ window.GG_LEARN_GUIDES.oak = {
      "h": "Join them.",
      "sub": "Invite them into something good.",
      "say": "The kindest help is company. Put your own phone away too, and invite them into something good. A walk, a meal, a game. Joining in works far better than keeping watch.",
-     "img": "p/prac/sequoia-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-1"
     },
     {
      "k": "points",
@@ -20732,7 +20732,7 @@ window.GG_LEARN_GUIDES.oak = {
       "And notice the good out loud.",
       "That was a good evening."
      ],
-     "img": "p/prac/oak-evening-wind-down-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-2"
     },
     {
      "k": "big",
@@ -20755,27 +20755,27 @@ window.GG_LEARN_GUIDES.oak = {
       "Send it when the video ends."
      ],
      "say": "Let's try something now. Think of one person you could share an unplugged evening with this month. Picture what would fill it. A meal, a walk, a game, a story. Now plan the first words of your invite. Want to put the phones away Friday night and cook together? Send it when the video ends.",
-     "img": "p/prac/oak-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-3"
     },
     {
      "k": "big",
      "h": "Kids watch what grown-ups do.",
      "sub": "Your example speaks loudest.",
      "say": "If kids or teens live with you, your example speaks loudest. When grown-ups unplug too, the whole household follows more easily.",
-     "img": "p/prac/oak-evening-wind-down-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-4"
     },
     {
      "k": "big",
      "h": "Keep your own rest too.",
      "say": "Helping someone rest is a good reason to rest yourself. Keep your own unplugged stretch, and let it fill you up too.",
-     "img": "p/prac/oak-sabbath-hour-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-5"
     },
     {
      "k": "big",
      "h": "Rest is better together.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Rest is better together. The full guide has more, whenever you want it.",
-     "img": "p/prac/sequoia-family-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-6"
     }
    ]
   }
