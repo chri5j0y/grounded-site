@@ -33,10 +33,10 @@
 
   var FILES = [
     '/maple/checkin.js?v=b907',      // window.MAPLE_CHECKIN, the question bank
-    '/shared/gg-parts.js?v=b929',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
+    '/shared/gg-parts.js?v=c212',    // part labels in the player (Roots: Spirit, or Roots: what grounds you)
     '/shared/gg-life.js?v=c197',     // Health and Ability: the example and tip lines under a question
     '/maple/life.js?v=b907',         // window.MAPLE_LIFE notes, read by those lines
-    '/shared/gg-guided.js?v=c210',   // the shared player (it loads gg-guided.css itself)
+    '/shared/gg-guided.js?v=c212',   // the shared player (it loads gg-guided.css itself)
     '/shared/guided/maple.js?v=b907', // window.GG_GUIDED.maple, every spoken line
     '/shared/kids/maple-practices.js?v=c187' // BLD 1037: the practices, for the Growth Plan (Home loads practice-rhythm.js)
   ];

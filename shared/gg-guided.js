@@ -75,7 +75,7 @@
 (function () {
   'use strict';
   if (window.GGGuided) return;
-  var V = 'b889';
+  var V = 'c212';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
   var TREE_VOICE = { maple: 'jenny', aspen: 'jenny', pine: 'jenny', grove: 'jenny', birch: 'brian', oak: 'brian', sequoia: 'brian', willow: 'brian' };
@@ -457,6 +457,10 @@
 
     /* one question */
     function partCls(p) { return PARTS[p] ? ' ggd-p-' + p : ''; }
+    // BLD 1065: the part's icon from the Oak book (the six trees, through shared/gg-parts.js), in the part's color,
+    // where the eyebrow's dot was; the Growth Plan cards carry it beside their name.
+    function partIc(p, size) { var G = window.GGParts; return p && G && G.icon ? G.icon(p, o.tree, { size: size, ink: true, cls: 'ggd-ic' }) : ''; }
+    function ebHtml(p, text) { var ic = partIc(p, 26); return '<div class="ggd-eb' + (ic ? ' ggd-hasic' : '') + '">' + ic + esc(text) + '</div>'; }
     function drawQ(sc) {
       var q = Q[sc.i], v = A[q.id], type = q.type || 'choice', ops = q.options || [];
       var prevPart = sc.i > 0 ? Q[sc.i - 1].part : null, enterList = (K.enter || {})[q.part];
@@ -480,7 +484,7 @@
       if (curOp && type !== 'multi') { try { curNote = String(curOp.after || (typeof q.after === 'function' ? q.after(v, curOp) : q.after) || ''); } catch (e) { curNote = ''; } }
       var more = arr(q.more).filter(function (m) { return m && m.text; }).map(function (m) { return '<details class="ggd-more"><summary>' + esc(m.label || 'Why this question?') + '</summary><p>' + esc(m.text) + '</p></details>'; }).join('');
       stage.innerHTML = '<section class="ggd-card' + partCls(q.part) + (type === 'form' ? ' ggd-wide' : '') + '">'
-        + (q.part || q.eb ? '<div class="ggd-eb">' + esc(q.eb || partName(q.part)) + '</div>' : '')
+        + (q.part || q.eb ? ebHtml(q.part, q.eb || partName(q.part)) : '')
         + (enter ? '<p class="ggd-enter">' + esc(enter) + '</p>' : '')
         + (lead ? '<p class="ggd-enter ggd-lead">' + esc(lead) + '</p>' : '')
         + (q.stem ? '<p class="ggd-stem">' + esc(q.stem) + '</p>' : '')
@@ -669,7 +673,7 @@
           + (anc && on ? anchorsHtml(st, c, j) : '')
           + '</div>';
       }
-      stage.innerHTML = '<section class="ggd-card ggd-wide' + partCls(part) + '"><div class="ggd-eb">' + esc(partName(part, st)) + '</div>'
+      stage.innerHTML = '<section class="ggd-card ggd-wide' + partCls(part) + '">' + ebHtml(part, partName(part, st))
         + '<h2 id="ggd-h">' + esc(st.text || 'Choose up to ' + max + ' practices for ' + partName(part, st) + '.') + '</h2>'
         + (why ? '<p class="ggd-why">' + esc(why) + '</p>' : '') + more.map(function (t) { return '<p class="ggd-why">' + esc(t) + '</p>'; }).join('')
         + '<div class="ggd-count" aria-live="polite"></div><div class="ggd-cards">' + st.choices.map(card).join('') + '</div><div class="ggd-full" aria-live="polite"></div></section>';
@@ -728,7 +732,7 @@
       var cards = P.map(function (st, j) {
         var names = arr(PL[st.part]); if (!names.length) return '';
         var anc = Array.isArray(st.anchors) && st.anchors.length;
-        return '<div class="ggd-sp-card' + partCls(st.part) + '"><h3>' + esc(partName(st.part, st)) + '</h3><ul>' + names.map(function (nm) {
+        return '<div class="ggd-sp-card' + partCls(st.part) + '"><h3>' + partIc(st.part, 30) + esc(partName(st.part, st)) + '</h3><ul>' + names.map(function (nm) {
           var c = st.choices.filter(function (x) { return x.name === nm; })[0] || { name: nm }, r = rhythmOf(o.tree, st.part, c), w = anc ? (PA[st.part] || {})[nm] : '';
           return '<li><b>' + esc(nm) + '</b><small>' + (anc ? esc(w ? 'When: ' + w : st.anyTime || 'Any time we choose') : esc(rhythmPill(r)) + (+r.min > 0 ? ', ' + esc(r.min) + ' min' : '')) + '</small></li>';
         }).join('') + '</ul><button type="button" class="ggd-chg" data-j="' + j + '" aria-label="Change ' + esc(partName(st.part, st)) + '">Change</button></div>';

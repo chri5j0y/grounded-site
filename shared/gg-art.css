@@ -1,0 +1,32 @@
+/* =====================================================================
+   GROUNDED . THE BOOK ART (shared/gg-art.css), GWG BLD 1065
+   (c) 2026 Grow With Grounded LLC.
+   The drawings from the Oak book, one true vector each (shared/art), drawn as a mask in a color: crisp at every size,
+   and readable in light and dark (a lighter ink of each tree color in dark mode, the page's own ink for the woodcuts).
+     shared/art/parts     Roots, Trunk, Branches (every tree) and <tree>-leaves, -fruit, -bark (each tree its own)
+     shared/art/levels    strong, steady, growing (Growing Edge)
+     shared/art/mirror    the mirror pairs (roots and spirit, bark and mind, leaf and lungs, branch and hands), added
+                          when their new drawings are chosen (GGParts PAIRS_ON)
+     shared/art/spot      path (acorn to oak), acorn (sprouting), round (the cut round with rings)
+   Markup comes from GGParts.icon, GGParts.level, and GGParts.pair (shared/gg-parts.js), or by hand:
+     <span class="gg-ic gg-tc-oak" style="--ic:url(/shared/art/parts/oak-leaves.svg?v=c212)" aria-hidden="true"></span>
+   ===================================================================== */
+.gg-ic{display:inline-block;flex:none;vertical-align:-.25em;width:var(--s,1.35em);height:var(--s,1.35em);background-color:var(--tc,currentColor);-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat;}
+.gg-mir{display:block;flex:none;height:var(--h,96px);aspect-ratio:var(--ar,1);max-width:100%;background-color:var(--mc,currentColor);-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat;}
+.gg-spot{display:block;margin:0 auto;height:var(--h,72px);aspect-ratio:var(--ar,1);max-width:100%;background-color:var(--mc,currentColor);opacity:.82;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat;}
+
+/* the six tree colors, locked (IDEA decision 42), and a lighter ink of each for dark mode */
+.gg-tc-oak{--tc:#3D5A73;}.gg-tc-maple{--tc:#C4501E;}.gg-tc-aspen{--tc:#1F6F74;}.gg-tc-pine{--tc:#3A6B35;}.gg-tc-birch{--tc:#7F6610;}.gg-tc-sequoia{--tc:#7A2E1C;}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .gg-tc-oak{--tc:#A9C0D6;}:root:not([data-theme="light"]) .gg-tc-maple{--tc:#F0A07A;}:root:not([data-theme="light"]) .gg-tc-aspen{--tc:#7FCBCF;}
+  :root:not([data-theme="light"]) .gg-tc-pine{--tc:#A3CF95;}:root:not([data-theme="light"]) .gg-tc-birch{--tc:#DCC867;}:root:not([data-theme="light"]) .gg-tc-sequoia{--tc:#E8A08A;}
+}
+:root[data-theme="dark"] .gg-tc-oak{--tc:#A9C0D6;}:root[data-theme="dark"] .gg-tc-maple{--tc:#F0A07A;}:root[data-theme="dark"] .gg-tc-aspen{--tc:#7FCBCF;}
+:root[data-theme="dark"] .gg-tc-pine{--tc:#A3CF95;}:root[data-theme="dark"] .gg-tc-birch{--tc:#DCC867;}:root[data-theme="dark"] .gg-tc-sequoia{--tc:#E8A08A;}
+
+/* the mirror pairs: two drawings side by side, the name, one plain line */
+.gg-pair{display:flex;align-items:flex-end;justify-content:center;gap:clamp(10px,3vw,22px);margin:0 auto;}
+
+/* High contrast: the drawing takes the system's text color */
+@media (forced-colors:active){.gg-ic,.gg-mir,.gg-spot{forced-color-adjust:none;background-color:CanvasText;}}
+@media print{.gg-ic,.gg-mir,.gg-spot{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}

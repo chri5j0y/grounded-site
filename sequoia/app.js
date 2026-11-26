@@ -299,7 +299,8 @@ const ICONS = {
 function icon(name, size) {
   return `<svg class="icon" width="${size || 22}" height="${size || 22}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 }
-function partIcon(d, size) { return icon(d.icon, size); }
+// BLD 1065: the part's icon from the Oak book (shared/gg-parts.js, the true vector), in the part's color; the line icon stands in if it is missing.
+function partIcon(d, size) { const G = window.GGParts; return d && G && G.icon && G.has(d.key) ? G.icon(d.key, 'sequoia', { size: size || 22, ink: true, cls: 'icon' }) : icon(d.icon, size); }
 
 // =====================================================================
 // THE TREE ART (GWG BLD 780): the Sequoia painting with six glowing markers,

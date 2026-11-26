@@ -337,8 +337,8 @@
 
   window.GGScreen.week = {
     files: function (tree) {
-      var f = ['/shared/gg-journey.js?v=b929', '/shared/gg-parts.js?v=b929', CK_JS[tree] || CK_JS.oak];
-      if (GUIDED[tree]) f.push('/shared/gg-guided.js?v=c210', '/shared/guided/' + tree + '.js?v=b907');
+      var f = ['/shared/gg-journey.js?v=b929', '/shared/gg-parts.js?v=c212', CK_JS[tree] || CK_JS.oak];
+      if (GUIDED[tree]) f.push('/shared/gg-guided.js?v=c212', '/shared/guided/' + tree + '.js?v=b907');
       return f;
     },
     title: function () { return 'Weekly Check-in'; },

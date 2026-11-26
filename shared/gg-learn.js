@@ -71,7 +71,9 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var today = function () { var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); };
 
-  var MARK = function (m) { return url('/shared/marks/' + m + '.svg'); };
+  // BLD 1065: the six trees have one emblem file each (the true vector at every size), so their -tab and -small names point to it.
+  var ONE = function (m) { return String(m).replace(/^(oak|maple|aspen|pine|birch|sequoia)-(tab|small)$/, '$1'); };
+  var MARK = function (m) { return url('/shared/marks/' + ONE(m) + '.svg'); };
   // Title scenes use the paintings (GWG BLD 760): shared/heroes/<id>-wide.webp, Heartwood's own (heartwood/hero-wide.webp, GWG BLD 772)
   // painting for 'marriage', and the home painting for any other id. FRAME places each one in the 16 by 9 stage:
   // x is the side to side crop (object-position, percent), s the side the words sit on (l, r, or t for top),
@@ -1085,7 +1087,7 @@
   function wmark(cfg) {
     var m = cfg.mark || {}, tree = m.tree || (APPS[cfg.app] ? cfg.app : ''), name = m.name || (APPS[cfg.app] ? APPS[cfg.app].name : 'Field Guide');
     return '<div class="ln-wm ln-wm-tl" aria-hidden="true"><img src="' + url('/favicon.svg') + '" alt=""><span>Grow With Grounded</span></div>'
-      + '<div class="ln-wm ln-wm-br" aria-hidden="true">' + (tree ? '<img src="' + url('/shared/marks/' + tree + '-small.svg') + '" alt="">' : '') + '<span>' + esc(name) + '<i> &middot; growwithgrounded.com</i></span></div>';
+      + '<div class="ln-wm ln-wm-br" aria-hidden="true">' + (tree ? '<img src="' + MARK(tree + '-small') + '" alt="">' : '') + '<span>' + esc(name) + '<i> &middot; growwithgrounded.com</i></span></div>';
   }
   function player(host, cfg) {
     css(); needSources();
@@ -2182,7 +2184,7 @@
     });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
-  function needPrint() { return script(url('/shared/gg-print.js?v=b939'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=c212'), function () { return !!window.GGPrint; }); }
   // Written pages (GWG BLD 787): shared/learn-pages.js, loaded the first time a page or a track with pages shows.
   function needPages() { return script(url('/shared/learn-pages.js?v=' + V), function () { return !!window.GG_LEARN_PAGES; }); }
   function pageOf(app, id) { var P = ((window.GG_LEARN_PAGES || {})[app]) || []; for (var i = 0; i < P.length; i++) if (P[i] && P[i].id === id) return P[i]; return null; }
@@ -2309,7 +2311,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c209'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=c212'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

@@ -59,7 +59,7 @@
   var V = 'b908';
   var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c207', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c196', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c207';
+  var GGN_SRC = '/shared/ggn.js?v=c212';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -252,7 +252,8 @@
     grove: { n: 'The Grove', href: '/grove/', who: 'Families and groups', season: true },
     heartwood: { n: 'Heartwood', href: '/heartwood/', who: 'Couples', season: true }
   };
-  function mark(t) { return '/shared/marks/' + t + '-small.svg'; }
+  // BLD 1065: the six trees show their one emblem file (the true vector at every size); any other mark keeps its small file.
+  function mark(t) { return /^(oak|maple|aspen|pine|birch|sequoia)$/.test(t) ? '/shared/marks/' + t + '.svg?v=c212' : '/shared/marks/' + t + '-small.svg'; }
   function treeOfProfile(p) { if (!p) return 'oak'; if (p.age === 'maple' || p.age === 'aspen' || p.age === 'pine') return p.age; return (window.GGP && GGP.tree) ? GGP.tree(p.id) : 'oak'; }
   function isKid(p) { return p && (p.age === 'maple' || p.age === 'aspen'); }
   /* BLD 935 (audit H3): a young tree (Maple, Aspen, or Pine) sees no Seeds and no Membership shelves, lines, or cards. */
@@ -1575,7 +1576,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c207';
+  var PV_SRC = '/shared/page-videos.js?v=c212';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2714,7 +2715,9 @@
     return '<div class="hm-parts">' + PARTS.map(function (p) {
       var l = ck ? ed.lv[p.k] : 'unsure', sc = ck ? num(ck.scores[p.k]) : null, w = sc == null ? 0 : Math.max(4, Math.min(100, sc * 10));
       var lb = plabel(p.k), g = isTend(p.k) ? '' : 'Grows from your tending';
-      return '<div class="hm-part hm-p-' + p.k + ' lv-' + l + (g ? ' grows' : '') + '"><b>' + esc(lb) + '</b><span class="bar" role="img" aria-label="' + esc(lb) + ': ' + LV[l][0] + (sc != null ? ', ' + sc + ' of 10' : '') + (g ? '. ' + g : '') + '"><i style="width:' + w + '%"></i></span><small>' + esc(ck ? LV[l][0] + (g ? ' · ' + g : '') : (g || (function (m) { return m.charAt(0).toUpperCase() + m.slice(1); })(pmeaning(p.k)))) + '</small></div>';
+      // BLD 1065: the part's icon from the Oak book in the tree's color, and the Strong, Steady, or Growing Edge icon by its level.
+      var G = window.GGParts, pic = G && G.icon ? G.icon(p.k, S.tree, { size: 24 }) : '', lic = ck && G && G.level ? G.level(l, { size: 24 }) : '';
+      return '<div class="hm-part hm-p-' + p.k + ' lv-' + l + (g ? ' grows' : '') + '"><b>' + pic + '<span>' + esc(lb) + '</span></b><span class="bar" role="img" aria-label="' + esc(lb) + ': ' + LV[l][0] + (sc != null ? ', ' + sc + ' of 10' : '') + (g ? '. ' + g : '') + '"><i style="width:' + w + '%"></i></span><small>' + lic + esc(ck ? LV[l][0] + (g ? ' · ' + g : '') : (g || (function (m) { return m.charAt(0).toUpperCase() + m.slice(1); })(pmeaning(p.k)))) + '</small></div>';
     }).join('') + '</div>';
   }
   /* Grow, BLD 882: the pre-881 tree card on the left with Your Family; this season, the Growth Plan, Living Sober,
@@ -3572,7 +3575,12 @@
   /* ---------- the screens ---------- */
   function wpChip(act, label, on, c, dis) { return '<button type="button" class="hm-wp-chip" data-hm-wp="' + esc(act) + '" aria-pressed="' + !!on + '"' + (c ? ' style="--c:var(--' + c + ')"' : '') + (dis ? ' aria-disabled="true"' : '') + '>' + esc(label) + '</button>'; }
   function wpLbl(t) { return '<div class="hm-wp-lbl">' + esc(t) + '</div>'; }
-  function wpRow(c, b, s) { return '<div class="hm-wp-row"><span class="dot" style="--c:var(--' + c + ')"></span><div class="tx"><b>' + esc(b) + '</b><small>' + esc(s) + '</small></div></div>'; }
+  // BLD 1065: a row that names a part shows that part's icon from the Oak book (in the row's color) where the dot was.
+  var WP_PART = { move: 'leaves', bark: 'bark', roots: 'roots', plate: 'leaves' };
+  function wpRow(c, b, s) {
+    var G = window.GGParts, ic = WP_PART[c] && G && G.icon ? G.icon(WP_PART[c], S.tree, { size: 26, ink: true, cls: 'hm-wp-ic' }) : '';
+    return '<div class="hm-wp-row">' + (ic ? '<span class="hm-wp-icw" style="--c:var(--' + c + ')">' + ic + '</span>' : '<span class="dot" style="--c:var(--' + c + ')"></span>') + '<div class="tx"><b>' + esc(b) + '</b><small>' + esc(s) + '</small></div></div>';
+  }
   function wpK(t, c) { return '<div class="hm-wp-k"' + (c ? ' style="--c:var(--' + c + ')"' : '') + '>' + esc(t) + '</div>'; }
   function wpH(t) { return '<h2 class="hm-wp-h2" id="hm-wp-h" tabindex="-1">' + esc(t) + '</h2>'; }
   function wpBtn(act, label, ghost) { return '<button type="button" class="hm-wp-btn' + (ghost ? ' ghost' : '') + '" data-hm-wp="' + act + '">' + esc(label) + '</button>'; }
@@ -3617,7 +3625,7 @@
         f = wpBtn('later', 'Later', true) + wpBtn('checkin', 'Take My Check-in');
       } else {
         var LVW = { strong: 'Strong', steady: 'Steady', edge: 'Growing Edge', unsure: 'Not sure yet' };
-        var parts = '<div class="hm-wp-parts">' + PARTS.map(function (p) { var l = ed.lv[p.k]; return '<div class="hm-wp-part' + (l === 'edge' ? ' edge' : '') + '" style="--c:var(--' + p.k + ');--cs:var(--' + p.k + '-s)"><b>' + p.n + '</b><span>' + esc(wpWord(p.k)) + (isTend(p.k) ? '' : ', grows from your tending') + '</span><em class="lv-' + l + '">' + LVW[l] + '</em></div>'; }).join('') + '</div>';
+        var parts = '<div class="hm-wp-parts">' + PARTS.map(function (p) { var l = ed.lv[p.k]; var G = window.GGParts; return '<div class="hm-wp-part' + (l === 'edge' ? ' edge' : '') + '" style="--c:var(--' + p.k + ');--cs:var(--' + p.k + '-s)"><b>' + (G && G.icon ? G.icon(p.k, d.lead, { size: 24, ink: true }) : '') + p.n + '</b><span>' + esc(wpWord(p.k)) + (isTend(p.k) ? '' : ', grows from your tending') + '</span><em class="lv-' + l + '">' + (G && G.level ? G.level(l, { size: 24 }) : '') + LVW[l] + '</em></div>'; }).join('') + '</div>';
         var e4 = ed.edges.filter(isTend), first = e4.length ? e4.slice(0, 2) : ed.lead ? [ed.lead] : [];
         var nudge = e4.length ? '<b>' + esc(first.map(function (k) { return plabel(k); }).join(' and ')) + '</b> get' + (first.length === 1 ? 's' : '') + ' your first suggestions: ' + esc(first.map(function (k) { return wpLong(k); }).join(', ')) + '.'
           : first.length ? 'Your first suggestions lean toward <b>' + esc(plabel(first[0])) + '</b>, ' + esc(wpLong(first[0])) + '. Meaning and hope grow as you tend all four.' : 'Every part keeps its good rhythm.';
@@ -4746,7 +4754,7 @@
   var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
   /* BLD 912 Round 1: every check-in runs right here, through the tree's own check-in module (shared/checkin/<tree>.js,
      GGCheckin[tree].run), with the same questions, voice, and saved records as the tree page, and no tree page at all. */
-  var CK_MOD = { oak: '/shared/checkin/oak.js?v=c189', sequoia: '/shared/checkin/sequoia.js?v=c189', birch: '/shared/checkin/birch.js?v=c189', pine: '/shared/checkin/pine.js?v=c189', maple: '/shared/checkin/maple.js?v=c189', aspen: '/shared/checkin/aspen.js?v=c189' };
+  var CK_MOD = { oak: '/shared/checkin/oak.js?v=c212', sequoia: '/shared/checkin/sequoia.js?v=c212', birch: '/shared/checkin/birch.js?v=c212', pine: '/shared/checkin/pine.js?v=c212', maple: '/shared/checkin/maple.js?v=c212', aspen: '/shared/checkin/aspen.js?v=c212' };
   var NOPLAN = {};
   var CK_READY = { maple: true, aspen: true, oak: true, sequoia: true, birch: true, pine: true };
   var CK_WAIT = 0;   // when a check-in was asked for and is still loading (the tour waits for it)
@@ -5113,7 +5121,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=c189', ground: '/shared/home/groundwork.js?v=c183', next: '/shared/home/nextsteps.js?v=c183', legacy: '/shared/home/legacy.js?v=c183', guide: '/shared/home/grownup.js?v=c183', talk: '/shared/home/talk.js?v=c207', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=b949', week: '/shared/home/week.js?v=c212', ground: '/shared/home/groundwork.js?v=c212', next: '/shared/home/nextsteps.js?v=c183', legacy: '/shared/home/legacy.js?v=c183', guide: '/shared/home/grownup.js?v=c212', talk: '/shared/home/talk.js?v=c212', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -5215,7 +5223,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=c197', '/shared/gg-sober.js?v=c207'];
+  var SOBER_JS = ['/shared/gg-life.js?v=c197', '/shared/gg-sober.js?v=c212'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -5710,7 +5718,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c210';
+  var LEARN_JS = '/shared/gg-learn.js?v=c212';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -5918,7 +5926,7 @@
     if (MTR.src !== L) { MTR.src = L; MTR.list = arr(L.tracks).filter(function (t) { return t && t.id && arr(t.lessons).length; }).map(function (t) { return Object.assign({}, t, { member: 1 }); }); }
     return MTR.list;
   }
-  var PRINT_JS = '/shared/gg-print.js?v=b939';
+  var PRINT_JS = '/shared/gg-print.js?v=c212';
   function memberCert(t) {
     var dn = obj(homeRec().ldone), dates = arr(t && t.lessons).map(function (l) { return dn[l.id] || ''; }).filter(Boolean).sort();
     return load(PRINT_JS).then(function () { if (window.GGPrint && GGPrint.certificate) return GGPrint.certificate({ tree: 'house', name: S.p ? S.p.name : '', title: t.title, body: t.certLine || '', date: dates[dates.length - 1] || today() }); });
@@ -6111,7 +6119,9 @@
       var prev = null; for (var j = i + 1; j < list.length; j++) if (list[j].type === e.type) { prev = list[j]; break; }
       var cells = PART_KEYS.map(function (k) {
         var s = num(e.scores[k]), p0 = prev ? num(prev.scores[k]) : null, d = s != null && p0 != null ? s - p0 : null, word = d == null ? '' : d >= 2 ? 'Grew' : d <= -2 ? 'Dipped' : 'Same';
-        return '<li class="hm-p-' + k + '"><b>' + esc(plabel(k)) + '</b><span>' + (s == null ? 'Not sure yet' : LV[levelKey(s)][0]) + (word ? ' · ' + word : '') + '</span></li>';
+        // BLD 1065: the Strong, Steady, or Growing Edge icon from the Oak book beside each part's level.
+        var G = window.GGParts, lic = s != null && G && G.level ? G.level(levelKey(s), { size: 22 }) : '';
+        return '<li class="hm-p-' + k + '"><b>' + esc(plabel(k)) + '</b><span>' + lic + (s == null ? 'Not sure yet' : LV[levelKey(s)][0]) + (word ? ' · ' + word : '') + '</span></li>';
       }).join('');
       return '<article class="hm-card hm-hrow"><div class="hm-time">' + (e.type === 'quick' ? 'Quick Check-in' : 'Full Check-in') + '</div><h3 class="hm-h3">' + esc(niceDay(e.date)) + '</h3><ul class="hm-hparts">' + cells + '</ul></article>';
     }).join('');

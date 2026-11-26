@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#C4501E">
-<link rel="icon" type="image/svg+xml" href="/shared/marks/maple-tab.svg">
+<link rel="icon" type="image/svg+xml" href="/shared/marks/maple.svg?v=c212">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=b792c">
 <title>Maple, for Kids | The Grounded Way | Grow With Grounded</title>
 <meta name="description" content="Maple is the tree for kids, grades K to 5, in The Grounded Way by Grow With Grounded. Bright leaves, strong roots: tend spirit, mind, body, and relationships every day with your grown-up, and meaning and hope grow.">
@@ -28,6 +28,7 @@
 <meta name="twitter:description" content="Maple is the tree for kids, grades K to 5, in The Grounded Way by Grow With Grounded. Bright leaves, strong roots: tend spirit, mind, body, and relationships every day with your grown-up, and meaning and hope grow.">
 <meta name="twitter:image" content="https://growwithgrounded.com/maple/share-image.png?v=b792c">
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
+<link rel="stylesheet" href="/shared/gg-art.css?v=c212">
 <link rel="stylesheet" href="/shared/gg-hero.css?v=b760">
 <style>
 :root{
@@ -954,9 +955,9 @@ a.big-btn{text-decoration:none;}
 <script src="/maple/life.js?v=b907"></script>
 <script src="/shared/gg-journey.js?v=b929"></script>
 <script src="/shared/gg-library.js?v=c124"></script>
-<script src="/shared/gg-parts.js?v=b929"></script>
+<script src="/shared/gg-parts.js?v=c212"></script>
 <script src="/shared/gg-tend.js?v=b949"></script>
-<script src="/shared/gg-treeart.js?v=b907"></script>
+<script src="/shared/gg-treeart.js?v=c212"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
 <script src="/shared/kids/maple-practices.js?v=c187"></script>
 <script>
@@ -2190,7 +2191,7 @@ function mpInit(kid) {
     els: { today: 'mp-today', week: 'mp-week', season: 'mp-season' },
     parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.value, color: p.hex })),
     moveKey: 'leaves',
-    partIcon: k => `<span class="mp-pi" aria-hidden="true">${ICONS[partBy(k).icon] || ''}</span>`,
+    partIcon: k => (window.GGParts && GGParts.icon && GGParts.has(k)) ? GGParts.icon(k, 'maple', { size: 24, ink: true }) : `<span class="mp-pi" aria-hidden="true">${ICONS[partBy(k).icon] || ''}</span>`, // BLD 1065: the Oak book's part icon
     questions: () => mpWeeklyBank(),
     answers: CK.answers,
     weekStem: band === 'k2' ? 'Think about this week. A grown-up can read these out loud.' : 'Think about this past week.',
@@ -3158,9 +3159,9 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=b934"><script src="/shared/practice-rhythm.js?v=c209"></script><script src="/shared/gg-guided.js?v=c210"></script><script src="/shared/guided/maple.js?v=b907"></script><script src="/maple/guided.js?v=b907"></script><!-- /GUIDED -->
-<script src="/shared/gg-learn.js?v=c210" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
+<!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=c212"><script src="/shared/practice-rhythm.js?v=c209"></script><script src="/shared/gg-guided.js?v=c212"></script><script src="/shared/guided/maple.js?v=b907"></script><script src="/maple/guided.js?v=b907"></script><!-- /GUIDED -->
+<script src="/shared/gg-learn.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
 <script src="/read.js?v=c030" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=c030';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=c193" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
 </body>
 </html>

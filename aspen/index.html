@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#1F6F74">
-<link rel="icon" type="image/svg+xml" href="/shared/marks/aspen-tab.svg">
+<link rel="icon" type="image/svg+xml" href="/shared/marks/aspen.svg?v=c212">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=b792c">
 <title>Aspen, for Middle Schoolers | The Grounded Way | Grow With Grounded</title>
 <meta name="description" content="Aspen is the tree for middle schoolers, grades 6 to 8, in The Grounded Way by Grow With Grounded. Rooted together: tend spirit, mind, body, and relationships every day, and meaning and hope grow.">
@@ -28,6 +28,7 @@
 <meta name="twitter:description" content="Aspen is the tree for middle schoolers, grades 6 to 8, in The Grounded Way by Grow With Grounded. Rooted together: tend spirit, mind, body, and relationships every day, and meaning and hope grow.">
 <meta name="twitter:image" content="https://growwithgrounded.com/aspen/share-image.png?v=b792c">
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
+<link rel="stylesheet" href="/shared/gg-art.css?v=c212">
 <link rel="stylesheet" href="/shared/gg-hero.css?v=b760">
 <link rel="stylesheet" href="/shared/gg-tend.css?v=b756">
 <style>
@@ -502,9 +503,9 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="checkin.js?v=b907"></script>
 <script src="/shared/gg-journey.js?v=b929"></script>
 <script src="/shared/gg-library.js?v=c124"></script>
-<script src="/shared/gg-parts.js?v=b929"></script>
+<script src="/shared/gg-parts.js?v=c212"></script>
 <script src="/shared/gg-tend.js?v=b949"></script>
-<script src="/shared/gg-treeart.js?v=b907"></script>
+<script src="/shared/gg-treeart.js?v=c212"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
 <script src="/shared/kids/aspen-practices.js?v=c187"></script>
 <script>
@@ -2209,7 +2210,7 @@ if (window.GGTend) GGTend.init({
   els: { today: 'asp-today', week: 'asp-week', season: 'asp-season' },
   parts: PARTS.map(p => ({ key: p.key, part: p.name, name: p.sub, color: pcolor(p.key) })),
   moveKey: 'leaves',
-  partIcon: k => `<span class="asp-pi" aria-hidden="true">${ICONS[k] || ''}</span>`,
+  partIcon: k => (window.GGParts && GGParts.icon && GGParts.has(k)) ? GGParts.icon(k, 'aspen', { size: 24, ink: true }) : `<span class="asp-pi" aria-hidden="true">${ICONS[k] || ''}</span>`, // BLD 1065: the Oak book's part icon
   questions: () => aspWeeklyBank(),
   answers: ANSWERS,
   weekStem: 'Think about this past week.',
@@ -2263,9 +2264,9 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=b934"><script src="/shared/practice-rhythm.js?v=c209"></script><script src="/shared/gg-guided.js?v=c210"></script><script src="/shared/guided/aspen.js?v=b907"></script><script src="/aspen/guided.js?v=b907"></script><!-- /GUIDED -->
-<script src="/shared/gg-learn.js?v=c210" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
+<!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=c212"><script src="/shared/practice-rhythm.js?v=c209"></script><script src="/shared/gg-guided.js?v=c212"></script><script src="/shared/guided/aspen.js?v=b907"></script><script src="/aspen/guided.js?v=b907"></script><!-- /GUIDED -->
+<script src="/shared/gg-learn.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
 <script src="/read.js?v=c030" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=c030';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=c193" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
 </body>
 </html>
