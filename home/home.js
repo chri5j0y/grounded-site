@@ -2491,7 +2491,7 @@
     var plate = T.ready ? plateCardHtml() : '';
     var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
     var ls = soberOn() ? soberHtml(soberDate()) : !isKid(S.p) && h.parts.indexOf('sober') >= 0 && !soberDate() ? soberInviteHtml() : ''; if (ls && soberOn()) lsPre();
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + kidTreeHtml() + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + lead + (T.ready ? holTodayHtml() : '') + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + kidTreeHtml() + wmCardHtml() + ls + nowHtml(items) + (wide ? plate : '') + head + syncNoteHtml() + lead + (T.ready ? holTodayHtml() : '') + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + movedHtml(T.moved) + moneyTodayHtml() + (wide ? '' : plate + wkb) + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + visitTodayHtml() + fourHtml(T) + (wide ? wkb : '') + sideHtml(items, ed) + dailyMedHtml(T) + '</div></div>' + fab;
   }
   function visitTodayHtml() { try { return window.GGVisit && GGVisit.todayHtml ? GGVisit.todayHtml(S.id, S.tree) || '' : ''; } catch (e) { return ''; } }
@@ -4545,6 +4545,7 @@
       loadPlanner().then(function (ok) { if (ok) GGPlanner.load(); });
       GGAccount.on(function (t) { if (t === 'state' || t === 'confirmed' || t === 'household') { acctPaint(); if (t === 'state' && !S.id) render(); if (t !== 'household') joinWaitGo(); } });
       GGSync.on(function (t, d) {
+        syncNoteOn(t, d);
         if (t === 'status') { if (d && d.state === 'idle') acctSeen(); var dot = acctStatus().dot; if (dot !== AH.dot || (d && d.state === 'idle')) { AH.dot = dot; acctPaint(); } }
         else if (t === 'spaces') acctSeen();
         if (t === 'spaces' || (t === 'status' && d && d.state === 'idle')) plannerHH();   // BLD 950: the Household line in the Family Planner
@@ -4630,6 +4631,109 @@
     return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span>Already growing on another device? <button type="button" class="hm-linkbtn" data-hm-acct="signin">Sign In to My Account</button></span></div>';
   }
 
+  /* ---------- BLD 1071: Fresh Code and a New Day ----------
+     Chris, November 26, 2026 (Thanksgiving): his MacBook in Edge kept a tab from before the holiday dinners arrived, so Today
+     showed the plan's Use It Up dinner. Now the page keeps itself current: when a profile opens or unlocks, when the page
+     comes back into view, and when the calendar day changes, it asks the site for /home/ (no-store) and compares home.js's
+     ?v= with the one running here. A newer one reloads the page quietly at a safe moment (never while typing, in a dialog,
+     a sheet, a player, a video, a voice, or a sync; right after a profile opens, when the page is hidden, or after a short
+     quiet spell). The unlock lives
+     in the session, so the profile stays open through the reload. A new day redraws Today and the Week on its own, and Today
+     shows a quiet line while the first sync after opening brings in the latest plan. */
+  var FR = { run: '', want: '', at: 0, busy: false, eager: false, day: '', dayDue: false, seen: Date.now(), timer: null, media: [] };
+  FR.run = (function () {
+    var src = (document.currentScript && document.currentScript.src) || '';
+    if (!/\/home\/home\.js/.test(src)) { var el = document.querySelector('script[src*="/home/home.js"]'); src = el ? el.src : ''; }
+    var m = /\/home\/home\.js\?v=([A-Za-z0-9_.]+)/.exec(src); return m ? m[1] : '';
+  })();
+  FR.day = ymd(now());
+  // Media made with new Audio() never reaches the page, so each play is noted here (a playing clip waits the reload).
+  try {
+    var mPlay = HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play = function () { if (FR.media.indexOf(this) < 0) { FR.media.push(this); if (FR.media.length > 40) FR.media.shift(); } return mPlay.apply(this, arguments); };
+  } catch (e) {}
+  ['pointerdown', 'keydown', 'wheel', 'touchstart', 'input'].forEach(function (t) { window.addEventListener(t, function () { FR.seen = Date.now(); }, { capture: true, passive: true }); });
+  function frTyping() {
+    var a = document.activeElement; if (!a || a === document.body) return false;
+    return a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName);
+  }
+  function frPlaying() {
+    try { if (window.speechSynthesis && (speechSynthesis.speaking || speechSynthesis.pending)) return true; } catch (e) {}
+    var all = FR.media.concat([].slice.call(document.querySelectorAll('audio,video')));
+    if (all.some(function (m) { return m && !m.paused && !m.ended; })) return true;
+    try { if (window.GGLearn && GGLearn.musicState && GGLearn.musicState().playing) return true; } catch (e) {}
+    return false;
+  }
+  function frOpenThing() {
+    try { if (window.GGGuided && GGGuided.open && GGGuided.open()) return true; } catch (e) {}
+    try { if (window.GGHealth && GGHealth.state && GGHealth.state.ov) return true; } catch (e) {}
+    return [].slice.call(document.querySelectorAll('.ggp-dlg, .ga-sheet, #hm-sheet, .ln-vs, [role="dialog"], dialog[open]')).some(function (el) { return !el.hidden && el.getClientRects().length > 0; });
+  }
+  function frSyncing() { try { return !!(window.GGSync && GGSync.status && GGSync.status().state === 'syncing'); } catch (e) { return false; } }
+  // Calm enough to redraw: nothing being typed, played, or open.
+  function frCalm() { return !frTyping() && !frPlaying() && !frOpenThing(); }
+  // Safe to reload: calm, no sync running, and the page hidden, just opened, or left quiet for a little while.
+  function frSafe() { return frCalm() && !frSyncing() && (document.hidden || (FR.eager && Date.now() - FR.at < 60000) || Date.now() - FR.seen > 15000); }
+  function frReload() {
+    if (!FR.want || FR.want === FR.run) return;
+    if (!frSafe()) { frSoon(); return; }
+    // One reload for each newer version, so a slow copy of the page can never loop.
+    var key = 'gg-home-fresh', tried = null;
+    try { tried = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (e) {}
+    if (tried && tried.to === FR.want && tried.from === FR.run) return;
+    try { sessionStorage.setItem(key, JSON.stringify({ from: FR.run, to: FR.want })); } catch (e) {}
+    try { location.reload(); } catch (e) {}
+  }
+  function frSoon() { clearTimeout(FR.timer); FR.timer = setTimeout(frTick, FR.eager ? 3000 : 15000); }
+  function freshCheck(why) {
+    if (PREVIEW || !FR.run || FR.busy || !/^https?:$/.test(location.protocol) || !window.fetch) return;
+    var gap = why === 'look' ? 10 * 60000 : 60000;
+    if (Date.now() - FR.at < gap && why !== 'day') return;
+    FR.busy = true; FR.at = Date.now(); FR.eager = why === 'open';
+    fetch('/home/', { cache: 'no-store', credentials: 'same-origin' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) {
+      FR.busy = false;
+      var m = /\/home\/home\.js\?v=([A-Za-z0-9_.]+)/.exec(t || ''); if (!m || m[1] === FR.run) return;
+      FR.want = m[1]; frReload();
+    }, function () { FR.busy = false; });
+  }
+  function frDay() {
+    var d = ymd(now());
+    if (d !== FR.day) { FR.day = d; FR.dayDue = true; freshCheck('day'); }
+    if (!FR.dayDue) return;
+    if (!frOpen()) { FR.dayDue = false; return; }   // locked for now: the next unlock draws the new day
+    if (!frCalm()) { frSoon(); return; }
+    FR.dayDue = false;
+    try { if (window.GGHealth && GGHealth.redraw && document.querySelector('#hj-root,#hj-bare')) GGHealth.redraw(); } catch (e) {}
+    refreshPane();
+  }
+  function frOpen() { var a = window.GGP && GGP.active && GGP.active(); return !!(a && S.id && a.id === S.id && GGP.data(S.id, 'home')); }
+  function frTick() { frDay(); if (FR.want && FR.want !== FR.run) frReload(); }
+  function freshBoot() {
+    setInterval(frTick, 60000);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { if (FR.want && FR.want !== FR.run) frReload(); return; }
+      frDay(); freshCheck('look');
+    });
+    window.addEventListener('focus', function () { frDay(); });
+    window.addEventListener('pageshow', function (e) { if (e && e.persisted) { frDay(); freshCheck('look'); } });
+  }
+  // The first sync after a profile opens: a quiet line on Today until it lands (or 20 seconds at the most).
+  var SYNCNOTE = { id: null, t: null };
+  function syncNoteStart(id) {
+    if (!id || !acctIn() || !window.GGSync || !GGSync.status) return;
+    var st = GGSync.status(); if (!st || st.state !== 'syncing') return;
+    SYNCNOTE.id = id; clearTimeout(SYNCNOTE.t); SYNCNOTE.t = setTimeout(syncNoteEnd, 20000);
+  }
+  function syncNoteEnd() {
+    if (!SYNCNOTE.id) return; SYNCNOTE.id = null; clearTimeout(SYNCNOTE.t);
+    var r = route(); if (frOpen() && (r.tab === 'today' || (r.tab === 'me' && (S.under || 'today') === 'today')) && !r.sub) refreshPane();
+  }
+  function syncNoteOn(t, d) { if (t === 'status' && SYNCNOTE.id && d && d.state !== 'syncing') syncNoteEnd(); }
+  function syncNoteHtml() {
+    if (!SYNCNOTE.id || SYNCNOTE.id !== S.id) return '';
+    return '<p class="hm-sub hm-syncnote" role="status" aria-live="polite" style="margin:6px 0 12px">' + I('swap') + ' Bringing in your latest plan.</p>';
+  }
+
   /* ---------- start ---------- */
   function boot() {
     mountIcons();
@@ -4639,7 +4743,8 @@
       document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-ggm="open"],[data-hm-mcode]'); if (!t) return; e.preventDefault(); e.stopImmediatePropagation(); pvNote(); }, true);
     }
     if (!window.GGP) { var r = app(); if (r) r.innerHTML = welcomeHtml(); return; }
-    GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
+    freshBoot();
+    GGP.on(function (type) { if (type === 'change') { var a0 = GGP.active && GGP.active(); if (a0 && a0.id !== S.id) { syncNoteStart(a0.id); freshCheck('open'); } } if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
     // BLD 908: the door and Membership are read once this whole file has run (its later parts set their names).
     setTimeout(memberBoot, 0);
     GGP.ready.then(function () { render(); walkDoor(); walkGo(); acctHome(); houseHome(); });
