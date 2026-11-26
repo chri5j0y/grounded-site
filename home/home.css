@@ -1817,4 +1817,6 @@ html.gg-ts-2 main.hm{zoom:1.25;}
 .hm-wp-part span.gg-ic{display:inline-block;}
 .hm-wp-part em{display:inline-flex;align-items:center;gap:5px;}
 .hm-wp-icw{flex:none;display:flex;color:var(--c);margin-top:2px;}
-@media (max-width:560px){.hm-part b{flex-direction:column;align-items:flex-start;gap:4px;}.hm-part b > span:not(.gg-ic){-webkit-hyphens:auto;hyphens:auto;overflow-wrap:anywhere;}}
+/* Phones: the icon above the name, and two cards a row up to 430 px wide, so every part name breaks only between words. */
+@media (max-width:560px){.hm-part b{flex-direction:column;align-items:flex-start;gap:4px;}}
+@media (max-width:430px){#hm-tree .hm-parts{grid-template-columns:repeat(2,minmax(0,1fr));}}
