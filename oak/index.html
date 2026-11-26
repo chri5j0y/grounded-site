@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#3D5A73">
-<link rel="icon" type="image/svg+xml" href="/shared/marks/oak-tab.svg">
+<link rel="icon" type="image/svg+xml" href="/shared/marks/oak.svg?v=c212">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=b792c">
 <title>Oak, for Adults | The Grounded Way | Grow With Grounded</title>
 <meta name="description" content="Oak is the tree for adults, 26 to 59, in The Grounded Way by Grow With Grounded. Shelter for others, strength for you: tend spirit, mind, body, and relationships every day, and meaning and hope grow.">
@@ -28,6 +28,7 @@
 <meta name="twitter:title" content="Oak, for Adults | The Grounded Way">
 <meta name="twitter:description" content="Oak is the tree for adults, 26 to 59, in The Grounded Way by Grow With Grounded. Shelter for others, strength for you: tend spirit, mind, body, and relationships every day, and meaning and hope grow.">
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
+<link rel="stylesheet" href="/shared/gg-art.css?v=c212">
 <link rel="stylesheet" href="/shared/gg-hero.css?v=b760">
 <style>
 /* LIGHT PALETTE (default) */
@@ -1049,6 +1050,7 @@ html.ts-2 main{zoom:1.25;}
 <div class="view" id="client-season"></div>
 <div class="view" id="client-intro">
   <div id="prac-moved"></div>
+  <span class="gg-spot oak-spot" style="--ic:url('/shared/art/spot/round.svg?v=c212');--ar:.973;--h:72px;margin:0 0 14px" aria-hidden="true"></span><!-- BLD 1065: the Oak round from the book, a quiet section mark -->
   <p class="lead">Have you ever known a person, or perhaps been a person, who gives the impression that everything is good, but you sense it would only take one small bump in the road before the house of cards comes tumbling down? It takes one to know one. I lived this way for a long time, and I have met countless others who have felt the same.</p>
   <p class="lead">The answer is resilience: your ability to bounce back when something unexpected and unwanted occurs. The key is strengthening the different parts of your life, so when one part is injured, the healthy parts provide support for real healing and a return to wholeness.</p>
   <p class="lead">A person is a lot like a tree. A healthy tree is healthy because all its parts grow together. It needs roots that hold, a trunk that carries, bark that heals, branches that reach, leaves that breathe, and fruit that carries the future. Oak helps you tend four parts of you, Spirit, Mind, Body, and Relationships, so meaning and hope grow from that tending. The Grounded Way works when you tend all four parts.</p>
@@ -1150,15 +1152,15 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-profiles.js?v=c193"></script>
 <script src="/shared/gg-life.js?v=c197"></script>
 <script src="/shared/gg-life-kit.js?v=b888"></script>
-<script src="/shared/gg-sober.js?v=c207"></script>
+<script src="/shared/gg-sober.js?v=c212"></script>
 <script src="/shared/gg-journey.js?v=b929"></script>
 <script src="/shared/gg-library.js?v=c124"></script>
-<script src="/shared/gg-parts.js?v=b929"></script>
+<script src="/shared/gg-parts.js?v=c212"></script>
 <script src="/shared/gg-tend.js?v=b949"></script>
-<script src="/shared/gg-treeart.js?v=b907"></script>
+<script src="/shared/gg-treeart.js?v=c212"></script>
 <script src="/oak/guides.js?v=c209"></script>
 <script src="/oak/practices.js?v=c209"></script>
-<script src="/shared/gg-guided.js?v=c210"></script>
+<script src="/shared/gg-guided.js?v=c212"></script>
 <script src="/shared/guided/oak.js?v=b949"></script>
 <script src="/shared/practice-rhythm.js?v=c209" defer></script>
 <script>
@@ -1447,7 +1449,8 @@ const ICONS = {
 function icon(name, size) {
   return `<svg class="icon" width="${size || 22}" height="${size || 22}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 }
-function partIcon(d, size) { return icon(d.icon, size); }
+// BLD 1065: the part's icon from the Oak book (shared/gg-parts.js, the true vector), in the part's color; the line icon stands in if it is missing.
+function partIcon(d, size) { const G = window.GGParts; return d && G && G.icon && G.has(d.key) ? G.icon(d.key, 'oak', { size: size || 22, ink: true, cls: 'icon' }) : icon(d.icon, size); }
 
 // =====================================================================
 // THE TREE ART (GWG BLD 780): the Oak painting with six glowing markers,
@@ -3542,8 +3545,8 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=c210" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
 <script src="/read.js?v=c030" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=c030';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=c193" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
 </body>
 </html>

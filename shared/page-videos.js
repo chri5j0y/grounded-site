@@ -80,7 +80,7 @@ window.PAGE_VIDEOS = {
   // On a tap, read.js and the shared player (shared/gg-learn.js) load, then the video plays in the player's own
   // overlay styles (ggl ggl-app), with GGLearn.player doing all the playing, the closing scene, and Sources.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=c030', LEARN = '/shared/gg-learn.js?v=c210', ART = '/shared/learn-art.js?v=c205';
+  var READ = '/read.js?v=c030', LEARN = '/shared/gg-learn.js?v=c212', ART = '/shared/learn-art.js?v=c205';
   var PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
@@ -171,7 +171,7 @@ window.PAGE_VIDEOS = {
       var root = document.createElement('div');
       root.className = 'ggl ggl-app gg-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + v.title);
       root.style.setProperty('--ggl-acc', acc); root.style.setProperty('--ggl-bar', P.bar || '#2E2118'); root.style.setProperty('--ggl-lite', '#E8C98E');
-      root.innerHTML = '<div class="ggl-top"><img src="' + ROOT + (P.mark && P.mark.tree ? '/shared/marks/' + P.mark.tree + '-tab.svg' : '/favicon.svg') + '" alt=""><b><span class="gg-pv-tl">' + esc(v.title) + '</span><span class="gg-pv-ts">' + esc(String(v.title).replace(/: A Look Inside$/, '')) + '</span></b><button type="button" class="ggl-x" data-pv="close">Back to the Page</button></div>'
+      root.innerHTML = '<div class="ggl-top"><img src="' + ROOT + (P.mark && P.mark.tree ? '/shared/marks/' + P.mark.tree + (/^(oak|maple|aspen|pine|birch|sequoia)$/.test(P.mark.tree) ? '.svg' : '-tab.svg') : '/favicon.svg') + '" alt=""><b><span class="gg-pv-tl">' + esc(v.title) + '</span><span class="gg-pv-ts">' + esc(String(v.title).replace(/: A Look Inside$/, '')) + '</span></b><button type="button" class="ggl-x" data-pv="close">Back to the Page</button></div>'
         + '<div class="ggl-in"><div class="ggl-eb">Watch</div><h1 tabindex="-1">' + esc(v.title) + '</h1><p class="ggl-muted">' + esc(v.blurb || '') + ' About ' + esc(String(v.mins || 2)) + ' minutes.</p><div class="gg-pv-host"></div></div>';
       document.body.appendChild(root);
       OPEN = { key: key, root: root, from: from || document.activeElement, overflow: document.body.style.overflow, hist: true };

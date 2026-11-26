@@ -33,6 +33,16 @@
      get(key, o)          {key, tree, word, meaning, label, color, colorDark, soft, softDark, tend, grows}
      list(o)              get() for all six, in tree order (o.only 'tend' or 'grow' narrows it)
      countTend(keys)      how many of the four tended parts are in keys (an array, or an object of key: true)
+   The book art (GWG BLD 1065): one true vector per drawing in shared/art, drawn as a mask (shared/gg-art.css, added
+   to the page once by the first call), crisp at every size and readable in light and dark.
+     icon(key, tree, o)   the part's icon: Roots, Trunk, and Branches are shared by every tree; Leaves, Fruit, and Bark
+                          are each tree's own, in the tree's color. tree is one of the six trees ('' for any other app).
+                          o.size (px, default 1.35em), o.ink true (the text color, not the tree color), o.cls
+     level(l, o)          the level icon: l is 's', 't', 'g' (or 'strong', 'steady', 'edge'); '' for Not sure yet
+     pair(key, o)         the mirror pair for roots, bark, leaves, branches: {title, line, html}; null for the others.
+                          o.h the drawings' height in px (default 96)
+     TREE_COLORS          the six locked tree colors
+     art(path)            the address of one art file ('parts/roots.svg'), with its version
    o.plain may be true, false, or a function returning either.
    The same object also carries gg-app.js's rename helpers (id, tag, fix, name) on pages that load it.
    Nothing here reads or saves anything about a person.
@@ -79,10 +89,54 @@
     else if (keys && typeof keys === 'object') Object.keys(keys).forEach(function (k) { if (keys[k]) set[k] = 1; });
     return TEND.filter(function (k) { return set[k]; }).length;
   }
+  /* ---------- the book art (GWG BLD 1065) ---------- */
+  var AV = 'c212';
+  // The mirror pairs wait for their new drawings (Chris asked for stronger art, November 25, 2026). When the new vectors
+  // are in shared/art/mirror (bld1065 build_art.py), set PAIRS_ON true; pair() returns null until then.
+  var PAIRS_ON = false;
+  var ROOT = (function () { try { var c = document.currentScript && document.currentScript.src; if (c) return new URL('..', c).href.replace(/\/$/, ''); } catch (e) {} return ''; })();
+  var TREE_COLORS = { oak: '#3D5A73', maple: '#C4501E', aspen: '#1F6F74', pine: '#3A6B35', birch: '#7F6610', sequoia: '#7A2E1C' };
+  var OWN = { leaves: 1, fruit: 1, bark: 1 };
+  var LVL = { s: 'strong', strong: 'strong', t: 'steady', steady: 'steady', g: 'growing', edge: 'growing', growing: 'growing' };
+  var LVN = { strong: 'Strong', steady: 'Steady', growing: 'Growing Edge' };
+  // The mirror pairs (the Oak book): what the tree does, and the same in a person, in words drawn from the book's captions.
+  var PAIRS = {
+    roots: { title: 'Roots and Spirit', art: [['roots', 1], ['spirit', 1]], line: 'Deep roots hold the whole tree steady, the way a rooted spirit holds a whole life.' },
+    bark: { title: 'Bark and the Mind', art: [['bark', 0.411], ['mind', 0.826]], line: 'Bark guards the living layer of the tree, and the mind guards the living center of a person.' },
+    leaves: { title: 'Leaf and Lungs', art: [['leaf', 0.589], ['lungs', 0.848]], line: 'A leaf breathes in what we breathe out, and our lungs breathe in what the leaf gives away.' },
+    branches: { title: 'Branches and Hands', art: [['branch', 1.758], ['hands', 1.756]], line: 'Branches divide and reach outward, and as we reach out, the paths between us grow.' }
+  };
+  function art(path) { return ROOT + '/shared/art/' + path + '?v=' + AV; }
+  function css() {
+    if (typeof document === 'undefined' || document.getElementById('gg-art-css')) return;
+    if (document.querySelector('link[href*="/shared/gg-art.css"]')) return;
+    var l = document.createElement('link'); l.id = 'gg-art-css'; l.rel = 'stylesheet'; l.href = ROOT + '/shared/gg-art.css?v=' + AV;
+    (document.head || document.documentElement).appendChild(l);
+  }
+  function span(cls, src, style, label) {
+    css();
+    return '<span class="' + cls + '" style="--ic:url(\'' + src + '\')' + (style || '') + '"' + (label ? ' role="img" aria-label="' + String(label).replace(/"/g, '&quot;') + '"' : ' aria-hidden="true"') + '></span>';
+  }
+  function icon(k, t, o) {
+    o = o || {}; if (!has(k) || !TREE_COLORS[t]) return '';
+    var src = art('parts/' + (OWN[k] ? t + '-' + k : k) + '.svg');
+    return span('gg-ic gg-pt' + (o.ink ? '' : ' gg-tc-' + t) + (o.cls ? ' ' + o.cls : ''), src, o.size ? ';--s:' + o.size + 'px' : '', o.label);
+  }
+  function level(l, o) {
+    o = o || {}; var n = LVL[l]; if (!n) return '';
+    return span('gg-ic gg-lv gg-lv-' + n + (o.cls ? ' ' + o.cls : ''), art('levels/' + n + '.svg'), o.size ? ';--s:' + o.size + 'px' : '', o.label === true ? LVN[n] : o.label);
+  }
+  function pair(k, o) {
+    o = o || {}; var P2 = PAIRS_ON && PAIRS[k]; if (!P2) return null;
+    var h = o.h || 96;
+    var html = '<div class="gg-pair" style="--ph:' + h + 'px" aria-hidden="true">' + P2.art.map(function (a) { return span('gg-mir', art('mirror/' + a[0] + '.svg'), ';--ar:' + a[1] + ';--h:' + Math.round(a[1] > 1.4 ? h * 0.62 : h) + 'px'); }).join('') + '</div>';
+    return { title: P2.title, line: P2.line, html: html };
+  }
   window.GGParts = Object.assign(window.GGParts || {}, {
     KEYS: KEYS.slice(), TEND: TEND.slice(), GROW: GROW.slice(), GROWS: GROWS,
     PROMISE: 'The Grounded Way works when you tend all four parts.',
     has: has, tree: tree, word: word, meaning: meaning, label: label, color: color, soft: soft, tend: tend,
-    get: get, list: list, countTend: countTend
+    get: get, list: list, countTend: countTend,
+    icon: icon, level: level, pair: pair, art: art, artCss: css, TREE_COLORS: TREE_COLORS
   });
 })();

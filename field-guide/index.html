@@ -678,9 +678,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=c030"></script>
 <script src="../shared/gg-sources.js?v=c209"></script>
-<script src="../shared/gg-learn.js?v=c210"></script>
-<script src="../shared/gg-parts.js?v=b929"></script>
-<script src="../shared/gg-print.js?v=b939"></script>
+<script src="../shared/gg-learn.js?v=c212"></script>
+<script src="../shared/gg-parts.js?v=c212"></script>
+<script src="../shared/gg-print.js?v=c212"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
 <script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
@@ -701,7 +701,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="member-acct.js?v=b950"></script>
 <script src="../shared/gg-live.js?v=c184"></script>
 <script src="live-fg.js?v=c184"></script>
-<script src="../shared/gg-stories.js?v=c207"></script>
+<script src="../shared/gg-stories.js?v=c212"></script>
 <script src="vault.js?v=c180"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -3020,7 +3020,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b939'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=c212'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){

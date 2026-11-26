@@ -71,6 +71,12 @@
    with GGTreeArt.add('maple', {wide: {...}, phone: {...}}), or add it to
    POS below. GGTreeArt.pos(app) reads one back.
 
+   The book art (GWG BLD 1065): on the six trees, each chip and part card carries the part's icon (shared/art, through
+   GGParts.icon in shared/gg-parts.js), the card shows its mirror pair from the Oak book (bark and the mind, leaf and
+   lungs, branches and hands, roots and spirit), Results shows the part icon beside each part's words and the Strong,
+   Steady, or Growing Edge icon beside its result, and Then and Now shows each part's level icon under both paintings.
+   Willow and The Grove keep their own look.
+
    Reduce Motion (the device setting, html.gg-reduce-motion, or
    html[data-motion="reduce"]) stops the markers' slow glow. Nothing here
    reads or saves anything about a person.
@@ -105,6 +111,10 @@
     bark: ['Bark: Mind', 'Your thoughts, feelings, and focus'], branches: ['Branches: Relationships', 'The people you love, face to face'],
     leaves: ['Leaves: Body', 'Food, movement, rest, and a healthy body'], fruit: ['Fruit: Hope', 'Your hope'] };
   function cap1(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+  // BLD 1065: the book's icons, from shared/gg-parts.js, for the six trees only.
+  function GA(o) { var g = window.GGParts; return g && g.icon && g.TREE_COLORS && g.TREE_COLORS[o.app] ? g : null; }
+  function partIc(o, key, size) { var g = GA(o); return g ? g.icon(key, o.app, { size: size, cls: 'gta-ic' }) : ''; }
+  function lvIc(o, L, size) { var g = GA(o); return g && L !== 'u' ? g.level(L, { size: size, cls: 'gta-ic' }) : ''; }
   function defParts(plain) {
     var G = window.GGParts && window.GGParts.label ? window.GGParts : null, o = { plain: plain };
     return PART_KEYS.map(function (k) { return G ? { key: k, name: G.label(k, o), tag: cap1(G.meaning(k, o)), tree: G.tree(k) } : { key: k, name: FALL[k][0], tag: FALL[k][1], tree: FALL[k][0].split(':')[0] }; });
@@ -205,7 +215,17 @@
     + '.gta-ring i{display:block;width:6px;height:6px;border-radius:50%;background:#8B5E1A;}'
     + '.gta-sub{font-size:15px;line-height:1.5;color:var(--ink-soft,#4A3B2E);margin:0;}'
     + '.gta-h{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;font-size:22px;margin:0 0 4px;color:var(--ink,#2E2118);}'
-    + '.gta-sec{margin-top:18px;}';
+    + '.gta-sec{margin-top:18px;}'
+    /* BLD 1065: the book's icons and mirror pairs */
+    + '.gta-chip{display:inline-flex;align-items:center;gap:7px;}.gta-chip.on .gta-ic{--tc:currentColor;}'
+    + '.gta-hd{display:flex;align-items:center;gap:14px;}.gta-hd .gta-ic{margin:0;}.gta-hd > div{min-width:0;}'
+    + '.gta-pairf{margin:14px 0 0;padding:14px 0 0;border-top:1px solid var(--line,#E6DAC3);}'
+    + '.gta-pairf figcaption{margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--ink-soft,#4A3B2E);text-align:center;}.gta-pairf figcaption b{display:block;color:var(--ink,#2E2118);}'
+    + '.gta-word{display:inline-flex;align-items:center;gap:6px;}'
+    + '.gta-legend .gta-ic{margin-right:6px;}'
+    + '.gta-lvs{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;font-size:14px;line-height:1.3;}'
+    + '@container (min-width:900px){.gta-lvs{grid-template-columns:repeat(3,minmax(0,1fr));}}'
+    + '.gta-lvs li{display:flex;align-items:center;gap:6px;min-width:0;}.gta-lvs b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.gta-lvs span{color:var(--ink-soft,#4A3B2E);white-space:nowrap;}';
   function style() {
     if (document.getElementById('gta-style')) return;
     var st = document.createElement('style'); st.id = 'gta-style'; st.textContent = CSS;
@@ -261,13 +281,20 @@
     var body = art(o, mk, 'gta-glow', null);
     if (o.card !== false) {
       body = '<div class="gta-grid"><div>' + body.replace('class="gta-art gta-glow"', 'class="gta-art gta-glow" role="group" aria-label="' + esc(label) + '"') + '</div><div class="gta-side">'
-        + '<div class="gta-card" aria-live="polite"><p class="gta-k">' + esc(cur.tag) + '</p><h3 class="gta-name">' + esc(cur.name) + '</h3>' + (cur.text ? '<p>' + esc(cur.text) + '</p>' : '') + '</div>'
-        + '<div class="gta-chips" role="group" aria-label="Tend four, grow two">' + ps.map(function (p) { return '<button type="button" class="gta-chip' + (p.key === o.sel ? ' on' : '') + '" data-gta="' + id + '" data-pick="' + p.key + '" aria-pressed="' + (p.key === o.sel) + '">' + esc(p.name) + '</button>'; }).join('') + '</div>'
+        + '<div class="gta-card" aria-live="polite">' + card(o, cur) + '</div>'
+        + '<div class="gta-chips" role="group" aria-label="Tend four, grow two">' + ps.map(function (p) { return '<button type="button" class="gta-chip' + (p.key === o.sel ? ' on' : '') + '" data-gta="' + id + '" data-pick="' + p.key + '" aria-pressed="' + (p.key === o.sel) + '">' + partIc(o, p.key, 20) + esc(p.name) + '</button>'; }).join('') + '</div>'
         + '<p class="gta-hint">' + esc(o.hint || 'Tap a glowing part of the tree to learn what it holds.') + '</p></div></div>';
     } else body = body.replace('class="gta-art gta-glow"', 'class="gta-art gta-glow" role="group" aria-label="' + esc(label) + '"');
     return out(el, root(id, o, body));
   }
   function cap(s) { s = String(s || ''); return s === 'grove' ? 'Grove' : s.charAt(0).toUpperCase() + s.slice(1); }
+  // The chosen part's card: its icon beside the meaning and name, its words, and (BLD 1065) its mirror pair from the book.
+  function card(o, cur) {
+    var ic = partIc(o, cur.key, 44), g = GA(o), pr = g && g.pair ? g.pair(cur.key, { h: phone() ? 76 : 92 }) : null;
+    var head = '<p class="gta-k">' + esc(cur.tag) + '</p><h3 class="gta-name">' + esc(cur.name) + '</h3>';
+    return (ic ? '<div class="gta-hd">' + ic + '<div>' + head + '</div></div>' : head) + (cur.text ? '<p>' + esc(cur.text) + '</p>' : '')
+      + (pr ? '<figure class="gta-pairf">' + pr.html + '<figcaption><b>' + esc(pr.title) + '</b>' + esc(pr.line) + '</figcaption></figure>' : '');
+  }
 
   /* ---------- Results ---------- */
   function level(score, unsure) {
@@ -284,10 +311,11 @@
     var pic = art(o, mk, '', live ? null : (o.label || 'Your tree: ' + describe(ps, o.levels, w)));
     if (live) pic = pic.replace('class="gta-art"', 'class="gta-art" role="group" aria-label="' + esc(o.label || 'Your tree: ' + describe(ps, o.levels, w)) + '"');
     var rows = ps.map(function (p) {
-      var L = lvOf(o.levels, p.key), inner = '<span class="gta-dot gta-dot-' + L + '" aria-hidden="true"></span><span class="gta-nm"><b>' + esc(p.name) + '</b><span class="gta-mean">' + esc(p.tag) + '</span></span><span class="gta-word">' + esc(w[L]) + '</span>';
+      var L = lvOf(o.levels, p.key), ic = partIc(o, p.key, 28);
+      var inner = (ic || '<span class="gta-dot gta-dot-' + L + '" aria-hidden="true"></span>') + '<span class="gta-nm"><b>' + esc(p.name) + '</b><span class="gta-mean">' + esc(p.tag) + '</span></span><span class="gta-word">' + lvIc(o, L, 28) + esc(w[L]) + '</span>';
       return '<li>' + (live ? '<button type="button" class="gta-row" data-gta="' + id + '" data-pick="' + p.key + '">' + inner + '</button>' : '<div class="gta-row">' + inner + '</div>') + '</li>';
     }).join('');
-    var legend = o.legend === false ? '' : '<p class="gta-legend"><span><b>' + esc(w.s) + '</b>: a full warm glow.</span><span><b>' + esc(w.t) + '</b>: a soft glow.</span><span><b>' + esc(w.g) + '</b>: a new green light, where growth is starting.</span></p>';
+    var legend = o.legend === false ? '' : '<p class="gta-legend"><span>' + lvIc(o, 's', 24) + '<b>' + esc(w.s) + '</b>: a full warm glow.</span><span>' + lvIc(o, 't', 24) + '<b>' + esc(w.t) + '</b>: a soft glow.</span><span>' + lvIc(o, 'g', 24) + '<b>' + esc(w.g) + '</b>: a new green light, where growth is starting.</span></p>';
     var body = '<div class="gta-grid"><div>' + pic + '</div><div class="gta-side"><ul class="gta-list gta-card" aria-label="Your tree, part by part">' + rows + '</ul>' + legend + (o.note ? '<p class="gta-hint">' + esc(o.note) + '</p>' : '') + '</div></div>';
     return out(el, root(id, o, body));
   }
@@ -307,10 +335,15 @@
       return out(el, root(id, o, body));
     }
     var nowI = H.length - 1, now = H[nowI];
+    // BLD 1065: each part's level as its icon and word, under the painting (the painting's label already says it).
+    var lvs = function (levels) {
+      if (!GA(o)) return '';
+      return '<ul class="gta-lvs" aria-hidden="true">' + ps.map(function (p) { var L = lvOf(levels, p.key); return '<li>' + (lvIc(o, L, 24) || '<span class="gta-dot gta-dot-u"></span>') + '<b>' + esc(String(p.name).split(':')[0]) + '</b><span>' + esc(w[L]) + '</span></li>'; }).join('') + '</ul>';
+    };
     var nowPic = art(o, ps.map(function (p) { return marker(o, id, p, 'gta-lv-' + lvOf(now.levels, p.key), '', false); }).join('') + badge, '', 'Your tree now, ' + nice(now.date) + ': ' + describe(ps, now.levels, w) + (o.levelName ? '. Level ' + o.levelName : ''));
     if (H.length === 1) {
       body = '<h3 class="gta-line">' + esc(o.oneLine || 'Your first ring is here. Your next check-in will show Then and Now.') + '</h3>'
-        + '<div class="gta-tn"><div class="gta-col"><p class="gta-k">Now, ' + esc(nice(now.date)) + '</p>' + nowPic + '</div></div>';
+        + '<div class="gta-tn"><div class="gta-col"><p class="gta-k">Now, ' + esc(nice(now.date)) + '</p>' + nowPic + lvs(now.levels) + '</div></div>';
     } else {
       var t = typeof o.then === 'number' && o.then >= 0 && o.then < nowI ? o.then : 0; o.then = t;
       var then = H[t];
@@ -319,8 +352,8 @@
       var line = grew.length ? (o.grewLine || 'Your {parts} grew since {date}.').replace('{parts}', joinAnd(grew)).replace('{date}', nice(then.date)) : (o.steadyLine || 'Your tree is holding steady since {date}.').replace('{date}', nice(then.date));
       var thenPic = art(o, ps.map(function (p) { return marker(o, id, p, 'gta-lv-' + lvOf(then.levels, p.key), '', false); }).join('') + '<div class="gta-mist" aria-hidden="true"></div>', 'gta-then', 'Your tree then, ' + nice(then.date) + ': ' + describe(ps, then.levels, w));
       body = '<h3 class="gta-line" aria-live="polite">' + esc(line) + '</h3>'
-        + '<div class="gta-tn two"><div class="gta-col"><p class="gta-k">Then, ' + esc(nice(then.date)) + '</p>' + thenPic + '</div>'
-        + '<div class="gta-col"><p class="gta-k">Now, ' + esc(nice(now.date)) + '</p>' + nowPic + '</div></div>'
+        + '<div class="gta-tn two"><div class="gta-col"><p class="gta-k">Then, ' + esc(nice(then.date)) + '</p>' + thenPic + lvs(then.levels) + '</div>'
+        + '<div class="gta-col"><p class="gta-k">Now, ' + esc(nice(now.date)) + '</p>' + nowPic + lvs(now.levels) + '</div></div>'
         + '<p class="gta-sub gta-sec">Parts that grew shine brighter. A Growing Edge shows as new green light, where growth is starting.</p>';
     }
     var rings = '<div class="gta-sec"><p class="gta-k">Your Growth Rings</p><h3 class="gta-h">One ring for every full check-in</h3><p class="gta-sub">' + (H.length > 1 ? 'Like the rings inside a real tree, each check-in adds one. Tap a ring to compare that season with now.' : 'Like the rings inside a real tree, each check-in adds one.') + '</p>'

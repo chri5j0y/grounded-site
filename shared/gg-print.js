@@ -44,7 +44,7 @@
   var KEY_I = { roots: 0, trunk: 1, bark: 2, branches: 3, leaves: 4, fruit: 5 };
   var FALL = { roots: ['Roots', 'Spirit', 'what grounds you'], trunk: ['Trunk', 'Meaning'], bark: ['Bark', 'Mind'], branches: ['Branches', 'Relationships'], leaves: ['Leaves', 'Body'], fruit: ['Fruit', 'Hope'] };
   var PLAIN_TREES = { maple: 1, aspen: 1, pine: 1 };
-  if (!(window.GGParts && window.GGParts.label)) { try { var gp = document.createElement('script'); gp.src = ROOT + '/shared/gg-parts.js?v=b929'; document.head.appendChild(gp); } catch (e) {} }
+  if (!(window.GGParts && window.GGParts.label)) { try { var gp = document.createElement('script'); gp.src = ROOT + '/shared/gg-parts.js?v=c212'; document.head.appendChild(gp); } catch (e) {} }
   function partsOf(tr) {
     var G = window.GGParts && window.GGParts.label ? window.GGParts : null, o = { plain: !!PLAIN_TREES[tr] }, tend = G ? G.TEND : ['roots', 'bark', 'leaves', 'branches'], grow = G ? G.GROW : ['trunk', 'fruit'];
     return tend.concat(grow).map(function (k) {

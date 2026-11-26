@@ -32,10 +32,10 @@
   var FILES = [
     '/oak/checkin.js?v=b929',
     '/oak/practices.js?v=c209',
-    '/shared/gg-parts.js?v=b929',
+    '/shared/gg-parts.js?v=c212',
     '/shared/gg-life.js?v=c197',
     '/shared/practice-rhythm.js?v=c209',
-    '/shared/gg-guided.js?v=c210',
+    '/shared/gg-guided.js?v=c212',
     '/shared/guided/oak.js?v=b949'
   ];
   var PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];          // oak/index.html:1337

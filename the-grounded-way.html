@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
 <link rel="stylesheet" href="style.css?v=b956">
 <link rel="stylesheet" href="/shared/hero-fit.css?v=c179">
+<link rel="stylesheet" href="/shared/gg-art.css?v=c212">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"What Is The Grounded Way?","url":"https://growwithgrounded.com/the-grounded-way","description":"A daily path for your whole life: tend your mind, body, spirit, and relationships, and grow in meaning, hope, and resilience.","publisher":{"@type":"Organization","name":"Grow With Grounded","url":"https://growwithgrounded.com/"}}</script>
 <style>
 /* The Grounded Way page (GWG BLD 866) */
@@ -172,6 +173,20 @@
 .gw-tp b{color:var(--ink);font-weight:600}
 @media (max-width:860px){.sb-parts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.sb-steps{grid-template-columns:1fr}.sb-guide-in{flex-wrap:nowrap;gap:16px;align-items:center}.sb-guide-in img,.sb-guide img{width:96px;flex:0 0 96px}.sb-guide h2{flex:1 1 auto;font-size:22px}.gw-tp{grid-template-columns:1fr}}
+/* BLD 1065: the mirror pairs from the Oak book (a person grows like a tree) and the woodcut spot art, one true vector
+   each (shared/art), drawn in the page's own ink so they read in light and dark (shared/gg-art.css). */
+.gw-mir{margin:40px auto 0;padding:32px 0 0;border-top:1px solid var(--line);text-align:center;color:var(--ink)}
+.gw-mir h3{font:600 clamp(26px,2.8vw,34px)/1.2 'Cormorant Garamond',Georgia,serif;margin:0 auto 22px;max-width:24ch;text-wrap:balance}
+.gw-mir-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.gw-mir-f{margin:0;padding:22px 14px 18px;background:var(--card);border:1px solid var(--line);border-radius:18px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:16px}
+.gw-mir-f .gg-pair{height:136px;max-width:100%}
+.gw-mir-f .gg-mir{flex:0 1 auto;min-width:0}
+.gw-mir-f figcaption{font-size:16.5px;line-height:1.5;color:var(--ink-soft);max-width:30ch}
+.gw-mir-f figcaption b{display:block;font:600 23px/1.2 'Cormorant Garamond',Georgia,serif;color:var(--ink);margin-bottom:6px}
+.gw-spot{--mc:var(--ink);margin:0 auto 16px}
+.gw-low .gw-spot{margin:0 0 12px}
+@media (max-width:1000px){.gw-mir-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.gw-mir-row{grid-template-columns:1fr}.gw-mir-f .gg-pair{height:auto}.gw-mir-f[data-part="branches"] .gg-mir{--h:84px}}
 @media (max-width:420px){.sb-parts{gap:12px}.sb-part h3{font-size:21px}.sb-part p{font-size:15.5px}.sb-part>div{padding:12px 12px 14px}}
 </style>
 </head>
@@ -217,6 +232,17 @@
     <article class="sb-part" data-part="fruit" style="--k:#B5452F"><img src="/shared/heroes/p/site-way-card-fruit.webp" alt="" loading="lazy" decoding="async" width="800" height="600"><div><div class="eyebrow">Fruit</div><h3>Hope</h3><p>The joy and peace that grow from your tending.</p></div></article>
   </div>
   <p class="gw-promise">The Grounded Way works when you tend all four parts.</p>
+  <!-- BLD 1065: the mirror pairs from the Oak book, in the value step (StoryBrand order kept): what each part does for a tree, and the same in a person. -->
+  <!-- The band waits for the new mirror pair drawings: when shared/art/mirror holds them, remove hidden. -->
+  <div class="gw-mir" role="group" aria-labelledby="gw-mir-h" hidden>
+    <h3 id="gw-mir-h">A person grows like a tree.</h3>
+    <div class="gw-mir-row">
+      <figure class="gw-mir-f" data-part="roots"><div class="gg-pair" aria-hidden="true"><span class="gg-mir" style="--ic:url('/shared/art/mirror/roots.svg?v=c212');--ar:1;--h:120px"></span><span class="gg-mir" style="--ic:url('/shared/art/mirror/spirit.svg?v=c212');--ar:1;--h:120px"></span></div><figcaption><b>Roots and Spirit</b>Deep roots hold the whole tree steady, the way a rooted spirit holds a whole life.</figcaption></figure>
+      <figure class="gw-mir-f" data-part="bark"><div class="gg-pair" aria-hidden="true"><span class="gg-mir" style="--ic:url('/shared/art/mirror/bark.svg?v=c212');--ar:.411;--h:136px"></span><span class="gg-mir" style="--ic:url('/shared/art/mirror/mind.svg?v=c212');--ar:.826;--h:112px"></span></div><figcaption><b>Bark and the Mind</b>Bark guards the living layer of the tree, and the mind guards the living center of a person.</figcaption></figure>
+      <figure class="gw-mir-f" data-part="leaves"><div class="gg-pair" aria-hidden="true"><span class="gg-mir" style="--ic:url('/shared/art/mirror/leaf.svg?v=c212');--ar:.589;--h:136px"></span><span class="gg-mir" style="--ic:url('/shared/art/mirror/lungs.svg?v=c212');--ar:.848;--h:118px"></span></div><figcaption><b>Leaf and Lungs</b>A leaf breathes in what we breathe out, and our lungs breathe in what the leaf gives away.</figcaption></figure>
+      <figure class="gw-mir-f" data-part="branches"><div class="gg-pair" aria-hidden="true"><span class="gg-mir" style="--ic:url('/shared/art/mirror/branch.svg?v=c212');--ar:1.758;--h:70px"></span><span class="gg-mir" style="--ic:url('/shared/art/mirror/hands.svg?v=c212');--ar:1.756;--h:70px"></span></div><figcaption><b>Branches and Hands</b>Branches divide and reach outward, and as we reach out, the paths between us grow.</figcaption></figure>
+    </div>
+  </div>
 </div></section>
 
 <section id="promises" class="sb-guide" aria-labelledby="sb-guide-h"><div class="wrap">
@@ -233,6 +259,7 @@
 </div></section>
 
 <section id="steps" class="sb-plan" aria-labelledby="sb-plan-h"><div class="wrap">
+  <span class="gg-spot gw-spot" style="--ic:url('/shared/art/spot/path.svg?v=c212');--ar:.42;--h:230px" aria-hidden="true"></span>
   <h2 id="sb-plan-h">Getting started is simple.</h2>
   <ol class="sb-steps">
     <li><b aria-hidden="true">1</b><span>Meet your tree.</span></li>
@@ -275,6 +302,7 @@
 
 <section id="story" class="gw-low">
   <div class="wrap cp-body">
+    <span class="gg-spot gw-spot" style="--ic:url('/shared/art/spot/acorn.svg?v=c212');--ar:1.176;--h:72px" aria-hidden="true"></span>
     <div class="eyebrow">The Story</div>
     <h2>Get grounded. Tend four. Grow two.</h2>
     <div class="gw-story">
@@ -452,8 +480,8 @@
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b934"></script>
-<script src="nav.js?v=c193" defer></script>
-<!-- PAGE VIDEO (BLD 866) --><script src="/shared/page-videos.js?v=c207" defer></script><!-- /PAGE VIDEO -->
+<script src="nav.js?v=c212" defer></script>
+<!-- PAGE VIDEO (BLD 866) --><script src="/shared/page-videos.js?v=c212" defer></script><!-- /PAGE VIDEO -->
 <script src="/shared/gg-join.js?v=c193" defer></script>
 </body>
 </html>

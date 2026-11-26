@@ -1807,3 +1807,14 @@ html.gg-ts-2 main.hm{zoom:1.25;}
 }
 /* BLD 1045: the Open My Growth Plan link on Today is a full 44px tap. */
 .hm-link.hm-tap{min-height:44px;}
+/* BLD 1065: the book's part and level icons on Your Tree */
+.hm-part b{display:flex;align-items:center;gap:7px;min-width:0;}
+.hm-part b > span{min-width:0;}
+.hm-part small .gg-ic{margin-right:4px;}
+.hm-hparts span .gg-ic{margin-right:4px;}
+/* BLD 1065: My Growth Plan shows each part's icon and level icon from the Oak book */
+.hm-wp-part b{display:flex;align-items:center;gap:6px;}
+.hm-wp-part span.gg-ic{display:inline-block;}
+.hm-wp-part em{display:inline-flex;align-items:center;gap:5px;}
+.hm-wp-icw{flex:none;display:flex;color:var(--c);margin-top:2px;}
+@media (max-width:560px){.hm-part b{flex-direction:column;align-items:flex-start;gap:4px;}.hm-part b > span:not(.gg-ic){-webkit-hyphens:auto;hyphens:auto;overflow-wrap:anywhere;}}
