@@ -1180,7 +1180,7 @@ function vOv(){
       ${o.k === 'cook' && nOk(x.nut) ? `<details class="hj-doc"><summary><span>Nutrition per Serving</span></summary><div class="hj-body">${nTable(x.nut, x.nutHeart)}</div></details>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
       ${o.k === 'prep' && x.items947 ? piList(o, String(o.key).split(':')[1], +String(o.key).split(':')[2]) : `<ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
-        return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.kick ? `<span class="hj-at">${esc(t.kick)}</span> ` : t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}
+        return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.kick ? `<span class="hj-at">${esc(t.kick)}</span> ` : t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}${amtsH(t)}
           ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>`}
       ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.swaps && typeof x.swaps === 'object' ? Object.entries(x.swaps).filter(([, t]) => t).map(([k, t]) => `<p class="hj-sub"><b>Swap for ${esc((arr((PLIB() || {}).needs).find(z => z.id === k) || {}).name || k.replace(/([A-Z])/g, ' $1').toLowerCase())}:</b> ${esc(t)}</p>`).join('') : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
@@ -2581,6 +2581,9 @@ function vAuto(o, top){
 }
 // ---------- the kitchen guide (Andrew) ----------
 function kSteps(o){ return arr(o.data.steps).map(s => typeof s === 'string' ? {t: s} : s); }
+// BLD 1070 (Chris, November 26, 2026: "1"): a step's own amounts beside its words, sized for the table with the ingredients
+// (GGHolidays.recipe and GGScale.recipe give each step amts); the words and the recorded voice name no numbers.
+const amtsH = (s, cls) => arr(s && s.amts).length ? `<span class="hj-amts${cls ? ' ' + cls : ''}" role="list" aria-label="Amounts for this step">${s.amts.map(x => `<span role="listitem">${esc(x)}</span>`).join('')}</span>` : '';
 async function kSay(o, text){ const V = VO(); if (V && !o.dead) await V.say(ANDREW, text); }
 // BLD 947: in a prep guide with items, the first step of each item says what that item is and what it is for.
 function kEnter(o){ const ss = kSteps(o), gi = o.gi, s = ss[gi]; if (!s) return; const pv = ss[gi - 1], lab = s.say && (!pv || pv.it !== s.it) ? s.say : '';
@@ -2616,7 +2619,7 @@ function vGuide(o, top){
   ${stagePanel('cook', Object.assign({fig: window.GGStage ? '' : POT, small: true}, ft ? {pct: Math.max(0, Math.min(1, (ft.end - Date.now()) / ftot)), secs: Math.ceil(Math.max(0, ft.end - Date.now()) / 1000)} : {}))}
   ${o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : ''}
   ${tms.length ? `<div class="hj-ktimers">${tms.map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small><button type="button" class="linkbtn" data-hja="kstop" data-hjv="${t.i}">Stop</button></div>`).join('')}</div>` : ''}
-  <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="cook">${s.kick || s.at ? `<div class="hj-kick">${esc(s.kick || s.at)}</div>` : ''}<p class="hj-kstep">${esc(s.t)}</p>
+  <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="cook">${s.kick || s.at ? `<div class="hj-kick">${esc(s.kick || s.at)}</div>` : ''}<p class="hj-kstep">${esc(s.t)}</p>${amtsH(s, 'hj-kamts')}
     ${+s.min ? (tms.some(t => t.i === o.gi) ? `<p class="hj-sub">Timer running.</p>` : `<button type="button" class="btn btn-line" data-hja="ktimer" data-hjv="${o.gi}">Start ${+s.min} min Timer</button>`) : ''}
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="kback"${o.gi ? '' : ' disabled'}>Back</button><button type="button" class="btn btn-gold" data-hja="knext">${o.gi === steps.length - 1 ? 'Finish' : 'Next Step'}</button></div>
     <button type="button" class="linkbtn hj-skip" data-hja="krepeat">Say It Again</button>
@@ -3381,7 +3384,7 @@ const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressing
 function partyRecs(){ if (PUB()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
-  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=c218'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=c223'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -3853,7 +3856,7 @@ const srcLinks = ids => arr(Array.isArray(ids) ? ids : [ids]).filter(Boolean).ma
 const pubHH = () => { if (KJ()) return kitTable(); const s = (H() || {}).set || {}, n = (+((s.house || {}).adults) || 0) + KIDS().length || num(s.household) || 0; return n > 0 && n < 30 ? Math.round(n) : 0; };
 // BLD 935 (audit M4): the table is the household's own size, a table of 1 included, the same number on every screen.
 const tableOf = () => pubHH();
-const sizeUp = r => { const hh = PUB() ? tableOf() : 0; return r && hh && window.GGScale && arr(r.ingredients).length ? GGScale.recipe(r, hh) : r; };
+const sizeUp = r => { const hh = PUB() ? tableOf() : 0; return r && window.GGScale && arr(r.ingredients).length && (hh || arr(r.steps).some(x => x && x.uses)) ? GGScale.recipe(r, hh || +r.serves || 6) : r; };   // BLD 1070: steps with uses get their amounts at any size
 const hhNote = serves => { const hh = tableOf(); return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
 function planSet(){ const k = KJ(); if (k) return kitSet(k); const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: goalsNow(s), kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
 // The saved plan: ids only, so a library update keeps working; a change of needs, allergies, goals, or household builds it again.
@@ -5582,6 +5585,8 @@ const CSS = `
 .hj-ctl .btn{min-width:110px;}
 .hj-tap{text-align:center;font-size:15px;font-weight:600;margin:8px 0 0;}
 .hj-kstep{font-size:clamp(22px,5.5vw,28px);line-height:1.35;font-weight:600;max-width:32ch;margin:10px auto 16px;}
+.hj-amts{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px;}.hj-amts>span{font-size:14px;line-height:1.3;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--ink) 9%,transparent);color:var(--ink);overflow-wrap:anywhere;min-width:0;}
+.hj-kamts{justify-content:center;max-width:40rem;margin:-6px auto 16px;}.hj-kamts>span{font-size:15px;}
 .hj-ktimers{display:grid;gap:6px;margin:10px 0;}.hj-ktimers>div{display:flex;align-items:center;gap:8px;background:var(--bg-deep);border-radius:12px;padding:6px 10px;min-width:0;}.hj-ktimers small{flex:1;min-width:0;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .hj-rang{background:var(--hj);color:#fff;border-radius:12px;padding:10px 12px;margin:10px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}.hj-rang .linkbtn{color:#fff;margin-left:auto;}
 .hj-lib{list-style:none;padding:0;margin:0;display:grid;gap:6px;}.hj-lib .hj-pill{width:100%;}
@@ -6360,19 +6365,19 @@ function holCardsHtml(){
 }
 // The kitchen guide for one timeline task (the steps it names, from each recipe) or one recipe.
 function holTaskOv(id, i){
-  const G = holUse(), s = G && G.get(id); if (!s) return null; const p = holPlan(id), date = (p && p.date) || holNext(id) || today(), t = G.tasks(id, date, p && p.pick, p && p.off).find(x => x.i === +i); if (!t) return null;
-  if (!t.steps.length) return null; const N = holGuests(id), ings = [], base = +s.serves || N;
+  const G = holUse(), s = G && G.get(id); if (!s) return null; const p = holPlan(id), date = (p && p.date) || holNext(id) || today(), N = holGuests(id), t = G.tasks(id, date, p && p.pick, p && p.off, N).find(x => x.i === +i); if (!t) return null;
+  if (!t.steps.length) return null; const ings = [], base = +s.serves || N;
   t.menus.forEach(m => { const r = G.recipe(id, m, N); if (r) r.ingredients.forEach(g => ings.push(t.menus.length > 1 ? g + ' (' + r.name + ')' : g)); });
   return {k: 'cook', idea: true, hol: id, key: 'hol:' + id + ':' + t.i, title: t.title, sub: s.name + ' · ' + holShort(t.date) + (t.mins ? ' · about ' + t.mins + ' min' : ''),
     intro: t.daysBefore ? 'Getting ready for ' + holSay(s) + ': ' + holLc(t.title).replace(/[.!?]?$/, '.') : 'The day is here. We take it one step at a time.', outro: t.daysBefore ? HOL_OUT : '',
-    data: {name: t.title, meal: 'holiday', art: t.daysBefore ? HOL_ART.ahead : HOL_ART.day, steps: t.steps.map(x => ({t: x.t, min: x.min, at: x.at || ''})), ingredients: ings,
-      tip: N !== base && ings.length ? 'The ingredients are sized for ' + N + '. The steps name the amounts for ' + base + '.' : ''}};
+    data: {name: t.title, meal: 'holiday', art: t.daysBefore ? HOL_ART.ahead : HOL_ART.day, steps: t.steps.map(x => ({t: x.t, min: x.min, at: x.at || '', amts: arr(x.amts)})), ingredients: ings,
+      tip: N !== base && ings.length ? 'The ingredients and the amounts beside each step are sized for ' + N + '.' : ''}};
 }
 function holRecOv(id, mid){
   const G = holUse(), s = G && G.get(id), r = G && G.recipe(id, mid, holGuests(id)); if (!r) return null;
   return {k: 'cook', idea: true, hol: id, key: 'holrec:' + id + ':' + mid, title: r.name, sub: s.name + (r.mins ? ' · ' + r.mins + ' minutes' : '') + ' · for ' + r.serves,
-    data: {name: r.name, meal: 'holiday', art: HOL_ART.day, steps: r.steps.map(x => ({t: x.t, min: x.min})), ingredients: r.ingredients, serves: r.serves,
-      tip: [r.makeAhead ? 'Make ahead: ' + r.makeAhead : '', r.serves !== r.baseServes ? 'The ingredients are sized for ' + r.serves + '. The steps name the amounts for ' + r.baseServes + '.' : ''].filter(Boolean).join(' ')}};
+    data: {name: r.name, meal: 'holiday', art: HOL_ART.day, steps: r.steps.map(x => ({t: x.t, min: x.min, amts: arr(x.amts)})), ingredients: r.ingredients, serves: r.serves,
+      tip: [r.makeAhead ? 'Make ahead: ' + r.makeAhead : '', r.serves !== r.baseServes ? 'The ingredients and the amounts beside each step are sized for ' + r.serves + '.' : ''].filter(Boolean).join(' ')}};
 }
 // Every hol key, from Today, Week, the cards, and the Home (GGHealth.act).
 function holAct(key){
@@ -6426,7 +6431,7 @@ function vHolSet(G, s){
     if (canOff && off.includes(m.id)) return `<div class="hj-holoff"><span><b>${esc(m.name)}</b><small>Off the menu</small></span><button type="button" class="tn-btn sm line" data-hja="holback" data-hjv="${esc(id + '|' + m.id)}" aria-label="${esc('Add Back ' + m.name)}">${ic('plus')}Add Back</button></div>`;
     return `<details class="hj-doc"${S.open['hol:' + id + ':' + m.id] ? ' open' : ''} data-hjd="hol:${esc(id)}:${esc(m.id)}"><summary><span>${esc(m.name)}<small>${esc([m.course ? m.course[0].toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></span></summary><div class="hj-body">
       ${m.makeAhead ? `<p class="hj-sub"><b>Make ahead:</b> ${esc(m.makeAhead)}</p>` : ''}${m.card ? `<div class="hj-holcard"><b>Reheat Card</b><p>${esc(m.card)}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-hja="holcard" data-hjv="${esc(id + '|' + m.id)}">Share the Card</button><button type="button" class="btn btn-line btn-sm" data-hja="holcardprint" data-hjv="${esc(id + '|' + m.id)}">Print the Card</button></div></div>` : ''}${m.note ? `<p class="hj-sub">${esc(m.note)}</p>` : ''}<ul class="hj-ing">${arr(r && r.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul>
-      <ol class="hj-steps hj-holsteps">${arr(m.steps).map(x => `<li><div>${esc(x.say)}</div></li>`).join('')}</ol></div></details>
+      <ol class="hj-steps hj-holsteps">${arr(r ? r.steps : m.steps).map(x => `<li><div>${esc(x.t || x.say)}${amtsH(x)}</div></li>`).join('')}</ol></div></details>
       <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Grounded Cooking: ${esc(m.name)}</button>${mmHolBtn(id, m.id)}${canOff && keepN > 1 ? `<button type="button" class="linkbtn hj-holrm" data-hja="holoff" data-hjv="${esc(id + '|' + m.id)}" aria-label="${esc('Remove ' + m.name)}">Remove</button>` : ''}</div>`; }).join('')}</div></div>`;
   const tips = arr(s.tips).length ? `<div class="tn-card"><div class="tn-k">For a Calm, Healthy Day</div><ul class="hj-ing">${s.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
   return `<div class="row" style="margin:0 0 12px"><button type="button" class="btn btn-line btn-sm" data-hja="holall">Every Holiday Set</button></div>
@@ -6666,10 +6671,11 @@ function mmOv(id){
   const e = MENU().items.find(x => x.id === id), R = e && mmRecipe(e.ref); if (!R || R.src === 'x') return null; const N = Math.max(1, +e.serves || mmTable()), key = 'menu:' + e.id, idea = e.meal !== 'dinner';
   let o = null;
   if (R.src === 'r'){ const x = ideaOf(R.r); if (!x) return null; Object.assign(x, {ingredients: mmIngs(R, N), serves: undefined, meal: e.meal === 'extra' ? R.meal : e.meal});
+    if (window.GGScale && arr(R.r.steps).some(z => z && z.uses)) x.steps = arr(GGScale.recipe(R.r, N).steps);   // BLD 1070: each step's amounts at the menu's size
     o = {k: 'cook', idea, key, title: R.name, sub: (R.mins ? R.mins + ' minutes · ' : '') + 'for ' + N, data: x}; }
   else if (R.src === 'h'){ const r = holUse().recipe(R.set.id, R.m.id, N); if (!r) return null;
     o = {k: 'cook', idea: true, hol: R.set.id, key, title: r.name, sub: R.set.name + (r.mins ? ' · ' + r.mins + ' minutes' : '') + ' · for ' + r.serves,
-      data: {name: r.name, meal: 'holiday', art: HOL_ART.day, steps: r.steps.map(x => ({t: x.t, min: x.min})), ingredients: r.ingredients, serves: r.serves, tip: [r.makeAhead ? 'Make ahead: ' + r.makeAhead : '', r.serves !== r.baseServes ? 'The ingredients are sized for ' + r.serves + '. The steps name the amounts for ' + r.baseServes + '.' : ''].filter(Boolean).join(' ')}}; }
+      data: {name: r.name, meal: 'holiday', art: HOL_ART.day, steps: r.steps.map(x => ({t: x.t, min: x.min, amts: arr(x.amts)})), ingredients: r.ingredients, serves: r.serves, tip: [r.makeAhead ? 'Make ahead: ' + r.makeAhead : '', r.serves !== r.baseServes ? 'The ingredients and the amounts beside each step are sized for ' + r.serves + '.' : ''].filter(Boolean).join(' ')}}; }
   else if (R.src === 'g'){ const c = cookOv(R.wk, R.x.id); if (!c) return null; o = Object.assign(c, {key, idea, data: Object.assign({}, c.data, {ingredients: mmIngs(R, N)}), sub: (c.sub ? c.sub + ' · ' : '') + 'for ' + N}); }
   else { const c = ideaOv(R.ty, R.i); if (!c) return null; o = Object.assign(c, {key, data: Object.assign({}, c.data, {ingredients: mmIngs(R, N)})}); }
   o.mm = e.id; return o;

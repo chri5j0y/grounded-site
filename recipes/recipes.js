@@ -52,14 +52,14 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'c194';   // BLD 1014 draft 3: the 106 Complete Cookbook paintings on their recipes   // BLD 1014b: the egg dishes back to whole eggs only   // BLD 1014: Cookbook fixes (holiday salt and sugar, Maple Cider Dijon Vinaigrette)   // BLD 1013: Recipes All in One Place (one list, the holidays inside it, a Holidays and Gatherings chip, the cuts)   // BLD 1009: Recipes Round Four (51 more, the data only; 420 in all)   // BLD 1008: Recipes Round Three (51 more, the data only)   // BLD 1007: Recipes Round Two (51 more; a jar of Basics opens at its own size; Pressure Cooker)   // BLD 1006: Sides, Breads, Desserts, and Basics; nutrition computed from USDA FoodData Central; headnotes, contains, seasons   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
+  var VER = 'c223';   // BLD 1070: each step's own amounts beside its words, sized for the table   // BLD 1014 draft 3: the 106 Complete Cookbook paintings on their recipes   // BLD 1014b: the egg dishes back to whole eggs only   // BLD 1014: Cookbook fixes (holiday salt and sugar, Maple Cider Dijon Vinaigrette)   // BLD 1013: Recipes All in One Place (one list, the holidays inside it, a Holidays and Gatherings chip, the cuts)   // BLD 1009: Recipes Round Four (51 more, the data only; 420 in all)   // BLD 1008: Recipes Round Three (51 more, the data only)   // BLD 1007: Recipes Round Two (51 more; a jar of Basics opens at its own size; Pressure Cooker)   // BLD 1006: Sides, Breads, Desserts, and Basics; nutrition computed from USDA FoodData Central; headnotes, contains, seasons   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
-    ['/shared/tending-public.js?v=c218', 'GGTendPublic'],
+    ['/shared/tending-public.js?v=c223', 'GGTendPublic'],
     ['/shared/tend/stage.js?v=c202', 'GGStage'],
     ['/shared/tend/coach.js?v=c207', 'GGVoice'],
-    ['/shared/gg-scale.js?v=b934', 'GGScale'],
-    ['/shared/gg-holidays.js?v=c219', 'GGHolidays'],
+    ['/shared/gg-scale.js?v=c223', 'GGScale'],
+    ['/shared/gg-holidays.js?v=c223', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=c138', 'GGBulk'],
     ['/recipes/recipes.js?v=' + VER, 'GGRecipes']
   ];
@@ -278,6 +278,18 @@
       var f = window.GGScale ? GGScale.factor(r, sv(r)) : 1, G = r.grams || [];
       return (sized(r).ingredients || []).map(function (x, i) { var g = +G[i]; return '<li>' + esc(x) + (g > 0 ? ' <span class="rc-gr">(' + esc(Math.round(g * f >= 50 ? Math.round(g * f / 5) * 5 : g * f)) + ' g)</span>' : '') + '</li>'; }).join('');
     }
+    // BLD 1070 (Chris, November 26, 2026: "1"): each step shows its own amounts beside its words, sized for the table with the
+    // list (shared/gg-scale.js for book recipes, shared/gg-holidays.js for the holiday sets); the words name no numbers.
+    function amtsHTML(s, cls) {
+      var a = (s && s.amts) || []; if (!a.length) return '';
+      return '<span class="' + (cls || 'rc-amts') + '" role="list" aria-label="Amounts for this step">' + a.map(function (x) { return '<span role="listitem">' + esc(x) + '</span>'; }).join('') + '</span>';
+    }
+    function stepsHTML(r) {
+      return ((sized(r) || r).steps || []).map(function (s) {
+        s = typeof s === 'string' ? { t: s } : s;
+        return '<li>' + esc(s.t) + amtsHTML(s) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>';
+      }).join('');
+    }
     var fromList = false, lastId = '', listY = 0;
 
     /* BLD 912: scrolling and routing. The page scrolls the window and routes by location.hash; a mount scrolls the window it
@@ -467,9 +479,7 @@
       var rows = [['Calories', n0(n.cal), ''], ['Protein', n1(n.pro), ' g'], ['Carbohydrate', n1(n.carb), ' g'], ['Fiber', n1(n.fib), ' g'], ['Soluble fiber (estimated)', n1(n.sol), ' g'],
         ['Added sugar', n1(n.sug), ' g'], ['Saturated fat', n1(n.sf), ' g'], ['Sodium', n0(n.na), ' mg'], ['Iron', n1(n.iron), ' mg'], ['Calcium', n0(n.ca), ' mg']]
         .filter(function (x) { return x[1] !== 'NaN'; });
-      var steps = (r.steps || []).map(function (s) {
-        return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>';
-      }).join('');
+      var steps = stepsHTML(r);
       return '<button type="button" class="rc-back" id="rc-back"><span aria-hidden="true">&larr;</span> All Recipes</button>' +
         '<article class="rc-k-' + esc(r.meal) + '" aria-labelledby="rc-dname">' + bandHTML(r) +
         '<div class="rc-dh"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><div><div class="eyebrow">' + esc(MEAL_NAME[r.meal] || r.meal) + '</div>' +
@@ -481,9 +491,9 @@
         '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + shareBtn('r:' + r.id) + plateBtn(r.id) + '<span>Step by step, with a voice to guide you.</span></div><p class="rc-shnote" data-rc-shnote="' + esc('r:' + r.id) + '" role="status" hidden></p><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
         '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
         (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
-          '<p class="rc-size-note">' + (isBatch(r) ? (r.meal === 'drink' ? 'A full pitcher.' : r.meal === 'bread' ? 'A full batch.' : 'A full jar.') + ' Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
+          '<p class="rc-size-note">' + (isBatch(r) ? (r.meal === 'drink' ? 'A full pitcher.' : r.meal === 'bread' ? 'A full batch.' : 'A full jar.') + ' Choose a smaller batch any time; the steps fit every size.' : (r.steps || []).some(function (x) { return x && x.uses; }) ? 'Amounts scale to your table, in the list and beside each step.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
         '<ul class="rc-ing" id="rc-ing" aria-live="polite">' + ingHTML(r) + '</ul>' + (r.contains ? '<p class="rc-contains">' + esc(containsLine(r.contains)) + '</p>' : '') + '</div>' +
-        '<div class="card"><h3>Steps</h3><ol class="rc-steps">' + steps + '</ol></div></div>' +
+        '<div class="card"><h3>Steps</h3><ol class="rc-steps" id="rc-steps" aria-live="polite">' + steps + '</ol></div></div>' +
         '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Make Ahead', r.makeAhead) + note('Keeps', r.keeps) + note('Freezer', r.freezer) + note('In Season', seasonText(r.season)) + note('For Kids', r.kid) + pairsHTML(r) +
         (swaps.length ? '<div class="card"><h3>Swaps</h3>' + swaps.map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('') + '</div>' : '') + '</div>' +
         '<div class="rc-plates" id="rc-plates" data-rc-plates="' + esc(r.id) + '"></div>' +
@@ -545,14 +555,14 @@
           (m.makeAhead ? '<p><b>Make ahead:</b> ' + esc(m.makeAhead) + '</p>' : '') + (m.note ? '<p>' + esc(m.note) + '</p>' : '') +
           '<ul class="rc-ing">' + r.ingredients.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul>' +
           (m.contains ? '<p class="rc-contains">' + esc(containsLine(m.contains)) + '</p>' : '') + (m.nut ? '<p class="rc-hnut"><b>Per serving:</b> ' + esc(nutLine(m) + ', ' + n1(m.nut.sug) + ' g added sugar') + '</p>' : '') +
-          '<ol class="rc-steps">' + r.steps.map(function (s) { return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
+          '<ol class="rc-steps">' + r.steps.map(function (s) { return '<li>' + esc(s.t) + amtsHTML(s) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
           (m.card ? '<div class="rc-hcardtxt"><b>Reheat Card</b><p>' + esc(m.card) + '</p></div>' : '') + '</div>';
       }).join('');
       var src = (x.sources || []).filter(function (s) { return s && typeof s === 'object' && s.url; });
       return '<button type="button" class="rc-back" id="rc-back"><span aria-hidden="true">&larr;</span> All Recipes</button>' +
         '<article aria-labelledby="rc-dname"><div class="rc-dh"><div><div class="eyebrow">' + esc(HOL.whenText(id)) + '</div><h2 id="rc-dname" tabindex="-1">' + esc(x.name) + '</h2></div></div>' +
         '<p class="rc-hl">' + esc(x.lead) + '</p>' + (x.note ? '<p class="rc-hl">' + esc(x.note) + '</p>' : '') +
-        '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div><p class="rc-size-note">Amounts scale to your table. The steps name the amounts for ' + esc(x.serves) + '.</p></div>' +
+        '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div><p class="rc-size-note">Amounts scale to your table, in each list and beside each step.</p></div>' +
         '<div class="rc-hmenu">' + menu + '</div>' + alsoFor(id) +
         ((x.tips || []).length ? '<div class="card"><h3>For a Calm, Healthy Day</h3><ul>' + x.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' : '') +
         '<div class="card rc-cook"><h3>Put It on Your Calendar</h3><p>In The Grounded Way, Tending sets this up for your date and guests: the shopping on your list, the prep on the days before, and every recipe guided step by step, private on your device.</p><a class="btn btn-primary" href="/home/#week">Open The Grounded Way</a></div>' +
@@ -759,8 +769,9 @@
       if (isBatch(rb) && dt0 && !dt0.hidden) { batchSize[rb.id] = n; }
       else { serves = n; try { localStorage.setItem('gg-serves', String(n)); } catch (e) {} }
       if (/^hol-/.test(lastId) && HOL) { var hd0 = $('rc-detail'); if (hd0 && !hd0.hidden) { hd0.innerHTML = holDetail(lastId.slice(4)); var b0 = hd0.querySelector('[data-sz="' + n + '"]'); if (b0) b0.focus({ preventScroll: true }); } drawList(); return; }
-      var r = byId(lastId), ing = $('rc-ing'), tag = $('rc-serves'), row = q1('.rc-size .rc-row');
+      var r = byId(lastId), ing = $('rc-ing'), tag = $('rc-serves'), row = q1('.rc-size .rc-row'), sl = $('rc-steps');
       if (r && ing) ing.innerHTML = ingHTML(r);
+      if (r && sl) sl.innerHTML = stepsHTML(r);
       if (tag) tag.textContent = 'Serves ' + n;
       if (row) { row.innerHTML = '<span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)); var b = row.querySelector('[data-sz="' + n + '"]'); if (b) b.focus({ preventScroll: true }); }
       drawList();
@@ -842,7 +853,7 @@
         }
         var mine = o.timers.some(function (t) { return t.i === o.gi; });
         return top + stage('cook') + rangHtml() + timersHtml(true) +
-          '<div class="rg-body" aria-live="polite">' + (s.at ? '<div class="rg-at">' + esc(s.at) + '</div>' : '') + '<p class="rg-step" id="rg-step">' + esc(s.t) + '</p>' +
+          '<div class="rg-body" aria-live="polite">' + (s.at ? '<div class="rg-at">' + esc(s.at) + '</div>' : '') + '<p class="rg-step" id="rg-step">' + esc(s.t) + '</p>' + amtsHTML(s, 'rc-amts rg-amts') +
           (+s.min ? (mine ? '<p class="rg-sub">Timer running.</p>' : '<button type="button" class="btn btn-line rg-line rg-tbtn" data-rg="timer" data-v="' + o.gi + '">Start ' + (+s.min) + ' min Timer</button>') : '') +
           '<div class="rg-btns"><button type="button" class="btn btn-line rg-line" data-rg="back"' + (o.gi ? '' : ' disabled') + '>Back</button><button type="button" class="btn btn-primary" data-rg="next">' + (o.gi === n - 1 ? 'Finish' : 'Next Step') + '</button></div>' +
           '<button type="button" class="rg-link rg-under" data-rg="again1">Say It Again</button>' + toggles() + '</div>';
