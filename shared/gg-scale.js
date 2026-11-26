@@ -8,7 +8,10 @@
 // Pure functions, no page and no storage: the same code runs in the browser (window.GGScale) and in Node (require).
 //
 //   line(text, factor) -> text      one ingredient line; factor 1 returns the line exactly as written
-//   recipe(r, n) -> copy of r       serves: n, ingredients scaled by n / r.serves (nutrition stays per serving)
+//   recipe(r, n) -> copy of r       serves: n, ingredients scaled by n / r.serves (nutrition stays per serving); a step with
+//                                   uses gets amts, its own amounts as text at the same size (BLD 1070)
+//   amts(r, step, n) -> [text]      one step's own amounts for n: each use is a share of an ingredient line ({i, share}) or a
+//                                   line of its own ({a: "1 lime"}), scaled like the list and cut to its head (before a comma)
 //   factor(r, n) -> n / r.serves
 // =====================================================================
 (function (root) {
@@ -175,6 +178,16 @@
     return lead + keep + inner(rest.slice(keep.length), f);
   }
 
+  // BLD 1070 (Chris, November 26, 2026: "1"): each step shows its own amounts beside its words, sized for the table with the
+  // same rules as the list, so the step's words name the ingredients without numbers and one recorded line fits every size.
+  function uses(r, st, f) {
+    var L = (st && st.uses) || [], ing = (r && r.ingredients) || [];
+    return L.map(function (u) {
+      var t = u && u.a != null ? String(u.a) : u && typeof ing[u.i] === 'string' ? ing[u.i] : ''; if (!t) return '';
+      var s = line(t, (u.share != null ? +u.share : 1) * f);
+      return s.slice(0, headEnd(s)).trim();
+    }).filter(Boolean);
+  }
   function factor(r, n) { var base = +(r && r.serves) || 6, want = +n || base; return want / base; }
   function recipe(r, n) {
     if (!r) return r;
@@ -182,10 +195,12 @@
     for (var k in r) if (Object.prototype.hasOwnProperty.call(r, k)) out[k] = r[k];
     out.serves = +n || r.serves;
     out.ingredients = (r.ingredients || []).map(function (l) { return typeof l === 'string' ? line(l, f) : l; });
+    if (Array.isArray(r.steps) && r.steps.some(function (x) { return x && x.uses; })) out.steps = r.steps.map(function (x) { return x && x.uses ? Object.assign({}, x, { amts: uses(r, x, f) }) : x; });
     return out;
   }
+  function amts(r, st, n) { return uses(r, st, factor(r, n)); }
 
-  var API = { line: line, recipe: recipe, factor: factor, fmt: fmt };
+  var API = { line: line, recipe: recipe, factor: factor, fmt: fmt, amts: amts };
   if (typeof module === 'object' && module.exports) module.exports = API;
   if (root) root.GGScale = API;
 })(typeof window !== 'undefined' ? window : this);
