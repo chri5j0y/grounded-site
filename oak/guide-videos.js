@@ -20556,7 +20556,7 @@ window.GG_LEARN_GUIDES.oak = {
      "h": "A weekly stretch of real rest.",
      "sub": "An evening, half a day, or a whole day.",
      "say": "Here is the idea. Once a week, set aside one stretch of time with the phone put away. An evening, half a day, or a whole day. Then fill it on purpose with people, the outdoors, movement, and rest. People have kept a weekly day of rest for thousands of years. It still works.",
-     "img": "p/prac/birch-phone-check-sq"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-1"
     },
     {
      "k": "big",
@@ -20609,7 +20609,7 @@ window.GG_LEARN_GUIDES.oak = {
       "Through the week, keep social apps to about thirty minutes a day.",
       "After four weeks, notice your mood, your sleep, and your time with people."
      ],
-     "img": "pb/sb-oak-ok-g-unplugged-day-you-3"
+     "img": "pb/sb-oak-ok-g-unplugged-day-you-3b"
     },
     {
      "k": "big",
@@ -20775,7 +20775,7 @@ window.GG_LEARN_GUIDES.oak = {
      "h": "Rest is better together.",
      "sub": "The full guide has more, whenever you want it.",
      "say": "Rest is better together. The full guide has more, whenever you want it.",
-     "img": "pb/sb-oak-ok-g-unplugged-day-helper-6"
+     "img": "pb/sb-oak-ok-g-unplugged-day-helper-6b"
     }
    ]
   }
