@@ -13,7 +13,7 @@
                                answers with its planned date when there is one, else null
      suggestions(id, from)     a pick set's suggested days [{name, date}] (Mother's Day, Father's Day), soonest first
      whenText(id)              "Fourth Thursday of November", "December 25", "Easter Sunday", "A day you choose"
-     scale(qty, f, unit)       one amount scaled by f, rounded the kitchen way
+     scale(qty, f, unit, item) one amount scaled by f, rounded the kitchen way (item: halves of whole produce)
      amt(qty, unit)            "1 1/2 cups"
      shop(id, guests, pick, off)  [{key, item, qty, unit, amt, aisle}] the set's ingredients and extras, summed and sized for guests;
                                key is <set>:<item and unit>, the same whichever dishes are on the menu
@@ -92,9 +92,14 @@
   }
   var FR = [[0.125, '1/8'], [0.25, '1/4'], [1 / 3, '1/3'], [0.375, '3/8'], [0.5, '1/2'], [0.625, '5/8'], [2 / 3, '2/3'], [0.75, '3/4'], [0.875, '7/8']];
   var COUNT = /^(|whole|each|large|medium|small|can|cans|jar|jars|bunch|bunches|head|heads|bag|bags|box|boxes|package|packages|pkg|bottle|bottles|loaf|loaves|dozen|clove|cloves|sprig|sprigs|stalk|stalks|carton|cartons|pint|pints|block|blocks|pie|pies|sheet|sheets|piece|pieces)$/i;
-  function scale(q, f, unit) {
-    if (q == null || !isFinite(+q)) return q; var v = +q * (f || 1);
-    if (COUNT.test(String(unit || '').trim().split(/[\s(]/)[0])) return Math.max(1, Math.ceil(v - 0.15));
+  /* In a recipe's own lines (item given), whole produce a cook cuts in half (a watermelon, a lemon, an onion) keeps its halves;
+     eggs, cloves, and the like stay whole. A shopping list (no item) keeps whole things to buy. */
+  var HALVES = /\b(watermelons?|melons?|cantaloupes?|honeydews?|onions?|lemons?|limes?|oranges?|grapefruits?|peppers?|avocados?|cucumbers?|squash|zucchini|eggplants?|cabbages?|cauliflower|broccoli|fennel|pineapples?|mangoes|mango|apples?|pears?|sweet potato(es)?|potato(es)?|tomato(es)?|jalape(n|\u00f1)os?|shallots?|leeks?|beets?)\b/i;
+  var HALF_UNIT = /^(|whole|each|large|medium|small|head|heads|bunch|bunches)$/i;
+  function scale(q, f, unit, item) {
+    if (q == null || !isFinite(+q)) return q; var v = +q * (f || 1), u0 = String(unit || '').trim().split(/[\s(]/)[0];
+    if (HALF_UNIT.test(u0) && HALVES.test(String(item || '')) && !/\b(eggs?|cloves?)\b/i.test(String(item || ''))) return Math.max(0.5, Math.ceil(v * 2 - 0.3) / 2);
+    if (COUNT.test(u0)) return Math.max(1, Math.ceil(v - 0.15));
     /* A cup amount keeps its thirds (1/3 and 2/3 cup), so a recipe reads as written; other big units go to the nearest quarter. */
     if (/^(cup|cups)$/i.test(String(unit || ''))) { var c4 = Math.round(v * 4) / 4, c3 = Math.round(v * 3) / 3; return Math.max(0.25, Math.abs(c3 - v) < Math.abs(c4 - v) ? c3 : c4); }
     if (/^(lb|lbs|pound|pounds|oz|ounce|ounces|qt|quart|quarts|gal|gallon|gallons)$/i.test(String(unit || ''))) return Math.max(0.25, Math.round(v * 4) / 4);
@@ -161,7 +166,7 @@
     var f = s.scale === false ? 1 : (+guests || +s.serves || 1) / (+s.serves || 1);
     return { name: m.name, course: m.course, mins: m.mins || 0, handsOn: m.handsOn || 0, serves: Math.round((+m.serves || +s.serves || 1) * f), baseServes: +m.serves || +s.serves || 0,
       makeAhead: m.makeAhead || '', note: m.note || '', card: m.card || '', nut: m.nut || null, contains: m.contains || [],   // BLD 1006: nutrition from USDA FoodData Central, the FDA 9 allergens
-      ingredients: (m.ingredients || []).map(function (g) { var q = g.qty == null ? null : scale(+g.qty * f, 1, g.unit); return (q == null ? '' : amt(q, g.unit) + ' ') + g.item + (g.note ? ', ' + g.note : ''); }),
+      ingredients: (m.ingredients || []).map(function (g) { var q = g.qty == null ? null : scale(+g.qty * f, 1, g.unit, g.item); return (q == null ? '' : amt(q, g.unit) + ' ') + g.item + (g.note ? ', ' + g.note : ''); }),
       steps: (m.steps || []).map(function (x) { return { t: x.say, show: x.show || '', min: +x.mins || 0 }; }) };
   }
   /* BLD 1013: the holiday recipes in the one Grounded Recipes list (a menu item with a twin stays on its set, off the list). */

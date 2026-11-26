@@ -59,7 +59,7 @@
     ['/shared/tend/stage.js?v=c202', 'GGStage'],
     ['/shared/tend/coach.js?v=c207', 'GGVoice'],
     ['/shared/gg-scale.js?v=b934', 'GGScale'],
-    ['/shared/gg-holidays.js?v=c218', 'GGHolidays'],
+    ['/shared/gg-holidays.js?v=c219', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=c138', 'GGBulk'],
     ['/recipes/recipes.js?v=' + VER, 'GGRecipes']
   ];
