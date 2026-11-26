@@ -447,7 +447,7 @@ const SEASON_ORDER = ['planting','rooting','blooming'];
 // Moved here from index.html in session 11 so the Grove Guide in the Grounded
 // Field Guide reads the same words. Each week: theme, intro, reflection
 // question, and a story from Grounded.
-const GROVE_STORY = slug => "https://chri5j0y.substack.com/p/" + slug;
+const GROVE_STORY = slug => "/stories.html#" + slug; // Chris, November 26, 2026: stories open on Grounded Stories, never on Substack
 const ANCHORS = {
  morning:{t:"Arrive",b:"Before coffee, before your phone, sit for one minute. Just arrive in your body and the day. This one habit changes everything after it.",s:"Before anything else, one full breath where you are."},
  evening:{t:"Close the day",b:"Three specific graces from today. One thing you won't carry into sleep. One word for tomorrow. See the Guide for the full evening examen.",s:"One thing you're grateful for. One thing you're setting down."}
@@ -477,7 +477,7 @@ const WEEKS = [
  {theme:"Spirit, any way you come", intro:"You don't need a church or the right words. You need a little quiet and a willingness to notice what's bigger than you.", q:"Where did you feel something bigger than yourself this week?",
   story:{title:"The Atypical Atheist", url:GROVE_STORY("the-atypical-atheist"), line:"I believe in God, or something. I just cannot stand the church crap."}},
  {theme:"Practices that hold", intro:"Eight weeks in, some of this is becoming yours. The practices you keep on tired days are your roots. They hold when other things give way.", q:"Which practice has started to hold you?",
-  story:{title:"Prayer.", url:GROVE_STORY("thank-god-for-sending-you"), line:"The prayer stayed whole long after everything else had come apart."}},
+  story:{title:"Prayer.", url:GROVE_STORY("prayer"), line:"The prayer stayed whole long after everything else had come apart."}},
  {theme:"You get a say", intro:"Blooming begins with a choice. You don't control everything, but you get a say in how your life goes. Use it this week.", q:"What do you want more of in the life you're growing?",
   story:{title:"Birth Plan", url:GROVE_STORY("birth-plan"), line:"You don't just have to get ready to die. No one can, really. But you get a say in how it goes."}},
  {theme:"Love between us", intro:"Everything in a grove grows toward something. This week, grow toward the people you love.", q:"Where did you give or receive love this week?",

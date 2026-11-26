@@ -1656,7 +1656,7 @@
   function storyInfo(el) {
     if (el._ggp) return el._ggp;
     var h = el.querySelector('h1,h2,h3'); if (!h) return null;
-    var sub = el.querySelector('a[href*="substack.com/p/"]'), prev = el.querySelector('a[href$=".html"]');
+    var sub = el.querySelector('a[href*="stories.html#"]'), prev = el.querySelector('a[href$=".html"]');
     return (el._ggp = { t: h.textContent.trim(), s: slug(h.textContent), u: (prev && prev.getAttribute('href')) || (sub && sub.href) || location.pathname });
   }
   function markRead(s) { var v = vaultNow(); if (!v) return; v.stories = v.stories || { saved: {}, read: {} }; v.stories.read = v.stories.read || {}; if (!v.stories.read[s]) { v.stories.read[s] = todayStr(); save(cur.id); } }
@@ -1672,7 +1672,7 @@
         btn = document.createElement('button'); btn.type = 'button'; btn.className = 'ggp-story-save';
         (c.querySelector('.card-actions') || c).appendChild(btn);
         btn.onclick = function () { var vv = vaultNow(); if (!vv) return; var s2 = vv.stories.saved; if (s2[info.s]) delete s2[info.s]; else s2[info.s] = { t: info.t, u: info.u, d: todayStr() }; save(cur.id); paintStories(); };
-        c.querySelectorAll('a[href*="substack.com/p/"],a[href$=".html"]').forEach(function (l) { l.addEventListener('click', function () { markRead(info.s); }); });
+        c.querySelectorAll('a[href*="stories.html#"],a[href$=".html"]').forEach(function (l) { l.addEventListener('click', function () { markRead(info.s); }); });
       }
       var on = !!(st.saved || {})[info.s];
       btn.setAttribute('aria-pressed', String(on)); btn.textContent = on ? 'Saved' : 'Save for later';

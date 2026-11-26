@@ -15,7 +15,7 @@ window.GGJourney = {
    "q": "What made you want to start, and what are you hoping grows?",
    "story": {
     "title": "Grounded in Coffee",
-    "url": "https://chri5j0y.substack.com/p/grounded-in-coffee",
+    "url": "/stories.html#grounded-in-coffee",
     "line": "Sometimes the mess itself becomes part of the medicine."
    }
   },
@@ -25,7 +25,7 @@ window.GGJourney = {
    "q": "Where did you say yes this week when you needed to say no?",
    "story": {
     "title": "My Boundaries Have Gates",
-    "url": "https://chri5j0y.substack.com/p/my-boundaries-have-gates",
+    "url": "/stories.html#my-boundaries-have-gates",
     "line": "It's okay to care deeply. The harder part is caring for yourself just as deeply afterward."
    }
   },
@@ -35,7 +35,7 @@ window.GGJourney = {
    "q": "What did your body tell you this week?",
    "story": {
     "title": "Drift Away",
-    "url": "https://chri5j0y.substack.com/p/drift-away",
+    "url": "/stories.html#drift-away",
     "line": "Some people don't say goodbye. They sing it."
    }
   },
@@ -45,7 +45,7 @@ window.GGJourney = {
    "q": "What helped you come back when you drifted?",
    "story": {
     "title": "The Recovery",
-    "url": "https://chri5j0y.substack.com/p/the-recovery",
+    "url": "/stories.html#the-recovery",
     "line": "Not the mistake. The recovery."
    }
   },
@@ -55,7 +55,7 @@ window.GGJourney = {
    "q": "What are you carrying that you haven't said out loud?",
    "story": {
     "title": "Grief Debt",
-    "url": "https://chri5j0y.substack.com/p/grief-debt",
+    "url": "/stories.html#grief-debt",
     "line": "Turns out my heart was keeping better count than my head was."
    }
   },
@@ -65,7 +65,7 @@ window.GGJourney = {
    "q": "Who did you reach toward this week, and how did it feel?",
    "story": {
     "title": "If She Is Still Here",
-    "url": "https://chri5j0y.substack.com/p/if-she-is-still-here",
+    "url": "/stories.html#if-she-is-still-here",
     "line": "I almost said tomorrow. She didn't have a tomorrow."
    }
   },
@@ -75,7 +75,7 @@ window.GGJourney = {
    "q": "Where did you feel something bigger than yourself this week?",
    "story": {
     "title": "The Atypical Atheist",
-    "url": "https://chri5j0y.substack.com/p/the-atypical-atheist",
+    "url": "/stories.html#the-atypical-atheist",
     "line": "I believe in God, or something. I just cannot stand the church crap."
    }
   },
@@ -85,7 +85,7 @@ window.GGJourney = {
    "q": "Which practice has started to hold you?",
    "story": {
     "title": "Prayer.",
-    "url": "https://chri5j0y.substack.com/p/thank-god-for-sending-you",
+    "url": "/stories.html#prayer",
     "line": "The prayer stayed whole long after everything else had come apart."
    }
   },
@@ -95,7 +95,7 @@ window.GGJourney = {
    "q": "What do you want more of in the life you're growing?",
    "story": {
     "title": "Birth Plan",
-    "url": "https://chri5j0y.substack.com/p/birth-plan",
+    "url": "/stories.html#birth-plan",
     "line": "You don't just have to get ready to die. No one can, really. But you get a say in how it goes."
    }
   },
@@ -105,7 +105,7 @@ window.GGJourney = {
    "q": "Where did you give or receive love this week?",
    "story": {
     "title": "Love.",
-    "url": "https://chri5j0y.substack.com/p/love",
+    "url": "/stories.html#love",
     "line": "Love between us, right here, right now, is God loving us through each other."
    }
   },
@@ -115,7 +115,7 @@ window.GGJourney = {
    "q": "What gives you hope right now?",
    "story": {
     "title": "He Was Praying Too",
-    "url": "https://chri5j0y.substack.com/p/he-was-praying-too",
+    "url": "/stories.html#he-was-praying-too",
     "line": "When you were praying for me, I was praying too."
    }
   },
@@ -125,7 +125,7 @@ window.GGJourney = {
    "q": "What grew in these twelve weeks, and what are you ready to let go?",
    "story": {
     "title": "Enlightenment",
-    "url": "https://chri5j0y.substack.com/p/enlightenment",
+    "url": "/stories.html#enlightenment",
     "line": "I have spent my whole life learning how to hold on well. Perhaps I only have one more thing left to learn."
    }
   }

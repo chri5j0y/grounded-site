@@ -233,11 +233,11 @@
       '<p><b>Bark (Mind and feelings).</b> The American Psychological Association advises that social media not crowd out sleep or activity, and that kids limit comparison, especially around looks. <a class="src" href="https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use" target="_blank" rel="noopener">APA health advisory</a></p>' +
       '<p><b>Fruit (Hope) and Trunk (Purpose).</b> Simple gratitude practices like writing down three good things are linked with more well-being in students. <a class="src" href="https://ggie.berkeley.edu/practice/three-good-things-for-students/" target="_blank" rel="noopener">Greater Good in Education</a></p></div>' +
       '<div class="panel"><h3>Stories from Grounded</h3><p class="muted">Real stories from chaplain Chris Joy, for the grown-ups.</p><ul>' +
-      '<li><a href="https://chri5j0y.substack.com/p/the-recovery" target="_blank" rel="noopener">The Recovery</a>: what happens after a mistake matters most.</li>' +
-      '<li><a href="https://chri5j0y.substack.com/p/grounded-in-coffee" target="_blank" rel="noopener">Grounded in Coffee</a>: finding your way back to center when things spill over.</li>' +
-      '<li><a href="https://chri5j0y.substack.com/p/my-boundaries-have-gates" target="_blank" rel="noopener">My Boundaries Have Gates</a>: caring for others without losing yourself.</li>' +
-      '<li><a href="https://chri5j0y.substack.com/p/if-she-is-still-here" target="_blank" rel="noopener">If She Is Still Here</a>: on not waiting for tomorrow.</li>' +
-      '<li><a href="https://chri5j0y.substack.com/p/welcome-home" target="_blank" rel="noopener">Welcome Home</a>: a quiet moment at the end of a life.</li></ul>' +
+      '<li><a href="/stories.html#the-recovery" target="_blank" rel="noopener">The Recovery</a>: what happens after a mistake matters most.</li>' +
+      '<li><a href="/stories.html#grounded-in-coffee" target="_blank" rel="noopener">Grounded in Coffee</a>: finding your way back to center when things spill over.</li>' +
+      '<li><a href="/stories.html#my-boundaries-have-gates" target="_blank" rel="noopener">My Boundaries Have Gates</a>: caring for others without losing yourself.</li>' +
+      '<li><a href="/stories.html#if-she-is-still-here" target="_blank" rel="noopener">If She Is Still Here</a>: on not waiting for tomorrow.</li>' +
+      '<li><a href="/stories.html#welcome-home" target="_blank" rel="noopener">Welcome Home</a>: a quiet moment at the end of a life.</li></ul>' +
       '<div class="ggg-row"><a class="hm-btn sm hm-pill" href="https://growwithgrounded.com/stories.html">Open Grounded Stories</a><a class="hm-btn sm line hm-pill" href="https://growwithgrounded.com/the-grounded-way.html#ways">Start Membership</a></div></div>' +
       '<div class="panel"><h3>When Life Changes</h3><p>64 guides for talking with a middle schooler about hard things, from grief and divorce to group chats, AI chatbots, scary news, and health and ability, in group cards with tabs and search on top. Each has a quick card, a full "Talking It Through" guide with trusted sources, and two short videos: For You, for the student, and For the Grown-up.</p><button type="button" class="hm-btn sm hm-pill" data-ggg="life">Open When Life Changes</button></div>' +
       '</div>';
@@ -344,7 +344,7 @@
     title: function (tree) { return tree === 'maple' ? 'The Grown-up Guide' : 'For Grown-ups'; },
     files: function (tree) {
       var f = ['/shared/gg-parts.js?v=c212', '/shared/gg-life.js?v=c197', '/shared/gg-pdf.js?v=b803', '/shared/home/kidsdata.js?v=' + V, '/shared/home/kidkit.js?v=' + V];
-      if (tree === 'aspen') f.splice(3, 0, '/aspen/checkin.js?v=b907', '/shared/gg-journey.js?v=b929', '/shared/gg-filelock.js?v=b766');
+      if (tree === 'aspen') f.splice(3, 0, '/aspen/checkin.js?v=b907', '/shared/gg-journey.js?v=c220', '/shared/gg-filelock.js?v=b766');
       return f;
     },
     open: function (ctx) {
