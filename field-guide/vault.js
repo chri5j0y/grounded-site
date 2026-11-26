@@ -60,7 +60,7 @@ const stName = k => (ST.find(x => x[0] === k) || ST[0])[1];
 const FILTERS = [['all', 'All'], ['posted', 'Posted'], ['early', 'Early Preview'], ['vault', 'Vault'], ['voice', 'Needs a Voice'], ['note', 'Has a Note']];
 const hasNote = s => Array.isArray(s.behind) && s.behind.some(p => String(p).trim());
 const NOTEBOOK = 'Story: Chris Joy, from my notebook. Names and details changed.';
-const pubCredit = t => 'Story: Chris Joy, ' + t + ' · Read it on Grounded';
+const pubCredit = t => 'Story: Chris Joy, ' + t; // Chris, firm, November 26, 2026: no links to Substack, keep people on the website
 const TOPICS = [['dying', 'Dying and Saying Goodbye'], ['grief', 'Grief and After'], ['faith', 'Faith and Doubt'], ['kids', 'Kids and Families']];
 // The topics a story shows under now: its own, or the page's fallback (GGStories.themesOf) for a story with none set yet.
 const topicsNow = s => Array.isArray(s.topics) ? s.topics.slice() : (window.GGStories && GGStories.themesOf ? String(GGStories.themesOf({slug: GGStories.slug(s.title), title: s.title}) || '').split(' ').filter(Boolean) : []);
@@ -195,7 +195,7 @@ function storyView(V, s){
   ${waits() ? '<p class="tipbox" style="border-left:3px solid var(--gold)">An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and this story is ready for changes again.</p>' : ''}
   ${(() => { const m = mainCopy(s); return m ? `<div class="tipbox" style="border-left:3px solid var(--gold)"><p>This is another copy of <b>${esc(m.title)}</b>. The main copy is in ${esc(m.col || 'Stories')} (${esc(stName(m.status))}), and it is the one Grounded Stories uses. Make changes there.</p><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-sva="open" data-v="${esc(m.id)}">Open the Main Copy</button></div></div>` : ''; })()}
   <div class="card"><h3>Where It Stands</h3><div class="row" style="margin-top:8px">${sw}</div>
-   <p class="muted" style="font-size:14px;margin-top:8px">${{vault: 'Vault: kept here while you tend it. Visitors and members see it once you mark it Early Preview or Posted and seal.', early: 'Early Preview: members see the whole story first, often before it goes on Substack.', posted: 'Posted: on Grounded Stories, with a preview for everyone and the whole story for members.'}[s.status] || ''}</p>
+   <p class="muted" style="font-size:14px;margin-top:8px">${{vault: 'Vault: kept here while you tend it. Visitors and members see it once you mark it Early Preview or Posted and seal.', early: 'Early Preview: members see the whole story first, before it is Posted.', posted: 'Posted: on Grounded Stories, with a preview for everyone and the whole story for members.'}[s.status] || ''}</p>
    <label class="sv-tick"><input type="checkbox" data-svf="open"${s.open ? ' checked' : ''}${lock}> <span><b>Open to Everyone</b><br><small class="muted">The whole story plays and reads for every visitor once it is Posted.</small></span></label>
    ${samplerHTML(s, lock)}
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:10px">${savedLine()}</p></div>
@@ -205,8 +205,6 @@ function storyView(V, s){
    <label class="f" for="sv-title">Title</label><input type="text" id="sv-title" data-svf="title" value="${esc(s.title)}"${lock}>
    <label class="f" for="sv-sub">Subtitle</label><input type="text" id="sv-sub" data-svf="sub" value="${esc(s.sub || '')}"${lock}>
    <label class="f" for="sv-col">Collection</label><input type="text" id="sv-col" data-svf="col" value="${esc(s.col || '')}" list="sv-cols"${lock}><datalist id="sv-cols">${cols.map(c => `<option value="${esc(c)}">`).join('')}</datalist>
-   <label class="f" for="sv-sx">Substack Link</label><input type="text" inputmode="url" id="sv-sx" data-svf="substack" value="${esc(s.substack || '')}" placeholder="https://..."${lock}>
-   <p class="muted" style="font-size:14px;margin-top:4px">With a link, the story shows "Talk about this on Substack."</p>
    <label class="f" for="sv-cr">Credit Line</label><input type="text" id="sv-cr" data-svf="credit" value="${esc(s.credit || '')}"${lock}>
    ${s.note ? `<p class="muted" style="margin-top:10px"><b>Note:</b> ${esc(s.note)}</p>` : ''}</div>
   <div class="card"><h3>The Story</h3>
@@ -362,7 +360,7 @@ function cardView(V, c){
   ${c.status !== 'posted' ? `<button class="linkbtn" data-sva="cdel"${lock}>Remove This Card</button><br>` : ''}
   <button class="linkbtn" data-sva="back">&larr; Back to the Story Vault</button></div>`;
 }
-function needLib(){ return new Promise(ok => { if (window.GGLibrary) return ok(); const sc = document.createElement('script'); sc.src = '../shared/gg-library.js?v=c124'; sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); }).then(() => window.GGLibrary ? GGLibrary.ready() : false); }
+function needLib(){ return new Promise(ok => { if (window.GGLibrary) return ok(); const sc = document.createElement('script'); sc.src = '../shared/gg-library.js?v=c220'; sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); }).then(() => window.GGLibrary ? GGLibrary.ready() : false); }
 function libSearch(){ const q = UI.cq.trim(); if (!q){ UI.lib = null; return Promise.resolve(); } return needLib().then(okl => { UI.lib = okl ? GGLibrary.search(q, 'oak') : []; }); }
 function voiceLine(s){
   if (s.voiced) return '<span class="pill sage">Recorded</span> The narrator\'s voice reads this story as written.';
@@ -390,7 +388,7 @@ function textChanged(s){
 function setField(s, k, val){
   if (k === 'title'){
     const t = val.trim(); if (!t) return;
-    if (s.credit === pubCredit(s.title)) s.credit = pubCredit(t);
+    if (s.credit === pubCredit(s.title) || s.credit === pubCredit(s.title) + ' · Read it on Grounded') s.credit = pubCredit(t);
     s.title = t;
   } else if (k === 'substack'){
     const u = val.trim(); s.substack = u;

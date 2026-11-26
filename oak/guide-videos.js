@@ -1046,7 +1046,7 @@ window.GG_LEARN_GUIDES.oak = {
 "lesson": "Cool the body before you use your words.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/grounded-in-coffee",
+"href": "/stories.html#grounded-in-coffee",
 "label": "Read the Full Story: Grounded in Coffee"
 },
 "hold": 2,
@@ -2189,7 +2189,7 @@ window.GG_LEARN_GUIDES.oak = {
 "lesson": "Love keeps its own shape.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/total-bliss",
+"href": "/stories.html#total-bliss",
 "label": "Read the Full Story: Total Bliss"
 },
 "hold": 2,
@@ -5338,7 +5338,7 @@ window.GG_LEARN_GUIDES.oak = {
 "note": "From a Grounded story by Chris Joy",
 "hold": 2,
 "link": {
-"href": "https://chri5j0y.substack.com/p/drift-away",
+"href": "/stories.html#drift-away",
 "label": "Read the Full Story: Drift Away"
 },
 "say": "I once sat with Suzan, in her last days. She hadn't opened her eyes or answered me in days. A song played softly on a small speaker: Drift Away. Under the sheet, her toes began to move with the beat. I held her hand and sang along. She lifted her chin and smiled a big open smile, and her shoulders danced, right on the beat. She never woke again."
@@ -6308,7 +6308,7 @@ window.GG_LEARN_GUIDES.oak = {
 "lesson": "Listen for the one real word.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/love",
+"href": "/stories.html#love",
 "label": "Read the Full Story: Love."
 },
 "hold": 2,
@@ -11683,7 +11683,7 @@ window.GG_LEARN_GUIDES.oak = {
 "lesson": "The sacred may come through a new door.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/the-impossible-dance-of-particles",
+"href": "/stories.html#the-impossible-dance-of-particles",
 "label": "Read the Full Story: The Impossible Dance of Particles"
 },
 "hold": 2,
@@ -12465,7 +12465,7 @@ window.GG_LEARN_GUIDES.oak = {
 "lesson": "The hurt came from people. It deserved to be heard.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/the-atypical-atheist",
+"href": "/stories.html#the-atypical-atheist",
 "label": "Read the Full Story: The Atypical Atheist"
 },
 "hold": 2,

@@ -2036,7 +2036,7 @@ let SRCL = 0;
 function musicSrc(files){
   try { if (window.GGSources && GGSources.audio){ const h = GGSources.audio(files, {tag: 'p'}); if (h) return `<div class="hj-src">${h}</div>`; return ''; } } catch(e){}
   // the credits file loads the first time a session shows, then the screen draws again
-  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c209'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
+  if (!SRCL && typeof document !== 'undefined' && document.head && document.head.appendChild){ SRCL = 1; try { const s = document.createElement('script'); s.src = asset('shared/gg-sources.js?v=c220'); s.onload = () => rerender(true); s.onerror = () => { SRCL = 0; }; document.head.appendChild(s); } catch(e){ SRCL = 0; } }
   return '';
 }
 async function runSession(o){
@@ -3619,7 +3619,7 @@ function vRisk(){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c193'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c220'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 // BLD 1015: the moved plan keeps the keys to its own libraries (w.libKeys: the Guide key, the Founder key for a Founder plan,
 // the access code's id, and which sealed file each copy came from), inside the person's locked profile, so The Grounded Way

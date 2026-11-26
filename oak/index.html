@@ -5,7 +5,7 @@
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=c007"></script>
 <script src="/shared/gg-shelf.js?v=c124"></script>
-<script src="/shared/gg-sources.js?v=c209"></script>
+<script src="/shared/gg-sources.js?v=c220"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -1149,12 +1149,12 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-qr.js?v=b934"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/shared/gg-practice-alias.js?v=b907"></script>
-<script src="/shared/gg-profiles.js?v=c193"></script>
+<script src="/shared/gg-profiles.js?v=c220"></script>
 <script src="/shared/gg-life.js?v=c197"></script>
 <script src="/shared/gg-life-kit.js?v=b888"></script>
-<script src="/shared/gg-sober.js?v=c212"></script>
-<script src="/shared/gg-journey.js?v=b929"></script>
-<script src="/shared/gg-library.js?v=c124"></script>
+<script src="/shared/gg-sober.js?v=c220"></script>
+<script src="/shared/gg-journey.js?v=c220"></script>
+<script src="/shared/gg-library.js?v=c220"></script>
 <script src="/shared/gg-parts.js?v=c212"></script>
 <script src="/shared/gg-tend.js?v=b949"></script>
 <script src="/shared/gg-treeart.js?v=c212"></script>
@@ -1172,41 +1172,41 @@ const DOMAIN_DEFS = OAK_P.DOMAIN_DEFS || [];
 
 // =====================================================================
 // GROUNDED LINKS AND STORIES
-// To link a story, paste its Substack address between the quotes after url.
-// A story with no url links to the Grounded home page instead.
+// To link a story, put its Grounded Stories address (/stories.html#story-slug) between the quotes after url.
+// A story with no url links to the Grounded Stories page instead.
 // The first story in each part is the featured one on results and checkin pages.
 // =====================================================================
-const GROUNDED_URL = "https://chri5j0y.substack.com";
+const GROUNDED_URL = "/stories.html"; // Chris, November 26, 2026: keep people on growwithgrounded.com
 const SUBSCRIBE_URL = "https://growwithgrounded.com/the-grounded-way.html#ways"; // Chris, November 13, 2026: invites point to Membership, never a newsletter
 const STORIES = {
   roots: [
-    { title: "The Atypical Atheist", url: "https://chri5j0y.substack.com/p/the-atypical-atheist", snippet: "I believe in God, or something. I just cannot stand the church crap." },
-    { title: "Prayer.", url: "https://chri5j0y.substack.com/p/thank-god-for-sending-you", snippet: "The prayer stayed whole long after everything else had come apart." },
-    { title: "Love.", url: "https://chri5j0y.substack.com/p/love", snippet: "Love between us, right here, right now, is God loving us through each other." }
+    { title: "The Atypical Atheist", url: "/stories.html#the-atypical-atheist", snippet: "I believe in God, or something. I just cannot stand the church crap." },
+    { title: "Prayer.", url: "/stories.html#prayer", snippet: "The prayer stayed whole long after everything else had come apart." },
+    { title: "Love.", url: "/stories.html#love", snippet: "Love between us, right here, right now, is God loving us through each other." }
   ],
   bark: [
-    { title: "Grief Debt", url: "https://chri5j0y.substack.com/p/grief-debt", snippet: "Turns out my heart was keeping better count than my head was." },
-    { title: "The Recovery", url: "https://chri5j0y.substack.com/p/the-recovery", snippet: "Not the mistake. The recovery." },
-    { title: "My Boundaries Have Gates", url: "https://chri5j0y.substack.com/p/my-boundaries-have-gates", snippet: "It's okay to care deeply. The harder part is caring for yourself just as deeply afterward." }
+    { title: "Grief Debt", url: "/stories.html#grief-debt", snippet: "Turns out my heart was keeping better count than my head was." },
+    { title: "The Recovery", url: "/stories.html#the-recovery", snippet: "Not the mistake. The recovery." },
+    { title: "My Boundaries Have Gates", url: "/stories.html#my-boundaries-have-gates", snippet: "It's okay to care deeply. The harder part is caring for yourself just as deeply afterward." }
   ],
   trunk: [
-    { title: "Birth Plan", url: "https://chri5j0y.substack.com/p/birth-plan", snippet: "You don't just have to get ready to die. No one can, really. But you get a say in how it goes." },
-    { title: "The Impossible Dance of Particles", url: "https://chri5j0y.substack.com/p/the-impossible-dance-of-particles", snippet: "Finally naming the God you have known all along in your own sacred language." },
-    { title: "Enlightenment", url: "https://chri5j0y.substack.com/p/enlightenment", snippet: "I have spent my whole life learning how to hold on well. Perhaps I only have one more thing left to learn." }
+    { title: "Birth Plan", url: "/stories.html#birth-plan", snippet: "You don't just have to get ready to die. No one can, really. But you get a say in how it goes." },
+    { title: "The Impossible Dance of Particles", url: "/stories.html#the-impossible-dance-of-particles", snippet: "Finally naming the God you have known all along in your own sacred language." },
+    { title: "Enlightenment", url: "/stories.html#enlightenment", snippet: "I have spent my whole life learning how to hold on well. Perhaps I only have one more thing left to learn." }
   ],
   fruit: [
-    { title: "He Was Praying Too", url: "https://chri5j0y.substack.com/p/he-was-praying-too", snippet: "When you were praying for me&hellip; I was praying too." },
-    { title: "Total Bliss", url: "https://chri5j0y.substack.com/p/total-bliss", snippet: "Peace wasn't a big enough word for what she had. She needed bliss." },
-    { title: "Welcome Home", url: "https://chri5j0y.substack.com/p/welcome-home", snippet: "His arms stayed open the whole time, reaching for someone neither of us could see." }
+    { title: "He Was Praying Too", url: "/stories.html#he-was-praying-too", snippet: "When you were praying for me&hellip; I was praying too." },
+    { title: "Total Bliss", url: "/stories.html#total-bliss", snippet: "Peace wasn't a big enough word for what she had. She needed bliss." },
+    { title: "Welcome Home", url: "/stories.html#welcome-home", snippet: "His arms stayed open the whole time, reaching for someone neither of us could see." }
   ],
   leaves: [
-    { title: "Drift Away", url: "https://chri5j0y.substack.com/p/drift-away", snippet: "Some people don't say goodbye. They sing it." },
-    { title: "Grounded in Coffee", url: "https://chri5j0y.substack.com/p/grounded-in-coffee", snippet: "Sometimes the mess itself becomes part of the medicine." }
+    { title: "Drift Away", url: "/stories.html#drift-away", snippet: "Some people don't say goodbye. They sing it." },
+    { title: "Grounded in Coffee", url: "/stories.html#grounded-in-coffee", snippet: "Sometimes the mess itself becomes part of the medicine." }
   ],
   branches: [
-    { title: "If She Is Still Here", url: "https://chri5j0y.substack.com/p/if-she-is-still-here", snippet: "I almost said tomorrow. She didn't have a tomorrow." },
-    { title: "He Came to Collect", url: "https://chri5j0y.substack.com/p/he-came-to-collect", snippet: "You cannot save the whole field if the fence is broken in one spot." },
-    { title: "Please Help My Dad Die", url: "https://chri5j0y.substack.com/p/please-help-my-dad-die", snippet: "Sometimes the hardest part of dying is finding permission to leave." }
+    { title: "If She Is Still Here", url: "/stories.html#if-she-is-still-here", snippet: "I almost said tomorrow. She didn't have a tomorrow." },
+    { title: "He Came to Collect", url: "/stories.html#he-came-to-collect", snippet: "You cannot save the whole field if the fence is broken in one spot." },
+    { title: "Please Help My Dad Die", url: "/stories.html#please-help-my-dad-die", snippet: "Sometimes the hardest part of dying is finding permission to leave." }
   ]
 };
 
@@ -3545,8 +3545,8 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=c216" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c210';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=c220" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=c220';document.head.appendChild(s)"></script>
 <script src="/read.js?v=c030" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=c030';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=c212" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c193';document.head.appendChild(s)"></script>
+<script src="/nav.js?v=c220" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=c220';document.head.appendChild(s)"></script>
 </body>
 </html>

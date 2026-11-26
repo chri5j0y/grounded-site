@@ -75,37 +75,37 @@ DOMAIN_DEFS.forEach(d => {
 // GROUNDED LINKS AND STORIES (Chris's published stories, told in his own words)
 // The first story in each part is the featured one on results.
 // =====================================================================
-const GROUNDED_URL = "https://chri5j0y.substack.com";
+const GROUNDED_URL = "/stories.html"; // Chris, November 26, 2026: keep people on growwithgrounded.com
 const SUBSCRIBE_URL = "https://growwithgrounded.com/the-grounded-way.html#ways"; // Chris, November 13, 2026: invites point to Membership, never a newsletter
 const STORIES = {
   roots: [
-    { title: "Prayer.", url: "https://chri5j0y.substack.com/p/thank-god-for-sending-you", snippet: "The prayer stayed whole long after everything else had come apart." },
-    { title: "Love.", url: "https://chri5j0y.substack.com/p/love", snippet: "Love between us, right here, right now, is God loving us through each other." },
-    { title: "The Atypical Atheist", url: "https://chri5j0y.substack.com/p/the-atypical-atheist", snippet: "I believe in God, or something. I just cannot stand the church crap." }
+    { title: "Prayer.", url: "/stories.html#prayer", snippet: "The prayer stayed whole long after everything else had come apart." },
+    { title: "Love.", url: "/stories.html#love", snippet: "Love between us, right here, right now, is God loving us through each other." },
+    { title: "The Atypical Atheist", url: "/stories.html#the-atypical-atheist", snippet: "I believe in God, or something. I just cannot stand the church crap." }
   ],
   bark: [
-    { title: "The Recovery", url: "https://chri5j0y.substack.com/p/the-recovery", snippet: "Not the mistake. The recovery." },
-    { title: "Grief Debt", url: "https://chri5j0y.substack.com/p/grief-debt", snippet: "Turns out my heart was keeping better count than my head was." },
-    { title: "My Boundaries Have Gates", url: "https://chri5j0y.substack.com/p/my-boundaries-have-gates", snippet: "It's okay to care deeply. The harder part is caring for yourself just as deeply afterward." }
+    { title: "The Recovery", url: "/stories.html#the-recovery", snippet: "Not the mistake. The recovery." },
+    { title: "Grief Debt", url: "/stories.html#grief-debt", snippet: "Turns out my heart was keeping better count than my head was." },
+    { title: "My Boundaries Have Gates", url: "/stories.html#my-boundaries-have-gates", snippet: "It's okay to care deeply. The harder part is caring for yourself just as deeply afterward." }
   ],
   trunk: [
-    { title: "Enlightenment", url: "https://chri5j0y.substack.com/p/enlightenment", snippet: "I have spent my whole life learning how to hold on well. Perhaps I only have one more thing left to learn." },
-    { title: "Birth Plan", url: "https://chri5j0y.substack.com/p/birth-plan", snippet: "You don't just have to get ready to die. No one can, really. But you get a say in how it goes." },
-    { title: "The Impossible Dance of Particles", url: "https://chri5j0y.substack.com/p/the-impossible-dance-of-particles", snippet: "Finally naming the God you have known all along in your own sacred language." }
+    { title: "Enlightenment", url: "/stories.html#enlightenment", snippet: "I have spent my whole life learning how to hold on well. Perhaps I only have one more thing left to learn." },
+    { title: "Birth Plan", url: "/stories.html#birth-plan", snippet: "You don't just have to get ready to die. No one can, really. But you get a say in how it goes." },
+    { title: "The Impossible Dance of Particles", url: "/stories.html#the-impossible-dance-of-particles", snippet: "Finally naming the God you have known all along in your own sacred language." }
   ],
   fruit: [
-    { title: "Total Bliss", url: "https://chri5j0y.substack.com/p/total-bliss", snippet: "Peace wasn't a big enough word for what she had. She needed bliss." },
-    { title: "He Was Praying Too", url: "https://chri5j0y.substack.com/p/he-was-praying-too", snippet: "When you were praying for me&hellip; I was praying too." },
-    { title: "Welcome Home", url: "https://chri5j0y.substack.com/p/welcome-home", snippet: "His arms stayed open the whole time, reaching for someone neither of us could see." }
+    { title: "Total Bliss", url: "/stories.html#total-bliss", snippet: "Peace wasn't a big enough word for what she had. She needed bliss." },
+    { title: "He Was Praying Too", url: "/stories.html#he-was-praying-too", snippet: "When you were praying for me&hellip; I was praying too." },
+    { title: "Welcome Home", url: "/stories.html#welcome-home", snippet: "His arms stayed open the whole time, reaching for someone neither of us could see." }
   ],
   leaves: [
-    { title: "Drift Away", url: "https://chri5j0y.substack.com/p/drift-away", snippet: "Some people don't say goodbye. They sing it." },
-    { title: "Grounded in Coffee", url: "https://chri5j0y.substack.com/p/grounded-in-coffee", snippet: "Sometimes the mess itself becomes part of the medicine." }
+    { title: "Drift Away", url: "/stories.html#drift-away", snippet: "Some people don't say goodbye. They sing it." },
+    { title: "Grounded in Coffee", url: "/stories.html#grounded-in-coffee", snippet: "Sometimes the mess itself becomes part of the medicine." }
   ],
   branches: [
-    { title: "If She Is Still Here", url: "https://chri5j0y.substack.com/p/if-she-is-still-here", snippet: "I almost said tomorrow. She didn't have a tomorrow." },
-    { title: "He Came to Collect", url: "https://chri5j0y.substack.com/p/he-came-to-collect", snippet: "You cannot save the whole field if the fence is broken in one spot." },
-    { title: "Please Help My Dad Die", url: "https://chri5j0y.substack.com/p/please-help-my-dad-die", snippet: "Sometimes the hardest part of dying is finding permission to leave." }
+    { title: "If She Is Still Here", url: "/stories.html#if-she-is-still-here", snippet: "I almost said tomorrow. She didn't have a tomorrow." },
+    { title: "He Came to Collect", url: "/stories.html#he-came-to-collect", snippet: "You cannot save the whole field if the fence is broken in one spot." },
+    { title: "Please Help My Dad Die", url: "/stories.html#please-help-my-dad-die", snippet: "Sometimes the hardest part of dying is finding permission to leave." }
   ]
 };
 const ROTATION_TITLES = ["Drift Away", "Total Bliss", "Prayer.", "Enlightenment", "Love."];

@@ -677,8 +677,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=c030"></script>
-<script src="../shared/gg-sources.js?v=c209"></script>
-<script src="../shared/gg-learn.js?v=c216"></script>
+<script src="../shared/gg-sources.js?v=c220"></script>
+<script src="../shared/gg-learn.js?v=c220"></script>
 <script src="../shared/gg-parts.js?v=c212"></script>
 <script src="../shared/gg-print.js?v=c212"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
@@ -701,8 +701,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="member-acct.js?v=b950"></script>
 <script src="../shared/gg-live.js?v=c184"></script>
 <script src="live-fg.js?v=c184"></script>
-<script src="../shared/gg-stories.js?v=c212"></script>
-<script src="vault.js?v=c180"></script>
+<script src="../shared/gg-stories.js?v=c220"></script>
+<script src="vault.js?v=c220"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1266,7 +1266,7 @@ if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER
 // holds (DATA.health) in its own locked store, untouched; nothing is deleted. Bring Your Tending Over (Settings) carries them
 // over once: it loads the engine (/shared/tend/health.js) for that moment only and runs the same tested Move My Plan merge
 // (newest entry wins, removed entries stay removed), with the keys to this device's libraries for the plan's own refresh.
-const TEND_JS = '/shared/tend/health.js?v=c218';
+const TEND_JS = '/shared/tend/health.js?v=c220';
 const TC = {busy: false};
 function fgLoadJs(src){ return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = src; sc.onload = () => res(); sc.onerror = () => rej(new Error(src)); document.head.appendChild(sc); }); }
 async function fgTendEngine(){

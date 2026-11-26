@@ -11,7 +11,8 @@
    - Practices say "Adapted from" for the method they come from. Research behind a "why" line is "Sources".
    - Books on Chris's shelf link to their card in the Library (the card carries the Amazon link).
      Off-shelf books and studies link to their own home page or DOI.
-   - Stories: published, "Story: Chris Joy, <title> · Read it on Grounded" (the Substack link).
+   - Stories: published, "Story: Chris Joy, <title>", the title linked to its own page on Grounded Stories
+     (/stories.html#slug). Never a Substack link (Chris, firm, November 26, 2026: keep people on the website).
      Unpublished, "Story: Chris Joy, from my notebook. Names and details changed."
 
    For tools
@@ -1528,27 +1529,27 @@
     // end BLD 739
   };
 
-  // Chris's stories. Published: the Substack link ('' while the link is still to come). Anything not listed is from the notebook.
+  // Chris's stories. Published: the story's own page on Grounded Stories ('' while it is still to come). Anything not listed is from the notebook.
   var PUB = {
-    'he was praying too': 'https://chri5j0y.substack.com/p/he-was-praying-too',
-    'the atypical atheist': 'https://chri5j0y.substack.com/p/the-atypical-atheist',
-    'he came to collect': 'https://chri5j0y.substack.com/p/he-came-to-collect',
-    'total bliss': 'https://chri5j0y.substack.com/p/total-bliss',
-    'the recovery': 'https://chri5j0y.substack.com/p/the-recovery',
-    'drift away': 'https://chri5j0y.substack.com/p/drift-away',
-    'welcome home': 'https://chri5j0y.substack.com/p/welcome-home',
-    'please help my dad die': 'https://chri5j0y.substack.com/p/please-help-my-dad-die',
-    'if she is still here': 'https://chri5j0y.substack.com/p/if-she-is-still-here',
-    'grief debt': 'https://chri5j0y.substack.com/p/grief-debt',
-    'birth plan': 'https://chri5j0y.substack.com/p/birth-plan',
-    'my boundaries have gates': 'https://chri5j0y.substack.com/p/my-boundaries-have-gates',
-    'grounded in coffee': 'https://chri5j0y.substack.com/p/grounded-in-coffee',
-    'prayer': 'https://chri5j0y.substack.com/p/thank-god-for-sending-you',
-    'enlightenment': 'https://chri5j0y.substack.com/p/enlightenment',
-    'love': 'https://chri5j0y.substack.com/p/love',
-    'the impossible dance of particles': 'https://chri5j0y.substack.com/p/the-impossible-dance-of-particles',
-    'he deserves that': 'https://chri5j0y.substack.com/p/he-deserves-that'
-    // Drafts on Substack, not yet published (credited as from the notebook until they go live; then add the link here):
+    'he was praying too': '/stories.html#he-was-praying-too',
+    'the atypical atheist': '/stories.html#the-atypical-atheist',
+    'he came to collect': '/stories.html#he-came-to-collect',
+    'total bliss': '/stories.html#total-bliss',
+    'the recovery': '/stories.html#the-recovery',
+    'drift away': '/stories.html#drift-away',
+    'welcome home': '/stories.html#welcome-home',
+    'please help my dad die': '/stories.html#please-help-my-dad-die',
+    'if she is still here': '/stories.html#if-she-is-still-here',
+    'grief debt': '/stories.html#grief-debt',
+    'birth plan': '/stories.html#birth-plan',
+    'my boundaries have gates': '/stories.html#my-boundaries-have-gates',
+    'grounded in coffee': '/stories.html#grounded-in-coffee',
+    'prayer': '/stories.html#prayer',
+    'enlightenment': '/stories.html#enlightenment',
+    'love': '/stories.html#love',
+    'the impossible dance of particles': '/stories.html#the-impossible-dance-of-particles',
+    'he deserves that': '/stories.html#he-deserves-that'
+    // Drafts, not yet published (credited as from the notebook until they go live on Grounded Stories; then add the link here):
     // Why Is God Doing This to Me?, A Presence That Cannot Be Boxed, The Beautiful Hodgepodge, Divine Sign,
     // I Know That One, Silly.
   };
@@ -1663,7 +1664,7 @@
       var s = storyOf(t); if (!s) return;
       if (s.notebook) { nb = true; return; }
       if (st[s.title]) return; st[s.title] = 1;
-      rows.push('<span class="gg-src-k">Story:</span> Chris Joy, ' + esc(s.title) + (s.href ? ' &middot; <a href="' + esc(s.href) + '" target="_blank" rel="noopener">Read it on Grounded</a>' : ''));
+      rows.push('<span class="gg-src-k">Story:</span> Chris Joy, ' + (s.href ? '<a href="' + esc(s.href) + '">' + esc(s.title) + '</a>' : esc(s.title)));
     });
     if (nb) rows.push(esc(NOTEBOOK));
     if (!rows.length) return '';

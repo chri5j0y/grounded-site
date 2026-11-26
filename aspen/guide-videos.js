@@ -392,7 +392,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "lesson": "What you make with love is part of the goodbye.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/drift-away",
+"href": "/stories.html#drift-away",
 "label": "Read the Full Story: Drift Away"
 },
 "hold": 2,
@@ -509,7 +509,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "lesson": "What kids make and give is part of the goodbye.",
 "note": "From a Grounded story by Chris Joy",
 "link": {
-"href": "https://chri5j0y.substack.com/p/drift-away",
+"href": "/stories.html#drift-away",
 "label": "Read the Full Story: Drift Away"
 },
 "hold": 2,

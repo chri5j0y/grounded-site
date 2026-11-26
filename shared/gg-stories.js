@@ -229,11 +229,13 @@
     (paras || []).forEach(function (p) { w += String(p).split(/\s+/).filter(Boolean).length; s += sentences(p).length; });
     return Math.max(1, Math.round(w / 150 + s * 0.9 / 60 + (paras || []).length * 0.25 / 60));
   }
-  // The Sources line for a story (CLAUDE.md): "Story: Chris Joy, <title> · Read it on Grounded" (linked) or the notebook line.
+  // The Sources line for a story (CLAUDE.md): "Story: Chris Joy, <title>" or the notebook line. The reader is the story's own page,
+  // so the line carries no link (Chris, firm, November 26, 2026: no links to Substack, keep people on the website).
+  // Chris, November 26, 2026: the Vault's old "Published on Substack" collection shows as Published Stories.
+  function colName(c) { c = String(c || ''); return c === 'Published on Substack' ? 'Published Stories' : c; }
   function creditHtml(s) {
     var c = String((s && s.credit) || '').trim(); if (!c) return '';
     var m = /^Story:\s*(.*?)(?:\s*[·|]\s*Read it on Grounded\.?)?$/.exec(c);
-    if (m && /Read it on Grounded/.test(c)) return '<small class="gg-src-line"><span class="gg-src-k">Story:</span> ' + esc(m[1]) + (s.substack ? ' &middot; <a href="' + esc(s.substack) + '" target="_blank" rel="noopener">Read it on Grounded</a>' : '') + '</small>';
     if (m) return '<small class="gg-src-line"><span class="gg-src-k">Story:</span> ' + esc(m[1]) + '</small>';
     return '<small class="gg-src-line">' + esc(c) + '</small>';
   }
@@ -293,8 +295,8 @@
       var bk = s.bookSampler === true, sn = Math.min(5, Math.max(1, Math.round(+s.samplerParas) || SAMPLE_PARAS));
       if (bk) { open = false; pv = { paras: openingOf(pv.paras.length ? pv.paras : paras, sn), cut: pv.cut }; }
       var sl = slug(s.title); if (slugs[sl]) sl += '-' + s.id; slugs[sl] = 1;
-      var e = { id: String(s.id), slug: sl, title: String(s.title || ''), sub: String(s.sub || ''), col: String(s.col || ''), status: s.status, open: open,
-        substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : pv.paras, posted: String(s.postedAt || '') };
+      var e = { id: String(s.id), slug: sl, title: String(s.title || ''), sub: String(s.sub || ''), col: colName(s.col), status: s.status, open: open,
+        substack: '', credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : pv.paras, posted: String(s.postedAt || '') };
       if (bk) { e.book = 1; e.preview = pv.paras; }
       if (s.status !== 'early' && pv.cut) e.cut = 1; // the preview ends partway through a paragraph
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
@@ -497,7 +499,7 @@
   var BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>';
   var SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/></svg>';
   var ROOT = (function () { try { var s = root.document && document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return root.location ? location.origin : ''; })();
-  var READ_JS = '/read.js?v=c030', LEARN_JS = '/shared/gg-learn.js?v=c216';
+  var READ_JS = '/read.js?v=c030', LEARN_JS = '/shared/gg-learn.js?v=c220';
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function css() { if (document.getElementById('gs-css')) return; var s = document.createElement('style'); s.id = 'gs-css'; s.textContent = CSS; document.head.appendChild(s); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -625,7 +627,7 @@
     }
     var by = {}, order = [];
     L = L.map(function (s, i) { return [s, i]; }).sort(function (a, b) { return ((+a[0].part || 1e3) - (+b[0].part || 1e3)) || a[1] - b[1]; }).map(function (x) { return x[0]; });
-    L.forEach(function (s) { if (!by[s.col]) { by[s.col] = []; order.push(s.col); } by[s.col].push(s); });
+    L.forEach(function (s) { var c = colName(s.col); if (!by[c]) { by[c] = []; order.push(c); } by[c].push(s); });
     host.innerHTML = order.map(function (c) {
       return '<section class="gs-series" id="series-' + esc(slug(c)) + '" aria-labelledby="gs-ser-' + esc(slug(c)) + '"><h2 class="gs-h" id="gs-ser-' + esc(slug(c)) + '">' + esc(c) + '</h2>'
         + (SERIES[c] ? '<p class="gs-lead">' + esc(SERIES[c]) + '</p>' : '') + '<div class="gs-grid">' + by[c].map(card).join('') + '</div></section>';
@@ -671,7 +673,7 @@
       } else cEl.innerHTML = invite('A printable card each month for members', 'A line from a Grounded Story and a practice to carry it into your week. Become a Member to receive your member code.', Cs.map(function (c) { return monthLabel(c.month) + ': ' + c.title; }));
     }
   }
-  var PRINT_JS = '/shared/gg-print.js?v=c212', SOURCES_JS = '/shared/gg-sources.js?v=c209';
+  var PRINT_JS = '/shared/gg-print.js?v=c212', SOURCES_JS = '/shared/gg-sources.js?v=c220';
   function warmPrint() { return need(SOURCES_JS, function () { return !!root.GGSources; }).then(function () { return need(PRINT_JS, function () { return !!root.GGPrint; }); }); }
   function cardModel(id) { var c = cardOf(id), t = ((data() || {}).cards || []).filter(function (x) { return x.id === id; })[0]; if (!c || !t) return null; return { month: t.month, line: c.line, story: c.story, practice: c.practice }; }
   function cardAct(g, id, btn) {
@@ -801,8 +803,8 @@
     if (!v || !k) return Promise.resolve(false);
     var P = (v.paras || []).slice();
     VPEND = k;
-    return open({ id: String(v.id), slug: slug(v.title || v.id), title: String(v.title || ''), sub: String(v.sub || ''), col: String(v.col || ''), status: 'posted', open: false,
-      substack: String(v.substack || ''), credit: String(v.credit || ''), mins: mins(P), paras: P }, 'watch', null, true);
+    return open({ id: String(v.id), slug: slug(v.title || v.id), title: String(v.title || ''), sub: String(v.sub || ''), col: colName(v.col), status: 'posted', open: false,
+      substack: '', credit: String(v.credit || ''), mins: mins(P), paras: P }, 'watch', null, true);
   }
   // A letter, from the page (a member) or from the Story Vault (with the stories key): GGStories.openLetter(id, view),
   // GGStories.listenLetter(letter, keyObj).

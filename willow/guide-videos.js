@@ -424,7 +424,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "I once walked into a group home, and a man took one look at my chaplain badge and told me he did not want a chaplain, and did not believe in any of it. I smiled and asked, so tell me, what do you believe in? Later he dropped the act. He said, I tell people I am an atheist to keep the religious people away. I believe in God, or something. I just cannot stand the church part. I told him I take the Bible seriously when it says we are the church. Not the building, not the brand. The people.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/the-atypical-atheist",
+"href": "/stories.html#the-atypical-atheist",
 "label": "Read the Full Story: The Atypical Atheist"
 }
 },
@@ -1158,7 +1158,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "I met Jane a few days before she died, and she told me she could feel her death getting close. And she smiled, and said she felt nothing but peace and joy. Almost bliss. Readiness can be peace.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/total-bliss",
+"href": "/stories.html#total-bliss",
 "label": "Read the Full Story: Total Bliss"
 }
 },
@@ -1496,7 +1496,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "I was called to the bedside of a man near the end whose son could not bring himself to come. I told the man that his children would be okay, and that his son loved him, even from afar. He died peacefully the next day. Love can reach across a distance, even one that never closed.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/please-help-my-dad-die",
+"href": "/stories.html#please-help-my-dad-die",
 "label": "Read the Full Story: Please Help My Dad Die"
 }
 },
@@ -1814,7 +1814,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "Let me tell you about Gail, who keeps her whole life in a china cabinet. One day she showed me a new cup and saucer, and as I lifted it, the saucer let go and shattered. I dropped to my knees and told her how sorry I was. And instead of anger, she gave me grace. Someone broke a special one on me once, she said. Did not even say sorry. At least you did. That night I glued what I could, and found a nearly identical saucer to bring back. What stays, I have come to believe, is not the mistake. It is the recovery.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/the-recovery",
+"href": "/stories.html#the-recovery",
 "label": "Read the Full Story: The Recovery"
 }
 },
@@ -2315,7 +2315,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "Let me tell you about Suzan, who had not spoken in three days. Then an old song came on, Drift Away, and under the sheet, her toes began to move to the beat. She lifted her chin and smiled. She drifted away peacefully a short time later. Music can reach a person when words cannot.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/drift-away",
+"href": "/stories.html#drift-away",
 "label": "Read the Full Story: Drift Away"
 }
 },
@@ -2484,7 +2484,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "A daughter texted me early one morning: Dad is seeing ghosts. When I arrived, her father turned toward something we could not see, raised both arms, and quietly said, I love you, I love you, I love you. That evening he died peacefully, arms open.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/welcome-home",
+"href": "/stories.html#welcome-home",
 "label": "Read the Full Story: Welcome Home"
 }
 },
@@ -2645,7 +2645,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "Let me tell you about a man who seemed to be holding on, while one of his sons could not bring himself to come. I told him his children would be okay, that his son loved him even from afar, and that he was free to go. His arm lifted, as if reaching for something, and his daughter said, Dad, I am here, you can go. He died peacefully the next day, with her at his side.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/please-help-my-dad-die",
+"href": "/stories.html#please-help-my-dad-die",
 "label": "Read the Full Story: Please Help My Dad Die"
 }
 },
@@ -3515,7 +3515,7 @@ window.GG_LEARN_GUIDES.willow = {
 "note": "From a Grounded story by Chris Joy",
 "say": "One week I caught myself walking around numb. Not sad, not angry, just numb. A few losses had stacked up quietly while I kept telling myself I would feel them later. I call it grief debt. It piles up, like laundry we swear we will fold. The kindness is paying it down a little at a time, and every feeling counts, relief included.",
 "link": {
-"href": "https://chri5j0y.substack.com/p/grief-debt",
+"href": "/stories.html#grief-debt",
 "label": "Read the Full Story: Grief Debt"
 }
 },

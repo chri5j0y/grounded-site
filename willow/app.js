@@ -56,21 +56,21 @@ const PART_WORDS = {
 
 /* ---------- Grounded stories ---------- */
 const STORY = {
-  'He Was Praying Too': 'https://chri5j0y.substack.com/p/he-was-praying-too',
-  'The Atypical Atheist': 'https://chri5j0y.substack.com/p/the-atypical-atheist',
-  'He Came to Collect': 'https://chri5j0y.substack.com/p/he-came-to-collect',
-  'Total Bliss': 'https://chri5j0y.substack.com/p/total-bliss',
-  'The Recovery': 'https://chri5j0y.substack.com/p/the-recovery',
-  'Drift Away': 'https://chri5j0y.substack.com/p/drift-away',
-  'Welcome Home': 'https://chri5j0y.substack.com/p/welcome-home',
-  'Please Help My Dad Die': 'https://chri5j0y.substack.com/p/please-help-my-dad-die',
-  'If She Is Still Here': 'https://chri5j0y.substack.com/p/if-she-is-still-here',
-  'Grief Debt': 'https://chri5j0y.substack.com/p/grief-debt',
-  'Birth Plan': 'https://chri5j0y.substack.com/p/birth-plan',
-  'My Boundaries Have Gates': 'https://chri5j0y.substack.com/p/my-boundaries-have-gates',
-  'Grounded in Coffee': 'https://chri5j0y.substack.com/p/grounded-in-coffee',
-  'Prayer.': 'https://chri5j0y.substack.com/p/thank-god-for-sending-you',
-  'Enlightenment': 'https://chri5j0y.substack.com/p/enlightenment'
+  'He Was Praying Too': '/stories.html#he-was-praying-too',
+  'The Atypical Atheist': '/stories.html#the-atypical-atheist',
+  'He Came to Collect': '/stories.html#he-came-to-collect',
+  'Total Bliss': '/stories.html#total-bliss',
+  'The Recovery': '/stories.html#the-recovery',
+  'Drift Away': '/stories.html#drift-away',
+  'Welcome Home': '/stories.html#welcome-home',
+  'Please Help My Dad Die': '/stories.html#please-help-my-dad-die',
+  'If She Is Still Here': '/stories.html#if-she-is-still-here',
+  'Grief Debt': '/stories.html#grief-debt',
+  'Birth Plan': '/stories.html#birth-plan',
+  'My Boundaries Have Gates': '/stories.html#my-boundaries-have-gates',
+  'Grounded in Coffee': '/stories.html#grounded-in-coffee',
+  'Prayer.': '/stories.html#prayer',
+  'Enlightenment': '/stories.html#enlightenment'
 };
 const storyUrl = t => STORY[t] || 'https://growwithgrounded.com/stories.html';
 // One story per part on results (two touches max: this and the footer).
