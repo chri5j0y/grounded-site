@@ -1266,7 +1266,7 @@ if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER
 // holds (DATA.health) in its own locked store, untouched; nothing is deleted. Bring Your Tending Over (Settings) carries them
 // over once: it loads the engine (/shared/tend/health.js) for that moment only and runs the same tested Move My Plan merge
 // (newest entry wins, removed entries stay removed), with the keys to this device's libraries for the plan's own refresh.
-const TEND_JS = '/shared/tend/health.js?v=c220';
+const TEND_JS = '/shared/tend/health.js?v=c221';
 const TC = {busy: false};
 function fgLoadJs(src){ return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = src; sc.onload = () => res(); sc.onerror = () => rej(new Error(src)); document.head.appendChild(sc); }); }
 async function fgTendEngine(){
