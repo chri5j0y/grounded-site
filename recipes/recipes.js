@@ -52,14 +52,14 @@
 (function () {
   'use strict';
   if (window.GGRecipes && window.GGRecipes.mount) return; // a second copy of this file: the first one serves
-  var VER = 'c221';   // BLD 1070: each step's own amounts beside its words, sized for the table   // BLD 1014 draft 3: the 106 Complete Cookbook paintings on their recipes   // BLD 1014b: the egg dishes back to whole eggs only   // BLD 1014: Cookbook fixes (holiday salt and sugar, Maple Cider Dijon Vinaigrette)   // BLD 1013: Recipes All in One Place (one list, the holidays inside it, a Holidays and Gatherings chip, the cuts)   // BLD 1009: Recipes Round Four (51 more, the data only; 420 in all)   // BLD 1008: Recipes Round Three (51 more, the data only)   // BLD 1007: Recipes Round Two (51 more; a jar of Basics opens at its own size; Pressure Cooker)   // BLD 1006: Sides, Breads, Desserts, and Basics; nutrition computed from USDA FoodData Central; headnotes, contains, seasons   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
+  var VER = 'c223';   // BLD 1070: each step's own amounts beside its words, sized for the table   // BLD 1014 draft 3: the 106 Complete Cookbook paintings on their recipes   // BLD 1014b: the egg dishes back to whole eggs only   // BLD 1014: Cookbook fixes (holiday salt and sugar, Maple Cider Dijon Vinaigrette)   // BLD 1013: Recipes All in One Place (one list, the holidays inside it, a Holidays and Gatherings chip, the cuts)   // BLD 1009: Recipes Round Four (51 more, the data only; 420 in all)   // BLD 1008: Recipes Round Three (51 more, the data only)   // BLD 1007: Recipes Round Two (51 more; a jar of Basics opens at its own size; Pressure Cooker)   // BLD 1006: Sides, Breads, Desserts, and Basics; nutrition computed from USDA FoodData Central; headnotes, contains, seasons   // BLD 966: On Your Week; BLD 967: Share My Plate; BLD 970: each recipe's own painting; BLD 976: each category tile its own
   // What the page loads for Grounded Recipes, in order (recipes/index.html), with the global each one sets.
   var FILES = [
-    ['/shared/tending-public.js?v=c221', 'GGTendPublic'],
+    ['/shared/tending-public.js?v=c223', 'GGTendPublic'],
     ['/shared/tend/stage.js?v=c202', 'GGStage'],
     ['/shared/tend/coach.js?v=c207', 'GGVoice'],
-    ['/shared/gg-scale.js?v=c221', 'GGScale'],
-    ['/shared/gg-holidays.js?v=c221', 'GGHolidays'],
+    ['/shared/gg-scale.js?v=c223', 'GGScale'],
+    ['/shared/gg-holidays.js?v=c223', 'GGHolidays'],
     ['/shared/gg-bulk.js?v=c138', 'GGBulk'],
     ['/recipes/recipes.js?v=' + VER, 'GGRecipes']
   ];

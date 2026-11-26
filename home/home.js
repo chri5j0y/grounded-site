@@ -56,8 +56,8 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'c221';   // shared/gg-scale.js (BLD 1070: step amounts)
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c221', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c221', '/shared/gentle-public.js?v=c151'];
+  var V = 'c223';   // shared/gg-scale.js (BLD 1070: step amounts)
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c223', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c223', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c220';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -2848,7 +2848,7 @@
     void t;
   }
   /* BLD 912: Grounded Recipes runs in Home's own window (GGRecipes.mount, recipes/recipes.js), the same recipe design as /recipes/. */
-  var RECIPES_JS = '/recipes/recipes.js?v=c221';
+  var RECIPES_JS = '/recipes/recipes.js?v=c223';
   function openRecipe(id) {
     var hh = tableOf();
     mDialog('Grounded Recipes', '<p class="hm-loading">Opening Grounded Recipes…</p>');
