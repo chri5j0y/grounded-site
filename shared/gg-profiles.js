@@ -1262,7 +1262,8 @@
       if (kidP && !byGrown) return grownProof(d, p, function () { rmGo(d, null); }, null, null, true, function () { view(d); });
       var warn = p.age === 'adult' ? onlyWarn(id, true) : '', own = cur.id === id;
       d.show('<h2 id="ggp-title">Remove ' + esc(p.name) + '\'s Profile?</h2>' +
-        '<p>This erases ' + esc(p.name) + '\'s profile and everything saved in it from this device, for good. A backup file keeps a copy, opened with the passcode or Root Words from when it was made.</p>' + warn +
+        '<p>This erases ' + esc(p.name) + '\'s profile and everything saved in it from this device, for good. A backup file keeps a copy, opened with the passcode or Root Words from when it was made.</p>' +
+        (acctCarried(id) ? '<p>' + esc(p.name) + '\'s profile is in your Grounded Account, so it leaves the account too and stays gone on every device.</p>' : '') + warn +
         (own ? '<label class="ggp-l" for="ggp-rmpass">' + (p.code === 'pics' ? 'Your picture code' : isAcct(p) ? 'Your password' : 'Your passcode') + '</label>' + (p.code === 'pics' ? '<div id="ggp-pad"></div>' : '<input type="password" id="ggp-rmpass" autocomplete="current-password">') : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b" data-back>Back</button><button type="button" class="ggp-b ggp-go" data-rmgo>Remove Profile</button></div>');
       $(d, '[data-back]').onclick = function () { view(d); };
@@ -1889,7 +1890,7 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=c224', '/shared/gg-sync.js?v=b979'], CARRY = 'gg-acct-carry';
+  var ACCT_SRC = ['/shared/gg-account.js?v=c224', '/shared/gg-sync.js?v=c225'], CARRY = 'gg-acct-carry';
   var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'acct', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub'];   // BLD 1047: acct
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
@@ -1915,22 +1916,40 @@
   function listGet() {
     if (!acIn()) return null;
     var o = {}; readList().forEach(function (p) { if (acctCarried(p.id)) o[p.id] = head(p); });
+    // BLD 1074: a profile removed from the account here leaves a small marker (its id and the time), so the removal travels
+    // even when it was the account's last profile on this device, and every device takes it off too
+    var g = goneGet(); if (Object.keys(g).length) o._gone = g;
     return o;
   }
+  /* BLD 1074 (Caleb's phone, November 27, 2026: a removed profile came back): the ids this device took out of the account,
+     kept 60 days (gg-acct-gone: {id: time}). Bringing a profile back to the account clears its marker. */
+  var GONE = 'gg-acct-gone';
+  function goneGet() {
+    var g = {}; try { g = JSON.parse(localStorage.getItem(GONE)) || {}; } catch (e) {}
+    var o = {}, t = Date.now(); Object.keys(g).forEach(function (id) { if (typeof id === 'string' && +g[id] > t - 60 * 864e5) o[id] = +g[id]; });
+    return o;
+  }
+  function goneSet(id, on) { var g = goneGet(); if (on) g[id] = Date.now(); else delete g[id]; try { if (Object.keys(g).length) localStorage.setItem(GONE, JSON.stringify(g)); else localStorage.removeItem(GONE); } catch (e) {} }
   function listPut(now) {
     if (!now || typeof now !== 'object' || !acIn()) return;
     var before = readList().filter(function (p) { return acctCarried(p.id); }).map(function (p) { return p.id; }), moved = false;
     AC.q++;
     try {
+      var gone = goneGet(), gn = now._gone && typeof now._gone === 'object' ? now._gone : {};
       Object.keys(now).forEach(function (id) {
         var h = now[id]; if (!h || typeof h !== 'object' || h.id !== id || typeof h.name !== 'string' || !AGE[h.age]) return;
+        if (gone[id] || gn[id]) return;   // BLD 1074: removed from the account on a device: it never comes back
         var cur0 = getP(id), next = Object.assign({}, cur0 || {});
         HEAD.forEach(function (k) { if (k in h) next[k] = h[k]; else delete next[k]; });
         if (!cur0 || !same(cur0, next)) { putP(next); moved = true; }
         if (AC.ids.indexOf(id) < 0 && !(isMinor(next.age) && (next.grown || []).some(function (g) { return AC.ids.indexOf(g) >= 0 || now[g]; }))) AC.ids.push(id);
       });
       // removed on another device: it leaves this device too
-      before.forEach(function (id) { if (!now[id] && getP(id)) { AC.ids = AC.ids.filter(function (x) { return x !== id; }); removeProfile(id); moved = true; } });
+      before.forEach(function (id) {
+        if (!(!now[id] || gn[id]) || !getP(id)) return;
+        AC.ids = AC.ids.filter(function (x) { return x !== id; }); moved = true;
+        removeProfile(id);
+      });
     } finally { AC.q--; }
     carrySave(); acctReg();
     if (moved) emit('change');
@@ -1984,6 +2003,7 @@
   function acctList(id) { if (!AC.q && acIn() && acctCarried(id)) GGSync.changed('acct:profiles'); }
   function acctDropped(id, was) {
     if (AC.q || !acIn() || !was) return;
+    goneSet(id, true);   // BLD 1074
     AC.ids = AC.ids.filter(function (x) { return x !== id; }); carrySave();
     ['p:', 'pine:'].forEach(function (k) { delete AC.reg[k + id]; GGSync.removeDoc(k + id).catch(function () {}); });
     GGSync.changed('acct:profiles');
@@ -2021,7 +2041,9 @@
       if (acIn()) {
         // signing in or making an account with a grown-up open here brings that grown-up (and their children) along
         var p = cur && getP(cur.id);
-        if (!was && AC.booted && p && p.age === 'adult' && open[p.id] && AC.ids.indexOf(p.id) < 0) { AC.ids.push(p.id); carrySave(); }
+        // BLD 1074 (Chris, November 27, 2026: "it just added this profile without me doing it"; "same account, same profile"):
+        // signing in never brings a tree from this device into the account; trees on this device stay as they are, here,
+        // and the account's one tree opens
         acctReg();
         if (!was) GGSync.sync().catch(function () {});
       }
@@ -2038,6 +2060,7 @@
     var p = getP(id);
     if (!acIn()) return Promise.reject(new Error('Sign in to your Grounded Account first.'));
     if (!p || p.age !== 'adult' || !open[id]) return Promise.reject(new Error('Open this profile with its passcode, then bring it to your account.'));
+    goneSet(id, false);   // BLD 1074
     if (AC.ids.indexOf(id) < 0) AC.ids.push(id);
     carrySave(); acctReg(); GGSync.changed('acct:profiles'); GGSync.changed('p:' + id);
     return GGSync.sync();
@@ -2052,7 +2075,7 @@
     return !!(AC.on && window.GGAccount && GGAccount.configured && GGAccount.configured());
   }
   // The account sheets (shared/gg-account-ui.js), loaded when needed
-  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c224', acctUiP = null;
+  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c225', acctUiP = null;
   function acctSheet(view, o) {
     if (!acctUiP) acctUiP = new Promise(function (ok) {
       if (window.GGAccountUI) return ok(window.GGAccountUI);
@@ -2069,7 +2092,9 @@
     var m = readList().filter(function (p) { return isAcct(p) && p.acct && p.acct.a === accountId && acctCarried(p.id); })[0];
     if (m) return m;
     var l = readList().filter(function (p) { return p.age === 'adult' && acctCarried(p.id); });
-    return l.filter(function (p) { return isAcct(p) && p.acct && p.acct.a === accountId; })[0] || (l.length === 1 ? l[0] : null);
+    // BLD 1074 (Chris, November 27, 2026: "same account, same profile"): an account holding more than one grown-up tree (from
+    // before this build) still opens one of them, the first made, and never makes another
+    return l.filter(function (p) { return isAcct(p) && p.acct && p.acct.a === accountId; })[0] || (l.slice().sort(function (a, b) { return String(a.created || '').localeCompare(String(b.created || '')); })[0] || null);
   }
   // Open the account's own profile with the account key (a new device, a sign in, Root Words); a passcode profile waits
   function acctOpenOwn(p, held) {
@@ -2078,6 +2103,7 @@
   }
   function acctCarry(id, quiet) {
     if (!acIn()) return;
+    goneSet(id, false);   // BLD 1074
     if (AC.ids.indexOf(id) < 0) AC.ids.push(id);
     carrySave(); acctReg(); GGSync.changed('acct:profiles'); if (open[id]) GGSync.changed('p:' + id);
     if (!quiet) GGSync.sync().catch(function () {});
@@ -2118,7 +2144,8 @@
       if (AC.making) return;
       // BLD 1073: an account made on this device with no grown-up profile open: its key waits here, in memory only, for a
       // few minutes, so the profile setup right after needs no second password
-      if (x.why === 'signup' && !(cur && open[cur.id] && getP(cur.id) && getP(cur.id).age === 'adult')) { AC.made = { base: base, a: x.accountId, pw: x.password, until: Date.now() + 600000 }; return; }
+      // BLD 1074: the same when a tree from before the account is open here; it stays this device's own, outside the account
+      if (x.why === 'signup') { AC.made = { base: base, a: x.accountId, pw: x.password, until: Date.now() + 600000 }; return; }
       var c = cur && getP(cur.id);
       if (c && c.age === 'adult' && open[c.id] && !isAcct(c)) { AC.offer = { id: c.id, base: base, a: x.accountId, pw: x.password, until: Date.now() + 300000 }; offerSoon(); return; }
       if (x.why === 'signin' && !cur) return heldOpen({ base: base, a: x.accountId, pw: x.password });

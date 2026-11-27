@@ -499,7 +499,10 @@ const monOf = d => addD(day0(d), -((d.getDay() + 6) % 7));
 // shopping and Sunday prep belong to the week they get ready for (BLD 857c); then the coming Monday.
 const firstLog = () => { const h = H(), ds = Object.keys(h.log || {}).concat(arr(h.wlog).map(w => w.date)).map(parseD).filter(Boolean).sort((a, b) => a - b); return ds[0] || null; };
 function firstMon(){ const d = firstLog(); return d ? addD(d, (8 - d.getDay()) % 7) : null; }
-function startMon(){ const s = parseD(H().set.start); return s || firstMon() || nextMon(); }
+// BLD 1074: in a Family Kitchen, a plan start later than the kitchen's (a setup saved with next Monday) follows the kitchen,
+// so the same dinners show this week on every phone in it (Caleb's phone, November 27, 2026).
+function startMon(){ const s = parseD(H().set.start), k = kitJoinStart(); if (k && (!s || s > k)) return k; return s || firstMon() || nextMon(); }
+function kitJoinStart(){ try { const h = H(), k = h && h.kitchen; if (!k || typeof k !== 'object' || !k.joined) return null; const ks = parseD(k.start); return ks && KJ() ? ks : null; } catch(e){ return null; } }
 const weekNo = d => Math.floor((day0(d) - startMon()) / (7 * DAYMS)) + 1;
 const letter = n => 'ABCD'[(Math.max(1, n) - 1) % 4];
 const phaseOf = n => { n = Math.max(1, n); return n <= 12 ? Math.ceil(n / 4) : 2 + Math.floor(((n - 13) % 8) / 4); };
@@ -3622,7 +3625,7 @@ function vRisk(){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c224'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '/shared/gg-profiles.js?v=c225'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 // BLD 1015: the moved plan keeps the keys to its own libraries (w.libKeys: the Guide key, the Founder key for a Founder plan,
 // the access code's id, and which sealed file each copy came from), inside the person's locked profile, so The Grounded Way
@@ -3929,10 +3932,37 @@ function kitSwapsOut(){
     out.push([Math.round((day0(parseD(e.date)) - day0(ks)) / DAYMS), sl, e.ref]); });
   return out;
 }
+// BLD 1074: the Household's holiday plans travel with the kitchen (Chris, November 27, 2026: "All this should be plugged into
+// the household"): the holidays chosen, each set up one's day, guests, and dishes taken off, and the ones taken off the
+// calendar. Only the phone that leads the kitchen sends them; a phone in the kitchen takes them each time the kitchen changes.
+const HOLID = /^[a-z0-9-]{1,40}$/, YMD = /^\d{4}-\d{2}-\d{2}$/;
+function holPack(){
+  if (KJ() || !window.GGHolidays) return null; const x = holSt(), on = arr(x.on).filter(id => typeof id === 'string' && HOLID.test(id)).slice(0, 40), p = {}, k = {};
+  Object.entries(x.plans || {}).forEach(([id, v]) => { if (HOLID.test(id) && v && YMD.test(String(v.date || ''))){ const o = {d: v.date}; if (+v.guests > 0) o.g = Math.min(60, Math.round(+v.guests)); const off = arr(v.off).filter(y => typeof y === 'string' && y.length < 80).slice(0, 40); if (off.length) o.x = off; p[id] = o; } });
+  Object.entries(x.skip || {}).forEach(([id, d]) => { if (HOLID.test(id) && YMD.test(String(d || ''))) k[id] = d; });
+  if (!on.length && !Object.keys(p).length) return null; const o = {on}; if (Object.keys(p).length) o.p = p; if (Object.keys(k).length) o.k = k; return o;
+}
+function holRead(y){
+  if (!y || typeof y !== 'object') return null; const on = arr(y.on).filter(id => typeof id === 'string' && HOLID.test(id)).slice(0, 40), plans = {}, skip = {};
+  Object.entries(y.p && typeof y.p === 'object' ? y.p : {}).slice(0, 40).forEach(([id, v]) => { if (HOLID.test(id) && v && YMD.test(String(v.d || ''))){ const o = {date: v.d, u: Date.now()}; if (+v.g > 0) o.guests = Math.min(60, Math.round(+v.g)); const off = arr(v.x).filter(z => typeof z === 'string' && z.length < 80).slice(0, 40); if (off.length) o.off = off; plans[id] = o; } });
+  Object.entries(y.k && typeof y.k === 'object' ? y.k : {}).slice(0, 40).forEach(([id, d]) => { if (HOLID.test(id) && YMD.test(String(d || ''))) skip[id] = d; });
+  return {on, plans, skip};
+}
+function holTake(y){ if (!y) return; const x = holSt(); x.on = y.on.slice(); x.plans = y.plans; x.skip = y.skip; x.u = Date.now(); }
+// BLD 1074: a profile new to Tending that joins a Family Kitchen is set up by the kitchen itself: Food on, the kitchen's start
+// and table, and no setup questions (Caleb's phone, November 27, 2026: Food stayed off, then setup started him at week one).
+function kitFresh(s, x){
+  const fresh = !s.u || !arr(s.use).length; const ks = parseD(x.start), t = monOf(new Date());
+  s.use = arr(s.use).length ? (s.use.includes('food') ? s.use : PART_IDS.filter(p => s.use.includes(p) || p === 'food')) : ['food'];
+  const s0 = parseD(s.start); if (fresh || !s0 || (ks && s0 > ks)) s.start = ymd(ks && ks <= t ? ks : t);
+  const hh = arr((x.set || {}).h), n = Math.max(1, +hh[0] || 1) + Math.max(0, hh.length - 1); s.household = n;   // the kitchen's table
+  if (fresh){ s.who = s.who || (n > 1 ? 'family' : 'me'); s.remOff = true; delete s.needSetup; }
+  return fresh;
+}
 function kitPackLib(){
   const h = H(); if (!h || !KMOVED() || !U('food')) return null; const k = KJ(), hs = kitHouse(), x = kitSwapsOut();
   const o = {v: 1, k: k ? k.id : (KOWN() || {}).id, b: 'g', f: libSig(), t: +ymd8(ymd(kitStart())), h: [Math.max(1, +hs.adults || 1)].concat(arr(hs.kids).map(y => (y && y.band) || 0))};
-  if (x.length) o.x = x; return o;
+  if (x.length) o.x = x; const y = holPack(); if (y) o.y = y; return o;
 }
 function kitPack(){
   if (KMOVED()) return kitPackLib();
@@ -3944,6 +3974,7 @@ function kitPack(){
   if (set.needs.length) o.n = set.needs; if (set.allergies) o.a = set.allergies.slice(0, 160);
   o.h = [Math.max(1, +hs.adults || 1)].concat(arr(hs.kids).map(x => (x && x.band) || 0)); if (!set.leftovers) o.l = 0;
   if (Object.keys(d).length) o.d = d; if (Object.keys(m).length) o.m = m;
+  const y = holPack(); if (y) o.y = y;
   return o;
 }
 function kitRead(code){
@@ -3952,14 +3983,14 @@ function kitRead(code){
     const hh = arr(o.h).slice(0, 13), adults = Math.max(1, Math.min(12, Math.round(+hh[0] || 1)));
     const x = arr(o.x).slice(0, 40).filter(y => Array.isArray(y) && isFinite(+y[0]) && Math.abs(+y[0]) < 4000 && (y[1] === 'd' || y[1] === 'l') && typeof y[2] === 'string' && KREF.test(y[2])).map(y => [Math.round(+y[0]), y[1], y[2]]);
     return {id: /^[a-z0-9]{4,16}$/.test(String(o.k || '')) ? String(o.k) : 'k' + String(o.f || 'g').replace(/[^a-z0-9]/g, '').slice(0, 10), lib: 'g', f: String(o.f || '').replace(/[^a-z0-9]/g, '').slice(0, 16), start: ymd(monOf(parseD(ymdOf8(o.t)))),
-      set: {h: [adults].concat(hh.slice(1).map(b => BAND_PORTION[b] ? b : 0))}, sw: {x}};
+      set: {h: [adults].concat(hh.slice(1).map(b => BAND_PORTION[b] ? b : 0))}, sw: {x}, hol: holRead(o.y)};
   }
   if (!o || o.v !== 1 || o.b || !isFinite(+o.s) || +o.s < 1 || !parseD(ymdOf8(o.t))) return null;
   const strs = x => arr(x).filter(y => typeof y === 'string' && y.length < 40).slice(0, 12);
   const hh = arr(o.h).slice(0, 13), adults = Math.max(1, Math.min(12, Math.round(+hh[0] || 1)));
   const swaps = x => { const out = {}; Object.entries(x && typeof x === 'object' ? x : {}).slice(0, 60).forEach(([a, b]) => { if (/^[A-Za-z]\d{1,2}$/.test(a) && typeof b === 'string' && /^[a-z0-9-]{1,60}$/.test(b)) out[a] = b; }); return out; };
   return {id: /^[a-z0-9]{4,16}$/.test(String(o.k || '')) ? String(o.k) : 'k' + Math.round(+o.s), seed: Math.round(+o.s), start: ymd(monOf(parseD(ymdOf8(o.t)))),
-    set: {g: strs(o.g), n: strs(o.n), a: String(o.a || '').slice(0, 160), h: [adults].concat(hh.slice(1).map(b => BAND_PORTION[b] ? b : 0)), l: o.l === 0 ? 0 : 1}, sw: {d: swaps(o.d), m: swaps(o.m)}};
+    set: {g: strs(o.g), n: strs(o.n), a: String(o.a || '').slice(0, 160), h: [adults].concat(hh.slice(1).map(b => BAND_PORTION[b] ? b : 0)), l: o.l === 0 ? 0 : 1}, sw: {d: swaps(o.d), m: swaps(o.m)}, hol: holRead(o.y)};
 }
 function kitShare(){
   const h = H(), o = kitPack(); if (!o) return null;
@@ -3977,12 +4008,14 @@ function kitInfo(code){ const x = kitRead(code); if (!x) return null; const k = 
 function kitJoin(code){
   const h = H(), x = kitRead(code); if (!h || !x || !kitFits(x)) return false; const k0 = KJ();
   const own = k0 ? k0.own : {plan: h.plan ? JSON.parse(JSON.stringify(h.plan)) : null, kitchen: h.kitchen && !h.kitchen.joined ? JSON.parse(JSON.stringify(h.kitchen)) : null};
+  const hol = x.hol; delete x.hol;
   h.kitchen = Object.assign(x, {joined: 1, u: Math.max(Date.now(), (k0 ? +k0.u || 0 : 0) + 1), own});
-  if (x.lib){ const s = h.set; if (Array.isArray(s.use) && !s.use.includes('food')) s.use = PART_IDS.filter(p => s.use.includes(p) || p === 'food');
-    if (!parseD(s.start)){ const ks = parseD(x.start), t = monOf(new Date()); s.start = ymd(ks && ks <= t ? ks : t); }
+  if (hol) holTake(hol);   // BLD 1074: the Household's holidays
+  if (x.lib){ const s = h.set; kitFresh(s, x);
     s.u = Date.now(); kitMenuIn(h.kitchen); clearShop(); save(); return true; }
   // A profile new to Tending starts with the food part, its weeks from the kitchen's start.
   const s = h.set; if (!s.pubDone){ s.pubDone = 1; s.use = arr(s.use).length ? s.use : ['food']; s.who = s.who || 'family'; s.remOff = true; }
+  if (!arr(s.use).includes('food')) s.use = PART_IDS.filter(p => arr(s.use).includes(p) || p === 'food');   // BLD 1074: Food on
   if (!parseD(s.start) || weekNo(new Date()) < 1){ const ks = parseD(x.start), t = monOf(new Date()); s.start = ymd(ks && ks <= t ? ks : t); if (!s.progStart && PROG()) s.progStart = s.start; }
   s.u = Date.now(); PA = null; ensurePlan(); clearShop(); save(); return true;
 }
@@ -5337,7 +5370,8 @@ function apiPlan(o){
       s.place = s.place || 'home'; s.pubDone = 1; s.start = s.start || ymd(monOf(new Date())); s.remOff = true; markNew(); }
     else if (L.program && s.track !== 'practice' && (progTrack() !== tr0 || !w0 || (gentle0 && s.level !== 'gentle'))) s.progStart = ymd(monOf(new Date()));
   } else {
-    const use = h.set.use; if (Array.isArray(use)){ const u = new Set(use); u.add('move'); if (s.medFreq !== 'later') u.add('mind'); if (o.food === true) u.add('food'); else if (o.food === false) u.delete('food'); s.use = PART_IDS.filter(x => u.has(x)); }
+    // BLD 1074: a profile with no parts chosen yet takes the plan's own (Food included), so the setup's Food turns Food on
+    const use = Array.isArray(h.set.use) ? h.set.use : []; { const u = new Set(use); u.add('move'); if (s.medFreq !== 'later') u.add('mind'); if (o.food === true || (KJ() && o.food !== false)) u.add('food'); else if (o.food === false) u.delete('food'); s.use = PART_IDS.filter(x => u.has(x)); }
     if ((progTrack() !== tr0 || !w0) && PROG() && s.track !== 'practice') s.progStart = ymd(monOf(new Date()));
   }
   delete s.needSetup; s.u = Date.now(); PA = null; if (PUB()) ensurePlan(); save(); return true;
