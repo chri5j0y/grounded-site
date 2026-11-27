@@ -334,9 +334,8 @@ const FAM = [[/minutes? (hard|easy)|^hard minute|ladder rung|\bwalk\b(?!.?outs?)
   [/dead ?bugs?|bug on its back/, 'dead-bug'], [/bird ?dogs?|pointer pup/, 'bird-dog'], [/mountain climbers?/, 'climber'], [/heel raises?|calf raises?|tiptoe/, 'heel-raise'],
   [/jacks\b|star jumps/, 'jacks'], [/skater/, 'skater'], [/single.?leg (stand|balance)\b|flamingo/, 'one-leg-stand'], [/\bchop\b/, 'chop'],
   [/y.?t raise|w raise|snow angel|pull.?apart|face pull|reverse fly/, 'upper-back-raise'], [/(hanging|back pad).*knee raise|knee raise on|leg raise/, 'knee-raise']];
-// FAM_ON: the builder keeps to the rule. It waits for its new recorded lines (Ava says each new pick's sets and Next Up),
-// so no line falls back to the device voice; patches/bld1078/REC.md lists them. The checks use moveFam either way.
-const FAM_ON = false;
+// FAM_ON: the builder keeps to the rule (on since its 46 new Ava lines were recorded, November 27, 2026; patches/bld1078/REC.md).
+const FAM_ON = true;
 function moveFam(m){ const n = String((m && m.name) || m || '').toLowerCase().trim(); if (!n) return '';
   for (const [re, f] of FAM) if (re.test(n)) return f;
   return n.replace(/\b(tempo|slow|quick|steady|pause|speed|weighted|dumbbell|bodyweight|low|lateral|single.?leg|one.?arm|on handles|, slow)\b/g, ' ').replace(/s\b/g, '').replace(/[^a-z]+/g, ' ').trim(); }
