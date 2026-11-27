@@ -44,7 +44,7 @@
 (function () {
   'use strict';
   if (window.GGSync) return;
-  var V = 'b951', enc = new TextEncoder(), dec = new TextDecoder(), subtle = window.crypto && crypto.subtle;
+  var V = 'c225', enc = new TextEncoder(), dec = new TextDecoder(), subtle = window.crypto && crypto.subtle;
   function X() { if (!window.GGAccount || !GGAccount._) throw new Error('GGSync needs shared/gg-account.js'); return GGAccount._; }
 
   /* ---------- plain helpers ---------- */
@@ -306,7 +306,7 @@
       return getBoxes(sc, stubs.map(function (r) { return { id: r.id, ver: r.ver, size: 0 }; }), remote, res).then(function () { stubs.forEach(function (r) { delete B[r.scope + '|' + r.name]; }); return local; });
     }).then(function (local) {
       if (local == null) return;
-      var L = d.opaque ? { '': clone(local) } : split(local, d.rules), pre = d.name + '#', names = {}, at = d.dirtyAt || Date.now();
+      var L = d.opaque ? { '': clone(local) } : split(local, d.rules), pre = d.name + '#', names = {}, at = d.dirtyAt || Date.now(), t0 = d.touched || 0;
       Object.keys(L).forEach(function (p) { names[pre + p] = 1; });
       Object.keys(B).forEach(function (k) { var r = B[k]; if (r.scope === sc.scope && r.name.indexOf(pre) === 0) names[r.name] = 1; });
       Object.keys(remote).forEach(function (n) { if (n.indexOf(pre) === 0) names[n] = 1; });
@@ -373,10 +373,23 @@
         return saveBases(K, upd);
       }).then(function () {
         upd.forEach(function (u) { B[u.scope + '|' + u.name] = u; });
-        var now = d.opaque ? out[''] : assemble(out);
-        if (!eq(now, local)) { res.applied++; return Promise.resolve(d.adapter.put(now, { from: 'sync' })).then(function () { emit('applied', { doc: d.name, scope: sc.scope }); }); }
+        // BLD 1074 (Caleb's Quick Check-in, November 27, 2026): the doc is read again right before the result is applied. A
+        // part saved here while the sync was on the network (a check-in finished, a practice ticked) is kept as it is now,
+        // never written over with the copy the sync started from, and the doc stays marked so it goes up on the next sync.
+        return Promise.resolve(d.adapter.get()).then(function (cur) {
+          var base = local, now = d.opaque ? out[''] : assemble(out);
+          if (cur != null) {
+            var C = d.opaque ? { '': clone(cur) } : split(cur, d.rules), fin = {}, ks = {}, kept = false;
+            [out, L, C].forEach(function (o) { Object.keys(o).forEach(function (p) { ks[p] = 1; }); });
+            Object.keys(ks).forEach(function (p) { var same = eq(C[p], L[p]), v = same ? out[p] : C[p]; if (!same) kept = true; if (v !== undefined) fin[p] = v; });
+            if (kept) now = d.opaque ? fin[''] : assemble(fin);
+            base = cur;
+          }
+          if (!eq(now, base)) { res.applied++; return Promise.resolve(d.adapter.put(now, { from: 'sync' })).then(function () { emit('applied', { doc: d.name, scope: sc.scope }); }); }
+        });
       }).then(function () {
-        if (d.dirtyAt && d.dirtyAt <= at) { d.dirtyAt = 0; metaPut('dirty|' + d.name, undefined); }
+        if (d.dirtyAt && d.dirtyAt <= at && (d.touched || 0) === t0) { d.dirtyAt = 0; metaPut('dirty|' + d.name, undefined); }
+        else if ((d.touched || 0) !== t0) again = true;
       });
     });
   }
@@ -519,7 +532,7 @@
   function later() { clearTimeout(retryT); var waits = [5000, 15000, 45000, 120000, 300000]; retryT = setTimeout(sync, waits[Math.min(retry++, waits.length - 1)]); }
   function changed(name) {
     var now = Date.now();
-    (name ? [name] : Object.keys(docs)).forEach(function (n) { if (docs[n] && !docs[n].dirtyAt) { docs[n].dirtyAt = now; metaPut('dirty|' + n, now); } });
+    (name ? [name] : Object.keys(docs)).forEach(function (n) { if (docs[n]) docs[n].touched = now; if (docs[n] && !docs[n].dirtyAt) { docs[n].dirtyAt = now; metaPut('dirty|' + n, now); } });
     emit('status', status());
     clearTimeout(timer); timer = setTimeout(sync, CFG.debounce);
   }

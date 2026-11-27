@@ -384,7 +384,9 @@
           (h.owner && h.people.length < h.seats ? inviteForm() : '') +
           '<div class="ga-card"><span class="ga-k">Shared</span><ul class="ga-list">' + ['kitchen', 'money', 'planner', 'plates'].map(function (k) {   // BLD 967: Our Plates
             var onIt = shared.indexOf(k) >= 0 || h.spaces.some(function (s) { return s.kind === k && s.key; });
-            return '<li><div><b>' + KIND[k] + '</b><small>' + (onIt ? 'Shared with your Household' : 'On your own devices') + '</small></div>' + (onIt || !window.GGSync ? '' : '<button type="button" class="ga-btn sm" data-share="' + k + '">Share With Our Household</button>') + '</li>';
+            // BLD 1074: shared by the Household, with this account's key still on its way (no second copy to start)
+            var wait = !onIt && h.spaces.some(function (s) { return s.kind === k && !s.key; });
+            return '<li><div><b>' + KIND[k] + '</b><small data-ga-wait="' + (wait ? k : '') + '">' + (onIt ? 'Shared with your Household' : wait ? 'Your Household’s ' + KIND[k] + ' arrives once someone in your Household opens The Grounded Way.' : 'On your own devices') + '</small></div>' + (onIt || wait || !window.GGSync ? '' : '<button type="button" class="ga-btn sm" data-share="' + k + '">Share With Our Household</button>') + '</li>';
           }).join('') + '</ul></div>' +
           '<div class="ga-alt">' + (h.owner ? '<button type="button" class="ga-link" data-go="end">End the Household</button>' : '<button type="button" class="ga-link" data-go="leave">Leave the Household</button>') + '</div>';
         inviteWire(paint);
@@ -478,8 +480,8 @@
   // the age band, the time) lets The Grounded Way carry straight on into the profile setup on the next visit.
   function markSetup() {
     try {
-      var a = window.GGP && GGP.active && GGP.active(), i = G().info();
-      if (!i || (a && a.age === 'adult' && GGP.isOpen && GGP.isOpen(a.id))) return;
+      var i = G().info();
+      if (!i) return;   // BLD 1074: a tree from before the account, open here, stays this device's own; the account gets its own tree
       localStorage.setItem('gg-setup-wait', JSON.stringify({ a: i.accountId, band: i.band || 'adult', at: Date.now() }));
     } catch (e) {}
   }

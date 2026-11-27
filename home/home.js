@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'c223';   // shared/gg-scale.js (BLD 1070: step amounts)
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c223', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c223', '/shared/gentle-public.js?v=c151'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c225', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c151', '/shared/tending-public.js?v=c223', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c220';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -474,7 +474,7 @@
   var S = { id: null, p: null, tree: 'oak', view: 'home', tendLoad: null, tendInit: false, words: null };
   var W = { who: 'me', stage: 'oak', parts: { move: true, food: true, still: true, connect: true, labs: false, pray: false, sober: false } };
   function homeRec(id) {
-    var h = GGP.data(id || S.id, 'home'); if (!h) return {};
+    var h = GGP.data(id || S.id, 'home'); if (!h) return { parts: [], hidden: {}, days: {}, kid: {} };   // BLD 1074: a profile closing as another opens
     h.parts = arr(h.parts); h.hidden = obj(h.hidden); h.days = obj(h.days); h.kid = obj(h.kid);
     return h;
   }
@@ -2553,7 +2553,8 @@
   function weekData() { if (!tendReady() || !tendIsReady() || !hasFn('week')) return null; var w = hCall('week', S.wkOff || 0); return w && Array.isArray(w.days) ? w : null; }   // BLD 946: S.wkOff moves the Week tab by whole weeks
   /* BLD 885: the weekly practices lead the Week tab, beside the shopping list on a wide screen. */
   /* BLD 896: Week or Month (Chris: "we could have a monthly calendar avail"); the Month is Tending's own, drawn into the Week tab. */
-  function weekHtml() { if (!member()) return startWeekHtml(); var on = tendReady() && tendIsReady() && hasFn('render'); return (on ? wkTogHtml() : '') + (on && S.wkv === 'month' ? '<div id="hm-tend" class="hm-sec hm-month" data-sec="month"><p class="hm-loading">Opening your month…</p></div>' : weekHtml0()); }
+  function weekHtml() { return kitWaitHtml() + weekHtml1(); }
+  function weekHtml1() { if (!member()) return startWeekHtml(); var on = tendReady() && tendIsReady() && hasFn('render'); return (on ? wkTogHtml() : '') + (on && S.wkv === 'month' ? '<div id="hm-tend" class="hm-sec hm-month" data-sec="month"><p class="hm-loading">Opening your month…</p></div>' : weekHtml0()); }
   function weekHtml0() {
     var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = weekBody(planDoorWeek());
     if (!wp) return body;
@@ -4125,7 +4126,8 @@
         sub = '<div class="hm-wp-lbl">How often</div><div class="hm-wp-chips">' + [['daily', 'Every Day'], ['few', 'A Few Times a Week'], ['weekly', 'Once a Week']].map(function (o) { return suChip('set:med:freq:' + o[0], o[1], x.freq === o[0], 'bark'); }).join('') + '</div>' +
           '<div class="hm-wp-lbl" style="margin-top:10px">When</div><div class="hm-wp-chips">' + [['morning', 'Morning'], ['afternoon', 'Afternoon'], ['evening', 'Evening']].map(function (o) { return suChip('set:med:time:' + o[0], o[1], x.time === o[0], 'bark'); }).join('') + '</div>';
       } else if (f.id === 'food') {
-        sub = '<div class="hm-wp-lbl">Around the table</div><div class="hm-wp-chips">' + [1, 2, 3, 4, 5, 6, 8].map(function (n) { return suChip('set:food:house:' + n, n + (n === 1 ? ' person' : ' people'), x.house === n, 'leaves'); }).join('') + '</div>' +
+        sub = !suTeen() && kitHousehold() ? '<p class="hm-wp-small" style="margin:8px 0 0"><b>Your Household’s Family Kitchen</b> sets your table, dinners, holidays, and shopping list, the same as your family’s.</p>' + (kitWaiting() ? '<small class="hm-wp-small">' + esc(KIT_WAIT) + '</small>' : '') :   // BLD 1074
+          '<div class="hm-wp-lbl">Around the table</div><div class="hm-wp-chips">' + [1, 2, 3, 4, 5, 6, 8].map(function (n) { return suChip('set:food:house:' + n, n + (n === 1 ? ' person' : ' people'), x.house === n, 'leaves'); }).join('') + '</div>' +
           '<small class="hm-wp-small">Food needs, allergies, and goals live in Tending Setup, ready whenever you like.</small>' +
           (!member() && !suTeen() ? '<div class="hm-wp-seedmv"><span class="hm-wp-chip hm-wp-seednut" aria-disabled="true">Grounded Nutrition <em class="hm-seedtag">Membership</em></span></div><small class="hm-wp-small">Grounded Nutrition is part of Membership: meal plans, Grounded Cooking in your plan, and one shopping list.</small>' : '');
       } else if (f.id === 'fit' && suOnePlace()) {
@@ -4294,7 +4296,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=c224';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=c225';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -4563,8 +4565,8 @@
   function osPending() { return acctIn() && !!osGet() && !osOwn(); }
   // GGAccountUI.onMade: a new account's Root Words are done. With no grown-up profile open here, the setup carries on.
   function osMade(x) {
-    var a = GGP.active && GGP.active();
-    if (a && a.age === 'adult' && GGP.isOpen(a.id)) return false;   // that grown-up comes along into the account, as before
+    // BLD 1074 (Chris, November 27, 2026: "same account, same profile"): a tree from before the account stays on this device as
+    // it is, outside the account, and the new account gets its own tree here, as with no tree open
     var i = GGAccount.info(); if (!i) return false;
     osSet({ a: i.accountId, band: (x && x.band) || i.band || 'adult', at: Date.now() });
     if (x && x.joined) { AH.joinedNow = true; osJoined(); }   // a kid's account joins as it is made
@@ -4592,7 +4594,7 @@
         var p = GGP.get(id) || {};
         writeHome(id, { who: 'me', stage: treeOfProfile(p), parts: partsList(), setup: Object.assign(newSetup(), { acct: 1 }) }).then(function () { return soberLife(id); }).then(function () {
           if (location.hash) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
-          render(); window.scrollTo(0, 0); joinWaitGo();
+          render(); window.scrollTo(0, 0); joinWaitGo(); kitNow();
         });
       };
       GGP.createDialog(opt).then(function () { OS.busy = false; if (osOwn()) osSet(null); if (!S.id) render(); }, function () { OS.busy = false; });
@@ -4609,12 +4611,28 @@
   }
   document.addEventListener('visibilitychange', osBack);
   window.addEventListener('focus', osBack);
+  /* BLD 1074: the Household's Family Kitchen right after a tree is made or joins: Tending opens and a sync runs now, so the
+     kitchen (dinners, start, table, holidays) is in place before the person reaches Week. */
+  function kitNow() {
+    if (!acctIn() || !window.GGSync || !S.id) return;
+    loadTending().then(function () { if (S.tendInit !== S.id) initTending(); return GGSync.sync(); }).then(function () { if (S.id) refreshPane(); }, function () {});
+  }
+  // BLD 1074: the Household shares a Family Kitchen whose key has not reached this account yet (Chris and Caleb, November 27, 2026)
+  function kitWaiting() {
+    if (!acctIn() || !window.GGSync || !GGSync.household) return false;
+    var h = GGSync.household(); if (!h || !arr(h.spaces).some(function (x) { return x && x.kind === 'kitchen' && !x.key; })) return false;
+    return !GGSync.spaces().some(function (x) { return x.kind === 'kitchen'; });
+  }
+  function kitHousehold() { return !!(acctIn() && window.GGSync && (GGSync.spaces().some(function (x) { return x.kind === 'kitchen'; }) || kitWaiting())); }
+  var KIT_WAIT = 'Your Household’s Family Kitchen arrives once someone in your Household opens The Grounded Way.';
+  function kitWaitHtml() { return kitWaiting() ? '<p class="hm-sub hm-kitwait" data-hm-kitwait="1" style="margin:0 4px 12px">' + I('clock') + ' ' + esc(KIT_WAIT) + '</p>' : ''; }
   // Joined: Membership through the Household comes in, and You're All Set says so
   function osJoined() {
     var after = function () { if (SU.open && SU.i === SU_N - 1 && document.getElementById('hm-su')) suPaint(); };
     after();
     try { var m = GGAccount.memberRefresh && GGAccount.memberRefresh(); if (m && m.then) m.then(function () { if (window.GGMember && GGMember.sync) { try { GGMember.sync(); } catch (e) {} } setTimeout(after, 600); }, function () {}); } catch (e) {}
     if (window.GGSync) GGSync.sync().then(after, function () {});
+    kitNow();   // BLD 1074
   }
   // The Household line on You're All Set
   function osHouseHtml() {
@@ -4654,7 +4672,7 @@
       GGSync.on(function (t, d) {
         syncNoteOn(t, d);
         if (t === 'status') { if (d && d.state === 'idle') acctSeen(); var dot = acctStatus().dot; if (dot !== AH.dot || (d && d.state === 'idle')) { AH.dot = dot; acctPaint(); } }
-        else if (t === 'spaces') acctSeen();
+        else if (t === 'spaces') { acctSeen(); if (S.id && kitWaiting() !== !!document.querySelector('[data-hm-kitwait]')) refreshPane(); }   // BLD 1074
         if (t === 'spaces' || (t === 'status' && d && d.state === 'idle')) plannerHH();   // BLD 950: the Household line in the Family Planner
       });
       acctUI().then(function (U) { if (U && U.onMade) U.onMade(osMade); });   // BLD 1073
