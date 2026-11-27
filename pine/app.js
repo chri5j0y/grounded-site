@@ -1,7 +1,7 @@
 /* =====================================================================
    PINE . the app (GWG BLD 739)
-   The Grow With Grounded tree for high schoolers, grades 9 to 12, between
-   Aspen (grades 6 to 8) and Oak (adults). Built from Sequoia's newest
+   The Grow With Grounded tree for high schoolers, ages 14 to 17, between
+   Aspen (ages 11 to 13) and Oak (adults). Built from Sequoia's newest
    structures and Aspen's teen pieces. Where they differ, Aspen wins on
    safety and privacy, and Sequoia wins on depth and structure.
 
@@ -1688,7 +1688,7 @@ async function profPersist() {
   await GGP.save(PROF.id);
 }
 function profLock() { if (window.GGP) GGP.lock().then(() => showToast('Locked. Your profile is safe on this device.')); }
-const OTHER_TREE = { maple: '<a href="/home/?tree=maple">Maple</a> is made for kids.', aspen: '<a href="/home/?tree=aspen">Aspen</a> is made for middle schoolers.', adult: '<a href="/home/?tree=birch">Birch</a> is made for young adults, 18 to 25, <a href="/home/?tree=oak">Oak</a> for adults, 26 to 59, and <a href="/home/?tree=sequoia">Sequoia</a> for older adults, 60 and up.' };
+const OTHER_TREE = { maple: '<a href="/home/?tree=maple">Maple</a> is made for kids.', aspen: '<a href="/home/?tree=aspen">Aspen</a> is made for middle schoolers.', adult: '<a href="/home/?tree=birch">Birch</a> is made for young adults, ages 18 to 25, <a href="/home/?tree=oak">Oak</a> for adults, ages 26 to 59, and <a href="/home/?tree=sequoia">Sequoia</a> for older adults, ages 60 and up.' };
 function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();
@@ -1838,12 +1838,12 @@ function movingOnHtml(onToday) {
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="pn-set-moving"'}><h3>Turning 18, or Finishing High School?</h3>
     <p class="gt-small">${lead}You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Birch, built for ages 18 to 25. Start My Birch makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine), your Next Steps notebook, and your Faith or Plain choice with you. Pine keeps its own copy.</p>
     <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyBirch()">Start My Birch</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInPine()">Stay in Pine</button>' : ''}</div>
-    <p class="gt-small">Prefer Oak, built for adults 26 to 59? <button type="button" class="text-btn" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyOak()">Start My Oak instead</button></p>
+    <p class="gt-small">Prefer Oak, built for adults, ages 26 to 59? <button type="button" class="text-btn" onclick="${onToday ? '' : 'GGTend.closeSettings();'}startMyOak()">Start My Oak instead</button></p>
     ${!onToday && r.stayPine ? GGP.moveOn.stayNote(r.stayPine, 'Pine', 'Start My Birch') : ''}</${onToday ? 'div' : 'section'}>`;
 }
 function pnBirthdayHtml() {
   if (!PROF || !window.GGP || !GGP.moveOn) return '';
-  return GGP.moveOn.birthdayHtml(PROF.id, { section: 'pn-set-birthday', why: 'Only used to offer the step into Birch, built for 18 to 25, on your 18th birthday. Without it, Pine offers the step in grade 12.' });
+  return GGP.moveOn.birthdayHtml(PROF.id, { section: 'pn-set-birthday', why: 'Only used to offer the step into Birch, built for ages 18 to 25, on your 18th birthday. Without it, Pine offers the step in grade 12.' });
 }
 function stayInPine() { rec().stayPine = todayKey(); persistRec().then(() => { showToast('Pine stays your tree. Start My Birch is in Settings whenever you want it.'); if (window.GGTend) GGTend.render(); }); }
 // MOVE-ON OFFER END (the birthday rides along in startMyBirch and startMyOak below)
@@ -1865,7 +1865,7 @@ function startMyBirch() {
 }
 function startMyOak() {
   if (!PROF || !window.GGP) return;
-  if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults 26 to 59. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
+  if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults, ages 26 to 59. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
   const name = PROF.name, c = pineCarry();
   const oak = { history: c.rings }; if (c.ns) oak.nextsteps = Object.assign(c.ns, { from: 'pine', copied: todayKey() });
   const birth = GGP.moveOn && GGP.moveOn.birthday(PROF.id);   // GWG BLD 758: the birthday comes along

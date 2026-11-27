@@ -1,7 +1,7 @@
 /* =====================================================================
    BIRCH . the app (GWG BLD 742)
-   The Grow With Grounded tree for young adults, 18 to 25, between Pine
-   (grades 9 to 12) and Oak (adults, 26 to 59). Built from Pine's newest
+   The Grow With Grounded tree for young adults, ages 18 to 25, between Pine
+   (ages 14 to 17) and Oak (adults, ages 26 to 59). Built from Pine's newest
    structures (the app, the game layer, Faith or Plain) with Oak's and
    Sequoia's adult pieces (adult privacy, adult faith rules, helpers in
    Sequoia's model, adult help lines). Where they differ, Oak and Sequoia
@@ -1739,13 +1739,13 @@ function renderProfileBar() {
   const bar = document.getElementById('st-profile-bar'); if (!bar) return;
   const a = window.GGP && GGP.active();
   if (a && a.age !== 'adult') {
-    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Birch is built for young adults, 18 to 25. ${OTHER_TREE[a.age] || ''}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="bcSwitch()">Switch person</button></div></div>`;
+    bar.innerHTML = `<div class="pbar"><div class="pbar-who"><strong>${escapeHtml(a.name)}</strong><span>Birch is built for young adults, ages 18 to 25. ${OTHER_TREE[a.age] || ''}</span></div><div class="pbar-act"><button type="button" class="btn btn-secondary btn-sm" onclick="bcSwitch()">Switch person</button></div></div>`;
     return;
   }
   if (PROF) {
     const t = new Date(a.until).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
     const tree = treeNow(a.id);
-    const nudge = tree !== 'birch' && !HELP ? `<p class="pbar-kids">Your profile's tree is ${TREE_NAME[tree] || 'Oak'}${tree === 'sequoia' ? ', built for 60 and up' : ', built for adults 26 to 59'}. If you are 25 or younger, you can make Birch your tree, so My tree opens here. <button type="button" class="text-btn" onclick="makeBirchMine()">Make Birch My Tree</button></p>` : '';
+    const nudge = tree !== 'birch' && !HELP ? `<p class="pbar-kids">Your profile's tree is ${TREE_NAME[tree] || 'Oak'}${tree === 'sequoia' ? ', built for ages 60 and up' : ', built for adults, ages 26 to 59'}. If you are 25 or younger, you can make Birch your tree, so My tree opens here. <button type="button" class="text-btn" onclick="makeBirchMine()">Make Birch My Tree</button></p>` : '';
     const helps = helpedWithBirch();
     const helpRow = helps.length ? `<div class="sq-helprow"><span>You help:</span>${helps.map(p => `<button type="button" class="btn ${HELP === p.id ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="helpOpen('${p.id}')">${escapeHtml(p.name)}</button>`).join('')}${HELP ? '<button type="button" class="btn btn-secondary btn-sm" onclick="helpBack()">My Own Birch</button>' : ''}</div>` : '';
     bar.innerHTML = `<div class="pbar"><button type="button" class="pbar-pic" onclick="GGTend.openSettings()" aria-label="Profile and Settings">${GGAv.html(a.avatar, a.name, 44)}</button>
@@ -1835,7 +1835,7 @@ function bcSettingsHtml() {
       <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b><span class="hardy-pitch">${steadyFits() ? '' : 'A little more challenge. '}</span>A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
       <p class="gt-small">Your tree grows at your own pace, just for you. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     ${helperSettingsHtml()}
-    ${PROF && !HELP && window.GGP && GGP.moveOn ? GGP.moveOn.birthdayHtml(PROF.id, { section: 'bc-set-birthday', why: 'Only used to offer the step into Oak, built for adults 26 to 59, on your 26th birthday.' }) : ''}
+    ${PROF && !HELP && window.GGP && GGP.moveOn ? GGP.moveOn.birthdayHtml(PROF.id, { section: 'bc-set-birthday', why: 'Only used to offer the step into Oak, built for adults, ages 26 to 59, on your 26th birthday.' }) : ''}
     <section class="asp-see" id="bc-see"><h3>What Stays Private</h3>${BC_SEE}</section>
     ${moveOakHtml(false)}`;
 }
@@ -1897,7 +1897,7 @@ function moveOakHtml(onToday) {
   if (!PROF || HELP) return '';
   const r = rec(), age = ageNow();
   if (onToday && (age == null || age < 26 || r.stayBirch || r.movedToOak || treeNow(PROF.id) !== 'birch')) return '';
-  const lead = onToday ? (age === 26 && GGP.moveOn && GGP.moveOn.isBirthday(PROF.id) ? 'Happy 26th birthday! ' : '') + 'Birch is built for 18 to 25, and Oak for adults 26 to 59. ' : '';
+  const lead = onToday ? (age === 26 && GGP.moveOn && GGP.moveOn.isBirthday(PROF.id) ? 'Happy 26th birthday! ' : '') + 'Birch is built for ages 18 to 25, and Oak for adults, ages 26 to 59. ' : '';
   return `<${onToday ? 'div class="gt-card pn-moving"' : 'section id="bc-set-moving"'}><h3>Ready for Oak?</h3>
     <p class="gt-small">${lead}You choose when. Stay in Birch as long as it fits, or move your tree to Oak. Move My Tree to Oak keeps this same profile: Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can print your whole Groundwork notebook first, and come back to it here any time.</p>
     <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}moveToOak()">Move My Tree to Oak</button><button class="btn btn-secondary btn-sm" onclick="${onToday ? '' : 'GGTend.closeSettings();'}gwPrintAll()">Print My Groundwork</button>${onToday ? '<button class="btn btn-secondary btn-sm" onclick="stayInBirch()">Stay in Birch</button>' : ''}</div>

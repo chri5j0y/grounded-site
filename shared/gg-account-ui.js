@@ -331,7 +331,7 @@
   // BLD 958: invite a grown-up, a teen (13 to 17), or a kid (12 and under). A teen or kid needs the parent's approval, and a
   // kid can have a sign in name in place of an email. Every invite can be texted from the parent's own phone.
   var BAND = { teen: 'Teen', kid: 'Kid' };
-  var AGES = [['adult', 'Grown-up'], ['teen', 'Teen, 13 to 17'], ['kid', 'Kid, 12 and Under']];
+  var AGES = [['adult', 'Grown-up'], ['teen', 'Teen, Ages 13 to 17'], ['kid', 'Kid, 12 and Under']];
   var OK_LINE = 'Every part of Grounded is shaped for each age. Kids and teens see guides, videos, and practices written for their age. Tending for them centers on movement, food, and energy, with weight and calories kept for grown-ups. Any question about a substance goes to a trusted grown-up, and Grounded asks open questions only. Their data stays locked to their own account, and you see them here in your Household, where you can remove their account any time.';
   function inviteForm() {
     return '<form class="ga-card ga-inv" novalidate><span class="ga-k">Invite</span><div class="ga-ages" role="radiogroup" aria-label="Who is it for">' + AGES.map(function (a, i) {

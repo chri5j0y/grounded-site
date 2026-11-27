@@ -178,6 +178,9 @@
   // the scope context: the account, or one shared space
   function acctCtx(K) { var x = X(); return { scope: 'a', pre: '', idp: 'a|', DK: K.DK, NK: K.NK, aad: function (id, v) { return x.AAD.box(K.accountId, id, v); } }; }
   function spCtx(sp) { var x = X(); return { scope: sp.id, pre: '/spaces/' + sp.id, idp: 's|', DK: sp.DK, NK: sp.NK, kind: sp.kind, aad: function (id, v) { return x.AAD.sbox(sp.id, id, v); } }; }
+  // BLD 1075: a kid's account this grown-up guards (the kid's own keys, opened with the guardian key; every request names it)
+  function gCtx(g) { var x = X(); return { scope: 'g' + g.accountId, kind: 'g:' + g.accountId, pre: '', hdr: g.headers, idp: 'a|', DK: g.DK, NK: g.NK, aad: function (id, v) { return x.AAD.box(g.accountId, id, v); } }; }
+  function H(sc, o) { if (!sc.hdr) return o; o = Object.assign({}, o || {}); o.headers = Object.assign({}, sc.hdr, o.headers || {}); return o; }
   function idOf(sc, name) { return X().boxId(sc.NK, sc.idp + name); }
 
   // bases: the last synced copy of each piece, locked with the account key at rest
@@ -210,7 +213,7 @@
     return metaGet(cursorKey).then(function (cur) {
       cur = +cur || 0;
       var page = function () {
-        return api('GET', sc.pre + '/boxes?since=' + cur).then(function (r) {
+        return api('GET', sc.pre + '/boxes?since=' + cur, null, H(sc)).then(function (r) {
           r.items.forEach(function (it) {
             var b = byId[it.id];
             if (b && it.ver < b.ver) { res.old++; emit('old', { id: it.id }); return; }   // an older copy served again: keep ours
@@ -237,13 +240,13 @@
     };
     for (var i = 0; i < small.length; i += 50) {
       (function (chunk) {
-        jobs.push(x.api('POST', sc.pre + '/boxes/batch', { items: chunk.map(function (c) { return { op: 'get', id: c.id }; }) }).then(function (r) {
+        jobs.push(x.api('POST', sc.pre + '/boxes/batch', { items: chunk.map(function (c) { return { op: 'get', id: c.id }; }) }, H(sc)).then(function (r) {
           return Promise.all(r.items.map(function (it) { return it.ok ? take(it.id, it.ver, x.unb64u(it.data)) : null; }));
         }));
       })(small.slice(i, i + 50));
     }
     big.forEach(function (it) {
-      jobs.push(x.api('GET', sc.pre + '/boxes/' + it.id, null, { raw: true }).then(function (r) {
+      jobs.push(x.api('GET', sc.pre + '/boxes/' + it.id, null, H(sc, { raw: true })).then(function (r) {
         var ver = +r.headers.get('X-GG-Ver'); return r.arrayBuffer().then(function (b) { return take(it.id, ver, new Uint8Array(b)); });
       }).catch(function (e) { if (e.why === 'offline') throw e; }));
     });
@@ -252,7 +255,7 @@
   function getOne(sc, name) {
     var x = X();
     return idOf(sc, name).then(function (id) {
-      return x.api('GET', sc.pre + '/boxes/' + id, null, { raw: true }).then(function (r) {
+      return x.api('GET', sc.pre + '/boxes/' + id, null, H(sc, { raw: true })).then(function (r) {
         var ver = +r.headers.get('X-GG-Ver');
         return r.arrayBuffer().then(function (b) { return x.open(sc.DK, new Uint8Array(b), sc.aad(id, ver)); }).then(x.unpack).then(function (j) {
           if (j.t !== name) throw x.kind('box');
@@ -272,10 +275,10 @@
       });
     })).then(function (items) {
       var results = new Array(items.length), jobs = [], small = [];
-      items.forEach(function (it, i) { if (it.u8 && it.u8.length > 60000) jobs.push(x.api('PUT', sc.pre + '/boxes/' + it.id, it.u8, { headers: it.ver ? { 'If-Match': '"' + it.ver + '"' } : { 'If-None-Match': '*' } }).then(function (r) { results[i] = { ok: true, ver: r.ver }; }, function (e) { if (e.why === 'offline') throw e; results[i] = { ok: false, why: e.why, cur: e.ver }; })); else small.push(i); });
+      items.forEach(function (it, i) { if (it.u8 && it.u8.length > 60000) jobs.push(x.api('PUT', sc.pre + '/boxes/' + it.id, it.u8, H(sc, { headers: it.ver ? { 'If-Match': '"' + it.ver + '"' } : { 'If-None-Match': '*' } })).then(function (r) { results[i] = { ok: true, ver: r.ver }; }, function (e) { if (e.why === 'offline') throw e; results[i] = { ok: false, why: e.why, cur: e.ver }; })); else small.push(i); });
       for (var k = 0; k < small.length; k += 50) {
         (function (idx) {
-          jobs.push(x.api('POST', sc.pre + '/boxes/batch', { items: idx.map(function (i) { var it = items[i]; return it.op === 'del' ? { op: 'del', id: it.id, ver: it.ver } : { op: 'put', id: it.id, ver: it.ver, data: x.b64u(it.u8) }; }) }).then(function (r) {
+          jobs.push(x.api('POST', sc.pre + '/boxes/batch', { items: idx.map(function (i) { var it = items[i]; return it.op === 'del' ? { op: 'del', id: it.id, ver: it.ver } : { op: 'put', id: it.id, ver: it.ver, data: x.b64u(it.u8) }; }) }, H(sc)).then(function (r) {
             r.items.forEach(function (res, j) { results[idx[j]] = res.ok ? { ok: true, ver: res.ver } : { ok: false, why: res.why, cur: res.ver }; });
           }));
         })(small.slice(k, k + 50));
@@ -292,7 +295,7 @@
         // comes down the next time this doc opens, and never lose it when the cursor moves past.
         var upd = [];
         Object.keys(remote).forEach(function (n) {
-          if (n.indexOf(d.name + '#') !== 0) return;
+          if (n.indexOf((d.wire || d.name) + '#') !== 0) return;
           var key = sc.scope + '|' + n, b = B[key], r = remote[n];
           if (b && b.ver >= r.ver) { delete remote[n]; return; }
           upd.push(r.gone ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, gone: true, seen: false } : carries(n) ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, data: r.data, at: r.at, seen: false } : { scope: sc.scope, name: n, id: r.id, ver: r.ver, stub: true, seen: false });
@@ -301,12 +304,12 @@
         return saveBases(K, upd).then(function () { upd.forEach(function (u) { B[u.scope + '|' + u.name] = u; }); });
       }
       // pieces noted while this doc was closed here: bring them down now
-      var pre0 = d.name + '#', stubs = Object.keys(B).map(function (k) { return B[k]; }).filter(function (r) { return r.scope === sc.scope && r.stub && r.name.indexOf(pre0) === 0 && !remote[r.name]; });
+      var pre0 = (d.wire || d.name) + '#', stubs = Object.keys(B).map(function (k) { return B[k]; }).filter(function (r) { return r.scope === sc.scope && r.stub && r.name.indexOf(pre0) === 0 && !remote[r.name]; });
       if (!stubs.length) return local;
       return getBoxes(sc, stubs.map(function (r) { return { id: r.id, ver: r.ver, size: 0 }; }), remote, res).then(function () { stubs.forEach(function (r) { delete B[r.scope + '|' + r.name]; }); return local; });
     }).then(function (local) {
       if (local == null) return;
-      var L = d.opaque ? { '': clone(local) } : split(local, d.rules), pre = d.name + '#', names = {}, at = d.dirtyAt || Date.now(), t0 = d.touched || 0;
+      var L = d.opaque ? { '': clone(local) } : split(local, d.rules), pre = (d.wire || d.name) + '#', names = {}, at = d.dirtyAt || Date.now(), t0 = d.touched || 0;
       Object.keys(L).forEach(function (p) { names[pre + p] = 1; });
       Object.keys(B).forEach(function (k) { var r = B[k]; if (r.scope === sc.scope && r.name.indexOf(pre) === 0) names[r.name] = 1; });
       Object.keys(remote).forEach(function (n) { if (n.indexOf(pre) === 0) names[n] = 1; });
@@ -405,7 +408,7 @@
         Object.keys(p.remote).forEach(function (n) {
           var key = sc.scope + '|' + n, b = B[key], r = p.remote[n];
           if (b && b.ver >= r.ver) return;
-          var owned = mine.some(function (d) { return n.indexOf(d.name + '#') === 0; });
+          var owned = mine.some(function (d) { return n.indexOf((d.wire || d.name) + '#') === 0; });
           if (owned) return;
           upd.push(r.gone ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, gone: true, seen: false } : carries(n) ? { scope: sc.scope, name: n, id: r.id, ver: r.ver, data: r.data, at: r.at, seen: false } : { scope: sc.scope, name: n, id: r.id, ver: r.ver, stub: true, seen: false });
         });
@@ -494,6 +497,26 @@
   function rekeyAll() { var ks = Object.keys(spaceCtx), ch = Promise.resolve(); ks.forEach(function (k) { ch = ch.then(function () { return rekey(k); }); }); return ch; }
   function leftHousehold() { var ids = Object.keys(spaceCtx).map(function (k) { return spaceCtx[k].id; }); spaceCtx = {}; return dropBases(function (key) { return ids.some(function (id) { return key.indexOf(id + '|') === 0; }); }); }
 
+  /* ---------- BLD 1075: the doc as the server holds it, for the move's piece by piece check ---------- */
+  var guards = {};
+  function readBack(name, gid) {
+    var x = X(), K = x.keys(); if (!K) return Promise.reject(x.kind('signin'));
+    if (gid && !guards[gid]) return Promise.reject(x.kind('guard'));
+    var sc = gid ? gCtx(guards[gid]) : acctCtx(K), remote = {}, all0 = [], res = { bad: 0 };
+    var page = function (cur) {
+      return x.api('GET', sc.pre + '/boxes?since=' + cur, null, H(sc)).then(function (r) {
+        r.items.forEach(function (it) { if (!it.gone) all0.push(it); });
+        if (r.more) return page(r.seq);
+      });
+    };
+    return page(0).then(function () { return getBoxes(sc, all0, remote, res); }).then(function () {
+      var pieces = {}, any = false, pre = name + '#';
+      Object.keys(remote).forEach(function (n) { if (n.indexOf(pre) === 0 && !remote[n].gone) { pieces[n.slice(pre.length)] = remote[n].data; any = true; } });
+      if (res.bad) throw x.kind('box');
+      return any ? (pieces[''] !== undefined && Object.keys(pieces).length === 1 ? pieces[''] : assemble(pieces)) : null;
+    });
+  }
+
   /* ---------- sync ---------- */
   function sync() {
     if (running) { again = true; return running; }
@@ -508,6 +531,8 @@
         return (needSpaces ? refreshSpaces(K) : Promise.resolve()).then(function () {
           var chain = syncScope(acctCtx(K), K, B, res);
           Object.keys(spaceCtx).forEach(function (kind) { if (Object.keys(docs).some(function (n) { return docs[n].space === kind; })) chain = chain.then(function () { return syncScope(spCtx(spaceCtx[kind]), K, B, res); }); });
+          // BLD 1075: each kid's account this grown-up guards, for the docs this phone holds for that kid
+          Object.keys(guards).forEach(function (gid) { var sc = gCtx(guards[gid]); if (Object.keys(docs).some(function (n) { return docs[n].space === sc.kind; })) chain = chain.then(function () { return syncScope(sc, K, B, res); }); });
           return chain;
         });
       });
@@ -540,7 +565,8 @@
   function register(name, adapter, o, space) {
     o = o || {};
     if (!adapter || typeof adapter.get !== 'function' || typeof adapter.put !== 'function') throw new Error('GGSync: an adapter needs get() and put()');
-    var d = docs[name] = { name: name, adapter: adapter, rules: o.rules || RULES[space || name.split(':')[0]] || [], opaque: !!o.opaque, space: space || null, dirtyAt: 0 };
+    var wire = o.wire || name;
+    var d = docs[name] = { name: name, wire: wire, adapter: adapter, rules: o.rules || RULES[space && space.indexOf('g:') !== 0 ? space : wire.split(':')[0]] || [], opaque: !!o.opaque, space: space || null, dirtyAt: 0 };
     metaGet('dirty|' + name).then(function (t) { if (t && docs[name] === d && !d.dirtyAt) d.dirtyAt = +t; });
     return d;
   }
@@ -595,6 +621,14 @@
     remoteDocs: remoteDocs, fetchDoc: fetchDoc, removeDoc: removeDoc, carried: carried, forget: forget,
     spaces: spaces, household: function () { return hhCache; }, shareSpace: shareSpace, rekey: rekey, rekeyAll: rekeyAll, leftHousehold: leftHousehold,
     RULES: RULES,
+    // BLD 1075: a kid's account this grown-up guards. guard(ctx) with ctx from GGAccount.ctxFor(kidId, ak); guardDoc(kidId, name,
+    // adapter, o) a doc of that account (name: the kid's own doc name, such as p:<treeId> or acct:profiles); readBack(name,
+    // kidId) the doc as the server holds it now, opened here (for the move's check against the original).
+    guard: function (ctx) { if (!ctx || !ctx.accountId || !ctx.DK) throw new Error('GGSync: guard'); guards[ctx.accountId] = ctx; return ctx.accountId; },
+    guarded: function () { return Object.keys(guards); },
+    unguard: function (id) { delete guards[id]; Object.keys(docs).forEach(function (n) { if (docs[n].space === 'g:' + id) delete docs[n]; }); return dropBases(function (key) { return key.indexOf('g' + id + '|') === 0; }); },
+    guardDoc: function (id, name, adapter, o) { if (!guards[id]) throw new Error('GGSync: guard first'); return register('g:' + id + '|' + name, adapter, Object.assign({}, o || {}, { wire: name }), 'g:' + id) && name; },
+    readBack: readBack,
     _: { merge3: merge3, split: split, assemble: assemble, stable: stable, eq: eq }
   };
 })();

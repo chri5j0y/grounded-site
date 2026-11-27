@@ -68,7 +68,7 @@
   'use strict';
   if (window.GGAccount) return;
   var V = 'c143', ROUNDS = 250000, KDF = 'pbkdf2-sha256-250000';
-  var TERMS_V = '2026-11-17', PRIVACY_V = '2026-11-17';   // stage 2 moves these to the launch date with gg-profiles.js
+  var TERMS_V = '2026-11-27', PRIVACY_V = '2026-11-27';   // stage 2 moves these to the launch date with gg-profiles.js
   // BLD 1017: the Membership Trial (Try Membership for 14 days, no card) rests until Chris reads its sections of Terms and
   // Privacy (patches/bld1017/DEPLOY1017.md). While false, Start Membership shows Join Now only, and no page shows trial
   // words. Tests turn it on for one browser with window.GG_TRIAL_LIVE = true; nothing on the site sets that.
@@ -513,6 +513,89 @@
     }).then(function () { return forgetHere(!!o.erase, carried); }).then(function () { return { ok: true }; });
   }
 
+  /* ---------- BLD 1075 Your Account Is Your Profile: family accounts made on this phone, and the guardian key ----------
+     ONE_ACCOUNT_LIVE: the Worker c200 routes (deployed November 27, 2026). Tests turn it on with window.GG_ONE_ACCOUNT_LIVE.
+     makeFor(o) makes a family member's own account right here, with the grown-up who runs the Household signed in: every
+     key is made on this phone and goes up locked (POST /household/member), the grown-up stays signed in, and the answer
+     carries the new account key in memory only (the caller wipes it). A kid's account also carries the guardian key: the
+     kid's account key locked to this grown-up's public key (ECDH P-256, HKDF "gg-acct-v1 guard", AES-GCM, aad
+     "gg1|guard|<kid>|<grown-up>"), so this grown-up can open the kid's tree on their own phone. */
+  var ONE_ACCOUNT_LIVE = true;
+  function oneLive() { return ONE_ACCOUNT_LIVE === true || window.GG_ONE_ACCOUNT_LIVE === true; }
+  function gAad(kid, grown) { return 'gg1|guard|' + kid + '|' + grown; }
+  function gKey(pub, priv) {
+    return subtle.importKey('jwk', { kty: 'EC', crv: 'P-256', x: pub.x, y: pub.y, ext: true }, { name: 'ECDH', namedCurve: 'P-256' }, false, []).then(function (pk) {
+      return subtle.deriveBits({ name: 'ECDH', public: pk }, priv, 256);
+    }).then(function (bits) { return hkdfBase(new Uint8Array(bits)); }).then(function (b) { return hkAes(b, 'gg-acct-v1 guard'); });
+  }
+  function guardWrap(pub, ak, kid, grown) {
+    var iv = rand(12);
+    return subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']).then(function (eph) {
+      return Promise.all([gKey(pub, eph.privateKey), subtle.exportKey('jwk', eph.publicKey)]).then(function (r) {
+        return subtle.encrypt({ name: 'AES-GCM', iv: iv, additionalData: enc.encode(gAad(kid, grown)) }, r[0], ak).then(function (ct) {
+          return { epk: { kty: 'EC', crv: 'P-256', x: r[1].x, y: r[1].y }, iv: b64u(iv), ct: b64u(new Uint8Array(ct)) };
+        });
+      });
+    });
+  }
+  // The kid's account key, opened here with this grown-up's private key (in memory only; the caller keeps keys, never bytes)
+  function guardOpen(w, kid) {
+    if (!A) return Promise.reject(kind('signin'));
+    if (!w || !w.epk || !w.iv || !w.ct) return Promise.reject(kind('box'));
+    return gKey(w.epk, A.priv).then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64u(w.iv), additionalData: enc.encode(gAad(kid, A.accountId)) }, k, unb64u(w.ct)); })
+      .then(function (b) { return new Uint8Array(b); }, function () { throw kind('box'); });
+  }
+  // The keys GGSync uses for another account this phone may write to: {accountId, DK, NK, headers}
+  function ctxFor(accountId, ak) { return akKeys(ak).then(function (k) { return { accountId: accountId, DK: k.DK, NK: k.NK, headers: { 'X-GG-For': accountId } }; }); }
+  function makeFor(o) {
+    o = o || {};
+    if (!A) return Promise.reject(kind('signin'));
+    if (!oneLive()) return Promise.reject(kind('setup'));
+    var band = o.band === 'kid' || o.band === 'teen' ? o.band : 'adult', pw;
+    try { pw = okPassword(o.password); } catch (e) { return Promise.reject(e); }
+    var name = o.email ? '' : String(o.name || '').trim().toLowerCase(), email = name ? name + KID_AT : String(o.email || '').trim();
+    if (!name && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Promise.reject(kind('email'));
+    if (name && !/^[a-z0-9][a-z0-9.]{2,23}$/.test(name)) return Promise.reject(kind('name', 'A sign in name is 3 to 24 letters or numbers, and may have a dot.'));
+    var id = b64u(rand(16)), ak = rand(32), pwSalt = rand(16), rootSalt = rand(16), words, P, R, K, pair;
+    return needRoot().then(function (G) {
+      words = G.make();
+      return Promise.all([passKeys(pw, pwSalt), rootKeys(words, rootSalt), akKeys(ak), subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits'])]);
+    }).then(function (r) {
+      P = r[0]; R = r[1]; K = r[2]; pair = r[3];
+      return Promise.all([subtle.exportKey('jwk', pair.privateKey), subtle.exportKey('jwk', pair.publicKey)]);
+    }).then(function (j) {
+      var pub = { kty: 'EC', crv: 'P-256', x: j[1].x, y: j[1].y };
+      return Promise.all([seal(P.lock, ak, AAD.pw(id)), seal(R.lock, ak, AAD.root(id)), seal(K.DK, enc.encode(JSON.stringify(j[0])), AAD.priv(id)), band === 'kid' ? guardWrap(A.pub, ak, id, A.accountId) : null]).then(function (b) {
+        return api('POST', '/household/member', { band: band, name: name || undefined, email: name ? undefined : email, ok: band !== 'adult', adult: band === 'adult' ? true : undefined,
+          keys: { accountId: id, pw_salt: b64u(pwSalt), proof: P.proof, pw_box: b64u(b[0]), root_salt: b64u(rootSalt), root_proof: R.proof, root_box: b64u(b[1]), pub: pub, priv_box: b64u(b[2]) },
+          guard: b[3] || undefined, terms_v: TERMS_V, privacy_v: PRIVACY_V });
+      });
+    }).then(function (r) {
+      return { accountId: id, email: email, name: r.name || null, band: band, confirmed: !!r.confirmed, ak: ak, words: words.slice() };
+    }, function (e) { wipe(ak); if (e && e.why === 'taken') throw kind('taken', name ? 'That sign in name is taken. Try another.' : 'That email has a Grounded Account already. Send an invite instead.'); throw e; });
+  }
+  // A kid's new password, set by their grown-up: the new pw_box is made here from the kid's account key
+  function kidPassword(o) {
+    o = o || {};
+    if (!A) return Promise.reject(kind('signin'));
+    var pw; try { pw = okPassword(o.password); } catch (e) { return Promise.reject(e); }
+    var salt = rand(16);
+    return Promise.all([passKeys(pw, salt), proofOf(o.myPassword)]).then(function (r) {
+      return seal(r[0].lock, o.ak, AAD.pw(o.account)).then(function (box) {
+        return api('POST', '/household/member/password', { account: o.account, pw_salt: b64u(salt), proof: r[0].proof, pw_box: b64u(box), me_proof: r[1] }).catch(function (e) { if (e.why === 'nomatch') throw kind('nomatch', 'Check your own password and try again.'); throw e; });
+      });
+    });
+  }
+  // Start Fresh for a teen, or Remove Riley's Account for a kid (erased, never read)
+  function familyErase(o) {
+    o = o || {};
+    return proofOf(o.myPassword).then(function (p) { return api('POST', '/household/member/fresh', { account: o.account, confirm: 'START FRESH', me_proof: p }); })
+      .catch(function (e) { if (e.why === 'nomatch') throw kind('nomatch', 'Check your own password and try again.'); throw e; });
+  }
+  // The Root Words of the account signed in here, kept inside it (a family account made on another phone keeps them here
+  // the first time it signs in)
+  function keepWords(words) { return putSmall('acct:rootwords', { words: [].concat(words).join(' ') }); }
+
   /* ---------- Household ---------- */
   var household = {
     get: function () { return api('GET', '/household').then(function (r) { return r.household; }); },
@@ -637,7 +720,9 @@
     forgot: forgot, recover: recover, startFresh: startFresh, keep: keepAcct,
     changePassword: changePassword, rootWords: rootWords, newRootWords: newRootWords, changeEmail: changeEmail,
     devices: devices, signOutDevice: signOutDevice, exportData: exportData, openExport: openExport, deleteAccount: deleteAccount,
-    household: household, readHash: readHash, words: words, health: function () { return api('GET', '/health', null, { tries: 1 }); },
+    household: household, readHash: readHash,
+    // BLD 1075
+    oneLive: oneLive, makeFor: makeFor, guardOpen: guardOpen, ctxFor: ctxFor, kidPassword: kidPassword, familyErase: familyErase, keepWords: keepWords, words: words, health: function () { return api('GET', '/health', null, { tries: 1 }); },
     member: member, memberRefresh: memberRefresh, memberKey: memberKey, memberCode: memberCode, checkoutUrl: checkoutUrl, trial: trial, trialStart: trialStart, trialLive: trialLive,
     _: inner
   };

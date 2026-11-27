@@ -1,6 +1,6 @@
 /* =====================================================================
    SEQUOIA . the app (GWG BLD 733)
-   The Grow With Grounded tree for older adults: built for 60 and up, and
+   The Grow With Grounded tree for older adults: built for ages 60 and up, and
    anyone 55 or older may choose it. Built from Oak, with every Oak feature,
    fitted to later life.
 

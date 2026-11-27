@@ -348,10 +348,10 @@
       var r = rec();
       // BLD 929 (M6): Oak and Sequoia get the same Faith or Plain choice as Birch and Pine.
       return lifeHtml('gss-life') + wordingHtml('gss-wording', r.wording === 'plain', false, 'Prayer, worship, quiet, nature, and traditions.', 'Peace, values, quiet, nature, and traditions.', WORD_LEAD) + gameHtml() + helpersHtml()
-        + birthdayHtml('Only used to offer the step into Sequoia, built for 60 and up, on your 60th birthday.')
+        + birthdayHtml('Only used to offer the step into Sequoia, built for ages 60 and up, on your 60th birthday.')
         + seeHtml('gss-see', 'What Stays Private', OK_SEE)
         + (gwHas() ? sec('gss-gw', 'Groundwork From Birch', '<p class="gt-small">Your Groundwork notebook stays in Birch. Read it or print it here any time.</p><div class="gss-row">' + btn('ground', 'Open My Groundwork') + '</div>') : '')
-        + sec('gss-moving', 'Ready for Sequoia?', '<p class="gt-small">Sequoia is built for 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>'
+        + sec('gss-moving', 'Ready for Sequoia?', '<p class="gt-small">Sequoia is built for ages 60 and up, with a gentler pace and a Legacy Book for the stories you want to keep. You choose when. Stay in Oak as long as it fits, or move your tree to Sequoia. Move My Tree to Sequoia keeps this same profile: Sequoia gets a copy of your Oak check-ins, labeled From Oak, and Oak keeps everything.</p>'
           + '<div class="gss-row">' + btn('moveSeq', 'Move My Tree to Sequoia') + '</div>' + (r.staySeq ? stayNote(r.staySeq, 'Oak', 'Move My Tree to Sequoia') : ''));
     }
     /* Birch: bcSettingsHtml 1821 */
@@ -366,7 +366,7 @@
         + sec('gss-sens', 'Optional Question', '<p class="gt-small">One extra question about betting and gambling, on sports, online games, or anything else for money. It never counts toward a score, is never shared, and is never shown to a helper. Only you can turn it on.</p>'
           + check('sens', !!r.askOpt, 'Ask me the optional question', null))
         + gameHtml() + helpersHtml()
-        + birthdayHtml('Only used to offer the step into Oak, built for adults 26 to 59, on your 26th birthday.')
+        + birthdayHtml('Only used to offer the step into Oak, built for adults, ages 26 to 59, on your 26th birthday.')
         + seeHtml('gss-see', 'What Stays Private', BC_SEE)
         + sec('gss-moving', 'Ready for Oak?', '<p class="gt-small">You choose when. Stay in Birch as long as it fits, or move your tree to Oak. Move My Tree to Oak keeps this same profile: Oak gets a copy of your Birch check-ins, labeled From Birch, and Birch keeps everything, Groundwork included. You can print your whole Groundwork notebook first, and come back to it here any time.</p>'
           + '<div class="gss-row">' + btn('moveOak', 'Move My Tree to Oak') + btn('ground', 'Print My Groundwork') + '</div>' + (r.stayBirch ? stayNote(r.stayBirch, 'Birch', 'Move My Tree to Oak') : ''));
@@ -380,10 +380,10 @@
           + check('sens', !!r.askSens, 'Ask me the optional questions', null))
         + lifeHtml('gss-life', 'Health and Ability') + gameHtml()
         + seeHtml('gss-see', 'What Your Grown-up Can See', PN_SEE)
-        + birthdayHtml('Only used to offer the step into Birch, built for 18 to 25, on your 18th birthday. Without it, Pine offers the step in grade 12.')
+        + birthdayHtml('Only used to offer the step into Birch, built for ages 18 to 25, on your 18th birthday. Without it, Pine offers the step in grade 12.')
         + sec('gss-moving', 'Turning 18, or Finishing High School?', '<p class="gt-small">' + lead + 'You choose what comes next. Stay in Pine as long as it fits, or start your own adult tree in Birch, built for ages 18 to 25. Start My Birch makes a new profile for you as an adult, and brings your Pine check-ins (labeled From Pine), your Next Steps notebook, and your Faith or Plain choice with you. Pine keeps its own copy.</p>'
           + '<div class="gss-row">' + btn('startBirch', 'Start My Birch', { main: true }) + '</div>'
-          + '<p class="gt-small">Prefer Oak, built for adults 26 to 59? ' + linkBtn('startOak', 'Start My Oak instead') + '</p>' + (r.stayPine ? stayNote(r.stayPine, 'Pine', 'Start My Birch') : ''));
+          + '<p class="gt-small">Prefer Oak, built for adults, ages 26 to 59? ' + linkBtn('startOak', 'Start My Oak instead') + '</p>' + (r.stayPine ? stayNote(r.stayPine, 'Pine', 'Start My Birch') : ''));
     }
     /* Maple: mpExtraSettings 2434 */
     function mpMoveDue(k) { var M = P().moveOn; return !!(M && M.gradeDue && M.gradeDue('5', k.checkins || [], k.done5)); }   // 2673
@@ -397,7 +397,7 @@
       var due = mpMoveDue(k);   // mpMovingHtml 2674 (Settings)
       if (P().moveOn && (due || String(k.grade) === '5' || k.stayMaple)) {
         var lead = due ? (k.done5 ? nm + ' finished grade 5. ' : 'A new school year is here, and ' + nm + ' finished grade 5. ') : nm + ' is in grade 5. ';
-        out += sec('gss-moving', 'Ready for Middle School?', '<p class="gt-small">' + lead + 'Take all the time you need. ' + nm + ' can stay in Maple as long as it fits, or start a new tree in Aspen, built for grades 6 to 8. Start My Aspen makes a new Middle school profile with a grown-up, and brings ' + nm + '\'s Maple rings (labeled From Maple) and the Faith or Plain choice along. Maple keeps its own copy.</p>'
+        out += sec('gss-moving', 'Ready for Middle School?', '<p class="gt-small">' + lead + 'Take all the time you need. ' + nm + ' can stay in Maple as long as it fits, or start a new tree in Aspen, built for ages 11 to 13. Start My Aspen makes a new Middle school profile with a grown-up, and brings ' + nm + '\'s Maple rings (labeled From Maple) and the Faith or Plain choice along. Maple keeps its own copy.</p>'
           + '<div class="gss-row">' + btn('startAspen', 'Start My Aspen', { main: true }) + (!due ? btn('done5', 'Grade 5 Is Done') : '') + '</div>'
           + (!due ? '<p class="gt-small">Today offers Start My Aspen at the start of the next school year, or as soon as you tap Grade 5 Is Done.</p>' : '')
           + (k.stayMaple ? stayNote(k.stayMaple, 'Maple', 'Start My Aspen', (prof() || {}).name) : ''));
@@ -416,7 +416,7 @@
       var due = asMoveDue(s);   // movingOnHtml 2611 (Settings)
       if (P().moveOn && (due || +s.grade === 8 || s.stayAspen)) {
         var lead = due ? (s.done8 ? 'You finished grade 8. ' : 'A new school year is here, and you finished grade 8. ') : 'You are in grade 8. ';
-        out += sec('gss-moving', 'Heading to High School?', '<p class="gt-small">' + lead + 'You choose what comes next. Stay in Aspen as long as it fits, or start your own tree in Pine, built for grades 9 to 12. Start My Pine makes a new High school profile for you, with a grown-up agreeing, and brings your Aspen check-ins (labeled From Aspen) and your Faith or Plain wording with you. Aspen keeps its own copy.</p>'
+        out += sec('gss-moving', 'Heading to High School?', '<p class="gt-small">' + lead + 'You choose what comes next. Stay in Aspen as long as it fits, or start your own tree in Pine, built for ages 14 to 17. Start My Pine makes a new High school profile for you, with a grown-up agreeing, and brings your Aspen check-ins (labeled From Aspen) and your Faith or Plain wording with you. Aspen keeps its own copy.</p>'
           + '<div class="gss-row">' + btn('startPine', 'Start My Pine', { main: true }) + (!due ? btn('done8', 'Grade 8 Is Done') : '') + '</div>'
           + (!due ? '<p class="gt-small">Today offers Start My Pine at the start of the next school year, or as soon as you tap Grade 8 Is Done.</p>' : '')
           + (s.stayAspen ? stayNote(s.stayAspen, 'Aspen', 'Start My Pine') : ''));
@@ -641,7 +641,7 @@
         onCreated: function (nid) { try { if (nid && P().setTree && P().tree(nid) !== 'birch') P().setTree(nid, 'birch'); } catch (e) {} afterCreate(); } });
     }
     function startMyOak() {   // pine startMyOak 1846
-      if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults 26 to 59. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
+      if (!confirm('Start My Oak makes a new adult profile for you in Oak, built for adults, ages 26 to 59. You agree to the terms yourself, so you need to be 18 or older. Your Pine profile stays as it is. Continue?')) return;
       var name = (prof() || {}).name, c = pineCarry();
       var oak = { history: c.rings }; if (c.ns) oak.nextsteps = Object.assign(c.ns, { from: 'pine', copied: todayKey() });
       var birth = P().moveOn && P().moveOn.birthday(id);

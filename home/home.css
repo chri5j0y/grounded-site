@@ -1828,3 +1828,22 @@ html.gg-ts-2 main.hm{zoom:1.25;}
 .hm-hero .hm-acts .hm-btn{max-width:100%;white-space:normal;text-align:center;}
 .hm-ytpic{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line);}
 .hm-ytpic img{width:100%;height:100%;object-fit:cover;display:block;}
+/* BLD 1075: One Account, One Tree and Add a Family Member */
+.hm-mvlist{display:flex;flex-direction:column;gap:10px;}
+.hm-mvrow{display:flex;gap:14px;align-items:flex-start;padding:12px 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);}
+.hm-mvrow .av{width:52px;height:52px;flex:none;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line);display:grid;place-items:center;}
+.hm-mvrow .av img{width:100%;height:100%;object-fit:cover;display:block;}
+.hm-mvrow .tx{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
+.hm-mvrow .tx b{font:700 21px/1.15 'Cormorant Garamond',Georgia,serif;}
+.hm-mvrow .tx small{font-size:14px;color:var(--ink-soft);}
+.hm-mvrow .hm-acts{margin-top:6px;}
+.hm-mvrow .hm-acts .hm-btn{white-space:normal;max-width:100%;}
+.hm-mvok{display:inline-flex;align-items:center;gap:6px;color:var(--leaves,var(--gold));font-weight:700;}
+.hm-mvok .i{width:16px;height:16px;}
+.hm-mvfm{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.hm-mvl{font-size:13.5px;font-weight:700;color:var(--ink-soft);margin-top:4px;}
+.hm-mvi{width:100%;min-height:44px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg,var(--card));color:var(--ink);font-size:16px;}
+.hm-mvck{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--ink);}
+.hm-mvck input{margin-top:3px;flex:none;}
+.hm-mvmsg{min-height:1em;margin:4px 0 0;font-size:14px;color:var(--ink-soft);}
+.hm-mvfm .hm-btn{align-self:flex-start;max-width:100%;white-space:normal;}

@@ -86,9 +86,9 @@ const strandName = id => { const b = STRAND[id]; if (!b) return id; return b.par
 // Wording: maple uses kid words; aspen and pine use teen words.
 const AGES = [
  { id:"adult", name:"Adult", who:"Me, or another adult", w:0 },
- { id:"pine", name:"High school", who:"Grades 9 to 12", w:1 },
- { id:"aspen", name:"Middle school", who:"Grades 6 to 8", w:1 },
- { id:"maple", name:"Kids", who:"Kindergarten to grade 5", w:2 }
+ { id:"pine", name:"High school", who:"Ages 14 to 17", w:1 },
+ { id:"aspen", name:"Middle school", who:"Ages 11 to 13", w:1 },
+ { id:"maple", name:"Kids", who:"Ages 5 to 10", w:2 }
 ];
 const AGE = Object.fromEntries(AGES.map(a => [a.id, a]));
 const wordIdx = age => (AGE[age] || AGE.adult).w;
