@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'c207';
+const V = 'c231';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -344,13 +344,26 @@ function figGeom(W, H){
   // The whole loop's box on the stage, and the points on the floor (under 3 cm), from 12 poses round the loop.
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const floor = [];
   try { for (let i = 0; i < 12; i++){ const T = st.track(i / 12); for (const k in T){ const p = pr(new Vc(T[k][0], T[k][1], T[k][2]));
-    x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); if (T[k][1] < .03 * s) floor.push(pr(new Vc(T[k][0], 0, T[k][2]))); } } } catch(e){ x0 = g[0] - 60; x1 = g[0] + 60; y0 = t[1]; y1 = g[1]; }
+    x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); if (T[k][1] < .03 * s) floor.push(pr(new Vc(T[k][0], 0, T[k][2])));
+      // BLD 1078: the head joint sits at the base of the skull; the top of the head is about 22 cm above it.
+      if (k === 'head') y0 = Math.min(y0, pr(new Vc(T[k][0], T[k][1] + .22 * s, T[k][2]))[1]); } } } catch(e){ x0 = g[0] - 60; x1 = g[0] + 60; y0 = t[1]; y1 = g[1]; }
   // The drawn mat (when shown): its four corners on the floor, for the room check (the whole mat on open floor).
   let mat = null;
   try { const sc = st.floor && st.floor.parent; if (sc) sc.traverse(o => { const gp = o.geometry && o.geometry.parameters; if (mat || !o.isMesh || !gp || o.geometry.type !== 'BoxGeometry' || Math.abs(gp.height - .012) > .002 || Math.abs(gp.width - .62) > .01) return;
     let vis = true; for (let q = o; q; q = q.parent) if (q.visible === false) vis = false; if (!vis) return;
     o.updateWorldMatrix(true, false); mat = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([i, j]) => { const v = new Vc(i * gp.width / 2, 0, j * gp.depth / 2).applyMatrix4(o.matrixWorld); v.y = 0; return pr(v); }); }); } catch(e){ mat = null; }
   return (L.geo = {key, fx: g[0], fy: g[1], hp: Math.abs(g[1] - t[1]), box: [x0, y0, x1, y1 + 6], floor, mat});
+}
+// BLD 1078: the room over the figure's head. The chips along the top of the stage (top edge in its top fifth, shorter than a
+// third of it) that sit over the figure's column set the top margin (L.mT); the scale (1, or less when the loop is taller
+// than the room between that margin and the floor margin, never under .7) draws the whole body in that room.
+function figFit(G, W, H, m){
+  let top = m; const b = G.box;
+  try { const r = L.el.getBoundingClientRect(), x0 = Math.max(0, W / 2 - (b[2] - b[0]) / 2 - 6), x1 = Math.min(W, W / 2 + (b[2] - b[0]) / 2 + 6);
+    if (L.box) L.box.querySelectorAll('.ggs-break, .ggs-hud, .ggs-ftip, .ggs-wt, .ggs-side:not([hidden]), .ggs-prog').forEach(e => { const q = e.getBoundingClientRect(); if (!q.width || !q.height) return;
+      const t = q.top - r.top, l = q.left - r.left; if (t > H * .2 || q.height > H * .34 || l > x1 || l + q.width < x0) return; top = Math.max(top, t + q.height + 6); }); } catch(e){}
+  L.mT = top; const tall = b[3] - b[1], room = H - top - m;
+  return tall > room && tall > 0 ? Math.max(.7, room / tall) : 1;
 }
 function placeArt(){
   const img = L.artImg, a = L.art; if (!img || !a || !L.box) return;
@@ -359,13 +372,19 @@ function placeArt(){
   L.el.classList.toggle('g3-study', study);
   let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W * .45, fy: H * .835, hp: H * .72, box: [W * .3, H * .12, W * .6, H * .84], floor: []}; }
   const cover = Math.max(W / iw, H / ih) * ih * 1.02, fl = a.floor != null ? a.floor : .8, fo = (a.focal || [.5])[0];
-  let ph = study || !(a.scale > 0) ? cover * (study ? 1.06 : 1.12) : Math.max(cover, G.hp / a.scale), pw = ph * iw / ih;
+  // BLD 1078 (Chris, November 27, 2026, on the iPad: the step-up's head hid behind the Break sign and the cue cards): the
+  // whole body always shows. The top margin clears the chips along the top of the stage that sit over the figure's column
+  // (the Break sign, the Form card, the count), and a move whose loop is taller than the room left (a figure standing on a
+  // step or box) is drawn a little smaller, scaled about its feet, so the head and the feet both stay in view.
+  const m = 8, s = figFit(G, W, H, m), hp = G.hp * s, f0 = G.fx, f1 = G.fy, sc = (v, o) => o + (v - o) * s;
+  const b = [sc(G.box[0], f0), sc(G.box[1], f1), sc(G.box[2], f0), sc(G.box[3], f1)], mT = L.mT;
+  let ph = study || !(a.scale > 0) ? cover * (study ? 1.06 : 1.12) : Math.max(cover, hp / a.scale), pw = ph * iw / ih;
   let ox, oy, dx = 0, dy = 0;
+  const lim = (v, lo, hi) => lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
   if (!study){
     // BLD 900 (Chris: "on cardio videos he is often standing to the side.. how come he is not standing in the center?"): the
     // figure always stands in the middle of the stage (its move's box centered across). The painting slides so its focal
     // point sits under the figure; when it cannot slide far enough and still cover the stage, it grows a little instead.
-    const b = G.box, m = 8, lim = (v, lo, hi) => lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
     dx = lim(W / 2 - (b[0] + b[2]) / 2, m - b[0], W - m - b[2]);
     const fx = G.fx + dx, k = Math.max(1, fx / (fo * pw || 1e-6), (W - fx) / ((1 - fo) * pw || 1e-6));
     L.pw0 = pw; L.fxs = fx / W;
@@ -373,21 +392,24 @@ function placeArt(){
     ox = fx - fo * pw;
     // Up and down as before: the painting's floor line meets the feet; what the painting cannot do, the figure does.
     oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph));
-    dy = lim(oy + fl * ph - G.fy, m - b[1], H - m - b[3]);
+    dy = lim(oy + fl * ph - G.fy, mT - b[1], H - m - b[3]);
     oy = G.fy + dy - fl * ph;
     L.grow = k;
-  } else { ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)); oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; L.grow = 1; }
+  } else { dy = lim(0, mT - b[1], H - m - b[3]); ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)); oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy + dy - Math.min(26, H * .07)) + 'px'; L.grow = 1; }
   const st = L.paint.style; st.backgroundSize = `${pw.toFixed(0)}px ${ph.toFixed(0)}px`; st.backgroundPosition = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`;
-  const tf = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`; L.cv.style.transform = tf + (L.mir ? ' scaleX(-1)' : ''); L.gc.style.transform = tf;
+  // Scaled about the feet: the canvas scales about its center, so the shift carries the difference.
+  const tx = dx + (1 - s) * (G.fx - W / 2), ty = dy + (1 - s) * (G.fy - H / 2);
+  const tf = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px)` + (s < 1 ? ` scale(${s.toFixed(3)})` : ''); L.tf = tf; L.cv.style.transform = tf + (L.mir ? ' scaleX(-1)' : ''); L.gc.style.transform = tf;
   // BLD 985: a soft contact shadow on the painting's floor under the figure (as wide as the move's points on the floor), so the
   // figure sits in the painting.
-  if (L.shade){ const fx = G.floor.length ? G.floor.map(q => q[0]) : [G.fx], lo = Math.min(G.fx, ...fx), hi = Math.max(G.fx, ...fx), w = Math.max(G.hp * .42, hi - lo + G.hp * .22);
-    const ss = L.shade.style; ss.left = ((lo + hi) / 2 + dx - w / 2).toFixed(0) + 'px'; ss.top = (G.fy + dy - G.hp * .045).toFixed(0) + 'px'; ss.width = w.toFixed(0) + 'px'; ss.height = (G.hp * .09).toFixed(0) + 'px'; }
+  if (L.shade){ const fx = G.floor.length ? G.floor.map(q => q[0]) : [G.fx], lo = Math.min(G.fx, ...fx), hi = Math.max(G.fx, ...fx), w = Math.max(hp * .42, (hi - lo) * s + hp * .22);
+    const ss = L.shade.style; ss.left = ((sc(lo, f0) + sc(hi, f0)) / 2 + dx - w / 2).toFixed(0) + 'px'; ss.top = (G.fy + dy - hp * .045).toFixed(0) + 'px'; ss.width = w.toFixed(0) + 'px'; ss.height = (hp * .09).toFixed(0) + 'px'; }
   // For the room check (tests): the painting's box, the figure's move box, and its floor points, in painting units (0 to 1).
-  const P = (x, y) => [(x + dx - ox) / pw, (y + dy - oy) / ph];
-  L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: G.hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
+  const P = (x, y) => [(sc(x, f0) + dx - ox) / pw, (sc(y, f1) + dy - oy) / ph];
+  L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
     box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy),
-    mat: G.mat ? G.mat.map(p => P(p[0], p[1])) : null, cx: ((G.box[0] + G.box[2]) / 2 + dx) / W, grow: L.grow || 1, vw: W / (L.pw0 || pw), fxs: L.fxs || .5};
+    mat: G.mat ? G.mat.map(p => P(p[0], p[1])) : null, cx: ((b[0] + b[2]) / 2 + dx) / W, grow: L.grow || 1, vw: W / (L.pw0 || pw), fxs: L.fxs || .5,
+    fig: s, top: mT, px: [b[0] + dx, b[1] + dy, b[2] + dx, b[3] + dy], W, H, hp, fy: G.fy + dy};
 }
 
 // ---------- each frame ----------

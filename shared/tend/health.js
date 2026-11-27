@@ -2197,7 +2197,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c207';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=c231';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 // BLD 979 (Chris, November 11, 2026: "Arm circles: turn over the hand on the second half"): after Now the other way, the
 // arm circles figure circles backward with the palms turned up.
@@ -2302,27 +2302,50 @@ function trans(o, state){ const st = o && o.steps ? o.steps[o.i] : null, c = stC
 // Dumbbells come in 5 lb steps only (Chris, BLD 915 and November 6, 2026: no 3, 8, or 12 lb recommendations).
 const DB_STEPS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
 const W_ADJ = [-5, 0, 5, 10, 15];
+// BLD 1078 (Chris, November 27, 2026, Week 5: "10 lb each hand" on a squat where the figure held one dumbbell at the chest,
+// "20 lb each hand" on a deadlift where it held one dumbbell): the chip says what the move holds, read from the move's own
+// words (its load line, then its how, then its steps; never its Easier or Harder line), the same words the figure is held
+// to (patches/bld1078/audit checks every weighted move: the words, the 3D figure's props, and the chip agree). A pair reads
+// "10 lb each hand"; one dumbbell reads "25 lb dumbbell" (one kettlebell, "20 lb kettlebell"). Each row's share is the weight
+// of one dumbbell held the row's usual way (2: a pair, one in each hand; 1: one in one hand; 'b': one held in both hands, at
+// the chest, overhead, or resting on the hips); when the words hold it another way the share follows (one dumbbell in both
+// hands is about two of a pair, a pair is about half of one held in both hands). A machine or cable move holds no dumbbell,
+// so it shows Your Choice, and a band move holds none either.
 const W_SHARE = [
-  [/swing/i, .14, 1], [/squat to press|thruster/i, .07, 2], [/push press/i, .09, 2], [/goblet/i, .17, 1],
+  [/swing/i, .14, 1], [/squat to press|thruster/i, .07, 2], [/push press/i, .09, 2], [/goblet/i, .17, 'b'],
   [/(lateral|front|y.?t|rear|delt|scaption)\b.*raise|reverse fly|\bfly\b/i, .03, 2, 1],
   [/one.?arm.*press|half.?kneeling.*press|single.?arm.*press/i, .1, 1], [/incline.*press/i, .12, 2], [/(bench|floor|chest) press/i, .13, 2],
-  [/(shoulder|overhead|arnold|seated) press|\bpress\b/i, .08, 2], [/triceps|skull/i, .1, 1], [/curl/i, .1, 2],
+  [/(shoulder|overhead|arnold|seated) press|\bpress\b/i, .08, 2], [/triceps|skull/i, .1, 'b'], [/curl/i, .1, 2],
   [/chest.?supported|bent.?over|renegade|reverse grip row|two.?arm row/i, .1, 2], [/row/i, .15, 1],
-  [/single.?leg.*deadlift|one.?leg.*deadlift/i, .12, 1], [/deadlift|\brdl\b/i, .13, 2], [/hip thrust|glute bridge/i, .2, 1],
-  [/farmer|front rack/i, .17, 2], [/suitcase|carry|march/i, .2, 1], [/split squat|lunge|step.?up/i, .08, 2], [/calf|heel raise/i, .1, 2],
-  [/chop|halo|pull.?through|pullover/i, .07, 1], [/squat/i, .08, 2]];
+  [/kickstand|staggered/i, .1, 2], [/single.?leg.*deadlift|one.?leg.*deadlift/i, .1, 1], [/deadlift|\brdl\b/i, .13, 2], [/hip thrust|glute bridge/i, .2, 'b'],
+  [/overhead carry|waiter/i, .1, 1], [/farmer|front rack/i, .17, 2], [/suitcase|carry|march/i, .2, 1], [/split squat|lunge|step.?up/i, .08, 2], [/calf|heel raise/i, .1, 2],
+  [/chop|halo|pull.?through|pullover/i, .07, 'b'], [/squat/i, .08, 2]];
 const W_LEVEL = {root: .8, rise: 1, thrive: 1.15};
 const snapDB = v => DB_STEPS.reduce((b, x) => Math.abs(x - v) < Math.abs(b - v) ? x : b, DB_STEPS[0]);
 function bodyW(){ const h = H(); if (!h || TEEN()) return 0; const b = +h.set.bw; if (b > 0) return b;
   const m = marks().filter(x => +x.weight > 0); return m.length ? +m[m.length - 1].weight : 0; }
 const wAdj = () => { const a = +((H() || {}).set || {}).wadj || 0; return W_ADJ.includes(a) ? a : 0; };
-const recOK = st => wtMove(st);
+const MACHINE = /\b(machine|cable|leg press|lat pull ?down|sled|smith)\b/i;
+const recOK = st => wtMove(st) && !MACHINE.test([st.name, st.load, st.equip, st.how].join(' '));
+// What the move holds, from its words: {n: 2} a pair, {n: 1, both} one weight (both: held in both hands or resting on the
+// body), {kb} a kettlebell; null when the words name no dumbbell or kettlebell at all.
+const PAIR_RE = /\b(dumbbells|kettlebells)\b|\beach hand\b|\bpair\b|\b(a|one) (dumbbell|weight) (in|at|on) each\b|\bdumbbell (in|at|on) each\b/i;
+const ONE_RE = /\b(one|a|the|single) ((light|heavy|heavier|lighter|moderate) )?(dumbbell|kettlebell)\b/i;
+const BOTH_RE = /both hands|at (your|the) chest|chest height.*both|hip crease|across (your|the) hips|on (your|the) hips|overhead with both|goblet|cupping/i;
+function holdOf(st){ const kb = /kettlebell/i.test([st.name, st.load, st.how].join(' ')) && !/dumbbell/i.test([st.name, st.load, st.how].join(' '));
+  for (const t of [st.load || '', st.how || '', arr(st.steps).join(' ')]){
+    if (BODY_LOAD.test(t) && t === st.load) continue;
+    if (PAIR_RE.test(t) && !/\bone (dumbbell|kettlebell)\b/i.test(t)) return {n: 2, kb};
+    if (ONE_RE.test(t)) return {n: 1, both: BOTH_RE.test([st.name, st.load, st.how].concat(arr(st.steps)).join(' ')) || /swing/i.test(st.name) && !/one.?arm|single.?arm/i.test(st.name), kb}; }
+  return null; }
 // {lb, each, line} or null: the recommended weight for a move, with the adjustment applied.
 function recW(st, bw, adj){ if (!st || st.t !== 'ex' || !recOK(st)) return null; bw = bw == null ? bodyW() : bw; if (!(bw > 0)) return null;
   const nm = st.name + ' ' + (st.how || ''), row = W_SHARE.find(r => r[0].test(st.name)) || W_SHARE.find(r => r[0].test(nm)) || [null, .07, 2];
-  const lv = PUB() ? W_LEVEL[(H().set || {}).level] || 1 : 1, a = adj == null ? wAdj() : adj, base = snapDB(bw * row[1] * lv);
-  const lb = Math.max(DB_STEPS[0], snapDB(base + (row[3] ? a / 2 : a))), each = row[2] === 2 && !/\bone (dumbbell|kettlebell)\b/i.test(st.load || '');
-  return {lb, each, line: lb + ' lb' + (each ? ' each hand' : '')}; }
+  const hd = holdOf(st) || {n: row[2] === 2 ? 2 : 1, both: row[2] === 'b', kb: /kettlebell/i.test(st.name + ' ' + (st.load || ''))}, was = row[2], now = hd.n === 2 ? 2 : hd.both ? 'b' : 1;
+  const k = was === now ? 1 : was === 2 && now === 'b' ? 2 : was === 'b' && now === 2 ? .5 : 1;
+  const lv = PUB() ? W_LEVEL[(H().set || {}).level] || 1 : 1, a = adj == null ? wAdj() : adj, base = snapDB(bw * row[1] * k * lv);
+  const lb = Math.max(DB_STEPS[0], snapDB(base + (row[3] ? a / 2 : a))), each = hd.n === 2;
+  return {lb, each, n: hd.n, line: lb + ' lb ' + (each ? 'each hand' : hd.kb ? 'kettlebell' : 'dumbbell')}; }
 // What the screen shows for a move's weight: the recommendation; else the Founder's starting suggestion; else the library's line.
 function weightTip(st){ if (!st || st.t !== 'ex') return '';
   const r = recW(st); if (r) return r.line;
