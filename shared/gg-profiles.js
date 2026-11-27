@@ -2149,17 +2149,35 @@
   function mvGet() { try { var j = JSON.parse(localStorage.getItem(MV)); return j && j.v === 1 ? j : null; } catch (e) { return null; } }
   function mvPut(j) { try { if (j) localStorage.setItem(MV, JSON.stringify(j)); else localStorage.removeItem(MV); } catch (e) {} }
   function mvRow(id, o) { var j = mvGet() || { v: 1, at: Date.now(), rows: {} }; j.rows[id] = Object.assign(j.rows[id] || {}, o, { t: Date.now() }); mvPut(j); return j.rows[id]; }
-  function oldIds() { var out = []; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(OLDK) === 0) out.push(k.slice(OLDK.length)); } } catch (e) {} return out; }
-  function oldGet(id) { try { return JSON.parse(localStorage.getItem(OLDK + id)); } catch (e) { return null; } }
-  // The tree as it is now, header and locked box, kept here for 30 days (the first copy wins: a second move keeps the oldest)
+  // The set aside copies live in this device's larger store (IndexedDB, gg-aside), held in memory once loaded, so a family
+  // computer whose small store is nearly full can still move and remove its trees (BLD 1075 fix: "This device is full").
+  // Copies made before the fix stay readable where they were.
+  var ASIDE = {}, ASIDE_DB = null;
+  function asideDb() {
+    if (!ASIDE_DB) ASIDE_DB = new Promise(function (res, rej) { try { var r = indexedDB.open('gg-aside', 1); r.onupgradeneeded = function () { r.result.createObjectStore('old'); }; r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; } catch (e) { rej(e); } });
+    return ASIDE_DB;
+  }
+  function asideTx(mode, fn) { return asideDb().then(function (db) { return new Promise(function (res, rej) { var t = db.transaction('old', mode), st = t.objectStore('old'), out = fn(st); t.oncomplete = function () { res(out && 'result' in out ? out.result : undefined); }; t.onerror = t.onabort = function () { rej(t.error); }; }); }); }
+  function asideLoad() {
+    return asideTx('readonly', function (st) { var keys = st.getAllKeys(), vals = st.getAll(); return { get result() { var o = {}; (keys.result || []).forEach(function (k, i) { o[k] = vals.result[i]; }); return o; } }; })
+      .then(function (o) { Object.keys(o || {}).forEach(function (k) { if (o[k]) ASIDE[k] = o[k]; }); }).catch(function () {});
+  }
+  function asideDrop(id) { delete ASIDE[id]; try { localStorage.removeItem(OLDK + id); } catch (e) {} return asideTx('readwrite', function (st) { st.delete(id); }).catch(function () {}); }
+  function oldIds() { var out = Object.keys(ASIDE); try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(OLDK) === 0 && out.indexOf(k.slice(OLDK.length)) < 0) out.push(k.slice(OLDK.length)); } } catch (e) {} return out; }
+  function oldGet(id) { if (ASIDE[id]) return ASIDE[id]; try { return JSON.parse(localStorage.getItem(OLDK + id)); } catch (e) { return null; } }
+  // The tree as it is now, header and locked box, kept here for 30 days (the first copy wins: a second move keeps the oldest).
+  // Resolves once the copy is safely stored; nothing moves or goes before that.
   function setAside(id) {
-    var p = getP(id); if (!p) return false;
-    if (!oldGet(id)) { try { localStorage.setItem(OLDK + id, JSON.stringify({ p: p, box: localStorage.getItem(BOX + id), at: Date.now() })); } catch (e) { throw new Error('This device is full. Save a backup first, then try again.'); } }
-    return true;
+    var p = getP(id); if (!p) return Promise.resolve(false);
+    if (oldGet(id)) return Promise.resolve(true);
+    var rec = { p: snap(p), box: localStorage.getItem(BOX + id), at: Date.now() };
+    return asideTx('readwrite', function (st) { st.put(rec, id); }).then(function () { ASIDE[id] = rec; return true; }, function () {
+      try { localStorage.setItem(OLDK + id, JSON.stringify(rec)); return true; } catch (e) { throw new Error('This device is full. Save a backup first, then try again.'); }
+    });
   }
   function mvSweep() {
     var now = Date.now();
-    oldIds().forEach(function (id) { var o = oldGet(id); if (!o || now - (+o.at || 0) > MV_DAYS) { try { localStorage.removeItem(OLDK + id); } catch (e) {} } });
+    oldIds().forEach(function (id) { var o = oldGet(id); if (!o || now - (+o.at || 0) > MV_DAYS) asideDrop(id); });
     var j = mvGet(); if (j && now - (+j.at || 0) > MV_SHOW && !oldIds().length) mvPut(null);
   }
   // Undo the Move: every tree set aside comes back exactly as it was on this device (accounts already made stay, and each
@@ -2172,7 +2190,8 @@
         var o = oldGet(id); if (!o || !o.p || o.p.id !== id) return;
         if (open[id]) { delete open[id]; if (cur && cur.id === id) cur = null; }
         var l = readList().filter(function (q) { return q.id !== id; }); l.push(o.p); writeList(l);
-        try { if (o.box) localStorage.setItem(BOX + id, o.box); localStorage.removeItem(OLDK + id); } catch (e) {}
+        try { if (o.box) localStorage.setItem(BOX + id, o.box); } catch (e) {}
+        asideDrop(id);
         ['p:', 'pine:'].forEach(function (k) { if (AC.reg[k + id]) { delete AC.reg[k + id]; GGSync.drop(k + id); } });
         back++;
       });
@@ -2222,8 +2241,7 @@
   function mvRemove(id, typed) {
     var p = getP(id); if (!p) return Promise.resolve(false);
     if (String(typed || '').trim().toLowerCase() !== String(p.name).trim().toLowerCase()) return Promise.reject(new Error('Type the tree\'s name to remove it.'));
-    setAside(id); mvRow(id, { kind: 'remove', step: 'tidied' });
-    return removeProfile(id).then(function () { return true; });
+    return setAside(id).then(function () { mvRow(id, { kind: 'remove', step: 'tidied' }); return removeProfile(id); }).then(function () { return true; });
   }
   // Bring Its Check-ins Into My Tree: from the other tree come its check-ins, Tending, Living Sober, and the rest of what it
   // saved, joined by date and id (the newest whole record where both hold the same one), never doubled; this tree's own
@@ -2232,9 +2250,12 @@
   function mvMerge(intoId, fromId, fromPass) {
     if (!open[intoId]) return Promise.reject(new Error('Open your own tree first.'));
     var m3 = GGSync._.merge3;
-    return rawOf(fromId, fromPass).then(function (raw) { return readVault(fromId, raw); }).then(function (other) {
+    var other;
+    return rawOf(fromId, fromPass).then(function (raw) { return readVault(fromId, raw); }).then(function (o) {
+      other = o; return setAside(fromId).then(function () { return setAside(intoId); });
+    }).then(function () {
       var mine = open[intoId].data, before = snap(mine);
-      setAside(fromId); setAside(intoId); mvRow(fromId, { kind: 'merge', into: intoId, step: 'copied' });
+      mvRow(fromId, { kind: 'merge', into: intoId, step: 'copied' });
       Object.keys(other).forEach(function (k) {
         if (MERGE_SKIP[k]) return;
         if (k === 'home') { var oh = other.home || {}; if (oh.checkins) { mine.home = mine.home || {}; mine.home.checkins = m3(undefined, mine.home.checkins, oh.checkins, 2, 1); } return; }
@@ -2258,7 +2279,9 @@
     var band = p.age === 'pine' ? 'teen' : 'adult', raw, orig, made;
     if (o.agree === false) return Promise.reject(new Error('Check the box to agree to the Terms of Use and the Privacy Policy.'));
     return rawOf(id, o.pass).then(function (r) { raw = r; return readVault(id, raw); }).then(function (v) {
-      orig = snap(v); setAside(id); mvRow(id, { kind: band, step: 'plan' });
+      orig = snap(v); return setAside(id);
+    }).then(function () {
+      mvRow(id, { kind: band, step: 'plan' });
       return houseFirst();
     }).then(function () {
       return GGAccount.makeFor({ band: band, email: o.email, name: o.name, password: o.password });
@@ -2316,8 +2339,7 @@
     var p = getP(id); if (!p || !(p.age === 'maple' || p.age === 'aspen')) return Promise.reject(new Error('That tree is not on this device.'));
     if (!open[id]) return Promise.reject(new Error('Open your own tree first, so ' + p.name + '\'s tree opens with your key.'));
     var raw = open[id].raw, orig = snap(open[id].data), made;
-    setAside(id); mvRow(id, { kind: 'kid', step: 'plan' });
-    return houseFirst().then(function () {
+    return setAside(id).then(function () { mvRow(id, { kind: 'kid', step: 'plan' }); return houseFirst(); }).then(function () {
       return GGAccount.makeFor({ band: 'kid', name: o.name, password: o.password });
     }).then(function (r) {
       made = r; mvRow(id, { step: 'made', to: r.accountId });
@@ -2579,7 +2601,7 @@
       AC.on = true;
       GGAccount.on(acctEvent);
       if (GGAccount.onKeys) GGAccount.onKeys(acctKeys);   // BLD 1047
-      return GGAccount.ready.then(function () { carryLoad(); AC.booted = true; try { mvSweep(); } catch (e) {} acctReg(); if (acIn()) GGSync.sync().catch(function () {}); return true; });
+      return GGAccount.ready.then(asideLoad).then(function () { carryLoad(); AC.booted = true; try { mvSweep(); } catch (e) {} acctReg(); if (acIn()) GGSync.sync().catch(function () {}); return true; });
     }).catch(function () { return false; });
   }
   AC.ready = acctBoot();
