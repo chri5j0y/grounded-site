@@ -505,7 +505,8 @@
   }
   function progOpen() { return !!progLib(); }
   function wLib(w) {
-    var own = w && w.lib && !(w.kitLib && !w.movedOnce && isYoung(S.p)) ? w.lib : null;
+    // BLD 1075 (Chris: teens follow the family meals): a teen plays the recipes taken from the Household kitchen; a kid's food stays with the grown-up
+    var own = w && w.lib && !(w.kitLib && !w.movedOnce && isKid(S.p)) ? w.lib : null;
     if (own || (w && w.prog)) { var p = progLib(); if (p) return p; }
     return own;
   }
@@ -3403,7 +3404,7 @@
       check: Object.assign({}, obj(s.check)), cleared: !!s.cleared,
       med: WP_MED[s.medFreq] ? s.medFreq : 'daily', medTime: /^(morning|afternoon|evening)$/.test(s.medTime || '') ? s.medTime : 'morning',
       spirit: w.spirit ? Object.assign({}, w.spirit) : wpSpirit0(h, trees),
-      food: suTeen() || (info.done && arr(info.use).indexOf('food') < 0) ? 'later' : 'yes', household: n > 0 && n < 30 ? Math.round(n) : 2,
+      food: suTeenSolo() || (info.done && arr(info.use).indexOf('food') < 0) ? 'later' : 'yes', household: n > 0 && n < 30 ? Math.round(n) : 2,
       prac: null, prac0: null, light: !!w.light
     }); }
   /* BLD 1037 (the teen test run, B5): with no plan saved yet, the Roots step starts from what setup chose (Three Good Things is
@@ -3630,7 +3631,7 @@
     if (i === 0) {
       b = wpK('Grow') + wpH('Build one plan for your whole self') + '<p class="hm-wp-lead">Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes, and every choice can change anytime.</p>' +
         '<div class="hm-wp-card">' + wpK('What you will choose', 'leaves') + '<div style="margin-top:6px"></div>' + wpRow('move', plabel('leaves'), wpStart() ? 'Flow, Yoga, Balance, Stretch, and the Gentle sessions' : 'Strength, Cardio, Flow, Yoga, Balance, Stretch') + wpRow('bark', plabel('bark'), 'Meditation, how often and when') +
-        wpRow('roots', plabel('roots'), 'Gratitude, kindness, quiet, and more') + (suTeen() ? '' : wpRow('plate', 'Leaves: the Table', wpStart() ? 'Grounded Recipes and A Sample Week of Meals' : 'Weekly dinners and Sunday Together Prep')) + wpRow('leaves', 'Practices', 'A few for your Growing Edges') + '</div>' +
+        wpRow('roots', plabel('roots'), 'Gratitude, kindness, quiet, and more') + (suTeenSolo() ? '' : wpRow('plate', 'Leaves: the Table', wpStart() ? 'Grounded Recipes and A Sample Week of Meals' : 'Weekly dinners and Sunday Together Prep')) + wpRow('leaves', 'Practices', 'A few for your Growing Edges') + '</div>' +
         '<p class="hm-wp-lead sm">Everything stays inside your locked profile.</p>';
       f = wpBtn('next', 'Start My Plan');
     } else if (i === 1) {
@@ -3785,7 +3786,7 @@
   }
   function wpGo(i) {
     // BLD 1037 (the teen test run, C6): a teen's table is the grown-up's (BLD 929 M10), so Pine's plan passes Leaves: the Table.
-    if (i === 5 && suTeen()) i = WP.i > 5 ? 4 : 6;
+    if (i === 5 && suTeenSolo()) i = WP.i > 5 ? 4 : 6;
     WP.i = Math.max(0, Math.min(WP_SCREENS.length - 1, i)); paintPlan();
     var h = document.getElementById('hm-wp-h'); if (h) try { h.focus({ preventScroll: true }); } catch (e) {}
   }
@@ -4002,7 +4003,10 @@
   function suStart(tree, k) { return k === 'leaves' && tree === 'sequoia' ? 'Chair Stretch' : SU_START[k]; }
   // BLD 929 (M10): a teen's setup (Pine) leaves the table and meals to the grown-up at home, and shows no Membership lines.
   function suTeen() { return !!(S.p && S.p.age === 'pine'); }
-  function suFeats(k) { return SU_FEATS[k].filter(function (f) { return (!suKid() || f.kn) && !(suTeen() && f.id === 'food'); }); }
+  // BLD 1075 (Chris, November 27, 2026: Caleb is 16, Corban is 13, and teens follow the family meals): a teen in a Household with
+  // a Family Kitchen has Food, the table, and the week's dinners like the grown-ups; a teen on their own keeps the teen plan.
+  function suTeenSolo() { return suTeen() && !kitHousehold(); }
+  function suFeats(k) { return SU_FEATS[k].filter(function (f) { return (!suKid() || f.kn) && !(suTeenSolo() && f.id === 'food'); }); }
   function suLocked() { var h = obj(tendHost(S.id, S.tree)); if (h.plainLock === true) return true; try { return obj(obj(GGP.data(S.id))[S.tree]).plainLock === true; } catch (e) { return false; } }
   // BLD 927: the Faith or Plain choice in setup for every young tree (Maple, Aspen, and Pine), set by the grown-up.
   // BLD 929 (M6, Chris: "1"): every grown-up tree asks it too (Birch, Oak, Sequoia), the same choice Pine got.
@@ -4142,7 +4146,7 @@
         sub = '<div class="hm-wp-lbl">How often</div><div class="hm-wp-chips">' + [['daily', 'Every Day'], ['few', 'A Few Times a Week'], ['weekly', 'Once a Week']].map(function (o) { return suChip('set:med:freq:' + o[0], o[1], x.freq === o[0], 'bark'); }).join('') + '</div>' +
           '<div class="hm-wp-lbl" style="margin-top:10px">When</div><div class="hm-wp-chips">' + [['morning', 'Morning'], ['afternoon', 'Afternoon'], ['evening', 'Evening']].map(function (o) { return suChip('set:med:time:' + o[0], o[1], x.time === o[0], 'bark'); }).join('') + '</div>';
       } else if (f.id === 'food') {
-        sub = !suTeen() && kitHousehold() ? '<p class="hm-wp-small" style="margin:8px 0 0"><b>Your Household’s Family Kitchen</b> sets your table, dinners, holidays, and shopping list, the same as your family’s.</p>' + (kitWaiting() ? '<small class="hm-wp-small">' + esc(KIT_WAIT) + '</small>' : '') :   // BLD 1074
+        sub = kitHousehold() ? '<p class="hm-wp-small" style="margin:8px 0 0"><b>Your Household’s Family Kitchen</b> sets your table, dinners, holidays, and shopping list, the same as your family’s.</p>' + (kitWaiting() ? '<small class="hm-wp-small">' + esc(KIT_WAIT) + '</small>' : '') :   // BLD 1074
           '<div class="hm-wp-lbl">Around the table</div><div class="hm-wp-chips">' + [1, 2, 3, 4, 5, 6, 8].map(function (n) { return suChip('set:food:house:' + n, n + (n === 1 ? ' person' : ' people'), x.house === n, 'leaves'); }).join('') + '</div>' +
           '<small class="hm-wp-small">Food needs, allergies, and goals live in Tending Setup, ready whenever you like.</small>' +
           (!member() && !suTeen() ? '<div class="hm-wp-seedmv"><span class="hm-wp-chip hm-wp-seednut" aria-disabled="true">Grounded Nutrition <em class="hm-seedtag">Membership</em></span></div><small class="hm-wp-small">Grounded Nutrition is part of Membership: meal plans, Grounded Cooking in your plan, and one shopping list.</small>' : '');
@@ -4478,7 +4482,7 @@
       // (Chris and Kayti, November 9, 2026: the same kitchen, different dinners).
       var lsig = o.lib && o.lib.healthJourney ? kitHash(o.lib) : '';
       if (lsig && !homeRec().kitSawLib) { homeRec().kitSawLib = Date.now(); saveHome(); }
-      if (lsig && w && !kitLead(w) && !isYoung(S.p) && w.kitLibSig !== lsig) {
+      if (lsig && w && !kitLead(w) && !isKid(S.p) && w.kitLibSig !== lsig) {   // BLD 1075: teens take the kitchen's recipes too
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending();
       }
@@ -4489,7 +4493,7 @@
       if (!took && (o.c === cur || (hh.in === o.c && hh.out === cur && !hh.err))) return;
       var info = hasFn('kitchenInfo') ? hCall('kitchenInfo', o.c) : null;
       // BLD 957: the kitchen's recipes are ones this phone does not hold: take the library the kitchen carries.
-      if (!took && info && info.missing && o.lib && o.lib.healthJourney && w && !kitLead(w) && !isYoung(S.p)) {
+      if (!took && info && info.missing && o.lib && o.lib.healthJourney && w && !kitLead(w) && !isKid(S.p)) {
         w.lib = JSON.parse(JSON.stringify(o.lib)); w.moved = w.moved || Date.now(); w.tier = w.tier || 'guide'; w.kitLib = Date.now(); w.kitLibSig = lsig; took = true;
         S.tendInit = null; if (S.id) initTending(); info = hCall('kitchenInfo', o.c);
       }
