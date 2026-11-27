@@ -1508,7 +1508,9 @@
   function treeArt(tree, wide) { if (tree === 'willow') return wide ? '/shared/heroes/p/willow-hero2-wide.webp' : HERO + 'p/willow-hero2-card.webp'; /* BLD 971 */ if (tree === 'heartwood') return wide ? '/shared/heroes/p/heartwood-hero-wide.webp' : HERO + 'p/heartwood-card-sq.webp'; /* BLD 974: the couple under the two trees */ return HERO + (/^(oak|birch|sequoia|pine|maple|aspen|willow|grove)$/.test(tree) ? tree : 'oak') + (wide ? '-wide.webp' : '-phone.webp'); }
   function artFor(x) {
     var k = String(x.kind || '') + ' ' + String(x.hkey || x.key || '');
-    if (x.key === 'tree') return treeArt(S.tree);
+    // BLD 1076 (Chris: the evening check-in card "doesn't really match the rest of the cards on the today page"): the tree's
+    // check-in card wears a painting with people like every Today card (a kid's: a grown-up and a child checking in together).
+    if (x.key === 'tree') return S.p && isKid(S.p) ? PIMG + 'rep/gw-k-checkin.webp' : PIMG + 'site-sober-card-in-your-tree-sq.webp';
     // BLD 970: each kind of Today card has its own painting now.
     if (x.key === 'pray') return PIMG + 'sacred-pause-sq.webp';
     if (x.key === 'talk') return PIMG + 'tonights-question-sq.webp';
@@ -1675,7 +1677,7 @@
   }
   function tabHtml(tab) { return tab === 'week' ? weekHtml() + plannerWeekSlot() : tab === 'grow' ? growHtml() : tab === 'library' ? libraryHtml() : tab === 'checkin' ? checkinTabHtml() : tab === 'learn' ? learnTabHtml() : todayHtml(); }
   function afterTab(tab) {
-    if (tab === 'checkin') { paintRings(app()); return; }
+    if (tab === 'checkin') { paintRings(app()); gcDraw(); return; }
     if (tab === 'learn') { fillLearn(); return; }
     if (tab === 'today') { paintRings(app()); mileGlow(app()); fillAlso(); fillWords(); fillMantra(); }
     else if (tab === 'grow') { fillWords(); fillMantra(); paintRings(app()); mileGlow(app()); fillFruit(); }
@@ -2666,13 +2668,14 @@
     if (what === 'history') return t.href + (S.tree === 'birch' || S.tree === 'pine' ? '#progress' : '#season');
     return t.href;
   }
-  function treePic() { return '<picture class="hm-gpic" aria-hidden="true"><source media="(max-width:699px)" srcset="' + treeArt(S.tree) + '"><img src="' + treeArt(S.tree, true) + '" alt="" loading="lazy"></picture>'; }
+  /* BLD 1076 (Chris: "you just see the same image, top and bottom"): the Your Tree card no longer repeats the banner's tree
+     painting; the Check-in banner carries the tree, and the card leads with how each part is growing. */
   /* BLD 882: the pre-881 Home's tree card (the drawn tree with each part's level), restored on Grow. */
   function checkHref(t) { return t.href + (t.ck ? '#checkin' : ''); }
   function treeCardHtml(ck, ed, t) {
     if (!ck) {
       return '<article class="hm-card hm-p-leaves o2" id="hm-tree"><div class="hm-hd">' + pb(REP + 'checkin-tree-sq.webp') + '<div><div class="hm-k">Your Tree</div><div class="hm-sub">Your first check-in plants your tree here.</div></div></div>' +
-        treePic() + '<div class="hm-plant"><p class="hm-sub" style="max-width:40ch">Tend four, grow two. You tend ' + TEND4.map(function (k) { return esc(plabel(k)); }).join(', ') + ', and ' + GROW2.map(function (k) { return esc(plabel(k)); }).join(' and ') + ' grow from your tending. A check-in shows how each part is growing: Strong, Steady, or a Growing Edge.</p></div>' +
+        '<div class="hm-plant"><p class="hm-sub" style="max-width:40ch">Tend four, grow two. You tend ' + TEND4.map(function (k) { return esc(plabel(k)); }).join(', ') + ', and ' + GROW2.map(function (k) { return esc(plabel(k)); }).join(' and ') + ' grow from your tending. A check-in shows how each part is growing: Strong, Steady, or a Growing Edge.</p></div>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tree="checkin">' + I('check') + 'Begin My First Check-in</button></div></article>';
     }
     var lv = ed.lv, cnt = { strong: 0, steady: 0 }; PARTS.forEach(function (p) { if (cnt[lv[p.k]] != null) cnt[lv[p.k]]++; });
@@ -2683,7 +2686,7 @@
       : e2.length ? plabel(e2[0]) + ' is a Growing Edge this week. It grows as you tend all four parts.' : 'Every part is Steady or Strong. Keep tending what is working.';
     if (e4.length && e2.length) line += ' ' + e2.map(function (k) { return plabel(k); }).join(' and ') + ' grow' + (e2.length === 1 ? 's' : '') + ' from that tending.';
     return '<article class="hm-card hm-p-leaves o2" id="hm-tree"><div class="hm-hd">' + pb(REP + 'checkin-tree-sq.webp') + '<div><div class="hm-k">Your Tree</div><div class="hm-last">' + I('check') + 'Last check-in ' + esc(niceDay(ck.date)) + '</div></div></div>' +
-      treePic() + partsBars(ck, ed) + '<div class="hm-lvsum">' + sum + '</div><div class="hm-sub">' + esc(line) + '</div>' +
+      partsBars(ck, ed) + '<div class="hm-lvsum">' + sum + '</div><div class="hm-sub">' + esc(line) + '</div>' +
       '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tree="checkin">' + I('check') + 'Check In</button>' + ((TREES[S.tree] || {}).ck ? '<button type="button" class="hm-btn line hm-p-leaves" data-hm-tree="quick">' + I('clock') + 'Quick Check-in</button>' : '') + '</div>' +
       '<div class="hm-ckline"><span>' + I('check') + ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '</span><span>' + I('clock') + (ck.type === 'quick' ? 'Last one quick, about 2 minutes' : 'Full check-in, about 10 to 12 minutes') + '</span></div></article>';
   }
@@ -5295,18 +5298,120 @@
     else arr(obj(v[tree]).history).forEach(function (e) { if (e && e.scores && !e.from) out.push({ date: String(e.date || '').slice(0, 10), scores: e.scores, type: e.type === 'quick' ? 'quick' : 'full' }); });
     return out.filter(function (e) { return /^\d{4}-\d{2}-\d{2}$/.test(e.date); }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
   }
-  /* Trends: each part's check-in scores over time, a small line per part (Member). */
+  /* BLD 1076 (Chris, November 27, 2026: "create a nice chart to show the data points and the ups and downs of the different
+     parts ... As the data accumulates, it gets added to the chart"): Trends is a growth chart of every check-in, one small
+     panel for each part on one shared time line, each part in its own color. A full check-in is a filled dot and a quick one
+     an open dot; seasons shade the time line and each ring marks where a season ended. Tap or hover a check-in to see its
+     date and every score. Many check-ins scroll sideways inside the card (it opens on the newest), and the season buttons
+     show one season at a time. Under it, each part's change since the last check-in and since the season began, and the
+     numbers as a table. The card stays part of Membership (BLD 1076 decision: open it to everyone is a question for later). */
+  var GC = { s: 'all', sel: -1, rs: 0 };
+  function gcAll() {
+    var list = checkinsOf(S.id, S.tree), tend = tendOf(S.id, S.tree);
+    var rings = arr(tend.rings).filter(function (r) { return r && r.date; }).map(function (r) { return String(r.date).slice(0, 10); }).sort();
+    // A ring is added by the full check-in that ends a season, and that check-in begins the next season.
+    list.forEach(function (e) { e.season = 1 + rings.filter(function (d) { return d <= e.date; }).length; e.type = e.type || 'full'; });
+    var parts = PART_KEYS.filter(function (k) { return list.some(function (e) { return num(e.scores[k]) != null; }); });
+    return { list: list, rings: rings, parts: parts, seasons: list.length ? list[list.length - 1].season : 0 };
+  }
+  function gcWord(a, b) { return a == null || b == null ? '' : b - a >= 1 ? 'Growing' : a - b >= 1 ? 'Ready for tending' : 'Steady'; }
+  function gcChange(list, k, from) {
+    var pts = list.filter(function (e) { return num(e.scores[k]) != null; }); if (!pts.length) return null;
+    var last = pts[pts.length - 1], cur = pts.filter(function (e) { return e.season === last.season; });
+    var o = { last: num(last.scores[k]) };
+    if (pts.length > 1) { o.prev = num(pts[pts.length - 2].scores[k]); o.w1 = gcWord(o.prev, o.last); }
+    if (cur.length > 1) { o.first = num(cur[0].scores[k]); o.w2 = gcWord(o.first, o.last); o.season = last.season; }
+    return o;
+  }
   function trendsHtml() {
-    var list = checkinsOf(S.id, S.tree).slice(-12);
-    if (list.length < 2) return '<p class="hm-sub">Your trends draw a line for each part once you have two check-ins.</p>';
-    var W0 = 220, H0 = 46;
-    var rows = PART_KEYS.map(function (k) {
-      var pts = list.map(function (e, i) { var s = num(e.scores[k]); return s == null ? null : [Math.round(8 + i * (W0 - 16) / (list.length - 1)), Math.round(H0 - 6 - (s / 10) * (H0 - 12))]; }).filter(Boolean);
-      if (pts.length < 2) return '';
-      var first = num(list[0].scores[k]), last = num(list[list.length - 1].scores[k]), word = last - first >= 1 ? 'Growing' : first - last >= 1 ? 'Ready for tending' : 'Steady';
-      return '<li class="hm-trow" style="--c:var(--' + k + ')"><span class="tx"><b>' + esc(plabel(k)) + '</b><small>' + word + '</small></span><svg viewBox="0 0 ' + W0 + ' ' + H0 + '" role="img" aria-label="' + esc(plabel(k) + ': ' + word) + '"><polyline fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="' + pts.map(function (p) { return p.join(','); }).join(' ') + '"/>' + '<circle cx="' + pts[pts.length - 1][0] + '" cy="' + pts[pts.length - 1][1] + '" r="4" fill="currentColor"/></svg></li>';
+    var A = gcAll(), list = A.list;
+    if (list.length < 2) return '<p class="hm-sub">Your growth chart draws a line for each part once you have two check-ins. Every check-in after that joins the chart.</p>';
+    if (GC.s !== 'all' && !(+GC.s >= 1 && +GC.s <= A.seasons)) GC.s = 'all';
+    var chips = A.seasons > 1 ? '<div class="hm-lchips hm-gc-chips" role="group" aria-label="Choose a season"><button type="button" class="hm-lchip" data-hm-gcs="all" aria-pressed="' + (GC.s === 'all') + '">All Seasons</button>' +
+      Array.apply(null, Array(A.seasons)).map(function (_, i) { var s = String(i + 1); return '<button type="button" class="hm-lchip" data-hm-gcs="' + s + '" aria-pressed="' + (GC.s === s) + '">Season ' + s + '</button>'; }).join('') + '</div>' : '';
+    var names = A.parts.map(function (k) { var l = String(plabel(k)).split(': '); return '<div class="hm-gc-nm hm-p-' + k + '"><i aria-hidden="true"></i><b>' + esc(l[0]) + '</b><small>' + esc(l[1] || '') + '</small></div>'; }).join('');
+    var rows = A.parts.map(function (k) {
+      var c = gcChange(list, k), l = String(plabel(k)).split(': ')[0]; if (!c) return '';
+      var bits = [];
+      if (c.w1) bits.push('<span><em>Since your last check-in</em>' + esc(c.w1) + ', ' + c.prev + ' to ' + c.last + '</span>');
+      if (c.w2) bits.push('<span><em>Since Season ' + c.season + ' began</em>' + esc(c.w2) + ', ' + c.first + ' to ' + c.last + '</span>');
+      return '<li class="hm-p-' + k + '"><b><i aria-hidden="true"></i>' + esc(l) + ' <small>' + esc(LV[levelKey(c.last)][0]) + ', ' + c.last + ' of 10</small></b>' + bits.join('') + '</li>';
     }).join('');
-    return '<p class="hm-sub">' + list.length + ' check-ins, from ' + esc(niceDate(list[0].date)) + ' to ' + esc(niceDate(list[list.length - 1].date)) + '.</p><ul class="hm-trends">' + rows + '</ul>';
+    var tbl = '<details class="hm-gc-num"><summary>See the Numbers</summary><div class="hm-gc-tbl"><table><thead><tr><th scope="col">Check-in</th>' + A.parts.map(function (k) { return '<th scope="col">' + esc(String(plabel(k)).split(': ')[0]) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      list.slice().reverse().map(function (e) { return '<tr><th scope="row">' + esc(niceDate(e.date)) + '<small>' + (e.type === 'quick' ? 'Quick' : 'Full') + ', Season ' + e.season + '</small></th>' + A.parts.map(function (k) { var s = num(e.scores[k]); return '<td>' + (s == null ? '' : s) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div></details>';
+    return '<p class="hm-sub">' + list.length + ' check-ins from ' + esc(niceDate(list[0].date)) + ' to ' + esc(niceDate(list[list.length - 1].date)) + (A.seasons > 1 ? ', across ' + A.seasons + ' seasons' : '') + '. Each new check-in joins the chart.</p>' + chips +
+      '<div class="hm-gc" id="hm-gc"><div class="hm-gc-names" aria-hidden="true">' + names + '</div><div class="hm-gc-scroll" tabindex="0" role="group" aria-label="Growth chart. Use the arrow keys to move from one check-in to the next."><div class="hm-gc-svg"></div><div class="hm-gc-tip" role="status" hidden></div></div></div>' +
+      '<div class="hm-gc-key" aria-hidden="true"><span><i class="f"></i>Full check-in</span><span><i class="q"></i>Quick check-in</span><span><i class="r"></i>A ring, the end of a season</span><span><i class="l"></i>Lines at Steady (5) and Strong (8)</span></div><p class="hm-sub hm-gc-more" hidden>Slide the chart sideways to see every check-in.</p>' +
+      '<h4 class="hm-label">How Each Part Is Growing</h4><ul class="hm-gc-list">' + rows + '</ul>' + tbl;
+  }
+  var GC_TOP = 24, GC_PH = 68, GC_BOT = 26, GC_STEP = 46;
+  // Chicago's short month names, for the dates along the chart
+  var GC_MON = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+  function gcDate(s) { var d = parse(s); return d ? GC_MON[d.getMonth()] + ' ' + d.getDate() : ''; }
+  function gcDraw() {
+    var box = document.getElementById('hm-gc'); if (!box) return;
+    var A = gcAll(), list = A.list.filter(function (e) { return GC.s === 'all' || String(e.season) === GC.s; });
+    var sc = box.querySelector('.hm-gc-scroll'), host = box.querySelector('.hm-gc-svg'), tip = box.querySelector('.hm-gc-tip'); if (!sc || !host) return;
+    var n = list.length, avail = Math.max(120, sc.clientWidth), padL = 14, padR = 26;
+    var plotW = Math.max(avail - padL - padR, n > 1 ? (n - 1) * GC_STEP : 0), W = plotW + padL + padR, H = GC_TOP + A.parts.length * GC_PH + GC_BOT;
+    var X = function (i) { return n === 1 ? padL + plotW / 2 : padL + i * plotW / (n - 1); };
+    // One scale for every panel, from just under the lowest score to 10, so each rise and dip shows clearly.
+    var lo = 10; list.forEach(function (e) { A.parts.forEach(function (k) { var v = num(e.scores[k]); if (v != null && v < lo) lo = v; }); }); lo = Math.max(0, Math.min(4, Math.floor(lo) - 1));
+    var Y = function (p, s) { var t = GC_TOP + p * GC_PH; return t + 9 + (1 - (Math.max(lo, s) - lo) / (10 - lo)) * (GC_PH - 18); };
+    var o = [], mid = function (i) { return (X(i - 1) + X(i)) / 2; };
+    // seasons: a soft band for every other season, its name along the top, and a ring where a season ended
+    var runs = []; list.forEach(function (e, i) { var r = runs[runs.length - 1]; if (!r || r.s !== e.season) runs.push({ s: e.season, a: i, b: i }); else r.b = i; });
+    runs.forEach(function (r, j) {
+      var x0 = r.a ? mid(r.a) : 0, x1 = r.b < n - 1 ? mid(r.b + 1) : W;
+      if (r.s % 2 === 0) o.push('<rect class="band" x="' + x0 + '" y="0" width="' + (x1 - x0) + '" height="' + (H - GC_BOT + 4) + '"/>');
+      o.push('<text class="sea" x="' + (x0 + (r.a ? 16 : 6)) + '" y="16">Season ' + r.s + '</text>');
+      if (r.a) { o.push('<line class="sb" x1="' + x0 + '" x2="' + x0 + '" y1="20" y2="' + (H - GC_BOT + 4) + '"/>');
+        o.push('<g class="ring" transform="translate(' + x0 + ',12)"><title>Ring ' + (r.s - 1) + '</title><circle r="7"/><circle r="4"/><circle r="1.4"/></g>'); }
+    });
+    A.parts.forEach(function (k, p) {
+      var t = GC_TOP + p * GC_PH;
+      o.push('<g class="hm-p-' + k + '"><line class="gl" x1="0" x2="' + W + '" y1="' + Y(p, 8) + '" y2="' + Y(p, 8) + '"/><line class="gl" x1="0" x2="' + W + '" y1="' + Y(p, 5) + '" y2="' + Y(p, 5) + '"/>' + (p ? '<line class="pd" x1="0" x2="' + W + '" y1="' + t + '" y2="' + t + '"/>' : ''));
+      var pts = []; list.forEach(function (e, i) { var s = num(e.scores[k]); if (s != null) pts.push([X(i), Y(p, s), e.type, s, i]); });
+      if (pts.length > 1) o.push('<polyline class="ln" points="' + pts.map(function (q) { return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ') + '"/>');
+      pts.forEach(function (q) { o.push('<circle class="hm-gc-dot ' + (q[2] === 'quick' ? 'q' : 'f') + '" data-i="' + q[4] + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="' + (q[2] === 'quick' ? 4 : 4.5) + '"/>'); });
+      var lp = pts[pts.length - 1]; if (lp) o.push('<text class="end" x="' + (lp[0] + 9) + '" y="' + (lp[1] + 4) + '">' + lp[3] + '</text>');
+      o.push('</g>');
+    });
+    // dates along the bottom: the first, the last, each season's first, and others where they fit
+    var used = [], lab = function (i, force) { var x = X(i); if (!force && used.some(function (u) { return Math.abs(u - x) < 58; })) return; used.push(x); o.push('<text class="dt" x="' + x + '" y="' + (H - 8) + '" text-anchor="' + (i === 0 && n > 1 ? 'start' : i === n - 1 && n > 1 ? 'end' : 'middle') + '">' + esc(gcDate(list[i].date)) + '</text>'); };
+    if (n) { lab(n - 1, true); lab(0, true); runs.forEach(function (r) { lab(r.a); }); for (var i = 0; i < n; i++) lab(i); }
+    o.push('<line class="cx" x1="0" x2="0" y1="' + GC_TOP + '" y2="' + (H - GC_BOT) + '" visibility="hidden"/>');
+    for (var h = 0; h < n; h++) { var a = h ? mid(h) : 0, b = h < n - 1 ? mid(h + 1) : W; o.push('<rect class="hm-gc-hit" data-i="' + h + '" x="' + a + '" y="0" width="' + (b - a) + '" height="' + H + '"/>'); }
+    host.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' + o.join('') + '</svg>';
+    box.querySelector('.hm-gc-names').style.paddingTop = GC_TOP + 'px';
+    var show = function (i) {
+      GC.sel = i; var svg = host.querySelector('svg'), cx = svg.querySelector('.cx');
+      svg.querySelectorAll('.hm-gc-dot').forEach(function (d) { d.classList.toggle('on', +d.getAttribute('data-i') === i); });
+      if (i < 0 || i >= n) { cx.setAttribute('visibility', 'hidden'); tip.hidden = true; return; }
+      var e = list[i], x = X(i); cx.setAttribute('x1', x); cx.setAttribute('x2', x); cx.setAttribute('visibility', 'visible');
+      tip.innerHTML = '<b>' + esc(niceDay(e.date)) + '</b><small>' + (e.type === 'quick' ? 'Quick Check-in' : 'Full Check-in') + ', Season ' + e.season + '</small><ul>' + A.parts.map(function (k) { var s = num(e.scores[k]); return s == null ? '' : '<li class="hm-p-' + k + '"><i aria-hidden="true"></i>' + esc(String(plabel(k)).split(': ')[0]) + '<span>' + s + ', ' + esc(LV[levelKey(s)][0]) + '</span></li>'; }).join('') + '</ul>';
+      tip.hidden = false;
+      var tw = tip.offsetWidth, lo = sc.scrollLeft + 4, hi = sc.scrollLeft + sc.clientWidth - tw - 4, left = x + 14; if (left > hi) left = x - tw - 14; if (left < lo) left = Math.max(lo, Math.min(hi, x - tw / 2));
+      tip.style.left = left + 'px'; tip.style.top = (GC_TOP + 4) + 'px';
+      if (x < sc.scrollLeft + 10 || x > sc.scrollLeft + sc.clientWidth - 10) sc.scrollLeft = x - sc.clientWidth / 2;
+    };
+    host.querySelectorAll('.hm-gc-hit').forEach(function (r) {
+      var i = +r.getAttribute('data-i');
+      r.addEventListener('pointerenter', function (ev) { if (ev.pointerType === 'mouse') show(i); });
+      r.addEventListener('click', function () { show(i); });
+    });
+    host.onpointerleave = function (ev) { if (ev.pointerType === 'mouse') show(-1); };
+    sc.onkeydown = function (ev) {
+      var k = ev.key, i = GC.sel < 0 ? n : GC.sel;
+      if (k === 'ArrowLeft') i = Math.max(0, i - 1); else if (k === 'ArrowRight') i = Math.min(n - 1, GC.sel < 0 ? n - 1 : i + 1); else if (k === 'Home') i = 0; else if (k === 'End') i = n - 1; else if (k === 'Escape') i = -1; else return;
+      ev.preventDefault(); show(i);
+    };
+    sc.scrollLeft = sc.scrollWidth;
+    var more = box.parentNode.querySelector('.hm-gc-more'); if (more) more.hidden = !(sc.scrollWidth > sc.clientWidth + 2);
+    GC.sel = -1;
+    var card = box.parentNode; if (card && !card.__gc) { card.__gc = 1; card.addEventListener('click', function (ev) { var b = ev.target.closest && ev.target.closest('[data-hm-gcs]'); if (!b) return; GC.s = b.getAttribute('data-hm-gcs'); card.querySelectorAll('[data-hm-gcs]').forEach(function (c) { c.setAttribute('aria-pressed', String(c === b)); }); gcDraw(); }); }
+    GC.hide = function () { if (document.getElementById('hm-gc') === box) show(-1); };
+    if (!GC.rs) { GC.rs = 1; var tmo; document.addEventListener('click', function (ev) { if (GC.hide && !(ev.target.closest && ev.target.closest('.hm-gc'))) GC.hide(); }); window.addEventListener('resize', function () { clearTimeout(tmo); tmo = setTimeout(gcDraw, 150); }); }
   }
   /* Practice history: the days each of the four was tended, week by week, the last eight weeks (Member). */
   function historyHtml() {
@@ -6319,7 +6424,7 @@
   }
   function checkinTabHtml() {
     var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck);
-    var trends = member() ? '<article class="hm-card hm-gcard hm-p-bark hm-mcard" id="hm-trend"><div class="hm-hd">' + pb(PIMG + 'trends-card-sq.webp') + '<div><div class="hm-time">Membership</div><h3 class="hm-h3">Trends</h3></div></div>' + trendsHtml() + '</article>' : '';
+    var trends = member() ? '<article class="hm-card hm-gcard hm-p-bark hm-mcard hm-gccard" id="hm-trend"><div class="hm-hd">' + pb(PIMG + 'trends-card-sq.webp') + '<div><div class="hm-time">Membership</div><h3 class="hm-h3">Trends</h3></div></div>' + trendsHtml() + '</article>' : '';
     // BLD 929 (L11): on a wide screen the tree card spans the top, with the season (and Trends) side by side under it.
     return '<div class="hm-grow hm-cktab"><div class="hm-gcol hm-col">' + treeCardHtml(ck, ed, t) + '</div><div class="hm-gcol hm-col hm-ckside">' + seasonCardHtml() + trends +
       '<p class="hm-sub hm-cknote">The questions come from your ' + esc(t.n) + '. Every person on this device has a tree of their own, with questions made for their age.</p></div></div>';
