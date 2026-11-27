@@ -808,7 +808,7 @@
     if (o.who === 'me') S.view = { at: 'me', cid: '' }; else if (o.who) S.view = { at: 'person', cid: o.who }; else if (o.who === '') S.view = { at: 'home', cid: '' };
     invResume();
     paint();
-    if (!S.loaded || o.fresh) reload();
+    if ((!S.loaded && !S.bootP) || o.fresh) reload();
   }
   // Signing in or out, a list renewed elsewhere, and a sync that brought something new
   function hook() {
