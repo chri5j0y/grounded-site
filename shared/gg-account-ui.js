@@ -108,9 +108,15 @@
       var email = kid || val('ga-em');
       G().signUp({ email: email, password: val('ga-pw'), adult: !inv, invite: inv || undefined, oauth: o.oauth || undefined }).then(function (r) {
         return showWords(r.words).then(function () {
+          // BLD 1073 One Smooth Setup: with no grown-up profile open here, the page that hosts these sheets (The Grounded
+          // Way) carries straight on into the profile setup, and the Household joins along the way.
+          var made = { email: email, band: (G().info() || {}).band || '', kid: kid, invite: inv || '' };
+          var go = function () { if (!o.then && MADE && MADE(made)) { close(); MADE_ON = true; return true; } markSetup(); return false; };
           // A kid's account starts confirmed, so the invite joins the Household right away.
-          if (kid && inv) return G().household.join(inv).then(function () { joinWait(null); joinKid(null); var d = sheet('You Are In', 'Welcome to your family’s Household. Your tree opens on every device you sign in on.'); d.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>'; return d.p; }, function () { close(); });
-          if (o.then) return o.then();   // BLD 1017: Start Membership carries on to its choice
+          // The invite leaves the waiting spot first, so the page's own waiting join never tries the same invite at once.
+          if (kid && inv) { joinWait(null); return G().household.join(inv).then(function () { joinKid(null); made.joined = true; if (go()) return; var d = sheet('You Are In', 'Welcome to your family’s Household. Your tree opens on every device you sign in on.'); d.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">Done</button>'; return d.p; }, function (e) { if (!(e && /exists|expired|other/.test(e.why || ''))) joinWait(inv); if (!go()) close(); }); }
+          if (o.then) { markSetup(); return o.then(); }   // BLD 1017: Start Membership carries on to its choice
+          if (go()) return;
           V.welcome(email, !!o.oauth);
         });
       }).catch(fail(btn));
@@ -208,7 +214,11 @@
   V.confirm = function (o) {
     var c = sheet('Confirm Your Email', '');
     c.body.innerHTML = '<p class="ga-lead">Confirming…</p>';
-    G().confirm(o.token).then(function (r) { c.body.innerHTML = '<p class="ga-lead">' + (r && r.trial ? 'Your email is confirmed, and your 14 days of Membership are open. Every device you sign in on has the full Grounded Way.' : 'Your email is confirmed. Sign in on every device you use, and your tree comes along.') + '</p><button type="button" class="ga-btn big" data-ga="close">Done</button>'; }, function (e) { say(e.message); });
+    G().confirm(o.token).then(function (r) {
+      // BLD 1073: a profile setup waiting on this device carries straight on once the email is confirmed
+      if (o.then && cur === c && !(r && r.trial)) { close(); return o.then(r); }   // 14 days opening here keep their own words first
+      if (cur === c) c.w.classList.add('ga-calm');   // a Household invite waiting here joins without waiting for Done
+      c.body.innerHTML = '<p class="ga-lead">' + (r && r.trial ? 'Your email is confirmed, and your 14 days of Membership are open. Every device you sign in on has the full Grounded Way.' : 'Your email is confirmed. Sign in on every device you use, and your tree comes along.') + '</p><button type="button" class="ga-btn big" data-ga="close">Done</button>'; }, function (e) { say(e.message); });
     return c.p;
   };
   // BLD 957: an invite opened before the account exists or is confirmed waits on this device (gg-join-wait) and joins by
@@ -223,7 +233,9 @@
     if (o && o.token) joinWait(o.token);
     if (o && o.kid) joinKid(o.kid);
     // BLD 958: someone new opens their invite: Create My Account comes first (I Have an Account is one tap away).
-    if (G().state() === 'out') { var s = V.signup({ token: o && o.token, kid: o && o.kid }); return s.then(function () { if (G().state() !== 'out' && joinWaiting()) return V.join({ token: joinWaiting() }); }); }
+    if (G().state() === 'out') { MADE_ON = false; var s = V.signup({ token: o && o.token, kid: o && o.kid }); return s.then(function () { if (G().state() !== 'out' && joinWaiting() && !MADE_ON) return V.join({ token: joinWaiting() }); }); }
+    // BLD 1073: a waiting invite on a confirmed account joins at once, with no sheet (the host says so after)
+    if (o && o.auto) return G().household.join(o.token).then(function () { joinWait(null); joinKid(null); return { joined: true }; }, function (e) { if (e && /exists|expired|other/.test(e.why || '')) joinWait(null); return { joined: false, why: e && e.why || '' }; });
     var inf = G().info && G().info();
     if (inf && inf.confirmed === false) { var w = sheet('Join the Household', 'Your invite is saved on this device. Confirm your email from the message we sent, and you join the Household by yourself.'); w.body.innerHTML = '<button type="button" class="ga-btn big" data-ga="close">OK</button>'; return w.p; }
     var c = sheet('Join the Household', 'Each person keeps their own private account. The Family Kitchen, Grounded Money, and the Family Planner can be shared between you, and everything else stays yours alone.');
@@ -459,5 +471,18 @@
     if (!h) return null;
     return open(h.kind, Object.assign({ token: h.token, kid: h.kid || '' }, o || {}));
   }
-  window.GGAccountUI = { open: open, fromHash: fromHash, close: close, css: css, joinWaiting: joinWaiting };
+  // BLD 1073: GGAccountUI.onMade(fn): fn({email, band, kid, invite, joined}) runs after a new account's Root Words; when it
+  // answers true, the host carries on (its profile setup) in place of Your Account Is Ready.
+  var MADE = null, MADE_ON = false;
+  // Made on another page (Start Membership) or with a choice still to come: a small note on this device (the account id,
+  // the age band, the time) lets The Grounded Way carry straight on into the profile setup on the next visit.
+  function markSetup() {
+    try {
+      var a = window.GGP && GGP.active && GGP.active(), i = G().info();
+      if (!i || (a && a.age === 'adult' && GGP.isOpen && GGP.isOpen(a.id))) return;
+      localStorage.setItem('gg-setup-wait', JSON.stringify({ a: i.accountId, band: i.band || 'adult', at: Date.now() }));
+    } catch (e) {}
+  }
+  function onMade(fn) { MADE = typeof fn === 'function' ? fn : null; }
+  window.GGAccountUI = { open: open, fromHash: fromHash, close: close, css: css, joinWaiting: joinWaiting, joinKid: function () { return joinKid(); }, onMade: onMade };
 })();

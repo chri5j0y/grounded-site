@@ -20,7 +20,7 @@
      GGAccount.config({api, turnstile})   where the server is (default https://api.growwithgrounded.com/v1 on the site)
      GGAccount.ready                     promise, resolves once a saved sign in is loaded
      GGAccount.state()                   'out', 'in', or 'offline' (signed in here, server out of reach)
-     GGAccount.info()                    {accountId, email, confirmed} or null
+     GGAccount.info()                    {accountId, email, confirmed, band} or null (band: adult, teen, or kid, BLD 1073)
      GGAccount.on(fn)                    fn(type, detail): 'state', 'confirmed', 'erase', 'household'
      GGAccount.signUp({email, password, agree}) -> {words}  (show the 12 Root Words once)
      GGAccount.signIn({email, password})
@@ -244,7 +244,7 @@
   function emit(type, detail) { subs.slice().forEach(function (fn) { try { fn(type, detail); } catch (e) { console.error(e); } }); }
   function state() { return !A ? 'out' : net ? 'in' : 'offline'; }
   function setNet(v) { if (v !== net) { net = v; emit('state', state()); } }
-  function info() { return A ? { accountId: A.accountId, email: A.email, confirmed: !!A.confirmed } : null; }
+  function info() { return A ? { accountId: A.accountId, email: A.email, confirmed: !!A.confirmed, band: A.band || '' } : null; }   // BLD 1073: band (adult, teen, or kid), kept on this device only
   // signed out from somewhere else (Sign Out That Device, a new password, Delete My Account on another device)
   function lost() { if (!A) return; A = null; MB = null; kDel().then(function () { if (window.GGSync && GGSync.forget) return GGSync.forget(); }).then(function () { emit('state', 'out'); }); }
   function deviceTag() { try { var t = localStorage.getItem('gg-device-tag'); if (!t) { t = b64u(rand(18)); localStorage.setItem('gg-device-tag', t); } return t; } catch (e) { return ''; } }
@@ -262,7 +262,7 @@
         var jwk = JSON.parse(dec.decode(pj)); wipe(pj);
         return subtle.importKey('jwk', jwk, { name: 'ECDH', namedCurve: 'P-256' }, false, ['deriveBits']);
       }).then(function (priv) {
-        A = { v: 1, accountId: o.accountId, email: o.email, confirmed: !!o.confirmed, DK: k.DK, NK: k.NK, priv: priv, pub: o.pub, at: Date.now() };
+        A = { v: 1, accountId: o.accountId, email: o.email, confirmed: !!o.confirmed, band: o.band || '', DK: k.DK, NK: k.NK, priv: priv, pub: o.pub, at: Date.now() };
         return kPut(A);
       });
     }).then(function () { net = true; emit('state', 'in'); return info(); });
@@ -329,7 +329,7 @@
       var pub = { kty: 'EC', crv: 'P-256', x: j[1].x, y: j[1].y };
       return Promise.all([seal(P.lock, ak, AAD.pw(id)), seal(R.lock, ak, AAD.root(id)), seal(K.DK, enc.encode(JSON.stringify(j[0])), AAD.priv(id))]).then(function (b) {
         return api('POST', '/auth/signup', { accountId: id, email: email, pw_salt: b64u(pwSalt), proof: P.proof, pw_box: b64u(b[0]), root_salt: b64u(rootSalt), root_proof: R.proof, root_box: b64u(b[1]), pub: pub, priv_box: b64u(b[2]), device: dev(), terms_v: TERMS_V, privacy_v: PRIVACY_V, turnstile: o.turnstile, adult: o.invite ? undefined : o.adult !== false, invite: o.invite || undefined, oauth: o.oauth || undefined }).then(function (sr) {
-          return keep(ak, { accountId: id, email: email, confirmed: !!(sr && sr.confirmed), priv_box: b[2], pub: pub });
+          return keep(ak, { accountId: id, email: email, confirmed: !!(sr && sr.confirmed), band: sr && sr.band, priv_box: b[2], pub: pub });
         }).then(function () {
           var x = { password: pw, accountId: id, email: email, why: 'signup' };
           return (o.keyed ? Promise.resolve(o.keyed(ak, x)) : Promise.resolve()).then(function () { return runKeys(ak, x); });
@@ -375,6 +375,7 @@
   function resend(o) { return api('POST', '/email/resend', { turnstile: o && o.turnstile }); }
   function account() {
     return api('GET', '/account').then(function (r) {
+      if (A && r.band && r.band !== A.band) { A.band = r.band; if (r.confirmed === A.confirmed && r.email === A.email) kPut(A); }   // BLD 1073
       if (A && (r.confirmed !== A.confirmed || r.email !== A.email)) { A.confirmed = r.confirmed; A.email = r.email; kPut(A); if (r.confirmed) emit('confirmed', true); }
       if (A && 'member' in r) setMember(r.member);
       return r;

@@ -401,19 +401,21 @@
     var grownStep = Promise.resolve();
     // Willow: set up for someone you love, with the unlocked grown-up as their helper
     var helperOf = (!isMinor(o.age) && o.helperOf && cur && cur.id === o.helperOf && open[o.helperOf]) ? o.helperOf : null;
-    if (isMinor(o.age)) {
+    // BLD 1073: a teen's or kid's own profile in their own Grounded Account: the parent approved it with the Household invite
+    var ownMinor = !!(o.own && isMinor(o.age) && o.code === 'acct' && o.acct && o.acct.base);
+    if (isMinor(o.age) && !ownMinor) {
       if (!o.grownId) return Promise.reject(new Error('A grown-up needs to agree first.'));
       grown = getP(o.grownId);
       if (open[o.grownId] && cur && cur.id === o.grownId) grownStep = Promise.resolve(open[o.grownId]);
       else grownStep = rawFromPass(grown, o.grownPass).then(function (gr) { return readVault(grown.id, gr).then(function (gd) { return { raw: gr, data: gd }; }); });
     }
-    var acctOn = o.code === 'acct' && o.acct && o.acct.base && o.age === 'adult';
+    var acctOn = o.code === 'acct' && o.acct && o.acct.base && (o.age === 'adult' || ownMinor);
     return grownStep.then(function (g) {
       return wrapRaw(acctOn ? String(o.pass).normalize('NFKC') : o.pass, raw).then(function (w) {
         var p = {
           id: id, name: o.name, avatar: o.avatar || '', age: o.age, code: acctOn ? 'acct' : o.code === 'acct' ? 'text' : (o.code || 'text'),
           salt: w.salt, wrap: w.wrap, created: todayStr(),
-          agreed: { date: todayStr(), terms: TERMS_V, privacy: PRIVACY_V, by: grown ? 'grownup' : 'self', grownup: grown ? grown.name : '' },
+          agreed: { date: todayStr(), terms: TERMS_V, privacy: PRIVACY_V, by: grown ? 'grownup' : ownMinor ? 'household' : 'self', grownup: grown ? grown.name : '' },
           grown: grown ? [grown.id] : [], shared: {}, helpers: helperOf ? [helperOf] : []
         };
         if (o.age === 'adult' && (o.tree === 'sequoia' || o.tree === 'birch')) p.tree = o.tree;
@@ -670,6 +672,19 @@
       /* BLD 929 (M3): when Home already knows the stage of life (opt.fixed), the age question and the tree check boxes step
          aside for one quiet line naming the tree. */
       var fixAge = !!(opt.fixed && st.age), fixTree = fixAge && st.age === 'adult' && !!opt.tree;
+      /* BLD 1073 One Smooth Setup (opt.own): the profile for the Grounded Account just made on this device, straight after
+         its Root Words. The name and the tree come filled in (a teen or kid picks between their two trees), and the account
+         key held for a moment since the sign up locks it, so no password is typed again. The person agreed to the Terms
+         with the account (a teen's or kid's parent approved the Household invite), so no second agreement is asked. */
+      var own = !!(opt.own && acIn() && !other);
+      function ownHeld() { var i = GGAccount.info(), h = AC.made; return h && i && h.a === i.accountId && Date.now() < h.until ? h : null; }
+      function ownO() { return { name: st.name, avatar: st.avatar, age: st.age, pass: st.pass, code: 'text', hours: st.hours || 8, own: true, tree: st.age === 'adult' && st.band && BAND[st.band].indexOf(st.tree) >= 0 ? st.tree : 'oak' }; }
+      function ownGo(d) {
+        var h = ownHeld();
+        if (!h) return step2acct(d);   // the key went quiet (a reload, or a long pause): the password once, then the tree
+        st.acct = { mode: 'held', email: GGAccount.info().email }; st.pass = h.pw;
+        acctGo(d, ownO());
+      }
       dialog(function (d) { step1(d); }, function (r) { if (after) after.then(function () { resolve(true); }); else resolve(!!r); });
       function treeLine() {
         var w = st.age === 'adult' ? TREE[st.tree] || TREE.oak : AGE[st.age], who = String(w.who || '').replace(/^Built for /, '');
@@ -677,13 +692,14 @@
         return '<p class="ggp-small ggp-treeline">' + (other || st.age !== 'adult' ? 'Their tree: ' : 'Your tree: ') + esc(w.tool) + ', built for ' + esc(who) + '.' + (st.age === 'adult' ? ' Change it any time in Manage My Profile.' : '') + '</p>';
       }
       function step1(d) {
-        d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : 'Create a Grounded profile') + '</h2>' +
+        d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : own ? 'Your Profile' : 'Create a Grounded profile') + '</h2>' +
           (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode only you know.</p>') +
           '<label class="ggp-l" for="ggp-name">' + (other ? 'Their first name, or what you call them' : 'First name or a nickname') + '</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
-          (other || fixAge ? '' : '<label class="ggp-l">Who is this profile for?</label><div class="ggp-ages">' + AGES.map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + a.name + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
+          (other || fixAge ? '' : '<label class="ggp-l">' + (own ? 'My grade in school' : 'Who is this profile for?') + '</label><div class="ggp-ages">' + AGES.filter(function (a) { return !opt.ages || opt.ages.indexOf(a.id) >= 0; }).map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + (own ? a.tool + ', ' + a.name : a.name) + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
           (fixTree || (fixAge && st.age !== 'adult') ? treeLine() : treeBlock(st, other)) +
           '<div class="ggp-picrow"><span id="ggp-av">' + av(st.avatar, st.name || '?', 56) + '</span><button type="button" class="ggp-link" id="ggp-pick">Choose a picture</button></div>' +
-          '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Cancel</button><button type="button" class="ggp-b ggp-go" data-next>Next</button></div>');
+          (own ? '<p class="ggp-small">Grounded tools are for reflection and growth, alongside the doctors, therapists, and other professionals in your life.</p>' : '') +
+          '<div class="ggp-row"><button type="button" class="ggp-b" data-x>' + (own ? 'Later' : 'Cancel') + '</button><button type="button" class="ggp-b ggp-go" data-next>' + (own ? 'Save My Tree' : 'Next') + '</button></div>');
         $(d, '[data-x]').onclick = function () { d.close(false); };
         d.el.querySelectorAll('[data-age]').forEach(function (b) { b.onclick = function () { st.age = b.dataset.age; d.el.querySelectorAll('[data-age]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); var tb = $(d, '#ggp-treebox'); if (tb) tb.hidden = st.age !== 'adult'; }; });
         treeWire(d, st);
@@ -696,6 +712,8 @@
           if (!st.name) return d.msg('Add a name first.');
           if (!st.age) return d.msg('Choose who this profile is for.');
           if (readList().some(function (p) { return p.name.toLowerCase() === st.name.toLowerCase(); })) return d.msg('There is already a profile with that name on this device. Add a last initial to tell them apart.');
+          // BLD 1073: a person's own profile for the account just made (a Household invite's teen or kid included)
+          if (own) return ownGo(d);
           if (isMinor(st.age) && !adults().length) return noGrown(d);
           // BLD 1047: a grown-up's own profile lives in a Grounded Account, with one password
           if (st.age === 'adult' && !other && acctNeed(opt)) return step2acct(d);
@@ -734,6 +752,7 @@
           if (!pw) return d.msg('Type your password.');
           if (mode === 'signup' && pw.normalize('NFKC').length < 10) return d.msg('Choose a password of at least 10 characters. A short phrase of four or more words is strong and easy to remember.');
           st.acct.email = e; st.pass = pw; st.hours = +$(d, '#ggp-hx').value;
+          if (own && mode === 'in') return acctGo(d, ownO());   // BLD 1073
           step3(d);
         }
         $(d, '[data-next]').onclick = next;
@@ -821,7 +840,8 @@
         var keyed = function (ak, x) { return acctBase(ak).then(function (b) { held = { base: b, a: x.accountId, pw: x.password }; }); };
         AC.making = true;
         run(d, function () {
-          var step = A.mode === 'in' ? GGAccount.withKey(st.pass, function (ak, x) { return keyed(ak, { accountId: x.accountId, password: String(st.pass).normalize('NFKC') }); }).catch(function (e) { if (e && e.why === 'nomatch') throw new Error('That password did not open your account. Try again.'); throw e; })
+          var step = A.mode === 'held' ? Promise.resolve().then(function () { var h = ownHeld(); if (!h) throw new Error('Type your password once more, and your tree is saved.'); held = { base: h.base, a: h.a, pw: h.pw }; })   // BLD 1073
+            : A.mode === 'in' ? GGAccount.withKey(st.pass, function (ak, x) { return keyed(ak, { accountId: x.accountId, password: String(st.pass).normalize('NFKC') }); }).catch(function (e) { if (e && e.why === 'nomatch') throw new Error('That password did not open your account. Try again.'); throw e; })
             : A.mode === 'signup' ? GGAccount.signUp({ email: A.email, password: st.pass, adult: true, oauth: st.oauth || undefined, keyed: keyed }).then(function (r) { words = r && r.words; })
             : GGAccount.signIn({ email: A.email, password: st.pass, oauth: st.oauth || undefined, keyed: keyed }).then(function () {
                 // a tree that already lives in this account comes down first, so no second one is made
@@ -829,19 +849,21 @@
               });
           return step.then(function () {
             if (!held) throw new Error('Something went wrong. Try again in a little while.');
+            // BLD 1073: a tree already made for this account (another tab, or another device) opens instead of a second one
+            if (!found && o.own) found = ownProfile(held.a);
             if (found) return acctOpenOwn(found, held);
             o.code = 'acct'; o.pass = held.pw; o.acct = { base: held.base, a: held.a };
             return createProfile(o);
           });
         }).then(function (id) {
-          AC.making = false; st.oauth = null;
+          AC.making = false; st.oauth = null; if (o.own) AC.made = null;
           if (found) { d.close(true); if (!isAcct(getP(found.id))) { setTimeout(function () { openDialog({ id: found.id, reason: 'Welcome back. Your tree is here. Type its passcode once more, and your account password opens it from now on.' }); }, 250); AC.offer = { id: found.id, base: held.base, a: held.a, pw: held.pw, until: Date.now() + 300000 }; } else toast('Welcome back, ' + found.name + '. Your tree is here.'); return; }
           var fin = function () {
             toast(st.name + '\'s profile is ready.');
             if (opt.onCreated) opt.onCreated(id);
             try { window.dispatchEvent(new CustomEvent('ggp-created', { detail: { id: id, name: st.name } })); } catch (e) {}
           };
-          var hs = houseHere() ? function () { return needHouse().then(function (H) { return H.setup(id); }).catch(function () {}); } : null;
+          var hs = houseHere() && !o.own ? function () { return needHouse().then(function (H) { return H.setup(id); }).catch(function () {}); } : null;
           if (words) after = acctWordsShow(words).catch(function () {}).then(hs).then(fin);
           else if (hs) after = Promise.resolve().then(hs).then(fin);
           d.close(true);
@@ -1867,7 +1889,7 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=c193', '/shared/gg-sync.js?v=b979'], CARRY = 'gg-acct-carry';
+  var ACCT_SRC = ['/shared/gg-account.js?v=c224', '/shared/gg-sync.js?v=b979'], CARRY = 'gg-acct-carry';
   var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'acct', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub'];   // BLD 1047: acct
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
@@ -1995,6 +2017,7 @@
   function acctEvent(t, d) {
     if (t === 'state') {
       var was = AC.acct; carryLoad();
+      if (!acIn()) AC.made = null;   // BLD 1073: signed out, the waiting key goes
       if (acIn()) {
         // signing in or making an account with a grown-up open here brings that grown-up (and their children) along
         var p = cur && getP(cur.id);
@@ -2029,7 +2052,7 @@
     return !!(AC.on && window.GGAccount && GGAccount.configured && GGAccount.configured());
   }
   // The account sheets (shared/gg-account-ui.js), loaded when needed
-  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c193', acctUiP = null;
+  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c224', acctUiP = null;
   function acctSheet(view, o) {
     if (!acctUiP) acctUiP = new Promise(function (ok) {
       if (window.GGAccountUI) return ok(window.GGAccountUI);
@@ -2042,6 +2065,9 @@
   function acctEmailFor(p) { var i = window.GGAccount && GGAccount.info && GGAccount.info(); return i && p && p.acct && p.acct.a === i.accountId ? i.email : ''; }
   // The grown-up profiles that are this account's own, on this device
   function ownProfile(accountId) {
+    // BLD 1073: a teen's or kid's own account opens their own tree the same way
+    var m = readList().filter(function (p) { return isAcct(p) && p.acct && p.acct.a === accountId && acctCarried(p.id); })[0];
+    if (m) return m;
     var l = readList().filter(function (p) { return p.age === 'adult' && acctCarried(p.id); });
     return l.filter(function (p) { return isAcct(p) && p.acct && p.acct.a === accountId; })[0] || (l.length === 1 ? l[0] : null);
   }
@@ -2083,13 +2109,16 @@
   function acctKeys(x) {
     if (!x || !x.ak || !x.accountId) return;
     return acctBase(x.ak).then(function (base) {
-      var mine = readList().filter(function (p) { return p.age === 'adult' && isAcct(p) && p.acct && p.acct.a === x.accountId; });
+      var mine = readList().filter(function (p) { return isAcct(p) && p.acct && p.acct.a === x.accountId; });   // BLD 1073: any age
       if (x.why === 'password' || x.why === 'recover') {
         return mine.reduce(function (pr, p) {
           return pr.then(function () { return acctRaw(p, base).then(function (raw) { return wrapRaw(String(x.password).normalize('NFKC'), raw).then(function (w) { var q = getP(p.id); if (!q) return; q.salt = w.salt; q.wrap = w.wrap; putP(q); }); }).catch(function () {}); });
         }, Promise.resolve()).then(function () { if (x.why === 'recover' && !cur) return heldOpen({ base: base, a: x.accountId, pw: x.password }); });
       }
       if (AC.making) return;
+      // BLD 1073: an account made on this device with no grown-up profile open: its key waits here, in memory only, for a
+      // few minutes, so the profile setup right after needs no second password
+      if (x.why === 'signup' && !(cur && open[cur.id] && getP(cur.id) && getP(cur.id).age === 'adult')) { AC.made = { base: base, a: x.accountId, pw: x.password, until: Date.now() + 600000 }; return; }
       var c = cur && getP(cur.id);
       if (c && c.age === 'adult' && open[c.id] && !isAcct(c)) { AC.offer = { id: c.id, base: base, a: x.accountId, pw: x.password, until: Date.now() + 300000 }; offerSoon(); return; }
       if (x.why === 'signin' && !cur) return heldOpen({ base: base, a: x.accountId, pw: x.password });
@@ -2254,6 +2283,10 @@
     account: {
       live: LIVE, ready: AC.ready, carried: function (id) { return acctCarried(id); }, bring: acctBring,
       need: acctNeed, one: function (id) { return isAcct(getP(id)); },   // BLD 1047
+      // BLD 1073: the profile that is this account's own here ({id, name, age, open} or null), and whether the key from a
+      // sign up on this device still waits (so the setup needs no second password)
+      own: function () { var i = acIn() && GGAccount.info(), p = i && ownProfile(i.accountId); return p ? { id: p.id, name: p.name, age: p.age, open: !!open[p.id] } : null; },
+      held: function () { var i = acIn() && GGAccount.info(), h = AC.made; return !!(h && i && h.a === i.accountId && Date.now() < h.until); },
       profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); }
     },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },

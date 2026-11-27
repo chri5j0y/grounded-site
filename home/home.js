@@ -4178,8 +4178,12 @@
         '<p class="hm-su-keep" aria-live="polite">' + I('check') + '<span>' + esc(A.start && A.names.length === 1 ? 'A gentle starter keeps your ' + PART[k].n + ' tended: ' + A.start + '.' : 'Your ' + PART[k].n + (/s$/.test(PART[k].n) ? ' stay' : ' stays') + ' tended with ' + wpList(A.names) + '.') + '</span></p>';
       f = '<button type="button" class="hm-btn line hm-p-leaves" data-hm-su="back">' + I('back') + 'Back</button><button type="button" class="hm-btn hm-p-leaves" data-hm-su="next">' + I('arrow') + (i < 4 ? 'Next: ' + esc(PART[TEND4[i]].n) : 'Next: Check In') + '</button>';
     } else {
-      var rs = suResult(d);
-      b = '<div class="hm-k">Last step</div><h1 class="hm-su-h" id="hm-su-h" tabindex="-1">Your Four Are Ready</h1>' + prom +
+      var rs = suResult(d), allSet = !SU.edit && !!obj(homeRec().setup).acct;
+      // BLD 1073: a setup that began with a new account ends on You're All Set: the Household, the four, the first check-in
+      if (allSet) b = '<div class="hm-k">' + esc(t.n) + '</div><h1 class="hm-su-h" id="hm-su-h" tabindex="-1">You’re All Set</h1>' +
+        '<p class="hm-su-lead">' + (kid ? 'Your tree is ready. Next, a check-in with your grown-up shows how each part is growing.' : 'Your tree is ready. Your first check-in shows how each part is growing: quick, about two minutes, or full, about 10 to 12.') + '</p>' + osHouseHtml() +
+        '<ul class="hm-su-sum">' + TEND4.map(function (k) { return '<li style="--c:var(--' + k + ');--cs:var(--' + k + '-s)"><b>' + esc(plabel(k, plain)) + '</b><small>' + esc(wpList(rs.areas[k].names)) + '</small></li>'; }).join('') + '</ul>';
+      else b = '<div class="hm-k">Last step</div><h1 class="hm-su-h" id="hm-su-h" tabindex="-1">Your Four Are Ready</h1>' + prom +
         '<ul class="hm-su-sum">' + TEND4.map(function (k) { return '<li style="--c:var(--' + k + ');--cs:var(--' + k + '-s)"><b>' + esc(plabel(k, plain)) + '</b><small>' + esc(wpList(rs.areas[k].names)) + '</small></li>'; }).join('') + '</ul>' +
         '<p class="hm-su-lead">' + (kid ? 'Now a check-in with your grown-up shows how each part of your tree is growing.' : 'Now a check-in shows how each part is growing, the four you tend and the two that grow from them. Choose quick, about two minutes, or full, about 10 to 12.') + '</p>';
       f = '<button type="button" class="hm-btn line hm-p-leaves" data-hm-su="back">' + I('back') + 'Back</button>' +
@@ -4290,7 +4294,7 @@
      BLD 950 adds a third, planner (the Family Planner, shared/gg-planner.js): it answers for any family member open here
      who holds the planner's key, so a teen's note travels too; a grown-up on a new phone who meets it starts their own. */
   var AH = { on: false, hash: null, ui: null, dot: '' };
-  var ACCT_UI = '/shared/gg-account-ui.js?v=c193';
+  var ACCT_UI = '/shared/gg-account-ui.js?v=c224';
   function acctLive() { return !!(window.GGP && GGP.account && GGP.account.live) && !PREVIEW; }
   function acctOn() { return AH.on && !!window.GGAccount; }
   function acctIn() { return acctOn() && GGAccount.state() !== 'out'; }
@@ -4322,7 +4326,8 @@
   function acctHashGo() {
     if (!AH.hash || !AH.on) return;
     var h = AH.hash; AH.hash = null;
-    acctUI().then(function (U) { if (U) return U.open(h.kind, { token: h.token, kid: h.kid || '' }).then(acctPaint); }).catch(function () {});
+    var then = h.kind === 'confirm' && osPending() ? function () { toast('Your email is confirmed.'); setTimeout(function () { osStart(); }, 50); } : undefined;   // BLD 1073
+    acctUI().then(function (U) { if (U) return U.open(h.kind, { token: h.token, kid: h.kid || '', then: then }).then(function () { acctPaint(); if (then && osPending()) osStart(); }); }).catch(function () {});
   }
   acctHashRead();
   function acctUI() { return AH.ui || (AH.ui = load(ACCT_UI).then(function (ok) { return ok && window.GGAccountUI ? window.GGAccountUI : null; })); }
@@ -4391,6 +4396,7 @@
     if (/^bring:/.test(a)) { t.disabled = true; GGP.account.bring(a.slice(6)).then(function () { toast('Your profile is in your account now.'); acctPaint(); }, function (er) { t.disabled = false; toast((er && er.message) || 'Try again in a moment.'); }); return; }
     if (a === 'sync') { t.disabled = true; GGSync.sync().then(function () { acctPaint(); }, function () { acctPaint(); }); return; }
     if (a === 'out') { acctOpen('account'); return; }
+    if (a === 'setup') { osStart(); return; }   // BLD 1073
     acctOpen(a);
   });
   // The shared spaces
@@ -4513,11 +4519,112 @@
     if (ch) saveHome();
   }
   // BLD 957: a Household invite saved before the account was made or confirmed joins by itself once the email is confirmed.
+  // BLD 1073 (Chris, November 27, 2026: "that could all happen at one time"): it joins at once, with no sheet to tap, and
+  // a short line says so; Membership through the Household and the shared spaces come in right after.
   function joinWaitGo() {
     if (!acctIn() || AH.joining) return; var inf = GGAccount.info && GGAccount.info(); if (!inf || inf.confirmed !== true) return;
-    // it waits for any account sheet showing (Confirm Your Email, the Root Words) to close first
-    if (document.querySelector('.ga-sheet, .ggr')) { clearTimeout(AH.jwT); AH.jwT = setTimeout(joinWaitGo, 800); return; }
-    acctUI().then(function (U) { var t = U && U.joinWaiting && U.joinWaiting(); if (!t || AH.joining) return; AH.joining = true; return U.open('join', { token: t }).then(function () { AH.joining = false; acctPaint(); }, function () { AH.joining = false; }); });
+    // it waits for an account sheet at work (sign up, the Root Words, a Join the Household sheet opened from the link) to
+    // close first; a calm one (Your email is confirmed) needs no tap first
+    if (document.querySelector('.ga-wrap:not(.ga-calm) .ga-sheet, .ggr')) { clearTimeout(AH.jwT); AH.jwT = setTimeout(joinWaitGo, 800); return; }
+    acctUI().then(function (U) {
+      var t = U && U.joinWaiting && U.joinWaiting(); if (!t || AH.joining) return; AH.joining = true;
+      return U.open('join', { token: t, auto: true }).then(function (r) {
+        AH.joining = false;
+        if (r && r.joined) { AH.joinedNow = true; toast('You are in your Household now.'); osJoined(); }
+        else if (r && r.why === 'exists') toast('You are already in a Household.');
+        acctPaint();
+      }, function () { AH.joining = false; });
+    });
+  }
+  /* ---------- BLD 1073: One Smooth Setup ----------
+     Chris, November 27, 2026: "Caleb just set up an account, and it was a little confusing because he set up an account, did
+     the email, and then after that, he still has to do a profile, which seems like that could all happen at one time."
+     Now a new account made here (from a Household invite or on its own) goes straight from its Root Words into the profile:
+     the name comes from the invite's sign in name or the email, the tree from the age the parent chose in the invite
+     (Grown-up: Oak, with Birch and Sequoia a tap away; Teen: Pine, or Aspen for grades 6 to 8; Kid: Maple, or Aspen), and
+     the account key from the sign up locks it, so the person only checks it and taps Save My Tree. The invite joins the
+     Household by itself the moment the email is confirmed (a kid's account at once), the four come next, and the setup
+     ends on You're All Set with the first check-in. A small note on this device (gg-setup-wait: the account id, the age
+     band, the time; no name, nothing sent anywhere) lets the setup carry on after a reload, in the tab the confirm link
+     opens, or on coming back from the email app. A profile this account already has (another tab or device) opens in its
+     place, so there is never a second one; signing in on a second device brings the tree down as before. */
+  var OS = { K: 'gg-setup-wait', busy: false, at: 0, chk: 0 };
+  function osGet() {
+    try { var o = JSON.parse(localStorage.getItem(OS.K) || 'null'), i = acctIn() && GGAccount.info(); return o && i && o.a === i.accountId && Date.now() - (+o.at || 0) < 30 * 864e5 ? o : null; } catch (e) { return null; }
+  }
+  function osSet(o) { try { if (o) localStorage.setItem(OS.K, JSON.stringify(o)); else localStorage.removeItem(OS.K); } catch (e) {} }
+  function osOwn() { try { return GGP.account.own ? GGP.account.own() : null; } catch (e) { return null; } }
+  function osBand() { var i = GGAccount.info() || {}, m = osGet() || {}; return i.band || m.band || 'adult'; }
+  // A first name from a kid's sign in name (carson.joy) or the email (caleb.joy@...), for the person to check
+  function osName(email) {
+    var l = String(email || '').split('@')[0], m = /^([A-Za-z]{2,15})(?:[._-]|$)/.exec(l);
+    return m ? m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase() : '';
+  }
+  function osPending() { return acctIn() && !!osGet() && !osOwn(); }
+  // GGAccountUI.onMade: a new account's Root Words are done. With no grown-up profile open here, the setup carries on.
+  function osMade(x) {
+    var a = GGP.active && GGP.active();
+    if (a && a.age === 'adult' && GGP.isOpen(a.id)) return false;   // that grown-up comes along into the account, as before
+    var i = GGAccount.info(); if (!i) return false;
+    osSet({ a: i.accountId, band: (x && x.band) || i.band || 'adult', at: Date.now() });
+    if (x && x.joined) { AH.joinedNow = true; osJoined(); }   // a kid's account joins as it is made
+    setTimeout(function () { osStart(true); }, 60);
+    return true;
+  }
+  function osStart(now) {
+    if (OS.busy || !acctLive() || !acctIn()) return;
+    if (!osGet()) return;
+    if (osOwn()) { osSet(null); return; }
+    if (document.querySelector('.ga-sheet, .ggr, .ggp-dlg')) { clearTimeout(OS.t); OS.t = setTimeout(function () { osStart(now); }, 700); return; }
+    OS.busy = true;
+    // a tree made for this account on another device or in another tab comes down first, so no second one is made
+    var first = now || !window.GGSync ? Promise.resolve() : Promise.race([GGSync.sync().catch(function () {}), new Promise(function (ok) { setTimeout(ok, 15000); })]);
+    first.then(function () {
+      if (osOwn() || !acctIn() || !osGet()) { OS.busy = false; if (osOwn()) osSet(null); render(); return; }
+      var i = GGAccount.info(), band = osBand(), inv = !!(AH.ui && window.GGAccountUI && GGAccountUI.joinWaiting && GGAccountUI.joinWaiting());
+      var kidName = /@kid\.growwithgrounded\.com$/i.test(i.email || '');
+      var opt = { own: true, name: osName(i.email), reason: (inv || kidName ? 'Welcome to your family’s Household. ' : 'Your account is ready. ') + 'Check your name and your tree, then tap Save My Tree.' };
+      if (band === 'teen') { opt.age = 'pine'; opt.ages = ['pine', 'aspen']; }
+      else if (band === 'kid') { opt.age = 'maple'; opt.ages = ['maple', 'aspen']; }
+      else { opt.age = 'adult'; opt.fixed = true; }
+      opt.onCreated = function (id) {
+        osSet(null);
+        var p = GGP.get(id) || {};
+        writeHome(id, { who: 'me', stage: treeOfProfile(p), parts: partsList(), setup: Object.assign(newSetup(), { acct: 1 }) }).then(function () { return soberLife(id); }).then(function () {
+          if (location.hash) { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
+          render(); window.scrollTo(0, 0); joinWaitGo();
+        });
+      };
+      GGP.createDialog(opt).then(function () { OS.busy = false; if (osOwn()) osSet(null); if (!S.id) render(); }, function () { OS.busy = false; });
+    });
+  }
+  // Back from the email app or another tab: a confirm made there is noticed here, and a waiting setup carries on
+  function osBack() {
+    if (!acctLive() || !acctIn() || document.visibilityState === 'hidden') return;
+    var i = GGAccount.info();
+    var allSet = function () { if (SU.open && SU.i === SU_N - 1 && document.getElementById('hm-su')) osJoined(); };   // the Household may have joined in the other tab
+    if (i && i.confirmed === false && Date.now() - OS.chk > 4000) { OS.chk = Date.now(); GGAccount.account().then(function () { joinWaitGo(); allSet(); }, function () {}); }
+    else { joinWaitGo(); allSet(); }
+    if (osPending() && !S.id) osStart();
+  }
+  document.addEventListener('visibilitychange', osBack);
+  window.addEventListener('focus', osBack);
+  // Joined: Membership through the Household comes in, and You're All Set says so
+  function osJoined() {
+    var after = function () { if (SU.open && SU.i === SU_N - 1 && document.getElementById('hm-su')) suPaint(); };
+    after();
+    try { var m = GGAccount.memberRefresh && GGAccount.memberRefresh(); if (m && m.then) m.then(function () { if (window.GGMember && GGMember.sync) { try { GGMember.sync(); } catch (e) {} } setTimeout(after, 600); }, function () {}); } catch (e) {}
+    if (window.GGSync) GGSync.sync().then(after, function () {});
+  }
+  // The Household line on You're All Set
+  function osHouseHtml() {
+    if (!acctIn()) return '';
+    var hh = window.GGSync && GGSync.household && GGSync.household(), i = GGAccount.info() || {}, wait = !!(window.GGAccountUI && GGAccountUI.joinWaiting && GGAccountUI.joinWaiting());
+    var young = S.p && isYoung(S.p);
+    if (hh || AH.joinedNow) return '<p class="hm-su-note hm-os-house">' + I('people') + '<span><b>You are in your Household.</b> ' + (young ? 'The Family Kitchen and the Family Planner are here for you.' : 'The Family Kitchen and the Family Planner are here for you' + (member() ? ', and Membership comes with your Household.' : '.')) + '</span></p>';
+    if (wait && i.confirmed === false) return '<p class="hm-su-note hm-os-house">' + I('people') + '<span><b>One more tap:</b> open the message we sent to ' + esc(i.email || 'your email') + ' and tap its link. You join your Household by yourself, right then.</span></p>';
+    if (wait) return '<p class="hm-su-note hm-os-house">' + I('people') + '<span>Joining your Household now.</span></p>';
+    return '';
   }
   /* BLD 967: Share My Plate. Each person's plates live in their locked profile (GGPlates, shared/gg-plates.js); the ones
      marked For the Family travel to the Household in the locked shared space 'plates'. The first family note in a
@@ -4550,8 +4657,9 @@
         else if (t === 'spaces') acctSeen();
         if (t === 'spaces' || (t === 'status' && d && d.state === 'idle')) plannerHH();   // BLD 950: the Household line in the Family Planner
       });
+      acctUI().then(function (U) { if (U && U.onMade) U.onMade(osMade); });   // BLD 1073
       acctHashGo();
-      if (!AH.hash) setTimeout(joinWaitGo, 1500);
+      if (!AH.hash) { setTimeout(joinWaitGo, 1500); if (osGet()) setTimeout(function () { osStart(); }, 400); }
       if (S.view === 'welcome') render(); else acctPaint();
     });
   }
@@ -4627,6 +4735,7 @@
   }
   function acctWelcome() {
     if (!acctOn()) return '';
+    if (acctIn() && osPending()) return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span><b>Signed in as ' + esc(GGAccount.info().email) + '.</b> Your account is ready. <button type="button" class="hm-linkbtn" data-hm-acct="setup">Set Up My Profile</button></span></div>';   // BLD 1073
     if (acctIn()) return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span><b>Signed in as ' + esc(GGAccount.info().email) + '.</b> ' + (hasProfiles() ? 'Open your profile with your password, and its tree comes in.' : 'Your profiles are coming in now.') + '</span></div>';
     return '<div class="hm-note hm-p-branches hm-acwel" style="margin-top:16px">' + I('shield') + '<span>Already growing on another device? <button type="button" class="hm-linkbtn" data-hm-acct="signin">Sign In to My Account</button></span></div>';
   }
