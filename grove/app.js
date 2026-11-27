@@ -35,7 +35,8 @@ const ICON = {
  library:`<path d="M4.5 5.5c2.6-1 5-.8 7.5.8v13.2c-2.5-1.6-4.9-1.8-7.5-.8z"/><path d="M19.5 5.5c-2.6-1-5-.8-7.5.8v13.2c2.5-1.6 4.9-1.8 7.5-.8z"/>`,
  search:`<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>`,
  play:`<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>`,
- how:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/>`
+ how:`<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/>`,
+ gift:`<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8c-2-4-6-3-6 0h6zM12 8c2-4 6-3 6 0h-6z"/>`
 };
 function icon(name, cls){ return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]||''}</svg>`; }
 
@@ -520,16 +521,25 @@ function famIntake() {
 
 /* ---------- view state ---------- */
 const S = { tab: 'grove', sel: null, wk: 0, part: '', open: '', lib: { q: '', hit: '' }, setup: null, pick: false, ci: null, view: '', pd: null, fresh: null };
+/* ---------- Gift Lists and the Gift Circle (GWG BLD 1072, shared/gg-gifts.js) ----------
+   A tab after Together in Family groves, and #gifts with no grove at all, so a family member or friend invited by link
+   lands right on the lists. It shows only once the Worker answers the Gift Lists routes (GGGifts.live). */
+let GIFTS_ON = false, GIFT_WHO = '';
+function giftsTab() { return GIFTS_ON ? [['gifts', 'Gift Lists', 'gift']] : []; }
+function giftsAny() { return GIFTS_ON && (S.tab === 'gifts' || (window.GGAccount && GGAccount.state && GGAccount.state() !== 'out')); }
+function viewGifts() { return '<div id="gf-root"></div>'; }
+function giftsMount() { const el = document.getElementById('gf-root'); if (el && window.GGGifts) { GGGifts.mount(el, { who: GIFT_WHO }); GIFT_WHO = null; } }
+if (window.GGGifts) GGGifts.live().then(on => { GIFTS_ON = !!on; if (on) { renderTabs(); if (S.tab === 'gifts') render(); } });
 function tabs() {
-  if (!G || S.setup) return [['grove', G ? 'New Grove' : 'Start Our Grove', 'grove'], ['life', 'When Life Changes', 'guide'], ['how', 'How it works', 'how'], ['learn', 'Learn', 'play']];
-  const K = KW(), t = [['grove', 'Our Grove', 'grove'], ['checkin', K.checkin, 'week'], ['plan', 'Growth Plan', 'plan'], ['together', 'Together', 'heart'], ['life', 'When Life Changes', 'guide']];
+  if (!G || S.setup) return [['grove', G ? 'New Grove' : 'Start Our Grove', 'grove']].concat(giftsAny() ? giftsTab() : [], [['life', 'When Life Changes', 'guide'], ['how', 'How it works', 'how'], ['learn', 'Learn', 'play']]);
+  const K = KW(), t = [['grove', 'Our Grove', 'grove'], ['checkin', K.checkin, 'week'], ['plan', 'Growth Plan', 'plan'], ['together', 'Together', 'heart']].concat(isFamily() || S.tab === 'gifts' ? giftsTab() : [], [['life', 'When Life Changes', 'guide']]);
   if (isFamily() || G.wallOn) t.push(['wall', G.kind === 'classroom' ? 'Teacher Notes' : 'The Wall', 'people']);
   if (isFamily() && hasEarlier()) t.push(['earlier', 'Earlier', 'journal']);
   t.push(['how', 'How it works', 'how'], ['settings', 'Settings', 'gear'], ['learn', 'Learn', 'play']);
   return t;
 }
 function renderTabs() {
-  const t = tabs(); if (S.tab !== 'library' && !t.some(x => x[0] === S.tab)) S.tab = 'grove';
+  const t = tabs(); if (S.tab !== 'library' && S.tab !== 'gifts' && !t.some(x => x[0] === S.tab)) S.tab = 'grove';
   $('#tabs').innerHTML = t.map(([id, label, ic]) => `<button class="tab" role="tab" aria-selected="${S.tab === id}" data-tab="${id}">${icon(ic)}${esc(label)}</button>`).join('');
 }
 let LAST_SCENE = '';
@@ -555,14 +565,15 @@ function render() {
   renderTabs();
   const v = $('#view');
   window.GROVE_PLAIN = plainMode();
-  const body = !G || S.setup ? ({ how: viewHow, library: viewLibrary, life: viewLife }[S.tab] || viewSetup)()
-    : ({ grove: viewGrove, checkin: viewCheckin, plan: viewPlan, together: viewTogether, life: viewLife, wall: viewWall, earlier: viewEarlier, how: viewHow, settings: viewSettings, library: viewLibrary }[S.tab] || viewGrove)();
+  const body = !G || S.setup ? ({ how: viewHow, library: viewLibrary, life: viewLife, gifts: GIFTS_ON ? viewGifts : null }[S.tab] || viewSetup)()
+    : ({ grove: viewGrove, checkin: viewCheckin, plan: viewPlan, together: viewTogether, life: viewLife, wall: viewWall, earlier: viewEarlier, how: viewHow, settings: viewSettings, library: viewLibrary, gifts: GIFTS_ON ? viewGifts : null }[S.tab] || viewGrove)();
   v.innerHTML = (G && !S.setup ? groveBar() : '') + (isFamily() && !S.setup ? hereBar() : '') + body;
   // The Today scene plays a short moment (birds and a soft wind) when it opens, then rests still.
   const key = G && S.tab === 'grove' && !S.setup ? G.id : '';
   if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: GV_DONE, moment: !!key && key !== LAST_SCENE });
   LAST_SCENE = key;
   if (S.tab === 'library' && S.lib.q) libFind();
+  if (S.tab === 'gifts') giftsMount();
   lcReadBar();
 }
 window.render = render;
@@ -2095,6 +2106,10 @@ function fromHash() {
   const h = decodeURIComponent(location.hash || '');
   const gvm = GVHASH.exec(location.hash || ''); // GWG BLD 776: a Guide's visit, read once and taken out of the address bar
   if (gvm) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} HASH_SEEN = location.hash; gvFromGuide(gvm[1]); return; }
+  // BLD 1072: an invitation link (#gift=<code>~<card key>) is read once and taken out of the address bar at once
+  const gi = /^#gift=([A-Za-z0-9_-]{20,40})(?:~([A-Za-z0-9_-]{16,30}))?$/.exec(location.hash || '');
+  if (gi) { try { history.replaceState(null, '', location.pathname + location.search + '#gifts'); } catch (e) {} HASH_SEEN = location.hash; S.tab = 'gifts'; GIFT_WHO = ''; if (window.GGGifts) { GGGifts.live().then(on => { GIFTS_ON = !!on; render(); GGGifts.invite(gi[1], gi[2] || ''); }); } const a0 = $('#app'); if (a0) a0.scrollIntoView(); return; }
+  if (/^#gifts(=|$)/.test(h)) { GIFT_WHO = h.startsWith('#gifts=') ? h.slice(7) : ''; S.tab = 'gifts'; if (window.GGGifts) GGGifts.live().then(on => { GIFTS_ON = !!on; render(); }); render(); const a1 = $('#app'); if (a1) a1.scrollIntoView(); return; }
   if (/^#library(=|$)/.test(h)) { const q = h.startsWith('#library=') ? h.slice(9) : '', hit = libExact(q); S.tab = 'library'; S.lib.q = hit ? '' : q; S.lib.hit = hit ? hit.key : ''; S.open = hit ? hit.key : ''; if (window.GGLibrary) GGLibrary.ready().then(render); render(); const a = $('#app'); if (a) a.scrollIntoView(); }
   else if (/^#(life|talk)(=|$)/.test(h)) { const id = /^#(life|talk)=/.test(h) ? h.slice(h.indexOf('=') + 1) : null; S.tab = 'life'; S.lc.open = id && LC.some(t => t.id === id) ? id : null; render(); const a = $('#app'); if (a) { a.scrollIntoView(); setTimeout(() => a.scrollIntoView(), 350); } }
   else if (/^#(wall|together|how|earlier|grove|checkin|plan|settings)$/.test(h)) { S.tab = h.slice(1); S.open = ''; S.view = ''; render(); }
@@ -2106,6 +2121,7 @@ let HASH_SEEN = location.hash;
 const canonHash = h => (!h || h === '#') ? '#grove' : h;
 function pushHash(st) {
   const h = S.tab === 'life' && S.lc.open ? '#life=' + encodeURIComponent(S.lc.open) : S.tab === 'learn' ? '' : '#' + S.tab;
+  if (S.tab === 'gifts' && /^#gifts/.test(location.hash)) return;
   if (!h || canonHash(h) === canonHash(location.hash)) return;
   try { history.pushState(st || null, '', h); } catch (e) { return; }
   HASH_SEEN = location.hash;

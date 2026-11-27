@@ -211,3 +211,7 @@ body.gp-noscroll{overflow:hidden;}
   .gp-panel{padding:16px;border-radius:20px;}
   .gp-dlg{padding:8px;align-items:end;}
 }
+/* BLD 1072: See Maya's Gift List on a Birthday */
+.gp-giftls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px;}
+.gp-giftl{text-decoration:none;max-width:100%;}
+.gp-kev + .gp-giftls{margin:4px 0 6px;}

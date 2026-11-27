@@ -61,7 +61,7 @@
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c228';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
-  var PLANNER_SRC = '/shared/gg-planner.js?v=b951';   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
+  var PLANNER_SRC = '/shared/gg-planner.js?v=c232', GIFTS_SRC = '/shared/gg-gifts.js?v=c232';   // BLD 1072: Gift Lists, for the planner's Birthday link   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
   var PIMG = '/shared/heroes/p/';   // BLD 970: the new app paintings, each card its own
   // BLD 978: the painted set cards for Grounded Spirit, Relationships, and Seasons (home.js paintSets)
@@ -5835,7 +5835,14 @@
       onMembership: function (k) { if (k === 'code') mCode(); else location.href = MEMBER_URL; },
       go: function (v) { goTo('library=planner' + (v === 'cal' || !v ? '' : '-' + v)); },
       household: function () { if (!acctIn() || !window.GGSync || !GGSync.household || !GGSync.household()) return null; return { shared: GGSync.spaces().some(function (x) { return x.kind === 'planner'; }) }; },
-      share: function () { return GGSync.shareSpace('planner'); }
+      share: function () { return GGSync.shareSpace('planner'); },
+      // BLD 1072: See Maya's Gift List on a Birthday (shared/gg-gifts.js, loaded the first time a Birthday shows)
+      gift: function (name, me) {
+        if (!acctIn()) return null;
+        if (window.GGGifts) return GGGifts.linkFor(name, me);
+        if (!PL.gl) { PL.gl = true; load(GIFTS_SRC).then(function (ok) { if (ok && window.GGGifts) GGGifts.linkFor(name, me); }); }
+        return null;
+      }
     });
     // A change from another tab or the Household redraws the Week card and a kid's family week
     GGPlanner.on(function () { var w = document.getElementById('hm-plweek'), k = document.getElementById('hm-kplan'); if (w) GGPlanner.weekCard(w, S.wkOff || 0); if (k) GGPlanner.kidCard(k); fillPlanDays(); });
