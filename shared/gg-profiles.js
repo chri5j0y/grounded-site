@@ -61,7 +61,7 @@
    Birch, the tree for young adults (GWG BLD 742)
    - The same pattern as Sequoia: the age stays "adult" and p.tree is
      'birch'. Anyone who says they are 25 or younger may choose Birch
-     (built for 18 to 25) or Oak (built for 26 to 59, BLD 929), and switch any
+     (built for ages 18 to 25) or Oak (built for 26 to 59, BLD 929), and switch any
      time. Saying yes opens the tree pick with Birch chosen.
    - Helpers work in Birch the Sequoia way, only when the person turns on
      Add a Helper in their own Birch settings (birch.helpersOn).
@@ -138,7 +138,7 @@
 (function () {
   if (window.GGP) return;
 
-  var TERMS_V = '2026-11-17', PRIVACY_V = '2026-11-17';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
+  var TERMS_V = '2026-11-27', PRIVACY_V = '2026-11-27';   // BLD 938: both move to the launch date when Accounts go live (GO-LIVE.md)
   /* BLD 938 Accounts and Sync: the one site setting. Accounts stay hidden, and their files never load, until this is true.
      Turn it on only after the server is live (grounded-workshop patches/bld938/GO-LIVE.md). Tests turn it on for a page with
      window.GG_ACCOUNTS_LIVE = true before this file runs. */
@@ -147,14 +147,14 @@
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
     { id: 'adult', name: 'Adult', who: 'Grown-ups', tool: 'Oak', href: '/home/' },
-    { id: 'pine', name: 'High school', who: 'Grades 9 to 12', tool: 'Pine', href: '/home/' },   // Pine, built for grades 9 to 12 (GWG BLD 739)
-    { id: 'aspen', name: 'Middle school', who: 'Grades 6 to 8', tool: 'Aspen', href: '/home/' },
-    { id: 'maple', name: 'Kids', who: 'Kindergarten to grade 5', tool: 'Maple', href: '/home/' }
+    { id: 'pine', name: 'High school', who: 'Ages 14 to 17', tool: 'Pine', href: '/home/' },   // Pine, built for ages 14 to 17 (GWG BLD 739)
+    { id: 'aspen', name: 'Middle school', who: 'Ages 11 to 13', tool: 'Aspen', href: '/home/' },
+    { id: 'maple', name: 'Kids', who: 'Ages 5 to 10', tool: 'Maple', href: '/home/' }
   ];
   var AGE = {}; AGES.forEach(function (a) { AGE[a.id] = a; });
   // A grown-up's own tree (Sequoia, GWG BLD 733). The age stays "adult" either way.
   // Birch (GWG BLD 742) joins the same way: p.tree 'birch', the age still "adult".
-  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/home/', who: 'Built for adults, 26 to 59' }, birch: { id: 'birch', tool: 'Birch', href: '/home/', who: 'Built for young adults, 18 to 25' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/home/', who: 'Built for older adults, 60 and up' } };
+  var TREE = { oak: { id: 'oak', tool: 'Oak', href: '/home/', who: 'Built for adults, ages 26 to 59' }, birch: { id: 'birch', tool: 'Birch', href: '/home/', who: 'Built for young adults, ages 18 to 25' }, sequoia: { id: 'sequoia', tool: 'Sequoia', href: '/home/', who: 'Built for older adults, ages 60 and up' } };
   // Which trees each age question offers: 25 or younger (Birch first), 55 or older.
   var BAND = { young: ['birch', 'oak'], older: ['oak', 'sequoia'] };
   function treeOf(p) { return p && p.age === 'adult' && (p.tree === 'sequoia' || p.tree === 'birch') ? p.tree : 'oak'; }
@@ -1891,8 +1891,8 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=c224', '/shared/gg-sync.js?v=c225'], CARRY = 'gg-acct-carry';
-  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'acct', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub'];   // BLD 1047: acct
+  var ACCT_SRC = ['/shared/gg-account.js?v=c228', '/shared/gg-sync.js?v=c228'], CARRY = 'gg-acct-carry';
+  var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'acct', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub', 'kidAcct'];   // BLD 1047: acct; BLD 1075: kidAcct, a kid's own account
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
   function carryLoad() {
@@ -1910,6 +1910,9 @@
     return !!(p && isMinor(p.age) && (p.grown || []).some(function (g) { return AC.ids.indexOf(g) >= 0; }));
   }
   function head(p) { var h = {}; HEAD.forEach(function (k) { if (p[k] !== undefined) h[k] = p[k]; }); return h; }
+  // BLD 1075: a kid's tree that lives in the kid's own account, opened here by the grown-up with the guardian key (on the
+  // kid's own device it is simply that account's own tree)
+  function guardedKid(p) { return !!(p && p.kidAcct && p.kidAcct !== AC.acct); }
   function same(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   // Replace the parts of a vault in place, so tools holding the vault keep the one that is saved.
   function fillIn(t, d) { Object.keys(t).forEach(function (k) { if (!(k in d)) delete t[k]; }); Object.keys(d).forEach(function (k) { if (!same(t[k], d[k])) t[k] = d[k]; }); }
@@ -1958,6 +1961,7 @@
   }
   function regVault(id) {
     var p = getP(id); if (!p || !window.GGSync) return;
+    if (guardedKid(p)) { if (AC.reg['p:' + id]) { delete AC.reg['p:' + id]; GGSync.drop('p:' + id); } return guardReg(id); }   // BLD 1075
     var name = (p.age === 'pine' ? 'pine:' : 'p:') + id;
     if (AC.reg[name]) return;
     AC.reg[name] = 1;
@@ -1999,6 +2003,7 @@
     if (!AC.reg['acct:profiles']) { AC.reg['acct:profiles'] = 1; GGSync.doc('acct:profiles', { get: listGet, put: listPut }); }
     readList().forEach(function (p) { if (acctCarried(p.id) && (p.age === 'pine' || open[p.id])) regVault(p.id); });
     touchedFlush();
+    guardsUp();   // BLD 1075
   }
   // The save hooks (putP, dropP, writeVault)
   function acctList(id) { if (!AC.q && acIn() && acctCarried(id)) GGSync.changed('acct:profiles'); }
@@ -2024,6 +2029,7 @@
       return;
     }
     if (AC.quiet[id] || !acIn()) return;
+    var gp = getP(id); if (guardedKid(gp)) { if (AC.reg['g:' + gp.kidAcct + '|p:' + id]) GGSync.changed('g:' + gp.kidAcct + '|p:' + id); return; }   // BLD 1075
     var n = AC.reg['p:' + id] ? 'p:' + id : AC.reg['pine:' + id] ? 'pine:' + id : '';
     if (n) GGSync.changed(n); else if (GGSync.spaces().length && GGSync.poke) GGSync.poke();
   }
@@ -2079,6 +2085,267 @@
     return GGSync.sync();
   }
   /* =====================================================================
+     BLD 1075 YOUR ACCOUNT IS YOUR PROFILE: kids in their own accounts (the guardian key) and the move
+     - A kid's tree moves into the kid's own Grounded Account (Give Riley a Kid Account). Its header keeps kidAcct (the kid's
+       account id) and is locked with the kid's password and the kid's account key, so the kid signs in on their own device
+       and the tree opens there. On the grown-up's devices it still opens with the key in the grown-up's vault, and it syncs
+       to the kid's account through the guardian key (GGSync.guard, X-GG-For). The grown-up's own account keeps only the
+       header, never the kid's vault again.
+     - The move: copy, check, then tidy. Every tree that moves is first set aside here, still locked, for 30 days
+       (gg-move-old:<id>), with Undo the Move. A tree is written into its new account, read back down from the server,
+       and compared piece by piece with the original before anything else changes. A move cut off halfway leaves the tree
+       where it was, set aside copy and all. The journal (gg-move-1075) holds ids and steps only.
+     ===================================================================== */
+  var GUARD = { ready: {}, words: {} }, guardP = null;
+  var MV = 'gg-move-1075', OLDK = 'gg-move-old:', MV_DAYS = 30 * 86400000, MV_SHOW = 60 * 86400000;
+  function guardsUp() {
+    if (guardP || !acIn() || !GGAccount.oneLive || !GGAccount.oneLive() || !readList().some(guardedKid)) return guardP || Promise.resolve();
+    guardP = GGAccount.household.get().then(function (h) {
+      return Promise.all(((h && h.people) || []).map(function (m) {
+        if (!m.guard || !m.account || GUARD.ready[m.account]) return null;
+        return GGAccount.guardOpen(m.guard, m.account).then(function (ak) { return GGAccount.ctxFor(m.account, ak).then(function (ctx) { ak.fill(0); GGSync.guard(ctx); GUARD.ready[m.account] = 1; }); }).catch(function () {});
+      }));
+    }).then(function () { readList().filter(guardedKid).forEach(function (p) { if (open[p.id]) guardReg(p.id); }); }, function () {})
+      .then(function () { guardP = null; if (readList().some(function (p) { return guardedKid(p) && AC.reg['g:' + p.kidAcct + '|p:' + p.id]; })) GGSync.sync().catch(function () {}); });
+    return guardP;
+  }
+  function guardReg(id) {
+    var p = getP(id); if (!p || !p.kidAcct || !GUARD.ready[p.kidAcct]) return;
+    var g = p.kidAcct, ln = 'g:' + g + '|acct:profiles', n = 'g:' + g + '|p:' + id;
+    if (!AC.reg[ln]) {
+      AC.reg[ln] = 1;
+      GGSync.guardDoc(g, 'acct:profiles', {
+        get: function () { var o = {}; readList().forEach(function (q) { if (q.kidAcct === g) o[q.id] = head(q); }); return Object.keys(o).length ? o : null; },
+        // the kid's own device may change a name, a picture, or the tree; the lock fields follow a new password
+        put: function (now) {
+          if (!now || typeof now !== 'object') return;
+          Object.keys(now).forEach(function (kid) {
+            var h = now[kid], q = getP(kid); if (!q || !h || h.id !== kid || q.kidAcct !== g) return;
+            var nx = Object.assign({}, q); ['name', 'avatar', 'tree', 'salt', 'wrap', 'acct', 'code', 'shared', 'pub'].forEach(function (k) { if (k in h) nx[k] = h[k]; });
+            if (!same(nx, q)) { putP(nx); emit('change'); }
+          });
+        }
+      });
+    }
+    if (!AC.reg[n] && open[id]) {
+      AC.reg[n] = 1;
+      GGSync.guardDoc(g, 'p:' + id, {
+        get: function () { return open[id] ? open[id].data : null; },
+        put: function (data) {
+          if (!open[id] || !data || typeof data !== 'object') return;
+          fillIn(open[id].data, data); AC.quiet[id] = (AC.quiet[id] || 0) + 1;
+          var done = function () { AC.quiet[id]--; emit('data'); };
+          return writeVault(id, open[id].raw, open[id].data).then(done, done);
+        }
+      });
+    }
+    if (GUARD.words[g] && !AC.reg['g:' + g + '|acct:rootwords']) {
+      AC.reg['g:' + g + '|acct:rootwords'] = 1;
+      GGSync.guardDoc(g, 'acct:rootwords', { get: function () { return GUARD.words[g] ? { words: GUARD.words[g] } : null; }, put: function () {} }, { opaque: true });
+    }
+  }
+
+  /* ---------- the journal and the set aside copies ---------- */
+  function mvGet() { try { var j = JSON.parse(localStorage.getItem(MV)); return j && j.v === 1 ? j : null; } catch (e) { return null; } }
+  function mvPut(j) { try { if (j) localStorage.setItem(MV, JSON.stringify(j)); else localStorage.removeItem(MV); } catch (e) {} }
+  function mvRow(id, o) { var j = mvGet() || { v: 1, at: Date.now(), rows: {} }; j.rows[id] = Object.assign(j.rows[id] || {}, o, { t: Date.now() }); mvPut(j); return j.rows[id]; }
+  function oldIds() { var out = []; try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(OLDK) === 0) out.push(k.slice(OLDK.length)); } } catch (e) {} return out; }
+  function oldGet(id) { try { return JSON.parse(localStorage.getItem(OLDK + id)); } catch (e) { return null; } }
+  // The tree as it is now, header and locked box, kept here for 30 days (the first copy wins: a second move keeps the oldest)
+  function setAside(id) {
+    var p = getP(id); if (!p) return false;
+    if (!oldGet(id)) { try { localStorage.setItem(OLDK + id, JSON.stringify({ p: p, box: localStorage.getItem(BOX + id), at: Date.now() })); } catch (e) { throw new Error('This device is full. Save a backup first, then try again.'); } }
+    return true;
+  }
+  function mvSweep() {
+    var now = Date.now();
+    oldIds().forEach(function (id) { var o = oldGet(id); if (!o || now - (+o.at || 0) > MV_DAYS) { try { localStorage.removeItem(OLDK + id); } catch (e) {} } });
+    var j = mvGet(); if (j && now - (+j.at || 0) > MV_SHOW && !oldIds().length) mvPut(null);
+  }
+  // Undo the Move: every tree set aside comes back exactly as it was on this device (accounts already made stay, and each
+  // person can still sign in to theirs)
+  function mvUndo() {
+    var ids = oldIds(), back = 0;
+    AC.q++;
+    try {
+      ids.forEach(function (id) {
+        var o = oldGet(id); if (!o || !o.p || o.p.id !== id) return;
+        if (open[id]) { delete open[id]; if (cur && cur.id === id) cur = null; }
+        var l = readList().filter(function (q) { return q.id !== id; }); l.push(o.p); writeList(l);
+        try { if (o.box) localStorage.setItem(BOX + id, o.box); localStorage.removeItem(OLDK + id); } catch (e) {}
+        ['p:', 'pine:'].forEach(function (k) { if (AC.reg[k + id]) { delete AC.reg[k + id]; GGSync.drop(k + id); } });
+        back++;
+      });
+    } finally { AC.q--; }
+    var j = mvGet(); if (j) { Object.keys(j.rows).forEach(function (id) { j.rows[id].step = 'undone'; }); mvPut(j); }
+    emit('change');
+    return back;
+  }
+
+  /* ---------- what is on this device ---------- */
+  function mvKind(p, me) {
+    if (guardedKid(p)) return 'kidDone';
+    if (isAcct(p) && p.acct && p.acct.a) return p.acct.a === me ? 'own' : 'other';
+    if (p.age === 'maple' || p.age === 'aspen') return 'kid';
+    if (p.age === 'pine') return 'teen';
+    if ((p.helpers || []).length) return 'loved';
+    if (me && acctCarried(p.id)) return 'extra';
+    return 'adult';
+  }
+  function mvList() {
+    var i = acIn() && GGAccount.info(), me = i ? i.accountId : '', j = mvGet() || { rows: {} };
+    var rows = readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), kind: mvKind(p, me), open: !!open[p.id], step: (j.rows[p.id] || {}).step || '' }; });
+    // more than one tree that is this account's own (Caleb's two): the first made stays, each other one is an extra
+    var own = rows.filter(function (r) { return r.kind === 'own'; });
+    own.slice(1).forEach(function (r) { r.kind = 'extra'; });
+    return rows;
+  }
+  function mvNeeded() {
+    if (!LIVE || !acIn() || !GGAccount.oneLive || !GGAccount.oneLive()) return false;
+    if (/^\/(willow|grove|heartwood|live)(\/|$)/.test(location.pathname)) return false;
+    return mvList().some(function (r) { return /^(adult|teen|kid|loved|extra)$/.test(r.kind); });
+  }
+
+  /* ---------- the steps ---------- */
+  function rawOf(id, pass) { var p = getP(id); if (!p) return Promise.reject(new Error('That tree is not on this device.')); return open[id] ? Promise.resolve(open[id].raw) : rawFromPass(p, pass); }
+  function snap(v) { return JSON.parse(JSON.stringify(v)); }
+  function stable(v) { return window.GGSync && GGSync._ ? GGSync._.stable(v) : JSON.stringify(v); }
+  function eqv(a, b) { return stable(a) === stable(b); }
+  // The tree's header for its new account: locked with that person's password and the new account key
+  function lockFor(id, raw, password, ak, accountId, extra) {
+    return wrapRaw(String(password).normalize('NFKC'), raw).then(function (w) {
+      var q = Object.assign({}, getP(id), extra || {}); q.salt = w.salt; q.wrap = w.wrap; q.code = 'acct'; delete q.rw;
+      return acctBase(ak).then(function (b) { return acctSeal(q, b, accountId, raw); });
+    });
+  }
+  // Remove It: one tap, the name typed; set aside for 30 days, then gone from this device (and from the account it was in)
+  function mvRemove(id, typed) {
+    var p = getP(id); if (!p) return Promise.resolve(false);
+    if (String(typed || '').trim().toLowerCase() !== String(p.name).trim().toLowerCase()) return Promise.reject(new Error('Type the tree\'s name to remove it.'));
+    setAside(id); mvRow(id, { kind: 'remove', step: 'tidied' });
+    return removeProfile(id).then(function () { return true; });
+  }
+  // Bring Its Check-ins Into My Tree: from the other tree come its check-ins, Tending, Living Sober, and the rest of what it
+  // saved, joined by date and id (the newest whole record where both hold the same one), never doubled; this tree's own
+  // settings stay. Checked by merging again (it must change nothing), then the other tree is set aside and removed.
+  var MERGE_SKIP = { keys: 1, email: 1, rootWords: 1, house: 1, hkey: 1, planner: 1, life: 1, v: 1, keepSafe: 1 };
+  function mvMerge(intoId, fromId, fromPass) {
+    if (!open[intoId]) return Promise.reject(new Error('Open your own tree first.'));
+    var m3 = GGSync._.merge3;
+    return rawOf(fromId, fromPass).then(function (raw) { return readVault(fromId, raw); }).then(function (other) {
+      var mine = open[intoId].data, before = snap(mine);
+      setAside(fromId); setAside(intoId); mvRow(fromId, { kind: 'merge', into: intoId, step: 'copied' });
+      Object.keys(other).forEach(function (k) {
+        if (MERGE_SKIP[k]) return;
+        if (k === 'home') { var oh = other.home || {}; if (oh.checkins) { mine.home = mine.home || {}; mine.home.checkins = m3(undefined, mine.home.checkins, oh.checkins, 2, 1); } return; }
+        var r = m3(undefined, mine[k], other[k], 2, 1); if (r !== undefined) mine[k] = r;
+      });
+      // the check: everything from the other tree is in this one now (merging it again changes nothing), and nothing of
+      // this tree's own went missing (merging the copy from before changes nothing either)
+      var ok = Object.keys(other).every(function (k) { return MERGE_SKIP[k] || k === 'home' || eqv(m3(undefined, mine[k], other[k], 2, 1), mine[k]); }) &&
+        Object.keys(before).every(function (k) { return eqv(m3(undefined, mine[k], before[k], 2, 1), mine[k]); });
+      if (!ok) { fillIn(mine, before); mvRow(fromId, { step: 'retry' }); throw new Error('This one needs another try. Everything is still here.'); }
+      return writeVault(intoId, open[intoId].raw, mine).then(function () { mvRow(fromId, { step: 'checked' }); emit('data'); return removeProfile(fromId); }).then(function () { mvRow(fromId, { step: 'tidied' }); return true; });
+    });
+  }
+  // Make Kayti's Account (a grown-up), or a teen's own account: made right here while the grown-up who runs the Household
+  // is signed in; then this device signs in as that person, the tree becomes their account's own and goes up, and it is
+  // read back from the server and checked piece by piece. This device stays signed in as that person; Switch Account
+  // brings the grown-up back. o: {pass: the tree's passcode, email or name, password, band, agree}
+  function mvAdopt(id, o) {
+    o = o || {};
+    var p = getP(id); if (!p) return Promise.reject(new Error('That tree is not on this device.'));
+    var band = p.age === 'pine' ? 'teen' : 'adult', raw, orig, made;
+    if (o.agree === false) return Promise.reject(new Error('Check the box to agree to the Terms of Use and the Privacy Policy.'));
+    return rawOf(id, o.pass).then(function (r) { raw = r; return readVault(id, raw); }).then(function (v) {
+      orig = snap(v); setAside(id); mvRow(id, { kind: band, step: 'plan' });
+      return houseFirst();
+    }).then(function () {
+      return GGAccount.makeFor({ band: band, email: o.email, name: o.name, password: o.password });
+    }).then(function (r) {
+      made = r; mvRow(id, { step: 'made', to: r.accountId });
+      return lockFor(id, raw, o.password, r.ak, r.accountId);
+    }).then(function (q) {
+      made.ak.fill(0);
+      AC.making = true;
+      return Promise.resolve(lock(true)).then(function () { return GGAccount.signOut({ erase: false }); }).then(function () {
+        return GGAccount.signIn({ email: made.name ? made.name : made.email, password: o.password });
+      }).then(function () {
+        carryLoad(); putP(q);
+        return openWithRaw(id, raw, Date.now() + 8 * 3600000);
+      }).then(function () {
+        if (AC.ids.indexOf(id) < 0) AC.ids.push(id); carrySave(); acctReg(); GGSync.changed('acct:profiles'); GGSync.changed('p:' + id);
+        return GGAccount.keepWords(made.words);
+      }).then(function () { return GGSync.sync(); }).then(function () { mvRow(id, { step: 'copied' }); return mvCheck(id, orig); }).then(function () {
+        mvRow(id, { step: 'checked' }); return { accountId: made.accountId, words: made.words, email: made.email, name: made.name };
+      }, function (e) { mvRow(id, { step: 'retry' }); throw e; });
+    }).then(function (r) { AC.making = false; mvRow(id, { step: 'tidied' }); emit('change'); return r; }, function (e) { AC.making = false; throw e; });
+  }
+  // the account's copy of a tree, read back from the server and opened here, against the original
+  function mvCheck(id, orig, gid) {
+    var p0 = getP(id);
+    // a teen's Pine travels whole as its sealed box (pine:<id>): the server's box must be this device's box, and it must
+    // open here to the original
+    if (p0 && p0.age === 'pine' && !gid) return Promise.all([GGSync.readBack('pine:' + id), GGSync.readBack('acct:profiles')]).then(function (r) {
+      var box = null; try { box = JSON.parse(localStorage.getItem(BOX + id)); } catch (e) {}
+      if (!r[1] || !r[1][id] || !r[0] || !box || r[0].iv !== box.iv || r[0].ct !== box.ct) throw new Error('This one needs another try. Everything is still here.');
+      return readVault(id, open[id].raw).then(function (v) { if (Object.keys(orig).some(function (k) { return !eqv(v[k], orig[k]) && !eqv(v[k], open[id].data[k]); })) throw new Error('This one needs another try. Everything is still here.'); return true; });
+    });
+    return Promise.all([GGSync.readBack('p:' + id, gid), GGSync.readBack('acct:profiles', gid)]).then(function (r) {
+      var v = r[0], L = r[1];
+      if (!L || !L[id]) throw new Error('This one needs another try. Everything is still here.');
+      // every part of the original is there, unchanged (parts added since, like a new day's marks, may join it)
+      var miss = Object.keys(orig).filter(function (k) { return !v || !eqv(v[k], orig[k]) && !(open[id] && eqv(v[k], open[id].data[k])); });
+      if (miss.length) throw new Error('This one needs another try. Everything is still here.');
+      return true;
+    });
+  }
+  // A Household for the grown-up who is moving their family (any confirmed account may start one)
+  function houseFirst() {
+    return GGAccount.household.get().then(function (h) {
+      if (h && h.owner) return h;
+      if (h) throw new Error('Only the grown-up who runs your Household can make family accounts. Ask them to open this on their phone.');
+      var i = GGAccount.info(); if (!i || !i.confirmed) throw new Error('Confirm your email first, from the message we sent, then try again.');
+      return GGAccount.household.create().then(function () { return GGAccount.household.get(); });
+    });
+  }
+  // Give Riley a Kid Account: a sign in name and a password chosen together; the kid's account joins the Household, the
+  // tree moves in with every check-in through the guardian key, and the grown-up keeps opening it here.
+  function mvKid(id, o) {
+    o = o || {};
+    var p = getP(id); if (!p || !(p.age === 'maple' || p.age === 'aspen')) return Promise.reject(new Error('That tree is not on this device.'));
+    if (!open[id]) return Promise.reject(new Error('Open your own tree first, so ' + p.name + '\'s tree opens with your key.'));
+    var raw = open[id].raw, orig = snap(open[id].data), made;
+    setAside(id); mvRow(id, { kind: 'kid', step: 'plan' });
+    return houseFirst().then(function () {
+      return GGAccount.makeFor({ band: 'kid', name: o.name, password: o.password });
+    }).then(function (r) {
+      made = r; mvRow(id, { step: 'made', to: r.accountId });
+      return Promise.all([lockFor(id, raw, o.password, r.ak, r.accountId, { kidAcct: r.accountId }), GGAccount.ctxFor(r.accountId, r.ak)]);
+    }).then(function (x) {
+      made.ak.fill(0);
+      GGSync.guard(x[1]); GUARD.ready[made.accountId] = 1; GUARD.words[made.accountId] = made.words.join(' ');
+      putP(x[0]); regVault(id); guardReg(id);
+      GGSync.changed('acct:profiles');
+      return GGSync.sync();
+    }).then(function () { mvRow(id, { step: 'copied' }); return mvCheck(id, orig, made.accountId); }).then(function () {
+      delete GUARD.words[made.accountId]; mvRow(id, { step: 'checked' });
+      mvRow(id, { step: 'tidied' }); emit('change');
+      return { accountId: made.accountId, name: made.name, words: made.words };
+    }, function (e) { mvRow(id, { step: 'retry' }); throw e; });
+  }
+  // A kid's new password, set by their grown-up on this phone
+  function mvKidPassword(id, password, myPassword) {
+    var p = getP(id); if (!guardedKid(p) || !open[id]) return Promise.reject(new Error('Open your own tree first.'));
+    return GGAccount.household.get().then(function (h) {
+      var m = ((h && h.people) || []).filter(function (x) { return x.account === p.kidAcct && x.guard; })[0];
+      if (!m) throw new Error('Only the grown-up who holds ' + p.name + '\'s key can set a new password.');
+      return GGAccount.guardOpen(m.guard, p.kidAcct);
+    }).then(function (ak) {
+      return GGAccount.kidPassword({ account: p.kidAcct, ak: ak, password: password, myPassword: myPassword }).then(function () { return lockFor(p.id, open[id].raw, password, ak, p.kidAcct, {}); }).then(function (q) { ak.fill(0); putP(q); GGSync.changed('g:' + p.kidAcct + '|acct:profiles'); GGSync.sync().catch(function () {}); return true; }, function (e) { ak.fill(0); throw e; });
+    });
+  }
+  /* =====================================================================
      BLD 1047 ONE PASSWORD AND FACE ID
      ===================================================================== */
   // Making a grown-up's own profile asks for a Grounded Account, except where Grounded needs no account
@@ -2089,7 +2356,7 @@
     return !!(AC.on && window.GGAccount && GGAccount.configured && GGAccount.configured());
   }
   // The account sheets (shared/gg-account-ui.js), loaded when needed
-  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c226', acctUiP = null;
+  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c228', acctUiP = null;
   function acctSheet(view, o) {
     if (!acctUiP) acctUiP = new Promise(function (ok) {
       if (window.GGAccountUI) return ok(window.GGAccountUI);
@@ -2312,7 +2579,7 @@
       AC.on = true;
       GGAccount.on(acctEvent);
       if (GGAccount.onKeys) GGAccount.onKeys(acctKeys);   // BLD 1047
-      return GGAccount.ready.then(function () { carryLoad(); AC.booted = true; acctReg(); if (acIn()) GGSync.sync().catch(function () {}); return true; });
+      return GGAccount.ready.then(function () { carryLoad(); AC.booted = true; try { mvSweep(); } catch (e) {} acctReg(); if (acIn()) GGSync.sync().catch(function () {}); return true; });
     }).catch(function () { return false; });
   }
   AC.ready = acctBoot();
@@ -2331,8 +2598,17 @@
       profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); },
       // BLD 1075 Switch Account: each account's tree on this device (an account that signed in here keeps its tree locked
       // here for its owner), and the trees here that have no account yet (they move into their own accounts with the move)
-      trees: function () { var k = knownGet(), i = acIn() && GGAccount.info(); return readList().filter(function (p) { return isAcct(p) && p.acct && p.acct.a; }).map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), account: p.acct.a, email: (i && i.accountId === p.acct.a ? i.email : k[p.acct.a]) || '', mine: !!(i && i.accountId === p.acct.a), open: !!open[p.id] }; }); },
-      local: function () { return readList().filter(function (p) { return !isAcct(p); }).map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), grown: p.grown || [], open: !!open[p.id] }; }); }
+      trees: function () { var k = knownGet(), i = acIn() && GGAccount.info(); return readList().filter(function (p) { return isAcct(p) && p.acct && p.acct.a && !guardedKid(p); }).map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), account: p.acct.a, email: (i && i.accountId === p.acct.a ? i.email : k[p.acct.a]) || '', mine: !!(i && i.accountId === p.acct.a), open: !!open[p.id] }; }); },
+      local: function () { return readList().filter(function (p) { return !isAcct(p) || guardedKid(p); }).map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), grown: p.grown || [], open: !!open[p.id], kid: guardedKid(p) }; }); }
+    },
+    // BLD 1075: the move (One Account, One Tree) and kids in their own accounts (GGP.move stays Move to Another Device)
+    trees: {
+      // Add a Family Member, Kid: a new Maple or Aspen tree made here with this grown-up, moved at once into its own kid account
+      newKid: function (o) { o = o || {}; if (!cur || !open[cur.id] || getP(cur.id).age !== 'adult') return Promise.reject(new Error('Open your own tree first.'));
+        return createProfile({ name: o.first, age: o.age === 'aspen' ? 'aspen' : 'maple', pass: o.password, code: 'text', grownId: cur.id }).then(function (id) { return mvKid(id, { name: o.name, password: o.password }).then(function (r) { r.id = id; return r; }); }); },
+      needed: mvNeeded, list: mvList, journal: mvGet, remove: mvRemove, merge: mvMerge, adopt: mvAdopt, kid: mvKid, kidPassword: mvKidPassword,
+      undo: mvUndo, old: function () { var ids = oldIds(), at = ids.map(function (id) { return +((oldGet(id) || {}).at) || 0; }); return { count: ids.length, until: at.length ? Math.min.apply(null, at) + MV_DAYS : 0 }; },
+      guarded: function (id) { return guardedKid(getP(id)); }
     },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
     get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {}, pub: p.pub || null } : null; },
