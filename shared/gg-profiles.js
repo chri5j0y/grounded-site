@@ -1891,7 +1891,7 @@
      The Family Kitchen and Grounded Money shared spaces are wired in home/home.js.
      ===================================================================== */
   var LIVE = ACCOUNTS_LIVE === true || window.GG_ACCOUNTS_LIVE === true;
-  var ACCT_SRC = ['/shared/gg-account.js?v=c228', '/shared/gg-sync.js?v=c228'], CARRY = 'gg-acct-carry';
+  var ACCT_SRC = ['/shared/gg-account.js?v=c228', '/shared/gg-sync.js?v=c232'], CARRY = 'gg-acct-carry';
   var HEAD = ['id', 'name', 'avatar', 'age', 'tree', 'code', 'salt', 'wrap', 'rw', 'acct', 'grown', 'helpers', 'shared', 'agreed', 'created', 'pub', 'kidAcct'];   // BLD 1047: acct; BLD 1075: kidAcct, a kid's own account
   var AC = { on: false, booted: false, acct: '', ids: [], reg: {}, q: 0, quiet: {}, ready: null };
   function acIn() { return !!(AC.on && window.GGAccount && GGAccount.state() !== 'out' && AC.acct); }
@@ -2633,7 +2633,7 @@
       guarded: function (id) { return guardedKid(getP(id)); }
     },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
-    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {}, pub: p.pub || null } : null; },
+    get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {}, pub: p.pub || null, kidAcct: p.kidAcct || null } : null; },   // BLD 1072: kidAcct, so Gift Lists knows a kid's tree opened here is the kid's own
     // BLD 980: Household on One Device (shared/gg-house.js)
     house: {
       load: needHouse, here: houseHere,

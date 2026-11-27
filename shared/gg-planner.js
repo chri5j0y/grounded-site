@@ -48,7 +48,7 @@
 (function () {
   'use strict';
   if (window.GGPlanner) return;
-  var V = 'b951';
+  var V = 'c232';   // BLD 1072: See Maya's Gift List on a Birthday
   var HERE = (function () { try { var s = document.currentScript && document.currentScript.src; return s ? s.replace(/[^/]*$/, '') : '/shared/'; } catch (e) { return '/shared/'; } })();
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
   var BOXK = 'gg-plan:';
@@ -362,6 +362,16 @@
     var w = arr(e.w).map(function (id) { return person(plan, id); }).filter(Boolean);
     return w.length ? w.map(function (p) { return p.n; }).join(', ') : 'Everyone';
   }
+  // BLD 1072: See Maya's Gift List (or See My Gift List) on a Birthday, only when the person viewing can open that list.
+  // The host answers from Gift Lists (shared/gg-gifts.js, H.gift(name, isMe) -> {href, label} or null).
+  function giftLinks(plan, e) {
+    if (!e || e.k !== 'bday' || typeof H.gift !== 'function') return '';
+    var who = arr(e.w).map(function (id) { return person(plan, id); }).filter(Boolean).map(function (p) { return { n: p.n, me: p.id === me() }; });
+    if (!who.length) { var m = /^\s*([A-Za-z][A-Za-z.' ]{0,23}?)['\u2019]s\b/.exec(e.t || ''); if (m) who = [{ n: m[1], me: false }]; }
+    var out = [];
+    who.forEach(function (x) { var g = null; try { g = H.gift(x.n, x.me); } catch (er) {} if (g && g.href) out.push('<a class="gp-btn sm line gp-giftl" href="' + esc(g.href) + '">' + I('gift') + esc(g.label) + '</a>'); });
+    return out.length ? '<div class="gp-giftls">' + out.join('') + '</div>' : '';
+  }
   function colorOf(plan, e) { var p = person(plan, arr(e.w)[0]); return p ? p.c : 'fam'; }
   function dots(plan, e) {
     var w = arr(e.w).map(function (id) { return person(plan, id); }).filter(Boolean);
@@ -451,7 +461,7 @@
       if (!L.length) return none ? '<p class="gp-sub">' + esc(none) + '</p>' : '';
       return '<ul class="gp-evs">' + L.map(function (x) {
         var e = x.ev, k = KIND[e.k] || KIND.other;
-        return '<li><button type="button" class="gp-ev gp-c-' + colorOf(plan, e) + '" data-gp="edit:' + esc(e.id) + '"><span class="ic">' + I(k.ic) + '</span><span class="tx"><b>' + esc(e.t) + '</b><small>' + esc(k.n) + ' · ' + esc(timeLine(e, x)) + (e.r ? ' · ' + (e.r === 'w' ? 'Every week' : 'Every year') : '') + '</small><small class="who">' + dots(plan, e) + esc(whoLine(plan, e)) + '</small>' + (e.o ? '<small class="nt">' + esc(e.o) + '</small>' : '') + '</span></button></li>';
+        return '<li><button type="button" class="gp-ev gp-c-' + colorOf(plan, e) + '" data-gp="edit:' + esc(e.id) + '"><span class="ic">' + I(k.ic) + '</span><span class="tx"><b>' + esc(e.t) + '</b><small>' + esc(k.n) + ' · ' + esc(timeLine(e, x)) + (e.r ? ' · ' + (e.r === 'w' ? 'Every week' : 'Every year') : '') + '</small><small class="who">' + dots(plan, e) + esc(whoLine(plan, e)) + '</small>' + (e.o ? '<small class="nt">' + esc(e.o) + '</small>' : '') + '</span></button>' + giftLinks(plan, e) + '</li>';
       }).join('') + '</ul>';
     }
     function nudgeHtml(plan) {
@@ -541,7 +551,7 @@
       e = e || Object.assign({ id: '', t: '', k: 'other', d: st.pick || today(), w: [], r: '', o: '' }, preset || {});
       if (!ed && role() === 'teen' && !e.w.length) e.w = [me()];
       var allDay = !e.tm, k = KIND[e.k] || KIND.other;
-      var html = ro ? '<div class="gp-dlgh"><h2 class="gp-h2" id="gp-dt">' + esc(e.t) + '</h2></div><p class="gp-sub">' + esc(k.n) + ' · ' + esc(niceDate(e.d, true)) + ' · ' + esc(timeLine(e)) + '</p><p class="gp-sub">' + esc(whoLine(plan, e)) + '</p>' + (e.o ? '<p class="gp-sub">' + esc(e.o) + '</p>' : '') + '<div class="gp-acts"><button type="button" class="gp-btn sm line" data-gpd="x">Close</button></div>'
+      var html = ro ? '<div class="gp-dlgh"><h2 class="gp-h2" id="gp-dt">' + esc(e.t) + '</h2></div><p class="gp-sub">' + esc(k.n) + ' · ' + esc(niceDate(e.d, true)) + ' · ' + esc(timeLine(e)) + '</p><p class="gp-sub">' + esc(whoLine(plan, e)) + '</p>' + (e.o ? '<p class="gp-sub">' + esc(e.o) + '</p>' : '') + giftLinks(plan, e) + '<div class="gp-acts"><button type="button" class="gp-btn sm line" data-gpd="x">Close</button></div>'
         : '<form class="gp-form" data-gp-form="event" novalidate><div class="gp-dlgh"><h2 class="gp-h2" id="gp-dt">' + (ed ? 'Change the Event' : 'Add an Event') + '</h2><button type="button" class="gp-x" data-gpd="x" aria-label="Close">' + I('x') + '</button></div>' +
           '<label class="gp-l" for="gp-et">What</label><input type="text" id="gp-et" maxlength="80" autocomplete="off" value="' + esc(e.t) + '" placeholder="' + esc(k.ph) + '">' +
           '<span class="gp-l">Kind</span><div class="gp-kinds" role="group" aria-label="Kind">' + KINDS.map(function (x) { return '<button type="button" class="gp-pill" data-gpk="' + x.id + '" aria-pressed="' + (x.id === e.k) + '">' + I(x.ic) + esc(x.n) + '</button>'; }).join('') + '</div>' +
@@ -677,7 +687,7 @@
       if (!plan) { el.innerHTML = ''; return; }
       var td = today(), map = byDay(plan, td, addD(td, 6)), days = Object.keys(map).sort().slice(0, 5);
       el.innerHTML = '<div class="hm-kcard gp gp-kid" style="--c:#00B4D8"><h2 class="hm-kh">Our Family This Week</h2>' +
-        (days.length ? '<ul class="gp-kl">' + days.map(function (d) { return '<li><b>' + (d === td ? 'Today' : DAYS[parse(d).getDay()]) + '</b>' + map[d].map(function (x) { return '<span class="gp-kev"><span class="gp-dot gp-c-' + colorOf(plan, x.ev) + '" aria-hidden="true"></span>' + esc(x.ev.t) + (arr(x.ev.w).length ? ' <small>with ' + esc(whoLine(plan, x.ev)) + '</small>' : '') + '</span>'; }).join('') + '</li>'; }).join('') + '</ul>'
+        (days.length ? '<ul class="gp-kl">' + days.map(function (d) { return '<li><b>' + (d === td ? 'Today' : DAYS[parse(d).getDay()]) + '</b>' + map[d].map(function (x) { return '<span class="gp-kev"><span class="gp-dot gp-c-' + colorOf(plan, x.ev) + '" aria-hidden="true"></span>' + esc(x.ev.t) + (arr(x.ev.w).length ? ' <small>with ' + esc(whoLine(plan, x.ev)) + '</small>' : '') + '</span>' + giftLinks(plan, x.ev); }).join('') + '</li>'; }).join('') + '</ul>'
           : '<p>A cozy week at home. Ask your grown-up what fun thing your family could plan.</p>') + '</div>';
     });
   }
@@ -685,6 +695,7 @@
   window.GGPlanner = {
     v: V, host: host, render: render, weekCard: weekCard, kidCard: kidCard, load: load, has: has, start: start, space: space,
     on: function (fn) { P.subs.push(fn); }, off: function (fn) { P.subs = P.subs.filter(function (f) { return f !== fn; }); },
+    repaint: function () { emit('gifts'); },   // BLD 1072: Gift Lists are ready, so a Birthday can show its link
     plan: function () { return P.plan && P.who === me() ? P.plan : null; },
     model: { occ: occ, byDay: byDay, fixPlan: fixPlan, monthHasTogether: monthHasTogether, question: question, QUESTIONS: QUESTIONS, KINDS: KINDS, CIRCLES: CIRCLES }
   };

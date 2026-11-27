@@ -180,6 +180,8 @@
   function spCtx(sp) { var x = X(); return { scope: sp.id, pre: '/spaces/' + sp.id, idp: 's|', DK: sp.DK, NK: sp.NK, kind: sp.kind, aad: function (id, v) { return x.AAD.sbox(sp.id, id, v); } }; }
   // BLD 1075: a kid's account this grown-up guards (the kid's own keys, opened with the guardian key; every request names it)
   function gCtx(g) { var x = X(); return { scope: 'g' + g.accountId, kind: 'g:' + g.accountId, pre: '', hdr: g.headers, idp: 'a|', DK: g.DK, NK: g.NK, aad: function (id, v) { return x.AAD.box(g.accountId, id, v); } }; }
+  // BLD 1072: a Gift Circle space (its own key; every request goes to /gifts/spaces/<id>)
+  function qCtx(q) { var x = X(); return { scope: q.id, pre: '/gifts/spaces/' + q.id, idp: 'q|', DK: q.DK, NK: q.NK, kind: 'q:' + q.id, aad: function (id, v) { return x.AAD.sbox(q.id, id, v); } }; }
   function H(sc, o) { if (!sc.hdr) return o; o = Object.assign({}, o || {}); o.headers = Object.assign({}, sc.hdr, o.headers || {}); return o; }
   function idOf(sc, name) { return X().boxId(sc.NK, sc.idp + name); }
 
@@ -498,7 +500,7 @@
   function leftHousehold() { var ids = Object.keys(spaceCtx).map(function (k) { return spaceCtx[k].id; }); spaceCtx = {}; return dropBases(function (key) { return ids.some(function (id) { return key.indexOf(id + '|') === 0; }); }); }
 
   /* ---------- BLD 1075: the doc as the server holds it, for the move's piece by piece check ---------- */
-  var guards = {};
+  var guards = {}, gifts = {};
   function readBack(name, gid) {
     var x = X(), K = x.keys(); if (!K) return Promise.reject(x.kind('signin'));
     if (gid && !guards[gid]) return Promise.reject(x.kind('guard'));
@@ -533,6 +535,9 @@
           Object.keys(spaceCtx).forEach(function (kind) { if (Object.keys(docs).some(function (n) { return docs[n].space === kind; })) chain = chain.then(function () { return syncScope(spCtx(spaceCtx[kind]), K, B, res); }); });
           // BLD 1075: each kid's account this grown-up guards, for the docs this phone holds for that kid
           Object.keys(guards).forEach(function (gid) { var sc = gCtx(guards[gid]); if (Object.keys(docs).some(function (n) { return docs[n].space === sc.kind; })) chain = chain.then(function () { return syncScope(sc, K, B, res); }); });
+          // BLD 1072: each Gift Circle space this device holds a doc for; one that is gone or out of reach is told to its owner
+          // (gg-gifts.js) and never stops the rest of the sync
+          Object.keys(gifts).forEach(function (sid) { var sc = qCtx(gifts[sid]); if (Object.keys(docs).some(function (n) { return docs[n].space === sc.kind; })) chain = chain.then(function () { return syncScope(sc, K, B, res).catch(function (e) { if (e && (e.why === 'offline' || e.why === 'signin')) throw e; emit('giftgone', { id: sid, why: e && e.why }); }); }); });
           return chain;
         });
       });
@@ -596,7 +601,8 @@
   }
   function carried() { return Object.keys(docs).filter(function (n) { return !docs[n].space; }).concat(lastNames.filter(function (n) { return !docs[n]; })); }
   function forget() {
-    clearTimeout(timer); clearTimeout(retryT); spaceCtx = {}; hhCache = null; lastNames = [];
+    clearTimeout(timer); clearTimeout(retryT); spaceCtx = {}; hhCache = null; lastNames = []; gifts = {};
+    Object.keys(docs).forEach(function (n) { if (/^q:/.test(docs[n].space || '')) delete docs[n]; });
     Object.keys(docs).forEach(function (n) { docs[n].dirtyAt = 0; });
     return new Promise(function (res) { var r = indexedDB.deleteDatabase('gg-sync'); r.onsuccess = r.onerror = r.onblocked = function () { res(); }; }).then(function () { setS({ state: 'idle', last: 0 }); });
   }
@@ -629,6 +635,15 @@
     unguard: function (id) { delete guards[id]; Object.keys(docs).forEach(function (n) { if (docs[n].space === 'g:' + id) delete docs[n]; }); return dropBases(function (key) { return key.indexOf('g' + id + '|') === 0; }); },
     guardDoc: function (id, name, adapter, o) { if (!guards[id]) throw new Error('GGSync: guard first'); return register('g:' + id + '|' + name, adapter, Object.assign({}, o || {}, { wire: name }), 'g:' + id) && name; },
     readBack: readBack,
+    // BLD 1072: Gift Circle spaces (shared/gg-gifts.js). gift(sid, raw, adapter, o) syncs one space's doc with its own key;
+    // ungift(sid) stops it and drops its pieces here; giftKeys: wrapTo(pub, raw, sid, account), unwrap(w, sid), space keys.
+    gift: function (sid, raw, adapter, o) {
+      if (!/^q[A-Za-z0-9_-]{22}$/.test(sid)) throw new Error('GGSync: gift');
+      return spKeys(raw).then(function (k) { gifts[sid] = { id: sid, DK: k.DK, NK: k.NK, raw: raw }; register('q:' + sid, adapter, Object.assign({}, o || {}, { wire: 'g' }), 'q:' + sid); return sid; });
+    },
+    ungift: function (sid) { delete gifts[sid]; delete docs['q:' + sid]; return Promise.all([dropBases(function (key) { return key.indexOf(sid + '|') === 0; }), metaPut('cursor|' + sid, undefined), metaPut('dirty|q:' + sid, undefined)]); },
+    gifting: function () { return Object.keys(gifts); },
+    giftKeys: { wrapTo: wrapTo, unwrap: function (w, sid) { var x = X(), K = x.keys(); if (!K) return Promise.reject(x.kind('signin')); return unwrap(w, sid, K); } },
     _: { merge3: merge3, split: split, assemble: assemble, stable: stable, eq: eq }
   };
 })();
