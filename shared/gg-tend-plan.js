@@ -322,6 +322,24 @@ function estimate(ses, warmup, cooldown, ph, light){
 const FALL = {squat: ['lunge', 'hinge'], lunge: ['squat', 'balance'], hinge: ['squat', 'core'], push: ['core', 'carry'], pull: ['hinge', 'core'], core: ['balance', 'mobility'],
   carry: ['core', 'cardio'], cardio: ['lunge', 'core'], mobility: ['core', 'balance'], balance: ['core', 'mobility'], agility: ['cardio', 'balance']};
 const LEVELS = ['root', 'rise', 'thrive'];
+// BLD 1078 (Chris, November 27, 2026, Week 5: a step-up, then a step-down: "We just did this exercise. Now we're doing it
+// again?"): a workout never repeats a move and never plays two of the same kind. A move's family is what it looks and feels
+// like to do (every step-up and step-down is one family, every split squat and lunge another); the builder never picks a
+// second move from a family already in the day (warm-up and cooldown aside), and the checks hold every fixed session to the
+// same rule. Timed intervals (Four Minutes Hard, a Hard Minute, a Ladder Rung) repeat by design and have no family.
+const FAM = [[/minutes? (hard|easy)|^hard minute|ladder rung|\bwalk\b(?!.?outs?)(?<!heel.to.toe walk)/, ''], [/wall sit|invisible chair/, 'wall-sit'], [/pike push.?ups?/, 'pike-push-up'], [/side lunges?/, 'side-lunge'], [/heel.?to.?toe stand|tandem stand/, 'heel-toe-stand'], [/step.?ups?\b|step.?downs?\b|stair climb|step taps?/, 'step-up'], [/squat to press|thruster/, 'squat-press'],
+  [/split squat|lunge(?! and reach)/, 'split-squat'], [/squat|sit to stand/, 'squat'], [/bridge|hip thrust/, 'bridge'], [/romanian|deadlift|good morning|hip hinge/, 'hinge'],
+  [/swing/, 'swing'], [/push.?ups?\b/, 'push-up'], [/(bench|floor|chest|incline dumbbell) press/, 'bench-press'], [/(shoulder|overhead|push|one.?arm) press/, 'overhead-press'],
+  [/\bdips?\b/, 'dip'], [/\brows?\b/, 'row'], [/pull.?ups?\b|chin.?ups?\b|pull.?downs?\b/, 'pull-up'], [/side plank/, 'side-plank'], [/carry|farmer/, 'carry'],
+  [/dead ?bugs?|bug on its back/, 'dead-bug'], [/bird ?dogs?|pointer pup/, 'bird-dog'], [/mountain climbers?/, 'climber'], [/heel raises?|calf raises?|tiptoe/, 'heel-raise'],
+  [/jacks\b|star jumps/, 'jacks'], [/skater/, 'skater'], [/single.?leg (stand|balance)\b|flamingo/, 'one-leg-stand'], [/\bchop\b/, 'chop'],
+  [/y.?t raise|w raise|snow angel|pull.?apart|face pull|reverse fly/, 'upper-back-raise'], [/(hanging|back pad).*knee raise|knee raise on|leg raise/, 'knee-raise']];
+// FAM_ON: the builder keeps to the rule. It waits for its new recorded lines (Ava says each new pick's sets and Next Up),
+// so no line falls back to the device voice; patches/bld1078/REC.md lists them. The checks use moveFam either way.
+const FAM_ON = false;
+function moveFam(m){ const n = String((m && m.name) || m || '').toLowerCase().trim(); if (!n) return '';
+  for (const [re, f] of FAM) if (re.test(n)) return f;
+  return n.replace(/\b(tempo|slow|quick|steady|pause|speed|weighted|dumbbell|bodyweight|low|lateral|single.?leg|one.?arm|on handles|, slow)\b/g, ' ').replace(/s\b/g, '').replace(/[^a-z]+/g, ' ').trim(); }
 const placeOk = (m, place) => !arr(m.places).length || arr(m.places).includes(place);
 function lv(m, level){ const L = m.levels || {}; return L[level] || L[LEVELS[Math.max(0, LEVELS.indexOf(level) - 1)]] || L.root || null; }
 // BLD 892: the equipment checklist. Gear ids (nothing checked: body weight plus a chair, a wall, and a mat). A move lists the gear it
@@ -453,13 +471,13 @@ function strongKind(tp, track){
   if (/power|tempo|circuit|total|conditioning|cardio/i.test(t)) return 'press';
   return 'best';
 }
-function finishStrong(tp, track, blocks, MB, used, mk1, pre){
+function finishStrong(tp, track, blocks, MB, used, mk1, pre, fresh){
   const kind = strongKind(tp, track), first = blocks[0] && blocks[0].items[0];
   const best = () => { if (!first) return null; const it = JSON.parse(JSON.stringify(first));
     it.id = 'best-' + String(first.id); it.sets = {'1': 1, '2': 1, '3': 1}; it.rest = 0; it.restAfter = 0;
     it.cue = 'One last best set: your strongest, cleanest reps of the day.'; return it; };
   let it = null;
-  if (kind !== 'best') for (const id of (STRONG[kind] || [])){ const m = MB[id]; if (m && !used.has(id)){ used.add(id); it = mk1(m); if (STRONG_SECS[kind] && it.kind === 'time'){ const n = String(STRONG_SECS[kind]); it.secs = STRONG_SECS[kind]; it.reps = {'1': n, '2': n, '3': n}; } break; } }
+  if (kind !== 'best') for (const id of (STRONG[kind] || [])){ const m = MB[id]; if (m && !used.has(id) && (!fresh || fresh(m))){ used.add(id); it = mk1(m); if (STRONG_SECS[kind] && it.kind === 'time'){ const n = String(STRONG_SECS[kind]); it.secs = STRONG_SECS[kind]; it.reps = {'1': n, '2': n, '3': n}; } break; } }
   if (!it) it = best();
   if (!it) return null;
   it.rest = 0; it.sets = {'1': 1, '2': 1, '3': 1}; it.strong = kind;
@@ -494,10 +512,10 @@ function buildSessions(moves, templates, opts){
     const ra = tp.rest && tp.rest[level] != null && isFinite(+tp.rest[level]) ? Math.min(REST_MAX, +tp.rest[level]) : restAfter0, wk = tp.work && +tp.work[level] > 0 ? +tp.work[level] : 0;
     // A template's work seconds time only its cardio and agility moves (program.workPatterns); core and balance holds keep their own.
     const wpat = arr(tp.workPatterns || (prog && prog.workPatterns)).length ? arr(tp.workPatterns || prog.workPatterns) : ['cardio', 'agility'];
-    const take = m => { used.add(m.id); return m; };
+    const fams = new Set(), take = m => { used.add(m.id); const f = moveFam(m); if (f) fams.add(f); return m; }, fresh = m => !used.has(m.id) && !(FAM_ON && fams.has(moveFam(m)));
     const pick = slot => { const pat = slot && typeof slot === 'object' ? slot.p : slot;
-      if (slot && typeof slot === 'object') for (const id of arr(slot.prefer)){ const m = MB[id]; if (m && !used.has(id) && fitsLv(m)) return take(m); }
-      for (const p of [pat].concat(FALL[pat] || [])){ const m = listFor(p, baseOnly).find(x => !used.has(x.id)); if (m) return take(m); } return null; };
+      if (slot && typeof slot === 'object') for (const id of arr(slot.prefer)){ const m = MB[id]; if (m && fresh(m) && fitsLv(m)) return take(m); }
+      for (const p of [pat].concat(FALL[pat] || [])){ const m = listFor(p, baseOnly).find(fresh); if (m) return take(m); } return null; };
     const mk = (m0, sets) => { const m = tset ? phaseMove(m0, phase) : m0; return itemFor(m, level, place, sets, Math.min(+m.rest || REST_MAX, restCap), ra, pre, wpat.includes(m.pattern) ? wk : 0); };
     const blocks = [], add = (title, pats, setsf) => { const items = []; pats.forEach(p => { const m = pick(p); if (m) items.push(mk(m, setsf(m))); }); if (items.length) blocks.push({title, items}); };
     const base = m => +((lv(m, level) || {}).sets) || 3;
@@ -538,7 +556,7 @@ function buildSessions(moves, templates, opts){
       const it = mk(m, 2); blocks[0].items.push(it);
       if (est() > hiT){ setAll(it, 1); if (est() > hiT){ blocks[0].items.pop(); break; } }
     }
-    const fs = finishStrong(tp, track, blocks, MB, used, m => mk(m, 1), pre); if (fs) blocks.push(fs);
+    const fs = finishStrong(tp, track, blocks, MB, used, m => mk(m, 1), pre, fresh); if (fs) blocks.push(fs);
     items().forEach(it => { it.restAfter = ra; }); const all = items(); if (all.length) all[all.length - 1].restAfter = 0;
     ses.est = Math.round(est()); ses.mins = Math.round(ses.est / 60);
     sessions[d] = ses;
@@ -602,7 +620,7 @@ function ldlRange(base, levers, picks, opts){
 }
 
 const API = {needOk, fitsAll, tagOf: tg, runCost, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
-  buildSessions, estimate, setClock, clock: null, FINISH, FINISH_SETS, SP_MOVES, finishKind, finishItems, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
+  buildSessions, moveFam, FAM_ON, estimate, setClock, clock: null, FINISH, FINISH_SETS, SP_MOVES, finishKind, finishItems, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
   GEAR, PLACE_GEAR, gearOk, gearPlace, PHASES, phaseOfWeek, cardioSlots};
 if (typeof module === 'object' && module.exports) module.exports = API;
 if (root) root.GGTendPlan = API;

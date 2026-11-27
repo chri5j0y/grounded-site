@@ -4092,6 +4092,19 @@ G.define('sl-hinge', {name: 'Single-Leg Romanian Deadlift', tempo: 3.4, base: 's
     {br: 'out', on: 'fR', p: [.88, -.21], t: [98, 98], n: 104, ra: [0, 0], la: [-2, -2], rl: foot(.1, .0), ll: [-82, -82, 4], hL: 'grip', pnL: 'back', e: 1, ao: 5}
   ]});
 
+// BLD 1078: the Kickstand Romanian Deadlift holds a dumbbell in each hand, the way its words say (it showed the single-leg
+// figure with one dumbbell). Most of the weight on the right foot, the left toes resting lightly a half step behind, heel
+// up; the hips travel back, the back stays long, and the dumbbells slide down the front leg.
+var KICK = {x: .11, y: .1, z: -.2, f: 46, toe: 90};
+G.define('kickstand-hinge', {name: 'Kickstand Romanian Deadlift', tempo: 3, base: 'stand', glow: {hams: [.45, 1], glutes: [.5, 1], back: [.3, .3]}, cam: {yaw: 8, el: 6, zoom: 1},
+  props: ['dumbbells'],
+  form: [{when: [.3, .7], line: ['root', 'neck01'], ext: .1, say: 'long, flat back', at: 'spine01', side: 1},
+    {when: [.3, .7], plumb: ['wrist.R', 'foot.R'], say: 'weights close to the front leg', at: 'wrist.R', side: -1}],
+  k: [
+    {br: 'in', on: 'fR tL', p: [.925, -.07], t: [181, 181], n: 182, ra: [7, 7], la: [7, 7], rl: foot(.11, .04), ll: KICK, hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', e: .2, ao: 4},
+    {br: 'out', on: 'fR tL', p: [.89, -.25], t: [112, 112], n: 118, ra: [-2, -2], la: [-2, -2], rl: foot(.11, .04), ll: KICK, hR: 'grip', hL: 'grip', pnR: 'back', pnL: 'back', e: 1, ao: 4}
+  ]});
+
 // Dowel hip hinge: the dowel touches the head, the upper back, and the tailbone all the way down and up.
 G.define('dowel-hinge', {name: 'Dowel Hip Hinge', tempo: 3.2, base: 'stand', glow: {hams: [.9, .9], glutes: [.8, .8], back: [.4, .4]}, cam: {yaw: 4, el: 6, zoom: 1},
   props: [{id: 'dowel', at: 'hands'}],
@@ -4237,6 +4250,18 @@ G.define('squat-press', {name: 'Squat to Press', tempo: 3.4, base: 'stand', dur:
   k: [
     {br: 'out', p: [.52, -.22], t: [146, 148], n: 160, ra: RACK, la: RACK, rl: foot(.14, .02, {pole: KNEE}), ll: foot(.14, .02, {pole: KNEE}), hR: 'grip', hL: 'grip', pnR: 'fwd', pnL: 'fwd', e: .8, lo: 11},
     {br: 'in', p: [.925, -.062], t: [181, 181], n: 182, ra: LOCK, la: LOCK, rl: foot(.14, .02), ll: foot(.14, .02), hR: 'grip', hL: 'grip', pnR: 'fwd', pnL: 'fwd', e: 1, lo: 7}
+  ]});
+
+// BLD 1078 (Chris, November 27, 2026: the Recommended chip read "10 lb each hand" while the figure held one dumbbell at the
+// chest): the Dumbbell Front Squat holds a pair, a dumbbell resting at each shoulder, elbows forward, the way its words say.
+// The squat of Squat to Press with the dumbbells staying at the shoulders.
+G.define('front-squat', {name: 'Dumbbell Front Squat', tempo: 3, base: 'stand', glow: {quads: [1, 1], glutes: [.8, .8], abs: [.3, .3]}, cam: {yaw: 34, el: 8, zoom: 1},
+  props: ['dumbbells'],
+  form: [{when: [.3, .7], plumb: ['lowerleg01.R', 'foot.R'], tick: 'foot.R', say: 'knees over toes', at: 'lowerleg01.R', side: 1},
+    {when: [.3, .7], line: ['root', 'neck01'], say: 'elbows high, chest proud', at: 'spine01', side: -1}],
+  k: [
+    {br: 'in', p: [.925, -.062], t: [181, 181], n: 182, ra: RACK, la: RACK, rl: foot(.14, .02), ll: foot(.14, .02), hR: 'grip', hL: 'grip', pnR: 'fwd', pnL: 'fwd', e: .2, lo: 7},
+    {br: 'out', p: [.52, -.22], t: [146, 148], n: 160, ra: RACK, la: RACK, rl: foot(.14, .02, {pole: KNEE}), ll: foot(.14, .02, {pole: KNEE}), hR: 'grip', hL: 'grip', pnR: 'fwd', pnL: 'fwd', e: 1, lo: 11}
   ]});
 
 // Hammer curl: palms face each other, elbows stay by the sides, curl up, lower slowly.
@@ -6053,6 +6078,8 @@ GG3D.names = [
   byWords(/^hip hinges?$/i, /\bhands on your hips\b/i, 'hip-hinge-bw'),   // BLD 979: the warm-up hinge, no dumbbells   // BLD 979: the second half of Arm Circles, palms up
   [/^step back and reach up\b|^reverse lunge and reach\b/i, 'step-back-reach'],   // BLD 903: its own pattern, arms overhead
   // BLD 931: a dumbbell in each hand at the sides (Chris: "where are the dumbbells?"); the body weight moves keep their own.
+  // BLD 1078: the figure holds what the words say (a pair at the shoulders; a pair on the kickstand hinge).
+  [/\b(dumbbell )?front squats?\b/i, 'front-squat'], [/\bkickstand (romanian deadlift|rdl)s?\b|\bstaggered (stance )?(romanian deadlift|rdl)s?\b/i, 'kickstand-hinge'],
   [/\bdumbbell reverse lunges?\b/i, 'db-reverse-lunge'],
   byWords(/^reverse lunges?$/i, /\bdumbbells? in each hand\b|\bdumbbells at your sides\b/i, 'db-reverse-lunge'),
   byWords(/^split squats?$/i, /\bdumbbells at your sides\b|\bdumbbells? in each hand\b/i, 'db-split-squat'),
