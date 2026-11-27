@@ -1820,3 +1820,11 @@ html.gg-ts-2 main.hm{zoom:1.25;}
 /* Phones: the icon above the name, and two cards a row up to 430 px wide, so every part name breaks only between words. */
 @media (max-width:560px){.hm-part b{flex-direction:column;align-items:flex-start;gap:4px;}}
 @media (max-width:430px){#hm-tree .hm-parts{grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* BLD 1075 Your Account Is Your Profile: the welcome's people, Switch Account, and Your Tree in My Account */
+.hm-hero .hm-btn.ghost{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.75);box-shadow:none;}
+.hm-welwho{max-width:440px;margin:14px 0 4px;}
+.hm-whoacts{display:flex;flex-direction:column;gap:10px;margin:4px 0 8px;}
+.hm-whoacts .hm-btn,.hm-sheet .hm-whoacts>.hm-btn{flex:none;width:100%;justify-content:center;}
+.hm-hero .hm-acts .hm-btn{max-width:100%;white-space:normal;text-align:center;}
+.hm-ytpic{width:58px;height:58px;flex:none;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line);}
+.hm-ytpic img{width:100%;height:100%;object-fit:cover;display:block;}

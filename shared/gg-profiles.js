@@ -692,7 +692,7 @@
         return '<p class="ggp-small ggp-treeline">' + (other || st.age !== 'adult' ? 'Their tree: ' : 'Your tree: ') + esc(w.tool) + ', built for ' + esc(who) + '.' + (st.age === 'adult' ? ' Change it any time in Manage My Profile.' : '') + '</p>';
       }
       function step1(d) {
-        d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : own ? 'Your Profile' : 'Create a Grounded profile') + '</h2>' +
+        d.show('<h2 id="ggp-title">' + (other ? 'A profile for someone you love' : own ? 'Your Tree' : 'Create a Grounded profile') + '</h2>' +
           (opt.reason ? '<p>' + esc(opt.reason) + '</p>' : '<p>Your profile keeps what you save across every Grounded tool, locked with a passcode only you know.</p>') +
           '<label class="ggp-l" for="ggp-name">' + (other ? 'Their first name, or what you call them' : 'First name or a nickname') + '</label><input type="text" id="ggp-name" maxlength="30" autocomplete="off" value="' + esc(st.name) + '">' +
           (other || fixAge ? '' : '<label class="ggp-l">' + (own ? 'My grade in school' : 'Who is this profile for?') + '</label><div class="ggp-ages">' + AGES.filter(function (a) { return !opt.ages || opt.ages.indexOf(a.id) >= 0; }).map(function (a) { return '<button type="button" class="ggp-age" data-age="' + a.id + '" aria-pressed="' + (st.age === a.id) + '"><b>' + (own ? a.tool + ', ' + a.name : a.name) + '</b><span>' + a.who + '</span></button>'; }).join('') + '</div>') +
@@ -1635,10 +1635,10 @@
       if (v.willow && v.willow.started) html += link('/willow/', 'My tree in Willow');
       helping().map(getP).filter(Boolean).forEach(function (q) { var sq = seqHelp(q.id), bh = birchHelp(q.id), oh = oakHelp(q.id); if (sq || bh || oh) html += link('/home/', 'Helping ' + esc(q.name)); if ((!sq && !bh && !oh) || (open[q.id].data.willow && open[q.id].data.willow.started)) html += link('/willow/#for=' + q.id, (q.shared && q.shared.remembered ? 'Remembering ' : 'Caring for ') + esc(q.name) + ' in Willow'); });
       html += link('/stories.html#saved', 'Saved Stories' + (nSaved ? ' (' + nSaved + ')' : ''));
-      html += item('manage', 'Manage My Profile');
+      html += item('manage', isAcct(p) ? 'Your Tree' : 'Manage My Profile');   // BLD 1075: an account's tree is part of My Account
       var kids = Object.keys(open).filter(function (k) { return k !== p.id; }).map(getP).filter(function (k) { return k && k.age !== 'adult'; });
       if (kids.length) { html += '<div class="ggp-h">Kids you care for</div>' + kids.map(function (k) { return item('as', av(k.avatar, k.name, 28) + '<span>Switch to ' + esc(k.name) + '</span>', ' data-id="' + k.id + '"'); }).join(''); }
-      html += '<div class="ggp-h">This device</div>' + item('switch', 'Who Is Tending?') + item('move', 'Move to Another Device') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup') + item('lock', 'Lock');
+      html += '<div class="ggp-h">This device</div>' + item('switch', /^\/(willow|grove|heartwood|live)(\/|$)/.test(location.pathname) ? 'Who Is Tending?' : 'Switch Account') + item('move', 'Move to Another Device') + item('bk', 'Back Up Everything') + item('ld', 'Load a Backup') + item('lock', 'Lock');
     } else {
       var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked so only you can open them.</small></div></div>';
@@ -1653,6 +1653,7 @@
       b.onclick = function () {
         hidePop(); var act = b.dataset.a;
         if (act === 'manage') manage();
+        else if (act === 'switch' && window.GGHome && typeof GGHome.openWho === 'function' && /^\/home\//.test(location.pathname)) GGHome.openWho();   // BLD 1075: Switch Account
         else if (act === 'switch' || act === 'open') openDialog();
         else if (act === 'create') createDialog();
         else if (act === 'restore') restore(function () { openDialog(); });
@@ -2034,9 +2035,20 @@
     if (!fresh || !acctCarried(id)) return Promise.resolve();
     return Promise.race([s, new Promise(function (ok) { setTimeout(ok, 15000); })]);
   }
+  // BLD 1075: the accounts that signed in on this device, so Switch Account can fill in each email (kept until that
+  // account's tree leaves this device)
+  var KNOWN = 'gg-acct-known';
+  function knownGet() { try { var k = JSON.parse(localStorage.getItem(KNOWN)); return k && typeof k === 'object' ? k : {}; } catch (e) { return {}; } }
+  function knownKeep() {
+    var k = knownGet(), i = acIn() && GGAccount.info(), has = {};
+    readList().forEach(function (p) { if (isAcct(p) && p.acct && p.acct.a) has[p.acct.a] = 1; });
+    if (i && i.accountId && i.email) k[i.accountId] = i.email;
+    Object.keys(k).forEach(function (a) { if (!has[a] && !(i && i.accountId === a)) delete k[a]; });
+    try { if (Object.keys(k).length) localStorage.setItem(KNOWN, JSON.stringify(k)); else localStorage.removeItem(KNOWN); } catch (e) {}
+  }
   function acctEvent(t, d) {
     if (t === 'state') {
-      var was = AC.acct; carryLoad();
+      var was = AC.acct; carryLoad(); knownKeep();
       if (!acIn()) AC.made = null;   // BLD 1073: signed out, the waiting key goes
       if (acIn()) {
         // signing in or making an account with a grown-up open here brings that grown-up (and their children) along
@@ -2054,6 +2066,7 @@
       AC.q++;
       try { ids.forEach(function (id) { if (getP(id)) removeProfile(id); }); } finally { AC.q--; }
       AC.ids = []; try { localStorage.removeItem(CARRY); } catch (e) {}
+      knownKeep();
     }
   }
   function acctBring(id) {
@@ -2071,11 +2084,12 @@
   // Making a grown-up's own profile asks for a Grounded Account, except where Grounded needs no account
   function acctNeed(opt) {
     opt = opt || {};
-    if (!LIVE || opt.forOther || opt.noAccount || /^\/(willow|grove|heartwood|live)(\/|$)/.test(location.pathname)) return false;
+    // BLD 1075: in The Grounded Way every grown-up's tree starts with an account (the passcode way stays for the separate apps)
+    if (!LIVE || opt.forOther || (opt.noAccount && !/^\/home\//.test(location.pathname)) || /^\/(willow|grove|heartwood|live)(\/|$)/.test(location.pathname)) return false;
     return !!(AC.on && window.GGAccount && GGAccount.configured && GGAccount.configured());
   }
   // The account sheets (shared/gg-account-ui.js), loaded when needed
-  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c225', acctUiP = null;
+  var ACCT_UI_SRC = '/shared/gg-account-ui.js?v=c226', acctUiP = null;
   function acctSheet(view, o) {
     if (!acctUiP) acctUiP = new Promise(function (ok) {
       if (window.GGAccountUI) return ok(window.GGAccountUI);
@@ -2314,7 +2328,11 @@
       // sign up on this device still waits (so the setup needs no second password)
       own: function () { var i = acIn() && GGAccount.info(), p = i && ownProfile(i.accountId); return p ? { id: p.id, name: p.name, age: p.age, open: !!open[p.id] } : null; },
       held: function () { var i = acIn() && GGAccount.info(), h = AC.made; return !!(h && i && h.a === i.accountId && Date.now() < h.until); },
-      profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); }
+      profiles: function () { return readList().map(function (p) { return { id: p.id, name: p.name, age: p.age, carried: acctCarried(p.id), open: !!open[p.id] }; }); },
+      // BLD 1075 Switch Account: each account's tree on this device (an account that signed in here keeps its tree locked
+      // here for its owner), and the trees here that have no account yet (they move into their own accounts with the move)
+      trees: function () { var k = knownGet(), i = acIn() && GGAccount.info(); return readList().filter(function (p) { return isAcct(p) && p.acct && p.acct.a; }).map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), account: p.acct.a, email: (i && i.accountId === p.acct.a ? i.email : k[p.acct.a]) || '', mine: !!(i && i.accountId === p.acct.a), open: !!open[p.id] }; }); },
+      local: function () { return readList().filter(function (p) { return !isAcct(p); }).map(function (p) { return { id: p.id, name: p.name, age: p.age, tree: treeOf(p), grown: p.grown || [], open: !!open[p.id] }; }); }
     },
     list: function () { return readList().map(function (p) { return { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {} }; }); },
     get: function (id) { var p = getP(id); return p ? { id: p.id, name: p.name, avatar: p.avatar, age: p.age, tree: treeOf(p), grown: p.grown || [], helpers: p.helpers || [], shared: p.shared || {}, pub: p.pub || null } : null; },

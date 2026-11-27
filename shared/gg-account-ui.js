@@ -93,7 +93,7 @@
     // BLD 958: an invite on this device (a link from a parent) makes the account for the person it names; a teen or kid
     // account comes only this way. A kid's invite carries a sign in name, so a kid needs no email.
     var inv = o.token || joinWaiting(), kid = o.kid || joinKid();
-    var c = sheet(o.title || 'Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : o.lead || 'One email and one password open your tree on every device, and the same password opens your own profile. Everything is locked on this device before it leaves, so only you can open it. Your account costs nothing; Membership is the paid part on top.');
+    var c = sheet(o.title || 'Create My Account', kid ? 'Your parent made a place for you in your family’s Household. Choose a password, and your tree opens on every device you sign in on.' : o.lead || 'One email and one password open your tree on every device. Everything is locked on this device before it leaves, so only you can open it. Your account costs nothing; Membership is the paid part on top.');
     var agree = '<a href="/terms.html" target="_blank" rel="noopener">Terms of Use</a> and the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>';
     c.body.innerHTML = (kid || o.oauth ? '' : provRow()) + '<form novalidate>' + (kid ? '<p class="ga-note">Your sign in name: <b>' + esc(kid) + '</b></p>' : field('ga-em', 'Email', 'email', 'username')) + field('ga-pw', 'Password', 'password', 'new-password', 'At least 10 characters. A short phrase of four or more words is strong and easy to remember. Your phone can save it and fill it with Face ID. Your password is the key to your account, so keep it yours alone.') +
       '<label class="ga-check"><input id="ga-ag" type="checkbox"><span>' + (inv ? 'I agree to the ' + agree + '.' : 'I am 18 or older, and I agree to the ' + agree + '.') + '</span></label>' +
@@ -131,7 +131,7 @@
   };
   V.signin = function (o) {
     o = o || {};
-    var c = sheet('Sign In', o.oauth ? 'Your email is confirmed. Type your Grounded password once, and your tree opens on this device. Your phone can save it and fill it with Face ID next time.' : 'Sign in with your Grounded Account email (or your sign in name) and password. The same password opens your own profile.');
+    var c = sheet('Sign In', o.oauth ? 'Your email is confirmed. Type your Grounded password once, and your tree opens on this device. Your phone can save it and fill it with Face ID next time.' : 'Sign in with your Grounded Account email (or your sign in name) and password. The same password opens your tree.');
     c.body.innerHTML = (o.oauth ? '' : provRow()) + '<form novalidate>' + field('ga-em', 'Email or Sign In Name', 'text', 'username') + field('ga-pw', 'Password', 'password', 'current-password') + '<button type="submit" class="ga-btn big">Sign In</button></form>' +
       '<div class="ga-alt"><button type="button" class="ga-link" data-go="forgot">Forgot My Password</button><button type="button" class="ga-link" data-go="signup">Create My Account</button></div>';
     on('[data-go=forgot]', function () { V.forgot(); }); on('[data-go=signup]', function () { V.signup(o.then ? { then: o.then, title: o.title, lead: o.lead } : o.oauth ? { oauth: o.oauth, email: o.email } : undefined); });
@@ -177,7 +177,7 @@
     var at = Date.now() + 864e5, w = G().whenText ? G().whenText(at) : '';
     var c = sheet('Start Fresh', 'With the password and the Root Words both gone, no one can open what is locked in this account, including us. Start Fresh erases your account in 24 hours' + (w ? ', on ' + w : '') + '. After that, you can make a new account with the same email right away. We email you a Keep My Account link first, in case you find your Root Words.');
     c.body.innerHTML = '<form novalidate>' + field('ga-cf', 'Type START FRESH to confirm', 'text', 'off') + '<button type="submit" class="ga-btn big warm">Start Fresh</button></form>' +
-      '<p class="ga-note">This device keeps its own copy, still locked with each profile’s password or passcode.</p>';
+      '<p class="ga-note">This device keeps its own copy of your tree, still locked.</p>';
     form(function (btn) {
       if (val('ga-cf').trim().toUpperCase() !== 'START FRESH') return say('Type START FRESH to confirm.');
       busy(btn, true);
@@ -274,7 +274,7 @@
             '<button type="button" data-go="household">Household</button>' +
             '<button type="button" data-go="export">Download My Account Data</button>' +
           '</div>' +
-          '<label class="ga-check"><input id="ga-erase" type="checkbox"><span>Erase This Device Too when I sign out</span></label>' +
+          '<label class="ga-check"><input id="ga-erase" type="checkbox"><span>Remove My Tree From This Device Too</span></label>' +
           '<div class="ga-row"><button type="button" class="ga-btn line" data-go="out">Sign Out</button></div>' +
           '<div class="ga-alt"><button type="button" class="ga-link" data-go="delete">Delete My Account</button></div>';
         on('[data-go=resend]', function (b) { busy(b, true); G().resend().then(function () { busy(b, false); say('A new link is on its way.', true); }).catch(fail(b)); });
@@ -303,7 +303,7 @@
     return c.p;
   };
   V.password = function () {
-    var c = sheet('Change My Password', 'Your Root Words stay the same, and the new password opens your own profile too. Other devices sign out unless you keep them signed in.');
+    var c = sheet('Change My Password', 'Your Root Words stay the same, and the new password opens your tree too. Other devices sign out unless you keep them signed in.');
     c.body.innerHTML = '<form novalidate>' + field('ga-old', 'Password Now', 'password', 'current-password') + field('ga-pw', 'New Password', 'password', 'new-password', 'At least 10 characters.') +
       '<label class="ga-check"><input id="ga-keep" type="checkbox"><span>Keep my other devices signed in</span></label><button type="submit" class="ga-btn big">Change My Password</button></form>';
     form(function (btn) {
