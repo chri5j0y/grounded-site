@@ -115,7 +115,7 @@
       var root = document.createElement('div');
       root.className = 'ggl ggl-app ggn-pv gc-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
       root.style.setProperty('--ggl-acc', '#2F5A3C'); root.style.setProperty('--ggl-bar', '#223829'); root.style.setProperty('--ggl-lite', '#9FCB9F');
-      root.innerHTML = '<div class="ggl-top"><img src="/shared/marks/grove-tab.svg?v=c237" alt=""><b>' + esc(title) + '</b><div class="gc-tools">'
+      root.innerHTML = '<div class="ggl-top"><img src="/shared/marks/grove-tab.svg?v=c238" alt=""><b>' + esc(title) + '</b><div class="gc-tools">'
         + (o.timer ? '<span class="gc-timer" aria-live="polite"></span><button type="button" data-gc-t="60" aria-pressed="false">1 min</button><button type="button" data-gc-t="120" aria-pressed="false">2 min</button><button type="button" class="gc-wide" data-gc-t="300" aria-pressed="false">5 min</button>' : '')
         + (document.fullscreenEnabled ? '<button type="button" class="gc-wide" data-gc-full="1">Full Screen</button>' : '')
         + '</div><button type="button" class="ggl-x" data-gc-x="1" aria-label="' + esc(back) + '"><span class="ggl-xf">' + esc(back) + '</span><span class="ggl-xs">Back</span></button></div>'
