@@ -253,7 +253,7 @@
     heartwood: { n: 'Heartwood', href: '/heartwood/', who: 'Couples', season: true }
   };
   // BLD 1065: the six trees show their one emblem file (the true vector at every size); any other mark keeps its small file.
-  function mark(t) { return /^(oak|maple|aspen|pine|birch|sequoia)$/.test(t) ? '/shared/marks/' + t + '.svg?v=c236' : '/shared/marks/' + t + '-small.svg'; }
+  function mark(t) { return /^(oak|maple|aspen|pine|birch|sequoia)$/.test(t) ? '/shared/marks/' + t + '.svg?v=c237' : '/shared/marks/' + t + '-small.svg'; }
   function treeOfProfile(p) { if (!p) return 'oak'; if (p.age === 'maple' || p.age === 'aspen' || p.age === 'pine') return p.age; return (window.GGP && GGP.tree) ? GGP.tree(p.id) : 'oak'; }
   function isKid(p) { return p && (p.age === 'maple' || p.age === 'aspen'); }
   /* BLD 935 (audit H3): a young tree (Maple, Aspen, or Pine) sees no Seeds and no Membership shelves, lines, or cards. */

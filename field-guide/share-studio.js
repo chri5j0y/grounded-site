@@ -13,7 +13,7 @@
 (function(){
 'use strict';
 const R2 = 'https://audio.growwithgrounded.com/';
-const SHARE_JS = '../shared/imglib/share.js?v=c236', BOOK_JS = '../shared/imglib/book.js?v=c211', LIB_JS = '../shared/imglib/library.js?v=c211';
+const SHARE_JS = '../shared/imglib/share.js?v=c237', BOOK_JS = '../shared/imglib/book.js?v=c211', LIB_JS = '../shared/imglib/library.js?v=c211';
 const COVER = '../shared/books/in-the-end-cover-1200.webp';
 const DPI = 300;
 const SIZES = [
