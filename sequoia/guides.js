@@ -5717,3 +5717,5 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 ];
   T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
 /* BLD995 guides end */
+/* BLD 1077: go: a guide whose topic has one of our own tools right there names it once, the same tool as its video's closing button ({you, helper}: [label, href]). */
+(function () { var G = window.SEQUOIA_GUIDES; if (!G || !G.topics) return; var GO = {"sober-adult-child":{"you":["Someone I Love","/living-sober.html#love"]},"anxiety":{"you":["Get Grounded Now","/get-grounded-now.html"]},"facing-death":{"you":["Open Willow","/willow/"]},"fixed-income":{"you":["Grounded Money","/home/#library=money"]}}; G.topics.forEach(function (t) { if (t && GO[t.id]) t.go = GO[t.id]; }); })();

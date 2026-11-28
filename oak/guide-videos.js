@@ -53,6 +53,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Anxiety That Won't Settle",
 "you": {
 "id": "ok-g-anxiety-you",
+"go": ["Get Grounded Now", "/get-grounded-now.html"],
 "guide": "anxiety",
 "side": "you",
 "title": "Anxiety That Won't Settle",
@@ -165,7 +166,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "A feeling, not a forecast.",
 "sub": "You only have to do the next small thing.",
-"say": "You have handled hard things before. You only have to do the next small thing. This is a feeling, not a forecast."
+"say": "You have handled hard things before. You only have to do the next small thing. This is a feeling, not a forecast. And when it rises, Get Grounded Now has short guided videos to calm your body."
 }
 ]
 },
@@ -3279,6 +3280,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Someone You Love Is Dying",
 "you": {
 "id": "ok-g-dying-loved-you",
+"go": ["Open Willow", "/willow/"],
 "guide": "dying-loved",
 "side": "you",
 "title": "Someone You Love Is Dying",
@@ -3390,7 +3392,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Being here is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Everyone does this imperfectly, and that's human. You can grieve and hope at the same time. Being here is enough. The full guide has more, whenever you want it."
+"say": "Everyone does this imperfectly, and that's human. You can grieve and hope at the same time. Being here is enough. Willow, a companion app from Grounded, is made for this season, for the person who is dying and the people who love them. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -4678,6 +4680,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Facing Your Own Death",
 "you": {
 "id": "ok-g-own-death-you",
+"go": ["Open Willow", "/willow/"],
 "guide": "own-death",
 "side": "you",
 "title": "Facing Your Own Death",
@@ -4800,7 +4803,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Your life has mattered.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Your life has mattered, and it still does. The full guide has more, whenever you want it."
+"say": "Your life has mattered, and it still does. Willow, a companion app from Grounded, is made for this season, with What Matters to Me to gather your wishes, your way. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -4908,6 +4911,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Making an End-of-Life Plan",
 "you": {
 "id": "ok-g-eol-plan-you",
+"go": ["Open Willow", "/willow/"],
 "guide": "eol-plan",
 "side": "you",
 "title": "Making an End-of-Life Plan",
@@ -5031,7 +5035,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "One honest conversation is a good start.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "One piece at a time is plenty. One honest conversation, or one page, is a good start. It's a gift to the people you love, and a kind of peace for you. The full guide has more, whenever you want it."
+"say": "One piece at a time is plenty. One honest conversation, or one page, is a good start. It's a gift to the people you love, and a kind of peace for you. What Matters to Me, in Willow, helps you put your wishes into words, one page at a time. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -5157,6 +5161,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Sitting with Someone Who Is Dying",
 "you": {
 "id": "ok-g-bedside-you",
+"go": ["In the End", "/books.html"],
 "guide": "bedside",
 "side": "you",
 "title": "Sitting with Someone Who Is Dying",
@@ -5267,7 +5272,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Good enough is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Everyone does this imperfectly, and that's okay. Being here is enough. The full guide has more, whenever you want it."
+"say": "Everyone does this imperfectly, and that's okay. Being here is enough. In the End, our book of forty stories from the bedside, keeps you company in rooms like this one. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -5400,6 +5405,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "The First Days After a Death",
 "you": {
 "id": "ok-g-after-death-you",
+"go": ["Planning a Farewell", "/planning-a-farewell.html"],
 "guide": "after-death",
 "side": "you",
 "title": "The First Days After a Death",
@@ -5526,12 +5532,13 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "I only have to do today.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Say it to yourself as often as you need to. I only have to do today. The full guide has more, whenever you want it."
+"say": "Say it to yourself as often as you need to. I only have to do today. When you are ready, Planning a Farewell takes the next steps with you, one thing at a time. The full guide has more, whenever you want it."
 }
 ]
 },
 "helper": {
 "id": "ok-g-after-death-helper",
+"go": ["Planning a Farewell", "/planning-a-farewell.html"],
 "guide": "after-death",
 "side": "helper",
 "title": "The First Days After a Death",
@@ -5642,7 +5649,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Your steady presence is a gift.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Your steady presence is the gift. Show up, then keep showing up. The full guide has more, whenever you want it."
+"say": "Your steady presence is the gift. Show up, then keep showing up. Planning a Farewell can help you both, one thing at a time. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -5653,6 +5660,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Addiction and Recovery",
 "you": {
 "id": "ok-g-addiction-you",
+"go": ["Open Living Sober", "/living-sober.html"],
 "guide": "addiction",
 "side": "you",
 "title": "Addiction and Recovery",
@@ -5722,7 +5730,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Someone safe and steady"
 ]
 ],
-"say": "Here are some first steps. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: people who live sober and thrive, a peer group like SMART Recovery or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
+"say": "Here are some first steps. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: people who live sober and thrive, a peer group like SMART Recovery or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
 },
 {
 "k": "big",
@@ -5777,12 +5785,13 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "You belong in recovery.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Connection is the opposite of addiction. You belong in recovery, one day at a time, with people beside you. The full guide has more, whenever you want it."
+"say": "Connection is the opposite of addiction. You belong in recovery, one day at a time, with people beside you. Living Sober, right here in The Grounded Way, walks with you every day, with your day count, words for today, and Ride the Wave when an urge rises. The full guide has more, whenever you want it."
 }
 ]
 },
 "helper": {
 "id": "ok-g-addiction-helper",
+"go": ["Someone I Love", "/living-sober.html#love"],
 "guide": "addiction",
 "side": "helper",
 "title": "Addiction and Recovery",
@@ -5916,7 +5925,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Families need recovery too.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Love them, keep your boundaries, and let others hold you up too. Families need recovery too. The full guide has more, whenever you want it."
+"say": "Love them, keep your boundaries, and let others hold you up too. Families need recovery too. Living Sober has a place for you, called Someone I Love, with steady support for loving someone who drinks or uses. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -10040,6 +10049,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Money Trouble",
 "you": {
 "id": "ok-g-money-crisis-you",
+"go": ["Grounded Money", "/home/#library=money"],
 "guide": "money-crisis",
 "side": "you",
 "title": "Money Trouble",
@@ -10153,7 +10163,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "One bill at a time.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Tonight, start small: one honest look, one call, one bill at a time. This is a hard season, and seasons change. The full guide has more, whenever you want it."
+"say": "Tonight, start small: one honest look, one call, one bill at a time. This is a hard season, and seasons change. Grounded Money, in The Grounded Way, helps you make that plan, one bill at a time. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -11617,6 +11627,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When the Sacred Feels Far Away",
 "you": {
 "id": "ok-g-spiritual-dryness-you",
+"go": ["Readings Library", "/readings.html"],
 "guide": "spiritual-dryness",
 "side": "you",
 "title": "When the Sacred Feels Far Away",
@@ -11722,7 +11733,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "The sacred may be closer than it feels.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Keep showing up, gently. The sacred may be closer than it feels. The full guide has more, whenever you want it."
+"say": "Keep showing up, gently. The sacred may be closer than it feels. The Readings Library holds prayers, poems, and blessings from all faith traditions and everything in-between, for days when words are hard to find. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -17798,6 +17809,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Thinking About a Change",
   "you": {
    "id": "ok-g-sober-change-you",
+"go": ["Open Living Sober", "/living-sober.html"],
    "guide": "sober-change",
    "side": "you",
    "title": "Thinking About a Change",
@@ -17944,7 +17956,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Wondering is a beginning.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Wondering is a beginning. Small, honest steps still count. The full guide has more, whenever you want it."
+     "say": "Wondering is a beginning. Small, honest steps still count. Living Sober, in The Grounded Way, meets you right where you are, even while you are still thinking it over. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -18079,6 +18091,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "The First 30 Days, Safely",
   "you": {
    "id": "ok-g-sober-first-30-you",
+"go": ["Early Days", "/living-sober.html#early-days"],
    "guide": "sober-first-30",
    "side": "you",
    "title": "The First 30 Days, Safely",
@@ -18207,7 +18220,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Today counts.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Every sober day counts, and today counts. Your body is healing right now. The full guide has more, whenever you want it."
+     "say": "Every sober day counts, and today counts. Your body is healing right now. Early Days, in Living Sober, gives you one short video for each of your first ninety days. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -18586,6 +18599,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Cravings and Triggers",
   "you": {
    "id": "ok-g-sober-cravings-you",
+"go": ["Ride the Wave", "/living-sober.html#wave"],
    "guide": "sober-cravings",
    "side": "you",
    "title": "Cravings and Triggers",
@@ -18714,7 +18728,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "This is a wave. It will pass.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "This is a wave, and it will pass. You have ridden waves before. The full guide has more, whenever you want it."
+     "say": "This is a wave, and it will pass. You have ridden waves before. When an urge rises, Ride the Wave, in Living Sober, rides it out with you, ten calm minutes, one breath at a time. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -18850,6 +18864,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "After a Slip",
   "you": {
    "id": "ok-g-sober-slip-you",
+"go": ["Open Living Sober", "/living-sober.html"],
    "guide": "sober-slip",
    "side": "you",
    "title": "After a Slip",
@@ -18974,7 +18989,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "You can begin again today.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Your sober days still count. Everything you learned is still yours. You can begin again today. The full guide has more, whenever you want it."
+     "say": "Your sober days still count. Everything you learned is still yours. You can begin again today. In Living Sober, Begin Again starts a fresh count, and Days Grown keeps every day you have grown. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -19581,6 +19596,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Sober at Work and with Friends",
   "you": {
    "id": "ok-g-sober-work-friends-you",
+"go": ["Good Times, Sober", "/living-sober.html#good-times"],
    "guide": "sober-work-friends",
    "side": "you",
    "title": "Sober at Work and with Friends",
@@ -19691,7 +19707,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "The right people will stay.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "The right people will stay, and new ones will come. Your sober life has room for real friendship. The full guide has more, whenever you want it."
+     "say": "The right people will stay, and new ones will come. Your sober life has room for real friendship. Good Times, Sober, in Living Sober, has a plan for nights out, weddings, holidays, and travel. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -20035,6 +20051,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "When Your Partner Drinks or Uses",
   "you": {
    "id": "ok-g-sober-partner-you",
+"go": ["Someone I Love", "/living-sober.html#love"],
    "guide": "sober-partner",
    "side": "you",
    "title": "When Your Partner Drinks or Uses",
@@ -20159,7 +20176,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Calm and kind still counts.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "You didn't cause this, you can't cure it, and you can care for yourself. Calm and kind still counts. The full guide has more, whenever you want it."
+     "say": "You didn't cause this, you can't cure it, and you can care for yourself. Calm and kind still counts. Someone I Love, in Living Sober, is here for you, with steady support and room to tend your own tree. The full guide has more, whenever you want it."
     }
    ]
   },

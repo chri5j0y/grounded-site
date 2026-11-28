@@ -6989,6 +6989,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Anxiety and Panic",
    "you": {
     "id": "pn-g-anxiety-you",
+"go": ["Get Grounded Now", "/get-grounded-now.html"],
     "guide": "anxiety",
     "side": "you",
     "title": "Anxiety and Panic",
@@ -7112,7 +7113,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "You can do hard things nervous.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to wait until you feel calm to live your life. You can do hard things nervous. The full guide has more, whenever you want it."
+      "say": "You don't have to wait until you feel calm to live your life. You can do hard things nervous. When it rises, Get Grounded Now has short guided videos to calm your body. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -13205,6 +13206,7 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Getting Sober as a Teen",
   "you": {
    "id": "pn-g-sober-teen-you",
+"go": ["Open Living Sober", "/living-sober.html"],
    "guide": "sober-teen",
    "side": "you",
    "title": "Getting Sober as a Teen",
@@ -13305,7 +13307,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "big",
      "h": "You're worth it.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Sobriety is rarely a straight line, and every return to the path counts. Live sober, because you're worth it. The full guide has more, whenever you want it."
+     "say": "Sobriety is rarely a straight line, and every return to the path counts. Live sober, because you're worth it. Living Sober, in The Grounded Way, walks with you too, one day at a time. The full guide has more, whenever you want it."
     }
    ]
   },

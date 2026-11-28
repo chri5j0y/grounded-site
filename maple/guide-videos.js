@@ -61,6 +61,7 @@ window.GG_LEARN_GUIDES.maple = {
 "title": "Worry That Won't Let Go",
 "you": {
 "id": "mp-g-worry-you",
+"go": ["Get Grounded Now", "/get-grounded-now.html"],
 "guide": "worry",
 "side": "you",
 "title": "Worry That Won't Let Go",
@@ -154,7 +155,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "You can be worried and brave.",
 "sub": "Little steps make you strong.",
-"say": "Worries come and go, like weather. You can feel worried and still be brave. Little steps make you strong."
+"say": "Worries come and go, like weather. You can feel worried and still be brave. Little steps make you strong. When a worry feels big, Get Grounded Now has short videos to help your body feel calm."
 }
 ]
 },

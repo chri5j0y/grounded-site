@@ -6112,3 +6112,5 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 ];
   T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
 /* Living Sober guides end, GWG BLD 789 */
+/* BLD 1077: go: a guide whose topic has one of our own tools right there names it once, the same tool as its video's closing button ({you, helper}: [label, href]). */
+(function () { var G = window.PINE_GUIDES; if (!G || !G.topics) return; var GO = {"sober-teen":{"you":["Open Living Sober","/living-sober.html"]},"anxiety":{"you":["Get Grounded Now","/get-grounded-now.html"]}}; G.topics.forEach(function (t) { if (t && GO[t.id]) t.go = GO[t.id]; }); })();

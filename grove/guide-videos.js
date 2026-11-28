@@ -1778,6 +1778,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Finding Time Together",
    "you": {
     "id": "gr-g-time-together-you",
+"go": ["Family Planner", "/home/#library=planner"],
     "guide": "time-together",
     "side": "you",
     "title": "Finding Time Together",
@@ -1894,7 +1895,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Time together grows us.",
       "sub": "The full guide has more, whenever we want it.",
-      "say": "Little bits of time, again and again, help our family grow strong. Tonight, let's pick one idea from today and try it this week. The full guide has more, whenever we want it."
+      "say": "Little bits of time, again and again, help our family grow strong. Tonight, let's pick one idea from today and try it this week. The Family Planner, in The Grounded Way, keeps our time together on the calendar. The full guide has more, whenever we want it."
      }
     ]
    },
@@ -2022,6 +2023,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Back to the Table",
    "you": {
     "id": "gr-g-back-to-table-you",
+"go": ["Grounded Recipes", "/recipes/"],
     "guide": "back-to-table",
     "side": "you",
     "title": "Back to the Table",
@@ -2119,7 +2121,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "See you at the table.",
       "sub": "The full guide has more, whenever we want it.",
-      "say": "A simple meal, shared together, is one of the best things a family can do. See you at the table. The full guide has more, whenever we want it."
+      "say": "A simple meal, shared together, is one of the best things a family can do. See you at the table. Grounded Recipes has simple meals sized for our table, with a calm voice to guide the cooking. The full guide has more, whenever we want it."
      }
     ]
    },
@@ -4250,6 +4252,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Recovery in the Family",
    "you": {
     "id": "gr-g-recovery-you",
+"go": ["Open Living Sober", "/living-sober.html"],
     "guide": "recovery",
     "side": "you",
     "title": "Recovery in the Family",
@@ -4358,7 +4361,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "One day at a time, together.",
       "sub": "The full guide has more, whenever we want it.",
-      "say": "Every day of getting better counts, and so does every person in our family. The full guide has more, whenever we want it."
+      "say": "Every day of getting better counts, and so does every person in our family. Living Sober, in The Grounded Way, has a place for each of us, the one growing sober and everyone who loves them. The full guide has more, whenever we want it."
      }
     ]
    },
@@ -5185,6 +5188,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Remembering Together on Hard Dates",
    "you": {
     "id": "gr-g-hard-dates-you",
+"go": ["Readings Library", "/readings.html"],
     "guide": "hard-dates",
     "side": "you",
     "title": "Remembering Together on Hard Dates",
@@ -5280,7 +5284,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Their story is part of ours.",
       "sub": "The full guide has more, whenever we want it.",
-      "say": "Their story is part of our story, and we keep telling it. As the years go by, these days often get gentler. The full guide has more, whenever we want it."
+      "say": "Their story is part of our story, and we keep telling it. As the years go by, these days often get gentler. The Readings Library has words we can read together, from all faith traditions and everything in-between. The full guide has more, whenever we want it."
      }
     ]
    },
@@ -17968,6 +17972,7 @@ var V = [
   "title": "Sober Celebrations",
   "you": {
    "id": "gr-g-sober-celebrations-you",
+"go": ["Good Times, Sober", "/living-sober.html#good-times"],
    "guide": "sober-celebrations",
    "side": "you",
    "title": "Sober Celebrations",
@@ -18069,7 +18074,7 @@ var V = [
      "k": "big",
      "h": "Joy, together.",
      "sub": "The full guide has more, whenever we want it.",
-     "say": "The best celebrations are the ones where everyone is fully here. Joy, together. The full guide has more, whenever we want it."
+     "say": "The best celebrations are the ones where everyone is fully here. Joy, together. For ideas, Good Times, Sober, in Living Sober, has a plan for our holidays, weddings, and big days. The full guide has more, whenever we want it."
     }
    ]
   },
