@@ -2258,7 +2258,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "A walk outside every day, even ten minutes.",
     "A steady bedtime, with screens off early. Sleep often takes a few weeks to settle.",
     "One person you can text any hour, and a group if you want one: SMART Recovery, Refuge Recovery, or another that fits.",
-    "Counting days on Oak's Living Sober card, if that helps you, with a morning intention and an Evening Look Back. Every one counts."
+    "Counting days in Living Sober, on Today in The Grounded Way, if that helps you, with a morning intention and an Evening Look Back. Every one counts."
    ],
    "tell": [
     "“Today counts.”",
@@ -2457,7 +2457,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Texting or calling your person, before the wave peaks.",
     "Leaving: the party, the store aisle, the room. You can always leave.",
     "Planning for pain and medical visits: tell your doctor and dentist you're sober, and ask about pain plans that fit.",
-    "Ride the Wave, on Oak's Living Sober card: a ten minute video that rides an urge with you."
+    "Ride the Wave, in Living Sober, on Today in The Grounded Way: a ten minute video that rides an urge with you."
    ],
    "tell": [
     "“This is a wave. It will pass.”",
@@ -3244,3 +3244,5 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
 ];
   T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
 /* BLD995 guides end */
+/* BLD 1077: go: a guide whose topic has one of our own tools right there names it once, the same tool as its video's closing button ({you, helper}: [label, href]). */
+(function () { var G = window.OAK_GUIDES; if (!G || !G.topics) return; var GO = {"addiction":{"you":["Open Living Sober","/living-sober.html"],"helper":["Someone I Love","/living-sober.html#love"]},"sober-change":{"you":["Open Living Sober","/living-sober.html"]},"sober-first-30":{"you":["Early Days","/living-sober.html#early-days"]},"sober-cravings":{"you":["Ride the Wave","/living-sober.html#wave"]},"sober-slip":{"you":["Open Living Sober","/living-sober.html"]},"sober-partner":{"you":["Someone I Love","/living-sober.html#love"]},"sober-work-friends":{"you":["Good Times, Sober","/living-sober.html#good-times"]},"anxiety":{"you":["Get Grounded Now","/get-grounded-now.html"]},"after-death":{"you":["Planning a Farewell","/planning-a-farewell.html"],"helper":["Planning a Farewell","/planning-a-farewell.html"]},"own-death":{"you":["Open Willow","/willow/"]},"dying-loved":{"you":["Open Willow","/willow/"]},"eol-plan":{"you":["Open Willow","/willow/"]},"bedside":{"you":["In the End","/books.html"]},"money-crisis":{"you":["Grounded Money","/home/#library=money"]},"spiritual-dryness":{"you":["Readings Library","/readings.html"]}}; G.topics.forEach(function (t) { if (t && GO[t.id]) t.go = GO[t.id]; }); })();

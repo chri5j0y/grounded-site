@@ -59,7 +59,7 @@
   var V = 'c223';   // shared/gg-scale.js (BLD 1070: step amounts)
   var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c232', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c233', '/shared/tending-public.js?v=c223', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
-  var GGN_SRC = '/shared/ggn.js?v=c228';
+  var GGN_SRC = '/shared/ggn.js?v=c234';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
   var PLANNER_SRC = '/shared/gg-planner.js?v=c232', GIFTS_SRC = '/shared/gg-gifts.js?v=c232';   // BLD 1072: Gift Lists, for the planner's Birthday link   // BLD 950: the Family Planner (it brings gg-planner.css itself)   // BLD 937: Grounded Money (it brings gg-money-tools.js and gg-money.css itself)
   var IMG = '/shared/heroes/way/';
@@ -1593,7 +1593,7 @@
   /* BLD 963: the Membership sheet: the Membership card (gg-member.js) and the Welcome to Membership video. */
   /* BLD 963: once a profile has Membership, Today offers the Welcome to Membership tour until it is watched or set aside
      (gg-wm-<profile>, this device). The tour itself is a page video (shared/page-videos.js, welcome-membership). */
-  var PV_SRC = '/shared/page-videos.js?v=c228';
+  var PV_SRC = '/shared/page-videos.js?v=c234';
   function wmKey() { return 'gg-wm-' + (S.id || ''); }
   function wmSeen() { try { return !!localStorage.getItem(wmKey()); } catch (e) { return true; } }
   function wmMark() { try { localStorage.setItem(wmKey(), String(Date.now())); } catch (e) {} }
@@ -2771,7 +2771,7 @@
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=c220';
   var WELCOME_SRC = '/shared/learn-welcome.js?v=c021'; // BLD 975 (BLD 924): Welcome to The Grounded Way, one series per age group
-  var GUIDES = { oak: ['/oak/guides.js?v=c209', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c209', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c209', 'PINE_GUIDES'] };
+  var GUIDES = { oak: ['/oak/guides.js?v=c234', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c234', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c234', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c234', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   // BLD 1041 (the November 21 site test: a kid could reach no When Life Changes guide): Maple's guides (one list) and Aspen's (in
   // groups) count and search on the Library like every tree's.
@@ -5487,7 +5487,7 @@
   }
   /* BLD 912 Round 2: the tree's own screens (Tree Settings, Week, Groundwork, Next Steps, Legacy Book, For Grown-ups,
      the kids' talks) run here in Home's window through a screen module (shared/home/<name>.js, GGScreen[name].open). */
-  var SCR_MOD = { settings: '/shared/home/settings.js?v=c228', week: '/shared/home/week.js?v=c220', ground: '/shared/home/groundwork.js?v=c220', next: '/shared/home/nextsteps.js?v=c220', legacy: '/shared/home/legacy.js?v=c220', guide: '/shared/home/grownup.js?v=c228', talk: '/shared/home/talk.js?v=c228', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
+  var SCR_MOD = { settings: '/shared/home/settings.js?v=c228', week: '/shared/home/week.js?v=c220', ground: '/shared/home/groundwork.js?v=c234', next: '/shared/home/nextsteps.js?v=c220', legacy: '/shared/home/legacy.js?v=c220', guide: '/shared/home/grownup.js?v=c228', talk: '/shared/home/talk.js?v=c234', visit: '/shared/home/visit.js?v=b982', helper: '/shared/home/helper.js?v=b982' };
   var SCR_READY = { visit: true, helper: true, settings: true, guide: true, talk: true, week: true, ground: true, next: true, legacy: true };
   var SCR_CTL = null;
   function openScreen(name, tree, extra) {
@@ -5589,7 +5589,7 @@
   }
   /* Living Sober's tools in Home (BLD 911): the same shared module the trees used, opened right here (no tree page):
      My Anchor Plan, Healthy People, Strong on Your Own, My Good People, Sleep, Food, and Movement, and Loving Someone. */
-  var SOBER_JS = ['/shared/gg-life.js?v=c197', '/shared/gg-sober.js?v=c228'];
+  var SOBER_JS = ['/shared/gg-life.js?v=c197', '/shared/gg-sober.js?v=c234'];
   function soberTree() { return /^(birch|oak|sequoia)$/.test(S.tree) ? S.tree : 'oak'; }
   function soberTools(kind) {
     return soberReady().then(function (G) {
@@ -6091,7 +6091,7 @@
     if (t.hasAttribute('data-hm-vback')) { vBack(); return; }
     goTo('library=' + t.getAttribute('data-hm-set'));
   });
-  var LEARN_JS = '/shared/gg-learn.js?v=c228';
+  var LEARN_JS = '/shared/gg-learn.js?v=c234';
   function mPlay(key) {
     var c = key.indexOf('|'), sec = key.slice(0, c), id = key.slice(c + 1), all = mItems(sec), x = all.filter(function (i) { return i.id === id; })[0]; if (!x) return;
     if (sec === 'relationships') x = altFor(x, hhKind());
@@ -6144,6 +6144,8 @@
       cfg.onDone = function (lid) { if (!hl.ldone[lid]) { hl.ldone[lid] = today(); saveHome(); } if (onDone) onDone(lid); };
       cfg.open = function (lid) { mClose(); playTreeLesson(lid); };
     }
+    // BLD 1077: a guide video's tool button (go) closes its windows first (the video and the written guide under it), then opens the tool (a page, or a place in this app).
+    cfg.go = function (h) { for (var k = 0; k < 4 && document.getElementById('hm-mdlg'); k++) mClose(); location.assign(h); };
     if (extra) Object.keys(extra).forEach(function (k) { cfg[k] = extra[k]; });
     try { M_CTL = GGLearn.player(host, cfg); }
     catch (e) { if (window.console) console.error(e); host.innerHTML = '<p class="hm-sub">This session opens in a moment. Please try again.</p>'; }
@@ -6398,7 +6400,7 @@
   }
   /* BLD 911 (Chris: "when i chose a vid from When life changes.. i am forced to a new page and then hard to find way back"):
      a guide's two videos (For You and For the Helper) play in the same window on Learn; Read the Guide opens the written guide. */
-  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=c220', aspen: '/aspen/guide-videos.js?v=c220', maple: '/maple/guide-videos.js?v=c220', sequoia: '/sequoia/guide-videos.js?v=c216', pine: '/pine/guide-videos.js?v=c209', birch: '/birch/guide-videos.js?v=c216' };
+  var GUIDE_JS = { oak: '/oak/guide-videos.js?v=c234', aspen: '/aspen/guide-videos.js?v=c220', maple: '/maple/guide-videos.js?v=c234', sequoia: '/sequoia/guide-videos.js?v=c234', pine: '/pine/guide-videos.js?v=c234', birch: '/birch/guide-videos.js?v=c234' };
   function guideVideos(tree, id) { var D = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[tree]; return D ? arr(D.guides).filter(function (g) { return g && g.id === id; })[0] || null : null; }
   function playGuide(id, side, tree0) {
     var tree = tree0 && GUIDE_JS[tree0] ? tree0 : S.tree, src = GUIDE_JS[tree]; if (!src) { toast('This guide waits in Learn.'); goTo('learn'); return; }
@@ -6611,6 +6613,8 @@
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-hm-lesson],[data-hm-guide],[data-hm-gside],[data-hm-gread],[data-hm-gpersp],[data-hm-lf],[data-hm-pick],[data-hm-padd],[data-hm-sober],[data-hm-helpfor],[data-hm-sw]');
+    // BLD 1077: a written guide's tool link closes the guide window first, so a place in this app opens in full view.
+    var gg = e.target.closest && e.target.closest('a[data-hm-ggo]'); if (gg && !e.ctrlKey && !e.metaKey && !e.shiftKey) { e.preventDefault(); for (var k = 0; k < 4 && document.getElementById('hm-mdlg'); k++) mClose(); location.assign(gg.getAttribute('href')); return; }
     if (t && t.hasAttribute('data-hm-gpersp')) { GREAD.self = t.getAttribute('data-hm-gpersp') === 'self'; guideRead(GREAD.id, GREAD.tree); return; }
     if (!t) return;
     if (t.hasAttribute('data-hm-sober')) { soberTools(t.getAttribute('data-hm-sober')); return; }
@@ -6653,7 +6657,7 @@
      this or I'm helping someone, faith, practices, when to reach out, learn more, and the sources line. */
   var GREAD = { tree: '', id: '', self: true };
   var FAITH_H = { oak: 'Faith and the holy', sequoia: 'Faith and the holy', birch: 'Faith and meaning', pine: 'Faith and meaning' };
-  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=c209', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c209', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c197', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c209', 'PINE_GUIDES'] };
+  var GUIDE_SRC2 = { oak: ['/oak/guides.js?v=c234', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=c234', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=c234', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=c234', 'PINE_GUIDES'] };
   function gList(xs) { return '<ul class="hm-glist">' + arr(xs).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
   function gSay(xs) { return '<div class="hm-gsay">' + arr(xs).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; }
   function guideRead(id, tree) {
@@ -6666,12 +6670,15 @@
       var self = GREAD.self, h = T.helper || {}, s = T.self || {};
       var view = self ? '<h3>What this can feel like</h3><p>' + esc(T.feel) + '</p><h3>First steps</h3>' + gList(s.first) + '<h3>What helps</h3>' + gList(s.helps) + '<h3>What to tell yourself</h3>' + gSay(s.tell) + (s.people ? '<h3>Telling your people</h3><p>' + esc(s.people) + '</p>' : '')
         : '<h3>What they may be carrying</h3><p>' + esc(T.feel) + ' ' + esc(h.feel || '') + '</p><h3>What to say</h3>' + gSay(h.say) + '<h3>What to avoid</h3>' + gList(h.avoid) + '<h3>Practical ways to help</h3>' + gList(h.help) + (h.you ? '<h3>Caring for yourself as the helper</h3><p>' + esc(h.you) + '</p>' : '');
+      // BLD 1077: a guide whose topic has one of our own tools right there names it once, the same tool as its video's button.
+      var gGo = T.go ? ((self ? T.go.you : T.go.helper) || T.go.you || T.go.helper) : null; if (gGo && !(gGo[0] && /^\/[^\/]/.test(String(gGo[1] || '')))) gGo = null;
       var prac = arr(T.practices).map(function (k) { var nm = String(k).split('|')[1] || k; return '<span class="hm-gprac">' + esc(nm) + '</span>'; }).join('');
       var html = '<div class="hm-lchips"><button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|you|' + tree + '">' + I('play') + 'Watch: For You</button><button type="button" class="hm-lchip" data-hm-gside="' + esc(id) + '|helper|' + tree + '">' + I('play') + 'Watch: For the Helper</button></div>' +
         '<div class="hm-gread"><div class="hm-gquick"><b>Quick Reference</b>' + gList(T.quick) + '</div>' +
         '<div class="hm-lchips" role="group" aria-label="Choose a view"><button type="button" class="hm-lchip" data-hm-gpersp="self" aria-pressed="' + self + '">I\'m going through this</button><button type="button" class="hm-lchip" data-hm-gpersp="helper" aria-pressed="' + !self + '">I\'m helping someone</button></div>' +
         view + (T.story ? '<h3>From Chris\'s Story</h3>' + gSay([T.story.text]) : '') + (T.faith ? '<h3>' + esc(FAITH_H[tree] || 'Faith and meaning') + '</h3><p>' + esc(T.faith) + '</p>' : '') +
         (prac ? '<h3>Practices that can help</h3><p class="hm-gpracs">' + prac + '</p>' : '') +
+        (gGo ? '<h3>A Grounded tool for this</h3><p><a class="hm-linkbtn" data-hm-ggo="1" href="' + esc(gGo[1]) + '">' + esc(gGo[0]) + '</a></p>' : '') +
         (T.kids ? '<h3>If children are involved</h3><p><a class="hm-linkbtn" href="/home/?guide=' + encodeURIComponent(T.kids) + '&amp;tree=maple">A guide for talking with kids about this</a></p>' : '') +
         '<h3>When to reach out for more help</h3>' + gList(T.reach) +
         (arr(T.more).length ? '<h3>Learn more</h3><ul class="hm-glist">' + arr(T.more).map(function (m) { return '<li><a class="hm-linkbtn" href="' + esc(m[1]) + '" target="_blank" rel="noopener">' + esc(m[0]) + '</a></li>'; }).join('') + '</ul>' : '') +

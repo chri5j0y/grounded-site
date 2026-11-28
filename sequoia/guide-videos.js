@@ -5233,6 +5233,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worry and Anxiety",
    "you": {
     "id": "sq-g-anxiety-you",
+"go": ["Get Grounded Now", "/get-grounded-now.html"],
     "guide": "anxiety",
     "side": "you",
     "title": "Worry and Anxiety",
@@ -5362,7 +5363,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "You have handled hard things before.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You have handled hard things before, and you only need to take the next small step. The full guide has more, whenever you want it."
+      "say": "You have handled hard things before, and you only need to take the next small step. When worry rises, Get Grounded Now has short guided videos to calm your body. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -6390,6 +6391,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Money Worries on a Fixed Income",
    "you": {
     "id": "sq-g-fixed-income-you",
+"go": ["Grounded Money", "/home/#library=money"],
     "guide": "fixed-income",
     "side": "you",
     "title": "Money Worries on a Fixed Income",
@@ -6485,7 +6487,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Your worth was never in dollars.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Asking for help is wise, not weak. Your worth was never measured in dollars. The full guide has more, whenever you want it."
+      "say": "Asking for help is wise, not weak. Your worth was never measured in dollars. Grounded Money, in The Grounded Way, helps you see your whole month on one page. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -10252,6 +10254,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Facing Death and Sharing Your Wishes",
    "you": {
     "id": "sq-g-facing-death-you",
+"go": ["Open Willow", "/willow/"],
     "guide": "facing-death",
     "side": "you",
     "title": "Facing Death and Sharing Your Wishes",
@@ -10356,7 +10359,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Your wishes matter.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Your wishes matter, and you can say them, one small step at a time. The full guide has more, whenever you want it."
+      "say": "Your wishes matter, and you can say them, one small step at a time. What Matters to Me, in Willow, helps you put your wishes into words, one page at a time. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -12828,6 +12831,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   "title": "When Your Adult Child Drinks or Uses",
   "you": {
    "id": "sq-g-sober-adult-child-you",
+"go": ["Someone I Love", "/living-sober.html#love"],
    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
    "guide": "sober-adult-child",
    "side": "you",
@@ -12922,7 +12926,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "big",
      "h": "Every return to the path counts.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Healing is real, for your child and for you. Sobriety is rarely a straight line, and every return to the path counts. The full guide has more, whenever you want it."
+     "say": "Healing is real, for your child and for you. Sobriety is rarely a straight line, and every return to the path counts. Someone I Love, in Living Sober, is here for you, with steady support for loving a child who drinks or uses. The full guide has more, whenever you want it."
     }
    ]
   },

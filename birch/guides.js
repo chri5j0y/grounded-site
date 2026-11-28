@@ -6556,3 +6556,5 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 ];
   T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
 /* BLD995 guides end */
+/* BLD 1077: go: a guide whose topic has one of our own tools right there names it once, the same tool as its video's closing button ({you, helper}: [label, href]). */
+(function () { var G = window.BIRCH_GUIDES; if (!G || !G.topics) return; var GO = {"substances":{"you":["Open Living Sober","/living-sober.html"],"helper":["Someone I Love","/living-sober.html#love"]},"sober-college-nightlife":{"you":["Good Times, Sober","/living-sober.html#good-times"]},"sober-after-slip":{"you":["Open Living Sober","/living-sober.html"]},"anxiety":{"you":["Get Grounded Now","/get-grounded-now.html"]},"money-basics":{"you":["Grounded Money","/home/#library=money"]}}; G.topics.forEach(function (t) { if (t && GO[t.id]) t.go = GO[t.id]; }); })();

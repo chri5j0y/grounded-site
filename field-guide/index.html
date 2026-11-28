@@ -678,7 +678,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=c030"></script>
 <script src="../shared/gg-sources.js?v=c220"></script>
-<script src="../shared/gg-learn.js?v=c228"></script>
+<script src="../shared/gg-learn.js?v=c234"></script>
 <script src="../shared/gg-parts.js?v=c212"></script>
 <script src="../shared/gg-print.js?v=c228"></script>
 <script src="../shared/grove-scene.js?v=b929"></script>
@@ -701,7 +701,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="member-acct.js?v=b950"></script>
 <script src="../shared/gg-live.js?v=c184"></script>
 <script src="live-fg.js?v=c184"></script>
-<script src="../shared/gg-stories.js?v=c228"></script>
+<script src="../shared/gg-stories.js?v=c234"></script>
 <script src="vault.js?v=c228"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -10089,7 +10089,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=c197', '../aspen/guides.js?v=c197', '../oak/guides.js?v=c209', '../willow/guides.js?v=c183', '../sequoia/guides.js?v=c197', '../pine/guides.js?v=c209', '../birch/guides.js?v=c209'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=c197', '../aspen/guides.js?v=c197', '../oak/guides.js?v=c234', '../willow/guides.js?v=c183', '../sequoia/guides.js?v=c234', '../pine/guides.js?v=c234', '../birch/guides.js?v=c234'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

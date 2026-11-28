@@ -2044,6 +2044,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Money Basics: Paychecks, Budgets, and Credit",
    "you": {
     "id": "br-g-money-basics-you",
+"go": ["Grounded Money", "/home/#library=money"],
     "guide": "money-basics",
     "side": "you",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2138,7 +2139,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Small amounts, on time, add up.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "One paycheck, one plan, one small amount set aside. That's how it starts. The full guide has more, whenever you want it."
+      "say": "One paycheck, one plan, one small amount set aside. That's how it starts. Grounded Money, in The Grounded Way, helps you build that first plan. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -6611,6 +6612,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Anxiety and Panic",
    "you": {
     "id": "br-g-anxiety-you",
+"go": ["Get Grounded Now", "/get-grounded-now.html"],
     "guide": "anxiety",
     "side": "you",
     "title": "Anxiety and Panic",
@@ -6734,7 +6736,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You can do hard things nervous.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can live your life before you feel calm. You can do hard things nervous. The full guide has more, whenever you want it."
+      "say": "You can live your life before you feel calm. You can do hard things nervous. When it rises, Get Grounded Now has short guided videos to calm your body. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -7396,6 +7398,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Drinking and Other Drugs",
    "you": {
     "id": "br-g-substances-you",
+"go": ["Open Living Sober", "/living-sober.html"],
     "guide": "substances",
     "side": "you",
     "title": "Drinking and Other Drugs",
@@ -7515,12 +7518,13 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Your life, your call.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Your life, your call. Notice the why, plan your answer, and reach out when you want help. The full guide has more, whenever you want it."
+      "say": "Your life, your call. Notice the why, plan your answer, and reach out when you want help. Whenever you choose to grow sober, Living Sober, in The Grounded Way, walks with you, one day at a time. The full guide has more, whenever you want it."
      }
     ]
    },
    "helper": {
     "id": "br-g-substances-helper",
+"go": ["Someone I Love", "/living-sober.html#love"],
     "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "helper",
@@ -7632,7 +7636,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Calm. Clear. Door open.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Stay calm. Keep your boundaries clear. Keep the door open. The full guide has more, whenever you want it."
+      "say": "Stay calm. Keep your boundaries clear. Keep the door open. Living Sober has a place for you, called Someone I Love, with steady support for loving someone who drinks or uses. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -13358,6 +13362,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Sober in College and Nightlife",
   "you": {
    "id": "br-g-sober-college-nightlife-you",
+"go": ["Good Times, Sober", "/living-sober.html#good-times"],
    "guide": "sober-college-nightlife",
    "side": "you",
    "title": "Sober in College and Nightlife",
@@ -13469,7 +13474,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "big",
      "h": "Clear head. Good morning.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Here's a line to keep. Clear head, good morning. Your nights can be full, and your mornings can be yours. The full guide has more, whenever you want it."
+     "say": "Here's a line to keep. Clear head, good morning. Your nights can be full, and your mornings can be yours. Good Times, Sober, in Living Sober, has a plan for nights out, parties, and every big night. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -13825,6 +13830,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "After a Slip",
   "you": {
    "id": "br-g-sober-after-slip-you",
+"go": ["Open Living Sober", "/living-sober.html"],
    "guide": "sober-after-slip",
    "side": "you",
    "title": "After a Slip",
@@ -13925,7 +13931,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "big",
      "h": "Every return counts.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Let your people back in: a friend, a peer group, a mentor, a therapist, or a doctor. Every return counts. The full guide has more, whenever you want it."
+     "say": "Let your people back in: a friend, a peer group, a mentor, a therapist, or a doctor. Every return counts. In Living Sober, Begin Again starts a fresh count, and Days Grown keeps every day you have grown. The full guide has more, whenever you want it."
     }
    ]
   },
