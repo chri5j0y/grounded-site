@@ -127,7 +127,7 @@ const GROVE_AUD = [
     lines: ['A Class Check-in in a morning circle, with one shared answer', 'Plain words, and questions about class life only', 'No student names, ever', 'Practices like a Name Greeting and Kindness Notes', 'Kept private on the leader\'s device, locked with a passcode']}
 ];
 const GROVE_HOLD = 'Hold this flyer for now. The Classroom kind waits on the attorney\'s answer about classroom check-ins (PPRA) before it is offered to schools. Its words stay general: classes, co-ops, and youth programs.';
-const GROVES = GROVE_AUD.map(a => Object.assign({svc: 'org', grp: 'grove', mark: 'shared/marks/grove.svg', color: '#223829', line: GROVE_LINE, url: GROVE_URL, eyebrow: 'The Grove\u2122 for ' + a.name}, a, {hero: 'shared/heroes/grove-wide.webp', focus: .5}));
+const GROVES = GROVE_AUD.map(a => Object.assign({svc: 'org', grp: 'grove', mark: 'shared/marks/grove.svg?v=c236', color: '#223829', line: GROVE_LINE, url: GROVE_URL, eyebrow: 'The Grove\u2122 for ' + a.name}, a, {hero: 'shared/heroes/grove-wide.webp', focus: .5}));
 // The Painting look: each subject's wide painting, and where its main tree stands (a fraction of the image width).
 const FOCUS = {maple: .37, aspen: .36, pine: .38, birch: .18, oak: .72, sequoia: .22, willow: .21, grove: .5, home: .74, marriage: .64};
 // People named in the bios (bios may name a person who is not a card subject).
