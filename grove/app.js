@@ -247,6 +247,8 @@ function load() {
   }
   if (!ROOT.groves.length) { try { const o = JSON.parse(localStorage.getItem(OLD) || 'null'); if (o && o.scale) ROOT.scale = o.scale; } catch (e) {} }
   ROOT.groves = ROOT.groves.filter(g => g && g.id && !(ROOT.gone[g.id] >= (g.u || 0)));
+  // BLD 1079: a Family grove brought along to the shared Family grove keeps its old copy here 30 days, then steps aside
+  ROOT.groves = ROOT.groves.filter(g => !(g.brought && Date.now() - g.brought > 30 * 864e5));
   G = ROOT.groves.find(g => g.id === ROOT.active) || ROOT.groves[0] || null;
   if (G) { ROOT.active = G.id; fixGrove(G); }
   if (ROOT.groves.length && JSON.stringify(ROOT) !== JSON.stringify(j)) persist();
@@ -264,7 +266,10 @@ function deepMerge(cur, inc) {
   return cur;
 }
 function fixGrove(g) { const b = blankGrove(g.kind, g.name); Object.keys(b).forEach(k => { if (g[k] === undefined) g[k] = b[k]; }); if (!KDEF[g.kind]) g.kind = 'family'; }
-function persist() { try { localStorage.setItem(STORE2, JSON.stringify(ROOT)); return true; } catch (e) { return false; } }
+// BLD 1079: a Family grove for accounts keeps its posts, reactions, and practices locked in shared/gg-famgrove.js; this
+// device's plain storage keeps only its settings.
+const fgStrip = g => g && g.acct ? Object.assign({}, g, { wall: [], reacts: {}, done: {}, grew: {}, cheers: [], box: null, plainBox: null }) : g;
+function persist() { try { localStorage.setItem(STORE2, JSON.stringify(Object.assign({}, ROOT, { groves: ROOT.groves.map(fgStrip) }))); return true; } catch (e) { return false; } }
 function save() { if (G) G.u = Date.now(); if (!persist()) toast('Saving did not work in this browser.'); }
 function toast(m) { if (window.GGP && GGP.toast) GGP.toast(m); else { const t = document.createElement('div'); t.className = 'gv-toast'; t.setAttribute('role', 'status'); t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); } }
 const isFamily = () => G && G.kind === 'family';
@@ -291,6 +296,7 @@ function V() { return G ? VAULTS[G.id] : null; }
 function sealVault() {
   if (!G || !VAULTS[G.id]) return Promise.resolve();
   const data = VAULTS[G.id];
+  if (fgOn()) { data.u = Date.now(); VAULT_U[G.id] = data.u; return FGX().saveVault(data).catch(e => toast(fgSay(e))); }
   if (!G.lockOn) { G.plainBox = data; G.box = null; G.boxU = Date.now(); save(); return Promise.resolve(); }
   const k = KEYS[G.id]; if (!k) return Promise.resolve();
   const iv = crypto.getRandomValues(new Uint8Array(12)), gid = G.id;
@@ -304,6 +310,7 @@ function lockNow() { if (G) { delete KEYS[G.id]; delete VAULTS[G.id]; delete RAW
 function unlock(reason) {
   if (!G) return Promise.resolve(false);
   if (vaultOpen()) return Promise.resolve(true);
+  if (fgOn()) { if (FGX().grown()) { VAULTS[G.id] = Object.assign(blankVault(), FGX().vault() || {}); return Promise.resolve(true); } toast('The Family Check-in and Growth Plan are with the grown-ups of your Household.'); return Promise.resolve(false); }
   if (!G.lockOn) { VAULTS[G.id] = Object.assign(blankVault(), G.plainBox || {}); return Promise.resolve(true); }
   if (!subtle) { alert('This browser cannot lock The Grove. Try another browser.'); return Promise.resolve(false); }
   if (!G.lock || !G.box) return choosePass(reason);
@@ -407,7 +414,7 @@ function seeRoot() {
   return attempt('').then(() => render());
 }
 function keepSafeNote(g) {
-  if (!g || (g.ks && g.ks.first)) return;
+  if (!g || (g.ks && g.ks.first) || g.acct) return;   // BLD 1079: the Family grove for accounts is kept locked in the account
   g.ks = Object.assign({}, g.ks, { first: today() }); save();
   setTimeout(() => needRoot().then(R => R.remind({ lead: 'Your first check-in together is saved.', wordsLabel: g.lockOn ? 'See Our Root Words' : 'Turn the Lock On', onBackup: () => { if (window.GGBackupGo) GGBackupGo('make'); }, onWords: () => { if (g.lockOn) seeRoot(); else { S.tab = 'settings'; render(); } } }), () => {}), 700);
 }
@@ -430,10 +437,10 @@ function passDialog(o) {
 const ORDER = { adult:1, pine:2, aspen:3, maple:4 };
 // Household profiles stand in Family groves only. Other kinds keep no member list on the device.
 function allPeople() { return window.GGP && GGP.list ? GGP.list().slice().sort((a, b) => (ORDER[a.age] || 9) - (ORDER[b.age] || 9) || String(a.name).localeCompare(String(b.name))) : []; }
-function people() { return isFamily() ? allPeople() : []; }
-function who(id) { return allPeople().find(p => p.id === id) || null; }
+function people() { return fgOn() ? FGX().people() : isFamily() ? allPeople() : []; }
+function who(id) { return (fgOn() ? FGX().people() : allPeople()).find(p => p.id === id) || null; }
 function nameOf(id) { const p = who(id); return p ? p.name : 'Someone'; }
-function me() { return window.GGP && GGP.active ? GGP.active() : null; }
+function me() { if (fgOn()) return FGX().me(KIDHERE || ''); return window.GGP && GGP.active ? GGP.active() : null; }
 function treeOf(p) {
   const t = (p.shared || {}).tree, show = !!(t && t.show !== false && t.tool);
   const wk = addDays(today(), -6), parts = new Set();
@@ -530,9 +537,75 @@ function giftsAny() { return GIFTS_ON && (S.tab === 'gifts' || (window.GGAccount
 function viewGifts() { return '<div id="gf-root"></div>'; }
 function giftsMount() { const el = document.getElementById('gf-root'); if (el && window.GGGifts) { GGGifts.mount(el, { who: GIFT_WHO }); GIFT_WHO = null; } }
 if (window.GGGifts) GGGifts.live().then(on => { GIFTS_ON = !!on; if (on) { renderTabs(); if (S.tab === 'gifts') render(); } });
+/* ---------- The Family grove for accounts (GWG BLD 1079, shared/gg-famgrove.js) ----------
+   With a Grounded Account, the Household is the Family grove: everyone sees it on their own phone. Here a grove on this
+   device with acct (the Family grove's id) holds only its settings (words, children, a hard season); the posts, reactions,
+   practices done together, cheers, the name, the scenery, and (for grown-ups) the Family Check-in and Growth Plan come from
+   the shared Family grove each time The Grove draws. The Who's here? picker and the grove passcode step aside: the signed
+   in account is the person here, and a kid whose tree this phone holds can post as themselves (Riley Is Here). Every other
+   kind of grove keeps its own passcode and Our Grove Across Phones. It shows only once the Worker answers (FG_ON). */
+let FG_ON = false, KIDHERE = '';
+const FGX = () => window.GGFamilyGrove;
+function fgOn() { return !!(FG_ON && G && G.kind === 'family' && G.acct && FGX() && FGX().ready() && FGX().id() === G.acct); }
+const VAULT_U = {};
+function fgFill() {
+  if (!fgOn()) return;
+  const F = FGX(), w = F.wall();
+  G.wall = w.filter(x => !x.cheer); G.cheers = w.filter(x => x.cheer); G.reacts = F.reacts(); G.done = F.done(); G.grew = F.grew(); G.kinds = F.kinds();
+  const st = F.set(); if (st.name) G.name = st.name; if (st.scenery) G.scenery = st.scenery;
+  G.lockOn = false; G.lock = null;
+  if (F.grown()) { const v = F.vault(), u = v ? +v.u || 0 : -1; if (!VAULTS[G.id] || VAULT_U[G.id] !== u) { VAULTS[G.id] = Object.assign(blankVault(), v || {}); VAULT_U[G.id] = u; } }
+  else { delete VAULTS[G.id]; delete VAULT_U[G.id]; }
+  if (KIDHERE && !F.kidsHere().some(k => k.account === KIDHERE)) KIDHERE = '';
+}
+// a grove on this device for the Family grove (made once), and an ended one kept as a grove on this device
+function fgSync() {
+  const F = FGX(); if (!F) return;
+  const st = F.st(), fg = st.g;
+  if (fg && F.ready()) {
+    let g = ROOT.groves.find(x => x.acct === fg.id);
+    if (!g) {
+      g = Object.assign(blankGrove('family', F.set().name || 'Our Family Grove'), { acct: fg.id, lockOn: false, intro: true });
+      ROOT.groves.push(g);
+      const cur = G;
+      if (!cur || (cur.kind === 'family' && !cur.acct)) { G = g; ROOT.active = g.id; S.setup = null; S.pick = false; }
+      persist();
+    }
+  } else if (st.loaded && !fg && st.ended && ROOT.groves.some(x => x.acct)) {
+    // a grown-up keeps the grove as it was, as a grove on this device; a guest, a teen, or a kid who left keeps none of it
+    const lv = st.lastView;
+    if (lv) ROOT.groves.filter(x => x.acct).forEach(x => { Object.assign(x, { acct: null, wall: (lv.wall || []).filter(y => !y.cheer), reacts: lv.reacts || {}, done: lv.done || {}, grew: lv.grew || {}, lockOn: false, ended: Date.now() }); });
+    else { ROOT.groves = ROOT.groves.filter(x => !x.acct); if (G && !ROOT.groves.includes(G)) { G = ROOT.groves[0] || null; ROOT.active = G ? G.id : null; if (G) fixGrove(G); } }
+    KIDHERE = ''; persist();
+  }
+  render();
+}
+// Bring Our Grove Along: the Family grove from before on this device comes into the shared Family grove
+function fgOld() { return (G && G.kind === 'family' && !G.acct && !G.brought) ? G : ROOT.groves.find(x => x.kind === 'family' && !x.acct && !x.brought) || null; }
+const fgHasOld = () => { const o = fgOld(); return !!(o && ((o.wall || []).length || Object.keys(o.done || {}).length || o.box || o.plainBox)); };
+window.GGFamilyGroveBring = function (name) {
+  const F = FGX(), old = fgOld(); if (!F || !old) return Promise.resolve(false);
+  const prev = G; G = old;
+  return unlock('Bring the Family Check-ins and plan along.').then(ok => {
+    const vault = ok && VAULTS[old.id] ? JSON.parse(JSON.stringify(VAULTS[old.id])) : null;
+    G = prev;
+    const st = F.st();
+    return (st.g ? F.bring(old, vault) : F.plant(name || old.name || 'Our Family Grove', { grove: old, vault })).then(() => { old.brought = Date.now(); persist(); fgSync(); });
+  });
+};
+if (FGX()) { FGX().on(() => fgSync()); FGX().live().then(on => { FG_ON = !!on; if (on) FGX().load().catch(() => {}); });
+  if (window.GGAccount && GGAccount.on) GGAccount.on(t => { if (t === 'state' && FG_ON) FGX().load(true).catch(() => {}); }); }
+function fgCard() { return FG_ON && FGX() && !fgOn() ? FGX().cardHtml({ bring: fgHasOld(), name: (fgOld() || {}).name }) : ''; }
+const fgKid = () => { const a = me(); return !!(fgOn() && a && a.role === 'kid'); };
+const fgSay = e => FGX() ? FGX().say(e) : 'That did not go through.';
+function fgCheersHtml() {
+  const F = FGX(), a = me(), others = people().filter(p => !a || p.id !== a.id);
+  return `<div class="card gv-cheers"><h3>Send a Cheer</h3><label class="lbl" for="gv-cto">To</label><select id="gv-cto" class="gv-input"><option value="">The whole grove</option>${others.map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('')}</select><div class="gv-chips">${F.CHEERS.map((c, i) => `<button type="button" class="chip" data-act="fgcheer" data-id="${i}">${esc(c)}</button>`).join('')}</div></div>`;
+}
 function tabs() {
   if (!G || S.setup) return [['grove', G ? 'New Grove' : 'Start Our Grove', 'grove']].concat(giftsAny() ? giftsTab() : [], [['life', 'When Life Changes', 'guide'], ['how', 'How it works', 'how'], ['learn', 'Learn', 'play']]);
   const K = KW(), t = [['grove', 'Our Grove', 'grove'], ['checkin', K.checkin, 'week'], ['plan', 'Growth Plan', 'plan'], ['together', 'Together', 'heart']].concat(isFamily() || S.tab === 'gifts' ? giftsTab() : [], [['life', 'When Life Changes', 'guide']]);
+  if (fgOn() && !FGX().grown()) for (let i = t.length - 1; i >= 0; i--) if (t[i][0] === 'checkin' || t[i][0] === 'plan') t.splice(i, 1);
   if (isFamily() || G.wallOn) t.push(['wall', G.kind === 'classroom' ? 'Teacher Notes' : 'The Wall', 'people']);
   if (isFamily() && hasEarlier()) t.push(['earlier', 'Earlier', 'journal']);
   t.push(['how', 'How it works', 'how'], ['settings', 'Settings', 'gear'], ['learn', 'Learn', 'play']);
@@ -559,6 +632,7 @@ function gvHero() {
 }
 if (window.GGClass) GGClass.provide(id => TP[id] ? Object.assign(pv(TP[id]), { id }) : null);
 function render() {
+  fgFill();
   gvStripWords();
   gvHero();
   if (window.GGClass) GGClass.plain(!G || plainMode());
@@ -604,6 +678,7 @@ function viewSetup() {
     if (st.lock) h += `<label class="lbl" for="gv-sp1">Grove passcode</label><input id="gv-sp1" class="gv-input" type="password" autocomplete="new-password"><label class="lbl" for="gv-sp2">Passcode again</label><input id="gv-sp2" class="gv-input" type="password" autocomplete="new-password"><p class="muted">At least 6 characters. Grow With Grounded never sees it and cannot recover it. Next you get 12 Root Words that open the grove if the passcode is ever forgotten.</p>`;
     h += `<p class="gv-err" id="gv-serr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create-grove">Plant This Grove</button>${G ? '<button class="btn btn-line btn-sm" data-act="cancel-setup">Cancel</button>' : ''}</div></div>`;
   }
+  if (!G) h += fgCard();
   if (!G) h += `<div class="card"><h3>From Your Guide's Visit</h3><p>Did a Grove Guide visit your family and send your check-in and plan? Open them here with the link or message and the 8-letter code.</p><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>`;
   if (!G) h += `<div class="card gv-next"><h3>The Grove for Classrooms</h3><p>Calm, connected classrooms in a few minutes a day: Class Resets, a Class Screen for the smartboard, Teacher's Day, and painted practice cards. Start with a 4-Week Pilot, or sponsor a classroom for a teacher you know.</p><div class="tools-row" style="justify-content:flex-start"><a class="btn btn-gold btn-sm" href="/classrooms/">See The Grove for Classrooms</a><a class="btn btn-line btn-sm" href="/classrooms/sponsor.html">Sponsor a Classroom</a><button type="button" class="btn btn-line btn-sm" data-gc-video="teachers">Watch: For Teachers</button></div></div>`; // BLD 982
   if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in The Grounded Way, at Home. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
@@ -637,6 +712,12 @@ function createGrove() {
 
 /* ---------- who's here (Family groves) ---------- */
 function hereBar() {
+  if (fgOn()) {
+    const a = me(), F = FGX(), kids = F.kidsHere(), mine = F.me('');
+    if (!a) return '';
+    if (KIDHERE) return `<div class="gv-here">${window.GGAv ? GGAv.html(a.avatar, a.name, 36) : ''}<p>Here as <b>${esc(a.name)}</b>.</p><div class="gv-here-acts"><button class="btn btn-line btn-sm" data-act="fgback">Back to ${esc(mine ? mine.name : 'Me')}</button></div></div>`;
+    return `<div class="gv-here">${window.GGAv ? GGAv.html(a.avatar, a.name, 36) : ''}<p>Here as <b>${esc(a.name)}</b>.</p>${kids.length ? `<div class="gv-here-acts">${kids.map(k => { const p = F.me(k.account); return `<button class="btn btn-gold btn-sm" data-act="fgkid" data-id="${esc(k.account)}">${esc(p ? p.name : k.profile.name)} Is Here</button>`; }).join('')}</div>` : ''}</div>`;
+  }
   const a = me();
   if (a) return `<div class="gv-here">${window.GGAv ? GGAv.html(a.avatar, a.name, 36) : ''}<p>Here as <b>${esc(a.name)}</b>.</p><div class="gv-here-acts"><button class="btn btn-line btn-sm" data-act="switch">Switch person</button><button class="btn btn-line btn-sm" data-act="lock">Lock</button></div></div>`;
   if (!people().length) return '';
@@ -693,13 +774,14 @@ function viewGrove() {
   if (!G.intro) h += `<div class="banner gv-intro"><h2 class="gv-h3">${esc(Wk(W('kinds.' + G.kind + '.introTitle'), G.kind) || 'Where our trees grow together')}</h2><p>${isFamily()
     ? '<b>Your tree is yours. The grove is ours.</b> Everyone tends their own tree in The Grounded Way: Oak for grown-ups, Birch for young adults, Sequoia for older adults, Pine for high schoolers, Aspen for middle schoolers, Maple for kids. The Grove is where your trees stand side by side. Check in together, make a plan together, and watch the grove grow.'
     : `<b>This grove belongs to ${esc(K.we)}.</b> Check in together with one shared answer for each question, make a Growth Plan together, and do a few practices side by side. Nothing about any one person is ever asked or kept.`}</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-light btn-sm" data-act="intro">Got it</button></div></div>`;
+  if (isFamily()) h += fgCard();
   h += groveTodayHtml();
   if (G.kind === 'classroom' && window.GGClass) h += GGClass.dayHtml() + `<div class="section-head"><h2>Class Resets</h2><p>Short guided videos for the whole class, one to three minutes, with a calm voice leading. Tap one and it plays full screen.</p></div>` + GGClass.resetsHtml() + `<p class="no-print"><button type="button" class="btn btn-line btn-sm" data-gc-video="teachers">${icon('play')} Watch: For Teachers</button></p>`;
-  if (window.GGGroveShare) h += GGGroveShare.cardHtml(G);
+  if (window.GGGroveShare && !fgOn()) h += GGGroveShare.cardHtml(G);
   h += nextStepHtml();
   h += lcHomeHtml();
   if (hasTrees()) {
-    const lead = isFamily() ? (ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'Start with your own tree.')
+    const lead = fgOn() ? (ps.length === 1 ? 'Your tree stands here. Everyone in your Household grows here too, each on their own phone.' : 'Every tree in your Household, side by side, each tended on its own phone.') : isFamily() ? (ps.length ? (ps.length === 1 ? 'One tree so far. Add the people you live with, and their trees grow here too.' : 'Every tree in your household, side by side.') : 'Start with your own tree.')
       : (fam.length ? 'Trees shared by members from The Grounded Way, side by side.' : 'Members can share their own tree here from The Grounded Way, if they choose. It is never required.');
     h += `<div class="section-head"><h2>Our Grove</h2><p>${lead}</p></div>`;
     h += `<div class="gv-scene">${window.GGGroveRow ? GGGroveRow.html({ trees: trees.length ? trees : [{ stage: 'adult', g: .05, kind: 'grove', private: true }], sky: skyNow(), scenery: scen, visitors: vis, fresh, pick: isFamily(), label: 'Our grove' }) : ''}</div>`;
@@ -726,9 +808,10 @@ function viewGrove() {
   if (isFamily() && a) {
     const mine = who(a.id), md = myDays(mine), gd = days;
     const row = (list, cur, act, n) => `<div class="unlock-row">${list.map(k => { const ok = n >= k.days; return `<button type="button" class="chip${cur === k.id ? ' on' : ''}${ok ? '' : ' is-off'}" ${ok ? `data-act="${act}" data-id="${k.id}"` : 'disabled'} aria-pressed="${cur === k.id}">${esc(k.name)}${ok ? '' : ` (${k.days} ${k.days === 1 ? 'day' : 'days'})`}</button>`; }).join('')}</div>`;
+    const fgS = fgOn() && !FGX().grown();
     h += `<div class="card"><h3>Your tree in the grove</h3><p class="muted">Days you tend in ${esc(toolOf(who(a.id) || a).name)} unlock new kinds of trees. Days the family grows together unlock scenery for everyone.</p>
       <label class="lbl">Kind of tree</label>${row(KINDS, G.kinds[a.id] || 'grove', 'kind', md)}
-      <label class="lbl">Scenery</label>${row(SCENES, scen, 'scenery', gd)}</div>`;
+      ${fgS ? '' : `<label class="lbl">Scenery</label>${row(SCENES, scen, 'scenery', gd)}`}</div>`;
   }
   return h + moveOnHtml() + helpCardHtml();
 }
@@ -851,6 +934,7 @@ function wallItems(w0) {
   G.wall.forEach(x => { if (x.day >= w0 && x.day <= w1) out.push(Object.assign({ kind: 'post' }, x)); });
   people().forEach(p => treeOf(p).recent.forEach(r => { if (r.d >= w0 && r.d <= w1) out.push({ kind: 'growth', id: 'g:' + p.id + ':' + r.d, by: p.id, day: r.d, at: r.d + 'T20:00', parts: r.parts || [] }); }));
   Object.keys(G.done).forEach(d => { if (d >= w0 && d <= w1) Object.keys(G.done[d]).forEach(k => { const x = G.done[d][k]; out.push({ kind: 'practice', id: 'p:' + d + ':' + k, by: x.by, day: d, at: x.at || d + 'T19:00', practice: k }); }); });
+  if (fgOn()) (G.cheers || []).forEach(x => { if (x.day >= w0 && x.day <= w1) out.push(Object.assign({}, x, { kind: 'cheer' })); });
   return out.sort((a, b) => String(b.at).localeCompare(String(a.at)));
 }
 const list3 = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
@@ -868,16 +952,19 @@ function itemHtml(x) {
   if (x.kind === 'post') body = `<p class="gv-text">${esc(x.text)}</p>`;
   if (x.kind === 'growth') { const tool = toolOf(p || 'adult'), names = PARTS6.filter(k => (x.parts || []).includes(k.key)).map(k => k.name);
     body = `<p class="gv-text">${esc(nameOf(x.by))} tended their tree${names.length ? ': ' + esc(list3(names)) : ''}.</p><p><a class="text-link" href="${tool.href}">Go tend your tree</a></p>`; }
+  if (x.kind === 'cheer') { const to = x.to ? who(x.to) : null; body = `<p class="gv-text"><b>${esc(FGX().CHEERS[x.c] || '')}</b> ${to ? 'To ' + esc(to.name) + '.' : 'To the whole grove.'}</p>`; }
   if (x.kind === 'practice') { const pr = TP[x.practice]; body = `<p class="gv-text">${esc(K.We)} did <b>${esc(pr ? pv(pr).name : 'a practice')}</b> together${p ? ', checked off by ' + esc(p.name) : ''}.</p>`; }
-  const canDrop = x.kind === 'post' && (!isFamily() || (a && (a.id === x.by || a.age === 'adult')));
-  const by = x.kind === 'practice' ? 'Together' : x.by === 'leader' ? leaderName() : nameOf(x.by);
-  return `<li class="gv-item gv-${x.kind}"><div class="gv-item-head">${x.kind === 'practice' ? `<span class="gv-dot">${icon('heart')}</span>` : av}<div><b>${esc(by)}</b><small>${esc(nice(x.day))}</small></div>${canDrop ? `<button type="button" class="gv-drop" data-act="drop" data-id="${esc(x.id)}">Remove</button>` : ''}</div>${body}${reactsHtml(x.id)}</li>`;
+  const canDrop = x.kind === 'post' && (fgOn() ? !!(a && (a.id === x.by || FGX().grown())) : (!isFamily() || (a && (a.id === x.by || a.age === 'adult'))));
+  const by = x.kind === 'practice' ? 'Together' : x.by === 'leader' ? leaderName() : x.before ? x.before + ', from before' : nameOf(x.by);
+  return `<li class="gv-item gv-${x.kind}"><div class="gv-item-head">${x.kind === 'practice' ? `<span class="gv-dot">${icon('heart')}</span>` : av}<div><b>${esc(by)}</b><small>${esc(nice(x.day))}</small></div>${canDrop ? `<button type="button" class="gv-drop" data-act="drop" data-id="${esc(x.id)}">${fgOn() ? 'Take Down' : 'Remove'}</button>` : ''}</div>${body}${reactsHtml(x.id)}</li>`;
 }
 function viewWall() {
   const a = me(), w0 = addDays(weekStart(today()), -7 * S.wk), items = wallItems(w0), cls = G.kind === 'classroom';
-  let h = `<div class="section-head"><h2>${cls ? 'Teacher Notes' : 'The Wall'}</h2><p>${isFamily() ? "Cheer each other on. Growth from The Grounded Way shows here when someone's switch is on, along with short posts and the things you do together." : cls ? 'Short notes from the teacher, and the practices the class did together. Students do not post here.' : 'Short notes from the leader, and the practices done together.'}</p></div>`;
+  let h = `<div class="section-head"><h2>${cls ? 'Teacher Notes' : 'The Wall'}</h2><p>${fgOn() ? 'Cheer each other on, from wherever you are. Posts, cheers, and the things you do together show here for your Household and welcomed guests. Growth from The Grounded Way shows when someone\'s switch is on.' : isFamily() ? "Cheer each other on. Growth from The Grounded Way shows here when someone's switch is on, along with short posts and the things you do together." : cls ? 'Short notes from the teacher, and the practices the class did together. Students do not post here.' : 'Short notes from the leader, and the practices done together.'}</p></div>`;
   if (S.wk === 0) {
     if (!isFamily()) h += `<div class="card gv-compose"><label class="lbl" for="gv-post">${cls ? 'A note from the teacher' : 'A note from the leader'}</label><textarea id="gv-post" maxlength="280" rows="3" placeholder="${cls ? 'Our class did the Calm Corner Breath before the test. Proud of you all.' : 'Thank you for showing up for each other this week.'}"></textarea><div class="tools-row" style="justify-content:space-between"><span class="muted">Notes stay on this device. No names of students, please.</span><button class="btn btn-gold btn-sm" data-act="post">Post</button></div></div>`;
+    else if (fgOn()) { const kid = fgKid(), F = FGX();
+      h += a ? `<div class="card gv-compose"><label class="lbl" for="gv-post">Post to the wall as ${esc(a.name)}</label>${kid ? `<p class="muted">Start with one of these, then finish it your way.</p><div class="gv-chips">${F.STARTERS.map((t2, i) => `<button type="button" class="chip" data-act="fgstart" data-id="${i}">${esc(t2)}...</button>`).join('')}</div>` : ''}<textarea id="gv-post" maxlength="${kid ? F.KID_MAX : F.POST_MAX}" rows="3" placeholder="${kid ? 'Thank you for the pancakes.' : 'Proud of you for the walk today.'}"></textarea><div class="tools-row" style="justify-content:space-between"><span class="muted">Posts stay locked for your family and welcomed guests. A grown-up can take down any post.</span><button class="btn btn-gold btn-sm" data-act="post">Post</button></div></div>` + fgCheersHtml() : ''; }
     else h += a ? `<div class="card gv-compose"><label class="lbl" for="gv-post">Post to the wall as ${esc(a.name)}</label><textarea id="gv-post" maxlength="280" rows="3" placeholder="Proud of you for the walk today."></textarea><div class="tools-row" style="justify-content:space-between"><span class="muted">Posts stay on this device, for your household. A grown-up can remove any post.</span><button class="btn btn-gold btn-sm" data-act="post">Post</button></div></div>`
       : (people().length ? `<div class="card gv-compose"><p>Choose your picture to write a post or react.</p><button class="btn btn-gold btn-sm" data-act="here">Who's here?</button></div>` : '');
   }
@@ -914,7 +1001,7 @@ function practiceCard(pr0, featured, extra) {
 function srcLine(pr) { const ids = pr.sources || []; return ids.length && window.GGSources ? GGSources.line(ids, { practice: true }) : ''; }
 function srcFor(key) { const ids = W('sources.' + key, null); return Array.isArray(ids) && ids.length && window.GGSources ? `<div class="gv-srcs">${GGSources.line(ids)}</div>` : ''; }
 function viewTogether() {
-  const K = KW(), w = weekNo(), v = vaultOpen() ? V() : null, plan = v && v.plan;
+  const K = KW(), w = weekNo(), v = vaultOpen() ? V() : null, plan = v ? v.plan : (fgOn() && FGX().planPids().length ? { items: FGX().planPids().map(pid => ({ pid })) } : null);
   const planItems = plan ? (plan.items || []).map(x => TP[x.pid]).filter(Boolean) : [];
   let feat = null;
   if (planItems.length) feat = planItems[w % planItems.length];
@@ -1286,6 +1373,7 @@ function liveSpreadHtml(ci) {
 function qText(q) { return plainMode() && q.plain ? q.plain : q.q; }
 function kidText(q) { return plainMode() && q.kidPlain ? q.kidPlain : q.kid; }
 function lockedHtml(what) {
+  if (fgOn()) return `<div class="card gv-locked"><h3>${esc(what)}</h3><p>The Family Check-in and the Growth Plan are with the grown-ups of your Household, on their own phones. The plan's practices show in Together for everyone.</p><button class="btn btn-gold btn-sm" data-tab="together">Open Together</button></div>`;
   return `<div class="card gv-locked"><h3>${icon('lock')} ${esc(what)} Is Locked</h3><p>The check-ins, the Growth Plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on this device only.</p><button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button></div>` + helpCardHtml();
 }
 function viewCheckin() {
@@ -1522,9 +1610,11 @@ function earlierPlansHtml() {
 function viewSettings() {
   const K = KW(), cls = G.kind === 'classroom', fixedPlain = cls && G.school !== 'faith';
   let h = `<div class="section-head"><h2>Settings</h2><p>For ${esc(G.name || K.name)}. Each grove keeps its own settings.</p></div>`;
-  h += `<div class="card"><h3>Our Grove</h3><label class="lbl" for="gv-name">Name</label><input id="gv-name" class="gv-input" maxlength="40" value="${esc(G.name)}"><button class="btn btn-line btn-sm" data-act="setname">Save the Name</button>
-    <p class="lbl">Kind of grove</p><div class="gv-chips">${KIND_IDS.map(k => `<button type="button" class="chip${G.kind === k ? ' on' : ''}" aria-pressed="${G.kind === k}" data-act="setgkind" data-id="${k}">${esc(KW(k).long)}</button>`).join('')}</div>
-    <p class="muted">Changing the kind changes the words, questions, and practices. Check-ins and plans you made stay.</p></div>`;
+  const fg = fgOn(), fgG = fg && FGX().grown();
+  if (fg) h += FGX().settingsHtml() + (fgG && fgHasOld() ? `<div class="card"><h3>Bring Our Grove Along</h3><p class="muted">The Family grove from before on this device can come into this one: its posts, reactions, practices, and, with its passcode, the Family Check-ins and plan.</p><button class="btn btn-line btn-sm" data-fg="bring">Bring Our Grove Along</button></div>` : '');
+  if (!fg || fgG) h += `<div class="card"><h3>Our Grove</h3><label class="lbl" for="gv-name">Name</label><input id="gv-name" class="gv-input" maxlength="40" value="${esc(G.name)}"><button class="btn btn-line btn-sm" data-act="setname">Save the Name</button>
+    ${fg ? '</div>' : `<p class="lbl">Kind of grove</p><div class="gv-chips">${KIND_IDS.map(k => `<button type="button" class="chip${G.kind === k ? ' on' : ''}" aria-pressed="${G.kind === k}" data-act="setgkind" data-id="${k}">${esc(KW(k).long)}</button>`).join('')}</div>
+    <p class="muted">Changing the kind changes the words, questions, and practices. Check-ins and plans you made stay.</p></div>`}`;
   h += `<div class="card"><h3>Words</h3>`;
   if (cls) h += `<p class="lbl">Where is this class?</p><div class="gv-chips">${[['public', 'Public School'], ['faith', 'Faith-Based School'], ['other', 'Homeschool or Program']].map(([id, l]) => `<button type="button" class="chip${(G.school || 'public') === id ? ' on' : ''}" aria-pressed="${(G.school || 'public') === id}" data-act="setgschool" data-id="${id}">${l}</button>`).join('')}</div>`;
   h += `<p class="lbl">Faith or Plain</p>${fixedPlain ? `<p class="muted">Plain, about class life only.${G.school === 'other' ? '' : ' A public school class keeps Plain wording.'}</p>` : `<div class="gv-chips">${[['faith', 'Faith'], ['plain', 'Plain']].map(([id, l]) => `<button type="button" class="chip${(plainMode() ? 'plain' : 'faith') === id ? ' on' : ''}" aria-pressed="${(plainMode() ? 'plain' : 'faith') === id}" data-act="setgfaith" data-id="${id}">${l}</button>`).join('')}</div><p class="muted">Faith wording names prayer, worship, and the sacred, for all faith traditions and everything in-between. Plain wording speaks of quiet, thanks, and what matters most.</p>`}`;
@@ -1537,12 +1627,13 @@ function viewSettings() {
     if (G.hard) h += `<label class="lbl" for="gv-lname">Hospice name (optional)</label><input id="gv-lname" class="gv-input" maxlength="60" value="${esc((G.line || {}).name || '')}"><label class="lbl" for="gv-lphone">Hospice 24/7 phone number</label><input id="gv-lphone" class="gv-input" type="tel" maxlength="30" value="${esc((G.line || {}).phone || '')}" placeholder="320-555-0100"><button class="btn btn-line btn-sm" data-act="setline">Save the Line</button><p class="muted"><a class="text-link" href="/willow/">Willow</a> is for the person in hospice and the people who love them. A remembered willow stays in the grove.</p>`;
     h += `</div>`;
   }
+  if (fg && !fgG) return h + helpCardHtml();
   h += `<div class="card"><h3>${icon('circle', 'gv-ic-inline')} Who's in Our Circle</h3>`;
   if (!vaultOpen()) h += `<p class="muted">Locked with the grove passcode.</p><button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button>`;
   else { const c = V().circle || [];
     h += `<p class="muted">${esc(W('circle.intro', 'Pick any that are part of our circle. Practices that fit come first, with a way for everyone to join.'))} ${esc(W('circle.note', 'It never changes a question, a result, or a help line.'))}</p><div class="gv-chips">${CIRCLE.filter(circleOffered).map(([id, l]) => `<button type="button" class="chip${c.includes(id) ? ' on' : ''}" aria-pressed="${c.includes(id)}" data-act="circle" data-id="${id}">${esc(l)}</button>`).join('')}</div>`; }
   h += `</div>`;
-  h += `<div class="card"><h3>${icon('lock', 'gv-ic-inline')} The Grove Lock</h3><p class="muted">${G.lockOn ? 'On. The check-ins, the plan, and the circle choices are locked with the grove passcode. The Wall and practices done together stay readable on this device.' : 'Off. Anyone using this device can open the check-ins and the plan.'}</p><div class="tools-row" style="justify-content:flex-start">`
+  if (!fg) h += `<div class="card"><h3>${icon('lock', 'gv-ic-inline')} The Grove Lock</h3><p class="muted">${G.lockOn ? 'On. The check-ins, the plan, and the circle choices are locked with the grove passcode. The Wall and practices done together stay readable on this device.' : 'Off. Anyone using this device can open the check-ins and the plan.'}</p><div class="tools-row" style="justify-content:flex-start">`
     + (G.lockOn ? (vaultOpen() ? `<button class="btn btn-line btn-sm" data-act="glock">Lock Now</button><button class="btn btn-line btn-sm" data-act="gpass">Change the Passcode</button><button class="btn btn-line btn-sm" data-act="groot">${G.lock && G.lock.rw ? 'See Our Root Words' : 'Make Our Root Words'}</button><button class="btn btn-line btn-sm" data-act="glockoff">Turn the Lock Off</button>` : `<button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button>`) : `<button class="btn btn-gold btn-sm" data-act="glockon">Turn the Lock On</button>`) + `</div></div>`;
   h += `<div class="card"><h3>${icon('print', 'gv-ic-inline')} Printouts</h3><div class="tools-row" style="justify-content:flex-start">`
     + (!isFamily() ? `<button class="btn btn-line btn-sm" data-act="print" data-id="agree">${esc(W('print.agreementsTitle', 'Group Agreements'))}</button>` : '')
@@ -1726,21 +1817,25 @@ function libFind() {
 
 /* ---------- actions ---------- */
 function react(id, k) {
+  if (fgOn()) { FGX().react(id, k, KIDHERE).then(render, e => toast(fgSay(e))); return; }
   needHere('Choose your picture to react.').then(ok => { if (!ok) return; const a = me(); const r = G.reacts[id] || (G.reacts[id] = {});
     if (r[a.id] === k) delete r[a.id]; else r[a.id] = k; save(); render(); });
 }
 function post() {
+  if (fgOn()) { const t0 = $('#gv-post'), text = t0 ? t0.value.trim() : ''; if (!text) { toast('Write something first.'); return; } FGX().post(text, KIDHERE).then(ok => { if (ok) { render(); toast('Posted.'); } }, e => toast(fgSay(e))); return; }
   const a = me(), t = $('#gv-post'); if (!t || (isFamily() && !a)) return; const text = t.value.trim().slice(0, 280);
   if (!text) { toast('Write something first.'); return; }
   G.wall.push({ id: uid(), by: isFamily() ? a.id : 'leader', text, day: today(), at: new Date().toISOString() }); save(); render(); toast('Posted.');
 }
 function drop(id) {
+  if (fgOn()) { if (!confirm('Take down this post?')) return; FGX().unpost(id, KIDHERE).then(render, e => toast(fgSay(e))); return; }
   const a = me(), x = G.wall.find(p => p.id === id); if (!x) return;
   if (isFamily() && !(a && (a.id === x.by || a.age === 'adult'))) return;
   if (!confirm('Remove this post?')) return;
   G.wall = G.wall.filter(p => p.id !== id); delete G.reacts[id]; G.gone = G.gone || {}; G.gone[id] = Date.now(); save(); render();
 }
 function did(id) {
+  if (fgOn()) { FGX().did(id, KIDHERE).then(r => { render(); if (r === 'on') { if (window.GGLiving) GGLiving.burst(2); toast('Nice work. The grove grew today.'); } else if (r === 'theirs') toast('Checked off by someone else today.'); }, e => toast(fgSay(e))); return; }
   const d = today(), day = G.done[d] || (G.done[d] = {});
   if (day[id]) { delete day[id]; if (!Object.keys(day).length) delete G.done[d]; save(); render(); return; }
   const a = isFamily() ? me() : null; day[id] = { by: a ? a.id : null, at: new Date().toISOString() }; G.grew[d] = 1; save(); render(); if (window.GGLiving) GGLiving.burst(2); toast('Nice work. The grove grew today.');
@@ -1787,13 +1882,17 @@ document.addEventListener('click', e => {
   if (t && (t.closest('#tabs') || t.closest('#view') || t.closest('.gg-hero'))) { e.preventDefault(); if (t.dataset.tab === 'learn') { window.GROVE_PLAIN = plainMode(); if (window.GROVE_VIDS_WORDING) GROVE_VIDS_WORDING(plainMode()); if (window.GGLearn) GGLearn.open('grove'); return; } const k = t.dataset.tab === 'guide' ? 'how' : t.dataset.tab; S.tab = k; S.open = ''; S.view = ''; if (k === 'life') S.lc.open = null; render(); pushHash(); if (t.closest('.gg-hero') || t.closest('#view')) $('#app').scrollIntoView({ behavior: 'smooth' }); return; }
   const b = e.target.closest('[data-act]'); if (!b || !b.closest('#view')) return;
   const id = b.dataset.id, act = b.dataset.act;
+  if (act === 'fgkid') { KIDHERE = id; render(); return; }
+  if (act === 'fgback') { KIDHERE = ''; render(); return; }
+  if (act === 'fgstart') { const t = $('#gv-post'); if (t && FGX()) { t.value = FGX().STARTERS[+id] + ' '; t.focus(); } return; }
+  if (act === 'fgcheer') { const to = ($('#gv-cto') || {}).value || ''; FGX().cheer(to, +id, KIDHERE).then(ok => { if (ok) toast('Cheer sent.'); render(); }, e => toast(fgSay(e))); return; }
   if (act === 'here' || act === 'switch') { if (window.GGP) GGP.openDialog({ reason: "Who's here? Choose your picture." }).then(render); }
   else if (act === 'lock') { if (window.GGP) GGP.lock().then(render); }
   else if (act === 'create') { if (window.GGP) GGP.createDialog({}).then(render); }
   else if (act === 'intro') { G.intro = true; save(); render(); }
   else if (act === 'sel') { S.sel = S.sel === id ? null : id; render(); }
-  else if (act === 'kind') { const a = me(); if (a) { G.kinds[a.id] = id; save(); render(); } }
-  else if (act === 'scenery') { G.scenery = id; save(); render(); }
+  else if (act === 'kind') { const a = me(); if (a && fgOn()) { FGX().myKind(id, KIDHERE).then(render); return; } if (a) { G.kinds[a.id] = id; save(); render(); } }
+  else if (act === 'scenery') { if (fgOn()) { if (FGX().grown()) FGX().setGrove({ scenery: id }).then(render); else toast('A grown-up chooses the scenery.'); return; } G.scenery = id; save(); render(); }
   else if (act === 'react') react(id, b.dataset.k);
   else if (act === 'post') post();
   else if (act === 'drop') drop(id);
@@ -1846,6 +1945,7 @@ document.addEventListener('click', e => {
   else if (act === 'print') { if (['summary', 'plan', 'card'].includes(id) && !vaultOpen()) { withVault('', render); return; } printWhat(id, b.dataset.ci); }
   else if (act === 'closeclass') closeClass();
   // settings
+  else if (act === 'setname' && fgOn()) { const n = (($('#gv-name') || {}).value || '').trim().slice(0, 40); if (n) FGX().setGrove({ name: n }).then(() => { render(); toast('Saved.'); }); }
   else if (act === 'setname') { const n = ($('#gv-name') || {}).value || ''; G.name = n.trim().slice(0, 40) || G.name; save(); render(); toast('Saved.'); }
   else if (act === 'setgkind') { if (id === G.kind) return; if (!confirm('Change this grove to ' + KW(id).long + '? The words, questions, and practices change. Check-ins and plans you made stay.')) return; G.kind = id; if (id === 'team' || id === 'classroom') G.faith = 'plain'; if (id === 'team') G.children = false; if (!isFamily()) S.sel = null; save(); render(); }
   else if (act === 'setgschool') { G.school = id; save(); render(); }

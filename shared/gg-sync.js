@@ -27,7 +27,8 @@
    For stage 2
      GGSync.doc(name, adapter, opts)     an account doc. adapter: {get() -> object or null (null: closed for now),
                                          put(object, info) -> Promise}. opts: {rules: [{path, field}], opaque}
-     GGSync.space(kind, adapter, opts)   a household shared doc: kind 'kitchen', 'money', or 'planner' (BLD 950, the Family Planner)
+     GGSync.space(kind, adapter, opts)   a household shared doc: kind 'kitchen', 'money', or 'planner' (BLD 950, the Family Planner),
+                                         'plates' (BLD 967), or 'progress' (BLD 1075, each member's open progress; BLD 1079 accepts it here)
      GGSync.drop(name)                   stop syncing a doc here (its pieces stay on the server)
      GGSync.changed(name)                a doc changed: sync in a few seconds
      GGSync.poke()                       sync in a few seconds, marking nothing (stage 2)
@@ -44,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGSync) return;
-  var V = 'c225', enc = new TextEncoder(), dec = new TextDecoder(), subtle = window.crypto && crypto.subtle;
+  var V = 'c235', enc = new TextEncoder(), dec = new TextDecoder(), subtle = window.crypto && crypto.subtle;
   function X() { if (!window.GGAccount || !GGAccount._) throw new Error('GGSync needs shared/gg-account.js'); return GGAccount._; }
 
   /* ---------- plain helpers ---------- */
@@ -519,6 +520,30 @@
     });
   }
 
+  /* ---------- BLD 1079: the Family grove's keys, handed along from any family phone ----------
+     The Family grove (shared/gg-famgrove.js, the Worker's /famgrove routes) has its own spaces and keys. Any family phone
+     that opens Grounded hands a waiting key along: once every ten minutes at most, this asks GET /famgrove, and for each space
+     whose key this account holds, locks it to each person still waiting for it. Before the Worker c202 is live the route
+     answers 404 and this rests for the rest of the visit. It reads no box and changes nothing else. */
+  var famAt = 0, famOff = false;
+  function famKeys(K) {
+    if (famOff || Date.now() - famAt < 600000 || window.GG_FAMGROVE_OFF || Date.now() - (+window.GG_FAMGROVE_NONE || 0) < 600000) return Promise.resolve();
+    famAt = Date.now();
+    var x = X();
+    return x.api('GET', '/famgrove', null, { tries: 1, quiet401: true }).then(function (r) {
+      var jobs = [];
+      (r.groves || []).forEach(function (g) {
+        (g.spaces || []).forEach(function (sp) {
+          if (!sp.key || !sp.missing || !sp.missing.length) return;
+          jobs.push(unwrap(sp.key, sp.id, K).then(function (raw) {
+            return Promise.all(sp.missing.map(function (m) { return wrapTo(m.pub, raw, sp.id, m.account).then(function (w) { return { account: m.account, key: w }; }); }));
+          }).then(function (items) { return x.api('POST', '/famgrove/spaces/' + sp.id + '/keys', { items: items }); }).catch(function () {}));
+        });
+      });
+      return Promise.all(jobs);
+    }, function (e) { if (e && e.status === 404) { famOff = true; window.GG_FAMGROVE_NONE = Date.now(); } }).catch(function () {});
+  }
+
   /* ---------- sync ---------- */
   function sync() {
     if (running) { again = true; return running; }
@@ -544,6 +569,7 @@
     };
     var locked = navigator.locks && navigator.locks.request ? function (fn) { return navigator.locks.request('gg-sync', fn); } : function (fn) { return fn(); };
     running = locked(job).then(function () {
+      famKeys(K);   // BLD 1079: never waits on it, never stops the sync
       retry = 0; setS({ state: 'idle', last: Date.now() });
       if (Date.now() - (S.told || 0) > 300000) { S.told = Date.now(); X().api('POST', '/devices/synced', {}).catch(function () {}); }
       return res;
@@ -618,7 +644,7 @@
   window.GGSync = {
     v: V, doc: function (name, adapter, o) { return register(name, adapter, o, null) && name; },
     // BLD 967: plates, Share My Plate's family notes
-    space: function (kind, adapter, o) { if (['kitchen', 'money', 'planner', 'plates'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
+    space: function (kind, adapter, o) { if (['kitchen', 'money', 'planner', 'plates', 'progress'].indexOf(kind) < 0) throw new Error('GGSync: kind'); return register(kind, adapter, o, kind) && kind; },
     drop: function (name) { delete docs[name]; }, changed: changed, sync: sync, status: status,
     // stage 2: a save that touches only a shared space (no doc of its own here) asks for a sync in a few seconds
     poke: function () { clearTimeout(timer); timer = setTimeout(sync, CFG.debounce); },

@@ -22,7 +22,7 @@
   function acct() { return window.GGAccount && GGAccount._ && GGAccount._.api ? GGAccount : null; }
   function signedIn() { var A = acct(); return !!(A && A.info && A.info()); }
   function api(m, p, b) { return acct()._.api(m, p, b == null ? null : b); }
-  var WORDS = { grown: 'Sharing a grove is for grown up accounts. Kids and teens join in on the grove device.', code: 'That code opens no grove. Check the letters with your leader.', leader: 'Only the grove\'s leader can do that.',
+  var WORDS = { grown: 'Groves joined with a code are for grown-up accounts. Teens and kids grow together in their Family grove.', code: 'That code opens no grove. Check the letters with your leader.', leader: 'Only the grove\'s leader can do that.',
     name: 'Use letters only for a name, up to 24 for yours and 40 for the grove.', full: 'That grove is full, or you are in as many groves as an account can hold.', confirm: 'Confirm your email first, from the message Grounded sent.',
     none: 'That grove has ended, or you are no longer in it.', wait: 'That is a lot of tries. Give it a little while, then try again.', offline: 'You look offline. The grove is saved here and shares again once you are back online.' };
   function say(e) { var w = e && e.why;

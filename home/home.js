@@ -57,7 +57,7 @@
   'use strict';
   if (window.GGHome) return;
   var V = 'c223';   // shared/gg-scale.js (BLD 1070: step amounts)
-  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c232', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c233', '/shared/tending-public.js?v=c223', '/shared/gentle-public.js?v=c151'];
+  var TEND_SRC = ['/shared/tend/moves.js?v=c151', '/shared/tend/stage.js?v=c202', '/shared/tend/coach.js?v=c207', '/shared/tend/health.js?v=c235', '/shared/gg-scale.js?v=' + V, '/shared/gg-meal-tags.js?v=c195', '/shared/gg-tend-plan.js?v=c233', '/shared/tending-public.js?v=c223', '/shared/gentle-public.js?v=c151'];
   var WORDS_SRC = '/shared/sober-words.js?v=b916';
   var GGN_SRC = '/shared/ggn.js?v=c234';
   var MONEY_SRC = '/shared/gg-money.js?v=c121';
@@ -1900,7 +1900,22 @@
       for (var i = 0; i < 14; i++) { var k = addDays(d, -i), x = t.days[k]; if (!x || !tended(k)) continue; var set = {}; arr(x.d).forEach(function (pk) { set[String(pk).split('|')[0]] = 1; }); recent.push({ d: k, parts: Object.keys(set) }); }
       var days = Object.keys(t.days).filter(tended).length;
       GGP.setShared(id, { tree: Object.assign({}, old, { tool: tree, show: true, days: days, rings: typeof old.rings === 'number' ? old.rings : arr(t.rings).length, season: t.season || old.season || 1, recent: recent, updated: d }) });
+      famGroveLine();
     } catch (e) { /* the shared line waits for the tree page */ }
+  }
+
+  /* BLD 1079: the same line reaches the Family grove (shared/gg-famgrove.js), so the Household sees it on their own phones. It
+     loads only with a Grounded Account, once the Worker answers the Family grove's routes, and waits a few seconds so a run
+     of checkmarks sends one line. The Grounded Way never needs The Grove for anything: this only shares the line. */
+  var famT = 0;
+  function famGroveLine() {
+    if (!window.GGAccount || !GGAccount.state || GGAccount.state() === 'out') return;
+    clearTimeout(famT);
+    famT = setTimeout(function () {
+      var go = function () { var F = window.GGFamilyGrove; if (!F) return; F.live().then(function (on) { if (on) return F.load().then(function () { return F.publishTree(); }); }).catch(function () {}); };
+      if (window.GGFamilyGrove) return go();
+      var s = document.createElement('script'); s.src = '/shared/gg-famgrove.js?v=c235'; s.onload = go; document.head.appendChild(s);
+    }, 4000);
   }
 
   /* ---------- BLD 892: one card, two credits (shared/gg-fills.js) ----------
